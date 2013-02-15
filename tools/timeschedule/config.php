@@ -1,9 +1,12 @@
 <?php
 	$key = "eenrandomwoord";
 	$users = array(
-		'ruben'	=> 'ruben',
-	);
-	$fullnames = array(
-		'ruben' => 'Ruben Taelman',
+		'eddy'		=> 'eddy',
+		'felix'		=> 'felix',
+		'jens'		=> 'jens',
+		'kevin'		=> 'kevin',
+		'ruben'		=> 'ruben',
+		'sander'	=> 'sander',
+		'thomas'	=> 'thomas',
 	);
 ?>
