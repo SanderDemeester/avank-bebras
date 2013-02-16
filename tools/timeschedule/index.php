@@ -46,10 +46,21 @@ function draw_loggedin($username, $insert, $datum="", $begin="", $eind="", $taak
 	if($insert) {
 		$file="raw_schedules/".$username.".csv";
 		$fh = fopen($file, 'a');
-		fwrite($fh, $datum.",".$begin.",".$eind.",".$taak."\n");
+		fwrite($fh, $datum.",".$begin.",".$eind.",\"".$taak."\"\n");
 	}
 	$content="Nieuwe entry: <br />";
 	$content.='
+<script type="text/javascript"> 
+
+function stopRKey(evt) { 
+  var evt = (evt) ? evt : ((event) ? event : null); 
+  var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null); 
+  if ((evt.keyCode == 13) && (node.type=="text"))  {return false;} 
+} 
+
+document.onkeypress = stopRKey; 
+
+</script>
 <form method="post" action="">
 Datum: <input type="date" name="datum">
 Begin: <input type="time" name="begin">
