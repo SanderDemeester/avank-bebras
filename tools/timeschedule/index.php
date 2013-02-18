@@ -15,7 +15,7 @@ elseif ($_COOKIE['authkey']) {
 	if (md5($username.$key) == $hash) {
         // SUCCESFULLY SIGNED IN
 		if(isset($_REQUEST['datum']) && isset($_REQUEST['begin']) && isset($_REQUEST['eind'])) {
-			draw_loggedin($username, true, $_REQUEST['datum'], $_REQUEST['begin'], $_REQUEST['eind']);
+			draw_loggedin($username, true, $_REQUEST['datum'], $_REQUEST['begin'], $_REQUEST['eind'], $_REQUEST['taak']);
 		}
 		else {
 			draw_loggedin($username, false);
@@ -42,18 +42,30 @@ function get_schedule($username) {
 	return fread($fh, filesize($file));
 }
 
-function draw_loggedin($username, $insert, $datum="", $begin="", $eind="") {
+function draw_loggedin($username, $insert, $datum="", $begin="", $eind="", $taak="") {
 	if($insert) {
 		$file="raw_schedules/".$username.".csv";
 		$fh = fopen($file, 'a');
-		fwrite($fh, $datum.",".$begin.",".$eind."\n");
+		fwrite($fh, $datum.",".$begin.",".$eind.",\"".$taak."\"\n");
 	}
 	$content="Nieuwe entry: <br />";
 	$content.='
+<script type="text/javascript"> 
+
+function stopRKey(evt) { 
+  var evt = (evt) ? evt : ((event) ? event : null); 
+  var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null); 
+  if ((evt.keyCode == 13) && (node.type=="text"))  {return false;} 
+} 
+
+document.onkeypress = stopRKey; 
+
+</script>
 <form method="post" action="">
 Datum: <input type="date" name="datum">
 Begin: <input type="time" name="begin">
 Einde: <input type="time" name="eind">
+Beschrijving: <input type="text" name="taak" size="100"><br />
 <input type="submit" value="Voeg Toe">
 </form>
 <hr />
@@ -61,7 +73,7 @@ Einde: <input type="time" name="eind">
 	$content.="Jouw huidig tijdsschema: <br />";
 	$content.=str_replace("\n","<br />",get_schedule($username));
 	$content.="<hr />";
-	$content.="Als je iets kapot hebt gemaakt kan je het bestand handmatig aanpassen op deze locatie: <b>raw_schedules/".$username.".csv</b>";
+	$content.="Als je iets kapot hebt gemaakt kan je het bestand handmatig aanpassen op deze locatie: <b>/home/rtaelman/public_html/documents/timeschedules/setup/raw_schedules/".$username.".csv</b>";
 	draw_page($content);
 }
 
