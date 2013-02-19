@@ -15,3 +15,8 @@ dist
 /RUNNING_PID
 /.settings
 .gitignore
+*.pdf
+*.log
+*.aux
+*.gz
+
