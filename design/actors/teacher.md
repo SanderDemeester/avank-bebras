@@ -1,10 +1,10 @@
-
 Teacher
 =======
 
 - change own password & emailadres & other info
 - reset pupil's password
 - create classes
+- delete classes
 - register pupils
 - add pupils to classes
 - open/register competitions to classes
