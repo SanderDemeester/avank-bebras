@@ -13,3 +13,4 @@ Teacher
 - in case of failure, send cookie to app
 - in case of PC failure, reset status of pupil so he can continue (evt add grace minutes)
 - download marks of all pupils
+- decouple themself from a class
