@@ -1,4 +1,3 @@
-
 Admin
 =====
 
@@ -7,3 +6,4 @@ Admin
 - reset everyone?s password
 - deactivate user
 - register organizers
+- re-assign teacher to a class.
