@@ -1,0 +1,1 @@
+- add also to the question managment screen that questions can be inserted.
