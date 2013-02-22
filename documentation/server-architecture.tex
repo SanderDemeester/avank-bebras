@@ -6,9 +6,10 @@
 \usepackage{amssymb}
 \author{Sander Demeester}
 \begin{document}
+\title{Server architectuur avank.ugent.be}
 \section*{Web-applicatie setup}
 Dit document beschrijft in het kort de gebruikte architectuur voor de web applicatie avank.ugent.be.
-Het gebruikte framework is het play!-framework dat we met java 1.7 zal worden geprogrammeerd (ebans, de Java Persistence API). Als back-end database zal postgresql worden gebruikt.\\
+Het gebruikte framework is het play! 2-framework dat we met java 1.7 zal worden geprogrammeerd (ebans, de Java Persistence API). Als back-end database zal postgresql worden gebruikt.\\
 \\
 Als webserver wordt de JBoss Netty server gebruikt die is ingebouwd in het play!-framework.
 \section*{Ontwikkelings-omgeving}
@@ -16,7 +17,7 @@ Voor de ontwikkelings-omgeving maken we gebruik van verschillende tools, nl
 \begin{itemize}
 \item Git (github.ugent.be)
 \item Jenkins (continuous integration server)
-\item JUint
+\item JUnit 4
 \item SBT (java/scale build tool)
 \item ZAP (Web-applicatie regression security server)
 \item vaurien (Mozilla web-applicatie die de gevolgen simuleerd van veel gebruikers op uw web applicatie)
