@@ -1,0 +1,27 @@
+\documentclass[10pt,a4paper]{report}
+\usepackage[latin1]{inputenc}
+\setlength\parindent{0pt}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\author{Sander Demeester}
+\begin{document}
+\section*{Web-applicatie setup}
+Dit document beschrijft in het kort de gebruikte architectuur voor de web applicatie avank.ugent.be.
+Het gebruikte framework is het play!-framework dat we met java 1.7 zal worden geprogrammeerd (ebans, de Java Persistence API). Als back-end database zal postgresql worden gebruikt.\\
+\\
+Als webserver wordt de JBoss Netty server gebruikt die is ingebouwd in het play!-framework.
+\section*{Ontwikkelings-omgeving}
+Voor de ontwikkelings-omgeving maken we gebruik van verschillende tools, nl
+\begin{itemize}
+\item Git (github.ugent.be)
+\item Jenkins (continuous integration server)
+\item JUint
+\item SBT (java/scale build tool)
+\item ZAP (Web-applicatie regression security server)
+\item vaurien (Mozilla web-applicatie die de gevolgen simuleerd van veel gebruikers op uw web applicatie)
+\item Python (bepaalde test-scriptjes zijn geschreven in python)
+\end{itemize}
+\section*{Test workflow}
+De lijst van bovenstaande tools worden gebruikt in een geautomatiseerd, de sever haalt automatisch elke nacht de code op en voert in jenkins de junt tests uit en de python scriptjes voeren de tests uit op ZAP en vaurien.
+\end{document}
