@@ -1,0 +1,184 @@
+\documentclass[]{article}
+\usepackage[a4paper]{geometry}
+\usepackage[dutch]{babel}
+
+\usepackage{graphicx}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{listings}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+
+\usepackage{hyperref}
+
+\usepackage{amsmath}
+\setcounter{MaxMatrixCols}{25}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{14pt}
+
+% Remove until here...
+
+\begin{document}
+
+\begin{section}{Organizers}
+	When the organizer is succesfully signed in, he will be redirected to his dashboard.
+	The organizer also has the default user functionalities that have been previously
+	mentioned. But he will also be some extra links presented that are exclusively
+	available to organizers.
+	\begin{subsection}{Manage Pupils}
+		\label{sec:organizer_manage_pupils}
+		Upon entering this page, there will be a table visible with all the (basic) users
+		registered in the bebras application. Columns include but are not limited to:
+		\begin{itemize}
+			\item Bebras-ID
+			\item Name
+			\item Email Adress
+			\item Class, [School]
+			\item Gender
+			\item Age
+			\item Actions
+		\end{itemize}
+		The actions column contains multiple buttons that can perform different actions
+		for each user, these actions are the following:
+		\begin{itemize}
+			\item Delete
+			\item Edit
+			\item Block
+			\item Mimic
+		\end{itemize}
+		The first row of the column will contain only input fields that will serve as
+		search input. For example the organizer can search a user by name and class by
+		entering (part) of the pupil's name and the id of the class. The table will
+		automatically update when the search button is pressed and will only contain
+		rows that satisfy the input query.\\
+		\\
+		The table won't show all rows at al time, but it will use a paging system that
+		by default shows only twenty rows at a time.\\
+		\\
+		There will also be a prominent Add button visible. After clicking it, the
+		organizer will be redirected to a page identical to
+		\nameref{sec:organizer_edit_pupils}, with the only difference that no fields
+		are filled in. \\
+		\\
+		Each row also has a select box. When multiple rows are selected, the organizer is
+		able to perform multi-actions, these include:
+		\begin{itemize}
+			\item Delete
+			\item Edit ClassGroup
+			\item Block
+		\end{itemize}
+		These multi-actions are useful for when larger groups of pupils require similar
+		actions. Clicking a select-box in the column-name row of the table will select
+		all the rows on the current page.
+		The first action will simply remove the selected pupils, but the other actions
+		redirect the organizer to edit pages identical to their single-edit equivalent.
+		\begin{subsubsection}{Delete Pupils}
+			When the organizer whishes to remove a pupil, he can click on the delete
+			button in the row of that user. A confirmation dialog will be shown after
+			clicking it, to make sure the organizer really wants to delete that user. \\
+			The user will not really be deleted from the database, but only unlinked so
+			that the statistics are in noway harmed.
+		\end{subsubsection}
+		\begin{subsubsection}{Edit Pupils}
+			\label{sec:organizer_edit_pupils}
+			The Edit button will redirect the user to a dedicated edit-screen where all
+			the fields of a pupil that are available in the database are presented in a
+			form and can be modified. Every field of the form is a regular text-field.
+			Upon saving the form by clicking the button on the bottom of the form, the
+			form will be checked and the organizer will be notified if there are errors
+			in the form and where they are. For example a non-existing ClassGroup id.
+			When there were no errors while editing, the organizer will be redirected to
+			the main pupil-management page.
+		\end{subsubsection}
+		\begin{subsubsection}{Block Pupils}
+			When pupils are misbehaving the organizer has an option to temporarily or
+			permanently block a user from the application. When the organizer clicks on
+			the Block button, he will be redirected to a new page where he will presented
+			to a small form where he has to choice to select not-blocked, permanent or
+			temporarily. When he chooses temporarily a new input box will become visible
+			where he can choose the date for when the user should become active again.
+			When the pupil was already blocked. When a user is already being blocked,
+			the organizer is able to visit this screen and change the current
+			blocking-mode.
+		\end{subsubsection}
+		\begin{subsubsection}{Mimic Pupils}
+			Upon pressing this button, the organizer will be redirected to the dashboard
+			of the selected pupil. He will be able to do anything that pupil can, and
+			nothing else. Only when the disguised organizer clicks on the log-out button,
+			he will be redirected to the page he left off, in this case the Pupil
+			managment.
+		\end{subsubsection}
+		
+	\end{subsection}
+	
+	\begin{subsection}{Manage Teachers}
+		The Teacher management page is identical to the Pupil management page, with the
+		only difference that there is also a phone-number field that is only available
+		to the teacher.
+	\end{subsection}
+	
+	\begin{subsection}{Manage ClassGroups}
+		This page is identical to the ClassGroup managment page that is available to the
+		teachers, but the organizers are able to see all the available classgroups that
+		are present in the application. The organizer is also able to change the ownership
+		of the class to another teacher in the Edit ClassGroup form.
+	\end{subsection}
+	
+	\begin{subsection}{Manage Questions}
+		This page contains two tables that are positioned next to each other. \\
+		The first table contains all the servers that provide the hosting of questions.
+		This is nothing more than a simple list of names of the server, base-url and
+		optional additional path to the questions base folder. \\
+		The second table contains all the questions and has the following columns:
+		\begin{itemize}
+			\item ID
+			\item Server
+			\item Official/Regular
+			\item Active
+		\end{itemize}
+		The Server is field contains the name of a certain server specified in the first
+		table and the ID is the name of a subfolder on that server that contains all the
+		resource files necessary for that question.
+		The last two fields are simple toggles that say whether the question is official
+		or regular and whether the question is active or not. Non-active questions are
+		not usable in the rest of the application, they can be useful when a question
+		needs evaluation or is not yet fully finished. \\
+		\\
+		These table also have Add buttons at the top, and Edit and Delete buttons in each
+		row that perform equivalent actions as in \nameref{sec:organizer_manage_pupils}.
+		\\
+		\\
+		Each row in the questions table also have select boxes that are needed to perform
+		the following multi-actions:
+		\begin{itemize}
+			\item Change server
+			\item Set official question
+			\item Set regular question
+			\item Activate
+			\item De-activate
+		\end{itemize}
+		The first multi-action will redirect the user to a simple form page where he can
+		select a server for the selected questions. And the other actions are simple
+		toggles that happen on this page.\\
+		\\
+		The questions table also has a first row with input fields that serves as
+		search fields. The last two column are no textual inputs, but simple dropdown
+		list with the the values None, Official and Regalar for the first one and the
+		values None, Active and Inactive for the second one.
+	\end{subsection}
+	
+	\begin{subsection}{Manage Question-sets}
+		
+	\end{subsection}
+	
+	\begin{subsection}{Manage Competitions}
+		
+	\end{subsection}
+\end{section}
+
+\end{document}
