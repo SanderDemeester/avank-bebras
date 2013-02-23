@@ -1,7 +1,7 @@
-
 The page where everything happens, where genii are discovered.
 
 On page:
+- Timer with # time left.
 - The current question
 - The answer form.
 - List of other questions in the contest.
