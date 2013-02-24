@@ -57,14 +57,14 @@ public class BasicTest extends UnitTest {
 	@Test
 	public void postComments() {
 	    // Create a new user and save it
-	    User bob = new User("bob@gmail.com", "secret", "Bob").save();
+	    User bob = new User("demeester.sander@gmail.com", "pw", "Sander").save();
 	 
 	    // Create a new post
 	    Post bobPost = new Post(bob, "My first post", "Hello world").save();
 	 
 	    // Post a first comment
 	    new Comment(bobPost, "Jeff", "Nice post").save();
-	    new Comment(bobPost, "Tom", "I knew that !").save();
+	    new Comment(bobPost, "Alice", "where is bob?").save();
 	 
 	    // Retrieve all comments
 	    List<Comment> bobPostComments = Comment.find("byPost", bobPost).fetch();
@@ -85,14 +85,16 @@ public class BasicTest extends UnitTest {
 	    assertNotNull(secondComment.postedAt);
 	}
 	
-	@Test
+//	@Test
 	public void useTheCommentsRelation(){
 		User sander = new User("demeester.sander@gmail.com","pw","Sander").save();
 		
-		Post sanderPost =new Post(sander,"My first post","Hello world").save();
+		Post sanderPost = new Post(sander,"My first post","Hello world").save();
 		
-		sanderPost.addComment("Tom", "Nice post");
+		sanderPost.addComment("Jeff", "Nice post");
 		sanderPost.addComment("Alice", "where is bob :(");
+		
+		
 		
 		assertEquals(1, User.count());
 	    assertEquals(1, Post.count());
