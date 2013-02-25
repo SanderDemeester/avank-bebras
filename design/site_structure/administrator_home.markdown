@@ -2,7 +2,6 @@
 This is the page the Administrator arrives when he logs in.
 
 On page:
-- Login form for mimicking.
 
 Links to:
 - `pupil_management`
