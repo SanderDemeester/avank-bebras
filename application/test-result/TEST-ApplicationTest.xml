@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<testsuite failures="0" time="0.638" errors="0" skipped="0" tests="1" name="ApplicationTest">
-  <testcase classname="ApplicationTest" name="testThatIndexPageWorks" time="0.638">
+<testsuite failures="0" time="0.557" errors="0" skipped="0" tests="1" name="ApplicationTest">
+  <testcase classname="ApplicationTest" name="testThatIndexPageWorks" time="0.557">
       </testcase>
 </testsuite>
