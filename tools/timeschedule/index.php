@@ -62,7 +62,7 @@ document.onkeypress = stopRKey;
 
 </script>
 <form method="post" action="">
-Datum: <input type="date" name="datum" placeholder="jjjj-mm-dd">
+Datum: <input type="date" name="datum" value="'.date('Y-m-d', strtotime(date('Y/m/d'))).'" placeholder="jjjj-mm-dd">
 Begin: <input type="time" name="begin" placeholder="hh:mm">
 Einde: <input type="time" name="eind" placeholder="hh:mm">
 Beschrijving: <input type="text" name="taak" size="100"><br />
@@ -81,7 +81,7 @@ function draw_nowbuttons() {
         <script type="text/javascript">
 function begin_button() {
     var d = new Date();
-    document.getElementsByName("datum")[0].value = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+    //document.getElementsByName("datum")[0].value = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
     document.getElementsByName("begin")[0].value = d.getHours() + ":" + d.getMinutes();
 }
 function end_button() {
