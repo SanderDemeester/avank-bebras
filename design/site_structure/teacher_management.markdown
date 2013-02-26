@@ -5,8 +5,7 @@ On page:
 - List of teachers.
 - Search function.
 - Log in button for each teacher, to mimick him.
-- Create teacher button (links to `teacher_creation`).
+- Create teacher form.
 
 Links to:
-- `teacher_creation`
 

@@ -1,4 +1,5 @@
 .DS_store
+usecases_textual.out
 logs
 project/project
 project/target
