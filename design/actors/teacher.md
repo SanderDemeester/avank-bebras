@@ -4,7 +4,6 @@ Teacher
 - change own password & emailadres & other info
 - reset pupil's password
 - create classes
-- delete classes
 - register pupils
 - add pupils to classes
 - open/register competitions to classes
@@ -13,3 +12,4 @@ Teacher
 - in case of failure, send cookie to app
 - in case of PC failure, reset status of pupil so he can continue (evt add grace minutes)
 - download marks of all pupils
+- decouple themself from a class

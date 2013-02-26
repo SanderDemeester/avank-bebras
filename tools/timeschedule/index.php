@@ -4,7 +4,7 @@ if(isset($_REQUEST['username']) && isset($_REQUEST['password']) && !isset($_COOK
 //SIGNING IN
 	if($users[$_REQUEST['username']]==$_REQUEST['password']) {
 		setcookie('authkey', $_REQUEST['username'].','.md5($_REQUEST['username'].$key));
-		draw_loggedin($username, false);
+		draw_loggedin($_REQUEST['username'], false);
 	}
 	else {
 		draw_error("Jammer, het is mis...");
@@ -62,9 +62,9 @@ document.onkeypress = stopRKey;
 
 </script>
 <form method="post" action="">
-Datum: <input type="date" name="datum">
-Begin: <input type="time" name="begin">
-Einde: <input type="time" name="eind">
+Datum: <input type="date" name="datum" placeholder="jjjj-mm-dd">
+Begin: <input type="time" name="begin" placeholder="hh:mm">
+Einde: <input type="time" name="eind" placeholder="hh:mm">
 Beschrijving: <input type="text" name="taak" size="100"><br />
 <input type="submit" value="Voeg Toe">
 </form>
@@ -73,7 +73,7 @@ Beschrijving: <input type="text" name="taak" size="100"><br />
 	$content.="Jouw huidig tijdsschema: <br />";
 	$content.=str_replace("\n","<br />",get_schedule($username));
 	$content.="<hr />";
-	$content.="Als je iets kapot hebt gemaakt kan je het bestand handmatig aanpassen op deze locatie: <b>/home/rtaelman/public_html/documents/timeschedules/setup/raw_schedules/".$username.".csv</b>";
+	$content.="Als je iets kapot hebt gemaakt kan je het bestand handmatig aanpassen op deze locatie: <b>/home/rtaelman/public_html/documents/timeschedules/setup/raw_schedules/".$username.".csv</b>.";
 	draw_page($content);
 }
 
