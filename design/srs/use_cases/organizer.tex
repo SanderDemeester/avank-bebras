@@ -3,38 +3,6 @@
 	The organizer also has the default user functionalities that have been previously
 	mentioned. But he will also be some extra links presented that are exclusively
 	available to organizers.
-
-	\begin{subsection}{Default Management Table Form}
-		This is specific page that is available to the organizer, but is an important
-		element that is used in most of these pages.
-		\begin{figure}[h]
-		  \centering
-			\includegraphics[width=1\textwidth]{img/default_managment_form.png}
-		  \caption{Default management table form}
-		  \label{default_management_table_form}
-		\end{figure}
-		The organizer has many similar pages where he has the ability to manage big datasets.
-		We will use a similar management table form for all of these pages.
-		The first row will also show the names of the fields in the dataset.
-		The second row of the column will contain only input fields that will serve as
-		search input. For example the organizer can search a user by name and class by
-		entering (part) of the pupil's name and the id of the class. The table will
-		automatically update when the search button is pressed and will only contain
-		rows that satisfy the input query.
-		\\
-		\\
-		The table won't show all rows at al time, but it will use a paging system that
-		by default shows only twenty rows at a time.\\
-		\\
-		Each row also has a select box. When multiple rows are selected, the organizer is
-		able to perform multi-actions.
-		These multi-actions are useful for when larger groups of pupils require similar
-		actions. Clicking a select-box in the column-name row of the table will select
-		all the rows on the current page.\\
-		\\
-		The last column can contain actions like Edit and Delete and those will be
-		performed on that row.
-	\end{subsection}
 	
 	\begin{subsection}{Manage Pupils}
 		\label{sec:organizer_manage_pupils}
@@ -173,11 +141,12 @@
 	\end{subsection}
 	
 	\begin{subsection}{Manage Question-sets}
-		This page contains a default management form with three columns: [TODO: 1-1 link with contests?]
+		This page contains a default management form with three columns:
 		\begin{itemize}
 			\item ID
 			\item Name
 			\item Active
+			\item Competition
 		\end{itemize}
 		The ID is unique for each set, but that is not required for the name. The active
 		field can be used for sets that are still under construction and therefore cannot
@@ -202,15 +171,18 @@
 		permanent warning message will be displayed for each language that contains
 		untranslated questions together with a list of the question ID without the
 		translation. The organizer won't be able to activate a question set with such
-		warnings, but he will be able to save them.
+		warnings, but he will be able to save them. The Competition field is only visible
+		here, but must be changed at the Competition management page.
 		
 	\end{subsection}
 	
 	\begin{subsection}{Manage Competitions}
-		This page will show a list of all the ongoing official competitions.
-		This list shows each name of the competition together with a live-countdown.
+		This page will show a list of all the ongoing official competitions and a seperate
+		list of unrestricted competitions.
+		This official list shows each name of the competition together with a live-countdown.
 		The page will be refreshed when one or more countdowns reach zero.
 		At the bottom of the list there are links to More, History and Edit.
+		The list of unrestricted competitions only have an Edit link.
 		\begin{subsubsection}{More}
 			\begin{figure}[!h]
 			  \centering
@@ -264,6 +236,7 @@
 				\item Question sets
 				\item Languages
 				\item Levels
+				\item Unrestricted
 			\end{itemize}
 			The Time field is the total amount of time each pupil gets for completing
 			the competition.\\
@@ -277,6 +250,9 @@
 			checked on existence upon saving.
 			The Levels and Languages fields are auto-generated based on the
 			available question sets. \\
+			The Unrestricted field is a checkbox that defines is that competition is open
+			for unrestricted quizzes. The field Expiration time is grayed out when the
+			competition is unrestricted.\\
 			\\
 			There is an extra action Start competition that will first trigger a
 			confirmation dialog and will then open the official competition after which
