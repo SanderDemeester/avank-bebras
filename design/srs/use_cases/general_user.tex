@@ -2,16 +2,16 @@
 \begin{section}{General User}
 
     This section describes the shared functionality of all registered users,
-    along with the registration, logging in and home page functionality.
+    along with the registration, logging in and home page functionality. Note
+    that most links on the home page will also be available for logged in users,
+    even though this may not always be explicitly mentioned.
 
     \begin{subsection}{Home Page}
 
         As this is the first page users see, it's all but obligated to start our
         list of use cases here. Figure \ref{img:index} displays a simple example
-        home page.
-
-        Starting at this home page, the user can complete several actions. These
-        are described below.
+        home page. Starting at this home page, the user can complete several
+        actions. These are described below.
 
         \begin{figure}[b]
             \centering
@@ -21,28 +21,47 @@
         \end{figure}
 
         \begin{subsubsection}{Log in}
-            On the landing page there are also a number of fields for logging
-            in (Bebras ID and password) and a button. If the ID-password combo
-            is a valid one, the user is brought to the landing page for his
-            User Role. If it isn't he is informed of this so he can fix the
-            errors.
+            From the home page, a user can fill in the log in form and hit the
+            ``Log in'' button. If the username is valid and the password
+            corresponds, the user will be taken to the landing page of this User
+            Role. Otherwise, the user is informed of his mistake, so he can try
+            again.
         \end{subsubsection}
 
         \begin{subsubsection}{Register}
-            The landing page for a not logged in user consists of several
-            elements. One of these is a Register button. Clicking this brings
-            the user to a registration page. This page has several text fields
-            (name, gender, e-mailadress (optional), date of birth, preferred
-            language, password, confirm password) and a Confirm button. If the
-            form is filled out incorrectly (2 passwords not equal, password not
-            according to specifications, required field empty,...) and the user
-            clicks Confirm, he is informed of this and given the option to fix
-            it. If it is filled out correctly and the user clicks Confirm, the
-            registration is succesfull and the user is brought to the landing
-            page for an Independent user.
+            When following the link a user finds on the home page, he is taken
+            to a registration page. On this page, the user can fill in
+            information about himself, and register.
+
+            There are required fields for the name, gender, birthday and
+            password (repeated). The user's preferred language and
+            email-address are optional. The email-address is used when the user
+            requests a password reset or contacts an organizer.
+
+            When the information is confirmed by clicking on a ``Register''
+            button, the fields are processed. Should the second password not
+            match the first, one of the required fields be left empty or one of
+            the fields not be conform with it rules (no @ in email, etc...), the
+            user is informed and has the chance to refill the incorrect fields.
+            Should every form element pass the checks, the user is registered
+            succesfully and redirected to the landing page of an Independent
+            User.
         \end{subsubsection}
 
         \begin{subsubsection}{Forgot password}
+            As we are all forgetful, a user might forget his password. No
+            worries, he can follow the ``Forgot password?'' link we will provide
+            on the home page. This will take him to a page where he can fill in
+            a form with his username and email-address. If the user fills in an
+            existing username and it's corresponding email-address, a mail will
+            be send there with a new password.
+
+            As there might be users who didn't leave their email-address with
+            us, the ``Forgot password?'' page will also explain how pupils can
+            request a password reset of their teachers. As a final safety net,
+            we'll also provide a ``Contact a human'' form, so users other than
+            pupils can request the same of an organizer, after convincing him of
+            their identity.
         \end{subsubsection}
 
         \begin{subsubsection}{Go home}
@@ -63,6 +82,9 @@
             and administrators. Here, the user can select a topic, so mail can
             easily be organized for the readers. A reply-to address must be
             provided.
+
+            Example topics would be ``Teacher Registration'', ``Password
+            reset'', ``Question suggestion'', ``Other''.
         \end{subsubsection}
 
         \begin{subsubsection}{Read Frequently Asked Questions}
