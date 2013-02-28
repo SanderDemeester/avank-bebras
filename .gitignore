@@ -1,5 +1,5 @@
 .DS_store
-usecases_textual.out
+srs.out
 logs
 project/project
 project/target
