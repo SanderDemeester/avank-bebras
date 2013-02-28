@@ -1,31 +1,26 @@
-\begin{uc}{TITLE HERE}
+\begin{uc}{Anonymous do unrestricted quizzes}
 
     \begin{uc-mss}
-    \item STEP ONE
-    \item STEP TWO
-    \item ETC
+    	\item The Anonymous users clicks on "do unrestricted quizzes"
+    	\item The user is taking to a different page with a list of unrestricted quizzes.
+    	\item The User selected's a quiz from the list
+    	\item The User clicks on "begin".
+    	\item The quiz started (see use-case unrestricted quiz)
+    	\item When the quiz is done, the user is sees his results (see use-case Unrestricted quiz)
+    	\item The user is redirected back to the page with the list of unrestricted quizzes.
     \end{uc-mss}
 
-    \begin{uc-ext}
+    \begin{uc-pre}
+        \item The Anonymous user in on his landing page.
+    \end{uc-pre}
 
-        \begin{uc-fail}{X}{PREREQUISITE}
-        \item STEP ONE
-        \item STEP TWO
-        \item ETC
-        \end{uc-fail}
+    \begin{uc-post}
+        \item The information that the Anonymous generated with his solutions are added to the dabase as "Anonymous-data"
+        \item The user is back on his landing page
+    \end{uc-post}
 
-        \begin{uc-pre}
-        \item Condition 1
-        \end{uc-pre}
-
-        \begin{uc-post}
-        \item Condition 1
-        \end{uc-post}
-
-        \begin{uc-trig}
-        \item Trigger 1
-        \end{uc-trig}
-
-    \end{uc-ext}
+    \begin{uc-trig}
+        \item The anonymous clicks on "do unrestricted" on his landing page.
+    \end{uc-trig}
 
 \end{uc}
