@@ -1,0 +1,58 @@
+
+\documentclass[10pt]{report}
+
+\usepackage[a4paper]{geometry}
+
+% Encoding and language
+\usepackage[latin1]{inputenc}
+\usepackage[english]{babel}
+
+% Pretty figures
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% Mathematics?
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\setcounter{MaxMatrixCols}{25}
+
+% Code?
+\usepackage{listings}
+
+% Links
+\usepackage{hyperref}
+
+% Allow relative paths
+\makeatletter
+\def\input@path{{./}{informal/}{formal/}}
+\makeatother
+\graphicspath{{formal/img/}}
+
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{10pt}
+
+\author{
+    Ruben Taelman \\
+    Sander Demeester \\
+    Jens Rammant \\
+    Eddy Van Den Heuvel \\
+    Thomas Mortier \\
+    Kevin Stobbelaer \\
+    Felix Van der Jeugt
+}
+
+\title{
+    Software Requirements Specification \\
+    Avank Bebras
+}
+
+\begin{document}
+
+\maketitle
+
+\input{informal}
+\input{formal}
+
+\end{document}
