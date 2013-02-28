@@ -1,0 +1,50 @@
+
+\begin{uc}{Log in}
+
+    \begin{uc-mss}
+    \item The system shows the use the home page with login form.
+    \item The user fills in his name and password in the form and submits.
+    \item The system verifies these for correct and redirects to user to his
+        landing page.
+    \end{uc-mss}
+
+    \begin{uc-ext}
+
+        \begin{uc-fail}{2}{Username not filled in.}
+        \item The system clears both fields and shows red text below the
+            username textfield saying ``Please fill in your username.''
+            \return{1}
+        \end{uc-fail}
+
+        \begin{uc-fail}{2}{Password not filled in.}
+        \item The system shows a red text below the password field saying
+            ``Please fill in your password.'' The username textfield is not
+            cleared.
+            \return{1}
+        \end{uc-fail}
+
+        \begin{uc-fail}{2}{Password and username do not match.}
+        \item The system shows a red text below the password field saying
+            ``Username and passworddo not match.'' Only the password textfield
+            is cleared.
+            \return{1}
+        \end{uc-fail}
+
+    \end{uc-ext}
+
+    \begin{uc-pre}
+    \item The user is on the home page.
+    \item The user is not logged in.
+    \end{uc-pre}
+
+    \begin{uc-post}
+    \item The user is logged in.
+    \item The user is redirected to his landing page.
+    \end{uc-post}
+
+    \begin{uc-trig}
+        The user arrives at the home page.
+    \end{uc-trig}
+
+\end{uc}
+

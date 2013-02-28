@@ -5,9 +5,11 @@
 
 \begin{uc}{TITLE HERE}
 
+    \extends{Other usecase}
+
     \begin{uc-mss}
     \item STEP ONE
-    \item STEP TWO
+    \item STEP TWO \extend{Continue elsewhere}
     \item ETC
     \end{uc-mss}
 
@@ -16,7 +18,7 @@
         \begin{uc-fail}{X}{PREREQUISITE}
         \item STEP ONE
         \item STEP TWO
-        \item ETC
+        \return{2}
         \end{uc-fail}
 
     \end{uc-ext}

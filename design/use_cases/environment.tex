@@ -11,6 +11,7 @@
 
 \newcommand{\extends}[1]{Extends: \emph{#1}}
 \newcommand{\extend}[1]{$<<$Extend #1$>>$} 
+\newcommand{\return}[1]{\item Return to MSS step #1.}
 
 \newenvironment{uc-ol}[1]{
     \textbf{#1}
@@ -42,7 +43,7 @@
 
 \newenvironment{uc-fail}[2]{
     \let\itemb\item
-    \renewcommand\item{\stepcounter{enumi}\itemb[$.$\theenumi$:$]}
+    \renewcommand\item{\stepcounter{enumi}\itemb[#1$.$\theenumi$:$]}
     \begin{uc-ol}{$<$MMS STEP #1$>$  [#2]}
 }{
     \end{uc-ol}
