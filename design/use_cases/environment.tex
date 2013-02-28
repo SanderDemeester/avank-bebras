@@ -5,7 +5,12 @@
 \newenvironment{uc}[1]{
     \textbf{Use Case #1}
     \vspace{8 pt}
-}{}
+}{
+    \vspace{20pt}
+}
+
+\newcommand{\extends}[1]{Extends: \emph{#1}}
+\newcommand{\extend}[1]{$<<$Extend #1$>>$} 
 
 \newenvironment{uc-ol}[1]{
     \textbf{#1}
@@ -21,6 +26,7 @@
     \begin{itemize}
     \setlength{\itemindent}{10pt}
 }{
+    \setlength{\itemindent}{0pt}
     \end{itemize}
 }
 
