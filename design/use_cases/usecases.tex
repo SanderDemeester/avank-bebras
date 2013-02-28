@@ -1,0 +1,41 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{textcomp} % for < and >
+
+\input{environment}
+
+% Pretty figures
+\usepackage{graphicx}
+
+% Include paths.
+\makeatletter
+\def\input@path{
+    {./}
+    {organizer/}
+}
+\makeatother
+\graphicspath{
+    {./}
+}
+
+\author{
+    Ruben Taelman \\
+    Sander Demeester \\
+    Jens Rammant \\
+    Eddy Van Den Heuvel \\
+    Thomas Mortier \\
+    Kevin Stobbelaer \\
+    Felix Van der Jeugt
+}
+
+\title{
+    Use Case Document \\
+    Avank Bebras
+}
+\begin{document}
+
+\input{organizer.new}
+
+\end{document}

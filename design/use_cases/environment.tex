@@ -1,0 +1,64 @@
+
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+
+\newenvironment{uc}[1]{
+    \textbf{Use Case #1}
+    \vspace{8 pt}
+}{}
+
+\newenvironment{uc-ol}[1]{
+    \textbf{#1}
+    \begin{enumerate}[topsep=0pt,leftmargin=*,labelindent=40px]
+    \setlength{\itemsep}{0pt}
+    \setlength{\parskip}{0pt}
+}{
+    \end{enumerate}
+    \vspace{4 pt}
+}
+
+\newenvironment{uc-ul}{
+    \begin{itemize}
+    \setlength{\itemindent}{10pt}
+}{
+    \end{itemize}
+}
+
+\newenvironment{uc-mss}{
+    \begin{uc-ol}{Main Success Scenario}
+}{
+    \end{uc-ol}
+}
+
+\newenvironment{uc-ext}{
+    \textbf{Extensions}
+}{ }
+
+\newenvironment{uc-fail}[2]{
+    \let\itemb\item
+    \renewcommand\item{\stepcounter{enumi}\itemb[$.$\theenumi$:$]}
+    \begin{uc-ol}{$<$MMS STEP #1$>$  [#2]}
+}{
+    \end{uc-ol}
+}
+
+\newenvironment{uc-pre}{
+    \textbf{Pre-conditions:}
+    \begin{uc-ul}
+}{
+    \end{uc-ul}
+}
+  
+\newenvironment{uc-post}{
+    \textbf{Post-conditions:}
+    \begin{uc-ul}
+}{
+    \end{uc-ul}
+}
+
+\newenvironment{uc-trig}{
+    \textbf{Triggers:}
+}{}
+
+ \linespread{1.3}
+ 
