@@ -1,51 +1,31 @@
-\documentclass[10pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{enumitem}
+\begin{uc}{TITLE HERE}
 
-\newenvironment{enumerate*}%
-  {\begin{enumerate}[topsep=0pt]
-    \setlength{\itemsep}{0pt}%
-    \setlength{\parskip}{0pt}%
-  }{\end{enumerate}}
-  
-\newcommand\itemdot{\stepcounter{enumi}\item[$.$\theenumi$:$]} 
- \linespread{1.3}
- 
-\begin{document}
-\textbf{Use Case: Anonymous: Change preferred language}
+    \begin{uc-mss}
+    \item STEP ONE
+    \item STEP TWO
+    \item ETC
+    \end{uc-mss}
 
-\vspace{8 pt}
+    \begin{uc-ext}
 
-\textbf{Main Success Scenario}
-\begin{enumerate*}
-\setlength{\itemindent}{70pt}
+        \begin{uc-fail}{X}{PREREQUISITE}
+        \item STEP ONE
+        \item STEP TWO
+        \item ETC
+        \end{uc-fail}
 
-\item STEP ONE
-\item STEP TWO
-\item ETC
-\end{enumerate*}
+        \begin{uc-pre}
+        \item Condition 1
+        \end{uc-pre}
 
-\vspace{4 pt}
+        \begin{uc-post}
+        \item Condition 1
+        \end{uc-post}
 
-\textbf{Extensions}
+        \begin{uc-trig}
+        \item Trigger 1
+        \end{uc-trig}
 
+    \end{uc-ext}
 
-\textbf{$<$MSS STEP X$>$  [PREREQUISITE]}
-\begin{enumerate*}
-\setlength{\itemindent}{70pt}
-\itemdot STEP ONE
-\itemdot STEP TWO
-\itemdot ETC
-\end{enumerate*}
-
-\vspace{4 pt}
-
-\textbf{Pre-conditions:}
-
-\textbf{Post-Conditions:}
-
-\textbf{Triggers:}
-\end{document}
+\end{uc}
