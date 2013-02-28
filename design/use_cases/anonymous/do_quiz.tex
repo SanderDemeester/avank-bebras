@@ -1,0 +1,51 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{enumitem}
+
+\newenvironment{enumerate*}%
+  {\begin{enumerate}[topsep=0pt]
+    \setlength{\itemsep}{0pt}%
+    \setlength{\parskip}{0pt}%
+  }{\end{enumerate}}
+  
+\newcommand\itemdot{\stepcounter{enumi}\item[$.$\theenumi$:$]} 
+ \linespread{1.3}
+ 
+\begin{document}
+\textbf{Use Case TITLE HERE}
+
+\vspace{8 pt}
+
+\textbf{Main Success Scenario}
+\begin{enumerate*}
+\setlength{\itemindent}{70pt}
+
+\item STEP ONE
+\item STEP TWO
+\item ETC
+\end{enumerate*}
+
+\vspace{4 pt}
+
+\textbf{Extensions}
+
+
+\textbf{$<$MSS STEP X$>$  [PREREQUISITE]}
+\begin{enumerate*}
+\setlength{\itemindent}{70pt}
+\itemdot STEP ONE
+\itemdot STEP TWO
+\itemdot ETC
+\end{enumerate*}
+
+\vspace{4 pt}
+
+\textbf{Pre-conditions:}
+
+\textbf{Post-Conditions:}
+
+\textbf{Triggers:}
+\end{document}
