@@ -1,44 +1,39 @@
-}
-\textbf{Use Case: Anonymous: Register}
+\begin{uc}{Anonymous: Register}
 
-\vspace{8 pt}
+    \begin{uc-mss}
+   	\item Go to anonymous landing page
+   	\item Click on "register"
+   	\item Fill in information
+   	\begin{enumerate}
+   	\item Firstname
+   	\item Lastname
+   	\item Email
+   	\item select school from dropdown
+   	\end{enumerate}
+    \end{uc-mss}
 
-\textbf{Main Success Scenario}
-\begin{enumerate*}
-\item Go to the Anonymous user landing page
-\item Click on the "register" button.  
-\item User goes to register-page
-\item User fill in personal information, this includes:
-\begin{enumerate}
-\item Firstname
-\item Lastname
-\item school (from a dropdown menu)
+    \begin{uc-ext}
 
-\end{enumerate}
-\setlength{\itemindent}{70pt}
+        \begin{uc-fail}{X}{PREREQUISITE}
+        \item STEP ONE
+        \item STEP TWO
+        \item ETC
+        \end{uc-fail}
 
-\item STEP ONE
-\item STEP TWO
-\item ETC
-\end{enumerate*}
+        \begin{uc-pre}
+        \item Condition 1
+        \end{uc-pre}
 
-\vspace{4 pt}
+        \begin{uc-post}
+        \item Condition 1
+        \end{uc-post}
 
-\textbf{Extensions}
+        \begin{uc-trig}
+        \item Trigger 1
+        \end{uc-trig}
 
+    \end{uc-ext}
 
-\textbf{$<$MSS STEP X$>$  [PREREQUISITE]}
-\begin{enumerate*}
-\setlength{\itemindent}{70pt}
-\itemdot STEP ONE
-\itemdot STEP TWO
-\itemdot ETC
-\end{enumerate*}
+\end{uc}
 
-\vspace{4 pt}
-
-\textbf{Pre-conditions:}
-
-\textbf{Post-Conditions:}
-
-\textbf{Triggers:}
+\end{document}
