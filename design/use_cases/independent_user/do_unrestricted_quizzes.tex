@@ -1,27 +1,30 @@
 \begin{uc}{Independent user: do unrestricted quizzes}
 
     \begin{uc-mss}
-    \item STEP ONE
-    \item STEP TWO
-    \item ETC
+    \item The Independent user clicks on "do unrestricted quizzes".
+    \item The user is taking to a different page with a list of unrestricted quizzes.
+    \item The usr selected's a quiz fro the list
+    \item The user clicks on "begin".
+    \item The quiz started (see use-case unrestricted quiz).
+    \item When the quiz is done, the user sees his results (se use-case quiz/competition).
+    \item The user clicks on "continue" and is redirected back to his homepage.
     \end{uc-mss}
 
     \begin{uc-ext}
-
-        \begin{uc-fail}{X}{PREREQUISITE}
-        \item STEP ONE
-        \item STEP TWO
-        \item ETC
+        \begin{uc-fail}{3}{There arent any quizzes for the user to choose from.}
+        \item Display message: The orginizers has not registered any quizzes for you to choose from
+        \item A button to take the user back to his homepage.
         \end{uc-fail}
 
     \end{uc-ext}
 
     \begin{uc-pre}
-    \item Condition 1
+    \item The user is logged into the system and is allowd to do quizzes.
     \end{uc-pre}
 
     \begin{uc-post}
-    \item Condition 1
+    \item The information that the user generated while solving the quiz will be added to the database associated with his personal profile.
+    \item The user is back to his landing page. 
     \end{uc-post}
 
     \begin{uc-trig}
