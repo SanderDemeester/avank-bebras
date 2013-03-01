@@ -3,68 +3,72 @@
 \usepackage{enumitem}
 
 \newenvironment{uc}[1]{
-    \textbf{Use Case #1}
-    \vspace{8 pt}
+    \vspace{10pt}
+    \textbf{\Large Use Case #1}
+    \setlength{\parskip}{0pt}
+    \setlength{\parindent}{0pt}
 }{
-    \vspace{20pt}
+    \vspace{10pt}
 }
 
+\newcommand{\ucpart}[1]{\vspace{5pt}{\bfseries \large #1}\vspace{5pt}}
 \newcommand{\extends}[1]{Extends: \emph{#1}}
 \newcommand{\extend}[1]{$<<$Extend #1$>>$} 
 \newcommand{\return}[1]{\item Return to MSS step #1.}
 
 \newenvironment{uc-ol}[1]{
-    \textbf{#1}
-    \begin{enumerate}[topsep=0pt,leftmargin=*,labelindent=40px]
-    \setlength{\itemsep}{0pt}
-    \setlength{\parskip}{0pt}
+    \begin{enumerate}[itemsep=0pt,topsep=0pt,leftmargin=*,labelindent=#1]
+    \linespread{1}
 }{
     \end{enumerate}
-    \vspace{4 pt}
 }
 
-\newenvironment{uc-ul}{
-    \begin{itemize}
+\newenvironment{uc-ul}[0]{
+    \begin{itemize}[topsep=0pt,itemsep=0pt]
     \setlength{\itemindent}{10pt}
 }{
     \setlength{\itemindent}{0pt}
     \end{itemize}
 }
 
-\newenvironment{uc-mss}{
-    \begin{uc-ol}{Main Success Scenario}
+\newenvironment{uc-mss}[0]{
+    \ucpart{Main Success Scenario}
+    \begin{uc-ol}{10pt}
 }{
     \end{uc-ol}
 }
 
-\newenvironment{uc-ext}{
-    \textbf{Extensions}
+\newenvironment{uc-ext}[0]{
+    \ucpart{Extensions}
 }{ }
 
 \newenvironment{uc-fail}[2]{
+    \vspace{5pt}
     \let\itemb\item
     \renewcommand\item{\stepcounter{enumi}\itemb[#1$.$\theenumi$:$]}
-    \begin{uc-ol}{$<$MMS STEP #1$>$  [#2]}
+    \hspace{20pt} \textbf{$<$MMS STEP #1$>$  [#2]}
+    \begin{uc-ol}{30pt}
 }{
     \end{uc-ol}
+    \vspace{10pt}
 }
 
-\newenvironment{uc-pre}{
-    \textbf{Pre-conditions:}
+\newenvironment{uc-pre}[0]{
+    \ucpart{Pre-conditions:}
     \begin{uc-ul}
 }{
     \end{uc-ul}
 }
   
-\newenvironment{uc-post}{
-    \textbf{Post-conditions:}
+\newenvironment{uc-post}[0]{
+    \ucpart{Post-conditions:}
     \begin{uc-ul}
 }{
     \end{uc-ul}
 }
 
-\newenvironment{uc-trig}{
-    \textbf{Triggers:}
+\newenvironment{uc-trig}[0]{
+    \ucpart{Triggers:}
 }{}
 
  \linespread{1.3}
