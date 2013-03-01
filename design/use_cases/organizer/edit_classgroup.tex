@@ -1,0 +1,51 @@
+
+\begin{uc}{Edit ClassGroup}
+
+	\extends{Database errors}
+
+    \begin{uc-mss}
+    \item Change the following fields:
+    	\begin{itemize}
+			\item Name
+			\item Level (dropdown-list with available Age-Levels)
+			\item School
+			\item Teacher
+		\end{itemize}
+    \item Click on the Save button.
+    \end{uc-mss}
+
+    \begin{uc-ext}
+
+        \begin{uc-fail}{2}{Invalid School ID}
+        \item Error message: Please enter an existing School ID
+        \return{1}
+        \end{uc-fail}
+        
+        \begin{uc-fail}{2}{Invalid Teacher ID}
+        \item Error message: Please enter an existing Teacher ID
+        \return{1}
+        \end{uc-fail}
+        
+        \begin{uc-fail}{2}{Not all fields are filled in}
+        \item Error message: Please make sure all the fields are filled in.
+        %\item Return to MSS step 1.
+        \return{1}
+        \end{uc-fail}
+
+    \end{uc-ext}
+
+    \begin{uc-pre}
+    \item User is authenticated as Organizer
+    \item Current page: Manage ClassGroups
+    \end{uc-pre}
+
+    \begin{uc-post}
+    \item ClassGroup is updated.
+    \item Redirect to page: Manage ClassGroups.
+    \end{uc-post}
+
+    \begin{uc-trig}
+        Organizer click on the Edit button in the row of a ClassGroup inside the table.
+    \end{uc-trig}
+
+\end{uc}

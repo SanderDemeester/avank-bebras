@@ -24,11 +24,13 @@
 			\item Edit
 			\item Block
 			\item Mimic
+			\item History
 		\end{itemize}
 		There is also one Add button at the top of the page. After clicking it, the
 		organizer will be redirected to a page identical to
 		\nameref{sec:organizer_edit_pupils}, with the only difference that no fields
-		are filled in. \\
+		are filled in. The history button will open a new page that shows a list of all
+		the previous ClassGroups that the Pupil was part of in the past. \\
 		\\
 		The multi-actions in this form are the following:
 		\begin{itemize}
@@ -258,6 +260,41 @@
 			confirmation dialog and will then open the official competition after which
 			the organizer will be redirected to the Competition Management page on which
 			he will be able to see the ongoing competition.
+		\end{subsubsection}
+	\end{subsection}
+	
+	\begin{subsection}{Manage ClassGroups}
+		This page will show two tables. One for the available classes, and one for the
+		available schools.
+		\begin{subsubsection}{ClassGroups}
+			The ClassGroup table form has the following fields:
+			\begin{itemize}
+				\item ID
+				\item Name
+				\item Level
+				\item School
+				\item Teacher
+			\end{itemize}
+			ClassGroups can be edited by pressing their Edit action and filling in those
+			fields. The School field will refer to an ID of a certain School and must
+			exist just like the Teacher. Adding is similar to editing and Deleting is
+			only possible if that ClassGroup contains no Pupils and has no assigned
+			Teacher.
+		\end{subsubsection}
+		
+		\begin{subsubsection}{Schools}
+			The Schools table form has the following fields:
+			\begin{itemize}
+				\item ID
+				\item Name
+				\item Phone Number
+				\item Address
+				\item Contact Name
+				\item Contact Email Address
+			\end{itemize}
+			This is a simple table that is only needed for the ClassGroups. Deletion of
+			these Schools is only possible if no ClassGroups make use of the selected
+			School.
 		\end{subsubsection}
 	\end{subsection}
 \end{section}
