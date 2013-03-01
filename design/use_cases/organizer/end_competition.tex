@@ -1,0 +1,25 @@
+
+\begin{uc}{End Competition}\\
+	\emph{For when the organizer wants to prematurely end a competition}
+    \begin{uc-mss}
+    \item Confirmation dialog: Are you certain you want to end this competition?
+    \item Select "End"
+    \end{uc-mss}
+
+    \begin{uc-pre}
+    \item Competition is running.
+    \item User is authenticated as Organizer
+    \item Current page: Competition Management {competition}
+    \end{uc-pre}
+
+    \begin{uc-post}
+    \item Competition is started.
+    \item Already collected data is deleted.
+    \item Redirect to page: Competition Management.
+    \end{uc-post}
+
+    \begin{uc-trig}
+        Organizer click on the End button on the Competition Management {competition} page.
+    \end{uc-trig}
+
+\end{uc}
