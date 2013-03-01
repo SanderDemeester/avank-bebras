@@ -1,0 +1,43 @@
+
+\begin{uc}{Edit Server}
+
+    \begin{uc-mss}
+    \item Change the following fields:
+    	\begin{itemize}
+			\item Name
+			\item Base URL
+			\item Additional path
+		\end{itemize}
+    \item Click on the Save button.
+    \end{uc-mss}
+
+    \begin{uc-ext}
+
+        \begin{uc-fail}{2}{Invalid server}
+        \item Error message: Invalid Base URL and/or path
+        \return{1}
+        \end{uc-fail}
+        
+        \begin{uc-fail}{2}{Name and Base URL are not filled in}
+        \item Error message: Please make sure all the required fields are filled in.
+        \return{1}
+        \end{uc-fail}
+
+    \end{uc-ext}
+
+    \begin{uc-pre}
+    \item User is authenticated as Organizer
+    \item Current page: Manage Questions
+    \end{uc-pre}
+
+    \begin{uc-post}
+    \item Server is updated.
+    \item Redirect to page: Manage Questions.
+    \end{uc-post}
+
+    \begin{uc-trig}
+        Organizer click on the Edit button in the row of a Server inside the
+        table.
+    \end{uc-trig}
+
+\end{uc}

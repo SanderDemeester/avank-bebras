@@ -2,8 +2,14 @@
 \begin{uc}{Edit Pupil}
 
     \begin{uc-mss}
-    \item Change text in the following fields: Name, Email Address, ClassGroup,
-        Gender, Birthdate.
+    \item Change text in the following fields:
+        \begin{itemize}
+			\item Name
+			\item Email Address
+			\item ClassGroup
+			\item Gender
+			\item Birthdate
+		\end{itemize}
     \item Click on the Save button.
     \end{uc-mss}
 
@@ -12,18 +18,18 @@
         \begin{uc-fail}{2}{ClassGroup ID doesn't exist}
         \item Error message: The specified ClassGroup ID does not exist, please
             fill in an existing one.
-        \item Return to MSS step 1.
+        \return{1}
         \end{uc-fail}
 
         \begin{uc-fail}{2}{Invalid Email Address}
         \item Error message: Please enter a valid email address. existing one.
-        \item Return to MSS step 1.
+        \return{1}
         \end{uc-fail}
 
         \begin{uc-fail}{2}{Email Address already available in database of
             Pupils}
         \item Error message: This email address is already assigned to a pupil.
-        \item Return to MSS step 1.
+        \return{1}
         \end{uc-fail}
 
         \begin{uc-fail}{2}{Not all fields are filled in}
@@ -40,7 +46,7 @@
     \end{uc-pre}
 
     \begin{uc-post}
-    \item Pupil is added or updated.
+    \item Pupil is updated.
     \item Redirect to page: Manage Pupils.
     \end{uc-post}
 
