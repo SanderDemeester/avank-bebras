@@ -1,0 +1,41 @@
+\documentclass[10pt,a4paper]{article}
+\input{environment}
+
+\begin{document}
+
+\begin{uc}{Contests: Change answer.}
+
+    \extends{Independent user: do unrestricted contest.}
+
+    \begin{uc-mss}
+    \item The user navigates to the question wherefor he wants to change his answer.
+    \item The user chooses his new answer or fills his new answer in.
+    \end{uc-mss}
+
+    \begin{uc-ext}
+
+        \begin{uc-fail}{2}{The new answer does not match with the pattern.}
+        \item A message will appear above the input box stating the answer does not match with the pattern.
+        \return{2}
+        \end{uc-fail}
+
+    \end{uc-ext}
+
+    \begin{uc-pre}
+    \item The user is on the contest page.
+    \item The user sees a question. 
+    \item The user had already answered the question wherefor he wants to change his answer.
+    \item There is time remaining. 
+    \end{uc-pre}
+
+    \begin{uc-post}
+    \item The user will be taken to the next question.
+    \end{uc-post}
+
+    \begin{uc-trig}
+    The user started the contest. 
+    \end{uc-trig}
+
+\end{uc}
+
+\end{document}
