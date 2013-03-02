@@ -8,7 +8,7 @@
 	\begin{subsection}{Manage Pupils}
 		\label{sec:organizer_manage_pupils}
 		Upon entering this page, there will be a table visible with all the (basic) users
-		registered in the bebras application. Columns include but are not limited to:
+		registered in the Bebras application. Columns include but are not limited to:
 		\begin{itemize}
 			\item Bebras-ID
 			\item Name
@@ -46,7 +46,7 @@
 			button in the row of that user. A confirmation dialog will be shown after
 			clicking it, to make sure the organizer really wants to delete that user. \\
 			The user will not really be deleted from the database, but only unlinked so
-			that the statistics are in noway harmed.
+			that the statistics are in no way harmed.
 		\end{subsubsection}
 		\begin{subsubsection}{Edit Pupils}
 			\label{sec:organizer_edit_pupils}
@@ -55,17 +55,17 @@
 			form and can be modified. Every field of the form is a regular text-field.
 			Upon saving the form by clicking the button on the bottom of the form, the
 			form will be checked and the organizer will be notified if there are errors
-			in the form and where they are. For example a non-existing ClassGroup id.
+			in the form and where they are. For example a non-existing ClassGroup ID.
 			When there were no errors while editing, the organizer will be redirected to
 			the main pupil-management page.
 		\end{subsubsection}
 		\begin{subsubsection}{Block Pupils}
 			\label{sec:organizer_block_pupils}
-			When pupils are misbehaving the organizer has an option to temporarily or
+			When pupils are misbehaving, the organizer has an option to temporarily or
 			permanently block a user from the application. When the organizer clicks on
-			the Block button, he will be redirected to a new page where he will presented
-			to a small form where he has to choice to select not-blocked, permanent or
-			temporarily. When he chooses temporarily a new input box will become visible
+			the Block button, he will be redirected to a new page where he will be presented
+			to a small form where he has the choice to select not-blocked, permanent or
+			temporarily. When he chooses temporarily, a new input box will become visible
 			where he can choose the date for when the user should become active again.
 			When a user is already being blocked,
 			the organizer is able to visit this screen and change the current
@@ -76,7 +76,7 @@
 			of the selected pupil. He will be able to do anything that pupil can, and
 			nothing else. Only when the disguised organizer clicks on the log-out button,
 			he will be redirected to the page he left off, in this case the Pupil
-			managment.
+			management.
 		\end{subsubsection}
 		
 	\end{subsection}
@@ -106,7 +106,7 @@
 			\item Official/Regular
 			\item Active
 		\end{itemize}
-		The Server is field contains the name of a certain server specified in the first
+		The Server's field contains the name of a certain server specified in the first
 		table and the ID is the name of a subfolder on that server that contains all the
 		resource files necessary for that question.
 		The last two fields are simple toggles that say whether the question is official
@@ -114,7 +114,7 @@
 		not usable in the rest of the application, they can be useful when a question
 		needs evaluation or is not yet fully finished. \\
 		\\
-		These table also have Add buttons at the top, and Edit and Delete buttons in each
+		This table also have Add buttons at the top, and Edit and Delete buttons in each
 		row that perform equivalent actions as in \nameref{sec:organizer_manage_pupils}.
 		\\
 		\\
@@ -125,27 +125,27 @@
 			\item Set official question
 			\item Set regular question
 			\item Activate
-			\item De-activate
+			\item Deactivate
 		\end{itemize}
 		The first multi-action will redirect the user to a simple form page where he can
 		select a server for the selected questions. And the other actions are simple
 		toggles that happen on this page.\\
 		\\
 		The questions table also has a first row with input fields that serves as
-		search fields. The last two columns are no textual inputs, but simple dropdown
+		search fields. The last two columns require no textual input, but are simple dropdown
 		lists with the values None, Official and Regular for the first one and the
 		values None, Active and Inactive for the second one.\\
 		\\
 		There is also an extra Read action available in the table for each question, and
 		also on the creation and edit form. This action allows the organizer to preview
-		the question just like he pupil would see it. It's only a view action, so the
+		the question just like the pupil would see it. It's only a view action, so the
 		question is not part of a competition and therefore cannot be solved. \\
 		\\
 		Each row also has a link to the statistics of that question.
 	\end{subsection}
 	
-	\begin{subsection}{Manage Question-sets}
-		This page contains a default management form with three columns:
+	\begin{subsection}{Manage Question sets}
+		This page contains a default management form with four columns:
 		\begin{itemize}
 			\item ID
 			\item Name
@@ -159,16 +159,16 @@
 		This table contains the default actions like creation, editing and deletion. \\
 		\\
 		The create and edit form contains fields for name and whether the set is active or
-		not. And next to that it also has a list where all the questions of that set are
+		not. Next to that, it also has a list where all the questions of that set are
 		visible. The list shows the ID of the question and a hyperlink to the preview
-		page of that question. Official question have a special marking. Elements in this
-		list can be dragged to change the order of the questions, there is no limit for 
+		page of that question. Official questions have a special marking. Elements in this
+		list can be dragged to change the order of the questions. There is no limit for 
 		the maximum amount of questions per set. \\
 		On the bottom of the list, there is an extra input field where questions can be
 		added by their ID, the organizer can be prompted with an error message for when
 		the question ID does not exist. \\
 		\\
-		The Edit and Create form also have an language list similar to the question list.
+		The Edit and Create form also have a language list similar to the question list.
 		Languages can be added from a preset dropdown list. Each language that is added
 		to the list will be cross-checked by the server with each question. When the
 		server discovers questions that are not available in some added languages, a
@@ -183,7 +183,7 @@
 	\begin{subsection}{Manage Competitions}
 		This page will show a list of all the ongoing official competitions and a seperate
 		list of unrestricted competitions.
-		This official list shows each name of the competition together with a live-countdown.
+		This official list shows each name of the competition together with a live countdown.
 		The page will be refreshed when one or more countdowns reach zero.
 		At the bottom of the list there are links to More, History and Edit.
 		The list of unrestricted competitions only have an Edit link.
@@ -246,7 +246,7 @@
 			the competition.\\
 			The expiration time is the time on which the competition will close,
 			the results will be collected and the statistics will be calculated.
-			Pupils won't be able able to enter the competition anymore if the
+			Pupils won't be able to enter the competition anymore if the
 			current time is larger than Expiration time - Time.\\
 			The four difficulty levels are presented together with a checkbox and a
 			textfield. When the checkbox is checked, that level will be available in the
@@ -254,7 +254,7 @@
 			checked on existence upon saving.
 			The Levels and Languages fields are auto-generated based on the
 			available question sets. \\
-			The Unrestricted field is a checkbox that defines is that competition is open
+			The Unrestricted field is a checkbox that defines if that competition is open
 			for unrestricted quizzes. The field Expiration time is grayed out when the
 			competition is unrestricted.\\
 			\\
