@@ -12,6 +12,14 @@ Dit document beschrijft in het kort de gebruikte architectuur voor de web applic
 Het gebruikte framework is het play! 2.0.4-framework dat we met OpenJDK 1.6 zullen programmeren  (ebeans en JDBC). Als back-end database zal postgresql worden gebruikt.\\
 \\
 Als webserver wordt de JBoss Netty server gebruikt die is ingebouwd in het play!-framework.
+Daarnaast is het ook nodig dat een email server beschikbaar is zodat de applicatie email kan versturen voor:
+\begin{itemize}
+\item Wachtwoorden te kunnen resetten.
+\item Login feedback lus.
+\item Registratie van gebruikers
+\item Algemene systeem updates.
+\end{itemize}
+
 \section*{Ontwikkelings-omgeving}
 Voor de ontwikkelings-omgeving maken we gebruik van verschillende tools, nl
 \begin{itemize}
