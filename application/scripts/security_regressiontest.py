@@ -3,10 +3,17 @@
 import time
 import urllib
 import copy
+import subprocess
+import os
+import signal
+import time
 from ConfigParser import SafeConfigParser
 from pprint import pprint
 from zapv2 import ZAPv2
 
+os.chdir("../")
+null = open("NUL","w")
+play_PID = subprocess.Popen(["/opt/play-2.0.4/play", "run&"], stdout=null,stderr=null)
 
 target = 'http://127.0.0.1:9000'
 zap_url = 'http://127.0.0.1:8080'
@@ -47,3 +54,5 @@ while int(zap.ascan.status['status']) < 100:
 zap_alerts += copy.deepcopy(zap.core.alerts().get('alerts'))
 
 pprint (zap_alerts)
+subprocess.call(["kill", "-9", "%d" % play_ID.pid])
+
