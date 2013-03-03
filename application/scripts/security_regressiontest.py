@@ -8,7 +8,7 @@ from pprint import pprint
 from zapv2 import ZAPv2
 
 
-target = 'http://127.0.0.1:<app port>'
+target = 'http://127.0.0.1:9000'
 zap_url = 'http://127.0.0.1:8080'
 proxies = {'http': zap_url,
            'https': zap_url}
@@ -23,7 +23,7 @@ print 'Accessing target %s' % target
 zap.urlopen(target)
 
 
-time.sleep(2)
+time.sleep(10)
 
 print 'Spidering target %s' % target
 zap.spider.scan(target)
@@ -31,7 +31,7 @@ zap.spider.scan(target)
 time.sleep(2)
 
 while int(zap.spider.status['status']) < 100:
-    print 'Spider progress %: ' % zap.spider.status['status']
+    print 'Spider progress %s: ' % zap.spider.status['status']
     time.sleep(5)
 
 zap_alerts = copy.deepcopy(zap.core.alerts().get('alerts'))
