@@ -1,0 +1,32 @@
+\begin{uc}{Independent user: change/add email}
+
+    \begin{uc-mss}
+    \item The user clicks on "change email information".
+    \item The user is presented with a form to change his email.
+    \item The form includes his current email (if he has one).
+    \item The user updates his email information. 
+    \item The user clicks on save.
+    \end{uc-mss}
+
+    \begin{uc-ext}
+
+        \begin{uc-fail}{4}{Invalid email address}
+        \item Error message: invalid email address
+        \item \return{2}
+        \end{uc-fail}
+
+    \end{uc-ext}
+
+    \begin{uc-pre}
+    \item The user is logged in
+    \end{uc-pre}
+
+    \begin{uc-post}
+    \item The user email information is changed.
+    \end{uc-post}
+
+    \begin{uc-trig}
+    \item The user clicks on "change email information"
+    \end{uc-trig}
+
+\end{uc}

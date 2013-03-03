@@ -1,0 +1,40 @@
+
+\begin{uc}{Edit Question}
+
+	\extends{Database errors}
+
+    \begin{uc-mss}
+    \item Change the following fields:
+    	\begin{itemize}
+			\item Server (dropdown-list of added servers)
+			\item Official / Regular (radiobuttons)
+			\item Active (checkbox)
+		\end{itemize}
+    \item Click on the Save button.
+    \end{uc-mss}
+
+    \begin{uc-ext}
+
+        \begin{uc-fail}{2}{No server available}
+        \item Error message: Please add a question server before managing questions.
+        \return{1}
+        \end{uc-fail}
+
+    \end{uc-ext}
+
+    \begin{uc-pre}
+    \item User is authenticated as Organizer
+    \item Current page: Manage Questions
+    \end{uc-pre}
+
+    \begin{uc-post}
+    \item Question is updated.
+    \item Redirect to page: Manage Questions.
+    \end{uc-post}
+
+    \begin{uc-trig}
+        Organizer click on the Edit button in the row of a Question inside the
+        table.
+    \end{uc-trig}
+
+\end{uc}

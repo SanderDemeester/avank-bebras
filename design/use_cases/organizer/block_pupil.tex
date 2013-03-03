@@ -1,0 +1,42 @@
+
+\begin{uc}{Block Pupil}
+
+	\extends{Database errors}
+	
+    \begin{uc-mss}
+    \item Select one of the following options from a dropdown-list.
+    	\begin{itemize}
+			\item Not blocked
+			\item Permanent
+			\item Temporarily
+		\end{itemize}
+    \item Only when Temporarily is selected, a field will be visible where an expiration
+    date for the block must be selected.
+    \item Click on the Save button
+    \end{uc-mss}
+
+    \begin{uc-ext}
+
+        \begin{uc-fail}{2}{Selected date is in the past.}
+        \item Error message: Please choose an expiration date from the future.
+        \return{1}
+        \end{uc-fail}
+
+    \end{uc-ext}
+
+    \begin{uc-pre}
+    \item User is authenticated as Organizer
+    \item Current page: Manage Pupils
+    \end{uc-pre}
+
+    \begin{uc-post}
+    \item Pupil is blocked or unblocked.
+    \item Redirect to page: Manage Pupils.
+    \end{uc-post}
+
+    \begin{uc-trig}
+        Organizer click on the Block button in the row of a Pupil inside the
+        table.
+    \end{uc-trig}
+
+\end{uc}

@@ -1,0 +1,33 @@
+\begin{document}
+
+\begin{uc}{Independent user: view statistics}
+
+    \begin{uc-mss}
+    \item The user clicked on "view statistics"
+    \item The user gets a list of all quizzes that he has done. 
+    \item The user can click on a item in the quiz list and see the history of his participation in that quiz. He can then click on a item in that list to populate the statistics view in the same window.
+    \item The user can filter the statistics based on some options.
+    \end{uc-mss}
+
+    \begin{uc-ext}
+
+        \begin{uc-fail}{2}{User has not done any quizzes}
+        \item Display warning: No quizzes played.
+        \end{uc-fail}
+
+    \end{uc-ext}
+
+    \begin{uc-pre}
+    \item The user is logged into the system.
+    \item The user is on his homepage.
+    \end{uc-pre}
+
+    \begin{uc-post}
+    \item Condition 1
+    \end{uc-post}
+
+    \begin{uc-trig}
+    \item The user clicks on "view statistics".
+    \end{uc-trig}
+
+\end{uc}

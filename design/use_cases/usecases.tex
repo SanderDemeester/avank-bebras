@@ -1,0 +1,53 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[a4paper]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\input{environment}
+
+% Pretty figures
+\usepackage{graphicx}
+
+% Include paths.
+\makeatletter
+\def\input@path{
+    {./}
+    {organizer/}
+    {anonymous/}
+    {independent_user/}
+    {general/}
+    {errors/}
+}
+\makeatother
+\graphicspath{
+    {./}
+}
+
+\author{
+    Ruben Taelman \\
+    Sander Demeester \\
+    Jens Rammant \\
+    Eddy Van Den Heuvel \\
+    Thomas Mortier \\
+    Kevin Stobbelaar \\
+    Felix Van der Jeugt
+}
+
+\title{
+    Use Case Document \\
+    Avank Bebras
+}
+
+\setlength{\parskip}{12pt}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\input{general}
+\input{errors}
+\input{anonymous}
+\input{independent}
+\input{organizer}
+
+\end{document}

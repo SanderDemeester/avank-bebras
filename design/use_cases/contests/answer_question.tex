@@ -1,0 +1,42 @@
+\documentclass[10pt,a4paper]{article}
+\input{environment}
+
+\begin{document}
+
+\begin{uc}{Contests: Answer a question.}
+
+    \extends{Independent user: do unrestricted contest.}
+
+    \begin{uc-mss}
+    \item The user navigates to the question he wants to answer.
+    \item The user reads the question.
+    \item The user chooses his answer or fills his answer in.
+    \end{uc-mss}
+
+    \begin{uc-ext}
+
+        \begin{uc-fail}{3}{The answer does not match with the pattern.}
+        \item A message will appear above the input box stating the answer does not match with the pattern.
+        \return{3}
+        \end{uc-fail}
+
+    \end{uc-ext}
+
+    \begin{uc-pre}
+    \item The user is on the contest page.
+    \item The user sees a question. 
+    \item There is time remaining. 
+    \end{uc-pre}
+
+    \begin{uc-post}
+    \item The user will be taken to the next question.
+    \item The question that has been answered will be marked as answered in the questions list. 
+    \end{uc-post}
+
+    \begin{uc-trig}
+    The user started the contest. 
+    \end{uc-trig}
+
+\end{uc}
+
+\end{document}

@@ -1,0 +1,34 @@
+
+\begin{uc}{Independent user: logout}
+
+    \begin{uc-mss}
+    \item User clicks on the "logout" button which is located in the top bar.
+    \item User is redirected to the systems homepage.
+    \end{uc-mss}
+    
+    \begin{uc-ext}
+    \begin{uc-fail}{1}{User is taking part of a quiz}
+    \item Message: You are currently taking part of a quiz. Stopping now will result in losing all anwserd questions so far.
+    \item Provide user with option.
+    \item If the user is taking part of a competition, the teachers can see on his page that a student did not complete the compitition. 
+    \item The database scratch table's for this user must be cleared. The database does not have to wait for a finished competition but has to be smart enough to see that a user stopped.
+    \end{uc-fail}
+    \end{uc-ext}
+
+    \begin{uc-pre}
+    \item User is logged in.
+    \end{uc-pre}
+
+    \begin{uc-post}
+    \item User is logged out.
+    \item All session information is saved.
+    \item All session cookies are removed.
+    \item All server-side user state is saved or removed.
+    \end{uc-post}
+
+    \begin{uc-trig}
+        User clicked on logging out. 
+    \end{uc-trig}
+
+\end{uc}
+

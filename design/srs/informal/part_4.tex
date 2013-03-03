@@ -1,4 +1,4 @@
-\section*{Questions, question sets and contests}
+\section{Questions, question sets and contests}
 
 	A \emph{question} is essentially a folder of HTML files, JavaScript files, images, ....
 	By default the index page of that folder is displayed by the application. In fact,
@@ -9,7 +9,7 @@
 	Possible examples for those questions are available on the German website.
 	These folders are stored outside the application on a separate server (a standard
 	HTTP server). The question pages themselves do not contain the code needed to submit
-	the answers: question authors need not know about the technical details of the
+	the answers: question authors don't need to know about the technical details of the
 	application. The only thing the question authors need to be aware of, is the folder
 	structure, the 'configuration'-file and the multiple languages for that question. \\
 	\\
@@ -33,11 +33,10 @@
   		\item Title of the question for all available languages.
   		\item Question type:
   		\begin{itemize}
-  			\item Multiple choice: Amount of questions with one marked as correct.
-  			This will an xml-based list and will be displayed in the application as a
-  			lexicographical ordered list identified by the A, B, C, ...
-  			The maximum amount of questions is obviously limited to 24.
-  			The question tag will contain multiple translated question depending on the
+  			\item Multiple choice: Amount of questions with one answer marked as correct.
+  			This will be an xml-based list and will be displayed in the application as a
+  			lexicographical ordered list.
+  			The question tag will contain multiple translated questions depending on the
   			available languages for this question.
   			\item Short answer: Regular expression of the expected answer for each
   			available language. These can be words, sentences, numbers, ... As long as
@@ -57,19 +56,23 @@
 	\\
 	Question sets can be created by the organizers or teachers by selecting a list of questions.
 	For each question in this list, a difficulty has to be selected. The final score of a
-	competition is calculated as stated in following table.
-	\begin{tabular}{ c c c c }
+	competition is calculated as stated in following table.\\
+	\begin{tabular}{| c| c| c| c| }
+	\hline
 	  & Easy & Medium & Hard \\
+	\hline
 	  Correct & +6 & +9 & +12 \\
+	\hline
 	  Wrong & -2 & -3 & -4 \\
+	\hline
 	  No answer & 0 & 0 & 0 \\
-	\end{tabular}
+	\hline
+	\end{tabular}\\ \\
 	The question sets must also store a time limit and optionally some remarks about the
 	set that are only visible by the organizers who will use them. \\
 	\\
 	These question sets will be used to create competitions which contain multiple
-	question sets, each with a different level. There can be one or more levels, each
-	one connected to a language level. Competitions will only be available to users if
+	question sets, each with a different level. Competitions will only be available to users if
 	they are assigned to them and if the competitions contain a level that corresponds to
 	the level the user has. Competitions can only be created by organizers and teachers where they have
 	to select the available languages and they also have to provide a title for each

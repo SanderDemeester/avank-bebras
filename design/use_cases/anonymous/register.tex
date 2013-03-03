@@ -1,0 +1,57 @@
+\begin{uc}{Anonymous: Register}
+
+    \begin{uc-mss}
+   	\item Go to anonymous landing page
+   	\item Click on "register"
+   	\item Fill in information
+   	\begin{enumerate}
+   	\item Firstname
+   	\item Lastname
+   	\item Email
+   	\item date of birth
+   	\item sex
+   	\item preferred language (drop down menu)
+   	\item password
+   	\item confirm password
+   	\end{enumerate}
+   	\item Users clicks on "register"
+   	\item The user is redirected to the anonymous landing-page
+    \end{uc-mss}
+
+    \begin{uc-ext}
+
+        \begin{uc-fail}{4}{Invalid email address}
+        \item Error message: please enter a valid email address
+        \item Return to MSS step 3
+        \end{uc-fail}
+        
+        \begin{uc-fail}{4}{Password mismatch}
+        \item Error message: Password mismatch
+        \item Return to MSS step 3
+		\end{uc-fail}
+		
+		\begin{uc-fail}{4}{Email address already in use}
+		\item Error message: Email address already in use
+		\item Return to MSS step 3
+		\end{uc-fail}
+		
+		\begin{uc-fail}{4s}{Not all fields are filled in}
+		\item Error message: Not all fields are filled in.
+		\item Identify empty fields.
+		\end{uc-fail}
+	\end{uc-ext}
+		
+    \begin{uc-pre}
+        \item Not logged in.
+    \end{uc-pre}
+
+    \begin{uc-post}
+        \item User is registerd into the system, a teacher can select the student to put him/her into a class.
+        \item User is redirected back to the anonymous landing-page.
+    \end{uc-post}
+
+    \begin{uc-trig}
+        Anonymous users clicks on the "register" button on the Anonymous user landing-page.
+    \end{uc-trig}
+\end{uc}
+
