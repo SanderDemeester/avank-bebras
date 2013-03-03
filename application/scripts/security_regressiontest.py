@@ -54,5 +54,5 @@ while int(zap.ascan.status['status']) < 100:
 zap_alerts += copy.deepcopy(zap.core.alerts().get('alerts'))
 
 pprint (zap_alerts)
-subprocess.call(["kill", "-9", "%d" % play_ID.pid])
+subprocess.call(["kill", "-9", "%d" % play_PID.pid])
 
