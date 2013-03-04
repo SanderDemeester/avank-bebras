@@ -11,7 +11,7 @@ public class Application extends Controller {
 	  
 	  response().setHeader("X-Frame-Options", "SAMEORIGIN");
 	  response().setHeader(CACHE_CONTROL, "max-age=3600");
-	  return ok(index.render("Your new application is ready."));
+	  return ok(index.render("nanos gigantum humeris insidentes"));
   }
   
 }
