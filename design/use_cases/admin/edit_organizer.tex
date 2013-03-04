@@ -1,0 +1,49 @@
+
+\begin{uc}{Edit organizer}
+
+	\extends{Database errors}
+
+    \begin{uc-mss}
+    \item Change text in the following fields:
+        \begin{itemize}
+			\item Name
+			\item Email Address
+			\end{itemize}
+    \item Click on the Save button.
+    \end{uc-mss}
+
+    \begin{uc-ext}
+
+        \begin{uc-fail}{2}{Invalid Email Address}
+        \item Error message: Please enter a valid email address.
+        \return{1}
+        \end{uc-fail}
+
+        \begin{uc-fail}{2}{Email Address already available in database of Organizers }
+        \item Error message: This email address is already assigned to an organizer.
+        \return{1}
+        \end{uc-fail}
+
+        \begin{uc-fail}{2}{Not all fields are filled in}
+        \item Error message: Please make sure all the fields are filled in.
+        \return{1}
+        \end{uc-fail}
+
+    \end{uc-ext}
+
+    \begin{uc-pre}
+    \item User is authenticated as Admin
+    \item Current page: Manage Organizers
+    \end{uc-pre}
+
+    \begin{uc-post}
+    \item Organizer is updated.
+    \item Redirect to page: Manage Organizers.
+    \end{uc-post}
+
+    \begin{uc-trig}
+        Admin clicks on the Edit button in the row of an Organizer inside the
+        table.
+    \end{uc-trig}
+
+\end{uc}

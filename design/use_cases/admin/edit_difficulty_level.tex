@@ -1,0 +1,41 @@
+
+\begin{uc}{Edit Difficulty level}
+
+    \begin{uc-mss}
+    \item Change the following fields:
+    	\begin{itemize}
+			\item Description of the difficulty
+			\item Name for this level
+		\end{itemize}
+    \item Click on the Save button.
+    \end{uc-mss}
+
+    \begin{uc-ext}
+
+				\begin{uc-fail}{2}{Name already exists}
+				\item Error message: This name is already in use. Please choose another one.
+				\return{1}
+				\end{uc-fail}
+
+       \begin{uc-fail}{2}{Not all fields are filled in}
+        \item Error message: Please make sure all the fields are filled in.
+        \return{1}
+       \end{uc-fail}
+
+    \end{uc-ext}
+
+    \begin{uc-pre}
+    \item User is authenticated as Admin
+    \item Current page: Admin home
+    \end{uc-pre}
+
+    \begin{uc-post}
+    \item Difficulty level is updated.
+    \item Redirect to page: Admin home.
+    \end{uc-post}
+
+    \begin{uc-trig}
+        Admin clicks on the Edit button in the row of a Difficulty level inside the table.
+    \end{uc-trig}
+
+\end{uc}

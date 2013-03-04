@@ -1,0 +1,25 @@
+
+\begin{uc}{Delete Organizer}
+
+    \extends{Database errors}
+
+    \begin{uc-mss}
+    \item Confirmation dialog: Are you sure you want to delete this Organizer?
+    \item Click on the Yes button.
+    \end{uc-mss}
+
+    \begin{uc-pre}
+    \item User is authenticated as Admin
+    \item Current page: Manage Organizers
+    \end{uc-pre}
+
+    \begin{uc-post}
+    \item Organizer is deleted.
+    \item Redirect to page: Manage Organizers.
+    \end{uc-post}
+
+    \begin{uc-trig}
+        Admin clicks on the Delete button in the row of an Organizer inside the table.
+    \end{uc-trig}
+\end{uc}
+

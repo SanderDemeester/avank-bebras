@@ -8,5 +8,5 @@
   - **independent_user:** Things you can do only when logged in as an
     Independent User (or things you do different when logged in as Independent
     User).
-  - **organizer:** Things only organizers can do.
-
+  - **organizer:** Things only organizers can do.  
+  - **administrator:** Things only admins can do.
