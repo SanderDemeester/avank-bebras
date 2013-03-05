@@ -1,15 +1,8 @@
-\documentclass[10pt,a4paper]{article}
-\input{environment}
-
-\begin{document}
-
 \begin{uc}{Contests: Finish a contest.}
-
-    \extends{Independent user: do unrestricted contest.}
 
     \begin{uc-mss}
     \item The user presses the button "finish" after answering the last question.
-    \item A warning will appear stating there is still some time remaining for the user to review his answers. There will be a "Review answers" button and "Finish" button beneath the warning.
+    \item A warning will appear stating there is still some time remaining for the user to review his answers. There will be a "Review answers" button and a "Finish" button beneath the warning.
     \item The user clicks the "Finish" button.
     \end{uc-mss}
 
@@ -20,16 +13,19 @@
         \return{2}
         \end{uc-fail}
 
+	begin{uc-fail}{2}{The contest is a restricted or official contest.}
+	\item A warning will appear stating there is still some time remaining for the user to review his answers. There will be a "Cancel" button and a "Finish" button beneath the warning. 
+	\return{3}
+
 	\begin{uc-fail}{3}{The user decides to review his answers.}
-	\item The user clicks the "Review answer" button.
-	\item The user returns to the question page. 
+	\item The user clicks the "Review answer" button (or the "Cancel" button is case of a restricted or official contest).
+	\item The user returns to the Contest Participation page. 
 	\end{uc-fail}
 
     \end{uc-ext}
 
     \begin{uc-pre}
-    \item The user is on the contest page.
-    \item The user sees a question. 
+    \item Current page: Contest Participation page.
     \item There is time remaining. 
     \end{uc-pre}
 
@@ -42,5 +38,3 @@
     \end{uc-trig}
 
 \end{uc}
-
-\end{document}
