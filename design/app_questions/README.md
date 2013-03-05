@@ -1,0 +1,3 @@
+- ISO 639-2 language code
+- regex: Java accepting
+- XSD won't check if there is only one correct answer, java should do this
