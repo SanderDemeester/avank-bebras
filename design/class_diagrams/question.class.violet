@@ -26,7 +26,7 @@
     </void>
     <void property="methods">
      <void property="text">
-      <string>- Question() : {constructor}
+      <string># Question() : {constructor}
 $ getFromXml(XML xml) : Question
 + getID() : String
 + getType() : QuestionType
@@ -200,7 +200,7 @@ $ getFromXml(XML xml) : Question
        <double>40.0</double>
        <double>460.0</double>
        <double>280.0</double>
-       <double>80.0</double>
+       <double>100.0</double>
       </void>
      </object>
     </void>
@@ -212,7 +212,8 @@ $ getFromXml(XML xml) : Question
     </void>
     <void property="methods">
      <void property="text">
-      <string>+ getElements() : List&lt;MultipleChoiceElement&gt;
+      <string># MultipleChoiceQuestion() : {constructor}
++ getElements() : List&lt;MultipleChoiceElement&gt;
 + getCorrectElement() : MultipleChoiceElement</string>
      </void>
     </void>
@@ -252,8 +253,8 @@ $ getFromXml(XML xml) : Question
       <void method="setRect">
        <double>360.0</double>
        <double>460.0</double>
-       <double>140.0</double>
-       <double>60.0</double>
+       <double>200.0</double>
+       <double>80.0</double>
       </void>
      </object>
     </void>
@@ -264,7 +265,8 @@ $ getFromXml(XML xml) : Question
     </void>
     <void property="methods">
      <void property="text">
-      <string>+ getRegex() : String</string>
+      <string># RegexQuestion() : {constructor}
++ getRegex() : String</string>
      </void>
     </void>
     <void property="name">
@@ -303,8 +305,8 @@ $ getFromXml(XML xml) : Question
       <void method="setRect">
        <double>20.0</double>
        <double>660.0</double>
-       <double>320.0</double>
-       <double>80.0</double>
+       <double>340.0</double>
+       <double>100.0</double>
       </void>
      </object>
     </void>
@@ -315,7 +317,8 @@ $ getFromXml(XML xml) : Question
     </void>
     <void property="methods">
      <void property="text">
-      <string>+ equals(MultipleChoiceElement element) : boolean
+      <string>+ MultipleChoiceElement(String content) : {constructor}
++ equals(MultipleChoiceElement element) : boolean
 + getContent() : String</string>
      </void>
     </void>
@@ -362,7 +365,7 @@ $ getFromXml(XML xml) : Question
     </void>
     <void property="attributes">
      <void property="text">
-      <string>- question : Question</string>
+      <string># question : Question</string>
      </void>
     </void>
     <void property="methods">
@@ -404,10 +407,10 @@ $ getFromXml(XML xml) : Question
     <void property="bounds">
      <object class="java.awt.geom.Rectangle2D$Double">
       <void method="setRect">
-       <double>410.0</double>
-       <double>700.0</double>
-       <double>220.0</double>
-       <double>60.0</double>
+       <double>130.0</double>
+       <double>770.0</double>
+       <double>540.0</double>
+       <double>80.0</double>
       </void>
      </object>
     </void>
@@ -418,7 +421,8 @@ $ getFromXml(XML xml) : Question
     </void>
     <void property="methods">
      <void property="text">
-      <string>+ isCorrect() : boolean</string>
+      <string>+ MultipleChoiceAnswer(Question question, MultipleChoiceElement element) : {constructor}
++ isCorrect() : boolean</string>
      </void>
     </void>
     <void property="name">
@@ -437,15 +441,15 @@ $ getFromXml(XML xml) : Question
         <void method="set">
          <object idref="Point2D$Double7">
           <void method="setLocation">
-           <double>410.0</double>
-           <double>700.0</double>
+           <double>130.0</double>
+           <double>770.0</double>
           </void>
          </object>
-         <double>700.0</double>
+         <double>770.0</double>
         </void>
        </void>
       </object>
-      <double>410.0</double>
+      <double>130.0</double>
      </void>
     </void>
    </object>
@@ -455,10 +459,10 @@ $ getFromXml(XML xml) : Question
     <void property="bounds">
      <object class="java.awt.geom.Rectangle2D$Double">
       <void method="setRect">
-       <double>740.0</double>
-       <double>700.0</double>
-       <double>140.0</double>
-       <double>60.0</double>
+       <double>690.0</double>
+       <double>770.0</double>
+       <double>380.0</double>
+       <double>80.0</double>
       </void>
      </object>
     </void>
@@ -469,7 +473,8 @@ $ getFromXml(XML xml) : Question
     </void>
     <void property="methods">
      <void property="text">
-      <string>+ isCorrect() : boolean</string>
+      <string>+ RegexAnswer(Question question, String input) : {constructor}
++ isCorrect() : boolean</string>
      </void>
     </void>
     <void property="name">
@@ -488,15 +493,15 @@ $ getFromXml(XML xml) : Question
         <void method="set">
          <object idref="Point2D$Double8">
           <void method="setLocation">
-           <double>740.0</double>
-           <double>700.0</double>
+           <double>690.0</double>
+           <double>770.0</double>
           </void>
          </object>
-         <double>700.0</double>
+         <double>770.0</double>
         </void>
        </void>
       </object>
-      <double>740.0</double>
+      <double>690.0</double>
      </void>
     </void>
    </object>
