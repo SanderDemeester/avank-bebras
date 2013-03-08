@@ -10,12 +10,12 @@ import time
 from ConfigParser import SafeConfigParser
 from pprint import pprint
 from zapv2 import ZAPv2
-print os.getcwd()
-print os.getcwd()
 null = open("NUL","w")
 subprocess.Popen(["/opt/play-2.0.4/play","stage"], stdout=null,stderr=null)
-print os.getcwd()
-play_PID = subprocess.Popen(["./target/start&"], stdout=null,stderr=null)
+a = os.getcwd()
+path=os.path.join(a,"target/start")
+
+play_PID = subprocess.Popen([path])
 
 target = 'http://127.0.0.1:9000'
 zap_url = 'http://127.0.0.1:8080'
