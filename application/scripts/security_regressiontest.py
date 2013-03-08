@@ -11,13 +11,13 @@ from ConfigParser import SafeConfigParser
 from pprint import pprint
 from zapv2 import ZAPv2
 null = open("NUL","w")
-subprocess.Popen(["/opt/play-2.0.4/play","stage"], stdout=null,stderr=null)
+subprocess.check_call(["/opt/play-2.0.4/play","stage"], stdout=null,stderr=null)
 time.sleep(10)
 a = os.getcwd()
 path=os.path.join(a,"target/start")
 print path
 play_PID = subprocess.Popen([path])
-
+time.sleep(10) #wait for play to start up
 target = 'http://127.0.0.1:9000'
 zap_url = 'http://127.0.0.1:8080'
 proxies = {'http': zap_url,
