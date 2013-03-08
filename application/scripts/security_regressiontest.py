@@ -58,4 +58,4 @@ zap_alerts += copy.deepcopy(zap.core.alerts().get('alerts'))
 
 pprint (zap_alerts)
 subprocess.call(["kill", "-9", "%d" % play_PID.pid])
-subprocess.call(["rm RUNNING_PID"],stdout=null,stderr=null)
+subprocess.call(["rm","RUNNING_PID"],stdout=null,stderr=null)
