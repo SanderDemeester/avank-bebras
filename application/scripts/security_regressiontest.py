@@ -13,8 +13,7 @@ from zapv2 import ZAPv2
 
 os.chdir("../")
 null = open("NUL","w")
-
-subprocess_Popen["/opt/play-2.0.4/play", "stage"], stdout=null,stderr=null)
+subprocess.Popen(["/opt/play-2.0.4/play","stage"], stdout=null,stderr=null)
 play_PID = subprocess.Popen(["target/start"], stdout=null,stderr=null)
 
 target = 'http://127.0.0.1:9000'
