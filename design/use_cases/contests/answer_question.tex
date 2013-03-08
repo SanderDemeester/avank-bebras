@@ -1,30 +1,26 @@
-\documentclass[10pt,a4paper]{article}
-\input{environment}
-
-\begin{document}
-
 \begin{uc}{Contests: Answer a question.}
 
-    \extends{Independent user: do unrestricted contest.}
-
     \begin{uc-mss}
-    \item The user navigates to the question he wants to answer.
-    \item The user reads the question.
-    \item The user chooses his answer or fills his answer in.
+    	\item The user navigates to the question he wants to answer. \extend{Navigating between questions}
+    	\item The user reads the question.
+    	\item The user does one of the following:
+		\begin{itemize}
+			\item Fills in his answer in the corresponding input field and presses the "submit" button.
+			\item Chooses his answer from the list with possible answers (multiple choice).
+		\end{itemize}
     \end{uc-mss}
 
     \begin{uc-ext}
 
-        \begin{uc-fail}{3}{The answer does not match with the pattern.}
-        \item A message will appear above the input box stating the answer does not match with the pattern.
-        \return{3}
+        \begin{uc-fail}{3.1}{The answer does not match with the pattern.}
+        	\item A message will appear above the input box stating the answer does not match with the pattern.
+        	\return{3.1}
         \end{uc-fail}
 
     \end{uc-ext}
 
     \begin{uc-pre}
-    \item The user is on the contest page.
-    \item The user sees a question. 
+    \item Current page: Contest Participation page.
     \item There is time remaining. 
     \end{uc-pre}
 
@@ -38,5 +34,3 @@
     \end{uc-trig}
 
 \end{uc}
-
-\end{document}

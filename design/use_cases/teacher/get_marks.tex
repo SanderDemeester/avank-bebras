@@ -1,0 +1,38 @@
+\begin{uc}{Get marks}
+
+    \begin{uc-mss}
+    \item The teacher clicks on the specific competition.
+    \item A specific page for the specific competition has been opened.
+    \item The teacher clicks on "Get marks".
+    \item The teacher is taken to a page that allows him to view the marks.
+    \item The teacher closes the page.
+    \item The teacher is redirected back to his landing-page.
+    \end{uc-mss}
+
+    \begin{uc-ext}
+        \begin{uc-fail}{3}{No marks found}
+        \item Error message: No marks found.
+        \item \return{2}.
+        \end{uc-fail}
+	
+	\begin{uc-fail}{3}{Competition still running}
+	\item Error message: The competition is still running.
+	\item \return{2}.
+	\end{uc-fail}
+    \end{uc-ext}
+
+    \begin{uc-pre}
+	\item The specific competition has been closed
+    	\item The teacher is logged in.
+    	\item The teacher opened the organizer's competition page.
+    \end{uc-pre}
+
+    \begin{uc-post}
+    \item Marks have been viewed
+    \end{uc-post}
+
+    \begin{uc-trig}
+        The teacher clicks on "View competitions" on the organizer's competition page.
+    \end{uc-trig}
+
+\end{uc}

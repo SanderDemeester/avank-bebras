@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+	<!-- root element -->
+	<xsd:element name="root">
+		<xsd:complexType>
+			<xsd:choice>
+				<xsd:element name="regex-question" type="regex-question" />
+				<xsd:element name="multiple-choice-question" type="mc-question" />
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<!-- question -->	
+	<xsd:complexType name="mc-question">
+		<xsd:sequence>
+			<xsd:element name="language" type="mc-language" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="regex-question">
+		<xsd:sequence>
+			<xsd:element name="language" type="regex-language" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<!-- language -->
+	<xsd:complexType name="base-language">
+		<xsd:sequence>
+			<xsd:element name="index" type="xsd:string" />
+			<xsd:element name="feedback" type="xsd:string" />
+			<xsd:element name="title" type="xsd:string" />
+		</xsd:sequence>
+		<xsd:attribute name="code" type="xsd:string" />
+	</xsd:complexType>
+	
+	<xsd:complexType name="mc-language">
+		<xsd:complexContent>
+			<xsd:extension base="base-language">
+				<xsd:sequence>
+					<xsd:element name="answers" type="answers-type" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:complexType name="regex-language">
+		<xsd:complexContent>
+			<xsd:extension base="base-language">
+				<xsd:sequence>
+					<xsd:element name="input" type="input-type" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<!-- answers -->
+	<xsd:complexType name="answers-type">
+		<xsd:sequence>
+			<xsd:element name="answer" type="answer-type" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<!-- input -->
+	<xsd:complexType name="input-type">
+		<xsd:attribute name="regex" type="xsd:string" />
+	</xsd:complexType>
+	
+	<!-- answer -->
+	<xsd:complexType name="answer-type">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string">
+				<xsd:attribute name="correct" type="xsd:string" fixed="true" use="optional" />
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	
+</xsd:schema>

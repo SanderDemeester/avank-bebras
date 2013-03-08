@@ -5,12 +5,10 @@ import play.mvc.*;
 
 import views.html.*;
 
-public class Application extends Controller {
+public class Application extends EController {
   
   public static Result index() {
-	  
-	  response().setHeader("X-Frame-Options", "SAMEORIGIN");
-	  response().setHeader(CACHE_CONTROL, "max-age=3600");
+	  setCommonHeaders();
 	  return ok(index.render("nanos gigantum humeris insidentes"));
   }
   

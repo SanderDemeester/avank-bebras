@@ -1,0 +1,104 @@
+\select@language {english}
+\contentsline {chapter}{\numberline {1}In General}{4}{chapter.1}
+\contentsline {section}{\numberline {1.1}Overview}{5}{section.1.1}
+\contentsline {section}{\numberline {1.2}Roles and ids}{5}{section.1.2}
+\contentsline {section}{\numberline {1.3}Classes and Schools}{6}{section.1.3}
+\contentsline {section}{\numberline {1.4}Questions, question sets and contests}{7}{section.1.4}
+\contentsline {section}{\numberline {1.5}The competition}{9}{section.1.5}
+\contentsline {section}{\numberline {1.6}In case of trouble}{10}{section.1.6}
+\contentsline {section}{\numberline {1.7}A pupil's personal page}{10}{section.1.7}
+\contentsline {section}{\numberline {1.8}The teacher}{11}{section.1.8}
+\contentsline {section}{\numberline {1.9}Information stored}{12}{section.1.9}
+\contentsline {chapter}{\numberline {2}Use cases}{13}{chapter.2}
+\contentsline {section}{\numberline {2.1}General}{13}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Default Management Table Form}{13}{subsection.2.1.1}
+\contentsline {section}{\numberline {2.2}General User}{14}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Home Page}{14}{subsection.2.2.1}
+\contentsline {subsubsection}{Log in}{14}{section*.4}
+\contentsline {subsubsection}{Register}{14}{section*.5}
+\contentsline {subsubsection}{Forgot password}{15}{section*.6}
+\contentsline {subsubsection}{Go home}{15}{section*.7}
+\contentsline {subsubsection}{Participate in unrestricted contests}{15}{section*.8}
+\contentsline {subsubsection}{Contact a human}{15}{section*.9}
+\contentsline {subsubsection}{Read Frequently Asked Questions}{15}{section*.10}
+\contentsline {subsection}{\numberline {2.2.2}Shared Functionality}{16}{subsection.2.2.2}
+\contentsline {subsubsection}{Log out}{16}{section*.11}
+\contentsline {subsubsection}{Change personal information}{16}{section*.12}
+\contentsline {subsubsection}{View statistics}{16}{section*.14}
+\contentsline {section}{\numberline {2.3}Admin}{17}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Manage organizers}{17}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Age levels}{18}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}Difficulty levels}{18}{subsection.2.3.3}
+\contentsline {subsection}{\numberline {2.3.4}Activation and deactivation of user accounts}{18}{subsection.2.3.4}
+\contentsline {subsection}{\numberline {2.3.5}Add homepage links}{18}{subsection.2.3.5}
+\contentsline {subsection}{\numberline {2.3.6}Reset passwords for everyone}{18}{subsection.2.3.6}
+\contentsline {section}{\numberline {2.4}Anonymous/Not logged in User}{19}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}Register.}{19}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}Do unrestricted quizzes.}{19}{subsection.2.4.2}
+\contentsline {subsection}{\numberline {2.4.3}Change preferred language (not persistent)}{19}{subsection.2.4.3}
+\contentsline {subsection}{\numberline {2.4.4}Log in}{19}{subsection.2.4.4}
+\contentsline {section}{\numberline {2.5}Independent User}{19}{section.2.5}
+\contentsline {subsection}{\numberline {2.5.1}Change password}{19}{subsection.2.5.1}
+\contentsline {subsection}{\numberline {2.5.2}Change email address}{20}{subsection.2.5.2}
+\contentsline {subsection}{\numberline {2.5.3}Change preferred language}{20}{subsection.2.5.3}
+\contentsline {subsection}{\numberline {2.5.4}Do unrestricted quizzes}{20}{subsection.2.5.4}
+\contentsline {subsection}{\numberline {2.5.5}View results and statistics from quizzes/contests he previously participated in}{20}{subsection.2.5.5}
+\contentsline {subsection}{\numberline {2.5.6}View the classes he has been associated with}{20}{subsection.2.5.6}
+\contentsline {subsection}{\numberline {2.5.7}Logout}{20}{subsection.2.5.7}
+\contentsline {section}{\numberline {2.6}Pupil}{21}{section.2.6}
+\contentsline {subsection}{\numberline {2.6.1}Change password}{21}{subsection.2.6.1}
+\contentsline {subsection}{\numberline {2.6.2}Change email address}{21}{subsection.2.6.2}
+\contentsline {subsection}{\numberline {2.6.3}Change preferred language}{21}{subsection.2.6.3}
+\contentsline {subsection}{\numberline {2.6.4}Do unrestricted quizzes}{21}{subsection.2.6.4}
+\contentsline {subsection}{\numberline {2.6.5}Participate in contests that have been opened for his class by the teacher (both restricted as official)}{21}{subsection.2.6.5}
+\contentsline {subsection}{\numberline {2.6.6}View results and statistics from quizzes/contests he previously participated in}{21}{subsection.2.6.6}
+\contentsline {subsection}{\numberline {2.6.7}View the classes he has been associated with and his current class}{21}{subsection.2.6.7}
+\contentsline {subsection}{\numberline {2.6.8}Logout}{22}{subsection.2.6.8}
+\contentsline {section}{\numberline {2.7}Teachers}{22}{section.2.7}
+\contentsline {subsection}{\numberline {2.7.1}Inheritance}{22}{subsection.2.7.1}
+\contentsline {subsubsection}{Independent}{22}{section*.15}
+\contentsline {subsection}{\numberline {2.7.2}General functionality}{22}{subsection.2.7.2}
+\contentsline {subsubsection}{Change personal information}{22}{section*.16}
+\contentsline {subsubsection}{Register pupil/class}{23}{section*.17}
+\contentsline {subsubsection}{Open and close (local) competition}{23}{section*.19}
+\contentsline {subsubsection}{Get restricted question set}{23}{section*.20}
+\contentsline {subsubsection}{Get marks}{23}{section*.21}
+\contentsline {subsubsection}{Get state of pupil}{24}{section*.22}
+\contentsline {subsubsection}{Grant pupil minutes}{24}{section*.23}
+\contentsline {section}{\numberline {2.8}Organizers}{24}{section.2.8}
+\contentsline {subsection}{\numberline {2.8.1}Manage Pupils}{24}{subsection.2.8.1}
+\contentsline {subsubsection}{Delete Pupils}{25}{section*.24}
+\contentsline {subsubsection}{Edit Pupils}{25}{section*.25}
+\contentsline {subsubsection}{Block Pupils}{25}{section*.26}
+\contentsline {subsubsection}{Mimic Pupils}{26}{section*.27}
+\contentsline {subsection}{\numberline {2.8.2}Manage Teachers}{26}{subsection.2.8.2}
+\contentsline {subsection}{\numberline {2.8.3}Manage ClassGroups}{26}{subsection.2.8.3}
+\contentsline {subsection}{\numberline {2.8.4}Manage Questions}{26}{subsection.2.8.4}
+\contentsline {subsection}{\numberline {2.8.5}Manage Question sets}{27}{subsection.2.8.5}
+\contentsline {subsection}{\numberline {2.8.6}Manage Competitions}{28}{subsection.2.8.6}
+\contentsline {subsubsection}{More}{28}{section*.28}
+\contentsline {subsubsection}{History}{29}{section*.30}
+\contentsline {subsubsection}{Edit}{29}{section*.31}
+\contentsline {subsection}{\numberline {2.8.7}Manage ClassGroups}{30}{subsection.2.8.7}
+\contentsline {subsubsection}{ClassGroups}{30}{section*.32}
+\contentsline {subsubsection}{Schools}{30}{section*.33}
+\contentsline {section}{\numberline {2.9}Competitions}{31}{section.2.9}
+\contentsline {subsection}{\numberline {2.9.1}Common}{31}{subsection.2.9.1}
+\contentsline {subsubsection}{Answer a question.}{31}{section*.34}
+\contentsline {subsubsection}{Navigate between questions.}{31}{section*.35}
+\contentsline {subsubsection}{Change answer.}{31}{section*.36}
+\contentsline {subsubsection}{Remove answer.}{32}{section*.37}
+\contentsline {subsubsection}{See time left.}{32}{section*.38}
+\contentsline {subsubsection}{Finish a contest.}{32}{section*.39}
+\contentsline {subsubsection}{See questions that already have been answered.}{32}{section*.40}
+\contentsline {subsubsection}{See how many points that can be gained or lost.}{32}{section*.41}
+\contentsline {subsubsection}{Example}{32}{section*.42}
+\contentsline {subsection}{\numberline {2.9.2}Unrestricted contest}{33}{subsection.2.9.2}
+\contentsline {subsubsection}{See results and feedback}{33}{section*.44}
+\contentsline {subsubsection}{When the internet fails}{33}{section*.46}
+\contentsline {subsection}{\numberline {2.9.3}Restricted contest}{33}{subsection.2.9.3}
+\contentsline {subsubsection}{See results and feedback}{33}{section*.47}
+\contentsline {subsubsection}{When the internet fails}{33}{section*.48}
+\contentsline {subsection}{\numberline {2.9.4}Official contest}{33}{subsection.2.9.4}
+\contentsline {subsubsection}{See results and feedback}{33}{section*.49}
+\contentsline {subsubsection}{When the internet fails}{34}{section*.50}
