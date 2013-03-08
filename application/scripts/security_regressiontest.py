@@ -12,6 +12,7 @@ from pprint import pprint
 from zapv2 import ZAPv2
 null = open("NUL","w")
 subprocess.Popen(["/opt/play-2.0.4/play","stage"], stdout=null,stderr=null)
+time.sleep(10)
 a = os.getcwd()
 path=os.path.join(a,"target/start")
 print path
