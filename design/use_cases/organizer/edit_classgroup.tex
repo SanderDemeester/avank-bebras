@@ -1,16 +1,16 @@
 
 \begin{uc}{Edit ClassGroup}
 
-	\extends{Database errors}
+    \extends{Database errors}
 
     \begin{uc-mss}
     \item Change the following fields:
-    	\begin{itemize}
-			\item Name
-			\item Level (dropdown-list with available Age-Levels)
-			\item School
-			\item Teacher
-		\end{itemize}
+        \begin{itemize}
+            \item Name
+            \item Level (dropdown-list with available Age-Levels)
+            \item School
+            \item Teacher
+        \end{itemize}
     \item Click on the Save button.
     \end{uc-mss}
 
@@ -20,12 +20,12 @@
         \item Error message: Please enter an existing School ID
         \return{1}
         \end{uc-fail}
-        
+
         \begin{uc-fail}{2}{Invalid Teacher ID}
         \item Error message: Please enter an existing Teacher ID
         \return{1}
         \end{uc-fail}
-        
+
         \begin{uc-fail}{2}{Not all fields are filled in}
         \item Error message: Please make sure all the fields are filled in.
         \return{1}

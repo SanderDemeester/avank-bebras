@@ -1,20 +1,24 @@
 \begin{uc}{Get restricted question set}
-	\extends{Organizer}
+
+    \extends{Organizer}
+
     \begin{uc-mss}
     \item The teacher has an overview of all question sets.
     \item The teacher clicks on the specific question set.
     \end{uc-mss}
 
     \begin{uc-ext}
+
         \begin{uc-fail}{2}{Question set doesn't exist}
         \item Error message: Question set cannot be found.
-        \item \return{1}.
+            \return{1}.
         \end{uc-fail}
+
     \end{uc-ext}
 
     \begin{uc-pre}
-	\item The teacher visits the competition management.
-    	\item The teacher is logged in.
+    \item The teacher visits the competition management.
+        \item The teacher is logged in.
     \end{uc-pre}
 
     \begin{uc-post}
