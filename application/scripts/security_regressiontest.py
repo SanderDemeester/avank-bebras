@@ -11,7 +11,6 @@ from ConfigParser import SafeConfigParser
 from pprint import pprint
 from zapv2 import ZAPv2
 print os.getcwd()
-os.chdir("../")
 print os.getcwd()
 null = open("NUL","w")
 subprocess.Popen(["/opt/play-2.0.4/play","stage"], stdout=null,stderr=null)
