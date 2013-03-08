@@ -10,7 +10,7 @@ import time
 from ConfigParser import SafeConfigParser
 from pprint import pprint
 from zapv2 import ZAPv2
-
+print os.getcwd()
 os.chdir("../")
 print os.getcwd()
 null = open("NUL","w")
