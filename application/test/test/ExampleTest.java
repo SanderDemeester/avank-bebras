@@ -4,7 +4,7 @@ import org.fest.assertions.AssertExtension;
 import org.junit.*;
 import play.mvc.*;
 import play.test.*;
-import play.libs.*;
+import views.html.*;
 import static play.test.Helpers.*;
 import static org.fest.assertions.Assertions.*;
 
@@ -32,5 +32,18 @@ public class ExampleTest {
 				
 			}
 		});
+	}
+	
+	@Test
+	public void testTemplate(){
+		
+//	    Index is the name of our scala template.
+//		The scala source file takes one string argument thet the template will render
+		Content htmlContent = index.render("Test-string");
+		
+//		Test the content Type
+		assertThat(contentType(htmlContent)).isEqualTo("text/html");
+//		Test that the html Content contains a string
+		assertThat(contentAsString(htmlContent)).contains("Test-string");
 	}
 }
