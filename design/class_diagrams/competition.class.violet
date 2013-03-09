@@ -491,15 +491,15 @@ user finishes competition</string>
        <object class="java.awt.geom.Rectangle2D$Double">
         <void method="setRect">
          <double>820.0</double>
-         <double>160.0</double>
-         <double>100.0</double>
+         <double>90.0</double>
+         <double>140.0</double>
          <double>60.0</double>
         </void>
        </object>
       </void>
       <void property="name">
        <void property="text">
-        <string>QuestionSet</string>
+        <string>QuestionFeedback</string>
        </void>
       </void>
      </object>
@@ -510,15 +510,15 @@ user finishes competition</string>
        <object class="java.awt.geom.Rectangle2D$Double">
         <void method="setRect">
          <double>820.0</double>
-         <double>90.0</double>
-         <double>140.0</double>
+         <double>160.0</double>
+         <double>100.0</double>
          <double>60.0</double>
         </void>
        </object>
       </void>
       <void property="name">
        <void property="text">
-        <string>QuestionFeedback</string>
+        <string>QuestionSet</string>
        </void>
       </void>
      </object>
@@ -569,7 +569,7 @@ user finishes competition</string>
    </object>
   </void>
   <void method="addNode">
-   <object idref="ClassNode5"/>
+   <object idref="ClassNode4"/>
    <object class="java.awt.geom.Point2D$Double" id="Point2D$Double10">
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>x</string>
@@ -594,7 +594,7 @@ user finishes competition</string>
    </object>
   </void>
   <void method="addNode">
-   <object idref="ClassNode4"/>
+   <object idref="ClassNode5"/>
    <object class="java.awt.geom.Point2D$Double" id="Point2D$Double11">
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>x</string>
@@ -626,7 +626,7 @@ user finishes competition</string>
        <object class="java.awt.geom.Rectangle2D$Double">
         <void method="setRect">
          <double>40.0</double>
-         <double>320.0</double>
+         <double>250.0</double>
          <double>100.0</double>
          <double>60.0</double>
         </void>
@@ -634,7 +634,7 @@ user finishes competition</string>
       </void>
       <void property="name">
        <void property="text">
-        <string>ClassGroup</string>
+        <string>User</string>
        </void>
       </void>
      </object>
@@ -645,7 +645,7 @@ user finishes competition</string>
        <object class="java.awt.geom.Rectangle2D$Double">
         <void method="setRect">
          <double>40.0</double>
-         <double>250.0</double>
+         <double>320.0</double>
          <double>100.0</double>
          <double>60.0</double>
         </void>
@@ -653,7 +653,7 @@ user finishes competition</string>
       </void>
       <void property="name">
        <void property="text">
-        <string>User</string>
+        <string>ClassGroup</string>
        </void>
       </void>
      </object>
@@ -704,7 +704,7 @@ user finishes competition</string>
    </object>
   </void>
   <void method="addNode">
-   <object idref="ClassNode7"/>
+   <object idref="ClassNode6"/>
    <object class="java.awt.geom.Point2D$Double" id="Point2D$Double13">
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>x</string>
@@ -729,7 +729,7 @@ user finishes competition</string>
    </object>
   </void>
   <void method="addNode">
-   <object idref="ClassNode6"/>
+   <object idref="ClassNode7"/>
    <object class="java.awt.geom.Point2D$Double" id="Point2D$Double14">
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>x</string>
@@ -749,6 +749,102 @@ user finishes competition</string>
        </void>
       </object>
       <double>40.0</double>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object class="com.horstmann.violet.ClassNode">
+    <void property="bounds">
+     <object class="java.awt.geom.Rectangle2D$Double">
+      <void method="setRect">
+       <double>720.0</double>
+       <double>540.0</double>
+       <double>300.0</double>
+       <double>80.0</double>
+      </void>
+     </object>
+    </void>
+    <void property="methods">
+     <void property="text">
+      <string>+ getInstance() : CompetitionManager
++ getCompetitions(User user) : List&lt;Competition&gt;</string>
+     </void>
+    </void>
+    <void property="name">
+     <void property="text">
+      <string>CompetitionManager</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double15">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double15">
+       <void class="java.awt.geom.Point2D$Double" method="getField">
+        <string>y</string>
+        <void method="set">
+         <object idref="Point2D$Double15">
+          <void method="setLocation">
+           <double>720.0</double>
+           <double>540.0</double>
+          </void>
+         </object>
+         <double>540.0</double>
+        </void>
+       </void>
+      </object>
+      <double>720.0</double>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object class="com.horstmann.violet.NoteNode">
+    <void property="bounds">
+     <object class="java.awt.geom.Rectangle2D$Double">
+      <void method="setRect">
+       <double>860.0</double>
+       <double>620.0</double>
+       <double>200.0</double>
+       <double>40.0</double>
+      </void>
+     </object>
+    </void>
+    <void property="bounds">
+     <void method="setRect">
+      <double>860.0</double>
+      <double>620.0</double>
+      <double>200.0</double>
+      <double>40.0</double>
+     </void>
+    </void>
+    <void property="text">
+     <void property="text">
+      <string>list will depend of type of user</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double16">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double16">
+       <void class="java.awt.geom.Point2D$Double" method="getField">
+        <string>y</string>
+        <void method="set">
+         <object idref="Point2D$Double16">
+          <void method="setLocation">
+           <double>860.0</double>
+           <double>620.0</double>
+          </void>
+         </object>
+         <double>620.0</double>
+        </void>
+       </void>
+      </object>
+      <double>860.0</double>
      </void>
     </void>
    </object>
@@ -823,6 +919,18 @@ user finishes competition</string>
     </void>
    </object>
    <object idref="ClassNode0"/>
+   <object idref="ClassNode4"/>
+  </void>
+  <void method="connect">
+   <object class="com.horstmann.violet.ClassRelationshipEdge">
+    <void property="endArrowHead">
+     <object class="com.horstmann.violet.ArrowHead" field="V"/>
+    </void>
+    <void property="lineStyle">
+     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/>
+    </void>
+   </object>
+   <object idref="ClassNode0"/>
    <object idref="ClassNode5"/>
   </void>
   <void method="connect">
@@ -835,7 +943,7 @@ user finishes competition</string>
     </void>
    </object>
    <object idref="ClassNode0"/>
-   <object idref="ClassNode4"/>
+   <object idref="ClassNode7"/>
   </void>
   <void method="connect">
    <object class="com.horstmann.violet.ClassRelationshipEdge">
@@ -851,18 +959,6 @@ user finishes competition</string>
   </void>
   <void method="connect">
    <object class="com.horstmann.violet.ClassRelationshipEdge">
-    <void property="endArrowHead">
-     <object class="com.horstmann.violet.ArrowHead" field="V"/>
-    </void>
-    <void property="lineStyle">
-     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/>
-    </void>
-   </object>
-   <object idref="ClassNode0"/>
-   <object idref="ClassNode7"/>
-  </void>
-  <void method="connect">
-   <object class="com.horstmann.violet.ClassRelationshipEdge">
     <void property="bentStyle">
      <object class="com.horstmann.violet.BentStyle" field="HVH"/>
     </void>
@@ -871,7 +967,7 @@ user finishes competition</string>
     </void>
    </object>
    <object idref="ClassNode3"/>
-   <object idref="ClassNode7"/>
+   <object idref="ClassNode6"/>
   </void>
   <void method="connect">
    <object class="com.horstmann.violet.ClassRelationshipEdge">
