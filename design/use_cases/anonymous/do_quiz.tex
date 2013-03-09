@@ -1,19 +1,23 @@
 \begin{uc}{Anonymous do unrestricted quizzes}
 
     \begin{uc-mss}
-    	\item The Anonymous users clicks on "do unrestricted quizzes"
-    	\item The user is taking to a different page with a list of unrestricted quizzes.
-    	\item The User selected's a quiz from the list
-    	\item The User clicks on "begin".
-    	\item The quiz started (see use-case unrestricted quiz)
-    	\item When the quiz is done, the user is sees his results (see use-case quiz/competition)
-    	\item The user is redirected back to the page with the list of unrestricted quizzes.
+        \item The Anonymous users clicks on "do unrestricted quizzes"
+        \item The user is taking to a different page with a list of unrestricted quizzes.
+        \item The User selected's a quiz from the list
+        \item The User clicks on "begin".
+        \item The quiz started (see use-case unrestricted quiz)
+        \item When the quiz is done, the user is sees his results (see use-case quiz/competition)
+        \item The user is redirected back to the page with the list of unrestricted quizzes.
     \end{uc-mss}
-    
+
+    \begin{uc-ext}
+
       \begin{uc-fail}{3}{There arent any quizzes for the user to choose from.}
         \item Display message: The orginizers has not registered any quizzes for you to choose from
         \item A button to take the user back to his homepage.
         \end{uc-fail}
+
+    \end{uc-ext}
 
     \begin{uc-pre}
         \item The Anonymous user in on his landing page.

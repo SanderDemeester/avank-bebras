@@ -9,32 +9,32 @@
     \begin{uc-ext}
 
         \begin{uc-fail}{1}{The user is currently not answering the last question.}
-        \item The user clicks on the "finish" button beneath the list with questions. 
+        \item The user clicks on the "finish" button beneath the list with questions.
         \return{2}
         \end{uc-fail}
 
-	begin{uc-fail}{2}{The contest is a restricted or official contest.}
-	\item A warning will appear stating there is still some time remaining for the user to review his answers. There will be a "Cancel" button and a "Finish" button beneath the warning. 
-	\return{3}
+    begin{uc-fail}{2}{The contest is a restricted or official contest.}
+    \item A warning will appear stating there is still some time remaining for the user to review his answers. There will be a "Cancel" button and a "Finish" button beneath the warning.
+    \return{3}
 
-	\begin{uc-fail}{3}{The user decides to review his answers.}
-	\item The user clicks the "Review answer" button (or the "Cancel" button is case of a restricted or official contest).
-	\item The user returns to the Contest Participation page. 
-	\end{uc-fail}
+    \begin{uc-fail}{3}{The user decides to review his answers.}
+    \item The user clicks the "Review answer" button (or the "Cancel" button is case of a restricted or official contest).
+    \item The user returns to the Contest Participation page.
+    \end{uc-fail}
 
     \end{uc-ext}
 
     \begin{uc-pre}
     \item Current page: Contest Participation page.
-    \item There is time remaining. 
+    \item There is time remaining.
     \end{uc-pre}
 
     \begin{uc-post}
-    \item The user will be taken to results and feedback pages. 
+    \item The user will be taken to results and feedback pages.
     \end{uc-post}
 
     \begin{uc-trig}
-    The user started the contest. 
+    The user started the contest.
     \end{uc-trig}
 
 \end{uc}

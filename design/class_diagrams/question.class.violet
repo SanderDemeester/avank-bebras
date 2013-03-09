@@ -559,8 +559,8 @@ QuestionType</string>
     <void property="bounds">
      <object class="java.awt.geom.Rectangle2D$Double">
       <void method="setRect">
-       <double>430.0</double>
-       <double>350.0</double>
+       <double>440.0</double>
+       <double>370.0</double>
        <double>320.0</double>
        <double>60.0</double>
       </void>
@@ -568,8 +568,8 @@ QuestionType</string>
     </void>
     <void property="bounds">
      <void method="setRect">
-      <double>430.0</double>
-      <double>350.0</double>
+      <double>440.0</double>
+      <double>370.0</double>
       <double>320.0</double>
       <double>60.0</double>
      </void>
@@ -592,15 +592,15 @@ The Questions can be rendered within views.</string>
         <void method="set">
          <object idref="Point2D$Double10">
           <void method="setLocation">
-           <double>430.0</double>
-           <double>350.0</double>
+           <double>440.0</double>
+           <double>370.0</double>
           </void>
          </object>
-         <double>350.0</double>
+         <double>370.0</double>
         </void>
        </void>
       </object>
-      <double>430.0</double>
+      <double>440.0</double>
      </void>
     </void>
    </object>
@@ -657,88 +657,6 @@ The Questions can be rendered within views.</string>
     <void property="bounds">
      <object class="java.awt.geom.Rectangle2D$Double">
       <void method="setRect">
-       <double>1260.0</double>
-       <double>390.0</double>
-       <double>100.0</double>
-       <double>60.0</double>
-      </void>
-     </object>
-    </void>
-    <void property="name">
-     <void property="text">
-      <string>Grade</string>
-     </void>
-    </void>
-   </object>
-   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double12">
-    <void class="java.awt.geom.Point2D$Double" method="getField">
-     <string>x</string>
-     <void method="set">
-      <object idref="Point2D$Double12">
-       <void class="java.awt.geom.Point2D$Double" method="getField">
-        <string>y</string>
-        <void method="set">
-         <object idref="Point2D$Double12">
-          <void method="setLocation">
-           <double>1260.0</double>
-           <double>390.0</double>
-          </void>
-         </object>
-         <double>390.0</double>
-        </void>
-       </void>
-      </object>
-      <double>1260.0</double>
-     </void>
-    </void>
-   </object>
-  </void>
-  <void method="addNode">
-   <object class="com.horstmann.violet.ClassNode" id="ClassNode11">
-    <void property="bounds">
-     <object class="java.awt.geom.Rectangle2D$Double">
-      <void method="setRect">
-       <double>1150.0</double>
-       <double>390.0</double>
-       <double>100.0</double>
-       <double>60.0</double>
-      </void>
-     </object>
-    </void>
-    <void property="name">
-     <void property="text">
-      <string>Difficulty</string>
-     </void>
-    </void>
-   </object>
-   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double13">
-    <void class="java.awt.geom.Point2D$Double" method="getField">
-     <string>x</string>
-     <void method="set">
-      <object idref="Point2D$Double13">
-       <void class="java.awt.geom.Point2D$Double" method="getField">
-        <string>y</string>
-        <void method="set">
-         <object idref="Point2D$Double13">
-          <void method="setLocation">
-           <double>1150.0</double>
-           <double>390.0</double>
-          </void>
-         </object>
-         <double>390.0</double>
-        </void>
-       </void>
-      </object>
-      <double>1150.0</double>
-     </void>
-    </void>
-   </object>
-  </void>
-  <void method="addNode">
-   <object class="com.horstmann.violet.ClassNode" id="ClassNode12">
-    <void property="bounds">
-     <object class="java.awt.geom.Rectangle2D$Double">
-      <void method="setRect">
        <double>850.0</double>
        <double>350.0</double>
        <double>100.0</double>
@@ -752,15 +670,15 @@ The Questions can be rendered within views.</string>
      </void>
     </void>
    </object>
-   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double14">
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double12">
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>x</string>
      <void method="set">
-      <object idref="Point2D$Double14">
+      <object idref="Point2D$Double12">
        <void class="java.awt.geom.Point2D$Double" method="getField">
         <string>y</string>
         <void method="set">
-         <object idref="Point2D$Double14">
+         <object idref="Point2D$Double12">
           <void method="setLocation">
            <double>850.0</double>
            <double>350.0</double>
@@ -771,6 +689,236 @@ The Questions can be rendered within views.</string>
        </void>
       </object>
       <double>850.0</double>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object class="com.horstmann.violet.PackageNode">
+    <void method="addChild">
+     <object class="com.horstmann.violet.ClassNode" id="ClassNode11">
+      <void property="bounds">
+       <object class="java.awt.geom.Rectangle2D$Double">
+        <void method="setRect">
+         <double>1220.0</double>
+         <double>320.0</double>
+         <double>100.0</double>
+         <double>60.0</double>
+        </void>
+       </object>
+      </void>
+      <void property="name">
+       <void property="text">
+        <string>Grade</string>
+       </void>
+      </void>
+     </object>
+    </void>
+    <void method="addChild">
+     <object class="com.horstmann.violet.ClassNode" id="ClassNode12">
+      <void property="bounds">
+       <object class="java.awt.geom.Rectangle2D$Double">
+        <void method="setRect">
+         <double>1220.0</double>
+         <double>390.0</double>
+         <double>100.0</double>
+         <double>60.0</double>
+        </void>
+       </object>
+      </void>
+      <void property="name">
+       <void property="text">
+        <string>Difficulty</string>
+       </void>
+      </void>
+     </object>
+    </void>
+    <void property="bounds">
+     <object class="java.awt.geom.Rectangle2D$Double">
+      <void method="setRect">
+       <double>1190.0</double>
+       <double>290.0</double>
+       <double>140.0</double>
+       <double>180.0</double>
+      </void>
+     </object>
+    </void>
+    <void property="bounds">
+     <void method="setRect">
+      <double>1190.0</double>
+      <double>290.0</double>
+      <double>140.0</double>
+      <double>180.0</double>
+     </void>
+    </void>
+    <void property="name">
+     <string>Data</string>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double13">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double13">
+       <void class="java.awt.geom.Point2D$Double" method="getField">
+        <string>y</string>
+        <void method="set">
+         <object idref="Point2D$Double13">
+          <void method="setLocation">
+           <double>1190.0</double>
+           <double>290.0</double>
+          </void>
+         </object>
+         <double>290.0</double>
+        </void>
+       </void>
+      </object>
+      <double>1190.0</double>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object class="com.horstmann.violet.ClassNode" id="ClassNode13">
+    <void property="bounds">
+     <object class="java.awt.geom.Rectangle2D$Double">
+      <void method="setRect">
+       <double>660.0</double>
+       <double>240.0</double>
+       <double>420.0</double>
+       <double>100.0</double>
+      </void>
+     </object>
+    </void>
+    <void property="attributes">
+     <void property="text">
+      <string>- feedbackElements : Map&lt;Question, FeedbackElement&gt;
+- score : int</string>
+     </void>
+    </void>
+    <void property="methods">
+     <void property="text">
+      <string>+ QuestionFeedback(Map&lt;Question, Answer&gt; answers) : {constructor}
++ getScore() : int
++ getFeedbackElements() : Map&lt;Question, FeedbackElement&gt;</string>
+     </void>
+    </void>
+    <void property="name">
+     <void property="text">
+      <string>QuestionFeedback</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double14">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double14">
+       <void class="java.awt.geom.Point2D$Double" method="getField">
+        <string>y</string>
+        <void method="set">
+         <object idref="Point2D$Double14">
+          <void method="setLocation">
+           <double>660.0</double>
+           <double>240.0</double>
+          </void>
+         </object>
+         <double>240.0</double>
+        </void>
+       </void>
+      </object>
+      <double>660.0</double>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object class="com.horstmann.violet.ClassNode" id="ClassNode14">
+    <void property="bounds">
+     <object class="java.awt.geom.Rectangle2D$Double">
+      <void method="setRect">
+       <double>960.0</double>
+       <double>160.0</double>
+       <double>120.0</double>
+       <double>60.0</double>
+      </void>
+     </object>
+    </void>
+    <void property="name">
+     <void property="text">
+      <string>FeedbackElement</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double15">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double15">
+       <void class="java.awt.geom.Point2D$Double" method="getField">
+        <string>y</string>
+        <void method="set">
+         <object idref="Point2D$Double15">
+          <void method="setLocation">
+           <double>960.0</double>
+           <double>160.0</double>
+          </void>
+         </object>
+         <double>160.0</double>
+        </void>
+       </void>
+      </object>
+      <double>960.0</double>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object idref="ClassNode12"/>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double16">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double16">
+       <void class="java.awt.geom.Point2D$Double" method="getField">
+        <string>y</string>
+        <void method="set">
+         <object idref="Point2D$Double16">
+          <void method="setLocation">
+           <double>1220.0</double>
+           <double>390.0</double>
+          </void>
+         </object>
+         <double>390.0</double>
+        </void>
+       </void>
+      </object>
+      <double>1220.0</double>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object idref="ClassNode11"/>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double17">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double17">
+       <void class="java.awt.geom.Point2D$Double" method="getField">
+        <string>y</string>
+        <void method="set">
+         <object idref="Point2D$Double17">
+          <void method="setLocation">
+           <double>1220.0</double>
+           <double>320.0</double>
+          </void>
+         </object>
+         <double>320.0</double>
+        </void>
+       </void>
+      </object>
+      <double>1220.0</double>
      </void>
     </void>
    </object>
@@ -869,7 +1017,7 @@ The Questions can be rendered within views.</string>
     </void>
    </object>
    <object idref="ClassNode0"/>
-   <object idref="ClassNode12"/>
+   <object idref="ClassNode10"/>
   </void>
   <void method="connect">
    <object class="com.horstmann.violet.ClassRelationshipEdge">
@@ -884,7 +1032,7 @@ The Questions can be rendered within views.</string>
     </void>
    </object>
    <object idref="ClassNode1"/>
-   <object idref="ClassNode12"/>
+   <object idref="ClassNode10"/>
   </void>
   <void method="connect">
    <object class="com.horstmann.violet.ClassRelationshipEdge">
@@ -943,8 +1091,44 @@ The Questions can be rendered within views.</string>
      <object class="com.horstmann.violet.ArrowHead" field="DIAMOND"/>
     </void>
    </object>
+   <object idref="ClassNode13"/>
+   <object idref="ClassNode14"/>
+  </void>
+  <void method="connect">
+   <object class="com.horstmann.violet.ClassRelationshipEdge">
+    <void property="endArrowHead">
+     <object class="com.horstmann.violet.ArrowHead" field="V"/>
+    </void>
+    <void property="lineStyle">
+     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/>
+    </void>
+   </object>
+   <object idref="ClassNode13"/>
+   <object idref="ClassNode0"/>
+  </void>
+  <void method="connect">
+   <object class="com.horstmann.violet.ClassRelationshipEdge">
+    <void property="endArrowHead">
+     <object class="com.horstmann.violet.ArrowHead" field="V"/>
+    </void>
+    <void property="lineStyle">
+     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/>
+    </void>
+   </object>
+   <object idref="ClassNode13"/>
+   <object idref="ClassNode6"/>
+  </void>
+  <void method="connect">
+   <object class="com.horstmann.violet.ClassRelationshipEdge">
+    <void property="bentStyle">
+     <object class="com.horstmann.violet.BentStyle" field="HVH"/>
+    </void>
+    <void property="startArrowHead">
+     <object class="com.horstmann.violet.ArrowHead" field="DIAMOND"/>
+    </void>
+   </object>
    <object idref="ClassNode1"/>
-   <object idref="ClassNode10"/>
+   <object idref="ClassNode12"/>
   </void>
   <void method="connect">
    <object class="com.horstmann.violet.ClassRelationshipEdge">
