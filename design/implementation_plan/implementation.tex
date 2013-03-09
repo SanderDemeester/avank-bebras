@@ -41,29 +41,21 @@
 		These are the subsystems we will use in relation to each other. There is also an
 		estimated percentage in each subsystem for how much work each subsystem will
 		require.
+		% Hier moet nog de afbeelding komen van het packagediagram
 	\end{subsection}
 	
 	\begin{subsection}{Contracts}
-		begin{subsubsection}{Contract X->Y}
-			\begin{tabular}{l l l }
-			  Client Class & Server Class & Explanation\\ \hline
-			\end{tabular}
-		\end{subsection}
+		% Hier moeten alle contracten tussen de subsystemen komen
+		\input{constracts/X_Y}
 	\end{subsection}
 	
-	\begin{subsection}{SUBSYSTEM NAME}
-		\textbf{Estimated amount of work: X%} \\
-		\textbf{Responsible team member: A, B, C} \\
-		\textbf{Class Diagram:} \\
-		
-		\textbf{Remarks:} \\
-		
-	\end{subsection}
+	% Hier moeten de subsystemen komen
+	\input{subsystems/X}
 	
-	...
 \end{section}	
 
 \begin{section}{Implementation}
+	% Dit moeten we nog bespreken
 	The course of the implementation of each subsystem:
 	\begin{itemize}
 		\item Database:
@@ -77,6 +69,8 @@
   		\item Stats:
   		\item Data:
 	\end{itemize}
-\end{section}	
+\end{section}
+
+% Use Cases nog invoegen?
 
 \end{document}
