@@ -13,6 +13,7 @@ import datamodels.QuestionSetQuestion;
 import datamodels.School;
 import datamodels.Teacher;
 import datamodels.TeacherCompetition;
+import enums.UserType;
 import java.util.Collection;
 import queries.AnswerQuery;
 import queries.ClassGroupQuery;
@@ -33,6 +34,9 @@ import queries.TeacherQuery;
 /**
  *
  * @author Jens N. Rammant
+ * 
+ * Regarding the creation of new users: to be able to be inserted in the database, the ID of the user
+ * has to be unique over ALL the users of ALL types
  */
 public interface DatabaseManagementInterface {
     
@@ -109,7 +113,8 @@ public interface DatabaseManagementInterface {
      * Application data
      */
     
-    public String getSalt();
+    public UserType getUserType(String userID);
+    public String getSalt(String userID);
     
     /*
      * Stuff related to dirty data

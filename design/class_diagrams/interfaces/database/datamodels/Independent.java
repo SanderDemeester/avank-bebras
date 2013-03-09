@@ -11,9 +11,11 @@ import java.util.Date;
  */
 public class Independent extends User {
 
-    public Independent(String id, String name, Gender gender, String email, Language preferredLanguage, Date registrationDate, Date birthDate) {
-        super(id, name, gender, email, preferredLanguage, registrationDate, birthDate);
+    public Independent(String id, String name, Gender gender, String email, Language preferredLanguage, Date registrationDate, Date birthDate, boolean active) {
+        super(id, name, gender, email, preferredLanguage, registrationDate, birthDate, active);
     }
+
+    
     
     
 }

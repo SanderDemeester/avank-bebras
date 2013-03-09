@@ -11,9 +11,11 @@ import java.util.Date;
  */
 public class Organizer extends User {
 
-    public Organizer(String id, String name, Gender gender, String email, Language preferredLanguage, Date registrationDate, Date birthDate) {
-        super(id, name, gender, email, preferredLanguage, registrationDate, birthDate);
+    public Organizer(String id, String name, Gender gender, String email, Language preferredLanguage, Date registrationDate, Date birthDate, boolean active) {
+        super(id, name, gender, email, preferredLanguage, registrationDate, birthDate, active);
     }
+
+    
     
 
 }
