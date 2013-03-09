@@ -1,0 +1,45 @@
+CREATE TABLE Admins (
+id SERIAL,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE Organizers (
+id SERIAL,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE Independents (
+id SERIAL,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE Teachers (
+id SERIAL,
+telephone varchar(256) NOT NULL,
+address varchar(256) NOT NULL,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE Users (
+id text,
+name text NOT NULL,
+gender text NOT NULL,
+birthdate date NOT NULL,
+email text,
+registrationDate date NOT NULL,
+prefLanguage text NOT NULL,
+password text NOT NULL,
+hash text NOT NULL,
+active bool NOT NULL,
+type varchar(1),
+indID integer REFERENCES Independents,
+admID integer REFERENCES Admins,
+teachID integer REFERENCES Teachers,
+orgID integer REFERENCES Organizers,
+CHECK ( ( type = 'T' AND teachID IS NOT NULL ) 
+OR ( type = 'I' AND indID IS NOT NULL )
+OR ( type = 'A' AND admID IS NOT NULL )
+OR ( type = 'O' AND orgID IS NOT NULL )
+)
+);
+
