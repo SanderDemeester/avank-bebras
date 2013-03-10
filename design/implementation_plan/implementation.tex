@@ -4,8 +4,6 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
-\input{environment}
-
 % Pretty figures
 \usepackage{graphicx}
 
@@ -41,16 +39,29 @@
 		These are the subsystems we will use in relation to each other. There is also an
 		estimated percentage in each subsystem for how much work each subsystem will
 		require.
-		% Hier moet nog de afbeelding komen van het packagediagram
+		\begin{figure}[!h]
+		  \centering
+			\includegraphics[width=1\textwidth]{../class_diagrams/subsystems.png}
+		  \caption{Subsystems}
+		  \label{subsystems}
+		\end{figure}
 	\end{subsection}
 	
 	\begin{subsection}{Contracts}
 		% Hier moeten alle contracten tussen de subsystemen komen
-		\input{constracts/X_Y}
+		\input{contracts/competition_user}
+		\input{contracts/question_competition}
+		\input{contracts/question_user}
 	\end{subsection}
 	
 	% Hier moeten de subsystemen komen
-	\input{subsystems/X}
+	%\input{subsystems/management}
+	%\input{subsystems/database}
+	\input{subsystems/competition}
+	\input{subsystems/question}
+	%\input{subsystems/user}
+	%\input{subsystems/stats}
+	%\input{subsystems/data}
 	
 \end{section}	
 
