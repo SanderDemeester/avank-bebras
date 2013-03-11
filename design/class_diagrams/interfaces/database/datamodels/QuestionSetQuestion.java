@@ -7,7 +7,7 @@ import enums.Difficulty;
  *
  * @author Jens N. Rammant
  */
-public class QuestionSetQuestion {
+public class QuestionSetQuestion implements Model{
     private String questionSetID;
     private String questionID;
     private Difficulty difficulty;

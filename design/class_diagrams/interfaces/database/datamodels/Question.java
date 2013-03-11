@@ -7,10 +7,11 @@ import enums.QuestionType;
  *
  * @author Jens N. Rammant
  */
-public class Question {
+public class Question implements Model{
     private String id;
     private String officialID;
     private QuestionType type;
+    private boolean active;
     
     private String dutchName;
     private String frenchName;
@@ -23,10 +24,11 @@ public class Question {
     private String serverID;
     private String path;
 
-    public Question(String id, String officialID, QuestionType type, String dutchName, String frenchName, String germanName, String dutchAnswer, String frenchAnswer, String germanAnswer, String serverID, String path) {
+    public Question(String id, String officialID, QuestionType type, boolean active, String dutchName, String frenchName, String germanName, String dutchAnswer, String frenchAnswer, String germanAnswer, String serverID, String path) {
         this.id = id;
         this.officialID = officialID;
         this.type = type;
+        this.active = active;
         this.dutchName = dutchName;
         this.frenchName = frenchName;
         this.germanName = germanName;
@@ -35,6 +37,14 @@ public class Question {
         this.germanAnswer = germanAnswer;
         this.serverID = serverID;
         this.path = path;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+   public Question(String id) {
+        this.id = id;
     }
 
     public String getId() {

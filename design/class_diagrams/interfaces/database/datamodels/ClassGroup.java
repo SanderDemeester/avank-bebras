@@ -8,7 +8,7 @@ import java.util.Date;
  *
  * @author Jens N. Rammant
  */
-public class ClassGroup {
+public class ClassGroup implements Model{
 
     private String id;
     private String name;

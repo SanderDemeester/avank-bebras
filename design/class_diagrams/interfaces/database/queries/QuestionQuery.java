@@ -1,10 +1,12 @@
 
 package queries;
 
+import datamodels.Question;
+
 /**
  *
  * @author Jens N. Rammant
  */
-public class QuestionQuery {
+public class QuestionQuery implements Query<Question>{
 
 }

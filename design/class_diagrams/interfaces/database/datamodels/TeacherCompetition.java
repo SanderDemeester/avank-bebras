@@ -5,7 +5,7 @@ package datamodels;
  *
  * @author Jens N. Rammant
  */
-public class TeacherCompetition {
+public class TeacherCompetition implements Model{
     private String teacherID;
     private String competitionID;
 

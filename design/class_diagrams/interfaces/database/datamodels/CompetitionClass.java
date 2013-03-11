@@ -5,7 +5,7 @@ package datamodels;
  *
  * @author Jens N. Rammant
  */
-public class CompetitionClass {
+public class CompetitionClass implements Model{
     private String competitionID;
     private String classID;
 

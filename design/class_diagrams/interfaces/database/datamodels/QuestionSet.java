@@ -7,7 +7,7 @@ import enums.Level;
  *
  * @author Jens N. Rammant
  */
-public class QuestionSet {
+public class QuestionSet implements Model {
     private String id;
     private Level level;
     private String contestID;

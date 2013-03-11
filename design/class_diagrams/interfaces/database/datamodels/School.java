@@ -5,7 +5,7 @@ package datamodels;
  *
  * @author Jens N. Rammant
  */
-public class School {
+public class School implements Model{
     private String id;
     private String name;
     private String address;

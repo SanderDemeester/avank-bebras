@@ -5,7 +5,7 @@ package datamodels;
  *
  * @author Jens N. Rammant
  */
-public class Server {
+public class Server implements Model{
     private String id;
     private String address;
 

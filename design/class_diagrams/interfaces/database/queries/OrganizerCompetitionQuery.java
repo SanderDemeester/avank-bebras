@@ -1,10 +1,12 @@
 
 package queries;
 
+import datamodels.OrganizerCompetition;
+
 /**
  *
  * @author Jens N. Rammant
  */
-public class OrganizerCompetitionQuery {
+public class OrganizerCompetitionQuery implements Query<OrganizerCompetition>{
 
 }

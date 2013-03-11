@@ -5,7 +5,7 @@ package datamodels;
  *
  * @author Jens N. Rammant
  */
-public class Answer {
+public class Answer implements Model{
     private String questionID;
     private String competitionID;
     private String userID;
@@ -33,6 +33,7 @@ public class Answer {
     public String getAnswer() {
         return answer;
     }
+
     
     
 }
