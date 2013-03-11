@@ -17,8 +17,9 @@ public class User {
     private Language preferredLanguage;
     private Date registrationDate;
     private Date birthDate;
+    private boolean active;
 
-    public User(String id, String name, Gender gender, String email, Language preferredLanguage, Date registrationDate, Date birthDate) {
+    public User(String id, String name, Gender gender, String email, Language preferredLanguage, Date registrationDate, Date birthDate, boolean active) {
         this.id = id;
         this.name = name;
         this.gender = gender;
@@ -26,7 +27,10 @@ public class User {
         this.preferredLanguage = preferredLanguage;
         this.registrationDate = registrationDate;
         this.birthDate = birthDate;
+        this.active = active;
     }
+
+    
 
     public String getId() {
         return id;
@@ -55,6 +59,11 @@ public class User {
     public Date getBirthDate() {
         return birthDate;
     }
+
+    public boolean isActive() {
+        return active;
+    }
+    
     
     
 }
