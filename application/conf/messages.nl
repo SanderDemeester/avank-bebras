@@ -1,0 +1,1 @@
+test.content=Dit is een test en de inhoud is {0} en het aantal is {1}
