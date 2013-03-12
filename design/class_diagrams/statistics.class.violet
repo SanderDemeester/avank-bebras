@@ -29,12 +29,12 @@ Charter</string>
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double0"/>
-      <double>212.97339976339725</double>
+      <double>221.29784956841627</double>
      </void>
     </void>
     <void method="setLocation">
      <double>206.99237511273884</double>
-     <double>212.97339976339725</double>
+     <double>221.29784956841627</double>
     </void>
    </object>
   </void>
@@ -85,19 +85,19 @@ DataProvider</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double2"/>
-      <double>724.530364063141</double>
+      <double>726.9087782931464</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double2"/>
-      <double>14.887633087780102</double>
+      <double>10.130804627769216</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>724.530364063141</double>
-     <double>14.887633087780102</double>
+     <double>726.9087782931464</double>
+     <double>10.130804627769216</double>
     </void>
    </object>
   </void>
