@@ -12,7 +12,7 @@ import queries.Query;
  * Regarding the creation of new users: to be able to be inserted in the database, the ID of the user
  * has to be unique over ALL the users of ALL types
  */
-public interface DatabaseManagementInterface<T extends Model, Q extends Query<T>> {
+public interface DatabaseManagementInterface<T extends Model> {
         
     /*
      * Tries to insert all elements from c. Return the elements that could not be inserted
@@ -27,7 +27,7 @@ public interface DatabaseManagementInterface<T extends Model, Q extends Query<T>
     /*
      * Returns the T that comply with the restrictions set by query
      */
-    public Collection<T> get(Q Query);
+    public Collection<T> get(? extends Query<T> query);
     
     /*
      * Deletes all the elements in c. Returns those that could not be deleted
