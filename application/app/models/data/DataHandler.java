@@ -2,8 +2,9 @@
 package models.data;
 
 import java.net.URL;
-import java.util.Map;
-import java.util.TreeMap;
+import java.net.MalformedURLException;
+import java.util.List;
+import java.util.ArrayList;
 
 import models.data.FAQ;
 import models.data.Grade;
@@ -16,7 +17,7 @@ import models.data.Grade;
  */
 public class DataHandler {
 
-    private static Grade[] grades = new String[] {
+    private static Grade[] grades = new Grade[] {
         new Grade("Ewok",    10, 12),
         new Grade("Wooky",   12, 14),
         new Grade("Padawan", 14, 16),
@@ -29,15 +30,20 @@ public class DataHandler {
         "Hard"
     };
 
-    private static Map<String, URL> links = new TreeMap<String, URL>();
+    private static List<Link> links = new ArrayList<Link>(2);
     static {
-        links.put("Home", URL("www.bebras.be"));
-        links.put("FAQ", URL("faq"));
-    }
+        try {
+            links.add(new Link("Home", "http://www.bebras.be"));
+            links.add(new Link("FAQ",  "file://FAQ.html"));
+        } catch(MalformedURLException e) {
+            // Yeah, stub.
+            throw new Error(e);
+        }
+    };
 
     private static FAQ[] faqs = new FAQ[] {
         new FAQ("How do I login?", "Click the login button.")
-    }
+    };
 
     /**
      * Returns the different Grades users can belong to.
@@ -61,7 +67,7 @@ public class DataHandler {
      * Returns the links to show on the home page.
      * @return Links for the home page.
      */
-    public static Map<String, URL> getLinks() {
+    public static List<Link> getLinks() {
         return links;
     }
 
