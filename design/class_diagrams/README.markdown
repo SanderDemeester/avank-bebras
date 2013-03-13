@@ -1,3 +1,0 @@
-
-# UML Class Diagrams
-
