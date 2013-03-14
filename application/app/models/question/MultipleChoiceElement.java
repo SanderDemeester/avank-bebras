@@ -1,21 +1,30 @@
 package models.question;
 
 /**
- * 
+ * An answerable element in a MultipleChoice Question
  * @author Ruben Taelman
  *
  */
 public class MultipleChoiceElement {
+    
 	private String content;
 	
+	/**
+	 * Makes a new MultipleChoiceElement based on an input text that can be selected
+	 * @param content  the text that will appear next to the radio-button
+	 */
 	public MultipleChoiceElement(String content) {
-		
+		this.content=content;
 	}
 
+	/**
+	 * Get the input text for this element
+	 * @return the text that will appear next to the radio-button
+	 */
 	public String getContent() {
 		return content;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
