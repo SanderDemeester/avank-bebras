@@ -2,10 +2,9 @@ package controllers.User;
 
 
 /**
-	Moddeling UserID
-	@author sander
-**/
-
+ * Modeling UserID
+ * @author sander
+ */
 public class UserID {
 	
 	private String userID;
