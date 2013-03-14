@@ -13,6 +13,7 @@ import models.data.Language;
  *
  */
 public abstract class Question {
+
 	protected QuestionType type;
 	private List<Language> languages;
 	private String ID;
