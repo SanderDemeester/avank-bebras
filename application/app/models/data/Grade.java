@@ -2,7 +2,7 @@
 package models.data;
 
 /**
- * Represents a Grade or Age cathegory of a Indepent/User.
+ * Represents a Grade or Age category of a Indepent/User.
  * @author Felix Van der Jeugt
  */
 public class Grade {
@@ -43,7 +43,7 @@ public class Grade {
 
     /**
      * Returns the upper mound of the grade. Students of this age "graduate".
-     * @return The graduating age for this cathegory.
+     * @return The graduating age for this category.
      */
     public int getUpperBound() {
         return upperbound;
