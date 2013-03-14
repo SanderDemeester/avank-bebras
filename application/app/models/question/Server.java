@@ -7,6 +7,8 @@ import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * Server entity managed by Ebean.
@@ -15,11 +17,13 @@ import javax.persistence.Id;
  *
  */
 @Entity
+// @Table(name="Server") could be needed, not needed if we use Ebean's DDL generation
 public class Server extends Model implements Manager<Server> {
 
     @Id
 	public String name;
 
+    @Transient
     @Constraints.Required
     public String baseUrl;
 
