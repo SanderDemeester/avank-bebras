@@ -6,5 +6,9 @@ package controllers.User;
  * @author Sander Demeester
  */
 public class AuthenticationManager {
+	
+	public AuthenticationManager(){
+		
+	}
 
 }

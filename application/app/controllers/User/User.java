@@ -12,6 +12,10 @@ public abstract class User {
 
     private UserID id;
     private String loginType;
+    
+    public User(){
+    	
+    }
 
     /**
      * Returns info about this user as a String.
