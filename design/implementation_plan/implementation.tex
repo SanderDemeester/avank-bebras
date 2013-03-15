@@ -71,19 +71,33 @@
 \end{section}	
 
 \begin{section}{Implementation}
-	% Dit moeten we nog bespreken
 	The course of the implementation of each subsystem:
 	\begin{itemize}
-		\item Database:
-		\begin{itemize}
-			\item blablabla...
-		\end{itemize}
+		\item Data:
+			Stubs for this (small) subsystem will be created as soon as possible and it
+			will be updated when someone needs something from Data.
+		\item User:
+			The User models will be added as stubs and default implementations. The
+			User controller will be created with stubs so that the implementation of the
+			following subsystems can also start. After that the shared functionality of
+			the users will be implemented and after that each specific user type will
+			be taken care of in parallel.
   		\item Management:
-  		\item User:
+  			This subsystem is going to be created after some basic Question Model
+  			functionality is available so that is can easily be tested.	
   		\item Question:
+  			This can also be created after the basics of User are ready. At first the models
+  			will be created and the import from XML features for the questions. After that
+  			the management of models can be implemented.
   		\item Competition:
+  			When subsystem Question is ready, this subsystem can be implemented. The
+  			models will be implemented as stubs so that the dirty data features, views
+  			of competition and further implementation of the models can be created in
+  			parallel.
   		\item Stats:
-  		\item Data:
+  			When the previous subsystems are largely implemented, this subsystem can use
+  			them to start adding stats features.
+  		
 	\end{itemize}
 \end{section}
 
