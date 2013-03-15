@@ -8,7 +8,7 @@ import org.w3c.dom.NodeList;
 
 /**
  * A factory where MultipleChoiceQuestion can be created
- * @author kroeser
+ * @author Ruben Taelman
  *
  */
 public class MultipleChoiceQuestionFactory extends QuestionFactory<MultipleChoiceQuestion>{

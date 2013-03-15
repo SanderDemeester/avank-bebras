@@ -1,14 +1,22 @@
 package models.question;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Source;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
@@ -42,6 +50,7 @@ public abstract class Question {
 	public boolean active;
 	
 	/** Static fields **/
+	private static final String XML_SCHEMA = "conf/questions.xsd";
 	private static final String XML_ROOT = "/root";
 	private static final Map<String, QuestionFactory> QUESTION_TYPE_NAMES = new HashMap<String, QuestionFactory>();
 	static {
@@ -66,24 +75,42 @@ public abstract class Question {
 	 * @throws QuestionBuilderException possible things that can go wrong
 	 */
 	public static Question getFromXml(String xml) throws QuestionBuilderException {
-	    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-	    DocumentBuilder builder;
-	    
 	    Question question = null;
         try {
-            builder = factory.newDocumentBuilder();
+        	// Parse the given XML into a DOM tree
+        	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    	    DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(xml);
+            
+            // create a SchemaFactory capable of understanding our schemas
+            SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            
+            // Load our schema
+            Source schemaFile = new StreamSource(new File(XML_SCHEMA));
+            Schema schema = schemaFactory.newSchema(schemaFile);
+            
+            // create a Validator instance to validate the give XML
+            Validator validator = schema.newValidator();
+            
+            // Validate our document
+            validator.validate(new DOMSource(doc));
+            
+            // Make a factory to understand the schema
             XPathFactory xPathfactory = XPathFactory.newInstance();
             XPath xpath = xPathfactory.newXPath();
             XPathExpression expr = xpath.compile(XML_ROOT);
+            
+            // Retrieve the root nodeList
             NodeList nodeList = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
             nodeList = nodeList.item(0).getChildNodes();
             String type = nodeList.item(1).getNodeName();
+            
+            // Give the nodeList to the correct QuestionFactory to make our Question
             question = QUESTION_TYPE_NAMES.get(type).newQuestion(nodeList);
         } catch (ParserConfigurationException e) {
-            throw new QuestionBuilderException("Invalid XML, can't be parsed.");
+            throw new QuestionBuilderException("Incorrect XML, can't be parsed.");
     	} catch (SAXException e) {
-    	    throw new QuestionBuilderException("SAX Error.");
+    	    throw new QuestionBuilderException("The XML is invalid.");
         } catch (IOException e) {
             throw new QuestionBuilderException("Can't read the XML file.");
         } catch (XPathExpressionException e) {
