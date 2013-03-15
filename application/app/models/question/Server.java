@@ -11,14 +11,14 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 /**
- * Server entity managed by Ebean.
+ * ServerController entity managed by Ebean.
  *
  * @author Ruben Taelman & Kevin Stobbelaar
  *
  */
 @Entity
-// @Table(name="Server") could be needed, not needed if we use Ebean's DDL generation
-public class Server extends Model implements Manager<Server> {
+// @Table(name="ServerController") could be needed, not needed if we use Ebean's DDL generation
+public class Server extends Model {
 
     @Id
 	public String name;
@@ -31,7 +31,7 @@ public class Server extends Model implements Manager<Server> {
 	public String path;
 
     /**
-     * Generic query helper for Server entity.
+     * Generic query helper for ServerController entity.
      */
     public static Finder<String, Server> finder = new Finder<String, Server>(String.class, Server.class);
 
@@ -45,12 +45,11 @@ public class Server extends Model implements Manager<Server> {
      * @param filter   filter to select specific elements
      * @return the requested page
      */
-    @Override
-    public Page<Server> page(int page, int pageSize, String orderBy, String order, String filter) {
+    public static Page<Server> page(int page, int pageSize, String orderBy, String order, String filter) {
         return finder.where()
             .ilike("name", "%" + filter + "%")
             .orderBy(orderBy + " " + order)
-            .fetch("path")
+            // .fetch("path")
             .findPagingList(pageSize)
             .getPage(page);
     }

@@ -1,0 +1,88 @@
+@(currentPage: Page[models.question.Server], currentOrderBy: String, currentOrder: String, currentFilter: String)
+
+@*****************************************
+* Helper generating the navigation links *
+*****************************************@
+@link(newPage: Int, newOrderBy: String) = @{
+
+    var orderBy = currentOrderBy
+    var order = currentOrder
+
+        if(newOrderBy != null) {
+            orderBy = newOrderBy
+            if(currentOrderBy == newOrderBy) {
+                if(currentOrder == "asc") {
+                    order = "desc"
+                } else {
+                    order = "asc"
+                }
+            } else {
+                order = "asc"
+            }
+        }
+
+    // routes.Application.list(newPage, orderBy, order, currentFilter)
+}
+
+@***************************************
+* Helper generating the column headers *
+***************************************@
+@header(key: String, title: String) = {
+    <th class="@key.replace(".","_") header @if(currentOrderBy == key) @{if(currentOrder == "asc") "headerSortDown" else "headerSortUp"}">
+        <a href="@link(0, key)">@title</a>
+    </th>
+}
+
+@***********************
+* The list view itself *
+***********************@
+@main("List of servers") {
+
+    <!-- filtering and adding servers -->
+    <div id="actions">
+
+        <!-- when filtering, the first page has to be returned -->
+        <form action="@link(0,"name")" method="GET">
+            <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by server name...">
+            <input type="submit" id="searchsubmit" value="Filter by name" class="btn primary">
+        </form>
+
+        <!-- a button for adding a new server -->
+        <a class="button succes" id="add" href="@controllers.question.routes.ServerController.create()"> Add new server </a>
+
+    </div>
+
+    <!-- the list of servers -->
+    @if(currentPage.getTotalRowCount == 0){
+        <div>
+            <p> Nothing to display </p>
+        </div>
+    } else {
+        <table>
+
+            <thead>
+            <tr>
+                @header("name", "Computer name")
+                @header("introduced", "Introduced")
+                @header("discontinued", "Discontinued")
+                @header("company.name", "Company")
+            </tr>
+            </thead>
+
+            <tbody>
+
+                @for(server <- currentPage.getList){
+                    <tr>
+                         <td> @server.name </td>
+                         <td> @server.path </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+        // pagination buttons
+    }
+
+}
