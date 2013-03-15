@@ -5,7 +5,7 @@ import play.mvc.Result;
 
 /**
  * The default abstract class for User.
- * @author sander
+ * @author Sander Demeester
 **/
 
 public abstract class User {
