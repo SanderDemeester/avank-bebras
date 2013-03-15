@@ -1,11 +1,12 @@
 package controllers;
 
 import play.GlobalSettings;
-import play.api.*;
-import play.mvc.*;
-import views.html.*;
+import play.mvc.Result;
 import static play.mvc.Results.*;
 
+/**
+ * @author Sander Demeester
+ */
 public class Global extends GlobalSettings{
 	
 	 public Result onError(Throwable t) {
