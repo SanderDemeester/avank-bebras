@@ -26,6 +26,7 @@ public class Teacher extends SuperUser{
 	}
 	
 	/**
+	 * @param regex A regex for filtering.
 	 * Apply's a seach filter for the teacher to Filter through all students in the System
 	 */
 	public void searchStudents(String regex){
