@@ -21,7 +21,7 @@
             }
         }
 
-    // routes.Application.list(newPage, orderBy, order, currentFilter)
+    // routes.Application.list(newPage, 10, orderBy, order, currentFilter)
 }
 
 @***************************************
@@ -62,10 +62,9 @@
 
             <thead>
             <tr>
-                @header("name", "Computer name")
-                @header("introduced", "Introduced")
-                @header("discontinued", "Discontinued")
-                @header("company.name", "Company")
+                @header("name", "Server name")
+                @header("path", "Server's path")
+                @header("baseUrl", "Server's base URL")
             </tr>
             </thead>
 
@@ -75,6 +74,7 @@
                     <tr>
                          <td> @server.name </td>
                          <td> @server.path </td>
+                         <td> @server.baseUrl </td>
                     </tr>
                 }
 
@@ -82,7 +82,7 @@
 
         </table>
 
-        // pagination buttons
+        <!-- pagination buttons -->
     }
 
 }

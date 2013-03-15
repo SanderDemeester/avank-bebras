@@ -1,13 +1,11 @@
 package models.question;
 
 import com.avaje.ebean.Page;
-import models.management.Manager;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 
 /**
