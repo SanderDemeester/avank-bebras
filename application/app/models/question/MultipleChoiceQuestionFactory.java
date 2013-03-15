@@ -21,7 +21,7 @@ public class MultipleChoiceQuestionFactory extends QuestionFactory<MultipleChoic
     }
     
     @Override
-    public Question newQuestion(NodeList nodeList) {
+    public Question newQuestion(NodeList nodeList) throws QuestionBuilderException {
         this.nodeActions.put("answers", new AnswersNodeAction());
         MultipleChoiceQuestion question = new MultipleChoiceQuestion();
         this.processCommonElements(question, nodeList);
@@ -39,7 +39,8 @@ public class MultipleChoiceQuestionFactory extends QuestionFactory<MultipleChoic
         @Override
         public void processValue(MultipleChoiceQuestion question,
                 Language language, String value, NodeList nodeList,
-                NamedNodeMap attributes) {
+                NamedNodeMap attributes) throws QuestionBuilderException {
+        	boolean containsOneCorrect = false;
             // Loop over the answer-nodes
             for(int i=0;i<nodeList.getLength();i++) {
                 Node answerNode = nodeList.item(i);
@@ -53,8 +54,18 @@ public class MultipleChoiceQuestionFactory extends QuestionFactory<MultipleChoic
                     Node attribute = answerNode.getAttributes().getNamedItem(ATTRIBUTE_ANSWER_CORRECT);
                     if(attribute!=null && attribute.getNodeValue().equals("true")) {
                         question.setCorrectElement(language, element);
+                        // Throw exception if there already was a correct answer
+                        if(containsOneCorrect) {
+                        	throw new QuestionBuilderException("The answers for language "+language.getCode()+" contain more than one correct answers.");
+                        }
+                        containsOneCorrect = true;
                     }
                 }
+            }
+            
+            // Throw exception if there are no correct answers in the answer list
+            if(!containsOneCorrect) {
+            	throw new QuestionBuilderException("The answers for language "+language.getCode()+" contain no correct answers.");
             }
         }
         

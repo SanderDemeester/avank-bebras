@@ -75,6 +75,7 @@ public abstract class Question {
 	 * @throws QuestionBuilderException possible things that can go wrong
 	 */
 	public static Question getFromXml(String xml) throws QuestionBuilderException {
+		// TODO: Set Server and ID upon loading the XML file
 	    Question question = null;
         try {
         	// Parse the given XML into a DOM tree
