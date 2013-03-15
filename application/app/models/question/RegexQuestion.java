@@ -12,6 +12,10 @@ public class RegexQuestion extends Question{
 	public RegexQuestion() {
 	    this.type=QuestionType.REGEX;
 	}
+	
+	public void setRegex(String regex) {
+		this.regex=regex;
+	}
 
 	protected String getRegex() {
 		return regex;
