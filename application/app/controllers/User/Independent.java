@@ -3,6 +3,8 @@ package controllers.User;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.user.ClassGroup;
+
 import play.mvc.Result;
 
 public class Independent extends User{
@@ -14,26 +16,46 @@ public class Independent extends User{
 		previousClassList = new ArrayList<String>();
 	}
 	
-	//need to add documentation.
+	/**
+	 * Constructor for Independent-user. 
+	 * This constructor makes a copy of all the information
+	 * provided in independent.
+	 * @param independent
+	 */
 	public Independent(Independent independent){
 		
 	}
 
+	/**
+	 * Show specific landingpage for user Independent.
+	 */
 	@Override
 	public Result showLandingPage() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
+	/**
+	 * Add an old class
+	 * @param oldClass
+	 */
 	public void addPreviousClass(String oldClass){
 		previousClassList.add(oldClass);
 	}
 	
+	/**
+	 * Add a class to Independent user.
+	 * @param classGroup
+	 */
 	public void addCurrentClass(ClassGroup classGroup){
 		
 	}
 	
-	public String getCurrentClass(){
+	/**
+	 * 
+	 * @return Get currentClass.
+	 */
+	public ClassGroup getCurrentClass(){
 		return null;
 	}
 	

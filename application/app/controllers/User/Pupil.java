@@ -10,7 +10,11 @@ public class Pupil extends Independent{
 	}
 	
 	
-	//need to add argumen
+	/**
+	 * 
+	 * @param competition 
+	 * @return returns if adding competition was succesfull.
+	 */
 	public boolean addCompetition(Competition competition){
 		return false;
 	}

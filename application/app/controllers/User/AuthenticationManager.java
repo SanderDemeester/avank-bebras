@@ -7,6 +7,9 @@ package controllers.User;
  */
 public class AuthenticationManager {
 	
+	/**
+	 * AuthenticationManager constructor.
+	 */
 	public AuthenticationManager(){
 		
 	}

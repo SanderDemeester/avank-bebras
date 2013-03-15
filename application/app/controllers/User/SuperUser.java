@@ -11,6 +11,10 @@ public abstract class SuperUser extends User{
 		
 	}
 
+	/**
+	 * reset password for user.
+	 * @param user
+	 */
 	public void resetPassword(User user){
 	
 	}
