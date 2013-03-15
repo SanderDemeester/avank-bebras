@@ -1,5 +1,5 @@
 
-package controllers.User;
+package controllers.user;
 
 /**
  * Class to handle UserAuthentication.

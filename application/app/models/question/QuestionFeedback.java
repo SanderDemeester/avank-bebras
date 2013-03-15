@@ -2,6 +2,11 @@ package models.question;
 
 import java.util.Map;
 
+/**
+ * 
+ * @author Ruben Taelman
+ *
+ */
 public class QuestionFeedback {
 	private Map<Question, FeedbackElement> feedbackElements;
 	private int score;

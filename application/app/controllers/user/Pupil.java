@@ -1,6 +1,11 @@
-package controllers.User;
-import models.competition.*;
 
+package controllers.user;
+
+import models.competition.Competition;
+
+/**
+ * @author Sander Demeester
+ */
 public class Pupil extends Independent{
 
 	//We first need a competition object.

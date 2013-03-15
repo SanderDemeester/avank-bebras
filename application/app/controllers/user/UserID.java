@@ -1,9 +1,9 @@
-package controllers.User;
 
+package controllers.user;
 
 /**
  * Modeling UserID
- * @author sander
+ * @author Sander Demeester
  */
 public class UserID {
 	

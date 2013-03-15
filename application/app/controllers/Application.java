@@ -2,11 +2,15 @@ package controllers;
 
 import models.question.Question;
 import models.question.QuestionBuilderException;
-import play.*;
-import play.mvc.*;
+
+import play.mvc.Result;
 
 import views.html.*;
 
+/**
+ * @author Ruben Taelman
+ * @author Sander Demeester
+ */
 public class Application extends EController {
   
   public static Result index() {

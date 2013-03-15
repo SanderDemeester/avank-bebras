@@ -1,4 +1,5 @@
-package controllers.User;
+
+package controllers.user;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +8,9 @@ import models.user.ClassGroup;
 
 import play.mvc.Result;
 
+/**
+ * @author Sander Demeester
+ */
 public class Independent extends User{
 	
 	private List<String> previousClassList;

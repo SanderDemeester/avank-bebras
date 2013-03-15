@@ -13,7 +13,8 @@ import javax.persistence.Transient;
 /**
  * Server entity managed by Ebean.
  *
- * @author Ruben Taelman & Kevin Stobbelaar
+ * @author Ruben Taelman
+ * @author Kevin Stobbelaar
  *
  */
 @Entity

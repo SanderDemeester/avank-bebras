@@ -12,7 +12,7 @@ import org.w3c.dom.NodeList;
 
 /**
  * Abstract class for Question factories
- * @author kroeser
+ * @author Ruben Taelman
  *
  */
 public abstract class QuestionFactory<T extends Question> {

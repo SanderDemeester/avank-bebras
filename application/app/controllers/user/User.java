@@ -1,5 +1,5 @@
 
-package controllers.User;
+package controllers.user;
 
 import play.mvc.Result;
 

@@ -1,9 +1,13 @@
-package controllers.User;
+
+package controllers.user;
 
 import java.util.Set;
 
 import play.mvc.Result;
 
+/**
+ * @author Sander Demeester
+ */
 public class Organizer extends SuperUser{
 	
 	public Organizer(){

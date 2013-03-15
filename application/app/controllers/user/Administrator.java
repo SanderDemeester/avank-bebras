@@ -1,7 +1,11 @@
-package controllers.User;
+
+package controllers.user;
 
 import play.mvc.Result;
 
+/**
+ * @author Sander Demeester
+ */
 public class Administrator extends Organizer{
 	
 	/**

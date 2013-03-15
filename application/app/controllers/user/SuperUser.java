@@ -1,8 +1,9 @@
-package controllers.User;
+
+package controllers.user;
 
 /**
  * Abstract superUser class
- * @author sander
+ * @author Sander Demeester
 **/
 
 public abstract class SuperUser extends User{

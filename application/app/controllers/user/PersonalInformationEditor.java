@@ -1,11 +1,12 @@
-package controllers.User;
+
+package controllers.user;
 
 import org.codehaus.jackson.JsonNode;
 import play.mvc.Result;
 
 /**
  * This class contains all the logic for chaning/updating a user person information.
- * @author sander
+ * @author Sander Demeester
 **/
 public class PersonalInformationEditor {
 	
