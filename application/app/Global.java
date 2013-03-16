@@ -21,7 +21,7 @@ public class Global extends GlobalSettings{
 	 @Override
 	 public Result onHandlerNotFound(RequestHeader request){
 		 return notFound(
-				 views.html.PageNotFound.render("This is not the page that you are looking for", request.path())
+				 views.html.PageNotFound.render("these aren't the pages you're looking for", request.path())
 				 );
 	 }
 }
