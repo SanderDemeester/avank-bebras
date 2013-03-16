@@ -22,8 +22,6 @@ public class Global extends GlobalSettings{
 
     @Override
     public Result onHandlerNotFound(RequestHeader request){
-    	EController econtroller = new EController();
-    	econtroller.setCommonHeaders();
         return notFound(
             views.html.PageNotFound.render("These aren't the pages you're looking for", request.path())
         );
