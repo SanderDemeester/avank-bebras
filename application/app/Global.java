@@ -1,6 +1,8 @@
-package controllers;
 
+
+import net.sf.ehcache.search.Results;
 import play.GlobalSettings;
+import play.mvc.Http.RequestHeader;
 import play.mvc.Result;
 import static play.mvc.Results.*;
 
@@ -14,10 +16,12 @@ public class Global extends GlobalSettings{
 	     views.html.index.render("fout")
 	    );
 	  }  
+	
 	 
-	  public Result onActionNotFound(String uri) {
-	    return notFound(
-	      views.html.PageNotFound.render("This is not the page you are looking for")
-	    );
-	  }  
+	 @Override
+	 public Result onHandlerNotFound(RequestHeader request){
+		 return notFound(
+				 views.html.PageNotFound.render("This is not the page that you are looking for", request.path())
+				 );
+	 }
 }
