@@ -6,7 +6,7 @@ package models.question;
  *
  */
 public class QuestionBuilderException extends Exception{
-    
+
     public QuestionBuilderException(String message) {
         super(message);
     }

@@ -6,12 +6,12 @@ package controllers.user;
  * @author Sander Demeester
  */
 public class AuthenticationManager {
-	
-	/**
-	 * AuthenticationManager constructor.
-	 */
-	public AuthenticationManager(){
-		
-	}
+
+    /**
+     * AuthenticationManager constructor.
+     */
+    public AuthenticationManager(){
+
+    }
 
 }

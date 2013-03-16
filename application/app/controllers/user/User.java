@@ -12,9 +12,9 @@ public abstract class User {
 
     private UserID id;
     private String loginType;
-    
+
     public User(){
-    	
+
     }
 
     /**

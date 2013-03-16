@@ -6,14 +6,14 @@ package models.question;
  *
  */
 public class RegexQuestion extends Question{
-    
-	private String regex;
-	
-	public RegexQuestion() {
-	    this.type=QuestionType.REGEX;
-	}
 
-	protected String getRegex() {
-		return regex;
-	}
+    private String regex;
+
+    public RegexQuestion() {
+        this.type=QuestionType.REGEX;
+    }
+
+    protected String getRegex() {
+        return regex;
+    }
 }

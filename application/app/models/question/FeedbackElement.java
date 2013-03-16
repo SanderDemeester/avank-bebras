@@ -1,7 +1,7 @@
 package models.question;
 
 /**
- * 
+ *
  * @author Ruben Taelman
  *
  */

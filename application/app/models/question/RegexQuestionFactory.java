@@ -15,7 +15,7 @@ public class RegexQuestionFactory extends QuestionFactory<RegexQuestion> {
     public RegexQuestionFactory() {
         super();
     }
-    
+
     @Override
     public Question newQuestion(NodeList nodeList) {
         // TODO Auto-generated method stub

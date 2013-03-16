@@ -22,14 +22,14 @@ import javax.persistence.Transient;
 public class Server extends Model implements Manager<Server> {
 
     @Id
-	public String name;
+    public String name;
 
     @Transient
     @Constraints.Required
     public String baseUrl;
 
     @Constraints.Required
-	public String path;
+    public String path;
 
     /**
      * Generic query helper for Server entity.
