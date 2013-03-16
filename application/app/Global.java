@@ -1,10 +1,7 @@
 
 
-import org.apache.xalan.templates.ElemExtensionCall;
 
 import controllers.EController;
-
-import net.sf.ehcache.search.Results;
 import play.GlobalSettings;
 import play.mvc.Http.RequestHeader;
 import play.mvc.Result;
