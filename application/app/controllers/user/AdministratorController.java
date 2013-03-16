@@ -1,21 +1,21 @@
-
 package controllers.user;
 
 import play.mvc.Result;
-
 /**
+ * The purpose of this class is to contain all logic 
+ * for returning a view back to the client. This specific view is for an Administrator.
  * @author Sander Demeester
  */
-public class Administrator extends Organizer{
-
-    /**
-     * Constructor for Administrator.
-     **/
-    public Administrator(){
-        super();
-    }
-
-    /**
+public class AdministratorController extends AbstractUserController {
+	
+	
+	@Override
+	public Result showLandingPage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	/**
      * This methode contains the logic to generate the hompage links.
      * @return returns a Result view to the homepage links.
      */
@@ -47,5 +47,6 @@ public class Administrator extends Organizer{
     public Result manageFAQ(){
         return null;
     }
+
 
 }

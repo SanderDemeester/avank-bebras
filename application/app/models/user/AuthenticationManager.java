@@ -1,5 +1,5 @@
 
-package controllers.user;
+package models.user;
 
 /**
  * Class to handle UserAuthentication.

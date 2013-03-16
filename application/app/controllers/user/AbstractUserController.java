@@ -1,46 +1,15 @@
-
 package controllers.user;
 
 import play.mvc.Result;
 
-/**
- * The default abstract class for User.
- * @author Sander Demeester
-**/
-
-public abstract class User {
-
-    private UserID id;
-    private String loginType;
-
-    public User(){
-
-    }
-
-    /**
-     * Returns info about this user as a String.
-     * @return Userinfo.
-     */
-    public String getUserInfo() {
-        return null;
-    }
-
-    /**
-     * Reset the password of this user. Is delegated to the
-     * AuthenticationManager.
-     */
-    public void resetPassword(){
-
-    }
-
-    /**
-     * Logs out the user. Is delegated to the AuthenticationManager.
-     */
-    public void logout(){
-
-    }
-
-    /**
+/*
+ * The purpose of this class is to create a abstract type for all UserControllers. 
+ * Different roles need different view handlers. The basis for all handlers is this class.
+ *  @author Sander Demeester
+ */
+public abstract class AbstractUserController {
+	
+	/**
      * The returned page is where the user arrives after login in.
      * @return The user's landing page.
      */
@@ -65,4 +34,5 @@ public abstract class User {
         //TODO: add proper driver code.
         return null;
     }
+
 }

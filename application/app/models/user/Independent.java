@@ -1,10 +1,9 @@
 
-package controllers.user;
+package models.user;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import models.user.ClassGroup;
 
 import play.mvc.Result;
 
@@ -28,15 +27,6 @@ public class Independent extends User{
      */
     public Independent(Independent independent){
 
-    }
-
-    /**
-     * Show specific landingpage for user Independent.
-     */
-    @Override
-    public Result showLandingPage() {
-        // TODO Auto-generated method stub
-        return null;
     }
 
     /**

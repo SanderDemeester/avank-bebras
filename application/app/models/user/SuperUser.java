@@ -1,5 +1,5 @@
 
-package controllers.user;
+package models.user;
 
 /**
  * Abstract superUser class

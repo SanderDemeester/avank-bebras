@@ -1,5 +1,5 @@
 
-package controllers.user;
+package models.user;
 
 import play.mvc.Result;
 
@@ -15,15 +15,7 @@ public class Teacher extends SuperUser{
 
     }
 
-    /* (non-Javadoc)
-     * @see controllers.User.User#showLandingPage()
-     */
-    @Override
-    public Result showLandingPage() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
+    
 
     public void scheduleUnrestrictedCompetition(){
 
