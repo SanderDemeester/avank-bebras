@@ -9,11 +9,11 @@ public class ErrorPageTest {
 
 	@Test
 	public void test() {
-		   running(fakeApplication(), new Runnable(){
-	            public void run(){
-	                // TODO write tests for pagination
-	            }
-	        });
+		running(fakeApplication(), new Runnable(){
+	        public void run(){
+	            // TODO write tests for pagination
+	        }
+	    });
 	}
 
 }
