@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			xmlns:Q="bebras:Question"
+			targetNamespace="bebras:Question"
+			elementFormDefault="qualified">
 
 	<!-- root element -->
 	<xsd:element name="root">
 		<xsd:complexType>
 			<xsd:choice>
-				<xsd:element name="regex-question" type="regex-question" />
-				<xsd:element name="multiple-choice-question" type="mc-question" />
+				<xsd:element name="regex-question" type="Q:regex-question" />
+				<xsd:element name="multiple-choice-question" type="Q:mc-question" />
 			</xsd:choice>
 		</xsd:complexType>
 	</xsd:element>
@@ -14,13 +17,13 @@
 	<!-- question -->	
 	<xsd:complexType name="mc-question">
 		<xsd:sequence>
-			<xsd:element name="language" type="mc-language" maxOccurs="unbounded" />
+			<xsd:element name="language" type="Q:mc-language" maxOccurs="unbounded" />
 		</xsd:sequence>
 	</xsd:complexType>
 	
 	<xsd:complexType name="regex-question">
 		<xsd:sequence>
-			<xsd:element name="language" type="regex-language" maxOccurs="unbounded" />
+			<xsd:element name="language" type="Q:regex-language" maxOccurs="unbounded" />
 		</xsd:sequence>
 	</xsd:complexType>
 	
@@ -36,9 +39,9 @@
 	
 	<xsd:complexType name="mc-language">
 		<xsd:complexContent>
-			<xsd:extension base="base-language">
+			<xsd:extension base="Q:base-language">
 				<xsd:sequence>
-					<xsd:element name="answers" type="answers-type" />
+					<xsd:element name="answers" type="Q:answers-type" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -46,9 +49,9 @@
 	
 	<xsd:complexType name="regex-language">
 		<xsd:complexContent>
-			<xsd:extension base="base-language">
+			<xsd:extension base="Q:base-language">
 				<xsd:sequence>
-					<xsd:element name="input" type="input-type" />
+					<xsd:element name="input" type="Q:input-type" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -57,7 +60,7 @@
 	<!-- answers -->
 	<xsd:complexType name="answers-type">
 		<xsd:sequence>
-			<xsd:element name="answer" type="answer-type" maxOccurs="unbounded" />
+			<xsd:element name="answer" type="Q:answer-type" maxOccurs="unbounded" />
 		</xsd:sequence>
 	</xsd:complexType>
 	
