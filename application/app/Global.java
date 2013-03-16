@@ -1,5 +1,9 @@
 
 
+import org.apache.xalan.templates.ElemExtensionCall;
+
+import controllers.EController;
+
 import net.sf.ehcache.search.Results;
 import play.GlobalSettings;
 import play.mvc.Http.RequestHeader;
@@ -21,6 +25,8 @@ public class Global extends GlobalSettings{
 
     @Override
     public Result onHandlerNotFound(RequestHeader request){
+    	EController econtroller = new EController();
+    	econtroller.setCommonHeaders();
         return notFound(
             views.html.PageNotFound.render("These aren't the pages you're looking for", request.path())
         );
