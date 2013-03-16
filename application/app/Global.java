@@ -4,6 +4,8 @@ import net.sf.ehcache.search.Results;
 import play.GlobalSettings;
 import play.mvc.Http.RequestHeader;
 import play.mvc.Result;
+import static play.mvc.Results.internalServerError;
+import static play.mvc.Results.notFound;
 
 /**
  * @author Sander Demeester
