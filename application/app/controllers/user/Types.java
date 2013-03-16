@@ -1,6 +1,6 @@
 package controllers.user;
 
-public enum Roles {
+public enum Types {
 	
 	ADMINISTRATOR,
 	ORGANIZER,

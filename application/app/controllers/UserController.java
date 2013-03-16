@@ -10,7 +10,7 @@ import controllers.user.AdministratorController;
 import controllers.user.IndependentController;
 import controllers.user.OrganizerController;
 import controllers.user.PupilController;
-import controllers.user.Roles;
+import controllers.user.Types;
 import controllers.user.TeacherController;
 
 /**
@@ -30,16 +30,16 @@ import controllers.user.TeacherController;
 public class UserController {
 	
 	
-	private HashMap<Roles, AbstractUserController> userControllerMapping = new HashMap<Roles, AbstractUserController>();
+	private HashMap<Types, AbstractUserController> userControllerMapping = new HashMap<Types, AbstractUserController>();
 	
 	public UserController(){
 		
-		userControllerMapping.put(Roles.ADMINISTRATOR,new AdministratorController());
-		userControllerMapping.put(Roles.ANON,null); //Yes, we need to fix this.
-		userControllerMapping.put(Roles.INDEPENDENT, new IndependentController());
-		userControllerMapping.put(Roles.ORGANIZER, new OrganizerController());
-		userControllerMapping.put(Roles.PUPIL, new PupilController());
-		userControllerMapping.put(Roles.TEACHER, new TeacherController());
+		userControllerMapping.put(Types.ADMINISTRATOR,new AdministratorController());
+		userControllerMapping.put(Types.ANON,null); //Yes, we need to fix this.
+		userControllerMapping.put(Types.INDEPENDENT, new IndependentController());
+		userControllerMapping.put(Types.ORGANIZER, new OrganizerController());
+		userControllerMapping.put(Types.PUPIL, new PupilController());
+		userControllerMapping.put(Types.TEACHER, new TeacherController());
 		
 	}
 	
