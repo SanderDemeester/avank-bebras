@@ -1,6 +1,7 @@
 
 
-import net.sf.ehcache.search.Results;
+
+import controllers.EController;
 import play.GlobalSettings;
 import play.mvc.Http.RequestHeader;
 import play.mvc.Result;
