@@ -11,17 +11,10 @@ import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 
 import models.data.Language;
 
@@ -51,7 +44,7 @@ public abstract class Question {
 	
 	/** Static fields **/
 	private static final String XML_SCHEMA = "conf/questions.xsd";
-	private static final String XML_ROOT = "/root";
+	private static final String XML_ROOT = "root";
 	private static final Map<String, QuestionFactory> QUESTION_TYPE_NAMES = new HashMap<String, QuestionFactory>();
 	static {
 	    QUESTION_TYPE_NAMES.put("multiple-choice-question", new MultipleChoiceQuestionFactory());
@@ -80,42 +73,40 @@ public abstract class Question {
         try {
         	// Parse the given XML into a DOM tree
         	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        	factory.setNamespaceAware(true);
+        	
+        	// create a SchemaFactory capable of understanding our schemas
+            SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI); 
+            // Load our schema
+            Schema schema = sf.newSchema(new File(XML_SCHEMA));
+            //factory.setSchema(schema); </-- DO NOT USE THIS, IT WILL ADD OPTIONAL ATTRS EVERYWHERE!
+            
+        	// Parse our file
     	    DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(xml);
-            
-            // create a SchemaFactory capable of understanding our schemas
-            SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            
-            // Load our schema
-            Source schemaFile = new StreamSource(new File(XML_SCHEMA));
-            Schema schema = schemaFactory.newSchema(schemaFile);
-            
+                        
             // create a Validator instance to validate the give XML
             Validator validator = schema.newValidator();
-            
+
             // Validate our document
             validator.validate(new DOMSource(doc));
-            
-            // Make a factory to understand the schema
-            XPathFactory xPathfactory = XPathFactory.newInstance();
-            XPath xpath = xPathfactory.newXPath();
-            XPathExpression expr = xpath.compile(XML_ROOT);
-            
+                        
             // Retrieve the root nodeList
-            NodeList nodeList = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+            NodeList nodeList = doc.getChildNodes();
             nodeList = nodeList.item(0).getChildNodes();
             String type = nodeList.item(1).getNodeName();
             
             // Give the nodeList to the correct QuestionFactory to make our Question
             question = QUESTION_TYPE_NAMES.get(type).newQuestion(nodeList);
+            
         } catch (ParserConfigurationException e) {
             throw new QuestionBuilderException("Incorrect XML, can't be parsed.");
     	} catch (SAXException e) {
-    	    throw new QuestionBuilderException("The XML is invalid.");
+    	    throw new QuestionBuilderException("The XML is invalid."+e.getMessage());
         } catch (IOException e) {
             throw new QuestionBuilderException("Can't read the XML file.");
-        } catch (XPathExpressionException e) {
-            throw new QuestionBuilderException("Can't select the root node.");
+        /*} catch (XPathExpressionException e) {
+            throw new QuestionBuilderException("Can't select the root node.");*/
     	} catch (NullPointerException e) {
     	    throw new QuestionBuilderException("Unknown question type.");
         }        
@@ -208,7 +199,7 @@ public abstract class Question {
 	 * @param language chosen language
 	 * @return the title of this question in the given language
 	 */
-	public String getTitles(Language language) {
+	public String getTitle(Language language) {
 		return this.titles.get(language);
 	}
 	
@@ -231,12 +222,30 @@ public abstract class Question {
     }
     
     /**
+     * Gets the index file name for a given language
+     * @param language chosen language
+     * @return the index file name for the question
+     */
+    public String getIndex(Language language) {
+        return indexes.get(language);
+    }
+    
+    /**
      * Sets the feedback file name for a given language
      * @param title the feedback file name for the question
      * @param language chosen language
      */
     public void setFeedback(String title, Language language) {
         this.feedbacks.put(language, title);
+    }
+    
+    /**
+     * Gets the feedback file name for a given language
+     * @param language chosen language
+     * @return the feedback file name for the question
+     */
+    public String getFeedback(Language language) {
+        return feedbacks.get(language);
     }
 	
 }

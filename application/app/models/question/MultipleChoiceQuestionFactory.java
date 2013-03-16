@@ -44,14 +44,16 @@ public class MultipleChoiceQuestionFactory extends QuestionFactory<MultipleChoic
             // Loop over the answer-nodes
             for(int i=0;i<nodeList.getLength();i++) {
                 Node answerNode = nodeList.item(i);
+                
                 // Only check valid xml-elements
                 if(answerNode.getNodeName().equals(ELEMENT_ANSWER)) {
                     // Add the current element to the Question
-                    MultipleChoiceElement element = new MultipleChoiceElement(answerNode.getNodeValue());
+                    MultipleChoiceElement element = new MultipleChoiceElement(getNodeValue(answerNode));
                     question.addElement(language, element);
                     
                     // Check if the element is the correct one, and add those one to the Question
                     Node attribute = answerNode.getAttributes().getNamedItem(ATTRIBUTE_ANSWER_CORRECT);
+                    
                     if(attribute!=null && attribute.getNodeValue().equals("true")) {
                         question.setCorrectElement(language, element);
                         // Throw exception if there already was a correct answer

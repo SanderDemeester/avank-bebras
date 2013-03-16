@@ -14,7 +14,7 @@ public class Application extends EController {
 	  
 	  Question q=null;
 	  try {
-		  q = Question.getFromXml("http://www.rubensworks.net/bebras/example_question_regex.xml");
+		  q = Question.getFromXml("http://www.rubensworks.net/bebras/example_question_mc.xml");
 	  } catch (QuestionBuilderException e) {
 		// TODO Auto-generated catch block
 		  return internalServerError(e.getMessage());

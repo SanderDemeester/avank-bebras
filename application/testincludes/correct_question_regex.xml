@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns="bebras:Question">
+<regex-question>
+
+	<language code="en">
+		<index>index_en.html</index>
+		<feedback>feedback_en.html</feedback>
+		<title>A Question</title>
+		<input regex="a wo+rd" />
+	</language>
+	
+	<language code="nl">
+		<index>index_nl.html</index>
+		<feedback>feedback_nl.html</feedback>
+		<title>Een vraag</title>
+		<input regex="een wo+rd" />
+	</language>
+	
+</regex-question>
+</root>

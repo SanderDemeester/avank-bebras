@@ -60,7 +60,7 @@ public class RegexQuestionFactory extends QuestionFactory<RegexQuestion> {
         	Node regexAttribute = attributes.getNamedItem(ATTRIBUTE_REGEX);
         	String regex = regexAttribute.getNodeValue();
         	if(isValidRegex(regex))
-        		question.setRegex(regex);
+        		question.setRegex(language, regex);
         	else
         		throw new QuestionBuilderException("Invalid regular expression found in language "+language.getCode());
         }

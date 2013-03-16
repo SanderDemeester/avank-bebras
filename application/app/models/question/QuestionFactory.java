@@ -38,6 +38,22 @@ public abstract class QuestionFactory<T extends Question> {
     }
     
     /**
+     * Helper method to solve the issue that JUnit has another definition of Node value
+     * @param node
+     * @return
+     */
+    public static String getNodeValue(Node node) {
+        StringBuffer buf = new StringBuffer();
+        NodeList children = node.getChildNodes();
+        for (int i = 0; i < children.getLength(); i++) {
+            Node textChild = children.item(i);
+            if (textChild.getNodeType() == Node.TEXT_NODE)
+                buf.append(textChild.getNodeValue());
+        }
+        return buf.toString();
+    }
+    
+    /**
      * Processes common elements of the question structure
      * @param question question to alter
      * @param nodeList starting nodeList
@@ -65,7 +81,7 @@ public abstract class QuestionFactory<T extends Question> {
 	                    Node actionNode = languageElements.item(j);
 	                    NodeAction action = nodeActions.get(actionNode.getNodeName());
 	                    if(action!=null) {
-	                        action.processValue(question, language, actionNode.getNodeValue()
+	                        action.processValue(question, language, getNodeValue(actionNode)
 	                                , actionNode.getChildNodes(), actionNode.getAttributes());
 	                    }
 	                }
