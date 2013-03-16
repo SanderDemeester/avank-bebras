@@ -42,8 +42,9 @@
      <void property="text">
       <string>+isGrade() : boolean
 +isDifficulty() : boolean
-+getValue() : int
-+setValue(int val) : void</string>
++getValue() : string
++setValue(string) : void
+</string>
      </void>
     </void>
     <void property="name">
@@ -63,7 +64,7 @@
    <object id="ClassNode1" class="com.horstmann.violet.ClassNode">
     <void property="attributes">
      <void property="text">
-      <string>type : int</string>
+      <string>- type : string</string>
      </void>
     </void>
     <void property="name">
@@ -74,8 +75,8 @@
    </object>
    <object class="java.awt.geom.Point2D$Double">
     <void method="setLocation">
-     <double>462.0</double>
-     <double>390.0</double>
+     <double>219.0</double>
+     <double>396.0</double>
     </void>
    </object>
   </void>
@@ -83,7 +84,7 @@
    <object id="ClassNode2" class="com.horstmann.violet.ClassNode">
     <void property="attributes">
      <void property="text">
-      <string>type : int</string>
+      <string>- type : string</string>
      </void>
     </void>
     <void property="name">
@@ -94,8 +95,8 @@
    </object>
    <object class="java.awt.geom.Point2D$Double">
     <void method="setLocation">
-     <double>700.0</double>
-     <double>389.0</double>
+     <double>832.0</double>
+     <double>397.0</double>
     </void>
    </object>
   </void>
@@ -105,6 +106,67 @@
     <void method="setLocation">
      <double>360.0</double>
      <double>227.0</double>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object id="ClassNode3" class="com.horstmann.violet.ClassNode">
+    <void property="attributes">
+     <void property="text">
+      <string>listQuestions : list&lt;string&gt;
+listAnswers : list&lt;string&gt;
+
+</string>
+     </void>
+    </void>
+    <void property="methods">
+     <void property="text">
+      <string>+addQuestion(string) : void
++removeQuestion(string) : void
++addAnswer(string) : void
++removeAnswer(string) : void
++getListFAQ() : string</string>
+     </void>
+    </void>
+    <void property="name">
+     <void property="text">
+      <string>Faq</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double">
+    <void method="setLocation">
+     <double>363.0</double>
+     <double>396.0</double>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object id="ClassNode4" class="com.horstmann.violet.ClassNode">
+    <void property="attributes">
+     <void property="text">
+      <string>- linkToPage : string
+- ownerPage : string</string>
+     </void>
+    </void>
+    <void property="methods">
+     <void property="text">
+      <string>+getLinkToPage() : string
++getOwnerPage() : string
++setLinkToPage(string) : void
++setOwnerPage(string) : void</string>
+     </void>
+    </void>
+    <void property="name">
+     <void property="text">
+      <string>HomePageLink</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double">
+    <void method="setLocation">
+     <double>611.0</double>
+     <double>398.0</double>
     </void>
    </object>
   </void>
@@ -160,6 +222,36 @@
     </void>
    </object>
    <object idref="ClassNode0"/>
+   <object idref="InterfaceNode0"/>
+  </void>
+  <void method="connect">
+   <object class="com.horstmann.violet.ClassRelationshipEdge">
+    <void property="bentStyle">
+     <object class="com.horstmann.violet.BentStyle" field="VHV"/>
+    </void>
+    <void property="endArrowHead">
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/>
+    </void>
+    <void property="lineStyle">
+     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/>
+    </void>
+   </object>
+   <object idref="ClassNode3"/>
+   <object idref="InterfaceNode0"/>
+  </void>
+  <void method="connect">
+   <object class="com.horstmann.violet.ClassRelationshipEdge">
+    <void property="bentStyle">
+     <object class="com.horstmann.violet.BentStyle" field="VHV"/>
+    </void>
+    <void property="endArrowHead">
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/>
+    </void>
+    <void property="lineStyle">
+     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/>
+    </void>
+   </object>
+   <object idref="ClassNode4"/>
    <object idref="InterfaceNode0"/>
   </void>
  </object>
