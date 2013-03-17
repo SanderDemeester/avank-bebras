@@ -16,6 +16,14 @@ import controllers.EController;
  */
 public class QuestionEditorController extends EController {
 
+    // TODO If the links here won't change, it better for efficiency to define
+    // these as a constant:
+    //
+    // private static List<Link> breadcrumbs = new ArrayList<List>();
+    // static {
+    //     breadcrumbs.add(new Link("Home", "/"));
+    //     breadcrumbs.add(new Link("Question Editor", "/questioneditor"));
+    // }
     public static Result index(){
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));

@@ -1,5 +1,9 @@
 package controllers.user;
 
+/**
+ * Enumerates the different types of user.
+ * @author Sander Demeester
+ */
 public enum Type {
 
     ADMINISTRATOR,
@@ -9,4 +13,5 @@ public enum Type {
     TEACHER,
     AUTHOR,
     ANON;
+
 }

@@ -32,7 +32,6 @@ public class DataHandler {
 
     private static List<Link> links = new ArrayList<Link>(2);
     static {
-
         links.add(new Link("Home", "http://www.bebras.be"));
         links.add(new Link("FAQ",  "file://FAQ.html"));
     };
