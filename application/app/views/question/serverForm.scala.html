@@ -1,9 +1,9 @@
-@(serverForm: Form[models.question.Server])
+@(serverForm: Form[models.question.Server], breadcrumbs : List[models.data.Link])
 
 @import helper._
 @import helper.twitterBootstrap._
 
-@main("Add new server") {
+@main("Add new server", breadcrumbs) {
 
 @form(controllers.question.routes.ServerController.save()) {
 

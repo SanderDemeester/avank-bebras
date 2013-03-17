@@ -1,6 +1,6 @@
-@(message: String)
+@(message: String, breadcrumbs : List[models.data.Link])
 
-@main("Welcome to Bebras") {
+@main("Welcome to Bebras", breadcrumbs) {
 
     <p class="lead">Some fancy intro.</p>
     <p>@message</p>

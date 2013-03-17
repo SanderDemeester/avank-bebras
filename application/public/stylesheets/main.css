@@ -28,7 +28,7 @@ body{
     }
 }
 
-.container {
+.small-container {
     width: auto;
     max-width: 680px;
 }

@@ -1,12 +1,15 @@
 
 
 
-import controllers.EController;
+import static play.mvc.Results.internalServerError;
+import static play.mvc.Results.notFound;
+
+import java.util.ArrayList;
+
+import models.data.Link;
 import play.GlobalSettings;
 import play.mvc.Http.RequestHeader;
 import play.mvc.Result;
-import static play.mvc.Results.internalServerError;
-import static play.mvc.Results.notFound;
 
 /**
  * @author Sander Demeester
@@ -15,7 +18,7 @@ public class Global extends GlobalSettings{
 
     public Result onError(Throwable t) {
         return internalServerError(
-            views.html.index.render("fout")
+            views.html.index.render("fout", new ArrayList<Link>())
         );
     }
 

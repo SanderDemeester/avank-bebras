@@ -32,13 +32,9 @@ public class DataHandler {
 
     private static List<Link> links = new ArrayList<Link>(2);
     static {
-        try {
-            links.add(new Link("Home", "http://www.bebras.be"));
-            links.add(new Link("FAQ",  "file://FAQ.html"));
-        } catch(MalformedURLException e) {
-            // Yeah, stub.
-            throw new Error(e);
-        }
+        
+        links.add(new Link("Home", "http://www.bebras.be"));
+        links.add(new Link("FAQ",  "file://FAQ.html"));
     };
 
     private static FAQ[] faqs = new FAQ[] {

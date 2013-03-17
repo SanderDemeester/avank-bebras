@@ -1,11 +1,13 @@
 package controllers;
 
+import java.util.ArrayList;
+
+import models.data.Link;
 import models.question.Question;
 import models.question.QuestionBuilderException;
-
 import play.mvc.Result;
-
-import views.html.*;
+import views.html.index;
+import views.html.test;
 
 /**
  * @author Ruben Taelman
@@ -24,7 +26,7 @@ public class Application extends EController {
           return internalServerError(e.getMessage());
       }
 
-      return ok(index.render(q.getID()));
+      return ok(index.render(q.getID(), new ArrayList<Link>()));
   }
 
   public static Result test(String id){

@@ -1,4 +1,5 @@
-package controllers;
+package models;
+
 
 import play.i18n.Lang;
 import play.i18n.Messages;

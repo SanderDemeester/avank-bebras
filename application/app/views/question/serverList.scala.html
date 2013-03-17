@@ -1,4 +1,4 @@
-@(currentPage: Page[models.question.Server], currentOrderBy: String, currentOrder: String, currentFilter: String)
+@(currentPage: Page[models.question.Server], currentOrderBy: String, currentOrder: String, currentFilter: String, breadcrumbs : List[models.data.Link])
 
 @*****************************************
 * Helper generating the navigation links *
@@ -36,7 +36,7 @@
 @***********************
 * The list view itself *
 ***********************@
-@main("List of servers") {
+@main("List of servers", breadcrumbs) {
 
     <!-- filtering and adding servers -->
     <div id="actions">

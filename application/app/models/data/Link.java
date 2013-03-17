@@ -11,7 +11,7 @@ import java.net.MalformedURLException;
 public class Link {
 
     private String name;
-    private URL url;
+    private String url;
 
     /**
      * Creates a new link. This method links the given name to a URL created
@@ -20,9 +20,9 @@ public class Link {
      * @param url The url as a String.
      * @throws MalformedURLException If the given url is malformed.
      */
-    public Link(String name, String url) throws MalformedURLException {
+    public Link(String name, String url) {
         this.name = name;
-        this.url  = new URL(url);
+        this.url  = url;
     }
 
     /**
@@ -37,7 +37,7 @@ public class Link {
      * Return the URL this link points to.
      * @return The URL.
      */
-    public URL getUrl() {
+    public String getUrl() {
         return url;
     }
 

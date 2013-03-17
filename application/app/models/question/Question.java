@@ -22,6 +22,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import controllers.user.User;
+
 /**
  * The base class where questions for the competitions are stored in.
  * @author Ruben Taelman
@@ -41,10 +43,10 @@ public abstract class Question {
 	/** These fields can be altered afterwards **/
 	public boolean official;
 	public boolean active;
+	public User author;
 	
 	/** Static fields **/
 	private static final String XML_SCHEMA = "conf/questions.xsd";
-	private static final String XML_ROOT = "root";
 	private static final Map<String, QuestionFactory> QUESTION_TYPE_NAMES = new HashMap<String, QuestionFactory>();
 	static {
 	    QUESTION_TYPE_NAMES.put("multiple-choice-question", new MultipleChoiceQuestionFactory());

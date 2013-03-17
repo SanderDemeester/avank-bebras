@@ -1,5 +1,8 @@
 package controllers.question;
 
+import java.util.ArrayList;
+
+import models.data.Link;
 import models.question.Server;
 import play.data.Form;
 import play.mvc.Controller;
@@ -21,7 +24,7 @@ public class ServerController extends Controller {
      */
     public static Result list(int page, int pageSize, String orderBy, String order, String filter){
         return ok(
-            serverList.render(Server.page(page, pageSize, orderBy, order, filter), orderBy, order, filter)
+            serverList.render(Server.page(page, pageSize, orderBy, order, filter), orderBy, order, filter, new ArrayList<Link>())
         );
     }
 
@@ -33,7 +36,7 @@ public class ServerController extends Controller {
      */
     public static Result create(){
         Form<Server> form = form(Server.class).bindFromRequest();
-        return ok(serverForm.render(form));
+        return ok(serverForm.render(form, new ArrayList<Link>()));
     }
 
     /**
@@ -45,7 +48,7 @@ public class ServerController extends Controller {
     public static Result save(){
         Form<Server> form = form(Server.class).bindFromRequest();
         if(form.hasErrors()) {
-            return badRequest(serverForm.render(form));
+            return badRequest(serverForm.render(form, new ArrayList<Link>()));
         }
         form.get().save();
         // TODO place message in flash for "server add warning" in view

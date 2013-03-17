@@ -1,0 +1,15 @@
+@(breadcrumbs : List[models.data.Link])
+
+@import models.EMessages
+
+@main("Question Editor", breadcrumbs) {
+	<div class="hero-unit">
+	  	<h1>Questions</h1>
+	  	<p>@EMessages.get("question.editor.index.hero")</p>
+	  	<p>
+	    <a class="btn btn-primary btn-large">
+	    	@EMessages.get("question.editor.index.create")
+	    </a>
+		</p>
+	</div>	
+}
