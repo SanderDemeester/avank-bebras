@@ -9,7 +9,7 @@
        <double>230.0</double>
        <double>60.0</double>
        <double>220.0</double>
-       <double>320.0</double>
+       <double>340.0</double>
       </void>
      </object>
     </void>
@@ -21,7 +21,8 @@
 - titles : Map&lt;Language, String&gt;
 - official : boolean
 - active : boolean
-- server : Server</string>
+- server : Server
+- author : User</string>
      </void>
     </void>
     <void property="methods">
@@ -701,7 +702,7 @@ The Questions can be rendered within views.</string>
        <object class="java.awt.geom.Rectangle2D$Double">
         <void method="setRect">
          <double>1220.0</double>
-         <double>320.0</double>
+         <double>390.0</double>
          <double>100.0</double>
          <double>60.0</double>
         </void>
@@ -709,7 +710,7 @@ The Questions can be rendered within views.</string>
       </void>
       <void property="name">
        <void property="text">
-        <string>Grade</string>
+        <string>Difficulty</string>
        </void>
       </void>
      </object>
@@ -720,7 +721,7 @@ The Questions can be rendered within views.</string>
        <object class="java.awt.geom.Rectangle2D$Double">
         <void method="setRect">
          <double>1220.0</double>
-         <double>390.0</double>
+         <double>320.0</double>
          <double>100.0</double>
          <double>60.0</double>
         </void>
@@ -728,7 +729,7 @@ The Questions can be rendered within views.</string>
       </void>
       <void property="name">
        <void property="text">
-        <string>Difficulty</string>
+        <string>Grade</string>
        </void>
       </void>
      </object>
@@ -874,7 +875,7 @@ The Questions can be rendered within views.</string>
    </object>
   </void>
   <void method="addNode">
-   <object idref="ClassNode12"/>
+   <object idref="ClassNode11"/>
    <object class="java.awt.geom.Point2D$Double" id="Point2D$Double16">
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>x</string>
@@ -899,7 +900,7 @@ The Questions can be rendered within views.</string>
    </object>
   </void>
   <void method="addNode">
-   <object idref="ClassNode11"/>
+   <object idref="ClassNode12"/>
    <object class="java.awt.geom.Point2D$Double" id="Point2D$Double17">
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>x</string>
@@ -919,6 +920,112 @@ The Questions can be rendered within views.</string>
        </void>
       </object>
       <double>1220.0</double>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object class="com.horstmann.violet.ClassNode">
+    <void property="bounds">
+     <object class="java.awt.geom.Rectangle2D$Double">
+      <void method="setRect">
+       <double>640.0</double>
+       <double>910.0</double>
+       <double>180.0</double>
+       <double>120.0</double>
+      </void>
+     </object>
+    </void>
+    <void property="methods">
+     <void property="text">
+      <string>$ index() : Result
+$ create() : Result
+$ read() : Result
+$ update() : Result
+$ delete() : Result</string>
+     </void>
+    </void>
+    <void property="name">
+     <void property="text">
+      <string>QuestionEditorController</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double18">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double18">
+       <void class="java.awt.geom.Point2D$Double" method="getField">
+        <string>y</string>
+        <void method="set">
+         <object idref="Point2D$Double18">
+          <void method="setLocation">
+           <double>640.0</double>
+           <double>910.0</double>
+          </void>
+         </object>
+         <double>910.0</double>
+        </void>
+       </void>
+      </object>
+      <double>640.0</double>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object class="com.horstmann.violet.ClassNode">
+    <void property="bounds">
+     <object class="java.awt.geom.Rectangle2D$Double">
+      <void method="setRect">
+       <double>870.0</double>
+       <double>910.0</double>
+       <double>320.0</double>
+       <double>140.0</double>
+      </void>
+     </object>
+    </void>
+    <void property="attributes">
+     <void property="text">
+      <string>- question : Question</string>
+     </void>
+    </void>
+    <void property="methods">
+     <void property="text">
+      <string>+ QuestionEditor(Question question) : {constructor}
++ QuestionEditor(String xml) : {constructor}
++ isValid() : boolean
++ getQuestion() : Question
++ updateToServer() : boolean
++ saveToServer(Server server, String ID) : boolean</string>
+     </void>
+    </void>
+    <void property="name">
+     <void property="text">
+      <string>QuestionEditor</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double19">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double19">
+       <void class="java.awt.geom.Point2D$Double" method="getField">
+        <string>y</string>
+        <void method="set">
+         <object idref="Point2D$Double19">
+          <void method="setLocation">
+           <double>870.0</double>
+           <double>910.0</double>
+          </void>
+         </object>
+         <double>910.0</double>
+        </void>
+       </void>
+      </object>
+      <double>870.0</double>
      </void>
     </void>
    </object>
@@ -1128,7 +1235,7 @@ The Questions can be rendered within views.</string>
     </void>
    </object>
    <object idref="ClassNode1"/>
-   <object idref="ClassNode12"/>
+   <object idref="ClassNode11"/>
   </void>
   <void method="connect">
    <object class="com.horstmann.violet.ClassRelationshipEdge">
@@ -1140,7 +1247,7 @@ The Questions can be rendered within views.</string>
     </void>
    </object>
    <object idref="ClassNode1"/>
-   <object idref="ClassNode11"/>
+   <object idref="ClassNode12"/>
   </void>
  </object>
 </java>
