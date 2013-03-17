@@ -15,7 +15,7 @@ import controllers.EController;
  *
  */
 public class QuestionEditorController extends EController {
-    
+
     public static Result index(){
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));

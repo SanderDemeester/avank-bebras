@@ -12,7 +12,7 @@ public class Languages {
         LANGUAGES.put("en", new Language("en","tmp"));
         LANGUAGES.put("nl", new Language("nl","tmp"));
     }
-    
+
     public static Language getLanguage(String code) {
         return LANGUAGES.get(code);
     }

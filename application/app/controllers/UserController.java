@@ -22,49 +22,49 @@ import controllers.user.Type;
  * @author Sander Demeester
  */
 public class UserController extends EController{
-	
-	/**
-	 * This hashmap embodies the mapping from a Type to a view. 
-	 * Each view is responsible for getting all information from the DataModel and make a 
-	 * beautiful view for the user :)
-	 */
-	private HashMap<Type, Class<?>> landingPageHashmap = new HashMap<Type, Class<?>>();
-	private AuthenticationManager authenticatieManger = new AuthenticationManager();
-	
-	
-	public UserController(){
-		
-		landingPageHashmap.put(Type.ADMINISTRATOR, AdminLandingPage.class);
-		landingPageHashmap.put(Type.INDEPENDENT, IndependentPupilLandingPage.class);
-		landingPageHashmap.put(Type.ORGANIZER, OrganizerLandingPage.class);
-		landingPageHashmap.put(Type.PUPIL,PupilLandingPage.class);
-		
-		
-	}
-	
-	public static Result register(){
-		//TODO: Delegate to authenticationManager
-		return null;
-	}
-	
-	public static Result login(){
-		//TODO: Delage to authenticationManager
-		return null;
-	}
-	
-	public static Result logout(){
-		//TODO: Tell authenticationManager to log a user out.
-		
-	    setCommonHeaders();
-	    return null;
-	}
-	
-	public static Result getLandingPage(String token){ //or whatever the token will be
-		//TODO: Delegate to correct UserController object based on token
-		/*
-		 * The result will come from the landingPageHashMap
-		 */
-		return null;
-	}
+
+    /**
+     * This hashmap embodies the mapping from a Type to a view.
+     * Each view is responsible for getting all information from the DataModel and make a
+     * beautiful view for the user :)
+     */
+    private HashMap<Type, Class<?>> landingPageHashmap = new HashMap<Type, Class<?>>();
+    private AuthenticationManager authenticatieManger = new AuthenticationManager();
+
+
+    public UserController(){
+
+        landingPageHashmap.put(Type.ADMINISTRATOR, AdminLandingPage.class);
+        landingPageHashmap.put(Type.INDEPENDENT, IndependentPupilLandingPage.class);
+        landingPageHashmap.put(Type.ORGANIZER, OrganizerLandingPage.class);
+        landingPageHashmap.put(Type.PUPIL,PupilLandingPage.class);
+
+
+    }
+
+    public static Result register(){
+        //TODO: Delegate to authenticationManager
+        return null;
+    }
+
+    public static Result login(){
+        //TODO: Delage to authenticationManager
+        return null;
+    }
+
+    public static Result logout(){
+        //TODO: Tell authenticationManager to log a user out.
+
+        setCommonHeaders();
+        return null;
+    }
+
+    public static Result getLandingPage(String token){ //or whatever the token will be
+        //TODO: Delegate to correct UserController object based on token
+        /*
+         * The result will come from the landingPageHashMap
+         */
+        return null;
+    }
 
 }

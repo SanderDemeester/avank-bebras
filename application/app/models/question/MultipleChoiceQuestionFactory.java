@@ -40,11 +40,11 @@ public class MultipleChoiceQuestionFactory extends QuestionFactory<MultipleChoic
         public void processValue(MultipleChoiceQuestion question,
                 Language language, String value, NodeList nodeList,
                 NamedNodeMap attributes) throws QuestionBuilderException {
-        	boolean containsOneCorrect = false;
+            boolean containsOneCorrect = false;
             // Loop over the answer-nodes
             for(int i=0;i<nodeList.getLength();i++) {
                 Node answerNode = nodeList.item(i);
-                
+
                 // Only check valid xml-elements
                 if(answerNode.getNodeName().equals(ELEMENT_ANSWER)) {
                     // Add the current element to the Question
@@ -53,21 +53,21 @@ public class MultipleChoiceQuestionFactory extends QuestionFactory<MultipleChoic
 
                     // Check if the element is the correct one, and add those one to the Question
                     Node attribute = answerNode.getAttributes().getNamedItem(ATTRIBUTE_ANSWER_CORRECT);
-                    
+
                     if(attribute!=null && attribute.getNodeValue().equals("true")) {
                         question.setCorrectElement(language, element);
                         // Throw exception if there already was a correct answer
                         if(containsOneCorrect) {
-                        	throw new QuestionBuilderException("The answers for language "+language.getCode()+" contain more than one correct answers.");
+                            throw new QuestionBuilderException("The answers for language "+language.getCode()+" contain more than one correct answers.");
                         }
                         containsOneCorrect = true;
                     }
                 }
             }
-            
+
             // Throw exception if there are no correct answers in the answer list
             if(!containsOneCorrect) {
-            	throw new QuestionBuilderException("The answers for language "+language.getCode()+" contain no correct answers.");
+                throw new QuestionBuilderException("The answers for language "+language.getCode()+" contain no correct answers.");
             }
         }
 

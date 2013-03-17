@@ -7,13 +7,13 @@ import org.junit.Test;
 
 public class ErrorPageTest {
 
-	@Test
-	public void test() {
-		running(fakeApplication(), new Runnable(){
-	        public void run(){
-	            // TODO write tests for pagination
-	        }
-	    });
-	}
+    @Test
+    public void test() {
+        running(fakeApplication(), new Runnable(){
+            public void run(){
+                // TODO write tests for pagination
+            }
+        });
+    }
 
 }

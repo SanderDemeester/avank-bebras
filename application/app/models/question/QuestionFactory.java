@@ -51,7 +51,7 @@ public abstract class QuestionFactory<T extends Question> {
         }
         return buf.toString();
     }
-    
+
     /**
      * Processes common elements of the question structure
      * @param question question to alter
@@ -71,22 +71,22 @@ public abstract class QuestionFactory<T extends Question> {
                 languageCode = node.getAttributes().getNamedItem("code").getNodeValue();
                 Language language = Languages.getLanguage(languageCode);
                 if(language != null) {
-	                question.addLanguage(language);
-	                
-	                // process the child elements of the current language element
-	                NodeList languageElements = node.getChildNodes();
-	                for(int j=0; j<languageElements.getLength();j++) {
-	                    // get the NodeAction and execute it if one exists for the current Node
-	                    Node actionNode = languageElements.item(j);
-	                    NodeAction action = nodeActions.get(actionNode.getNodeName());
-	                    if(action!=null) {
-	                        action.processValue(question, language, getNodeValue(actionNode)
-	                                , actionNode.getChildNodes(), actionNode.getAttributes());
-	                    }
-	                }
+                    question.addLanguage(language);
+
+                    // process the child elements of the current language element
+                    NodeList languageElements = node.getChildNodes();
+                    for(int j=0; j<languageElements.getLength();j++) {
+                        // get the NodeAction and execute it if one exists for the current Node
+                        Node actionNode = languageElements.item(j);
+                        NodeAction action = nodeActions.get(actionNode.getNodeName());
+                        if(action!=null) {
+                            action.processValue(question, language, getNodeValue(actionNode)
+                                    , actionNode.getChildNodes(), actionNode.getAttributes());
+                        }
+                    }
                 }
                 else {
-                	throw new QuestionBuilderException("The language code '"+languageCode+"' is invalid.");
+                    throw new QuestionBuilderException("The language code '"+languageCode+"' is invalid.");
                 }
             }
         }
@@ -108,7 +108,7 @@ public abstract class QuestionFactory<T extends Question> {
          */
         public abstract void processValue(T question, Language language, String value
                 , NodeList nodeList, NamedNodeMap attributes) throws QuestionBuilderException;
-        
+
     }
 
     /**

@@ -2,9 +2,9 @@
 <ul class="breadcrumb">
 @for(link <- breadcrumbs) {
   @if(breadcrumbs.lastIndexOf(link)!=breadcrumbs.size()-1) {
-  	<li><a href="@link.getUrl()">@link.getName()</a> <span class="divider">/</span></li>
+      <li><a href="@link.getUrl()">@link.getName()</a> <span class="divider">/</span></li>
   } else {
-  	<li class="active">@link.getName()</li>
+      <li class="active">@link.getName()</li>
   }
-} 
+}
 </ul>
