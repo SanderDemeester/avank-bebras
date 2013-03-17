@@ -65,6 +65,8 @@
                 @header("name", "Server name")
                 @header("path", "Server's path")
                 @header("baseUrl", "Server's base URL")
+                @header("edit", "Edit server")
+                @header("remove", "Remove server")
             </tr>
             </thead>
 
@@ -75,6 +77,8 @@
                          <td> @server.name </td>
                          <td> @server.path </td>
                          <td> @server.baseUrl </td>
+                         <td> <a class="button succes" id="edit" href="@controllers.question.routes.ServerController.edit(server.name)"> Edit </a></td>
+                         <td> <a class="button succes" id="remove" href="@controllers.question.routes.ServerController.remove(server.name)"> Remove </a> </td>
                     </tr>
                 }
 

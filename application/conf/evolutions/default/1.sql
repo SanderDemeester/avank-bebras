@@ -5,6 +5,7 @@
 
 create table server (
   name                      varchar(255) not null,
+  base_url                  varchar(255),
   path                      varchar(255),
   constraint pk_server primary key (name))
 ;

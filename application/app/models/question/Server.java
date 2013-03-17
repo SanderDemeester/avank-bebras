@@ -22,7 +22,6 @@ public class Server extends Model {
     @Id
     public String name;
 
-    @Transient
     @Constraints.Required
     public String baseUrl;
 
