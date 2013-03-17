@@ -1,12 +1,10 @@
 
 package models.data;
 
-import java.net.URL;
-import java.net.MalformedURLException;
-
 /**
  * This clas represents a Link, as the combination of a name and a URL.
  * @author Felix Van der Jeugt
+ * @author Ruben Taelman
  */
 public class Link {
 
@@ -18,7 +16,6 @@ public class Link {
      * from the given string.
      * @param name The name of the link.
      * @param url The url as a String.
-     * @throws MalformedURLException If the given url is malformed.
      */
     public Link(String name, String url) {
         this.name = name;

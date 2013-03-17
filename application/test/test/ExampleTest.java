@@ -8,6 +8,10 @@ import views.html.*;
 import static play.test.Helpers.*;
 import static org.fest.assertions.Assertions.*;
 
+import models.data.Link;
+
+import java.util.List;
+import java.util.ArrayList;
 
 //An example of some basic JUnit tests and integration tests.
 
@@ -39,7 +43,9 @@ public class ExampleTest {
 		
 //	    Index is the name of our scala template.
 //		The scala source file takes one string argument thet the template will render
-		Content htmlContent = index.render("Test-string");
+        List links = new ArrayList<Link>();
+        links.add(new Link("Bebras", "http://www.bebras.be"));
+		Content htmlContent = index.render("Test-string", links);
 		
 //		Test the content Type
 		assertThat(contentType(htmlContent)).isEqualTo("text/html");
