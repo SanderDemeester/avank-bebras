@@ -5,14 +5,14 @@ import java.util.Map;
 import play.mvc.Result;
 
 import scala.collection.mutable.HashMap;
-import controllers.user.Types;
+import controllers.user.Type;
 
 /**
  * @author Sander Demeester
  */
 public class UserController {
 	
-	
+	private HashMap<Type, Result> landingPageHashmap = new HashMap<Type, Result>();
 	
 	public UserController(){
 		
@@ -32,7 +32,7 @@ public class UserController {
 	public static Result getLandingPage(String token){ //or whatever the token will be
 		//TODO: Delegate to correct UserController object based on token
 		/*
-		 * The result value will come from some UserController
+		 * The result will come from the landingPageHashMap
 		 */
 		return null;
 	}
