@@ -11,7 +11,8 @@ import javax.persistence.Transient;
 /**
  * ServerController entity managed by Ebean.
  *
- * @author Ruben Taelman & Kevin Stobbelaar
+ * @author Ruben Taelman
+ * @author Kevin Stobbelaar
  *
  */
 @Entity
@@ -19,14 +20,14 @@ import javax.persistence.Transient;
 public class Server extends Model {
 
     @Id
-	public String name;
+    public String name;
 
     @Transient
     @Constraints.Required
     public String baseUrl;
 
     @Constraints.Required
-	public String path;
+    public String path;
 
     /**
      * Generic query helper for ServerController entity.
