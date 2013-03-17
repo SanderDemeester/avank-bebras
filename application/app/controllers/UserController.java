@@ -55,8 +55,8 @@ public class UserController extends EController{
 	public static Result logout(){
 		//TODO: Tell authenticationManager to log a user out.
 		
-		setCommonHeaders();
-	    return ok(index.render(null));
+	    setCommonHeaders();
+	    return null;
 	}
 	
 	public static Result getLandingPage(String token){ //or whatever the token will be

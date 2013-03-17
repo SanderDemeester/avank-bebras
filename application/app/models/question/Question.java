@@ -22,7 +22,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import controllers.user.User;
+import models.user.User;
 
 /**
  * The base class where questions for the competitions are stored in.
