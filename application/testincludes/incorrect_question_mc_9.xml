@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root xmlns="bebras:Question">
 <multiple-choice-question>
-
-<<<<<<< HEAD
-	<language>
-=======
 	<language code="wrongcode">
->>>>>>> 6eb0a5265d1e64fb4035492e5671e26e649935bb
 		<index>index_en.html</index>
 		<feedback>feedback_en.html</feedback>
 		<title>A Question</title>
