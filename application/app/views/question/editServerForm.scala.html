@@ -1,0 +1,26 @@
+@(serverForm: Form[models.question.Server], id: String, breadcrumbs : List[models.data.Link])
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("Edit server", breadcrumbs) {
+
+@form(controllers.question.routes.ServerController.update(id)) {
+
+<fieldset>
+
+    @inputText(serverForm("name"), '_label -> "Server's new name")
+    @inputText(serverForm("path"), '_label -> "Server's new path")
+    @inputText(serverForm("baseUrl"), '_label -> "Server's new baseUrl")
+
+
+</fieldset>
+
+<div class="actions">
+    <input type="submit" value="Update" class="btn primary"> or
+    <a href="@controllers.question.routes.ServerController.list()" class="btn">Cancel</a>
+</div>
+
+}
+
+}

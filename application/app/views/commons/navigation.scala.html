@@ -4,7 +4,7 @@
             <a class="brand" href='@routes.Application.index'>Bebras</a>
             <ul class="nav">
                 @for(link <- models.data.DataHandler.getLinks()) {
-                <li><a href='@(link.getUrl().toString())'>@(link.getName())</a></li>
+                <li><a href='@(link.getUrl())'>@(link.getName())</a></li>
                 }
             </ul>
 

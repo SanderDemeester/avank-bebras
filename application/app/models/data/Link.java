@@ -1,28 +1,25 @@
 
 package models.data;
 
-import java.net.URL;
-import java.net.MalformedURLException;
-
 /**
  * This clas represents a Link, as the combination of a name and a URL.
  * @author Felix Van der Jeugt
+ * @author Ruben Taelman
  */
 public class Link {
 
     private String name;
-    private URL url;
+    private String url;
 
     /**
      * Creates a new link. This method links the given name to a URL created
      * from the given string.
      * @param name The name of the link.
      * @param url The url as a String.
-     * @throws MalformedURLException If the given url is malformed.
      */
-    public Link(String name, String url) throws MalformedURLException {
+    public Link(String name, String url) {
         this.name = name;
-        this.url  = new URL(url);
+        this.url  = url;
     }
 
     /**
@@ -37,7 +34,7 @@ public class Link {
      * Return the URL this link points to.
      * @return The URL.
      */
-    public URL getUrl() {
+    public String getUrl() {
         return url;
     }
 
