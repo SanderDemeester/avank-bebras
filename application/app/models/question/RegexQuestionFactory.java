@@ -22,7 +22,7 @@ public class RegexQuestionFactory extends QuestionFactory<RegexQuestion> {
     public RegexQuestionFactory() {
         super();
     }
-    
+
     @Override
     public Question newQuestion(NodeList nodeList) throws QuestionBuilderException {
     	this.nodeActions.put("input", new InputNodeAction());

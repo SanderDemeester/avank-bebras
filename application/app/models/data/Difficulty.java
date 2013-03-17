@@ -5,7 +5,7 @@ package models.data;
  * @author Ruben Taelman
  */
 public class Difficulty {
-	/**
-	 * Contains nothing yet...
-	 */
+    /**
+     * Contains nothing yet...
+     */
 }

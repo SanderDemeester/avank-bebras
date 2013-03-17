@@ -28,7 +28,7 @@ import org.xml.sax.SAXException;
  *
  */
 public abstract class Question {
-    
+
     /** These fields are generated on reading the XML **/
     protected String ID;
     protected Server server;
@@ -220,7 +220,7 @@ public abstract class Question {
     public void setIndex(String title, Language language) {
         this.indexes.put(language, title);
     }
-    
+
     /**
      * Gets the index file name for a given language
      * @param language chosen language

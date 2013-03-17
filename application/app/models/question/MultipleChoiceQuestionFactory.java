@@ -19,7 +19,7 @@ public class MultipleChoiceQuestionFactory extends QuestionFactory<MultipleChoic
     public MultipleChoiceQuestionFactory() {
         super();
     }
-    
+
     @Override
     public Question newQuestion(NodeList nodeList) throws QuestionBuilderException {
         this.nodeActions.put("answers", new AnswersNodeAction());
@@ -27,15 +27,15 @@ public class MultipleChoiceQuestionFactory extends QuestionFactory<MultipleChoic
         this.processCommonElements(question, nodeList);
         return question;
     }
-    
+
     /**
      * A NodeAction for the Answer elements that are present in MultipleChoice Questions
      */
     protected class AnswersNodeAction extends NodeAction{
-        
+
         public static final String ELEMENT_ANSWER="answer";
         public static final String ATTRIBUTE_ANSWER_CORRECT="correct";
-        
+
         @Override
         public void processValue(MultipleChoiceQuestion question,
                 Language language, String value, NodeList nodeList,
@@ -50,7 +50,7 @@ public class MultipleChoiceQuestionFactory extends QuestionFactory<MultipleChoic
                     // Add the current element to the Question
                     MultipleChoiceElement element = new MultipleChoiceElement(getNodeValue(answerNode));
                     question.addElement(language, element);
-                    
+
                     // Check if the element is the correct one, and add those one to the Question
                     Node attribute = answerNode.getAttributes().getNamedItem(ATTRIBUTE_ANSWER_CORRECT);
                     
@@ -70,7 +70,7 @@ public class MultipleChoiceQuestionFactory extends QuestionFactory<MultipleChoic
             	throw new QuestionBuilderException("The answers for language "+language.getCode()+" contain no correct answers.");
             }
         }
-        
+
     }
 
 }

@@ -3,6 +3,9 @@ package models.data;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author Ruben Taelman
+ */
 public class Languages {
     private static final Map<String, Language> LANGUAGES = new HashMap<String, Language>();
     static{

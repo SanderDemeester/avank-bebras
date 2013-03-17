@@ -2,19 +2,24 @@ package models.question;
 
 import java.util.Map;
 
+/**
+ *
+ * @author Ruben Taelman
+ *
+ */
 public class QuestionFeedback {
-	private Map<Question, FeedbackElement> feedbackElements;
-	private int score;
-	
-	public QuestionFeedback(Map<Question, Answer> answers) {
-		
-	}
+    private Map<Question, FeedbackElement> feedbackElements;
+    private int score;
 
-	public Map<Question, FeedbackElement> getFeedbackElements() {
-		return feedbackElements;
-	}
+    public QuestionFeedback(Map<Question, Answer> answers) {
 
-	public int getScore() {
-		return score;
-	}
+    }
+
+    public Map<Question, FeedbackElement> getFeedbackElements() {
+        return feedbackElements;
+    }
+
+    public int getScore() {
+        return score;
+    }
 }

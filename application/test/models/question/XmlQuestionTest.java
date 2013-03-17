@@ -13,6 +13,18 @@ public class XmlQuestionTest {
     private static final String CORRECT_MC = "testincludes/correct_question_mc.xml";
     private static final String CORRECT_REGEX = "testincludes/correct_question_regex.xml";
     
+    private static final String INCORRECT_MC_1 = "testincludes/incorrect_question_mc_1.xml";
+    private static final String INCORRECT_MC_2 = "testincludes/incorrect_question_mc_2.xml";
+    private static final String INCORRECT_MC_3 = "testincludes/incorrect_question_mc_3.xml";
+    private static final String INCORRECT_MC_4 = "testincludes/incorrect_question_mc_4.xml";
+    private static final String INCORRECT_MC_5 = "testincludes/incorrect_question_mc_5.xml";
+    private static final String INCORRECT_MC_6 = "testincludes/incorrect_question_mc_6.xml";
+    private static final String INCORRECT_MC_7 = "testincludes/incorrect_question_mc_7.xml";
+    private static final String INCORRECT_MC_8 = "testincludes/incorrect_question_mc_8.xml";
+    private static final String INCORRECT_MC_9 = "testincludes/incorrect_question_mc_9.xml";
+    private static final String INCORRECT_REGEX_1 = "testincludes/incorrect_question_regex_1.xml";
+    private static final String INCORRECT_REGEX_2 = "testincludes/incorrect_question_regex_2.xml";
+    
     private Question testAFile(String file) {
         Question q = null;
         try {
@@ -79,6 +91,116 @@ public class XmlQuestionTest {
         // Check regex contents
         Assert.assertEquals(q.getRegex(Languages.getLanguage("en")), "a wo+rd");
         Assert.assertEquals(q.getRegex(Languages.getLanguage("nl")), "een wo+rd");
+    }
+    
+    /**
+     * Test if an incorrect Multiple Choice Xml question file without a correct answer doesn't get allowed
+     * @throws QuestionBuilderException The exception that is excepted to be thrown
+     */
+    @Test(expected=QuestionBuilderException.class)
+    public void incorrectMultipleChoiceFile1() throws QuestionBuilderException {
+        Question q = null;
+        q = Question.getFromXml(INCORRECT_MC_1);
+    }
+    
+    /**
+     * Test if an incorrect Multiple Choice Xml question file without answers doesn't get allowed
+     * @throws QuestionBuilderException The exception that is excepted to be thrown
+     */
+    @Test(expected=QuestionBuilderException.class)
+    public void incorrectMultipleChoiceFile2() throws QuestionBuilderException {
+        Question q = null;
+        q = Question.getFromXml(INCORRECT_MC_2);
+    }
+    
+    /**
+     * Test if an incorrect Multiple Choice Xml question file with more than one correct answer doesn't get allowed
+     * @throws QuestionBuilderException The exception that is excepted to be thrown
+     */
+    @Test(expected=QuestionBuilderException.class)
+    public void incorrectMultipleChoiceFile3() throws QuestionBuilderException {
+        Question q = null;
+        q = Question.getFromXml(INCORRECT_MC_3);
+    }
+    
+    /**
+     * Test if an incorrect Multiple Choice Xml question file missing the index tag doesn't get allowed
+     * @throws QuestionBuilderException The exception that is excepted to be thrown
+     */
+    @Test(expected=QuestionBuilderException.class)
+    public void incorrectMultipleChoiceFile4() throws QuestionBuilderException {
+        Question q = null;
+        q = Question.getFromXml(INCORRECT_MC_4);
+    }
+    
+    /**
+     * Test if an incorrect Multiple Choice Xml question file missing the feedback tag doesn't get allowed
+     * @throws QuestionBuilderException The exception that is excepted to be thrown
+     */
+    @Test(expected=QuestionBuilderException.class)
+    public void incorrectMultipleChoiceFile5() throws QuestionBuilderException {
+        Question q = null;
+        q = Question.getFromXml(INCORRECT_MC_5);
+    }
+    
+    /**
+     * Test if an incorrect Multiple Choice Xml question file missing the title tag doesn't get allowed
+     * @throws QuestionBuilderException The exception that is excepted to be thrown
+     */
+    @Test(expected=QuestionBuilderException.class)
+    public void incorrectMultipleChoiceFile6() throws QuestionBuilderException {
+        Question q = null;
+        q = Question.getFromXml(INCORRECT_MC_6);
+    }
+    
+    /**
+     * Test if an incorrect Multiple Choice Xml question file missing the answer tag doesn't get allowed
+     * @throws QuestionBuilderException The exception that is excepted to be thrown
+     */
+    @Test(expected=QuestionBuilderException.class)
+    public void incorrectMultipleChoiceFile7() throws QuestionBuilderException {
+        Question q = null;
+        q = Question.getFromXml(INCORRECT_MC_7);
+    }
+    
+    /**
+     * Test if an incorrect Multiple Choice Xml question file with an incorrect language code doesn't get allowed
+     * @throws QuestionBuilderException The exception that is excepted to be thrown
+     */
+    @Test(expected=QuestionBuilderException.class)
+    public void incorrectMultipleChoiceFile8() throws QuestionBuilderException {
+        Question q = null;
+        q = Question.getFromXml(INCORRECT_MC_8);
+    }
+    
+    /**
+     * Test if an incorrect Multiple Choice Xml question file withhout the language code tag doesn't get allowed
+     * @throws QuestionBuilderException The exception that is excepted to be thrown
+     */
+    @Test(expected=QuestionBuilderException.class)
+    public void incorrectMultipleChoiceFile9() throws QuestionBuilderException {
+        Question q = null;
+        q = Question.getFromXml(INCORRECT_MC_9);
+    }
+    
+    /**
+     * Test if an incorrect Regex Xml question file without a regular expression input doesn't get allowed
+     * @throws QuestionBuilderException The exception that is excepted to be thrown
+     */
+    @Test(expected=QuestionBuilderException.class)
+    public void incorrectRegexFile1() throws QuestionBuilderException {
+        Question q = null;
+        q = Question.getFromXml(INCORRECT_REGEX_1);
+    }
+    
+    /**
+     * Test if an incorrect Regex Xml question file without an input doesn't get allowed
+     * @throws QuestionBuilderException The exception that is excepted to be thrown
+     */
+    @Test(expected=QuestionBuilderException.class)
+    public void incorrectRegexFile2() throws QuestionBuilderException {
+        Question q = null;
+        q = Question.getFromXml(INCORRECT_REGEX_2);
     }
 
 }

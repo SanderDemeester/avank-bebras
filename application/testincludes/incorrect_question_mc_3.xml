@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns="bebras:Question">
+<multiple-choice-question>
+
+	<language code="en">
+		<index>index_en.html</index>
+		<feedback>feedback_en.html</feedback>
+		<title>A Question</title>
+		<answers>
+			<answer correct="true">Wrong</answer>
+			<answer correct="true">Correct</answer>
+			<answer>Wrong again</answer>
+		</answers>
+	</language>
+	
+	<language code="nl">
+		<index>index_nl.html</index>
+		<feedback>feedback_nl.html</feedback>
+		<title>Een vraag</title>
+		<answers>
+			<answer>Verkeerd</answer>
+			<answer correct="true">Juist</answer>
+			<answer>Weer verkeerd</answer>
+		</answers>
+	</language>
+	
+</multiple-choice-question>
+</root>
