@@ -23,7 +23,6 @@ public class Application extends EController {
         // TODO Auto-generated catch block
           return internalServerError(e.getMessage());
       }
-
       return ok(index.render(q.getID()));
   }
 
