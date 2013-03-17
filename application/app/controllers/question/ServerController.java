@@ -4,7 +4,8 @@ import models.question.Server;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.question.serverForm;
+import views.html.question.newServerForm;
+import views.html.question.editServerForm;
 import views.html.question.serverList;
 
 /**
@@ -33,7 +34,7 @@ public class ServerController extends Controller {
      */
     public static Result create(){
         Form<Server> form = form(Server.class).bindFromRequest();
-        return ok(serverForm.render(form));
+        return ok(newServerForm.render(form));
     }
 
     /**
@@ -45,10 +46,51 @@ public class ServerController extends Controller {
     public static Result save(){
         Form<Server> form = form(Server.class).bindFromRequest();
         if(form.hasErrors()) {
-            return badRequest(serverForm.render(form));
+            return badRequest(newServerForm.render(form));
         }
         form.get().save();
         // TODO place message in flash for "server add warning" in view
+        return redirect(routes.ServerController.list(0, 10, "name", "asc", ""));
+    }
+
+    /**
+     * This result will rediect to the edit a server page containing the
+     * corresponding form.
+     *
+     * @param name name of the server to be changed
+     * @return edit a server page
+     */
+    public static Result edit(String name){
+        Form<Server> form = form(Server.class).bindFromRequest().fill(Server.finder.ref(name));
+        return ok(editServerForm.render(form, name));
+    }
+
+    /**
+     * This will handle the update of an existing server and redirect
+     * to the server list
+     *
+     * @param name name of the server to be updated
+     * @return server list page
+     */
+    public static Result update(String name){
+        Form<Server> form = form(Server.class).bindFromRequest();
+        if(form.hasErrors()) {
+            return badRequest(editServerForm.render(form, name));
+        }
+        form.get().update(name);
+        // TODO place message in flash for server edited warning in view
+        return redirect(routes.ServerController.list(0, 10, "name", "asc", ""));
+    }
+
+    /**
+     * This will handle the removing of an existing server and redirect
+     * to the server list
+     *
+     * @param name name of the server to be removed
+     * @return server list page
+     */
+    public static Result remove(String name){
+        Server.finder.ref(name).delete();
         return redirect(routes.ServerController.list(0, 10, "name", "asc", ""));
     }
 
