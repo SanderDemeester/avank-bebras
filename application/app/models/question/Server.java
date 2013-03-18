@@ -1,12 +1,11 @@
 package models.question;
 
 import com.avaje.ebean.Page;
+import play.Logger;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 /**
  * ServerController entity managed by Ebean.
@@ -16,15 +15,18 @@ import javax.persistence.Transient;
  *
  */
 @Entity
-// @Table(name="ServerController") could be needed, not needed if we use Ebean's DDL generation
+@Table(name="servers")
 public class Server extends Model {
 
     @Id
+    @Column(name="id")
     public String name;
 
+    @Transient
     @Constraints.Required
     public String baseUrl;
 
+    @Column(name="location")
     @Constraints.Required
     public String path;
 

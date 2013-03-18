@@ -38,17 +38,21 @@
 ***********************@
 @main("List of servers", breadcrumbs) {
 
+    <h2>List of servers</h2>
+
     <!-- filtering and adding servers -->
     <div id="actions">
 
         <!-- when filtering, the first page has to be returned -->
         <form action="@link(0,"name")" method="GET">
             <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by server name...">
-            <input type="submit" id="searchsubmit" value="Filter by name" class="btn primary">
+            <input type="submit" id="searchsubmit" value="Filter by name" class="btn">
         </form>
 
         <!-- a button for adding a new server -->
-        <a class="button succes" id="add" href="@controllers.question.routes.ServerController.create()"> Add new server </a>
+        <p>
+        <a class="btn" href="@controllers.question.routes.ServerController.create()"> Add new server </a>
+        </p>
 
     </div>
 
@@ -58,7 +62,7 @@
             <p> Nothing to display </p>
         </div>
     } else {
-        <table>
+        <table class="table table-striped table-bordered table-hover">
 
             <thead>
             <tr>
