@@ -3,6 +3,8 @@ package models.user;
 
 import java.util.Set;
 
+import controllers.user.Type;
+
 import play.mvc.Result;
 
 /**
@@ -10,8 +12,8 @@ import play.mvc.Result;
  */
 public class Organizer extends SuperUser{
 
-    public Organizer(){
-
+    public Organizer(UserID id, Type loginType, String name){
+    	super(id,loginType,name);
     }
 
     /**

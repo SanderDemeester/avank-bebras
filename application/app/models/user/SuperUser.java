@@ -1,6 +1,8 @@
 
 package models.user;
 
+import controllers.user.Type;
+
 /**
  * Abstract superUser class
  * @author Sander Demeester
@@ -8,8 +10,8 @@ package models.user;
 
 public abstract class SuperUser extends User{
 
-    public SuperUser(){
-
+    public SuperUser(UserID id, Type loginType, String name){
+    	super(id,loginType,name);
     }
 
     /**
