@@ -1,6 +1,7 @@
 
 package models.user;
 
+import controllers.user.Type;
 import play.mvc.Result;
 
 /**
@@ -11,7 +12,8 @@ public class Teacher extends SuperUser{
     /**
      * The constructor of teacher.
      */
-    public Teacher(){
+    public Teacher(UserID id, Type loginType, String name){
+    	super(id,loginType,name);
 
     }
 

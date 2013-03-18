@@ -1,6 +1,12 @@
 
 package models.user;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+import controllers.user.Type;
+
+import play.db.ebean.Model;
 import play.mvc.Result;
 
 /**
@@ -8,14 +14,21 @@ import play.mvc.Result;
  * @author Sander Demeester
 **/
 
-public abstract class User {
+@Entity
+@Table(name="Users")
+public abstract class User extends Model{
 
     private UserID id;
-    private String loginType;
-
-    public User(){
+    private Type loginType;
+    private String name;
+    
+    public User(UserID id, Type loginType, String name){
+    	this.id = id;
+    	this.loginType = loginType; 
+    	this.name = name;
 
     }
+    
 
     /**
      * Returns info about this user as a String.

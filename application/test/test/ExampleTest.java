@@ -2,6 +2,8 @@ package test;
 
 import org.fest.assertions.AssertExtension;
 import org.junit.*;
+
+import controllers.user.Type;
 import play.mvc.*;
 import play.test.*;
 import views.html.*;
@@ -9,6 +11,9 @@ import static play.test.Helpers.*;
 import static org.fest.assertions.Assertions.*;
 
 import models.data.Link;
+import models.user.Administrator;
+import models.user.User;
+import models.user.UserID;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -16,26 +21,35 @@ import java.util.ArrayList;
 //An example of some basic JUnit tests and integration tests.
 
 public class ExampleTest {
-
-	@Test
-	public void ExampleTest(){
-		int a = 1+1;
-		Assert.assertTrue(a==2);
+	
+	/**
+	 * First way, start a global test.
+	 */
+	
+	@BeforeClass
+	public static void  startApp(){
+		Helpers.start(fakeApplication(Helpers.inMemoryDatabase()));
 	}
 	
+	/**
+	 * The second way to start tests.
+	 */
 	@Test
-	public void setupFakeServer(){
-		//Create anon runnable and pass it to running()
-		running(fakeApplication(), new Runnable() {
-			
-			@Override
-			public void run() {
-				// Do some tests on the fake server
-				int a = 1+1;
-				Assert.assertTrue(a==2);
-				
-			}
-		});
+	public void testUser(){
+		running(fakeApplication(inMemoryDatabase()), new Runnable() {
+	        public void run() { //some testing goes here
+	        	// This wont yet work because admin is not yet a registerd entity to ebeans, 
+	        	// We need inheritance 
+	        	//new Administrator(new UserID("id"),Type.ADMINISTRATOR,"Bertrand Russell").save();
+	        	}
+	        });	
+
+	}
+	
+	
+	@Test
+	public void createSimpelUser(){
+		
 	}
 	
 	@Test
@@ -52,4 +66,5 @@ public class ExampleTest {
 //		Test that the html Content contains a string
 		assertThat(contentAsString(htmlContent)).contains("Test-string");
 	}
+	
 }
