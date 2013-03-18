@@ -5,14 +5,17 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.fest.assertions.AssertExtension;
 import static org.fest.assertions.Assertions.assertThat;
 
 import play.mvc.Content;
+import play.test.Helpers;
 import static play.test.Helpers.fakeApplication;
 import static play.test.Helpers.contentType;
 import static play.test.Helpers.contentAsString;
 import static play.test.Helpers.running;
+import static play.test.Helpers.inMemoryDatabase;
 
 import models.data.Link;
 import models.user.Administrator;
