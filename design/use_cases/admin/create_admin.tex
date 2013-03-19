@@ -1,0 +1,48 @@
+
+\begin{uc}{Create admin}
+
+    \extends{Database errors}
+
+    \begin{uc-mss}
+    \item Change text in the following fields:
+        \begin{itemize}
+            \item Name
+            \item Email Address
+            \end{itemize}
+    \item Click on the Save button.
+    \end{uc-mss}
+
+    \begin{uc-ext}
+
+        \begin{uc-fail}{2}{Invalid Email Address}
+        \item Error message: Please enter a valid email address.
+        \return{1}
+        \end{uc-fail}
+
+        \begin{uc-fail}{2}{Email Address already available in database of Admins}
+        \item Error message: This email address is already assigned to an admin.
+        \return{1}
+        \end{uc-fail}
+
+        \begin{uc-fail}{2}{Not all fields are filled in}
+        \item Error message: Please make sure all the fields are filled in.
+        \return{1}
+        \end{uc-fail}
+
+    \end{uc-ext}
+
+    \begin{uc-pre}
+    \item User is authenticated as Admin
+    \item Current page: Create admin
+    \end{uc-pre}
+
+    \begin{uc-post}
+    \item New admin created.
+    \item Redirect to page: Create admin.
+    \end{uc-post}
+
+    \begin{uc-trig}
+        Admin clicks on the 'create admin' button.
+    \end{uc-trig}
+
+\end{uc}
