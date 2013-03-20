@@ -12,6 +12,8 @@ GET		/logout						controllers.UserController.logout()
 # Bootstrap resources
 GET     /assets/img/glyphicons-halflings-white.png      controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings-white.png")
 GET     /assets/img/glyphicons-halflings.png            controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings.png")
+GET     /assets/stylesheets/bootstrap.min.css            controllers.Assets.at(path="/public", file="/stylesheets/bootstrap/bootstrap.min.css")
+GET     /assets/stylesheets/responsive.min.css            controllers.Assets.at(path="/public", file="/stylesheets/bootstrap/responsive.min.css")
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
