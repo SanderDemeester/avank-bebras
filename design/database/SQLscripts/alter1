@@ -1,0 +1,17 @@
+CREATE TABLE helpTeachers(
+teacherID text NOT NULL REFERENCES Users,
+classID text NOT NULL REFERENCES Classes,
+PRIMARY KEY (teacherID,classID)
+);
+
+CREATE TABLE anonAnswer(
+id SERIAL,
+questionID text NOT NULL REFERENCES Questions,
+contestID text NOT NULL REFERENCES Contests,
+answer text NOT NULL,
+PRIMARY KEY (id)
+);
+
+ALTER TABLE Users ADD COLUMN comment text;
+
+ALTER TABLE Questions ADD COLUMN author text;
