@@ -1,0 +1,42 @@
+
+\begin{uc}{Register as Teacher}
+
+    \begin{uc-mss}
+    \item The system shows a form where the user can fill in the same
+        information as with a normal registration, but with an required field
+        for a telephone number and a teacher card's scan.
+    \item The user fills in the form and submits.
+    \item The system delegates this information to the organizers, and redirects
+        the user back to the login page after notifying him of his succes.
+    \end{uc-mss}
+
+    \begin{uc-ext}
+
+        \begin{uc-fail}{2}{The user has an account.}
+        \item The user clicks on the "Use existing account" button.
+        \item The system replaces above form with a login form, apart from the
+            telephone number and the teacher's card.
+            \return{2}
+        \end{uc-fail}
+        
+        \begin{uc-fail}{3}{The form is not filled correct.}
+        \item The system warns the user.
+            \return{2}
+        \end{uc-fail}
+
+    \end{uc-ext}
+
+    \begin{uc-pre}
+    \item The user is not logged in.
+    \end{uc-pre}
+
+    \begin{uc-post}
+    \item The organizers are notified of the request by mail.
+    \end{uc-post}
+
+    \begin{uc-trig}
+        The user clicks on the "Register as Teacher" link on the home page.
+    \end{uc-trig}
+
+\end{uc}
+

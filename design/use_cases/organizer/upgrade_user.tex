@@ -1,0 +1,34 @@
+
+\begin{uc}{Upgrade an Account}
+
+    \begin{uc-mss}
+    \item The system shows a list of user.
+    \item The user submits a user and his new role in a form. He provides the
+        extra information required (a telephone and obligated email for a
+        Pupil/Indepent who becomes a Teacher).
+    \item The system upgrades the user and notifies him by email.
+    \end{uc-mss}
+
+    \begin{uc-ext}
+        
+        \begin{uc-fail}{2}{Empty or invalid telephone/email.}
+            \item The system warns the user.
+                \return{1}
+        \end{uc-fail}
+
+    \end{uc-ext}
+
+    \begin{uc-pre}
+    \item The user is logged in as an organizer.
+    \end{uc-pre}
+
+    \begin{uc-post}
+    \item The selected user is a Teacher and is notified.
+    \end{uc-post}
+
+    \begin{uc-trig}
+        The organizers request the list of users.
+    \end{uc-trig}
+
+\end{uc}
+
