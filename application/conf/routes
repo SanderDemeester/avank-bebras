@@ -8,6 +8,11 @@ GET     /test				        controllers.Application.test(id: String)
 GET		/login						controllers.UserController.login()
 GET		/register					controllers.UserController.register()
 GET		/logout						controllers.UserController.logout()
+
+# Bootstrap resources
+GET     /assets/img/glyphicons-halflings-white.png      controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings-white.png")
+GET     /assets/img/glyphicons-halflings.png            controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings.png")
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
@@ -22,7 +27,3 @@ GET     /servers/:name              controllers.question.ServerController.edit(n
 POST    /servers/:name              controllers.question.ServerController.update(name)
 
 GET    /servers/remove/:name       controllers.question.ServerController.remove(name)
-
-# Bootstrap resources
-GET     /assets/img/glyphicons-halflings-white.png      controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings-white.png")
-GET     /assets/img/glyphicons-halflings.png            controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings.png")
