@@ -3,9 +3,13 @@ package models.question;
 import java.util.List;
 
 import models.data.Language;
-import models.data.LanguageCreationException;
+import models.data.UnavailableLanguageException;
+import models.data.UnknownLanguageCodeException;
+import static play.test.Helpers.fakeApplication;
+import static play.test.Helpers.running;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class XmlQuestionTest {
@@ -24,6 +28,28 @@ public class XmlQuestionTest {
     private static final String INCORRECT_MC_9 = "testincludes/incorrect_question_mc_9.xml";
     private static final String INCORRECT_REGEX_1 = "testincludes/incorrect_question_regex_1.xml";
     private static final String INCORRECT_REGEX_2 = "testincludes/incorrect_question_regex_2.xml";
+    
+    private Language en;
+    private Language nl;
+    
+    /**
+     * Fetch the languages
+     */
+    @Before
+    public void getLanguages() {
+        running(fakeApplication(), new Runnable(){
+            @Override
+            public void run(){
+                try {
+                    en = Language.getLanguage("en");
+                    en = Language.getLanguage("nl");
+                } catch (UnavailableLanguageException e) {
+                    Assert.fail(e.getMessage());
+                } catch (UnknownLanguageCodeException e) {
+                    Assert.fail(e.getMessage());
+                }
+            }});
+     }
 
     private Question testAFile(String file) {
         Question q = null;
@@ -34,25 +60,22 @@ public class XmlQuestionTest {
         }
         Assert.assertNotNull(q);
 
-        try {
-            // Check the languages
-            Assert.assertTrue(q.getLanguages().contains(Language.getLanguage("en")));
-            Assert.assertTrue(q.getLanguages().contains(Language.getLanguage("nl")));
+        // Check the languages
+        Assert.assertTrue(q.getLanguages().contains(en));
+        Assert.assertTrue(q.getLanguages().contains(nl));
 
-            // Check the titles
-            Assert.assertEquals(q.getTitle(Language.getLanguage("en")), "A Question");
-            Assert.assertEquals(q.getTitle(Language.getLanguage("nl")), "Een vraag");
+        // Check the titles
+        Assert.assertEquals(q.getTitle(en), "A Question");
+        Assert.assertEquals(q.getTitle(nl), "Een vraag");
 
-            // Check the indexes
-            Assert.assertEquals(q.getIndex(Language.getLanguage("en")), "index_en.html");
-            Assert.assertEquals(q.getIndex(Language.getLanguage("nl")), "index_nl.html");
+        // Check the indexes
+        Assert.assertEquals(q.getIndex(en), "index_en.html");
+        Assert.assertEquals(q.getIndex(nl), "index_nl.html");
 
-            // Check the feedback
-            Assert.assertEquals(q.getFeedback(Language.getLanguage("en")), "feedback_en.html");
-            Assert.assertEquals(q.getFeedback(Language.getLanguage("nl")), "feedback_nl.html");
-        } catch(LanguageCreationException e) {
-            Assert.fail(e.getMessage());
-        }
+        // Check the feedback
+        Assert.assertEquals(q.getFeedback(en), "feedback_en.html");
+        Assert.assertEquals(q.getFeedback(nl), "feedback_nl.html");
+        
         return q;
     }
 
@@ -64,27 +87,23 @@ public class XmlQuestionTest {
         MultipleChoiceQuestion q = (MultipleChoiceQuestion) testAFile(CORRECT_MC);
         Assert.assertEquals(q.getType(), QuestionType.MULTIPLE_CHOICE);
 
-        try {
-            // Check the answer contents
-            List<MultipleChoiceElement> elements_en = q.getElements(Language.getLanguage("en"));
-            Assert.assertEquals(elements_en.get(0).getContent(), "Wrong");
-            Assert.assertEquals(elements_en.get(1).getContent(), "Correct");
-            Assert.assertEquals(elements_en.get(2).getContent(), "Wrong again");
+        // Check the answer contents
+        List<MultipleChoiceElement> elements_en = q.getElements(en);
+        Assert.assertEquals(elements_en.get(0).getContent(), "Wrong");
+        Assert.assertEquals(elements_en.get(1).getContent(), "Correct");
+        Assert.assertEquals(elements_en.get(2).getContent(), "Wrong again");
 
-            // Check the correct answer
-            Assert.assertEquals(elements_en.get(1), q.getCorrectElement(Language.getLanguage("en")));
+        // Check the correct answer
+        Assert.assertEquals(elements_en.get(1), q.getCorrectElement(en));
 
-            // Check the answer contents
-            List<MultipleChoiceElement> elements_nl = q.getElements(Language.getLanguage("nl"));
-            Assert.assertEquals(elements_nl.get(0).getContent(), "Verkeerd");
-            Assert.assertEquals(elements_nl.get(1).getContent(), "Juist");
-            Assert.assertEquals(elements_nl.get(2).getContent(), "Weer verkeerd");
+        // Check the answer contents
+        List<MultipleChoiceElement> elements_nl = q.getElements(nl);
+        Assert.assertEquals(elements_nl.get(0).getContent(), "Verkeerd");
+        Assert.assertEquals(elements_nl.get(1).getContent(), "Juist");
+        Assert.assertEquals(elements_nl.get(2).getContent(), "Weer verkeerd");
 
-            // Check the correct answer
-            Assert.assertEquals(elements_nl.get(1), q.getCorrectElement(Language.getLanguage("nl")));
-        } catch(LanguageCreationException e) {
-            Assert.fail(e.getMessage());
-        }
+        // Check the correct answer
+        Assert.assertEquals(elements_nl.get(1), q.getCorrectElement(nl));
     }
 
     /**
@@ -95,13 +114,9 @@ public class XmlQuestionTest {
         RegexQuestion q = (RegexQuestion) testAFile(CORRECT_REGEX);
         Assert.assertEquals(q.getType(), QuestionType.REGEX);
 
-        try {
-            // Check regex contents
-            Assert.assertEquals(q.getRegex(Language.getLanguage("en")), "a wo+rd");
-            Assert.assertEquals(q.getRegex(Language.getLanguage("nl")), "een wo+rd");
-        } catch(LanguageCreationException e) {
-            Assert.fail(e.getMessage());
-        }
+        // Check regex contents
+        Assert.assertEquals(q.getRegex(en), "a wo+rd");
+        Assert.assertEquals(q.getRegex(nl), "een wo+rd");
     }
 
     /**
