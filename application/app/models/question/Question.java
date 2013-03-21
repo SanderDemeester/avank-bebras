@@ -35,7 +35,7 @@ public abstract class Question {
     protected String ID;
     protected Server server;
     protected QuestionType type;
-    protected List<Language> languages;
+    public List<Language> languages;
     protected Map<Language, String> titles;
     protected Map<Language, String> indexes;
     protected Map<Language, String> feedbacks;
