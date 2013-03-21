@@ -1,0 +1,32 @@
+@****************************
+* Pagination functionallity *
+*                           *
+* author: Kevin Stobbelaar  *
+*                           *
+****************************@
+@(currentPage: Page[_], orderBy: String, order: String, currentFilter: String)
+    <div id="pagination" class="pagination pagination-centered">
+        <ul>
+            @if(currentPage.hasPrev) {
+            <li class="prev">
+                <a href="@controllers.question.routes.ServerController.list(currentPage.getPageIndex - 1, 10, orderBy, order, currentFilter)">&larr; Previous</a>
+            </li>
+            } else {
+            <li class="prev disabled">
+                <a>&larr; Previous</a>
+            </li>
+            }
+            <li class="current">
+                <a>Displaying @currentPage.getDisplayXtoYofZ(" to "," of ")</a>
+            </li>
+            @if(currentPage.hasNext) {
+            <li class="next">
+                <a href="@controllers.question.routes.ServerController.list(currentPage.getPageIndex + 1, 10, orderBy, order, currentFilter)">Next &rarr;</a>
+            </li>
+            } else {
+            <li class="next disabled">
+                <a>Next &rarr;</a>
+            </li>
+            }
+        </ul>
+    </div>

@@ -1,0 +1,116 @@
+@***********************************************************
+*  Abstract view for every list shown in the application.  *
+*                                                          *
+*  author: Kevin Stobbelaar                                *
+*                                                          *
+***********************************************************@
+
+@(currentPage: Page[models.question.Server], currentOrderBy: String, currentOrder: String, currentFilter: String, breadcrumbs : List[models.data.Link])
+
+@*****************************************
+* Helper generating the navigation links *
+*****************************************@
+@link(newPage: Int, newOrderBy: String) = @{
+
+    var orderBy = currentOrderBy
+    var order = currentOrder
+
+    if(newOrderBy != null) {
+        orderBy = newOrderBy
+        if(currentOrderBy == newOrderBy) {
+            if(currentOrder == "asc") {
+                order = "desc"
+            } else {
+                order = "asc"
+            }
+        } else {
+            order = "asc"
+        }
+    }
+
+    controllers.question.routes.ServerController.list(newPage, 10, orderBy, order, currentFilter)
+}
+
+@***************************************
+* Helper generating the column headers *
+***************************************@
+@header(key: String, title: String) = {
+    <th class="@key.replace(".","_") header @if(currentOrderBy == key) @{if(currentOrder == "asc") "headerSortDown" else "headerSortUp"}">
+        <a href="@link(0, key)">@title</a>
+    </th>
+}
+
+@***********************
+* The list view itself *
+***********************@
+@main("List of servers", breadcrumbs) {
+
+    <h2>List of servers</h2>
+
+    <div id="actions">
+
+        @***********************
+        * Filtering            *
+        ***********************@
+        <form action="@link(0,"name")" method="GET">
+            <input type="text" class="input-medium search-query" name="f" value="@currentFilter" placeholder="Filter by server name...">
+            <input type="submit" id="searchsubmit" value="Filter by name" class="btn">
+        </form>
+
+        @***********************
+        * Add new item         *
+        ***********************@
+        <p>
+            <a class="btn" href="@controllers.question.routes.ServerController.create()"> Add new server </a>
+        </p>
+
+    </div>
+
+    @***********************
+    * The actual list      *
+    ***********************@
+    @if(currentPage.getTotalRowCount == 0){
+        <div>
+            <p> Nothing to display </p>
+        </div>
+    } else {
+        <table class="table table-striped table-bordered table-hover table-condensed">
+
+            <thead>
+                <tr>
+                @header("name", "Server name")
+                @header("path", "Server's path")
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @for(server <- currentPage.getList){
+                    <tr>
+                        <td>
+                            @server.name
+                            <a class="button succes" id="edit" href="@controllers.question.routes.ServerController.edit(server.name)">
+                                <i class="icon-edit"></i>
+                            </a>
+                            <a class="button succes" id="remove" href="@controllers.question.routes.ServerController.remove(server.name)">
+                                <i class="icon-remove"></i>
+                            </a>
+                        </td>
+                        <td>
+                            @server.path
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+        @***********************
+        * Pagination           *
+        ***********************@
+        @pagination(currentPage, currentOrderBy, currentOrder, currentFilter)
+
+    }
+
+}
