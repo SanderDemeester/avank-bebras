@@ -50,8 +50,11 @@ public class QuestionEditorController extends EController {
         breadcrumbs.add(new Link("Create", "/questioneditor/create"));
         
         Form<RawQuestion> questionForm = form(RawQuestion.class).bindFromRequest();
+        
         if(questionForm.hasErrors()) {
             return badRequest(create.render(breadcrumbs, questionForm));
+        } else {
+            breadcrumbs.add(new Link(questionForm.field("addLanguage").value(), "/questioneditor/create"));
         }
         //questionForm.get().save();
         return ok(create.render(breadcrumbs, questionForm));

@@ -36,3 +36,7 @@ body{
 .container .credit {
     margin: 20px 0;
 }
+
+.well-small {
+	padding:5px 0px 0px 0px;
+}

@@ -6,21 +6,191 @@
 @import helper.twitterBootstrap._
 
 @main("Question Editor", breadcrumbs) {
-	@helper.form(action = controllers.question.editor.routes.QuestionEditorController.save(), 'id -> "question") {
-    
-	    @repeat(questionForm("languages"), min = 1) { language =>
-		    @select(
-		    			language,
-		    			options = options(RawQuestion.languageList),
-		    			'_default -> "--- Choose a language ---",
-		    			'_label -> "Language",
-            			'_error -> questionForm("languages").error.map(_.withMessage("Please select a language"))
-		    )
-		}
+	
+	<div class="row-fluid">
+		<div class="span3">
+
+		@helper.form(action = controllers.question.editor.routes.QuestionEditorController.save(), 'id -> "saveQuestion") {
+	    	
 	    
-	    <div class="actions">
-	        <input type="submit" name="action" class="btn primary" value="Save" />
-	    </div>
+	    	<div class="well well-small sidebar-nav">
+			    <ul id="languages" class="nav nav-list">
+					<li class="nav-header">Languages</li>
+					<li class="divider"></li>
+				    @repeat(questionForm("languages")) { language =>
+				    	@if(language.value == "") {
+					    	<li class="languageItem"><i class="icon-remove removelang"></i><a href="#" class="selectLang">@language.value</a></li>
+						}
+					}
+				</ul>
+			</div>
+			
+			<div>
+			<select id="languageList" class="input-medium">
+				@for(language <- RawQuestion.languageList) {
+					<option value="@language.getCode()">@language.getCode()</option>
+				}
+			</select>
+			<input type="submit" id="addLanguage" name="action" class="btn primary" value="Add" />
+			</div>
+		    
+		    <div class="actions">
+		        
+		    </div>
+		    
+		    
+
+			
+			</div>
+			<div id="questionPanel" class="span9">
+				<div id="noPanelSelected" class="text-center"><span class="muted">Add a new language or select an existing one to get started.</span></div>
+				<div id="panelTemplate" class="questionFrame hide">
+					<ul class="nav nav-tabs">
+						<li><a class="tabAnswers" href="#answers" data-toggle="tab">Answers</a></li>
+					  	<li><a class="tabIndex" href="#index" data-toggle="tab">Index</a></li>
+					  	<li><a class="tabFeedback" href="#feedback" data-toggle="tab">Feedback</a></li>
+					</ul>
+					<div class="answersTab well hide">
+						<h2>Answers</h2>
+					</div>
+					<div class="indexTab well hide">
+						<h2>Index</h2>
+						<textarea rows="10" class="span12 editor" placeholder="TODO: add WYSIWYG editor"></textarea>
+					</div>
+					<div class="feedbackTab well hide">
+						<h2>Feedback</h2>
+						<textarea rows="10" class="span12 editor" placeholder="TODO: add WYSIWYG editor"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id="removeLanguageConfirm" class="modal hide fade">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    			<h3>Remove language</h3>
+			</div>
+			<div class="modal-body">
+    			<p>Are you sure you want to remove the language <b id="removelang"></b>?</p>
+    			<p>Once this language is deleted, there is no way to recover the content for this language of the question.</p>
+  			</div>
+  			<div class="modal-footer">
+		    	<a data-dismiss="modal" href="#" class="btn">Cancel</a>
+		    	<a id="confirmRemoveLang" href="#" class="btn btn-primary">Delete language</a>
+		  	</div>
+		</div>
+		
+		
+		
+	    <!-- TMP CODE -->
+	    <style>
+	    .removelang {
+	    	position:relative;
+	    	top:5px;
+	    	float:right;
+	    	cursor:pointer;
+	    }
+	    </style>
+	    <script type="text/javascript">
+	    
+
+$(document).ready(function() {
+//TODO: remove langs that are already in the list
+	
+});
+	    
+$('#addLanguage').click(function(e) {
+	e.preventDefault();
+	
+	selected = $('#languageList').find('option:selected').remove();
+	if(selected.val()!=undefined) {
+		// Remove active class on other items
+		$(".languageItem").removeClass("active");
+		
+		// Fix lists content
+		$("#languages").append('<li class="languageItem active"><i class="icon-remove removelang"></i><a href="#" class="selectLang">'+selected.val()+'</a></li>');
+		$("#questionPanel").append();
+		
+		// Hide the other panels
+		$(".questionFrame").hide();
+		
+		// Make new question panel
+		template = $('#panelTemplate').clone();
+		template.removeClass("hide");
+		template.attr("id", "panel-"+selected.val());
+		template.find('.editor').wysihtml5();
+		$('#questionPanel').append(template);
+		
+		// Show the newly created panel
+		$(template).show();
+		
+		// Hide default panel
+		$('#noPanelSelected').hide();
+	
+	}
+	
+	return false;
+});
+
+$("i.removelang").live("click", function(){
+	lang = $(this).parent().find("a").text();
+	$("#removelang").text(lang);
+	$('#removeLanguageConfirm').modal();
+}); 
+
+$("#confirmRemoveLang").live("click", function(){
+	// Fix lists content
+	lang = $("#removelang").text();
+	$("#languages").find("li a:contains('"+lang+"')").parent().remove();
+	$("#languageList").append('<option value="'+lang+'">'+lang+'</option>');
+	
+	// Remove question panel
+	$("#panel-"+lang).remove();
+	$('#removeLanguageConfirm').modal('toggle');
+	
+	// Show default panel
+	$('#noPanelSelected').show();
+});
+
+$(".tabAnswers").live("click", function(){	
+	$(this).parent().parent().parent().find(".answersTab").show();
+	$(this).parent().parent().parent().find(".indexTab").hide();
+	$(this).parent().parent().parent().find(".feedbackTab").hide();
+});
+
+$(".tabIndex").live("click", function(){
+	$(this).parent().parent().parent().find(".answersTab").hide();
+	$(this).parent().parent().parent().find(".indexTab").show();
+	$(this).parent().parent().parent().find(".feedbackTab").hide();
+});
+
+$(".tabFeedback").live("click", function(){
+	$(this).parent().parent().parent().find(".answersTab").hide();
+	$(this).parent().parent().parent().find(".indexTab").hide();
+	$(this).parent().parent().parent().find(".feedbackTab").show();
+});
+
+$(".selectLang").live("click", function(){
+	lang = $(this).text();
+	
+	// Remove active class on other items
+	$(".languageItem").removeClass("active");
+	
+	// Set active class on this item
+	$(this).parent().addClass("active");
+	
+	// Hide the other panels
+	$(".questionFrame").hide();
+	
+	// Hide default panel
+	$('#noPanelSelected').hide();
+	
+	// Show the correct panel
+	$("#panel-"+lang).show();
+});
+
+// editor.getValue() will return the html content
+		</script>
 	    
 	}
 }
