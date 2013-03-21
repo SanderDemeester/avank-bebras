@@ -42,7 +42,7 @@ public class XmlQuestionTest {
             public void run(){
                 try {
                     en = Language.getLanguage("en");
-                    en = Language.getLanguage("nl");
+                    nl = Language.getLanguage("nl");
                 } catch (UnavailableLanguageException e) {
                     Assert.fail(e.getMessage());
                 } catch (UnknownLanguageCodeException e) {
