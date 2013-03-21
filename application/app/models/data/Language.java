@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
 import java.lang.Error;
+import java.lang.RuntimeException;
 
 import play.i18n.Lang;
 import play.i18n.Messages;
@@ -17,7 +18,7 @@ import models.data.UnknownLanguageCodeException;
  * limit the languages to the supported languages.
  * @author Felix Van der Jeugt
  */
-public class Language {
+public class Language implements Comparable<Language> {
 
     private Lang lang;
 
@@ -30,9 +31,19 @@ public class Language {
      */
     private Language(String code) throws UnknownLanguageCodeException,
            UnavailableLanguageException {
-        if(code == null || ! code.equals(Lang.forCode(code).code())) {
-            throw new UnknownLanguageCodeException(code);
-        } else if(!Lang.availables().contains(Lang.forCode(code))) {
+        if(code == null) throw new UnknownLanguageCodeException("<null>");
+
+        try {
+            Lang.forCode(code);
+        } catch(RuntimeException e) {
+            if(e.getMessage().startsWith("Unrecognized language:")) {
+                throw new UnknownLanguageCodeException(code);
+            } else {
+                throw e;
+            }
+        }
+
+        if(!Lang.availables().contains(Lang.forCode(code))) {
             throw new UnavailableLanguageException(code);
         }
         this.lang = Lang.forCode(code);
@@ -127,6 +138,19 @@ public class Language {
             throw new Error("Impossibru!");
         }
         return langs;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o == null || !(o instanceof Language)) return false;
+        Language that = (Language) o;
+        return this.getLang() == that.getLang();
+    }
+
+    @Override
+    public int compareTo(Language that) {
+        if(this.equals(that)) return 0;
+        return this.getCode().compareTo(that.getCode());
     }
 
 }
