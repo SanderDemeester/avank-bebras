@@ -25,46 +25,46 @@ public class RegexQuestionFactory extends QuestionFactory<RegexQuestion> {
 
     @Override
     public Question newQuestion(NodeList nodeList) throws QuestionBuilderException {
-    	this.nodeActions.put("input", new InputNodeAction());
+        this.nodeActions.put("input", new InputNodeAction());
         RegexQuestion question = new RegexQuestion();
         this.processCommonElements(question, nodeList);
         return question;
     }
-    
+
     /**
      * Check if a certain regex has a valid structure
      * @param regex regex to check
      * @return is the given regex valid
      */
     public static boolean isValidRegex(String regex) {
-    	try {
+        try {
             Pattern.compile(regex);
         } catch (PatternSyntaxException exception) {
             return false;
         }
         return true;
     }
-    
+
     /**
      * A NodeAction for the Input elements that are present in Regex Questions
      */
     protected class InputNodeAction extends NodeAction{
-        
+
         public static final String ATTRIBUTE_REGEX="regex";
-        
+
         @Override
         public void processValue(RegexQuestion question,
                 Language language, String value, NodeList nodeList,
                 NamedNodeMap attributes) throws QuestionBuilderException {
-        	// Get the regex value and save it in the question
-        	Node regexAttribute = attributes.getNamedItem(ATTRIBUTE_REGEX);
-        	String regex = regexAttribute.getNodeValue();
-        	if(isValidRegex(regex))
-        		question.setRegex(language, regex);
-        	else
-        		throw new QuestionBuilderException("Invalid regular expression found in language "+language.getCode());
+            // Get the regex value and save it in the question
+            Node regexAttribute = attributes.getNamedItem(ATTRIBUTE_REGEX);
+            String regex = regexAttribute.getNodeValue();
+            if(isValidRegex(regex))
+                question.setRegex(language, regex);
+            else
+                throw new QuestionBuilderException("Invalid regular expression found in language "+language.getCode());
         }
-        
+
     }
 
 }

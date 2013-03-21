@@ -17,7 +17,7 @@ public class Teacher extends SuperUser{
 
     }
 
-    
+
 
     public void scheduleUnrestrictedCompetition(){
 

@@ -53,5 +53,5 @@ public abstract class User extends Model{
 
     }
 
-    
+
 }

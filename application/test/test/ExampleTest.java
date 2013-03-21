@@ -1,22 +1,29 @@
 package test;
 
-import org.fest.assertions.AssertExtension;
-import org.junit.*;
+import java.util.List;
+import java.util.ArrayList;
 
-import controllers.user.Type;
-import play.mvc.*;
-import play.test.*;
-import views.html.*;
-import static play.test.Helpers.*;
-import static org.fest.assertions.Assertions.*;
+import org.junit.Test;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.fest.assertions.AssertExtension;
+import static org.fest.assertions.Assertions.assertThat;
+
+import play.mvc.Content;
+import play.test.Helpers;
+import static play.test.Helpers.fakeApplication;
+import static play.test.Helpers.contentType;
+import static play.test.Helpers.contentAsString;
+import static play.test.Helpers.running;
+import static play.test.Helpers.inMemoryDatabase;
 
 import models.data.Link;
 import models.user.Administrator;
 import models.user.User;
 import models.user.UserID;
 
-import java.util.List;
-import java.util.ArrayList;
+import views.html.index;
+import models.data.Link;
 
 //An example of some basic JUnit tests and integration tests.
 
