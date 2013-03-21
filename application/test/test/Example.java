@@ -8,6 +8,8 @@ import org.junit.Test;
 import static org.fest.assertions.Assertions.assertThat;
 
 import play.mvc.Content;
+import play.mvc.Http;
+import play.i18n.Lang;
 import static play.test.Helpers.contentType;
 import static play.test.Helpers.contentAsString;
 
@@ -39,6 +41,16 @@ public class Example extends ContextTest {
                     "Test-string");
             }
         });
+    }
+
+    @Override protected Http.Request makeRequest() {
+        return new StubRequest() {
+            @Override public List<Lang> acceptLanguages() {
+                List<Lang> l = new ArrayList<Lang>();
+                l.add(Lang.forCode("en-US"));
+                return l;
+            }
+        };
     }
 
 }
