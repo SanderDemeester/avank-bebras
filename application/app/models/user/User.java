@@ -1,15 +1,18 @@
 
 package models.user;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
-
+import com.avaje.ebean.annotation.Formula;
 import controllers.user.Type;
-
 import play.db.ebean.Model;
 import play.mvc.Result;
+import play.data.format.Formats;
 
 /**
  * The default abstract class for User.
@@ -21,9 +24,25 @@ import play.mvc.Result;
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public abstract class User extends Model{
 
-    private UserID id;
-    private Type loginType;
-    private String name;
+	@Id
+    public UserID id;
+    public String name;
+    
+    @Formats.DateTime(pattern = "MM/dd/yyyy")
+    public Date birtyDate;
+    
+    @Formats.DateTime(pattern = "MM/dd/yyyy")
+    public Date registrationDate;
+    public String prefLanguage;
+    public String password;
+    public String hash;
+    public String telephone;
+    public String address;
+    
+    public Gender gender;
+    public Type loginType;
+    
+    public boolean active;
     
     public User(UserID id, Type loginType, String name){
     	this.id = id;
