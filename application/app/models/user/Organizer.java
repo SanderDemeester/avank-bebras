@@ -31,7 +31,7 @@ public class Organizer extends SuperUser{
      * Mimick user.
      * @param user
      */
-    public void mimickPupil(Independent user){
+    public void mimicPupil(Independent user){
 
     }
 
@@ -41,6 +41,22 @@ public class Organizer extends SuperUser{
      */
     public Set<Teacher> listTeachers(){
         return null;
+    }
+    
+    /*
+     * Returns the Question Management Page
+     * @return Question Management Page
+     */
+    public Result manageQuestions(){
+    	return null;
+    }
+    
+    /*
+     * Returns the Competition Management Page
+     * @return Competition Management Page
+     */
+    public Result manageCompetitions(){
+    	return null;
     }
 
 	@Override
