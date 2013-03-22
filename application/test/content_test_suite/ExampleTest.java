@@ -1,4 +1,4 @@
-package test;
+package content_test_suite;
 
 import java.util.List;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package suite;
+package content_test_suite;
 
 
 import static play.test.Helpers.fakeApplication;
