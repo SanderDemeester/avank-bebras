@@ -2,6 +2,8 @@
 package models.user;
 
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 import controllers.user.Type;
@@ -16,6 +18,7 @@ import play.mvc.Result;
 
 @Entity
 @Table(name="Users")
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public abstract class User extends Model{
 
     private UserID id;

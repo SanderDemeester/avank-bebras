@@ -9,7 +9,7 @@ import content_test_suite.ErrorPageTest;
 
 
 @RunWith(Suite.class)
-@SuiteClasses({ ErrorPageTest.class })
+@SuiteClasses({ UserDatabaseTest.class })
 public class DatabaseTestSuite {
 
 }

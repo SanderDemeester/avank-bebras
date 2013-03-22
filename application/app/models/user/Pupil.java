@@ -1,11 +1,14 @@
 
 package models.user;
 
+import javax.persistence.Entity;
+
 import models.competition.Competition;
 
 /**
  * @author Sander Demeester
  */
+@Entity
 public class Pupil extends Independent{
 
     //We first need a competition object.

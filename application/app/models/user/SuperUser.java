@@ -1,6 +1,8 @@
 
 package models.user;
 
+import javax.persistence.MappedSuperclass;
+
 import controllers.user.Type;
 
 /**
@@ -8,6 +10,7 @@ import controllers.user.Type;
  * @author Sander Demeester
 **/
 
+@MappedSuperclass
 public abstract class SuperUser extends User{
 
     public SuperUser(UserID id, Type loginType, String name){
