@@ -104,9 +104,7 @@ public abstract class User extends Model{
      * Returns the statistics page
      * @return Statistics Page
      */
-    public Result showStatistics(){
-    	return null;
-    }
+    public abstract Result showStatistics();
     
     /*
      * Returns the personal info page

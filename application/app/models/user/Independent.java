@@ -67,5 +67,11 @@ public class Independent extends User{
 		return null;
 	}
 
+	@Override
+	public Result showStatistics() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }
