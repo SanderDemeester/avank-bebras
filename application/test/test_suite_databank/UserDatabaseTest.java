@@ -20,7 +20,7 @@ public class UserDatabaseTest{
 	
 	
 	
-	@Before
+	@BeforeClass
 	public static void startApp(){
 		
 //		start(fakeApplication(inMemoryDatabase()));
