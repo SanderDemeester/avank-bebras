@@ -4,6 +4,8 @@ package models.user;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -39,7 +41,10 @@ public abstract class User extends Model{
     public String telephone;
     public String address;
     
+    @Enumerated(EnumType.STRING)
     public Gender gender;
+    
+    @Enumerated(EnumType.STRING)
     public Type loginType;
     
     public boolean active;
