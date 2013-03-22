@@ -48,4 +48,10 @@ public class Teacher extends SuperUser{
         return null;
     }
 
+	@Override
+	public Result showLandingPage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -61,5 +61,11 @@ public class Independent extends User{
         return null;
     }
 
+	@Override
+	public Result showLandingPage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

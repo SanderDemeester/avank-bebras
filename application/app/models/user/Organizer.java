@@ -43,4 +43,10 @@ public class Organizer extends SuperUser{
         return null;
     }
 
+	@Override
+	public Result showLandingPage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

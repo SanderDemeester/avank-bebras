@@ -85,6 +85,36 @@ public abstract class User extends Model{
     public void logout(){
 
     }
+    
+    /*
+     * Returns the landing page. Is to be implemented by the child classes
+     *@return Landing Page
+     */
+    public abstract Result showLandingPage();
+    
+    /*
+     * Returns the userID
+     * @return userID
+     */
+    public UserID getID(){
+    	return null;
+    }
+    
+    /*
+     * Returns the statistics page
+     * @return Statistics Page
+     */
+    public Result showStatistics(){
+    	return null;
+    }
+    
+    /*
+     * Returns the personal info page
+     * @return Personal Info Page
+     */
+    public Result showPersonalInformation(){
+    	return null;
+    }
 
 
 }
