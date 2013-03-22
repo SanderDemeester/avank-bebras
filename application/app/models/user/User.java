@@ -27,7 +27,7 @@ import play.data.format.Formats;
 public abstract class User extends Model{
 
 	@Id
-    public UserID id;
+    public String id;
     public String name;
     
     @Formats.DateTime(pattern = "MM/dd/yyyy")
@@ -50,7 +50,7 @@ public abstract class User extends Model{
     public boolean active;
     
     public User(UserID id, Type loginType, String name){
-    	this.id = id;
+    	this.id = id.geUserID();
     	this.loginType = loginType; 
     	this.name = name;
 
