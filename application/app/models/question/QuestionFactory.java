@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import models.data.Language;
-import models.data.Languages;
+import models.data.LanguageCreationException;
 
 import org.w3c.dom.DOMException;
 import org.w3c.dom.NamedNodeMap;
@@ -69,8 +69,8 @@ public abstract class QuestionFactory<T extends Question> {
             if(node.getNodeName()=="language") {
                 // add the language to the question
                 languageCode = node.getAttributes().getNamedItem("code").getNodeValue();
-                Language language = Languages.getLanguage(languageCode);
-                if(language != null) {
+                try {
+                    Language language = Language.getLanguage(languageCode);
                     question.addLanguage(language);
 
                     // process the child elements of the current language element
@@ -84,9 +84,8 @@ public abstract class QuestionFactory<T extends Question> {
                                     , actionNode.getChildNodes(), actionNode.getAttributes());
                         }
                     }
-                }
-                else {
-                    throw new QuestionBuilderException("The language code '"+languageCode+"' is invalid.");
+                } catch(LanguageCreationException e) {
+                    throw new QuestionBuilderException(e.getMessage());
                 }
             }
         }

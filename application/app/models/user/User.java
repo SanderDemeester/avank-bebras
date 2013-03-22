@@ -23,8 +23,8 @@ import play.data.format.Formats;
 **/
 
 @Entity
-@Table(name="Users")
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@Table(name="users")
+//@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public abstract class User extends Model{
 
 	@Id
@@ -32,27 +32,28 @@ public abstract class User extends Model{
     public String name;
     
     @Formats.DateTime(pattern = "MM/dd/yyyy")
-    private Date birtyDate;
+    public Date birthdate;
     
     @Formats.DateTime(pattern = "MM/dd/yyyy")
-    private Date registrationDate;
-    private String prefLanguage;
-    private String password;
-    private String hash;
-    private String telephone;
-    private String address;
+    public Date registrationDate;
+    public String prefLanguage;
+    public String password;
+    public String hash;
+    public String telephone;
+    public String address;
+    public String email;
     
     @Enumerated(EnumType.STRING)
-    private Gender gender;
+    public Gender gender;
     
     @Enumerated(EnumType.STRING)
-    public Type loginType;
+    public Type type;
     
     public boolean active;
     
     public User(UserID id, Type loginType, String name){
     	this.id = id.geUserID();
-    	this.loginType = loginType; 
+    	this.type = loginType; 
     	this.name = name;
 
     }
