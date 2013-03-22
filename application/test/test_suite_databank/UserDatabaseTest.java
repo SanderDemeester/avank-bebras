@@ -1,34 +1,32 @@
 package test_suite_databank;
 
-import static org.junit.Assert.*;
-
-import models.user.Administrator;
 import models.user.Independent;
 import models.user.User;
 import models.user.UserID;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import controllers.user.Type;
-
 import play.test.FakeApplication;
-import play.test.Helpers;
+import controllers.user.Type;
+import static play.test.Helpers.fakeApplication;
+import static play.test.Helpers.start;
+import static play.test.Helpers.stop;
 
 public class UserDatabaseTest {
 	
-	private FakeApplication fakeApplication;
+	private FakeApplication application;
+	
 	
 	@Before
 	public void startApp(){
-		fakeApplication = Helpers.fakeApplication(); 
-		Helpers.start(fakeApplication);
+		application = fakeApplication();
+		start(application);
 	}
 	
 	@After
 	public void stopApp(){
-		Helpers.stop(fakeApplication);
+		stop(application);
 	}
 	
 	@Test
