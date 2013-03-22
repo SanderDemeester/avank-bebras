@@ -3,4 +3,9 @@ app.title = Avank Bebras - {0}
 
 # Question
 question.editor.index.hero = Questions are the key element of the Bebras application. You can become part of this fantastic application and submit your own question by creating them here.
-question.editor.index.create = Create a question pack
+question.editor.index.create.mc = Create Multiple Choice Question
+question.editor.index.create.regex = Create Input Question
+question.editor.index.create.import = Import from .ZIP
+
+question.type.MULTIPLE_CHOICE = Multiple Choice Question
+question.type.REGEX = Input Question

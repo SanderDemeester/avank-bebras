@@ -7,8 +7,14 @@
           <h1>Questions</h1>
           <p>@EMessages.get("question.editor.index.hero")</p>
           <p>
-        <a class="btn btn-primary btn-large" href="@controllers.question.editor.routes.QuestionEditorController.create()">
-            @EMessages.get("question.editor.index.create")
+        <a class="btn btn-primary btn-large" href="@controllers.question.editor.routes.QuestionEditorController.create("MULTIPLE_CHOICE")">
+            @EMessages.get("question.editor.index.create.mc")
+        </a>
+        <a class="btn btn-primary btn-large" href="@controllers.question.editor.routes.QuestionEditorController.create("REGEX")">
+            @EMessages.get("question.editor.index.create.regex")
+        </a>
+        <a class="btn btn-large" href="@controllers.question.editor.routes.QuestionEditorController.create("REGEX")">
+            @EMessages.get("question.editor.index.create.import")
         </a>
         </p>
     </div>

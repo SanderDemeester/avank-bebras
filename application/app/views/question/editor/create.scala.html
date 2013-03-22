@@ -1,4 +1,4 @@
-@(breadcrumbs : List[models.data.Link], questionForm: Form[models.question.editor.RawQuestion])
+@(breadcrumbs : List[models.data.Link], questionForm: Form[models.question.editor.RawQuestion], questionType : String)
 
 @import models.EMessages
 @import models.question.editor.RawQuestion
@@ -12,8 +12,12 @@
 
 		@helper.form(action = controllers.question.editor.routes.QuestionEditorController.save(), 'id -> "saveQuestion") {
 	    	
+	    	<div class="well text-center">
+				<button class="btn btn-primary" type="button"><i class="icon-envelope icon-white"></i> Submit</button>
+				<button class="btn" type="button"><i class="icon-download"></i> Export as .ZIP</button>
+			</div>
 	    
-	    	<div class="well well-small sidebar-nav">
+	    	<div class="well sidebar-nav">
 			    <ul id="languages" class="nav nav-list">
 					<li class="nav-header">Languages</li>
 					<li class="divider"></li>
@@ -22,44 +26,59 @@
 					    	<li class="languageItem"><i class="icon-remove removelang"></i><a href="#" class="selectLang">@language.value</a></li>
 						}
 					}
+					
 				</ul>
+				<ul class="nav nav-list"><li class="divider"></li></ul>
+				<div class="form-inline row-fluid">
+					<div class="span9">
+					<select id="languageList" class="span12">
+						@for(language <- RawQuestion.languageList) {
+							<option value="@language.getCode()">@language.getCode()</option>
+						}
+					</select>
+					</div>
+					<button id="addLanguage" class="btn span3"><i class="icon-plus-sign"></i></button>
+				</div>
 			</div>
-			
-			<div>
-			<select id="languageList" class="input-medium">
-				@for(language <- RawQuestion.languageList) {
-					<option value="@language.getCode()">@language.getCode()</option>
-				}
-			</select>
-			<input type="submit" id="addLanguage" name="action" class="btn primary" value="Add" />
-			</div>
 		    
-		    <div class="actions">
-		        
-		    </div>
-		    
-		    
-
-			
 			</div>
 			<div id="questionPanel" class="span9">
 				<div id="noPanelSelected" class="text-center"><span class="muted">Add a new language or select an existing one to get started.</span></div>
 				<div id="panelTemplate" class="questionFrame hide">
 					<ul class="nav nav-tabs">
+						<li><a class="tabGeneral" href="#answers" data-toggle="tab">General</a></li>
 						<li><a class="tabAnswers" href="#answers" data-toggle="tab">Answers</a></li>
-					  	<li><a class="tabIndex" href="#index" data-toggle="tab">Index</a></li>
+					  	<li><a class="tabIndex" href="#index" data-toggle="tab">Question</a></li>
 					  	<li><a class="tabFeedback" href="#feedback" data-toggle="tab">Feedback</a></li>
 					</ul>
+					<div class="generalTab well hide">
+						<h2>General</h2>
+						<div class="form-inline">
+							Title: <input type="text" class="title span10" placeholder="The title for this question in the current language."/>
+						</div>
+					</div>
 					<div class="answersTab well hide">
-						<h2>Answers</h2>
+						<h2>Answer</h2>
+							<div class="input">
+							@questionType match {
+								case "MULTIPLE_CHOICE" => {
+									@inputMultipleChoice(questionForm)
+								}
+								case "REGEX" => {
+									@inputRegex(questionForm)
+								}
+							}
+						</div>
 					</div>
-					<div class="indexTab well hide">
-						<h2>Index</h2>
-						<textarea rows="10" class="span12 editor" placeholder="TODO: add WYSIWYG editor"></textarea>
+					<div class="indexTab well hide editorTab">
+						<h2>Question</h2>
+						<div class="muted">This page will be presented to the user when he has to solve this question.</div>
+						<textarea rows="10" class="span12 editor" placeholder="Enter the question here.">&nbsp;</textarea>
 					</div>
-					<div class="feedbackTab well hide">
+					<div class="feedbackTab well hide editorTab">
 						<h2>Feedback</h2>
-						<textarea rows="10" class="span12 editor" placeholder="TODO: add WYSIWYG editor"></textarea>
+						<div class="muted">This content will be used to display feedback to the user after a competition.</div>
+						<textarea rows="10" class="span12 editor" placeholder="Enter the question feedback here.">&nbsp;</textarea>
 					</div>
 				</div>
 			</div>
@@ -72,7 +91,7 @@
 			</div>
 			<div class="modal-body">
     			<p>Are you sure you want to remove the language <b id="removelang"></b>?</p>
-    			<p>Once this language is deleted, there is no way to recover the content for this language of the question.</p>
+    			<p>Once this language is deleted, there is no way to recover the content of this language of the question.</p>
   			</div>
   			<div class="modal-footer">
 		    	<a data-dismiss="modal" href="#" class="btn">Cancel</a>
@@ -80,7 +99,7 @@
 		  	</div>
 		</div>
 		
-		
+<a class='addImage btn'>Put in nice modal</a>
 		
 	    <!-- TMP CODE -->
 	    <style>
@@ -93,12 +112,18 @@
 	    </style>
 	    <script type="text/javascript">
 	    
-
-$(document).ready(function() {
-//TODO: remove langs that are already in the list
-	
-});
+var questionType = "@questionType";
+var activeEditor;
 	    
+$(document).ready(function() {
+	// Show confirm dialog on leaving page
+	window.onbeforeunload = function() {
+	    return 'Are you sure you want to navigate away from this page? Unsaved changes will be lost.';
+	};
+	// Call this for removing the warning after save
+	//window.onbeforeunload = null;
+});
+	   
 $('#addLanguage').click(function(e) {
 	e.preventDefault();
 	
@@ -108,7 +133,10 @@ $('#addLanguage').click(function(e) {
 		$(".languageItem").removeClass("active");
 		
 		// Fix lists content
-		$("#languages").append('<li class="languageItem active"><i class="icon-remove removelang"></i><a href="#" class="selectLang">'+selected.val()+'</a></li>');
+		var newLang = $(document.createElement('li')).addClass("languageItem active").css('display', 'none');
+		newLang.html('<i class="icon-remove removelang"></i><a href="#" class="selectLang">'+selected.val()+'</a>');
+		$("#languages").append(newLang);
+		newLang.show('fast');
 		$("#questionPanel").append();
 		
 		// Hide the other panels
@@ -118,14 +146,30 @@ $('#addLanguage').click(function(e) {
 		template = $('#panelTemplate').clone();
 		template.removeClass("hide");
 		template.attr("id", "panel-"+selected.val());
-		template.find('.editor').wysihtml5();
+		var editor = template.find('.editor');
+		editor.each(function() {
+			var instance = $(this).wysihtml5({
+				"html": true,
+				"link": false,
+			});
+			$(this).data("editor", instance);
+		});
+		activeEditor = editor;
 		$('#questionPanel').append(template);
 		
 		// Show the newly created panel
-		$(template).show();
+		$(template).show('fast');
 		
 		// Hide default panel
 		$('#noPanelSelected').hide();
+		
+		// Type specific logics
+		if(questionType=="MULTIPLE_CHOICE") {
+			template.find(".input").data("counter", 0);
+			template.find(".input").data("lang", selected.val());
+		} else if(questionType=="REGEX") {
+			
+		}
 	
 	}
 	
@@ -141,33 +185,51 @@ $("i.removelang").live("click", function(){
 $("#confirmRemoveLang").live("click", function(){
 	// Fix lists content
 	lang = $("#removelang").text();
-	$("#languages").find("li a:contains('"+lang+"')").parent().remove();
+	removeLang = $("#languages").find("li a:contains('"+lang+"')").parent();
+	removeLang.hide('fast', function() {
+		removeLang.remove();
+	});
 	$("#languageList").append('<option value="'+lang+'">'+lang+'</option>');
 	
-	// Remove question panel
-	$("#panel-"+lang).remove();
+	// Remove active class on other items
+	$(".languageItem").removeClass("active");
+	
+	// Hide the other panels and remove this panel
+	$(".questionFrame").hide(function(e) {
+		$("#panel-"+lang).remove();
+	});
 	$('#removeLanguageConfirm').modal('toggle');
 	
 	// Show default panel
-	$('#noPanelSelected').show();
+	$('#noPanelSelected').show('fast');
+});
+
+$(".tabGeneral").live("click", function(){	
+	$(this).parent().parent().parent().find(".generalTab").show();
+	$(this).parent().parent().parent().find(".answersTab").hide();
+	$(this).parent().parent().parent().find(".indexTab").hide();
+	$(this).parent().parent().parent().find(".feedbackTab").hide();
 });
 
 $(".tabAnswers").live("click", function(){	
+	$(this).parent().parent().parent().find(".generalTab").hide();
 	$(this).parent().parent().parent().find(".answersTab").show();
 	$(this).parent().parent().parent().find(".indexTab").hide();
 	$(this).parent().parent().parent().find(".feedbackTab").hide();
 });
 
 $(".tabIndex").live("click", function(){
+	$(this).parent().parent().parent().find(".generalTab").hide();
 	$(this).parent().parent().parent().find(".answersTab").hide();
-	$(this).parent().parent().parent().find(".indexTab").show();
+	activeEditor = $(this).parent().parent().parent().find(".indexTab").show().find('.editor');
 	$(this).parent().parent().parent().find(".feedbackTab").hide();
 });
 
 $(".tabFeedback").live("click", function(){
+	$(this).parent().parent().parent().find(".generalTab").hide();
 	$(this).parent().parent().parent().find(".answersTab").hide();
 	$(this).parent().parent().parent().find(".indexTab").hide();
-	$(this).parent().parent().parent().find(".feedbackTab").show();
+	activeEditor = $(this).parent().parent().parent().find(".feedbackTab").show().find('.editor');
 });
 
 $(".selectLang").live("click", function(){
@@ -187,9 +249,45 @@ $(".selectLang").live("click", function(){
 	
 	// Show the correct panel
 	$("#panel-"+lang).show();
+	
+	// Set the default editor
+	activeEditor = $("#panel-"+lang).find("div:visible").find(".editor");
 });
 
 // editor.getValue() will return the html content
+
+// Add MC input element
+$(".addMCElement").live("click", function(){
+	var counter = $(this).parent().data("counter");
+	var lang = $(this).parent().data("lang");
+	
+	var answerDiv = $(document.createElement('div')).attr("id", 'answer-' + counter).css('display', 'none');
+	answerDiv.html('<label class="mc_answer row-fluid">'
+			+'<div class="span1"><i class="icon-remove removeanswer"></i></div>'
+			+'<div class="span8"><input class="span12" type="text" name="answer-' + counter
+		      + '" id="answer-textbox-' + counter + '" value="" placeholder="A possible answer"/></div>'
+		    +'<div class="span3">Correct: <input type="radio" name="correct_answer_' +
+		      lang+'" value="'+ counter+'"></div>'
+		    +'</label>');
+	$(this).parent().find(".answers").append(answerDiv);
+	answerDiv.show('fast');
+	
+	$(this).parent().data("counter", counter+1);
+});
+
+$(".removeanswer").live("click", function(){
+	// Don't lower counter, because an earlier element can also be removed instead of the last one
+	$(this).parent().parent().hide('fast', function() {
+		$(this).parent().parent();
+	});
+});
+
+$(".addImage").live("click", function(){
+	var editorInstance = activeEditor.data("editor").data("wysihtml5").editor;
+	editorInstance.composer.commands.exec("insertImage", { src: "http://icons.iconarchive.com/icons/deleket/sleek-xp-software/256/Yahoo-Messenger-icon.png", alt: "this is google" });
+	editorInstance.currentView.element.focus();
+});
+
 		</script>
 	    
 	}
