@@ -3,6 +3,8 @@ package models.user;
 
 import javax.persistence.Entity;
 
+import controllers.user.Type;
+
 import models.competition.Competition;
 
 /**
@@ -18,7 +20,15 @@ public class Pupil extends Independent{
     }
 
 
-    /**
+
+	public Pupil(UserID userID, Type logintType, String name) {
+		// TODO Auto-generated constructor stub
+		super(userID,logintType,name);
+	}
+
+
+
+	/**
      *
      * @param competition
      * @return returns if adding competition was succesfull.

@@ -54,10 +54,6 @@ public class ExampleTest {
 	}
 	
 	
-	@Test
-	public void createSimpelUser(){
-		
-	}
 	
 	@Test
 	public void testTemplate(){

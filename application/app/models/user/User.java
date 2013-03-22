@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import com.avaje.ebean.annotation.Formula;
 import controllers.user.Type;
 import play.db.ebean.Model;
+import play.db.ebean.Model.Finder;
 import play.mvc.Result;
 import play.data.format.Formats;
 
@@ -31,18 +32,18 @@ public abstract class User extends Model{
     public String name;
     
     @Formats.DateTime(pattern = "MM/dd/yyyy")
-    public Date birtyDate;
+    private Date birtyDate;
     
     @Formats.DateTime(pattern = "MM/dd/yyyy")
-    public Date registrationDate;
-    public String prefLanguage;
-    public String password;
-    public String hash;
-    public String telephone;
-    public String address;
+    private Date registrationDate;
+    private String prefLanguage;
+    private String password;
+    private String hash;
+    private String telephone;
+    private String address;
     
     @Enumerated(EnumType.STRING)
-    public Gender gender;
+    private Gender gender;
     
     @Enumerated(EnumType.STRING)
     public Type loginType;
@@ -56,6 +57,11 @@ public abstract class User extends Model{
 
     }
     
+    /**
+     * A finder for User.
+     * We will use this finder to execute specific sql query's.
+     */
+    public static Finder<Integer,User> find = new Model.Finder<Integer, User>(Integer.class,User.class);
 
     /**
      * Returns info about this user as a String.
