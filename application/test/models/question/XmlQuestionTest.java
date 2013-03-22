@@ -3,13 +3,19 @@ package models.question;
 import java.util.List;
 
 import models.data.Language;
+import models.question.MultipleChoiceElement;
+import models.question.MultipleChoiceQuestion;
+import models.question.Question;
+import models.question.QuestionBuilderException;
+import models.question.QuestionType;
+import models.question.RegexQuestion;
 import models.data.UnavailableLanguageException;
 import models.data.UnknownLanguageCodeException;
 import static play.test.Helpers.fakeApplication;
 import static play.test.Helpers.running;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class XmlQuestionTest {
@@ -29,14 +35,14 @@ public class XmlQuestionTest {
     private static final String INCORRECT_REGEX_1 = "testincludes/incorrect_question_regex_1.xml";
     private static final String INCORRECT_REGEX_2 = "testincludes/incorrect_question_regex_2.xml";
     
-    private Language en;
-    private Language nl;
+    private static Language en;
+    private static Language nl;
     
     /**
      * Fetch the languages
      */
-    @Before
-    public void getLanguages() {
+    @BeforeClass
+    public static void getLanguages() {
         running(fakeApplication(), new Runnable(){
             @Override
             public void run(){

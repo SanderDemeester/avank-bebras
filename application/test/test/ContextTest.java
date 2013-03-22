@@ -1,4 +1,4 @@
-package generic;
+package test;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -24,13 +24,21 @@ import play.i18n.Lang;
  * this may be interesting.
  * @author Felix Van der Jeugt
  */
-public class ContextTest {
+public abstract class ContextTest {
+
+    private static FakeApplication app;
 
     /**
      * Set up the application.
      */
     @BeforeClass public static void setupApplication() {
-        Helpers.start(Helpers.fakeApplication(Helpers.inMemoryDatabase()));
+	    Map<String, String> settings = new HashMap<String, String>();
+		settings.put("db.default.driver", "org.h2.Driver");
+	    settings.put("db.default.user", "sa");
+	    settings.put("db.default.password", "");
+	    settings.put("db.default.url", "jdbc:h2:mem:play");
+        app = Helpers.fakeApplication(settings);
+        Helpers.start(app);
     }
 
     /**
@@ -82,21 +90,10 @@ public class ContextTest {
     }
 
     /**
-     * Runnable code blocks passed to this method will run in the application
-     * with a proper Context.
-     */
-    protected void runInApplication(Runnable block) {
-        Helpers.running(
-            Helpers.fakeApplication(Helpers.inMemoryDatabase()),
-            block
-        );
-    }
-
-    /**
      * Breaks down the application.
      */
     @AfterClass public static void breakdownApplication() {
-        Helpers.stop(Helpers.fakeApplication(Helpers.inMemoryDatabase()));
+        Helpers.stop(app);
     }
 
     protected class StubRequest extends Http.Request {

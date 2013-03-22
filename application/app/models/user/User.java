@@ -1,13 +1,21 @@
 
 package models.user;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
-
+import com.avaje.ebean.annotation.Formula;
 import controllers.user.Type;
-
 import play.db.ebean.Model;
+import play.db.ebean.Model.Finder;
 import play.mvc.Result;
+import play.data.format.Formats;
 
 /**
  * The default abstract class for User.
@@ -15,20 +23,46 @@ import play.mvc.Result;
 **/
 
 @Entity
-@Table(name="Users")
+@Table(name="users")
+//@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public abstract class User extends Model{
 
-    private UserID id;
-    private Type loginType;
-    private String name;
+	@Id
+    public String id;
+    public String name;
+    
+    @Formats.DateTime(pattern = "MM/dd/yyyy")
+    public Date birthdate;
+    
+    @Formats.DateTime(pattern = "MM/dd/yyyy")
+    public Date registrationDate;
+    public String prefLanguage;
+    public String password;
+    public String hash;
+    public String telephone;
+    public String address;
+    public String email;
+    
+    @Enumerated(EnumType.STRING)
+    public Gender gender;
+    
+    @Enumerated(EnumType.STRING)
+    public Type type;
+    
+    public boolean active;
     
     public User(UserID id, Type loginType, String name){
-    	this.id = id;
-    	this.loginType = loginType; 
+    	this.id = id.geUserID();
+    	this.type = loginType; 
     	this.name = name;
 
     }
     
+    /**
+     * A finder for User.
+     * We will use this finder to execute specific sql query's.
+     */
+    public static Finder<Integer,User> find = new Model.Finder<Integer, User>(Integer.class,User.class);
 
     /**
      * Returns info about this user as a String.
