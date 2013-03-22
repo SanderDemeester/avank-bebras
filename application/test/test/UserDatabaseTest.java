@@ -77,7 +77,7 @@ public class UserDatabaseTest {
 			}catch(PersistenceException e){}
 		}
 		
-		List<User> teacherList = User.find.where().like("LoginType", "TEACHER").findList();
+		List<User> teacherList = User.find.where().like("type", "TEACHER").findList();
 		Assert.assertTrue(teacherList.size() == numberOfTeachers);
 
 		User teacher = new Teacher(new UserID(teacherID), Type.TEACHER, name);
@@ -102,7 +102,7 @@ public class UserDatabaseTest {
 			}catch(PersistenceException e){}
 		}
 		
-		List<User> organizerList = User.find.where().like("LoginType", "ORGANIZER").findList();
+		List<User> organizerList = User.find.where().like("type", "ORGANIZER").findList();
 		Assert.assertTrue(organizerList.size() == numberOfOrganizer);
 
 		User teacher = new Teacher(new UserID(organizerID), Type.ORGANIZER, name);
@@ -139,8 +139,8 @@ public class UserDatabaseTest {
 		}
 		
 		List<User> allUsers = User.find.all();
-		List<User> allIndepententUser = User.find.where().like("loginType", "INDEPENDENT").findList();
-		List<User> allPupils = User.find.where().like("loginType","PUPIL").findList();
+		List<User> allIndepententUser = User.find.where().like("type", "INDEPENDENT").findList();
+		List<User> allPupils = User.find.where().like("type","PUPIL").findList();
 			
 		Assert.assertTrue(allUsers.size() == numberOfIndependentUser+numberOfPupils);
 		Assert.assertTrue(allIndepententUser.size() == numberOfIndependentUser);
