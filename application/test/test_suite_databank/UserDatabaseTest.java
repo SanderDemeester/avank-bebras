@@ -9,6 +9,7 @@ import models.user.User;
 import models.user.UserID;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import play.test.FakeApplication;
@@ -19,8 +20,8 @@ public class UserDatabaseTest{
 	
 	
 	
-	@Before
-	public void startApp(){
+	@BeforeClass
+	public static void startApp(){
 		
 //		start(fakeApplication(inMemoryDatabase()));
 	    Map<String, String> settings = new HashMap<String, String>();
