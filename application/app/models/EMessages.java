@@ -27,9 +27,9 @@ public class EMessages extends Messages {
      * @return
      */
     public static String get(java.lang.String key, java.lang.Object... args) {
-        String language = Context.current().session().get("customLanguage");
-        if(language != null) return Messages.get(language, key, args);
-        else                 return Messages.get(key, args);
+        String lang = Context.current().session().get("customLanguage");
+        if(lang != null) return Messages.get(Lang.forCode(lang), key, args);
+        else             return Messages.get(key, args);
     }
 
 }
