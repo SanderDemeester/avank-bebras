@@ -3,18 +3,21 @@
  */
 package controllers.user;
 
+import java.awt.List;
 import java.util.ArrayList;
 
 import models.user.ClassGroup;
 import models.user.Teacher;
+import models.user.UserID;
 import play.mvc.Result;
 import views.html.landingPages.TeacherLandingPage;
 import controllers.EController;
 
 /**
- * Class purely meant as testclass for Teacher Landing page. Will probably be deleted
+ * Class purely meant as testclass for Teacher Landing page. Will most likely be deleted once
+ * I know how Sander's code works.
  * @author Jens N. Rammant
- *
+ *!!!!!!!!TESTCLASS!!!!!!!!
  */
 public class TeacherController extends EController {
 	private Teacher teacher;
@@ -30,12 +33,8 @@ public class TeacherController extends EController {
 
 	public static Result showLandingPage() {
 		setCommonHeaders();
-		// TODO lots of stuff
-		ArrayList<ClassGroup> cc = new ArrayList<>();
-		cc.add(new ClassGroup());
-		ArrayList<ClassGroup> pc = new ArrayList<>();
-		pc.add(new ClassGroup());
-		pc.add(new ClassGroup());
-		return ok(TeacherLandingPage.render("Test", cc, pc));
+		Teacher t = new Teacher(new UserID("a"), Type.TEACHER, "Jefke");
+		
+		return ok(t.getLandingPage());
 	}
 }

@@ -1,10 +1,31 @@
 package models.user;
 
+import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import play.db.ebean.Model;
+
 /**
  * This class contains information that models a group of pupils
  * @author Sander Demeester
  */
-public class ClassGroup {
+@Entity
+@Table(name="Classes")
+public class ClassGroup extends Model{
+	
+	@Id
+	public String id;
+	public String name;
+	public Date expdate;
+	public String schoolid;
+	public String teacherid;
+	public String level;
+	
+	
+	
 
     /**
      * Constructor for ClassGroup.
@@ -14,13 +35,11 @@ public class ClassGroup {
     }
     
     public String getName(){
-    	//TODO implement
-    	return "5B";
+    	return this.name;
     }
     
     public String getID(){
-    	//TODO implement
-    	return "aa1a";
+    	return this.id;
     }
 
 }
