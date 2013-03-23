@@ -2,10 +2,13 @@
 package models.user;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
+
+import com.avaje.ebean.Ebean;
 
 import controllers.user.Type;
 
@@ -72,6 +75,18 @@ public class Independent extends User{
 	public Result showStatistics() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public Collection<ClassGroup> getClasses(){
+		ArrayList<ClassGroup> res = new ArrayList<>();
+		
+		List<ClassPupil> cp = Ebean.find(ClassPupil.class).where().eq("indid", this.id).findList();
+		for(ClassPupil c : cp){
+			ClassGroup cg = Ebean.find(ClassGroup.class).where().eq("id", c.classid).findUnique();
+			if(cg != null)res.add(cg);
+		}
+		
+		return res;
 	}
 
 
