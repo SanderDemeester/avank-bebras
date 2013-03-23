@@ -4,6 +4,7 @@ package models.user;
 import javax.persistence.Entity;
 
 import controllers.user.Type;
+import play.mvc.Content;
 import play.mvc.Result;
 
 /**
@@ -48,6 +49,12 @@ public class Administrator extends Organizer{
      * @return FAQ Management Page
      */
     public Result manageFAQ(){
+    	return null;
+    }
+    
+    @Override
+    public Content getLandingPage(){
+    	//TODO
     	return null;
     }
 

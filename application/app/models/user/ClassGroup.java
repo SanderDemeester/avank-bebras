@@ -22,10 +22,7 @@ public class ClassGroup extends Model{
 	public Date expdate;
 	public String schoolid;
 	public String teacherid;
-	public String level;
-	
-	
-	
+	public String level;	
 
     /**
      * Constructor for ClassGroup.

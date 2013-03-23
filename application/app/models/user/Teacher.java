@@ -58,14 +58,7 @@ public class Teacher extends SuperUser{
      */
     public Result manageCompetitions(){
         return null;
-    }
-
-	@Override
-	public Result showLandingPage() {
-		// TODO lots of stuff
-		//return ok(TeacherLandingPage.render("Test", new ArrayList<ClassGroup>()));
-		return null;
-	}
+    }	
 	
 	/*
 	 * Creates the personalized landing page for this instance of Teacher.
@@ -81,7 +74,7 @@ public class Teacher extends SuperUser{
 		c.set(Calendar.SECOND, 0);
 		c.set(Calendar.MILLISECOND, 0);
 		Date today = c.getTime();
-		System.out.println(today.toString());
+		
 		for (ClassGroup cl : this.getClasses()){
 			System.out.println(cl.expdate.toString());
 			if(cl.expdate.before(today))pc.add(cl);

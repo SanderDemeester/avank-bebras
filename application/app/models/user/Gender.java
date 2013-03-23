@@ -2,5 +2,6 @@ package models.user;
 
 public enum Gender {
 	MALE,
-	FEMALE;
+	FEMALE,
+	OTHER //For justification: look up 'genderqueer' and 'Nepal third gender'
 }

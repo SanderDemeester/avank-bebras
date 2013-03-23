@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 
 import controllers.user.Type;
 
+import play.mvc.Content;
 import play.mvc.Result;
 
 /**
@@ -60,7 +61,7 @@ public class Organizer extends SuperUser{
     }
 
 	@Override
-	public Result showLandingPage() {
+	public Content getLandingPage() {
 		// TODO Auto-generated method stub
 		return null;
 	}

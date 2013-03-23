@@ -14,6 +14,7 @@ import com.avaje.ebean.annotation.Formula;
 import controllers.user.Type;
 import play.db.ebean.Model;
 import play.db.ebean.Model.Finder;
+import play.mvc.Content;
 import play.mvc.Result;
 import play.data.format.Formats;
 
@@ -91,7 +92,7 @@ public abstract class User extends Model{
      * Returns the landing page. Is to be implemented by the child classes
      *@return Landing Page
      */
-    public abstract Result showLandingPage();
+    public abstract Content getLandingPage();
     
     /*
      * Returns the userID
