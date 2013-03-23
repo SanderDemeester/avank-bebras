@@ -1,0 +1,33 @@
+\begin{uc}{Download class}
+
+    \begin{uc-mss}
+    \item The teacher clicks on "Download classgroup".
+    \item The teacher sees a list of previous classgroups he was responsible for.
+    \item The teacher selects the desired classgroup.
+    \item The teacher clicks on "Download".
+    \item The teacher is redirected back to his landing-page.
+    \end{uc-mss}
+
+    \begin{uc-ext}
+
+        \begin{uc-fail}{4}{No classgroups are selected}
+        \item Error message: Please select a classgroup.
+					\return{3}
+        \end{uc-fail}
+
+    \end{uc-ext}
+
+    \begin{uc-pre}
+    \item The teacher is logged into the system.
+    \item The teacher is on the classgroup web page.
+    \end{uc-pre}
+
+    \begin{uc-post}
+    \item The teacher has downloaded a list of a classgroup.
+    \end{uc-post}
+
+    \begin{uc-trig}
+        The user clicked on "Download class" on his classgroup web page.
+    \end{uc-trig}
+
+\end{uc}
