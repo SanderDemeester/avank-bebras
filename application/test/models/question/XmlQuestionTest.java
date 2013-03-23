@@ -18,7 +18,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class XmlQuestionTest {
+public class XmlQuestionTest extends test.ContextTest {
 
     private static final String CORRECT_MC = "testincludes/correct_question_mc.xml";
     private static final String CORRECT_REGEX = "testincludes/correct_question_regex.xml";
@@ -43,19 +43,15 @@ public class XmlQuestionTest {
      */
     @BeforeClass
     public static void getLanguages() {
-        running(fakeApplication(), new Runnable(){
-            @Override
-            public void run(){
-                try {
-                    en = Language.getLanguage("en");
-                    nl = Language.getLanguage("nl");
-                } catch (UnavailableLanguageException e) {
-                    Assert.fail(e.getMessage());
-                } catch (UnknownLanguageCodeException e) {
-                    Assert.fail(e.getMessage());
-                }
-            }});
-     }
+        try {
+            en = Language.getLanguage("en");
+            nl = Language.getLanguage("nl");
+        } catch (UnavailableLanguageException e) {
+            Assert.fail(e.getMessage());
+        } catch (UnknownLanguageCodeException e) {
+            Assert.fail(e.getMessage());
+        }
+    }
 
     private Question testAFile(String file) {
         Question q = null;
