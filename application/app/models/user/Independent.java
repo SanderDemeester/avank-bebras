@@ -2,7 +2,9 @@
 package models.user;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -15,6 +17,7 @@ import controllers.user.Type;
 
 import play.mvc.Content;
 import play.mvc.Result;
+import views.html.landingPages.PupilLandingPage;
 
 /**
  * @author Sander Demeester
@@ -61,14 +64,30 @@ public class Independent extends User{
      *
      * @return Get currentClass.
      */
+    public ClassGroup getCurrentClass(List<ClassGroup> classes){
+    	Calendar c = Calendar.getInstance();
+		c.set(Calendar.HOUR, -12);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
+		Date today = c.getTime();
+    	for(ClassGroup cl : classes){
+    		if(!cl.expdate.before(today))return cl;
+    	}
+    	return null;
+    }
+    
     public ClassGroup getCurrentClass(){
-        return null;
+    	return this.getCurrentClass(new ArrayList(this.getClasses()));
     }
 
 	@Override
 	public Content getLandingPage() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<ClassGroup> classes = new ArrayList(this.getClasses());
+		ClassGroup current=getCurrentClass(classes);
+		if(current != null)classes.remove(current);
+		return PupilLandingPage.render(this.id,current,classes);
 	}
 
 	@Override
@@ -77,6 +96,10 @@ public class Independent extends User{
 		return null;
 	}
 	
+	/*
+	 * Queries the database for all class the user is associated with
+	 * @return list of classes the 
+	 */
 	public Collection<ClassGroup> getClasses(){
 		ArrayList<ClassGroup> res = new ArrayList<>();
 		

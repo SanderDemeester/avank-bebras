@@ -44,12 +44,8 @@ public class TestController extends EController {
 	}
 	
 	public static Result testClassesPupil(){
-		Independent i = new Independent(new UserID("q"), Type.PUPIL, "Pieter");
+		Independent i = new Independent(new UserID("d"), Type.PUPIL, "Pieter");
 		
-		for (ClassGroup c : i.getClasses()){
-			System.out.println(c.id);
-		}
-		
-		return ok(index.render("a", new ArrayList<Link>()));
+		return ok(i.getLandingPage());
 	}
 }
