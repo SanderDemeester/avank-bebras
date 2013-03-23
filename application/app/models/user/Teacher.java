@@ -1,10 +1,14 @@
 
 package models.user;
 
+import java.awt.List;
+import java.util.ArrayList;
+
 import javax.persistence.Entity;
 
 import controllers.user.Type;
 import play.mvc.Result;
+import views.html.landingPages.TeacherLandingPage;
 
 /**
  * @author Sander Demeester
@@ -27,7 +31,7 @@ public class Teacher extends SuperUser{
 
     /**
      * @param regex A regex for filtering.
-     * Apply's a seach filter for the teacher to Filter through all students in the System
+     * Applys a seach filter for the teacher to Filter through all students in the System
      */
     public void searchStudents(String regex){
         //TODO: Need to add some filtering system
@@ -50,7 +54,8 @@ public class Teacher extends SuperUser{
 
 	@Override
 	public Result showLandingPage() {
-		// TODO Auto-generated method stub
+		// TODO lots of stuff
+		//return ok(TeacherLandingPage.render("Test", new ArrayList<ClassGroup>()));
 		return null;
 	}
 

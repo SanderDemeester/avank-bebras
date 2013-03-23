@@ -1,7 +1,33 @@
-@(User: models.user.Teacher)
+@(UserID: String, currentClasses : List[models.user.ClassGroup], 
+previousClasses : List[models.user.ClassGroup])
 
 <html>
-<body>
-TeacherLandingPage
-</body>
+	<body>
+		<div id="id">
+			Bebras ID: @UserID
+		</div>
+		
+		<div id ="currentClasses">
+		Current classes: <br>
+			@for(clas <- currentClasses){
+    			@clas.getName() (@clas.getID())<br>
+			}
+		</div>
+		
+		<div id ="previousClasses">
+		Previous classes: <br>
+			@for(clas <- previousClasses){
+    			@clas.getName() (@clas.getID())<br>
+			}
+		</div>
+		
+		<div id="links">
+			<a href="personalinfo"> Personal Info </a><br>
+			<a href="compmanage"> Competition Management </a>
+		</div>
+		
+		<div id="previousClasses">
+		</div>
+		
+	</body>
 </html>

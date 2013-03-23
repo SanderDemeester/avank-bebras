@@ -12,5 +12,15 @@ public class ClassGroup {
     public ClassGroup(){
 
     }
+    
+    public String getName(){
+    	//TODO implement
+    	return "5B";
+    }
+    
+    public String getID(){
+    	//TODO implement
+    	return "aa1a";
+    }
 
 }
