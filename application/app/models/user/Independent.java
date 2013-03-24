@@ -96,7 +96,7 @@ public class Independent extends User{
 		return null;
 	}
 	
-	/*
+	/**
 	 * Queries the database for all class the user is associated with
 	 * @return list of classes the 
 	 */

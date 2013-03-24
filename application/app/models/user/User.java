@@ -53,7 +53,7 @@ public abstract class User extends Model{
     public boolean active;
     
     public User(UserID id, Type loginType, String name){
-    	this.id = id.geUserID();
+    	this.id = id.getUserID();
     	this.type = loginType; 
     	this.name = name;
 

@@ -17,7 +17,7 @@ public class UserID {
      *
      * @return Get the users ID.
      */
-    public String geUserID(){
+    public String getUserID(){
         return userID;
     }
 
