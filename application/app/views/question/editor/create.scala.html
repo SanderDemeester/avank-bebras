@@ -6,42 +6,42 @@
 @import helper.twitterBootstrap._
 
 @main("Question Editor", breadcrumbs) {
-	
-	<div class="row-fluid">
-		<div class="span3">
+	@helper.form(action = controllers.question.editor.routes.QuestionEditorController.save(), 'id -> "saveQuestion") {
+		<div class="row-fluid">
+			<div class="span3">
 
-		@helper.form(action = controllers.question.editor.routes.QuestionEditorController.save(), 'id -> "saveQuestion") {
-	    
-	    	<div class="well sidebar-nav">
-			    <ul id="languages" class="nav nav-list">
-					<li class="nav-header">Languages</li>
-					<li class="divider"></li>
-				    @repeat(questionForm("languages")) { language =>
-				    	@if(language.value == "") {
-					    	<li class="languageItem"><i class="icon-remove removelang"></i><a href="#" class="selectLang">@language.value</a></li>
+		    	<div class="well sidebar-nav">
+				    <ul id="languages" class="nav nav-list">
+						<li class="nav-header">Languages</li>
+						<li class="divider"></li>
+					    @repeat(questionForm("languages")) { language =>
+					    	@if(language.value == "") {
+						    	<li class="languageItem"><i class="icon-remove removelang"></i><a href="#" class="selectLang">@language.value</a></li>
+							}
 						}
-					}
-					
-				</ul>
-				<ul class="nav nav-list"><li class="divider"></li></ul>
-				<div class="form-inline row-fluid">
-					<div class="span9">
-					<select id="languageList" class="span12">
-						@for(language <- RawQuestion.languageList) {
-							<option value="@language.getCode()">@language.getCode()</option>
-						}
-					</select>
+						
+					</ul>
+					<ul class="nav nav-list"><li class="divider"></li></ul>
+					<div class="form-inline row-fluid">
+						<div class="span9">
+						<select id="languageList" class="span12">
+							@for(language <- RawQuestion.languageList) {
+								<option value="@language.getCode()">@language.getCode()</option>
+							}
+						</select>
+						</div>
+						<button id="addLanguage" class="btn span3"><i class="icon-plus-sign"></i></button>
 					</div>
-					<button id="addLanguage" class="btn span3"><i class="icon-plus-sign"></i></button>
 				</div>
-			</div>
-			
-			<div class="well text-center">
-				<button class="btn btn-primary" type="button"><i class="icon-envelope icon-white"></i> Submit</button>
-				<button class="btn" type="button"><i class="icon-download"></i> Export as .ZIP</button>
-			</div>
+				
+				<div class="well text-center">
+					<button class="btn btn-primary" type="button"><i class="icon-envelope icon-white"></i> Submit</button>
+					<button class="btn" type="button"><i class="icon-download"></i> Export as .ZIP</button>
+				</div>
 		    
 			</div>
+			
+			<!-- Question panel template -->
 			<div id="questionPanel" class="span9">
 				<div id="noPanelSelected" class="text-center"><span class="muted">Add a new language or select an existing one to get started.</span></div>
 				<div id="panelTemplate" class="questionFrame hide">
@@ -84,6 +84,7 @@
 			</div>
 		</div>
 		
+		<!-- Hidden modal -->
 		<div id="removeLanguageConfirm" class="modal hide fade">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -99,6 +100,7 @@
 		  	</div>
 		</div>
 		
+		<!-- Hidden modal -->
 		<div id="uploadFile" class="modal hide fade">
 			<div class="modal-header">
 				<button type="button" class="cancelUpload close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -135,323 +137,7 @@
 		  	</div>
 		</div>
 		
-	    <!-- TMP CODE -->
-	    <style>
-	    .removelang {
-	    	position:relative;
-	    	top:5px;
-	    	float:right;
-	    	cursor:pointer;
-	    }
-.editor {
-	height:400px;
-}
-#dropzone {
-    height: 50px;
-    line-height: 50px;
-    text-align: center;
-    font-weight: bold;
-}
-#dropzone.in {
-    font-size: larger;
-}
-#dropzone.hover {
-    background: #FAFAFA;
-}
-#dropzone.fade {
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -ms-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
-    opacity: 1;
-}
-	    </style>
-	    <script type="text/javascript">
-	    
-var questionType = "@questionType";
-var activeEditor;
-var fileUploader;
-var myCustomTemplates = {
-	    image : function(locale) {
-	      return "<li><div class='btn-group'>" +
-	        "<a id='addFiles' class='btn' title='" + locale.link.insert + "'><i class='icon-picture'></i></a>" +
-	      "</div></li>";
-	    },
-};
-
-function appendFile(file) {
-	$('<tr/>').html("<td>"+file.name+"</td>"
-      		//+ "<td>"+file.size+"</td>"
-      		+ "<td><img src='"+file.url+"' width='50' /></td>"
-      		+ "<td><a class='addImage btn'><i class='icon-plus-sign'></i></a><a class='removeImage btn'><i class='icon-remove'></i></a></td>")
-      		.data("name", file.name)
-      		.data("url", file.url)
-      		.appendTo($("#files"));
-}
-	    
-$(document).ready(function() {
-	// Show confirm dialog on leaving page
-	window.onbeforeunload = function() {
-	    return 'Are you sure you want to navigate away from this page? Unsaved changes will be lost.';
-	};
-	// Call this for removing the warning after save
-	//window.onbeforeunload = null;
-	
-	$.getJSON('../files.json')
-	.done(function(data) {
-		$.each(data.files, function(i, file) {
-			  appendFile(file);
-		  });
-	})
-	.fail(function () {
-		$("#uploadStatus").html('<div class="alert alert-error">Upload server unavailable.</div>');
-     });
-	
-	fileUploader = $('#fileupload').fileupload({
-        dataType: 'json',
-        add: function (e, data) {
-            data.context = $("#uploadStatus").html('<div class="alert alert-info">Uploading...</div>');
-            data.submit();
-            $('#fileProgress').show();
-        },
-        done: function (e, data) {
-            $.each(data.result.files, function (index, file) {
-                appendFile(file);
-            });
-            data.context.html('<div class="alert alert-success">File(s) uploaded.</div>');
-            $('#fileProgress .bar').css('width', '0%').parent().hide();
-        },
-        progressall: function (e, data) {
-            var progress = parseInt(data.loaded / data.total * 100, 10);
-            $('#fileProgress .bar').css(
-                'width',
-                progress + '%'
-            );
-        },
-        fail: function(e, data) {
-        	$("#uploadStatus").html('<div class="alert alert-error">Invalid image file.</div>');
-        	$('#fileProgress').hide();
-        },
-        dropZone: $('#dropzone'),
-    })
-	
-});
-
-$(document).bind('dragover', function (e) {
-    var dropZone = $('#dropzone'),
-        timeout = window.dropZoneTimeout;
-    if (!timeout) {
-        dropZone.addClass('in');
-    } else {
-        clearTimeout(timeout);
-    }
-    if (e.target === dropZone[0]) {
-        dropZone.addClass('hover');
-    } else {
-        dropZone.removeClass('hover');
-    }
-    window.dropZoneTimeout = setTimeout(function () {
-        window.dropZoneTimeout = null;
-        dropZone.removeClass('in hover');
-    }, 100);
-});
-
-$("#addFiles").live("click", function(){
-	$('#uploadFile').modal();
-}); 
-
-$(".cancelUpload").live("click", function(){
-	$('#fileProgress').hide();
-	$("#uploadStatus").html('');
-	fileUploader.abort();
-}); 
-	   
-$('#addLanguage').click(function(e) {
-	e.preventDefault();
-	
-	selected = $('#languageList').find('option:selected').remove();
-	if(selected.val()!=undefined) {
-		// Remove active class on other items
-		$(".languageItem").removeClass("active");
-		
-		// Fix lists content
-		var newLang = $(document.createElement('li')).addClass("languageItem active").css('display', 'none');
-		newLang.html('<i class="icon-remove removelang"></i><a href="#" class="selectLang">'+selected.val()+'</a>');
-		$("#languages").append(newLang);
-		newLang.show('fast');
-		$("#questionPanel").append();
-		
-		// Hide the other panels
-		$(".questionFrame").hide();
-		
-		// Make new question panel
-		template = $('#panelTemplate').clone();
-		template.removeClass("hide");
-		template.attr("id", "panel-"+selected.val());
-		var editor = template.find('.editor');
-		editor.each(function() {
-			var instance = $(this).wysihtml5({
-				"html": false,
-				"link": false,
-				"image": true,
-				customTemplates: myCustomTemplates,
-			});
-			$(this).data("editor", instance);
-		});
-		activeEditor = editor;
-		$('#questionPanel').append(template);
-		
-		// Show the newly created panel
-		$(template).show('fast');
-		
-		// Hide default panel
-		$('#noPanelSelected').hide();
-		
-		// Type specific logics
-		if(questionType=="MULTIPLE_CHOICE") {
-			template.find(".input").data("counter", 0);
-			template.find(".input").data("lang", selected.val());
-		} else if(questionType=="REGEX") {
-			
-		}
-	
-	}
-	
-	return false;
-});
-
-$("i.removelang").live("click", function(){
-	lang = $(this).parent().find("a").text();
-	$("#removelang").text(lang);
-	$('#removeLanguageConfirm').modal();
-}); 
-
-$("#confirmRemoveLang").live("click", function(){
-	// Fix lists content
-	lang = $("#removelang").text();
-	removeLang = $("#languages").find("li a:contains('"+lang+"')").parent();
-	removeLang.hide('fast', function() {
-		removeLang.remove();
-	});
-	$("#languageList").append('<option value="'+lang+'">'+lang+'</option>');
-	
-	// Remove active class on other items
-	$(".languageItem").removeClass("active");
-	
-	// Hide the other panels and remove this panel
-	$(".questionFrame").hide(function(e) {
-		$("#panel-"+lang).remove();
-	});
-	$('#removeLanguageConfirm').modal('toggle');
-	
-	// Show default panel
-	$('#noPanelSelected').show('fast');
-});
-
-$(".tabGeneral").live("click", function(){	
-	$(this).parent().parent().parent().find(".generalTab").show();
-	$(this).parent().parent().parent().find(".answersTab").hide();
-	$(this).parent().parent().parent().find(".indexTab").hide();
-	$(this).parent().parent().parent().find(".feedbackTab").hide();
-});
-
-$(".tabAnswers").live("click", function(){	
-	$(this).parent().parent().parent().find(".generalTab").hide();
-	$(this).parent().parent().parent().find(".answersTab").show();
-	$(this).parent().parent().parent().find(".indexTab").hide();
-	$(this).parent().parent().parent().find(".feedbackTab").hide();
-});
-
-$(".tabIndex").live("click", function(){
-	$(this).parent().parent().parent().find(".generalTab").hide();
-	$(this).parent().parent().parent().find(".answersTab").hide();
-	activeEditor = $(this).parent().parent().parent().find(".indexTab").show().find('.editor');
-	$(this).parent().parent().parent().find(".feedbackTab").hide();
-});
-
-$(".tabFeedback").live("click", function(){
-	$(this).parent().parent().parent().find(".generalTab").hide();
-	$(this).parent().parent().parent().find(".answersTab").hide();
-	$(this).parent().parent().parent().find(".indexTab").hide();
-	activeEditor = $(this).parent().parent().parent().find(".feedbackTab").show().find('.editor');
-});
-
-$(".selectLang").live("click", function(){
-	lang = $(this).text();
-	
-	// Remove active class on other items
-	$(".languageItem").removeClass("active");
-	
-	// Set active class on this item
-	$(this).parent().addClass("active");
-	
-	// Hide the other panels
-	$(".questionFrame").hide();
-	
-	// Hide default panel
-	$('#noPanelSelected').hide();
-	
-	// Show the correct panel
-	$("#panel-"+lang).show();
-	
-	// Set the default editor
-	activeEditor = $("#panel-"+lang).find("div:visible").find(".editor");
-});
-
-// editor.getValue() will return the html content
-
-// Add MC input element
-$(".addMCElement").live("click", function(){
-	var counter = $(this).parent().data("counter");
-	var lang = $(this).parent().data("lang");
-	
-	var answerDiv = $(document.createElement('div')).attr("id", 'answer-' + counter).css('display', 'none');
-	answerDiv.html('<label class="mc_answer row-fluid">'
-			+'<div class="span1"><i class="icon-remove removeanswer"></i></div>'
-			+'<div class="span8"><input class="span12" type="text" name="answer-' + counter
-		      + '" id="answer-textbox-' + counter + '" value="" placeholder="A possible answer"/></div>'
-		    +'<div class="span3">Correct: <input type="radio" name="correct_answer_' +
-		      lang+'" value="'+ counter+'"></div>'
-		    +'</label>');
-	$(this).parent().find(".answers").append(answerDiv);
-	answerDiv.show('fast');
-	
-	$(this).parent().data("counter", counter+1);
-});
-
-$(".removeanswer").live("click", function(){
-	// Don't lower counter, because an earlier element can also be removed instead of the last one
-	$(this).parent().parent().hide('fast', function() {
-		$(this).parent().parent();
-	});
-});
-
-$(".addImage").live("click", function(){
-	var row = $(this).parent().parent();
-	var name = row.data("name");
-	var url = row.data("url");
-	var editorInstance = activeEditor.data("editor").data("wysihtml5").editor;
-	editorInstance.composer.commands.exec("insertImage", { src: url, alt: name });
-	editorInstance.currentView.element.focus();
-	$("#uploadFile").modal('toggle');
-});
-
-$(".removeImage").live("click", function(){
-	var row = $(this).parent().parent();
-	
-	$.ajax({
-		type: "GET",
-		url: "../delete",
-		data: { name: row.data("name") }
-	}).done(function( msg ) {
-		row.hide('fast', function() {
-			row.remove();
-		});
-	});	
-});
-
-		</script>
-	    
+	    <!-- Load the page logic after everything else is loaded -->
+	    <script src="@routes.Assets.at("javascripts/questioneditor.js")" type="text/javascript"></script>
 	}
 }
