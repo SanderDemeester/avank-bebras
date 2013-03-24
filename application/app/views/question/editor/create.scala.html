@@ -11,11 +11,6 @@
 		<div class="span3">
 
 		@helper.form(action = controllers.question.editor.routes.QuestionEditorController.save(), 'id -> "saveQuestion") {
-	    	
-	    	<div class="well text-center">
-				<button class="btn btn-primary" type="button"><i class="icon-envelope icon-white"></i> Submit</button>
-				<button class="btn" type="button"><i class="icon-download"></i> Export as .ZIP</button>
-			</div>
 	    
 	    	<div class="well sidebar-nav">
 			    <ul id="languages" class="nav nav-list">
@@ -39,6 +34,11 @@
 					</div>
 					<button id="addLanguage" class="btn span3"><i class="icon-plus-sign"></i></button>
 				</div>
+			</div>
+			
+			<div class="well text-center">
+				<button class="btn btn-primary" type="button"><i class="icon-envelope icon-white"></i> Submit</button>
+				<button class="btn" type="button"><i class="icon-download"></i> Export as .ZIP</button>
 			</div>
 		    
 			</div>
@@ -99,7 +99,41 @@
 		  	</div>
 		</div>
 		
-<a class='addImage btn'>Put in nice modal</a>
+		<div id="uploadFile" class="modal hide fade">
+			<div class="modal-header">
+				<button type="button" class="cancelUpload close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    			<h3>Upload file</h3>
+			</div>
+			<div class="modal-body">
+				<small class="muted">These are your personal files that will be included into this question.
+				They will be removed from the server after 24 hours.</small>
+			
+				<div id="uploadStatus"></div>
+				
+				<div id="dropzone" class="fade well">Drop files here</div>
+    			<span class="muted">Or select a file manually:</span> <input id="fileupload" type="file" name="files[]" data-url="../upload" />
+    			<div id="fileProgress" class="progress progress-striped active" style="display:none">
+				    <div class="bar" style="width: 0%;"></div>
+				</div>
+				
+				<hr />
+				
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Preview</th>
+							<th>&nbsp;</th>
+						</tr>
+					</thead>
+					<tbody id="files"></tbody>
+				</table>
+    			
+  			</div>
+  			<div class="modal-footer">
+		    	<a data-dismiss="modal" href="#" class="cancelUpload btn">Cancel</a>
+		  	</div>
+		</div>
 		
 	    <!-- TMP CODE -->
 	    <style>
@@ -109,11 +143,52 @@
 	    	float:right;
 	    	cursor:pointer;
 	    }
+.editor {
+	height:400px;
+}
+#dropzone {
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-weight: bold;
+}
+#dropzone.in {
+    font-size: larger;
+}
+#dropzone.hover {
+    background: #FAFAFA;
+}
+#dropzone.fade {
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    opacity: 1;
+}
 	    </style>
 	    <script type="text/javascript">
 	    
 var questionType = "@questionType";
 var activeEditor;
+var fileUploader;
+var myCustomTemplates = {
+	    image : function(locale) {
+	      return "<li><div class='btn-group'>" +
+	        "<a id='addFiles' class='btn' title='" + locale.link.insert + "'><i class='icon-picture'></i></a>" +
+	      "</div></li>";
+	    },
+};
+
+function appendFile(file) {
+	$('<tr/>').html("<td>"+file.name+"</td>"
+      		//+ "<td>"+file.size+"</td>"
+      		+ "<td><img src='"+file.url+"' width='50' /></td>"
+      		+ "<td><a class='addImage btn'><i class='icon-plus-sign'></i></a><a class='removeImage btn'><i class='icon-remove'></i></a></td>")
+      		.data("name", file.name)
+      		.data("url", file.url)
+      		.appendTo($("#files"));
+}
 	    
 $(document).ready(function() {
 	// Show confirm dialog on leaving page
@@ -122,7 +197,75 @@ $(document).ready(function() {
 	};
 	// Call this for removing the warning after save
 	//window.onbeforeunload = null;
+	
+	$.getJSON('../files.json')
+	.done(function(data) {
+		$.each(data.files, function(i, file) {
+			  appendFile(file);
+		  });
+	})
+	.fail(function () {
+		$("#uploadStatus").html('<div class="alert alert-error">Upload server unavailable.</div>');
+     });
+	
+	fileUploader = $('#fileupload').fileupload({
+        dataType: 'json',
+        add: function (e, data) {
+            data.context = $("#uploadStatus").html('<div class="alert alert-info">Uploading...</div>');
+            data.submit();
+            $('#fileProgress').show();
+        },
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                appendFile(file);
+            });
+            data.context.html('<div class="alert alert-success">File(s) uploaded.</div>');
+            $('#fileProgress .bar').css('width', '0%').parent().hide();
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#fileProgress .bar').css(
+                'width',
+                progress + '%'
+            );
+        },
+        fail: function(e, data) {
+        	$("#uploadStatus").html('<div class="alert alert-error">Invalid image file.</div>');
+        	$('#fileProgress').hide();
+        },
+        dropZone: $('#dropzone'),
+    })
+	
 });
+
+$(document).bind('dragover', function (e) {
+    var dropZone = $('#dropzone'),
+        timeout = window.dropZoneTimeout;
+    if (!timeout) {
+        dropZone.addClass('in');
+    } else {
+        clearTimeout(timeout);
+    }
+    if (e.target === dropZone[0]) {
+        dropZone.addClass('hover');
+    } else {
+        dropZone.removeClass('hover');
+    }
+    window.dropZoneTimeout = setTimeout(function () {
+        window.dropZoneTimeout = null;
+        dropZone.removeClass('in hover');
+    }, 100);
+});
+
+$("#addFiles").live("click", function(){
+	$('#uploadFile').modal();
+}); 
+
+$(".cancelUpload").live("click", function(){
+	$('#fileProgress').hide();
+	$("#uploadStatus").html('');
+	fileUploader.abort();
+}); 
 	   
 $('#addLanguage').click(function(e) {
 	e.preventDefault();
@@ -149,8 +292,10 @@ $('#addLanguage').click(function(e) {
 		var editor = template.find('.editor');
 		editor.each(function() {
 			var instance = $(this).wysihtml5({
-				"html": true,
+				"html": false,
 				"link": false,
+				"image": true,
+				customTemplates: myCustomTemplates,
 			});
 			$(this).data("editor", instance);
 		});
@@ -283,9 +428,27 @@ $(".removeanswer").live("click", function(){
 });
 
 $(".addImage").live("click", function(){
+	var row = $(this).parent().parent();
+	var name = row.data("name");
+	var url = row.data("url");
 	var editorInstance = activeEditor.data("editor").data("wysihtml5").editor;
-	editorInstance.composer.commands.exec("insertImage", { src: "http://icons.iconarchive.com/icons/deleket/sleek-xp-software/256/Yahoo-Messenger-icon.png", alt: "this is google" });
+	editorInstance.composer.commands.exec("insertImage", { src: url, alt: name });
 	editorInstance.currentView.element.focus();
+	$("#uploadFile").modal('toggle');
+});
+
+$(".removeImage").live("click", function(){
+	var row = $(this).parent().parent();
+	
+	$.ajax({
+		type: "GET",
+		url: "../delete",
+		data: { name: row.data("name") }
+	}).done(function( msg ) {
+		row.hide('fast', function() {
+			row.remove();
+		});
+	});	
 });
 
 		</script>

@@ -1,17 +1,25 @@
 package controllers.question.editor;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import models.EMessages;
 import models.data.Link;
 import models.question.editor.RawQuestion;
+
+import org.codehaus.jackson.node.ArrayNode;
+import org.codehaus.jackson.node.ObjectNode;
+
+import play.Play;
 import play.data.Form;
+import play.libs.Json;
+import play.mvc.Http.MultipartFormData;
+import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 import views.html.question.editor.create;
 import views.html.question.editor.index;
 import controllers.EController;
-import controllers.question.editor.routes;
 
 /**
  * This is the editor for creating question files, NOT the questions that will be saved in the database
@@ -70,4 +78,60 @@ public class QuestionEditorController extends EController {
         return ok(create.render(breadcrumbs, questionForm, ""));
         //return redirect(routes.QuestionEditorController.create());
     }
+    
+    public static Result upload() {
+        // Prepare json main node
+        ObjectNode result = Json.newObject();
+        ArrayNode array = result.putArray("files");
+        
+        //RawBuffer raw = request().body().asRaw();
+        MultipartFormData body = request().body().asMultipartFormData();
+        FilePart filePart = body.getFile("files[]");
+        if(filePart !=null) {
+            String name = filePart.getFilename();
+            
+            File file = filePart.getFile();
+            
+            File renamed = new File(Play.application().configuration().getString("questioneditor.upload"), name);
+            file.renameTo(renamed);
+            
+            // Add file data to json result
+            ObjectNode node = Json.newObject();
+            node.put("name", name);
+            node.put("size", renamed.length());
+            node.put("url", "/assets/files/"+renamed.getName());
+            array.add(node);
+        }
+        
+        return ok(result);
+    }
+    
+    public static Result delete(String name) {
+        File file = new File(Play.application().configuration().getString("questioneditor.upload"), name);
+        if(file.isFile())
+            file.delete();
+        return ok();
+    }
+    
+    public static Result getFiles() {
+        // TODO: Make this specific for each user
+        
+        // Prepare json main node
+        ObjectNode result = Json.newObject();
+        ArrayNode array = result.putArray("files");
+        
+        // Loop over all files in the upload folder
+        String location = Play.application().configuration().getString("questioneditor.upload");
+        File folder = new File(location);
+        for (File file : folder.listFiles()) {
+            // Add file data to json result
+            ObjectNode node = Json.newObject();
+            node.put("name", file.getName());
+            node.put("size", file.length());
+            node.put("url", "/assets/files/"+file.getName());
+            array.add(node);
+        }
+        
+        return ok(result);
+      }
 }
