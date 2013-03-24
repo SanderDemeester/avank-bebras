@@ -1,0 +1,10 @@
+# App
+app.title = Avank Bebras - {0}
+
+# Question
+question.editor.index.hero = Questions are the key element of the Bebras application. You can become part of this fantastic application and submit your own question by creating them here.
+question.editor.index.create = Create a question pack
+
+# Languages
+languages.en = English
+languages.nl = Dutch
