@@ -1,12 +1,16 @@
 
 package models.user;
 
+import javax.persistence.Entity;
+
 import controllers.user.Type;
 import play.mvc.Result;
 
 /**
  * @author Sander Demeester
  */
+
+@Entity
 public class Teacher extends SuperUser{
 
     /**
@@ -16,8 +20,6 @@ public class Teacher extends SuperUser{
     	super(id,loginType,name);
 
     }
-
-
 
     public void scheduleUnrestrictedCompetition(){
 

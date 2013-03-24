@@ -1,14 +1,15 @@
 package test;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.fest.assertions.AssertExtension;
 import static org.fest.assertions.Assertions.assertThat;
-
 import play.mvc.Content;
 import play.test.Helpers;
 import static play.test.Helpers.fakeApplication;
@@ -16,12 +17,8 @@ import static play.test.Helpers.contentType;
 import static play.test.Helpers.contentAsString;
 import static play.test.Helpers.running;
 import static play.test.Helpers.inMemoryDatabase;
-
-import models.data.Link;
-import models.user.Administrator;
-import models.user.User;
-import models.user.UserID;
-
+import static play.test.Helpers.start;
+import static play.test.Helpers.stop;
 import views.html.index;
 import models.data.Link;
 
@@ -29,34 +26,21 @@ import models.data.Link;
 
 public class ExampleTest {
 	
-	/**
-	 * First way, start a global test.
-	 */
 	
-	@BeforeClass
-	public static void  startApp(){
-		Helpers.start(fakeApplication(Helpers.inMemoryDatabase()));
+	@Before
+	public void startApp(){
+	    Map<String, String> settings = new HashMap<String, String>();
+		settings.put("db.default.driver", "org.h2.Driver");
+	    settings.put("db.default.user", "sa");
+	    settings.put("db.default.password", "");
+	    settings.put("db.default.url", "jdbc:h2:mem:play");
+	    
+		start(fakeApplication(settings));
 	}
 	
-	/**
-	 * The second way to start tests.
-	 */
-	@Test
-	public void testUser(){
-		running(fakeApplication(inMemoryDatabase()), new Runnable() {
-	        public void run() { //some testing goes here
-	        	// This wont yet work because admin is not yet a registerd entity to ebeans, 
-	        	// We need inheritance 
-	        	//new Administrator(new UserID("id"),Type.ADMINISTRATOR,"Bertrand Russell").save();
-	        	}
-	        });	
-
-	}
-	
-	
-	@Test
-	public void createSimpelUser(){
-		
+	@After
+	public void stopApp(){
+		stop(fakeApplication());
 	}
 	
 	@Test

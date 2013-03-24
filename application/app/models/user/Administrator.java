@@ -1,12 +1,15 @@
 
 package models.user;
 
+import javax.persistence.Entity;
+
 import controllers.user.Type;
 import play.mvc.Result;
 
 /**
  * @author Sander Demeester
  */
+@Entity
 public class Administrator extends Organizer{
 
     /**

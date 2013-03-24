@@ -4,6 +4,9 @@ package models.user;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
+
 import controllers.user.Type;
 
 
@@ -12,6 +15,8 @@ import play.mvc.Result;
 /**
  * @author Sander Demeester
  */
+
+@Entity
 public class Independent extends User{
 
     private List<String> previousClassList;
