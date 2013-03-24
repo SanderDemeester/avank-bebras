@@ -1,19 +1,25 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Map;
 
+import models.data.Link;
 import models.user.AuthenticationManager;
 
+import play.data.Form;
 import play.mvc.Content;
 import play.mvc.Result;
 import play.mvc.Results.Redirect;
 
 import scala.collection.mutable.HashMap;
+import models.data.Link;
 import views.html.index;
 import views.html.landingPages.AdminLandingPage;
 import views.html.landingPages.IndependentPupilLandingPage;
 import views.html.landingPages.OrganizerLandingPage;
 import views.html.landingPages.PupilLandingPage;
+import views.html.register;
+import views.html.generic;
 import controllers.user.Type;
 
 /**
@@ -41,10 +47,25 @@ public class UserController extends EController{
 
 
     }
-
-    public static Result register(){
+    /**
+     * This methode gets requested when the user clicks on "signup".
+     * @return Result page.
+     */
+    public static Result signup(){
         //TODO: Delegate to authenticationManager
-        return null;
+    	 return ok(register.render("Registration", 
+    			 new ArrayList<Link>(),
+    			 form(Register.class)
+    			 ));
+    }
+    /**
+     * this methode is called when the user submits his/here register information.
+     * @return Result page
+     */
+    public static Result register(){
+    	// bind data from post request to Form.
+    	Form<Register> registerForm = form(Register.class).bindFromRequest();
+    	return ok(generic.render("Succes", new ArrayList<Link>(), "Succes"));
     }
 
     public static Result login(){
@@ -65,6 +86,13 @@ public class UserController extends EController{
          * The result will come from the landingPageHashMap
          */
         return null;
+    }
+    
+    public static class Register{
+    	public String email;
+    	public String name;
+    	public String geboorteDatum;
+    	public String password;
     }
 
 }

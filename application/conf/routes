@@ -6,9 +6,11 @@
 GET     /                           controllers.Application.index()
 GET     /test				        controllers.Application.test(id: String)
 GET		/login						controllers.UserController.login()
-GET		/register					controllers.UserController.register()
 GET		/logout						controllers.UserController.logout()
 
+# Registration/signup
+GET		/signup						controllers.UserController.signup()
+POST	/register					controllers.UserController.register()
 # Bootstrap resources
 GET     /assets/img/glyphicons-halflings-white.png      controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings-white.png")
 GET     /assets/img/glyphicons-halflings.png            controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings.png")
