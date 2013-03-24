@@ -4,22 +4,33 @@ import com.avaje.ebean.Page;
 
 /**
  * Manager interface for every model that needs visual CRUD operations.
+ * An entity must implement this interface in order to use the view list.scala.html
  *
  * @author Kevin Stobbelaar
  *
  */
-public interface Manager<T> {
+public interface Manager {
 
     /**
-     * Returns a page with elements of type T.
+     * Returns those values that have to be represented in a table.
      *
-     * @param page     page number
-     * @param pageSize elements per page
-     * @param orderBy  attribute to sort on
-     * @param order    sort order
-     * @param filter   filter to select specific elements
-     * @return the requested page
+     * @return array with the current values of the fields to be represented in the table
      */
-    public Page<T> page(int page, int pageSize, String orderBy, String order, String filter);
+    public String[] getFieldValues();
+
+    /**
+     * Returns the names of the fields that have to be represented in a table.
+     * These will be the table headers.
+     *
+     * @return array with the names of fields to be represented in the table
+     */
+    public String[] getFieldNames();
+
+    /**
+     * Returns the id of the this object.
+     *
+     * @return id
+     */
+    public String getID();
 
 }

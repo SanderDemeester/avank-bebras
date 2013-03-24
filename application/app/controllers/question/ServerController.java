@@ -2,7 +2,9 @@ package controllers.question;
 
 import java.util.ArrayList;
 
+import com.avaje.ebean.Page;
 import models.data.Link;
+import models.management.Manager;
 import models.question.Server;
 import play.data.Form;
 import play.mvc.Controller;
@@ -24,8 +26,13 @@ public class ServerController extends Controller {
      * @return server list page
      */
     public static Result list(int page, int pageSize, String orderBy, String order, String filter){
+        Page<Server> serverPage = Server.page(page, pageSize, orderBy, order, filter);
+        ArrayList<Manager> items = new ArrayList<Manager>();
+        for (Server server : serverPage.getList()){
+            items.add((Manager) server);
+        }
         return ok(
-            list.render(Server.page(page, pageSize, orderBy, order, filter), orderBy, order, filter, new ArrayList<Link>())
+            list.render(serverPage, items, orderBy, order, filter, new ArrayList<Link>())
         );
     }
 

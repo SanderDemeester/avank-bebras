@@ -1,6 +1,7 @@
 package models.question;
 
 import com.avaje.ebean.Page;
+import models.management.Manager;
 import play.Logger;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
@@ -16,7 +17,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="servers")
-public class Server extends Model {
+public class Server extends Model implements Manager {
 
     @Id
     @Column(name="id")
@@ -52,5 +53,38 @@ public class Server extends Model {
             // .fetch("path")
             .findPagingList(pageSize)
             .getPage(page);
+    }
+
+    /**
+     * Returns those values that have to be represented in a table.
+     *
+     * @return array with the current values of the fields to be represented in the table
+     */
+    @Override
+    public String[] getFieldValues() {
+        String[] result = {this.name, this.path};
+        return result;
+    }
+
+    /**
+     * Returns the names of the fields that have to be represented in a table.
+     * These will be the table headers.
+     *
+     * @return array with the names of fields to be represented in the table
+     */
+    @Override
+    public String[] getFieldNames() {
+        String[] result = {"Server's name", "Servers's path"};
+        return result;
+    }
+
+    /**
+     * Returns the id of the this object.
+     *
+     * @return id
+     */
+    @Override
+    public String getID() {
+        return name;
     }
 }
