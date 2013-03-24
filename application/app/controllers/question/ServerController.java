@@ -9,8 +9,8 @@ import models.question.Server;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.question.newServerForm;
-import views.html.question.editServerForm;
+import views.html.question.server.newServerForm;
+import views.html.question.server.editServerForm;
 import views.html.management.list;
 
 /**
@@ -31,8 +31,9 @@ public class ServerController extends Controller {
         for (Server server : serverPage.getList()){
             items.add((Manager) server);
         }
+        Manager dummy = (Manager) new Server();
         return ok(
-            list.render(serverPage, items, orderBy, order, filter, new ArrayList<Link>())
+            list.render(serverPage, items, orderBy, order, filter, dummy, "servers/create", new ArrayList<Link>())
         );
     }
 

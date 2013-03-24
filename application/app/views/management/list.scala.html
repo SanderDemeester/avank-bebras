@@ -6,7 +6,7 @@
 ***********************************************************@
 
 @(currentPage: Page[_], items: List[models.management.Manager], currentOrderBy: String, currentOrder: String,
-    currentFilter: String, breadcrumbs : List[models.data.Link])
+    currentFilter: String, dummy: models.management.Manager, addRoute: String, breadcrumbs : List[models.data.Link])
 
 @*****************************************
 * Helper generating the navigation links *
@@ -29,7 +29,7 @@
         }
     }
 
-    controllers.question.routes.ServerController.list(newPage, 10, orderBy, order, currentFilter)
+    dummy.getListRoute(newPage, 10, orderBy, order, currentFilter)
 }
 
 @***************************************
@@ -62,7 +62,7 @@
         * Add new item         *
         ***********************@
         <p>
-            <a class="btn" href="@controllers.question.routes.ServerController.create()"> Add </a>
+            <a class="btn" href="@addRoute"> Add </a>
         </p>
 
     </div>
@@ -78,10 +78,11 @@
         <table class="table table-striped table-bordered table-hover table-condensed">
 
             <thead>
-                    <tr>
-                    @header("name", "name")
-                    @header("path", "path")
-                    </tr>
+                <tr>
+                    @for(headerName <- items.get(0).getFieldNames){
+                        @header(headerName, headerName)
+                    }
+                </tr>
             </thead>
 
             <tbody>
@@ -91,10 +92,10 @@
                     @for(fieldValue <- item.getFieldValues){
                         <td>
                             @fieldValue
-                            <a class="button succes" id="edit" href="@controllers.question.routes.ServerController.edit(item.getID())">
+                            <a class="button succes" id="edit" href="@item.getEditRoute()">
                                 <i class="icon-edit"></i>
                             </a>
-                            <a class="button succes" id="remove" href="@controllers.question.routes.ServerController.remove(item.getID())">
+                            <a class="button succes" id="remove" href="@item.getRemoveRoute()">
                                 <i class="icon-remove"></i>
                             </a>
                         </td>
