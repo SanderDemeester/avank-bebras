@@ -12,6 +12,7 @@ import java.util.Stack;
 public class LoginState {
     private String sessionID;
     private Stack<String> translatorStack;
+   
 
     public LoginState(String si) {
         sessionID=si;
@@ -23,7 +24,8 @@ public class LoginState {
      *@return Currently active ID 
      */
     public String getID(){
-        return translatorStack.peek();
+    	if(!translatorStack.isEmpty()) return translatorStack.peek();
+    	else return null;
     }
     
     /*
