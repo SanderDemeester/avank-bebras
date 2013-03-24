@@ -6,7 +6,7 @@
 ***********************************************************@
 
 @(currentPage: Page[_], items: List[models.management.Manager], currentOrderBy: String, currentOrder: String,
-    currentFilter: String, dummy: models.management.Manager, addRoute: String, breadcrumbs : List[models.data.Link])
+    currentFilter: String, dummy: models.management.Manager, addRoute: Call, breadcrumbs : List[models.data.Link])
 
 @*****************************************
 * Helper generating the navigation links *
@@ -110,7 +110,7 @@
         @***********************
         * Pagination           *
         ***********************@
-        @pagination(currentPage, currentOrderBy, currentOrder, currentFilter)
+        @pagination(currentPage, currentOrderBy, currentOrder, currentFilter, dummy)
 
     }
 

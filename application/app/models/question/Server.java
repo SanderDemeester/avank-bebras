@@ -1,14 +1,11 @@
 package models.question;
 
 import com.avaje.ebean.Page;
-import controllers.question.ServerController;
 import controllers.question.routes;
 import models.management.Manager;
-import play.Logger;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 import play.mvc.Call;
-import play.mvc.Result;
 
 import javax.persistence.*;
 
@@ -83,26 +80,6 @@ public class Server extends Model implements Manager {
     }
 
     /**
-     * Returns the id of the this object.
-     *
-     * @return id
-     */
-    @Override
-    public String getID() {
-        return name;
-    }
-
-    /**
-     * Returns the path of the route that must be followed to add a new item.
-     *
-     * @return String path of the route that must be followed
-     */
-    @Override
-    public String getAddRoute() {
-        return "servers/new";
-    }
-
-    /**
      * Returns the route that must be followed to refresh the list.
      *
      * @param page     current page number
@@ -115,27 +92,26 @@ public class Server extends Model implements Manager {
     @Override
     public Call getListRoute(int page, int pageSize, String orderBy, String order, String filter) {
         return routes.ServerController.list(page, pageSize, orderBy, order, filter);
-        //return ServerController.list(page, pageSize, orderBy, order, filter);
     }
 
     /**
      * Returns the path of the route that must be followed to edit the selected item.
      *
-     * @return String path of the route that must be followed
+     * @return Call path of the route that must be followed
      */
     @Override
-    public String getEditRoute() {
-        return "servers/:" + name;
+    public Call getEditRoute() {
+        return routes.ServerController.edit(name);
     }
 
     /**
      * Returns the path of the route that must be followed to remove the selected item.
      *
-     * @result String path of the route that must be followed
+     * @result Call path of the route that must be followed
      */
     @Override
-    public String getRemoveRoute() {
-        return "servers/remove/:" + name;
+    public Call getRemoveRoute() {
+        return routes.ServerController.remove(name);
     }
 
 

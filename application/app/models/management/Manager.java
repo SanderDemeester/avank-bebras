@@ -1,8 +1,6 @@
 package models.management;
 
-import com.avaje.ebean.Page;
 import play.mvc.Call;
-import play.mvc.Result;
 
 /**
  * Manager interface for every model that needs visual CRUD operations.
@@ -29,20 +27,6 @@ public interface Manager {
     public String[] getFieldNames();
 
     /**
-     * Returns the id of the this object.
-     *
-     * @return id
-     */
-    public String getID();
-
-    /**
-     * Returns the path of the route that must be followed to add a new item.
-     *
-     * @return String path of the route that must be followed
-     */
-    public String getAddRoute();
-
-    /**
      * Returns the route that must be followed to refresh the list.
      *
      * @param page current page number
@@ -57,15 +41,15 @@ public interface Manager {
     /**
      * Returns the path of the route that must be followed to edit the selected item.
      *
-     * @return String path of the route that must be followed
+     * @return Call path of the route that must be followed
      */
-    public String getEditRoute();
+    public Call getEditRoute();
 
     /**
      * Returns the path of the route that must be followed to remove the selected item.
      *
-     * @result String path of the route that must be followed
+     * @result Call path of the route that must be followed
      */
-    public String getRemoveRoute();
+    public Call getRemoveRoute();
 
 }

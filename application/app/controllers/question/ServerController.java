@@ -29,11 +29,11 @@ public class ServerController extends Controller {
         Page<Server> serverPage = Server.page(page, pageSize, orderBy, order, filter);
         ArrayList<Manager> items = new ArrayList<Manager>();
         for (Server server : serverPage.getList()){
-            items.add((Manager) server);
+            items.add(server);
         }
-        Manager dummy = (Manager) new Server();
+        Manager dummy = new Server();
         return ok(
-            list.render(serverPage, items, orderBy, order, filter, dummy, "servers/create", new ArrayList<Link>())
+            list.render(serverPage, items, orderBy, order, filter, dummy, routes.ServerController.create(), new ArrayList<Link>())
         );
     }
 
@@ -84,11 +84,11 @@ public class ServerController extends Controller {
      * @return server list page
      */
     public static Result update(String name){
-        Form<Server> form = form(Server.class).bindFromRequest();
+        Form<Server> form = form(Server.class).fill(Server.finder.byId(name)).bindFromRequest();
         if(form.hasErrors()) {
             return badRequest(editServerForm.render(form, name, new ArrayList<Link>()));
         }
-        form.get().update(name);
+        form.get().update();
         // TODO place message in flash for server edited warning in view
         return redirect(routes.ServerController.list(0, 10, "name", "asc", ""));
     }
@@ -101,7 +101,13 @@ public class ServerController extends Controller {
      * @return server list page
      */
     public static Result remove(String name){
-        Server.finder.ref(name).delete();
+        if (Server.finder.byId(name) != null){
+            System.out.println("niet null");
+        }
+        else {
+            System.out.println("wel null ezifzeijfoij " + name);
+        }
+        Server.finder.byId(name).delete();
         return redirect(routes.ServerController.list(0, 10, "name", "asc", ""));
     }
 
