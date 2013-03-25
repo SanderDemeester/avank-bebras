@@ -4,18 +4,25 @@ package models.user;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
+
+import controllers.user.Type;
+
 
 import play.mvc.Result;
 
 /**
  * @author Sander Demeester
  */
+
+@Entity
 public class Independent extends User{
 
     private List<String> previousClassList;
 
-    public Independent(){
-        super(); //abstract class constructor could init some values
+    public Independent(UserID id, Type loginType, String name){
+        super(id,loginType,name); //abstract class constructor could init some values
         previousClassList = new ArrayList<String>();
     }
 
@@ -26,7 +33,8 @@ public class Independent extends User{
      * @param independent
      */
     public Independent(Independent independent){
-
+    	//TODO: independent need getters setters for this information.
+    	super(null,Type.INDEPENDENT,"");
     }
 
     /**

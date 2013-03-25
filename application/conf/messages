@@ -9,3 +9,7 @@ question.editor.index.create.import = Import from .ZIP
 
 question.type.MULTIPLE_CHOICE = Multiple Choice Question
 question.type.REGEX = Input Question
+
+# Languages
+languages.en = English
+languages.nl = Dutch

@@ -25,7 +25,7 @@ public class UserID {
      * Add userID to user.
      * @param UserID
      */
-    public void setUserID(String UserID){
+    public void setUserID(String userID){
         this.userID = userID;
     }
 

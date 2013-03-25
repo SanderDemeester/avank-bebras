@@ -33,5 +33,5 @@ POST    /servers/                   controllers.question.ServerController.save()
 GET     /servers/:name              controllers.question.ServerController.edit(name)
 POST    /servers/:name              controllers.question.ServerController.update(name)
 
-GET    /servers/remove/:name       controllers.question.ServerController.remove(name)
 
+GET    /servers/remove/:name       controllers.question.ServerController.remove(name)

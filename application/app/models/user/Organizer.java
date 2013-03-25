@@ -3,15 +3,20 @@ package models.user;
 
 import java.util.Set;
 
+import javax.persistence.Entity;
+
+import controllers.user.Type;
+
 import play.mvc.Result;
 
 /**
  * @author Sander Demeester
  */
+@Entity
 public class Organizer extends SuperUser{
 
-    public Organizer(){
-
+    public Organizer(UserID id, Type loginType, String name){
+    	super(id,loginType,name);
     }
 
     /**
