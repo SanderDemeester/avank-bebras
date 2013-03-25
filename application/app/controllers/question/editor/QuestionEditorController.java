@@ -6,8 +6,9 @@ import java.util.List;
 
 import models.EMessages;
 import models.data.Language;
-import models.data.Languages;
 import models.data.Link;
+import models.data.UnavailableLanguageException;
+import models.data.UnknownLanguageCodeException;
 import models.question.MultipleChoiceElement;
 import models.question.MultipleChoiceQuestion;
 import models.question.Question;
@@ -60,12 +61,19 @@ public class QuestionEditorController extends EController {
         Question question = QuestionFactory.newQuestion(QuestionType.valueOf(type));
         
         // TMP:
-        Language en = Languages.getLanguage("en");
+        Language en = null;
+        try {
+            en = Language.getLanguage("en");
+        } catch (UnavailableLanguageException e) {
+            return redirect(routes.QuestionEditorController.index());
+        } catch (UnknownLanguageCodeException e) {
+            return redirect(routes.QuestionEditorController.index());
+        }
         question.addLanguage(en);question.getLanguages();//!!!
         question.setTitle("test", en);
         question.setIndex("<b>test</b>", en);
         question.setFeedback("<b>test2</b>", en);
-        ((MultipleChoiceQuestion)question).addElement(en, new MultipleChoiceElement("aaap"));
+        //((MultipleChoiceQuestion)question).addElement(en, new MultipleChoiceElement("aaap"));
         
         /*Form<RawQuestion> questionForm = form(RawQuestion.class);
         try{

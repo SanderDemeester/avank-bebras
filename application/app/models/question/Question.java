@@ -17,13 +17,11 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
 import models.data.Language;
-import models.data.Languages;
+import models.user.User;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
-import models.user.User;
 
 /**
  * The base class where questions for the competitions are stored in.
@@ -195,7 +193,7 @@ public abstract class Question {
      */
     public List<Language> getNonLanguages() {
         List<Language> all = new ArrayList<Language>();
-        for (Language language : Languages.LANGUAGES.values()) {
+        for (Language language : Language.listLanguages()) {
             if(!languages.contains(language))
                 all.add(language);
         }

@@ -9,7 +9,7 @@ import play.db.ebean.Model;
 
 public class RawQuestion extends Model{
     
-    public List<String> languages;
+    /*public List<String> languages;
     public List<String> files;
     public String addLanguage;
     public static List<Language> languageList = new ArrayList<Language>();
@@ -33,5 +33,5 @@ public class RawQuestion extends Model{
         
         // TMP:
         
-    }
+    }*/
 }
