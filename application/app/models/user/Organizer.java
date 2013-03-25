@@ -3,24 +3,23 @@ package models.user;
 
 import java.util.Set;
 
-import javax.persistence.Entity;
-
-import controllers.user.Type;
-
 import play.mvc.Content;
 import play.mvc.Result;
 
 /**
  * @author Sander Demeester
  */
-@Entity
+
 public class Organizer extends SuperUser{
 
-    public Organizer(UserID id, Type loginType, String name){
-    	super(id,loginType,name);
-    }
+    
 
-    /**
+    public Organizer(UserModel data) {
+		super(data);
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
      * Block user.
      * @param user
      */

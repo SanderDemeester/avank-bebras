@@ -7,13 +7,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.MappedSuperclass;
-
 import com.avaje.ebean.Ebean;
-
-import controllers.user.Type;
-
 
 import play.mvc.Content;
 import play.mvc.Result;
@@ -23,25 +17,13 @@ import views.html.landingPages.PupilLandingPage;
  * @author Sander Demeester
  */
 
-@Entity
 public class Independent extends User{
 
     private List<String> previousClassList;
 
-    public Independent(UserID id, Type loginType, String name){
-        super(id,loginType,name); //abstract class constructor could init some values
+    public Independent(UserModel data){
+        super(data); //abstract class constructor could init some values
         previousClassList = new ArrayList<String>();
-    }
-
-    /**
-     * Constructor for Independent-user.
-     * This constructor makes a copy of all the information
-     * provided in independent.
-     * @param independent
-     */
-    public Independent(Independent independent){
-    	//TODO: independent need getters setters for this information.
-    	super(null,Type.INDEPENDENT,"");
     }
 
     /**
@@ -87,7 +69,7 @@ public class Independent extends User{
 		List<ClassGroup> classes = new ArrayList(this.getClasses());
 		ClassGroup current=getCurrentClass(classes);
 		if(current != null)classes.remove(current);
-		return PupilLandingPage.render(this.id,current,classes);
+		return PupilLandingPage.render(this.data.id,current,classes);
 	}
 
 	@Override
@@ -103,7 +85,7 @@ public class Independent extends User{
 	public Collection<ClassGroup> getClasses(){
 		ArrayList<ClassGroup> res = new ArrayList<>();
 		
-		List<ClassPupil> cp = Ebean.find(ClassPupil.class).where().eq("indid", this.id).findList();
+		List<ClassPupil> cp = Ebean.find(ClassPupil.class).where().eq("indid", this.data.id).findList();
 		for(ClassPupil c : cp){
 			ClassGroup cg = Ebean.find(ClassGroup.class).where().eq("id", c.classid).findUnique();
 			if(cg != null)res.add(cg);

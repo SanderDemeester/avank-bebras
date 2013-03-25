@@ -1,18 +1,12 @@
 
 package models.user;
 
-import java.awt.List;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
-import javax.persistence.Entity;
-
 import com.avaje.ebean.Ebean;
-import com.avaje.ebean.ExpressionList;
-
-import controllers.user.Type;
 import play.mvc.Content;
 import play.mvc.Result;
 import views.html.landingPages.TeacherLandingPage;
@@ -22,18 +16,16 @@ import views.html.landingPages.TeacherLandingPage;
  * @author Jens N. Rammant
  */
 
-@Entity
 public class Teacher extends SuperUser{
 
-    /**
-     * The constructor of teacher.
-     */
-    public Teacher(UserID id, Type loginType, String name){
-    	super(id,loginType,name);
+    
 
-    }
+    public Teacher(UserModel data) {
+		super(data);
+		// TODO Auto-generated constructor stub
+	}
 
-    public void scheduleUnrestrictedCompetition(){
+	public void scheduleUnrestrictedCompetition(){
 
     }
 
@@ -81,7 +73,7 @@ public class Teacher extends SuperUser{
 			else cc.add(cl);
 		}
 		
-		return TeacherLandingPage.render(this.id, cc, pc);
+		return TeacherLandingPage.render(this.data.id, cc, pc);
 	}
 
 	@Override
@@ -97,7 +89,7 @@ public class Teacher extends SuperUser{
 	public Collection<ClassGroup> getClasses(){
 		
 		java.util.List<ClassGroup> res = Ebean.find(ClassGroup.class).where()
-				.eq("teacherid", this.id).findList();
+				.eq("teacherid", this.data.id).findList();
 		
 		return res;
 	}
