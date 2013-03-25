@@ -8,3 +8,10 @@ question.editor.index.create = Create a question pack
 # Languages
 languages.en = English
 languages.nl = Dutch
+
+# Statistics
+statistics.title = Statistics
+statistics.boxplot = Boxplot
+statistics.histogram = Histogram
+statistics.piechart = Pie Chart
+

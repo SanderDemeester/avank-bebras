@@ -6,3 +6,9 @@ question.editor.index.create = Maak een vraag pak
 languages.en = Engels
 languages.nl = Nederlands
 
+# Statistics
+statistics.title = Statistieken
+statistics.boxplot = Boxplot
+statistics.histogram = Histogram
+statistics.piechart = Taartdiagram
+
