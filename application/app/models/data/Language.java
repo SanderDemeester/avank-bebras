@@ -1,17 +1,12 @@
 package models.data;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.lang.Error;
-import java.lang.RuntimeException;
 
+import models.EMessages;
 import play.i18n.Lang;
-import play.i18n.Messages;
-
-import models.data.UnavailableLanguageException;
-import models.data.UnknownLanguageCodeException;
 
 /**
  * Wrapper class around the Play Lang class. This wrapper adds exceptions to
@@ -96,7 +91,7 @@ public class Language implements Comparable<Language> {
      * @return The name of this language in the provided language.
      */
     public String getName(Language language) {
-        return Messages.get(language.getCode(), "language." + lang.code());
+        return EMessages.get(language.getCode(), "language." + language.getCode());
     }
 
     /**
@@ -105,7 +100,7 @@ public class Language implements Comparable<Language> {
      * @return The name of this language in the preferred language.
      */
     public String getName() {
-        return Messages.get("language." + lang.code());
+        return EMessages.get("language." + lang.code());
     }
 
     /**
