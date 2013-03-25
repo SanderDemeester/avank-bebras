@@ -23,26 +23,9 @@ import junit.framework.Assert;
 import controllers.user.Type;
 import static play.test.Helpers.*;
 
-public class UserDatabaseTest {
+public class UserDatabaseTest extends ContextTest {
 	
 	private SecureRandom random = new SecureRandom();
-	
-	@Before
-	public void startApp(){
-	    Map<String, String> settings = new HashMap<String, String>();
-		settings.put("db.default.driver", "org.h2.Driver");
-	    settings.put("db.default.user", "sa");
-	    settings.put("db.default.password", "");
-	    settings.put("db.default.url", "jdbc:h2:mem:play");
-	    settings.put("evolutionplugin","enabled");
-	    
-		start(fakeApplication(settings));
-	}
-	
-	@After
-	public void stopApp(){
-		stop(fakeApplication());
-	}
 
 	/*
 	 * Test IndependentUser database insertion.
