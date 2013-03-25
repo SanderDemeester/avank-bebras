@@ -5,7 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.EMessages;
+import models.data.Language;
+import models.data.Languages;
 import models.data.Link;
+import models.question.MultipleChoiceElement;
+import models.question.MultipleChoiceQuestion;
+import models.question.Question;
+import models.question.QuestionFactory;
+import models.question.QuestionType;
+import models.question.RegexQuestion;
 import models.question.editor.RawQuestion;
 
 import org.codehaus.jackson.node.ArrayNode;
@@ -49,13 +57,23 @@ public class QuestionEditorController extends EController {
         breadcrumbs.add(new Link("Question Editor", "/questioneditor"));
         breadcrumbs.add(new Link("Create "+EMessages.get("question.type."+type), ""));
         
-        Form<RawQuestion> questionForm = form(RawQuestion.class);
+        Question question = QuestionFactory.newQuestion(QuestionType.valueOf(type));
+        
+        // TMP:
+        Language en = Languages.getLanguage("en");
+        question.addLanguage(en);question.getLanguages();//!!!
+        question.setTitle("test", en);
+        question.setIndex("<b>test</b>", en);
+        question.setFeedback("<b>test2</b>", en);
+        ((MultipleChoiceQuestion)question).addElement(en, new MultipleChoiceElement("aaap"));
+        
+        /*Form<RawQuestion> questionForm = form(RawQuestion.class);
         try{
             questionForm.fill(new RawQuestion(type));
         } catch(IllegalArgumentException e) {
             return redirect(routes.QuestionEditorController.index());
-        }
-        return ok(create.render(breadcrumbs, questionForm, type));
+        }*/
+        return ok(create.render(breadcrumbs, question));
     }
     
     public static Result save(){
@@ -70,12 +88,12 @@ public class QuestionEditorController extends EController {
         Form<RawQuestion> questionForm = form(RawQuestion.class).bindFromRequest();
         
         if(questionForm.hasErrors()) {
-            return badRequest(create.render(breadcrumbs, questionForm, ""));
+            return badRequest(create.render(breadcrumbs, new RegexQuestion()));
         } else {
             breadcrumbs.add(new Link(questionForm.field("addLanguage").value(), "/questioneditor/create"));
         }
         //questionForm.get().save();
-        return ok(create.render(breadcrumbs, questionForm, ""));
+        return ok(create.render(breadcrumbs, new RegexQuestion()));
         //return redirect(routes.QuestionEditorController.create());
     }
     

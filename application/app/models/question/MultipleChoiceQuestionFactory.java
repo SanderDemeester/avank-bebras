@@ -27,6 +27,11 @@ public class MultipleChoiceQuestionFactory extends QuestionFactory<MultipleChoic
         this.processCommonElements(question, nodeList);
         return question;
     }
+    
+    @Override
+    public Question newQuestion() {
+        return new MultipleChoiceQuestion();
+    }
 
     /**
      * A NodeAction for the Answer elements that are present in MultipleChoice Questions

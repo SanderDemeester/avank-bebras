@@ -30,6 +30,11 @@ public class RegexQuestionFactory extends QuestionFactory<RegexQuestion> {
         this.processCommonElements(question, nodeList);
         return question;
     }
+    
+    @Override
+    public Question newQuestion() {
+        return new RegexQuestion();
+    }
 
     /**
      * Check if a certain regex has a valid structure

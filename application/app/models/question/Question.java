@@ -17,6 +17,7 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
 import models.data.Language;
+import models.data.Languages;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -186,6 +187,19 @@ public abstract class Question {
      */
     public List<Language> getLanguages() {
         return languages;
+    }
+    
+    /**
+     * Returns a list of all languages that are not available in this question
+     * @return list of languages
+     */
+    public List<Language> getNonLanguages() {
+        List<Language> all = new ArrayList<Language>();
+        for (Language language : Languages.LANGUAGES.values()) {
+            if(!languages.contains(language))
+                all.add(language);
+        }
+        return all;
     }
 
     /**

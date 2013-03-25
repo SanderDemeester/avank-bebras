@@ -1,0 +1,72 @@
+@(question: models.question.Question, language : models.data.Language)
+
+@import models.EMessages
+@import helper._
+@import helper.twitterBootstrap._
+
+@panelId = @{
+ 	 if(language==null) {
+ 	 	"panelTemplate"
+ 	 } else {
+ 	 	"panel-" + language.getCode()
+ 	 }
+}
+
+@valueTitle = @{
+	if(language!=null) {
+ 	 	"value=" + question.getTitle(language) + ""
+ 	 }
+}
+
+@valueIndex = @{
+	if(language!=null) {
+ 	 	question.getIndex(language)
+ 	 }
+}
+
+@valueFeedback = @{
+	if(language!=null) {
+ 	 	question.getFeedback(language)
+ 	 }
+}
+
+	<!-- Question panel (template) -->
+	<div id="@panelId" class="questionFrame hide">
+		<ul class="nav nav-tabs">
+			<li><a class="tabGeneral" href="#answers" data-toggle="tab">General</a></li>
+			<li><a class="tabAnswers" href="#answers" data-toggle="tab">Answers</a></li>
+		  	<li><a class="tabIndex" href="#index" data-toggle="tab">Question</a></li>
+		  	<li><a class="tabFeedback" href="#feedback" data-toggle="tab">Feedback</a></li>
+		</ul>
+		<div class="generalTab well hide">
+			<h2>General</h2>
+			<div class="form-inline">
+				Title: <input type="text" class="title span10" placeholder="The title for this question in the current language." @valueTitle />
+			</div>
+		</div>
+		<div class="answersTab well hide">
+			<h2>Answer</h2>
+				<div class="input">
+				@defining(question.getType().name()) { qType =>
+					@qType match {
+						case "MULTIPLE_CHOICE" => {
+							@inputMultipleChoice(question.asInstanceOf[models.question.MultipleChoiceQuestion], language)
+						}
+						case "REGEX" => {
+							@inputRegex(question.asInstanceOf[models.question.RegexQuestion], language)
+						}
+					}
+				}
+			</div>
+		</div>
+		<div class="indexTab well hide editorTab">
+			<h2>Question</h2>
+			<div class="muted">This page will be presented to the user when he has to solve this question.</div>
+			<textarea rows="10" class="span12 editor" placeholder="Enter the question here.">@valueIndex</textarea>
+		</div>
+		<div class="feedbackTab well hide editorTab">
+			<h2>Feedback</h2>
+			<div class="muted">This content will be used to display feedback to the user after a competition.</div>
+			<textarea rows="10" class="span12 editor" placeholder="Enter the question feedback here.">@valueFeedback</textarea>
+		</div>
+	</div>

@@ -21,12 +21,17 @@ public class RawQuestion extends Model{
     }
     
     public RawQuestion() {
-        
+        languages = new ArrayList<String>();
     }
     
     public RawQuestion(String type) throws IllegalArgumentException {
+        super();
+        
         if(QuestionType.valueOf(type)==null)
             throw new IllegalArgumentException("The provided question type does not exist.");
         this.type = type;
+        
+        // TMP:
+        
     }
 }

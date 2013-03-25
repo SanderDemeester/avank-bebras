@@ -1,4 +1,4 @@
-@(breadcrumbs : List[models.data.Link], questionForm: Form[models.question.editor.RawQuestion], questionType : String)
+@(breadcrumbs : List[models.data.Link], question: models.question.Question)
 
 @import models.EMessages
 @import models.question.editor.RawQuestion
@@ -6,7 +6,7 @@
 @import helper.twitterBootstrap._
 
 @main("Question Editor", breadcrumbs) {
-	@helper.form(action = controllers.question.editor.routes.QuestionEditorController.save(), 'id -> "saveQuestion") {
+	<form id="saveQuestion">
 		<div class="row-fluid">
 			<div class="span3">
 
@@ -14,10 +14,8 @@
 				    <ul id="languages" class="nav nav-list">
 						<li class="nav-header">Languages</li>
 						<li class="divider"></li>
-					    @repeat(questionForm("languages")) { language =>
-					    	@if(language.value == "") {
-						    	<li class="languageItem"><i class="icon-remove removelang"></i><a href="#" class="selectLang">@language.value</a></li>
-							}
+					    @for(language <- question.getLanguages()) {
+						    <li class="languageItem"><i class="icon-remove removelang"></i><a href="#" class="selectLang">@language.getCode()</a></li>
 						}
 						
 					</ul>
@@ -25,7 +23,7 @@
 					<div class="form-inline row-fluid">
 						<div class="span9">
 						<select id="languageList" class="span12">
-							@for(language <- RawQuestion.languageList) {
+							@for(language <- question.getNonLanguages()) {
 								<option value="@language.getCode()">@language.getCode()</option>
 							}
 						</select>
@@ -41,47 +39,14 @@
 		    
 			</div>
 			
-			<!-- Question panel template -->
 			<div id="questionPanel" class="span9">
 				<div id="noPanelSelected" class="text-center"><span class="muted">Add a new language or select an existing one to get started.</span></div>
-				<div id="panelTemplate" class="questionFrame hide">
-					<ul class="nav nav-tabs">
-						<li><a class="tabGeneral" href="#answers" data-toggle="tab">General</a></li>
-						<li><a class="tabAnswers" href="#answers" data-toggle="tab">Answers</a></li>
-					  	<li><a class="tabIndex" href="#index" data-toggle="tab">Question</a></li>
-					  	<li><a class="tabFeedback" href="#feedback" data-toggle="tab">Feedback</a></li>
-					</ul>
-					<div class="generalTab well hide">
-						<h2>General</h2>
-						<div class="form-inline">
-							Title: <input type="text" class="title span10" placeholder="The title for this question in the current language."/>
-						</div>
-					</div>
-					<div class="answersTab well hide">
-						<h2>Answer</h2>
-							<div class="input">
-							@questionType match {
-								case "MULTIPLE_CHOICE" => {
-									@inputMultipleChoice(questionForm)
-								}
-								case "REGEX" => {
-									@inputRegex(questionForm)
-								}
-							}
-						</div>
-					</div>
-					<div class="indexTab well hide editorTab">
-						<h2>Question</h2>
-						<div class="muted">This page will be presented to the user when he has to solve this question.</div>
-						<textarea rows="10" class="span12 editor" placeholder="Enter the question here.">&nbsp;</textarea>
-					</div>
-					<div class="feedbackTab well hide editorTab">
-						<h2>Feedback</h2>
-						<div class="muted">This content will be used to display feedback to the user after a competition.</div>
-						<textarea rows="10" class="span12 editor" placeholder="Enter the question feedback here.">&nbsp;</textarea>
-					</div>
-				</div>
+				@questionPanel(question, null)
+				@for(language <- question.getLanguages()) {
+					@questionPanel(question, language)
+				}
 			</div>
+			
 		</div>
 		
 		<!-- Hidden modal -->
@@ -139,5 +104,5 @@
 		
 	    <!-- Load the page logic after everything else is loaded -->
 	    <script src="@routes.Assets.at("javascripts/questioneditor.js")" type="text/javascript"></script>
-	}
+	</form>
 }

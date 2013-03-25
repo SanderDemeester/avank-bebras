@@ -26,7 +26,7 @@ function appendFile(file) {
       		.data("url", file.url)
       		.appendTo($("#files"));
 }
-	    
+   
 $(document).ready(function() {
 	// Show confirm dialog on leaving page
 	window.onbeforeunload = function() {
@@ -35,6 +35,12 @@ $(document).ready(function() {
 	
 	// Call this for removing the warning after save
 	//window.onbeforeunload = null;
+	
+	// Make the editors for the languages that are already present
+	var editors = $("#questionPanel").find("[id^=panel-]");
+	editors.each(function() {
+		makeEditor($(this).find(".editor"));
+	});
 	
 	// Load the uploaded files for the first time
 	$.getJSON('../files.json')
@@ -136,6 +142,19 @@ $(".removeImage").live("click", function(){
 	});	
 });
 
+// Set the editor
+function makeEditor(editor) {
+	editor.each(function() {
+		var instance = $(this).wysihtml5({
+			"html": false,
+			"link": false,
+			"image": true,
+			customTemplates: myCustomTemplates,
+		});
+		$(this).data("editor", instance);
+	});
+}
+
 // Add a language to the question
 $('#addLanguage').click(function(e) {
 	e.preventDefault();
@@ -160,15 +179,7 @@ $('#addLanguage').click(function(e) {
 		template.removeClass("hide");
 		template.attr("id", "panel-"+selected.val());
 		var editor = template.find('.editor');
-		editor.each(function() {
-			var instance = $(this).wysihtml5({
-				"html": false,
-				"link": false,
-				"image": true,
-				customTemplates: myCustomTemplates,
-			});
-			$(this).data("editor", instance);
-		});
+		makeEditor(editor);
 		activeEditor = editor;
 		$('#questionPanel').append(template);
 		
