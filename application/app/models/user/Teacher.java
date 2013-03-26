@@ -6,6 +6,9 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
+import models.dbentities.ClassGroup;
+import models.dbentities.UserModel;
+
 import com.avaje.ebean.Ebean;
 import play.mvc.Content;
 import play.mvc.Result;
@@ -57,23 +60,8 @@ public class Teacher extends SuperUser{
 	 * @return Personalized landing page for this instance of teacher
 	 */
 	public Content getLandingPage(){		
-		java.util.List<ClassGroup> cc = new ArrayList<>();		
-		java.util.List<ClassGroup> pc = new ArrayList<>();
-		
-		Calendar c = Calendar.getInstance();
-		c.set(Calendar.HOUR, -12);
-		c.set(Calendar.MINUTE, 0);
-		c.set(Calendar.SECOND, 0);
-		c.set(Calendar.MILLISECOND, 0);
-		Date today = c.getTime();
-		
-		for (ClassGroup cl : this.getClasses()){
-			System.out.println(cl.expdate.toString());
-			if(cl.expdate.before(today))pc.add(cl);
-			else cc.add(cl);
-		}
-		
-		return TeacherLandingPage.render(this.data.id, cc, pc);
+		//TODO
+		return null;
 	}
 
 	@Override
@@ -86,6 +74,7 @@ public class Teacher extends SuperUser{
 	 * Queries the database for all Classes that this Teacher is main teacher of
 	 * @return List of all ClassGroups this Teacher is main Teacher of
 	 */
+	//TODO create test
 	public Collection<ClassGroup> getClasses(){
 		
 		java.util.List<ClassGroup> res = Ebean.find(ClassGroup.class).where()

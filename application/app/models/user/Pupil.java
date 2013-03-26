@@ -2,6 +2,7 @@
 package models.user;
 
 import models.competition.Competition;
+import models.dbentities.UserModel;
 
 /**
  * @author Sander Demeester

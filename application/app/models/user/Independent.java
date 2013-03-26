@@ -7,6 +7,10 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import models.dbentities.ClassGroup;
+import models.dbentities.ClassPupil;
+import models.dbentities.UserModel;
+
 import com.avaje.ebean.Ebean;
 
 import play.mvc.Content;
@@ -46,6 +50,7 @@ public class Independent extends User{
      *
      * @return Get currentClass.
      */
+    //TODO: create test
     public ClassGroup getCurrentClass(List<ClassGroup> classes){
     	Calendar c = Calendar.getInstance();
 		c.set(Calendar.HOUR, -12);
@@ -59,6 +64,7 @@ public class Independent extends User{
     	return null;
     }
     
+    //TODO create test
     public ClassGroup getCurrentClass(){
     	return this.getCurrentClass(new ArrayList(this.getClasses()));
     }
@@ -66,10 +72,8 @@ public class Independent extends User{
 	@Override
 	public Content getLandingPage() {
 		
-		List<ClassGroup> classes = new ArrayList(this.getClasses());
-		ClassGroup current=getCurrentClass(classes);
-		if(current != null)classes.remove(current);
-		return PupilLandingPage.render(this.data.id,current,classes);
+		//TODO
+		return null;
 	}
 
 	@Override

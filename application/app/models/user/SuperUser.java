@@ -1,6 +1,8 @@
 
 package models.user;
 
+import models.dbentities.UserModel;
+
 /**
  * Abstract superUser class
  * @author Sander Demeester

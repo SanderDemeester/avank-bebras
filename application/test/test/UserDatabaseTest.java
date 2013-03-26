@@ -2,13 +2,14 @@ package test;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import models.dbentities.UserModel;
 import models.user.Independent;
 import models.user.Organizer;
 import models.user.Pupil;
 import models.user.Teacher;
 import models.user.User;
 import models.user.UserID;
-import models.user.UserModel;
 
 import org.junit.After;
 import org.junit.Before;
