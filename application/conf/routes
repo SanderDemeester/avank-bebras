@@ -8,8 +8,6 @@ GET     /test				        controllers.Application.test(id: String)
 GET		/login						controllers.UserController.login()
 GET		/register					controllers.UserController.register()
 GET		/logout						controllers.UserController.logout()
-GET		/teacher					controllers.user.TestController.showTeachLandingPage()
-GET		/indep						controllers.user.TestController.testClassesPupil()
 
 # Bootstrap resources
 GET     /assets/img/glyphicons-halflings-white.png      controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings-white.png")

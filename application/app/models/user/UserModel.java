@@ -22,7 +22,7 @@ import play.db.ebean.Model.Finder;
  */
 @Entity
 @Table(name="users")
-public abstract class UserModel extends Model{
+public class UserModel extends Model{
 
 	@Id
     public String id;
