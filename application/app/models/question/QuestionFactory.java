@@ -32,7 +32,7 @@ public abstract class QuestionFactory<T extends Question> {
      * @param nodeList a NodeList that contains the structure of questions
      * @return a new question based on contents of the NodeList
      */
-    public abstract Question newQuestion(NodeList nodeList) throws QuestionBuilderException;
+    public abstract Question newQuestion(Node node) throws QuestionBuilderException;
     
     /**
      * A blank question will be generated based on a type
@@ -80,9 +80,8 @@ public abstract class QuestionFactory<T extends Question> {
      * @param nodeList starting nodeList
      * @throws QuestionBuilderException An exception has occurred
      */
-    public void processCommonElements(T question, NodeList nodeList) throws QuestionBuilderException {
+    public void processCommonElements(T question, Node rootNode) throws QuestionBuilderException {
         // loop over the languages in the structure
-        Node rootNode = nodeList.item(1);
         NodeList languages = rootNode.getChildNodes();
         for(int i=0; i<languages.getLength();i++) {
             Node node=languages.item(i);

@@ -3,7 +3,6 @@
  * @author: Ruben Taelman
  */
 
-var questionType = "@questionType";
 var activeEditor;
 var fileUploader;
 
@@ -310,4 +309,48 @@ $(".removeanswer").live("click", function(){
 	$(this).parent().parent().hide('fast', function() {
 		$(this).parent().parent();
 	});
+});
+
+function collectData() {
+	var data = new Object();
+	data.type = questionType;
+	data.languages = new Array();
+	
+	var langs = $("#languages").find(".languageItem");
+	langs.each(function() {
+		// Make a new language row
+		var langRow = {};
+		langRow['language'] = $(this).find("a").text();
+		
+		
+		var panel = $("#panel-"+langRow['language']);
+		langRow['title'] = panel.find(".title").val();
+		langRow['index'] = panel.find(".question").val();
+		langRow['feedback'] = panel.find(".feedback").val();
+		
+		// Type specific logic
+		if(questionType=="MULTIPLE_CHOICE") {
+			langRow['answers'] = new Array();
+			
+			// Loop over the answers and get their correctness value
+			var answers = panel.find(".answers").find(".mc_answer");
+			answers.each(function() {
+				var content = $(this).find("input[type=text]").val();
+				var attrChecked = $(this).find("input[type=radio]").attr("checked");
+				var checked = attrChecked != undefined && attrChecked == "checked";
+				langRow['answers'].push({content: content ,correct: checked});
+			});
+		} else if(questionType=="REGEX") {
+			langRow['regex'] = panel.find(".regex").val();
+		}
+		
+		// Save the language in the data object
+		data.languages.push(langRow);
+	});
+	
+	return data;
+}
+
+$("#submit").live("click", function(){
+	alert(JSON.stringify(collectData()));
 });

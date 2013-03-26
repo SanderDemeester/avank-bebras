@@ -1,24 +1,32 @@
 package controllers.question.editor;
 
 import java.io.File;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import models.EMessages;
 import models.data.Language;
 import models.data.Link;
 import models.data.UnavailableLanguageException;
 import models.data.UnknownLanguageCodeException;
-import models.question.MultipleChoiceElement;
-import models.question.MultipleChoiceQuestion;
 import models.question.Question;
+import models.question.QuestionBuilderException;
 import models.question.QuestionFactory;
 import models.question.QuestionType;
 import models.question.RegexQuestion;
 import models.question.editor.RawQuestion;
 
+import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
+import org.w3c.dom.Document;
 
 import play.Play;
 import play.data.Form;
@@ -159,5 +167,40 @@ public class QuestionEditorController extends EController {
         }
         
         return ok(result);
-      }
+     }
+    
+    public static Result validate(String json) {
+        List<Link> breadcrumbs = new ArrayList<Link>();
+        breadcrumbs.add(new Link("Home", "/"));
+        breadcrumbs.add(new Link("Question Editor", "/questioneditor"));
+        breadcrumbs.add(new Link("Create", ""));
+        
+        JsonNode input = Json.parse(json);
+        
+        Document doc = null;
+        try {
+            doc = Question.JsonToXml(input);
+            Question question = Question.getFromXml(doc);
+            return ok(toString(doc));
+        } catch (QuestionBuilderException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+     }
+    
+    public static String toString(Document doc) {
+        try {
+            StringWriter sw = new StringWriter();
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer transformer = tf.newTransformer();
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+            transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+
+            transformer.transform(new DOMSource(doc), new StreamResult(sw));
+            return sw.toString();
+        } catch (Exception ex) {
+            throw new RuntimeException("Error converting to String", ex);
+        }
+    }
 }

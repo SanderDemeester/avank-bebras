@@ -1,11 +1,17 @@
 package models.question;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -19,7 +25,10 @@ import javax.xml.validation.Validator;
 import models.data.Language;
 import models.user.User;
 
+import org.codehaus.jackson.JsonNode;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -61,7 +70,7 @@ public abstract class Question {
         this.indexes = new HashMap<Language, String>();
         this.feedbacks = new HashMap<Language, String>();
     }
-
+    
     /**
      * Creates a new question from a certain XML input
      * @param xml  absolute URL of an xml file
@@ -69,22 +78,40 @@ public abstract class Question {
      * @throws QuestionBuilderException possible things that can go wrong
      */
     public static Question getFromXml(String xml) throws QuestionBuilderException {
-        // TODO: Set Server and ID upon loading the XML file
-        Question question = null;
         try {
             // Parse the given XML into a DOM tree
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setNamespaceAware(true);
+    
+            // Parse our file
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(xml);
+            
+            return getFromXml(doc);
+        } catch (ParserConfigurationException e) {
+            throw new QuestionBuilderException("Incorrect XML, can't be parsed.");  
+        } catch (SAXException e) {
+            throw new QuestionBuilderException("The XML is invalid."+e.getMessage());
+        } catch (IOException e) {
+            throw new QuestionBuilderException("Can't read the xml file.");
+        }
+    }
 
+    /**
+     * Creates a new question from a certain XML input
+     * @param xml  input stream of an xml file
+     * @return a new question
+     * @throws QuestionBuilderException possible things that can go wrong
+     */
+    public static Question getFromXml(Document doc) throws QuestionBuilderException {
+        // TODO: Set Server and ID upon loading the XML file
+        Question question = null;
+        try {
             // create a SchemaFactory capable of understanding our schemas
             SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             // Load our schema
             Schema schema = sf.newSchema(new File(XML_SCHEMA));
             //factory.setSchema(schema); </-- DO NOT USE THIS, IT WILL ADD OPTIONAL ATTRS EVERYWHERE!
-
-            // Parse our file
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(xml);
 
             // create a Validator instance to validate the give XML
             Validator validator = schema.newValidator();
@@ -95,13 +122,13 @@ public abstract class Question {
             // Retrieve the root nodeList
             NodeList nodeList = doc.getChildNodes();
             nodeList = nodeList.item(0).getChildNodes();
-            String type = nodeList.item(1).getNodeName();
+            Node typeNode = nodeList.item(1);
+            if(typeNode==null)
+                typeNode = nodeList.item(0);
+            String type = typeNode.getNodeName();
 
             // Give the nodeList to the correct QuestionFactory to make our Question
-            question = QUESTION_TYPE_NAMES.get(type).newQuestion(nodeList);
-
-        } catch (ParserConfigurationException e) {
-            throw new QuestionBuilderException("Incorrect XML, can't be parsed.");
+            question = QUESTION_TYPE_NAMES.get(type).newQuestion(typeNode);        
         } catch (SAXException e) {
             throw new QuestionBuilderException("The XML is invalid."+e.getMessage());
         } catch (IOException e) {
@@ -113,6 +140,78 @@ public abstract class Question {
         }
 
         return question;
+    }
+    
+    public static Document JsonToXml(JsonNode json) throws QuestionBuilderException {
+        try {
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            
+            Document doc = docBuilder.newDocument();
+            Element root = doc.createElementNS("bebras:Question", "root");
+            
+            //doc.createElement("root");
+            //root.setAttributeNS("http://www.w3.org/2000/xmlns/" ,"xmlns","bebras:Question");
+            
+            QuestionType type = QuestionType.valueOf(json.get("type").asText());
+            if(type == null)
+                throw new QuestionBuilderException("Invalid question type.");
+            Element questionNode = doc.createElementNS("bebras:Question", type.getXmlElement());
+            
+            JsonNode languages = json.get("languages");
+            
+            for(int i=0;i<languages.size();i++) {
+                JsonNode language = languages.get(i);
+                
+                Element lang = doc.createElementNS("bebras:Question", "language");
+                lang.setAttribute("code", language.get("language").getTextValue());
+                
+                Element index = doc.createElementNS("bebras:Question", "index");
+                index.setTextContent(language.get("index").getTextValue());
+                lang.appendChild(index);
+                
+                // TODO TMP
+                Element feedback = doc.createElementNS("bebras:Question", "feedback");
+                feedback.setTextContent(language.get("feedback").getTextValue());
+                lang.appendChild(feedback);
+                
+                // TODO TMP
+                Element title = doc.createElementNS("bebras:Question", "title");
+                title.setTextContent(language.get("title").getTextValue());
+                lang.appendChild(title);
+                
+                if(QuestionType.MULTIPLE_CHOICE.equals(type)) {
+                    Element answers = doc.createElementNS("bebras:Question", "answers");
+                    
+                    JsonNode answerNodes = language.get("answers");
+                    for(int j=0;j<answerNodes.size();j++) {
+                        JsonNode answerNode = answerNodes.get(j);
+                        
+                        Element answer = doc.createElementNS("bebras:Question", "answer");
+                        answer.setTextContent(answerNode.get("content").getTextValue());
+                        if(answerNode.get("correct").asBoolean())
+                            answer.setAttribute("correct", "true");
+                        answers.appendChild(answer);
+                    }
+                    
+                    lang.appendChild(answers);
+                } else if(QuestionType.REGEX.equals(type)) {
+                    Element input = doc.createElementNS("bebras:Question", "input");
+                    input.setAttribute("regex", language.get("regex").getTextValue());
+                    lang.appendChild(input);
+                }
+                
+                questionNode.appendChild(lang);
+            }
+            
+            root.appendChild(questionNode);
+            doc.appendChild(root);
+            
+            return doc;
+            
+        } catch (ParserConfigurationException e) {
+            throw new QuestionBuilderException("An unexpected internal error occured.");
+        }
     }
 
     /**

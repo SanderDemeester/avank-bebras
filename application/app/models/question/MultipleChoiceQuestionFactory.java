@@ -21,10 +21,10 @@ public class MultipleChoiceQuestionFactory extends QuestionFactory<MultipleChoic
     }
 
     @Override
-    public Question newQuestion(NodeList nodeList) throws QuestionBuilderException {
+    public Question newQuestion(Node node) throws QuestionBuilderException {
         this.nodeActions.put("answers", new AnswersNodeAction());
         MultipleChoiceQuestion question = new MultipleChoiceQuestion();
-        this.processCommonElements(question, nodeList);
+        this.processCommonElements(question, node);
         return question;
     }
     

@@ -24,10 +24,10 @@ public class RegexQuestionFactory extends QuestionFactory<RegexQuestion> {
     }
 
     @Override
-    public Question newQuestion(NodeList nodeList) throws QuestionBuilderException {
+    public Question newQuestion(Node node) throws QuestionBuilderException {
         this.nodeActions.put("input", new InputNodeAction());
         RegexQuestion question = new RegexQuestion();
-        this.processCommonElements(question, nodeList);
+        this.processCommonElements(question, node);
         return question;
     }
     
