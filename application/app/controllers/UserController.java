@@ -1,7 +1,15 @@
 package controllers;
 
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 import java.util.ArrayList;
 import java.util.Map;
+
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 
 import models.data.Link;
 import models.user.AuthenticationManager;
@@ -66,6 +74,28 @@ public class UserController extends EController{
     public static Result register(){
     	setCommonHeaders();
     	Form<Register> registerForm = form(Register.class).bindFromRequest();
+    	
+    	/**
+    	 * Oh god.. SecureRandom.. really? 
+    	 */
+    	SecureRandom s = new SecureRandom();
+    	s.setSeed(System.currentTimeMillis());
+    	String salt = Integer.toString(s.nextInt(128));
+    	SecretKeyFactory factory;
+		try {
+			factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        KeySpec keyspec = new PBEKeySpec(registerForm.get().password.toCharArray(), salt.getBytes(), 1000, 128);
+        try {
+			Key key = factory.generateSecret(keyspec);
+		} catch (InvalidKeySpecException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
     	String r = new String();
     	r += registerForm.get().email + "\n";
     	r += registerForm.get().fname + "\n";
