@@ -37,6 +37,7 @@ public abstract class ContextTest {
 	    settings.put("db.default.user", "sa");
 	    settings.put("db.default.password", "");
 	    settings.put("db.default.url", "jdbc:h2:mem:play");
+	    settings.put("evolutionplugin","enabled");
         app = Helpers.fakeApplication(settings);
         Helpers.start(app);
     }

@@ -1,0 +1,19 @@
+03-24 15:42:13 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Table "USERS" not found; SQL statement:
+select t0.id c0, t0.name c1, t0.birthdate c2, t0.registration_date c3, t0.pref_language c4, t0.password c5, t0.hash c6, t0.telephone c7, t0.address c8, t0.email c9, t0.gender c10, t0.type c11, t0.active c12 
+from users t0 
+where t0.type like ?  [42102-158]
+03-24 15:42:13 jdbc[6]: exception
+org.h2.jdbc.JdbcSQLException: Table "USERS" not found; SQL statement:
+select t0.id c0, t0.name c1, t0.birthdate c2, t0.registration_date c3, t0.pref_language c4, t0.password c5, t0.hash c6, t0.telephone c7, t0.address c8, t0.email c9, t0.gender c10, t0.type c11, t0.active c12 
+from users t0 [42102-158]
+03-24 15:42:13 jdbc[7]: exception
+org.h2.jdbc.JdbcSQLException: Table "USERS" not found; SQL statement:
+select t0.id c0, t0.name c1, t0.birthdate c2, t0.registration_date c3, t0.pref_language c4, t0.password c5, t0.hash c6, t0.telephone c7, t0.address c8, t0.email c9, t0.gender c10, t0.type c11, t0.active c12 
+from users t0 
+where t0.id = ?  [42102-158]
+03-24 15:42:13 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLException: Table "USERS" not found; SQL statement:
+select t0.id c0, t0.name c1, t0.birthdate c2, t0.registration_date c3, t0.pref_language c4, t0.password c5, t0.hash c6, t0.telephone c7, t0.address c8, t0.email c9, t0.gender c10, t0.type c11, t0.active c12 
+from users t0 
+where t0.type like ?  [42102-158]
