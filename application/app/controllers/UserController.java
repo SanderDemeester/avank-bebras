@@ -19,7 +19,7 @@ import views.html.landingPages.IndependentPupilLandingPage;
 import views.html.landingPages.OrganizerLandingPage;
 import views.html.landingPages.PupilLandingPage;
 import views.html.register;
-import views.html.generic;
+import views.html.emptyPage;
 import controllers.user.Type;
 
 /**
@@ -53,6 +53,7 @@ public class UserController extends EController{
      */
     public static Result signup(){
         //TODO: Delegate to authenticationManager
+    	setCommonHeaders();
     	 return ok(register.render("Registration", 
     			 new ArrayList<Link>(),
     			 form(Register.class)
@@ -63,9 +64,14 @@ public class UserController extends EController{
      * @return Result page
      */
     public static Result register(){
-    	// bind data from post request to Form.
+    	setCommonHeaders();
     	Form<Register> registerForm = form(Register.class).bindFromRequest();
-    	return ok(generic.render("Succes", new ArrayList<Link>(), "Succes"));
+    	String r = new String();
+    	r += registerForm.get().email + "\n";
+    	r += registerForm.get().fname + "\n";
+    	r += registerForm.get().lname + "\n";
+    	r += registerForm.get().password;
+    	return ok(emptyPage.render("Succes", new ArrayList<Link>(), r));
     }
 
     public static Result login(){
@@ -89,10 +95,12 @@ public class UserController extends EController{
     }
     
     public static class Register{
+    	public String fname;
+    	public String lname;
     	public String email;
-    	public String name;
-    	public String geboorteDatum;
+    	public String bday;
     	public String password;
+    	public String controle_passwd;
     }
 
 }
