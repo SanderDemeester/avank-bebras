@@ -36,7 +36,7 @@ public class UserDatabaseTest extends ContextTest {
 		String name = "Bertrand Russell";
 		User userFind = null;
 		User user = new Independent(new UserID(id), Type.INDEPENDENT,name);
-		
+
 		try{
 		user.save();
 		}catch(PersistenceException e){}
