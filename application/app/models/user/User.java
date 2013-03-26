@@ -3,13 +3,8 @@ package models.user;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 import com.avaje.ebean.annotation.Formula;
 import controllers.user.Type;
 import play.db.ebean.Model;
@@ -22,7 +17,7 @@ import play.data.format.Formats;
  * @author Sander Demeester
 **/
 
-@Entity
+@MappedSuperclass
 @Table(name="users")
 //@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public abstract class User extends Model{
