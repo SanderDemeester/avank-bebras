@@ -1,7 +1,6 @@
 @(breadcrumbs : List[models.data.Link], question: models.question.Question)
 
 @import models.EMessages
-@import models.question.editor.RawQuestion
 @import helper._
 @import helper.twitterBootstrap._
 
@@ -33,13 +32,14 @@
 				</div>
 				
 				<div class="well text-center">
-					<button id="submit" class="btn btn-primary" type="button"><i class="icon-envelope icon-white"></i> Submit</button>
-					<button id="export" class="btn" type="button"><i class="icon-download"></i> Export as .ZIP</button>
+					<button id="submit" class="btn btn-primary" type="button" data-loading-text="Loading..."><i class="icon-envelope icon-white"></i> Submit</button>
+					<button id="export" class="btn" type="button" data-loading-text="Loading..."><i class="icon-download"></i> Export as .ZIP</button>
 				</div>
 		    
 			</div>
 			
 			<div id="questionPanel" class="span9">
+				<div id="alert" class="alert hide"></div>
 				<div id="noPanelSelected" class="text-center"><span class="muted">Add a new language or select an existing one to get started.</span></div>
 				@questionPanel(question, null)
 				@for(language <- question.getLanguages()) {

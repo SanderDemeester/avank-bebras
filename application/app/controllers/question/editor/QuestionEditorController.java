@@ -1,27 +1,33 @@
 package controllers.question.editor;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.StringWriter;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import models.EMessages;
-import models.data.Language;
 import models.data.Link;
-import models.data.UnavailableLanguageException;
-import models.data.UnknownLanguageCodeException;
 import models.question.Question;
 import models.question.QuestionBuilderException;
 import models.question.QuestionFactory;
 import models.question.QuestionType;
 import models.question.RegexQuestion;
-import models.question.editor.RawQuestion;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ArrayNode;
@@ -29,7 +35,6 @@ import org.codehaus.jackson.node.ObjectNode;
 import org.w3c.dom.Document;
 
 import play.Play;
-import play.data.Form;
 import play.libs.Json;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
@@ -44,51 +49,38 @@ import controllers.EController;
  *
  */
 public class QuestionEditorController extends EController {
-
-    // TODO If the links here won't change, it better for efficiency to define
-    // these as a constant:
-    //
-    // private static List<Link> breadcrumbs = new ArrayList<List>();
-    // static {
-    //     breadcrumbs.add(new Link("Home", "/"));
-    //     breadcrumbs.add(new Link("Question Editor", "/questioneditor"));
-    // }
-    public static Result index(){
+    
+    /**
+     * Make default breadcrumbs for this controller
+     * @return default breadcrumbs
+     */
+    private static List<Link> defaultBreadcrumbs() {
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link("Question Editor", "/questioneditor"));
+        return breadcrumbs;
+    }
+    
+    /**
+     * Index page to select a question type to create
+     * @return
+     */
+    public static Result index(){
+        List<Link> breadcrumbs = defaultBreadcrumbs();
         return ok(index.render(breadcrumbs));
     }
     
+    /**
+     * Creation of a question type
+     * @param type question type (QuestionType)
+     * @return
+     */
     public static Result create(String type){
-        List<Link> breadcrumbs = new ArrayList<Link>();
-        breadcrumbs.add(new Link("Home", "/"));
-        breadcrumbs.add(new Link("Question Editor", "/questioneditor"));
+        List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link("Create "+EMessages.get("question.type."+type), ""));
         
         Question question = QuestionFactory.newQuestion(QuestionType.valueOf(type));
         
-        // TMP:
-        Language en = null;
-        try {
-            en = Language.getLanguage("en");
-        } catch (UnavailableLanguageException e) {
-            return redirect(routes.QuestionEditorController.index());
-        } catch (UnknownLanguageCodeException e) {
-            return redirect(routes.QuestionEditorController.index());
-        }
-        question.addLanguage(en);question.getLanguages();//!!!
-        question.setTitle("test", en);
-        question.setIndex("<b>test</b>", en);
-        question.setFeedback("<b>test2</b>", en);
-        //((MultipleChoiceQuestion)question).addElement(en, new MultipleChoiceElement("aaap"));
-        
-        /*Form<RawQuestion> questionForm = form(RawQuestion.class);
-        try{
-            questionForm.fill(new RawQuestion(type));
-        } catch(IllegalArgumentException e) {
-            return redirect(routes.QuestionEditorController.index());
-        }*/
         return ok(create.render(breadcrumbs, question));
     }
     
@@ -101,18 +93,15 @@ public class QuestionEditorController extends EController {
         breadcrumbs.add(new Link("Question Editor", "/questioneditor"));
         breadcrumbs.add(new Link("Create", ""));
         
-        Form<RawQuestion> questionForm = form(RawQuestion.class).bindFromRequest();
-        
-        if(questionForm.hasErrors()) {
-            return badRequest(create.render(breadcrumbs, new RegexQuestion()));
-        } else {
-            breadcrumbs.add(new Link(questionForm.field("addLanguage").value(), "/questioneditor/create"));
-        }
         //questionForm.get().save();
         return ok(create.render(breadcrumbs, new RegexQuestion()));
         //return redirect(routes.QuestionEditorController.create());
     }
     
+    /**
+     * Upload of a file to be added to a question
+     * @return
+     */
     public static Result upload() {
         // Prepare json main node
         ObjectNode result = Json.newObject();
@@ -140,6 +129,11 @@ public class QuestionEditorController extends EController {
         return ok(result);
     }
     
+    /**
+     * Deletion of a file in a question
+     * @param name
+     * @return
+     */
     public static Result delete(String name) {
         File file = new File(Play.application().configuration().getString("questioneditor.upload"), name);
         if(file.isFile())
@@ -147,6 +141,10 @@ public class QuestionEditorController extends EController {
         return ok();
     }
     
+    /**
+     * Return the current files inside this question in json format
+     * @return
+     */
     public static Result getFiles() {
         // TODO: Make this specific for each user
         
@@ -167,26 +165,36 @@ public class QuestionEditorController extends EController {
         }
         
         return ok(result);
-     }
+    }
     
+    /**
+     * Validate the question by json input
+     * @param json json encoded question
+     * @return
+     */
     public static Result validate(String json) {
-        List<Link> breadcrumbs = new ArrayList<Link>();
-        breadcrumbs.add(new Link("Home", "/"));
-        breadcrumbs.add(new Link("Question Editor", "/questioneditor"));
-        breadcrumbs.add(new Link("Create", ""));
-        
-        JsonNode input = Json.parse(json);
-        
-        Document doc = null;
         try {
-            doc = Question.JsonToXml(input);
-            Question question = Question.getFromXml(doc);
-            return ok(toString(doc));
+            Question.validateJson(json);
+            return ok("Valid question.");
         } catch (QuestionBuilderException e) {
-            throw new RuntimeException(e.getMessage(), e);
+            return badRequest(e.getMessage());
         }
-     }
+    }
     
+    public static Result export(String json) {
+        response().setHeader("Content-Disposition", "attachment; filename=question.zip");
+        try {
+            return ok(Question.export(json));
+        } catch (QuestionBuilderException e) {
+            return badRequest(e.getMessage());
+        }
+    }
+    
+    /**
+     * TO MOVE
+     * @param doc
+     * @return
+     */
     public static String toString(Document doc) {
         try {
             StringWriter sw = new StringWriter();
@@ -201,6 +209,28 @@ public class QuestionEditorController extends EController {
             return sw.toString();
         } catch (Exception ex) {
             throw new RuntimeException("Error converting to String", ex);
+        }
+    }
+    
+ // This method writes a DOM document to a file
+    public static void writeXmlFile(Document doc, String filename) {
+        try {
+            // Prepare the DOM document for writing
+            Source source = new DOMSource(doc);
+ 
+            // Prepare the output file
+            File file = new File(filename);
+            javax.xml.transform.Result result = new StreamResult(file);
+ 
+            // Write the DOM document to the file
+            Transformer xformer = TransformerFactory.newInstance().newTransformer();
+            xformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+            xformer.setOutputProperty(OutputKeys.METHOD, "xml");
+            xformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            xformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            xformer.transform(source, result);
+        } catch (TransformerConfigurationException e) {
+        } catch (TransformerException e) {
         }
     }
 }

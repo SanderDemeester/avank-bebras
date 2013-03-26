@@ -352,5 +352,34 @@ function collectData() {
 }
 
 $("#submit").live("click", function(){
-	alert(JSON.stringify(collectData()));
+	$("#submit").attr("disabled", "disabled");
+	$("#export").attr("disabled", "disabled");
+	
+	var request = $.ajax({
+		type: "GET",
+		url: "../validate",
+		data: { json: JSON.stringify(collectData()) }
+	})
+	
+	request.done(function(msg) {
+		$("#alert").show('fast').attr("class", "alert alert-success").text(msg);
+		window.setTimeout(function() { $("#alert").hide('fast'); }, 5000);
+	});	
+	
+	request.fail(function(jqXHR, textStatus) {
+		$("#alert").show('fast').attr("class", "alert alert-error").text(jqXHR.responseText);
+		window.setTimeout(function() { $("#alert").hide('fast'); }, 5000);
+	});
+	
+	request.always(function(jqXHR, textStatus, errorThrown) {
+		$("#submit").removeAttr("disabled");
+		$("#export").removeAttr("disabled");
+	});
+});
+
+$("#export").live("click", function(){
+	window.open(
+	    '../export?json='+JSON.stringify(collectData()),
+		'_blank'
+	);
 });

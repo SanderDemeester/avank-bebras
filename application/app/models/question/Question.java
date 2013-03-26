@@ -3,21 +3,32 @@ package models.question;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
@@ -31,6 +42,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import play.libs.Json;
 
 /**
  * The base class where questions for the competitions are stored in.
@@ -69,6 +82,79 @@ public abstract class Question {
         this.titles = new HashMap<Language, String>();
         this.indexes = new HashMap<Language, String>();
         this.feedbacks = new HashMap<Language, String>();
+    }
+    
+    /**
+     * Validate a json formatted question
+     * @param json json formatted question
+     * @throws QuestionBuilderException any error that can occur
+     */
+    public static void validateJson(String json) throws QuestionBuilderException {
+        JsonNode input = Json.parse(json);
+        Document doc = Question.JsonToXml(input);
+        Question.getFromXml(doc);// The return is not catched because we only have to validate
+    }
+    
+    public static File export(String json) throws QuestionBuilderException {
+        JsonNode input = Json.parse(json);
+        Document doc = Question.JsonToXml(input);
+        Question.getFromXml(doc);// The return is not catched because we only have to validate
+        try {
+            // Make hash
+            MessageDigest mdEnc = MessageDigest.getInstance("MD5"); 
+            mdEnc.update(json.getBytes(), 0, json.length());
+            String hash = new BigInteger(1, mdEnc.digest()).toString(16);
+            
+            String zipfile = hash+".zip";
+            String xmlfile = hash+".xml";
+            
+            FileOutputStream fout = new FileOutputStream(zipfile);
+            ZipOutputStream zout = new ZipOutputStream(fout);
+            
+            Source source = new DOMSource(doc);
+            
+            // Prepare the xml output file
+            File file = new File(xmlfile);
+            Result result = new StreamResult(file);
+ 
+            // Write the DOM document to the file
+            Transformer xformer = TransformerFactory.newInstance().newTransformer();
+            xformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+            xformer.setOutputProperty(OutputKeys.METHOD, "xml");
+            xformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            xformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            xformer.transform(source, result);
+            
+            // Add xml file to zip
+            ZipEntry ze = new ZipEntry("question.xml");
+            zout.putNextEntry(ze);
+            byte[] buffer = new byte[1024];
+            FileInputStream in = new FileInputStream(xmlfile);
+            int len;
+            while ((len = in.read(buffer)) > 0) {
+                zout.write(buffer, 0, len);
+            }
+ 
+            in.close();
+            
+            zout.closeEntry();
+            
+            zout.close();
+            
+            return new File(zipfile);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("Invalid file.", e);
+        } catch (IOException e) {
+            throw new RuntimeException("IO error.", e);
+        } catch (TransformerConfigurationException e) {
+            throw new RuntimeException("Transformation server error.", e);
+        } catch (TransformerFactoryConfigurationError e) {
+            throw new RuntimeException("Transformation server error.", e);
+        } catch (TransformerException e) {
+            throw new RuntimeException("Transformation error.", e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Internal server error.", e);
+        }
     }
     
     /**
