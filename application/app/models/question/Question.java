@@ -18,6 +18,7 @@ import javax.xml.validation.Validator;
 
 import models.data.Language;
 
+import models.question.server.Server;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -70,7 +71,7 @@ public abstract class Question {
      * @throws QuestionBuilderException possible things that can go wrong
      */
     public static Question getFromXml(String xml) throws QuestionBuilderException {
-        // TODO: Set Server and ID upon loading the XML file
+        // TODO: Set server and ID upon loading the XML file
         Question question = null;
         try {
             // Parse the given XML into a DOM tree

@@ -23,7 +23,7 @@ GET		/questioneditor				controllers.question.editor.QuestionEditorController.ind
 GET		/questioneditor/create		controllers.question.editor.QuestionEditorController.create()
 POST    /questioneditor/            controllers.question.editor.QuestionEditorController.save()
 
-GET     /servers                    controllers.question.ServerController.list(p:Int ?= 0, ps:Int ?=10, s ?= "name", o ?= "asc", f ?= "")
+GET     /servers                    controllers.question.ServerController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
 GET     /servers/new                controllers.question.ServerController.create()
 POST    /servers/                   controllers.question.ServerController.save()

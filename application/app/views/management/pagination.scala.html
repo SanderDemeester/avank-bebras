@@ -4,12 +4,12 @@
 * author: Kevin Stobbelaar  *
 *                           *
 ****************************@
-@(currentPage: Page[_], orderBy: String, order: String, currentFilter: String, dummy: models.management.Manager)
+@(currentPage: Page[_], orderBy: String, order: String, currentFilter: String, manager: models.management.Manager[_])
     <div id="pagination" class="pagination pagination-centered">
         <ul>
             @if(currentPage.hasPrev) {
             <li class="prev">
-                <a href="@dummy.getListRoute(currentPage.getPageIndex - 1, 10, orderBy, order, currentFilter)">&larr; Previous</a>
+                <a href="@manager.getListRoute(currentPage.getPageIndex - 1, orderBy, order, currentFilter)">&larr; Previous</a>
             </li>
             } else {
             <li class="prev disabled">
@@ -21,7 +21,7 @@
             </li>
             @if(currentPage.hasNext) {
             <li class="next">
-                <a href="@dummy.getListRoute(currentPage.getPageIndex + 1, 10, orderBy, order, currentFilter)">Next &rarr;</a>
+                <a href="@manager.getListRoute(currentPage.getPageIndex + 1, orderBy, order, currentFilter)">Next &rarr;</a>
             </li>
             } else {
             <li class="next disabled">

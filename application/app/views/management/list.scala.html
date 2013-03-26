@@ -5,8 +5,8 @@
 *                                                          *
 ***********************************************************@
 
-@(currentPage: Page[_], items: List[models.management.Manager], currentOrderBy: String, currentOrder: String,
-    currentFilter: String, dummy: models.management.Manager, addRoute: Call, breadcrumbs : List[models.data.Link])
+@(currentPage: Page[models.management.Manageable], manager: models.management.Manager[_], currentOrderBy: String,
+    currentOrder: String, currentFilter: String, breadcrumbs : List[models.data.Link])
 
 @*****************************************
 * Helper generating the navigation links *
@@ -29,7 +29,7 @@
         }
     }
 
-    dummy.getListRoute(newPage, 10, orderBy, order, currentFilter)
+    manager.getListRoute(newPage, orderBy, order, currentFilter)
 }
 
 @***************************************
@@ -62,7 +62,7 @@
         * Add new item         *
         ***********************@
         <p>
-            <a class="btn" href="@addRoute"> Add </a>
+            <a class="btn" href="@manager.getAddRoute()"> Add </a>
         </p>
 
     </div>
@@ -79,7 +79,7 @@
 
             <thead>
                 <tr>
-                    @for(headerName <- items.get(0).getFieldNames){
+                    @for(headerName <- manager.getColumnHeaders){
                         @header(headerName, headerName)
                     }
                 </tr>
@@ -87,15 +87,15 @@
 
             <tbody>
 
-                @for(item <- items){
+                @for(item <- currentPage.getList){
                     <tr>
                     @for(fieldValue <- item.getFieldValues){
                         <td>
                             @fieldValue
-                            <a class="button succes" id="edit" href="@item.getEditRoute()">
+                            <a class="button succes" id="edit" href="@manager.getEditRoute(item.getID())">
                                 <i class="icon-edit"></i>
                             </a>
-                            <a class="button succes" id="remove" href="@item.getRemoveRoute()">
+                            <a class="button succes" id="remove" href="@manager.getRemoveRoute(item.getID())">
                                 <i class="icon-remove"></i>
                             </a>
                         </td>
@@ -110,7 +110,7 @@
         @***********************
         * Pagination           *
         ***********************@
-        @pagination(currentPage, currentOrderBy, currentOrder, currentFilter, dummy)
+        @pagination(currentPage, currentOrderBy, currentOrder, currentFilter, manager)
 
     }
 

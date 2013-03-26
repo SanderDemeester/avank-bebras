@@ -2,10 +2,9 @@ package controllers.question;
 
 import java.util.ArrayList;
 
-import com.avaje.ebean.Page;
 import models.data.Link;
-import models.management.Manager;
-import models.question.Server;
+import models.question.server.Server;
+import models.question.server.ServerManager;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -25,15 +24,10 @@ public class ServerController extends Controller {
      *
      * @return server list page
      */
-    public static Result list(int page, int pageSize, String orderBy, String order, String filter){
-        Page<Server> serverPage = Server.page(page, pageSize, orderBy, order, filter);
-        ArrayList<Manager> items = new ArrayList<Manager>();
-        for (Server server : serverPage.getList()){
-            items.add(server);
-        }
-        Manager dummy = new Server();
+    public static Result list(int page, String orderBy, String order, String filter){
+        ServerManager<Server> serverManager = new ServerManager<Server>();
         return ok(
-            list.render(serverPage, items, orderBy, order, filter, dummy, routes.ServerController.create(), new ArrayList<Link>())
+            list.render(serverManager.page(page, orderBy, order, filter), serverManager, orderBy, order, filter, new ArrayList<Link>())
         );
     }
 
@@ -61,7 +55,7 @@ public class ServerController extends Controller {
         }
         form.get().save();
         // TODO place message in flash for "server add warning" in view
-        return redirect(routes.ServerController.list(0, 10, "name", "asc", ""));
+        return redirect(routes.ServerController.list(0, "name", "asc", ""));
     }
 
     /**
@@ -72,7 +66,7 @@ public class ServerController extends Controller {
      * @return edit a server page
      */
     public static Result edit(String name){
-        Form<Server> form = form(Server.class).bindFromRequest().fill(Server.finder.ref(name));
+        Form<Server> form = form(Server.class).bindFromRequest().fill((Server) new ServerManager<Server>().getFinder().ref(name));
         return ok(editServerForm.render(form, name, new ArrayList<Link>()));
     }
 
@@ -84,13 +78,13 @@ public class ServerController extends Controller {
      * @return server list page
      */
     public static Result update(String name){
-        Form<Server> form = form(Server.class).fill(Server.finder.byId(name)).bindFromRequest();
+        Form<Server> form = form(Server.class).fill((Server) new ServerManager<Server>().getFinder().byId(name)).bindFromRequest();
         if(form.hasErrors()) {
             return badRequest(editServerForm.render(form, name, new ArrayList<Link>()));
         }
         form.get().update();
         // TODO place message in flash for server edited warning in view
-        return redirect(routes.ServerController.list(0, 10, "name", "asc", ""));
+        return redirect(routes.ServerController.list(0, "name", "asc", ""));
     }
 
     /**
@@ -101,14 +95,9 @@ public class ServerController extends Controller {
      * @return server list page
      */
     public static Result remove(String name){
-        if (Server.finder.byId(name) != null){
-            System.out.println("niet null");
-        }
-        else {
-            System.out.println("wel null ezifzeijfoij " + name);
-        }
-        Server.finder.byId(name).delete();
-        return redirect(routes.ServerController.list(0, 10, "name", "asc", ""));
+        Server server = (Server) new ServerManager<Server>().getFinder().byId(name);
+        server.delete();
+        return redirect(routes.ServerController.list(0, "name", "asc", ""));
     }
 
 }
