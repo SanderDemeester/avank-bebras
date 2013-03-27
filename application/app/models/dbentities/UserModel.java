@@ -10,6 +10,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Column;
 
 import models.user.Gender;
 import models.user.UserID;
@@ -50,6 +51,9 @@ public class UserModel extends Model{
     public Type type;
     
     public boolean active;
+
+    @Column(name="class")
+    public String classgroup;
     
     public UserModel(UserID id, Type loginType, String name){
     	this.id = id.getUserID();
