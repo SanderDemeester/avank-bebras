@@ -1,0 +1,34 @@
+\begin{uc}{Register class}
+
+    \begin{uc-mss}
+    \item The teacher clicks on "Add classgroup".
+    \item The teacher is taken to a page that allows him to set up a classgroup manually or by uploading a xlsx file.
+    \item The teacher selects his xlsx file.
+    \item The teacher clicks on "Confirm classgroup".
+    \item The teacher is redirected back to his landing-page.
+    \end{uc-mss}
+
+    \begin{uc-ext}
+
+        \begin{uc-fail}{4}{No pupils are being registred}
+        \item Error message: Empty pupils list.
+        \item Reupload the file with pupils.
+            \return{3}
+        \end{uc-fail}
+
+    \end{uc-ext}
+
+    \begin{uc-pre}
+    \item The teacher is logged into the system.
+    \item The teacher is on the classgroup web page.
+    \end{uc-pre}
+
+    \begin{uc-post}
+    \item The teacher has added a new classgroup.
+    \end{uc-post}
+
+    \begin{uc-trig}
+        The user clicked on "Register class" on his classgroup web page.
+    \end{uc-trig}
+
+\end{uc}

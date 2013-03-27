@@ -1,0 +1,36 @@
+
+\begin{uc}{Merge Students}
+
+    \begin{uc-mss}
+    \item The system shows a list of users. (Default Management Table).
+    \item The Teacher searches and selects two students, and click on a Merge
+        button.
+    \item The system shows a merging page.
+    \item The teacher selects the persistent user and clicks on continue.
+    \item The system merges these two users' history, and sets the personal
+        information and current class to that of the persistent user.
+    \end{uc-mss}
+
+    \begin{uc-ext}
+
+        \begin{uc-fail}{2}{The teachers selects only one student}
+        \item The system complains the teachers should select 2 students.
+            \return{2}
+        \end{uc-fail}
+
+    \end{uc-ext}
+
+    \begin{uc-pre}
+    \item The user is logged in as teacher.
+    \end{uc-pre}
+
+    \begin{uc-post}
+    \item The two students are merged into one student.
+    \end{uc-post}
+
+    \begin{uc-trig}
+        The teacher goes to his students' overview.
+    \end{uc-trig}
+
+\end{uc}
+
