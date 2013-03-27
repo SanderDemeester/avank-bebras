@@ -8,10 +8,10 @@
           <p>@EMessages.get("question.editor.index.hero")</p>
           <p>
         <a class="btn btn-primary btn-large" href="@controllers.question.editor.routes.QuestionEditorController.create("MULTIPLE_CHOICE")">
-            @EMessages.get("question.editor.index.create.mc")
+            @EMessages.get("question.editor.index.create.main", EMessages.get("question.type.MULTIPLE_CHOICE"))
         </a>
         <a class="btn btn-primary btn-large" href="@controllers.question.editor.routes.QuestionEditorController.create("REGEX")">
-            @EMessages.get("question.editor.index.create.regex")
+            @EMessages.get("question.editor.index.create.main", EMessages.get("question.type.REGEX"))
         </a>
         <a class="btn btn-large" href="@controllers.question.editor.routes.QuestionEditorController.create("REGEX")">
             @EMessages.get("question.editor.index.create.import")

@@ -57,7 +57,7 @@ public class QuestionEditorController extends EController {
     private static List<Link> defaultBreadcrumbs() {
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
-        breadcrumbs.add(new Link("Question Editor", "/questioneditor"));
+        breadcrumbs.add(new Link(EMessages.get("question.editor.name"), "/questioneditor"));
         return breadcrumbs;
     }
     
@@ -77,7 +77,7 @@ public class QuestionEditorController extends EController {
      */
     public static Result create(String type){
         List<Link> breadcrumbs = defaultBreadcrumbs();
-        breadcrumbs.add(new Link("Create "+EMessages.get("question.type."+type), ""));
+        breadcrumbs.add(new Link(EMessages.get("forms.createArg", EMessages.get("question.type."+type)), ""));
         
         Question question = QuestionFactory.newQuestion(QuestionType.valueOf(type));
         

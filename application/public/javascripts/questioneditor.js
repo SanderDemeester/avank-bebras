@@ -28,7 +28,7 @@ function appendFile(file) {
 $(document).ready(function() {
 	// Show confirm dialog on leaving page
 	window.onbeforeunload = function() {
-	    return 'Are you sure you want to navigate away from this page? Unsaved changes will be lost.';
+	    return messages.confirmLeave;
 	};
 	
 	// Make the editors for the languages that are already present
@@ -45,14 +45,14 @@ $(document).ready(function() {
 		  });
 	})
 	.fail(function () {
-		$("#uploadStatus").html('<div class="alert alert-error">Upload server unavailable.</div>');
+		$("#uploadStatus").html('<div class="alert alert-error">'+messages.uploadServerDown+'</div>');
     });
 	
 	// Initialize the file uploader
 	fileUploader = $('#fileupload').fileupload({
         dataType: 'json',
         add: function (e, data) {
-            data.context = $("#uploadStatus").html('<div class="alert alert-info">Uploading...</div>');
+            data.context = $("#uploadStatus").html('<div class="alert alert-info">'+messages.uploading+'...</div>');
             data.submit();
             $('#fileProgress').show();
         },
@@ -60,7 +60,7 @@ $(document).ready(function() {
             $.each(data.result.files, function (index, file) {
                 appendFile(file);
             });
-            data.context.html('<div class="alert alert-success">File(s) uploaded.</div>');
+            data.context.html('<div class="alert alert-success">'+messages.filesUploaded+'</div>');
             $('#fileProgress .bar').css('width', '0%').parent().hide();
         },
         progressall: function (e, data) {
@@ -68,7 +68,7 @@ $(document).ready(function() {
             $('#fileProgress .bar').css('width', progress + '%');
         },
         fail: function(e, data) {
-        	$("#uploadStatus").html('<div class="alert alert-error">Invalid image file.</div>');
+        	$("#uploadStatus").html('<div class="alert alert-error">'+messages.filesUploadFailed+'</div>');
         	$('#fileProgress').hide();
         },
         dropZone: $('#dropzone'),
@@ -288,7 +288,7 @@ function addMCElement(counter, lang, element) {
 	answerDiv.html('<label class="mc_answer row-fluid">'
 			+'<div class="span1"><i class="icon-remove removeanswer"></i></div>'
 			+'<div class="span8"><input class="span12" type="text" name="answer-' + counter
-		      + '" id="answer-textbox-' + counter + '" value="" placeholder="A possible answer"/></div>'
+		      + '" id="answer-textbox-' + counter + '" value="" placeholder="'+messages.possibleAnswer+'"/></div>'
 		    +'<div class="span3">Correct: <input type="radio" name="correct_answer_' +
 		      lang+'" value="'+ counter+'"></div>'
 		    +'</label>');
