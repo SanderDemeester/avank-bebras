@@ -21,4 +21,6 @@ dist
 *.aux
 *.gz
 */.*
-
+*.bbl
+*.blg
+*.toc
