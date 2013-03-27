@@ -14,7 +14,7 @@
 						<li class="nav-header">Languages</li>
 						<li class="divider"></li>
 					    @for(language <- question.getLanguages()) {
-						    <li class="languageItem"><i class="icon-remove removelang"></i><a href="#" class="selectLang">@language.getCode()</a></li>
+						    <li class="languageItem"><span class="code hide">@language.getCode()</span><i class="icon-remove removelang"></i><a href="#" class="selectLang">@language.getName()</a></li>
 						}
 						
 					</ul>
@@ -23,7 +23,7 @@
 						<div class="span9">
 						<select id="languageList" class="span12">
 							@for(language <- question.getNonLanguages()) {
-								<option value="@language.getCode()">@language.getCode()</option>
+								<option value="@language.getCode()">@language.getName()</option>
 							}
 						</select>
 						</div>

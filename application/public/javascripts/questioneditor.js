@@ -165,7 +165,7 @@ $('#addLanguage').click(function(e) {
 		
 		// Fix lists content
 		var newLang = $(document.createElement('li')).addClass("languageItem active").css('display', 'none');
-		newLang.html('<i class="icon-remove removelang"></i><a href="#" class="selectLang">'+selected.val()+'</a>');
+		newLang.html('<span class="code hide">'+selected.val()+'</span><i class="icon-remove removelang"></i><a href="#" class="selectLang">'+selected.text()+'</a>');
 		$("#languages").append(newLang);
 		newLang.show('fast');
 		$("#questionPanel").append();
@@ -192,19 +192,23 @@ $('#addLanguage').click(function(e) {
 		if(questionType=="MULTIPLE_CHOICE") {
 			template.find(".input").data("counter", 0);
 			template.find(".input").data("lang", selected.val());
+			
+			for(var i=0;i<4;i++) {
+				addMCElement(i, selected.val(), template.find(".addMCElement"));
+			}
 		} else if(questionType=="REGEX") {
 			
 		}
-	
 	}
-	
 	return false;
 });
 
 // Open confirmation modal for removing a language from the question
 $("i.removelang").live("click", function(){
 	lang = $(this).parent().find("a").text();
+	code = $(this).parent().find("code").text();
 	$("#removelang").text(lang);
+	$("#removelang").data("code", code);
 	$('#removeLanguageConfirm').modal();
 }); 
 
@@ -212,11 +216,12 @@ $("i.removelang").live("click", function(){
 $("#confirmRemoveLang").live("click", function(){
 	// Fix lists content
 	lang = $("#removelang").text();
+	code = $("#removelang").data("code");
 	removeLang = $("#languages").find("li a:contains('"+lang+"')").parent();
 	removeLang.hide('fast', function() {
 		removeLang.remove();
 	});
-	$("#languageList").append('<option value="'+lang+'">'+lang+'</option>');
+	$("#languageList").append('<option value="'+code+'">'+lang+'</option>');
 	
 	// Remove active class on other items
 	$(".languageItem").removeClass("active");
@@ -233,7 +238,7 @@ $("#confirmRemoveLang").live("click", function(){
 
 //Select a language tab
 $(".selectLang").live("click", function(){
-	lang = $(this).text();
+	code = $(this).parent().find(".code").text();
 	
 	// Remove active class on other items
 	$(".languageItem").removeClass("active");
@@ -248,10 +253,10 @@ $(".selectLang").live("click", function(){
 	$('#noPanelSelected').hide();
 	
 	// Show the correct panel
-	$("#panel-"+lang).show();
+	$("#panel-"+code).show();
 	
 	// Set the default editor
-	activeEditor = $("#panel-"+lang).find("div:visible").find(".editor");
+	activeEditor = $("#panel-"+code).find("div:visible").find(".editor");
 });
 
 /* --- Tabs logic --- */
@@ -285,10 +290,7 @@ $(".tabFeedback").live("click", function(){
 /* ---         --- */
 
 // Add MC input element
-$(".addMCElement").live("click", function(){
-	var counter = $(this).parent().data("counter");
-	var lang = $(this).parent().data("lang");
-	
+function addMCElement(counter, lang, element) {
 	var answerDiv = $(document.createElement('div')).attr("id", 'answer-' + counter).css('display', 'none');
 	answerDiv.html('<label class="mc_answer row-fluid">'
 			+'<div class="span1"><i class="icon-remove removeanswer"></i></div>'
@@ -297,10 +299,17 @@ $(".addMCElement").live("click", function(){
 		    +'<div class="span3">Correct: <input type="radio" name="correct_answer_' +
 		      lang+'" value="'+ counter+'"></div>'
 		    +'</label>');
-	$(this).parent().find(".answers").append(answerDiv);
+	element.parent().find(".answers").append(answerDiv);
 	answerDiv.show('fast');
 	
-	$(this).parent().data("counter", counter+1);
+	element.parent().data("counter", counter+1);
+}
+
+$(".addMCElement").live("click", function(){
+	var counter = $(this).parent().data("counter");
+	var lang = $(this).parent().data("lang");
+	var element = $(this);
+	addMCElement(counter, lang, element);
 });
 
 // Remove an MC input element
@@ -320,7 +329,7 @@ function collectData() {
 	langs.each(function() {
 		// Make a new language row
 		var langRow = {};
-		langRow['language'] = $(this).find("a").text();
+		langRow['language'] = $(this).find(".code").text();
 		
 		
 		var panel = $("#panel-"+langRow['language']);

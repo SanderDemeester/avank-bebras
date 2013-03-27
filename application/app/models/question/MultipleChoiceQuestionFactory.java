@@ -63,7 +63,7 @@ public class MultipleChoiceQuestionFactory extends QuestionFactory<MultipleChoic
                         question.setCorrectElement(language, element);
                         // Throw exception if there already was a correct answer
                         if(containsOneCorrect) {
-                            throw new QuestionBuilderException("The answers for language "+language.getCode()+" contain more than one correct answers.");
+                            throw new QuestionBuilderException("The answers for language "+language.getName()+" contain more than one correct answers.");
                         }
                         containsOneCorrect = true;
                     }
@@ -72,7 +72,7 @@ public class MultipleChoiceQuestionFactory extends QuestionFactory<MultipleChoic
 
             // Throw exception if there are no correct answers in the answer list
             if(!containsOneCorrect) {
-                throw new QuestionBuilderException("The answers for language "+language.getCode()+" contain no correct answers.");
+                throw new QuestionBuilderException("The answers for language "+language.getName()+" contain no correct answers.");
             }
         }
 

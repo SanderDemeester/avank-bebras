@@ -67,7 +67,7 @@ public class RegexQuestionFactory extends QuestionFactory<RegexQuestion> {
             if(isValidRegex(regex))
                 question.setRegex(language, regex);
             else
-                throw new QuestionBuilderException("Invalid regular expression found in language "+language.getCode());
+                throw new QuestionBuilderException("Invalid regular expression found in language "+language.getName());
         }
 
     }

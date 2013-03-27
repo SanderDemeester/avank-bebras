@@ -91,7 +91,7 @@ public class Language implements Comparable<Language> {
      * @return The name of this language in the provided language.
      */
     public String getName(Language language) {
-        return EMessages.get(language.getCode(), "language." + language.getCode());
+        return EMessages.get(language.getCode(), "languages." + language.getCode());
     }
 
     /**
@@ -100,7 +100,7 @@ public class Language implements Comparable<Language> {
      * @return The name of this language in the preferred language.
      */
     public String getName() {
-        return EMessages.get("language." + lang.code());
+        return EMessages.get("languages." + lang.code());
     }
 
     /**
