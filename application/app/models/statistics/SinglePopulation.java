@@ -1,6 +1,10 @@
 package models.statistics;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import models.statistics.Population;
+import models.user.User;
 
 /**
  * Quite a stupid Population, actually. Represents a single user.
@@ -17,7 +21,7 @@ public class SinglePopulation implements Population {
     }
 
     public String describe() {
-        return user.name + "(" + user.id + ")";
+        return user.getData().name + "(" + user.getID() + ")";
     }
 
     public List<User> getUsers() {

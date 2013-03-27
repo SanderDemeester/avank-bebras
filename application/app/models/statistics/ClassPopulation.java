@@ -1,6 +1,10 @@
 package models.statistics;
 
+import java.util.List;
+
 import models.statistics.Population;
+import models.dbentities.ClassGroup;
+import models.user.User;
 
 /**
  * A Population of one class.
@@ -17,8 +21,7 @@ public class ClassPopulation implements Population {
     }
 
     public String describe() {
-        // TODO How is a class described? (Issue #72)
-        return "";
+        return classGroup.name + " of the " + classGroup.schoolid;
     }
 
     public List<User> getUsers() {

@@ -2,6 +2,8 @@ package models.statistics;
 
 import java.util.List;
 
+import models.user.User;
+
 /**
  * Represents a group of Users, joined together to be summarized as a whole.
  * @author Felix Van der Jeugt
