@@ -18,7 +18,6 @@ var myCustomTemplates = {
 // Adds a file to the file list
 function appendFile(file) {
 	$('<tr/>').html("<td>"+file.name+"</td>"
-      		//+ "<td>"+file.size+"</td>"
       		+ "<td><img src='"+file.url+"' width='50' /></td>"
       		+ "<td><a class='addImage btn'><i class='icon-plus-sign'></i></a><a class='removeImage btn'><i class='icon-remove'></i></a></td>")
       		.data("name", file.name)
@@ -31,9 +30,6 @@ $(document).ready(function() {
 	window.onbeforeunload = function() {
 	    return 'Are you sure you want to navigate away from this page? Unsaved changes will be lost.';
 	};
-	
-	// Call this for removing the warning after save
-	//window.onbeforeunload = null;
 	
 	// Make the editors for the languages that are already present
 	var editors = $("#questionPanel").find("[id^=panel-]");
@@ -69,10 +65,7 @@ $(document).ready(function() {
         },
         progressall: function (e, data) {
             var progress = parseInt(data.loaded / data.total * 100, 10);
-            $('#fileProgress .bar').css(
-                'width',
-                progress + '%'
-            );
+            $('#fileProgress .bar').css('width', progress + '%');
         },
         fail: function(e, data) {
         	$("#uploadStatus").html('<div class="alert alert-error">Invalid image file.</div>');
@@ -129,7 +122,6 @@ $(".addImage").live("click", function(){
 // Remove this file from the question
 $(".removeImage").live("click", function(){
 	var row = $(this).parent().parent();
-	
 	$.ajax({
 		type: "GET",
 		url: "../delete",
@@ -193,6 +185,7 @@ $('#addLanguage').click(function(e) {
 			template.find(".input").data("counter", 0);
 			template.find(".input").data("lang", selected.val());
 			
+			// Add four default answer inputs
 			for(var i=0;i<4;i++) {
 				addMCElement(i, selected.val(), template.find(".addMCElement"));
 			}
@@ -305,6 +298,7 @@ function addMCElement(counter, lang, element) {
 	element.parent().data("counter", counter+1);
 }
 
+// Call the add MC input element function from button click
 $(".addMCElement").live("click", function(){
 	var counter = $(this).parent().data("counter");
 	var lang = $(this).parent().data("lang");
@@ -320,6 +314,7 @@ $(".removeanswer").live("click", function(){
 	});
 });
 
+// Put the current question data inside a javascript object
 function collectData() {
 	var data = new Object();
 	data.type = questionType;
@@ -360,7 +355,8 @@ function collectData() {
 	return data;
 }
 
-$("#submit").live("click", function(){
+// Validate function, the success function will be called if everything is correctly validated
+function validate(success) {
 	$("#submit").attr("disabled", "disabled");
 	$("#export").attr("disabled", "disabled");
 	
@@ -373,6 +369,7 @@ $("#submit").live("click", function(){
 	request.done(function(msg) {
 		$("#alert").show('fast').attr("class", "alert alert-success").text(msg);
 		window.setTimeout(function() { $("#alert").hide('fast'); }, 5000);
+		success();
 	});	
 	
 	request.fail(function(jqXHR, textStatus) {
@@ -384,11 +381,24 @@ $("#submit").live("click", function(){
 		$("#submit").removeAttr("disabled");
 		$("#export").removeAttr("disabled");
 	});
+}
+
+// Submit the question for approval after validation
+$("#submit").live("click", function(){
+	validate(function() {
+		// Real submission and go to other page
+		
+		// Call this for removing the warning after save
+		//window.onbeforeunload = null;
+	});
 });
 
+// Download the archive after validation
 $("#export").live("click", function(){
-	window.open(
-	    '../export?json='+JSON.stringify(collectData()),
-		'_blank'
-	);
+	validate(function() {
+		window.open(
+		    '../export?json='+JSON.stringify(collectData()),
+			'_blank'
+		);
+	});
 });
