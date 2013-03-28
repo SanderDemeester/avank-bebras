@@ -151,7 +151,9 @@ public class UserController extends EController{
 			String username = loginForm.get().email;
 			String password = loginForm.get().password;
 			
-			return validate_login();
+			//TODO: This should be a landing page.
+			return Application.index(); 
+			
 		}
 	}
 
