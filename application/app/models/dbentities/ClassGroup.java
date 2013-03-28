@@ -12,7 +12,6 @@ import play.db.ebean.Model;
  * This class contains information that models a group of pupils
  * @author Sander Demeester
  */
-//TODO: write test
 @Entity
 @Table(name="Classes")
 public class ClassGroup extends Model{

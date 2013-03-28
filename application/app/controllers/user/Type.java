@@ -9,9 +9,9 @@ public enum Type {
     ADMINISTRATOR,
     ORGANIZER,
     INDEPENDENT,
-    PUPIL, //TODO: for what is this role? The DB makes no difference between Ind & pupil
+    PUPIL,
     TEACHER,
-    AUTHOR, //TODO: same question
-    ANON; //TODO: for what is this one needed?
+    AUTHOR,
+    ANON;
 
 }
