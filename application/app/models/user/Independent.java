@@ -87,7 +87,7 @@ public class Independent extends User{
 	 * @return list of classes the 
 	 */
 	public Collection<ClassGroup> getClasses(){
-		ArrayList<ClassGroup> res = new ArrayList<>();
+		ArrayList<ClassGroup> res = new ArrayList<ClassGroup>();
 		
 		List<ClassPupil> cp = Ebean.find(ClassPupil.class).where().eq("indid", this.data.id).findList();
 		for(ClassPupil c : cp){

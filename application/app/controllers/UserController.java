@@ -81,7 +81,7 @@ public class UserController extends EController{
     	SecureRandom s = new SecureRandom();
     	s.setSeed(System.currentTimeMillis());
     	String salt = Integer.toString(s.nextInt(128));
-    	SecretKeyFactory factory;
+    	SecretKeyFactory factory = null;
 		try {
 			factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
 		} catch (NoSuchAlgorithmException e) {
