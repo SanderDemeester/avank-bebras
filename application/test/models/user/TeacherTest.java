@@ -1,0 +1,85 @@
+/**
+ * 
+ */
+package models.user;
+
+import static org.junit.Assert.*;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+
+import junit.framework.Assert;
+
+import models.dbentities.ClassGroup;
+import models.dbentities.ClassPupil;
+import models.dbentities.UserModel;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import com.avaje.ebean.Ebean;
+
+import controllers.user.Type;
+
+import test.ContextTest;
+
+/**
+ * @author Jens N. Rammant
+ *
+ */
+public class TeacherTest extends ContextTest {
+	
+	@Before
+	public void clear(){
+		List<UserModel> um = Ebean.find(UserModel.class).findList();
+		for(UserModel u : um) u.delete();
+		
+		List<ClassGroup> cg = Ebean.find(ClassGroup.class).findList();
+		for(ClassGroup c : cg) c.delete();
+	}
+
+	/**
+	 * Test method for {@link models.user.Teacher#getClasses()}.
+	 */
+	@Test
+	public void testGetClasses() {
+		UserModel data = new UserModel(new UserID("a"),Type.TEACHER,"test");
+		
+		ClassGroup cp1=new ClassGroup();
+		cp1.id="b";
+		cp1.teacherid=data.id;
+		
+		ClassGroup cp2=new ClassGroup();
+		cp2.id="c";
+		cp2.teacherid=data.id;
+		
+		ClassGroup cp3=new ClassGroup();
+		cp3.id="d";
+		cp3.teacherid=data.id+data.id;
+		
+		try{
+			data.save();
+			cp1.save();
+			cp2.save();
+			cp3.save();
+		}catch(PersistenceException p){
+			Assert.fail("Something went wrong with the saving");
+		}
+		
+		UserModel find = Ebean.find(UserModel.class).where().eq("id", data.id).findUnique();
+		Teacher iff = new Teacher(find);
+		
+		Collection<ClassGroup> fff = iff.getClasses();
+		Assert.assertEquals(2, fff.size());
+		HashSet<String> ids = new HashSet<String>();
+		for(ClassGroup cg : fff){
+			ids.add(cg.id);
+		}
+		Assert.assertTrue(ids.contains(cp1.id));
+		Assert.assertTrue(ids.contains(cp2.id));
+	}
+
+}

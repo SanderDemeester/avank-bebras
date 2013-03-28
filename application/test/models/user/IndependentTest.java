@@ -1,8 +1,5 @@
 package models.user;
 
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -68,7 +65,7 @@ public class IndependentTest extends ContextTest {
 		}
 		
 		UserModel find = Ebean.find(UserModel.class).where().eq("id", data.id).findUnique();
-		Independent iff = new Independent(data);
+		Independent iff = new Independent(find);
 		
 		ClassGroup fff = iff.getCurrentClass();
 		Assert.assertNotNull(fff);
@@ -105,7 +102,7 @@ public class IndependentTest extends ContextTest {
 		}
 		
 		UserModel find = Ebean.find(UserModel.class).where().eq("id", data.id).findUnique();
-		Independent iff = new Independent(data);
+		Independent iff = new Independent(find);
 		
 		Collection<ClassGroup> fff = iff.getPreviousClasses();
 		Assert.assertEquals(2, fff.size());
