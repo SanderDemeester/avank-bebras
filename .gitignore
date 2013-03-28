@@ -22,4 +22,4 @@ dist
 *.gz
 */.*
 application/bin/*
-
+application/doc/
