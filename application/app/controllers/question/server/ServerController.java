@@ -12,7 +12,7 @@ import play.mvc.Result;
 import play.mvc.Results;
 import views.html.question.server.newServerForm;
 import views.html.question.server.editServerForm;
-import views.html.management.list;
+import views.html.question.server.serverManagement;
 
 /**
  * ServerController controller.
@@ -29,7 +29,7 @@ public class ServerController extends Controller {
     public static Result list(int page, String orderBy, String order, String filter){
         ServerManager<Server> serverManager = new ServerManager<Server>();
         return ok(
-            list.render(serverManager.page(page, orderBy, order, filter), serverManager, orderBy, order, filter, new ArrayList<Link>())
+            serverManagement.render(serverManager.page(page, orderBy, order, filter), serverManager, orderBy, order, filter, new ArrayList<Link>())
         );
     }
 

@@ -1,0 +1,20 @@
+@***************************************
+*   Server management page             *
+*                                      *
+*   author: Kevin Stobbelaar           *
+***************************************@
+
+@(currentPage: Page[models.management.Manageable], manager: models.management.Manager[_], currentOrderBy: String,
+    currentOrder: String, currentFilter: String, breadcrumbs : List[models.data.Link])
+
+@import views.html.management.list
+
+@main("List of servers", breadcrumbs){
+    <div class="row">
+        <div class="span4"> <p> Rechts van hier staan de servers! </p></div>
+        <div class="span8">
+            @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter, breadcrumbs)
+        </div>
+    </div>
+
+}
