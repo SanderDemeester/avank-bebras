@@ -15,7 +15,8 @@ create table Classes (
 
 create table ClassPupil (
   classid                   varchar(255) not null,
-  indid                     varchar(255) not null)
+  indid                     varchar(255) not null,
+  test                      varchar(255))
 ;
 
 create table servers (
