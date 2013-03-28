@@ -38,6 +38,7 @@ create table users (
   gender                    varchar(6),
   type                      varchar(13),
   active                    boolean,
+  class                     varchar(255),
   constraint ck_users_gender check (gender in ('MALE','FEMALE','OTHER')),
   constraint ck_users_type check (type in ('ADMINISTRATOR','ORGANIZER','INDEPENDENT','PUPIL','TEACHER','AUTHOR','ANON')),
   constraint pk_users primary key (id))
