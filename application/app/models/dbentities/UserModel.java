@@ -55,10 +55,20 @@ public class UserModel extends Model{
     @Column(name="class")
     public String classgroup;
     
-    public UserModel(UserID id, Type loginType, String name){
+    public UserModel(UserID id, Type loginType, String name,
+    		Date birthdate, Date registrationDate,
+    		String password, String hash, String email,
+    		Gender gender){
     	this.id = id.getUserID();
     	this.type = loginType; 
     	this.name = name;
+    	this.birthdate = birthdate;
+    	this.registrationDate = registrationDate;
+    	this.password = password;
+    	this.hash = hash;
+    	this.email = email;
+    	this.gender = gender;
+    	active = true;
 
     }
     
