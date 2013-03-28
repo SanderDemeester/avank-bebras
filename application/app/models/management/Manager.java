@@ -36,8 +36,8 @@ public abstract class Manager<T extends Manageable> {
      * @param filter   filter to select specific elements
      * @return the requested page
      */
-    public Page<T> page(int page, String orderBy, String order, String filter) {
-        return finder.where()
+    public Page<Manageable> page(int page, String orderBy, String order, String filter) {
+        return (Page<Manageable>) finder.where()
             .ilike("name", "%" + filter + "%")
             .orderBy(orderBy + " " + order)
                 // .fetch("path")

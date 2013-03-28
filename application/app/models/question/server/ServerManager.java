@@ -10,7 +10,7 @@ import play.mvc.Call;
  *
  * @auhtor Kevin Stobbelaar
  */
-public class ServerManager<Server> extends Manager {
+public class ServerManager extends Manager<Server> {
 
     public ServerManager(){
         super(new Finder<String, models.question.server.Server>(String.class, models.question.server.Server.class), 6);
