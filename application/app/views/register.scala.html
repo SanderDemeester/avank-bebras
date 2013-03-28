@@ -30,97 +30,99 @@
 			<div class="row">
 				<div class="span8">
 					@helper.form(routes.UserController.register, 'id -> "signup"){
-				<legend>Sign Up</legend>		
-		<div class="control-group">
-	        <label class="control-label">First Name</label>
-			<div class="controls">
-			    <div class="input-prepend">
-				<span class="add-on"><i class="icon-user"></i></span>
-					<input type="text" class="input-xlarge" id="fname" name="fname" placeholder="First Name">
-				</div>
-			</div>
-		</div>
-		<div class="control-group ">
-	        <label class="control-label">Last Name</label>
-			<div class="controls">
-			    <div class="input-prepend">
-				<span class="add-on"><i class="icon-user"></i></span>
-					<input type="text" class="input-xlarge" id="lname" name="lname" placeholder="Last Name">
-				</div>
-			</div>
-		</div>
-		<div class="control-group">
-	        <label class="control-label">Email</label>
-			<div class="controls">
-			    <div class="input-prepend">
-				<span class="add-on"><i class="icon-envelope"></i></span>
-					<input type="text" class="input-xlarge" id="email" name="email" placeholder="Email">
-				</div>
-			</div>	
-		</div>
-		
-		<div class="control-group">
-	        <label class="control-label">Birthday</label>
-	        <div class="controls">
-			    <div class="input-prepend">
-				<span class="add-on"><i class="icon-user"></i></span>
-					<input type="text" class="input-xlarge" id="bday" name="bday" placeholder="Birthday">
-				</div>
-			</div>	
-		</div>
-		
-		
-		
-		<div class="control-group">
-	        <label class="control-label">Gender</label>
-			<div class="controls">
-			@select(
-                field = sform("gender"), 
-                options(models.user.Gender.values().toList.map(_.toString)),
-                '_label -> "Gender"
-            )	
-  					</select>
-                  </div>
-		</div>
-		
-		
-			<div class="control-group">
-	        <label class="control-label">preferred language</label>
-			<div class="controls">
-			@select(
-                sform("prefLanguage"), 
-                options(models.data.Language.listLanguages().toList.map(_.getCode)),
-                '_default -> "preferred language",
-                '_label -> "preferred language"
-            )	
- 	                  </div>
-		</div>
-		
-		<div class="control-group">
-	        <label class="control-label">Password</label>
-			<div class="controls">
-			    <div class="input-prepend">
-				<span class="add-on"><i class="icon-lock"></i></span>
-					<input type="Password" id="password" class="input-xlarge" name="password" placeholder="Password">
-				</div>
-			</div>
-		</div>
-		<div class="control-group">
-	        <label class="control-label">Confirm Password</label>
-			<div class="controls">
-			    <div class="input-prepend">
-				<span class="add-on"><i class="icon-lock"></i></span>
-					<input type="Password" id="controle_passwd" class="input-xlarge" name="controle_passwd" placeholder="Re-enter Password">
-				</div>
-			</div>
-		</div>
-		
-		<div class="control-group">
-		<label class="control-label"></label>
-	      <div class="controls">
-	       <button type="submit" class="btn btn-success" name="btn" id="btn" >Create My Account</button>
-	      </div>
-	</div>
+					<legend>Sign Up</legend>
+					<div class="control-group">
+						<label class="control-label">First Name</label>
+						<div class="controls">
+							<div class="input-prepend">
+								<span class="add-on"><i class="icon-user"></i>
+								</span> <input type="text" class="input-xlarge" id="fname" name="fname"
+									placeholder="First Name">
+							</div>
+						</div>
+					</div>
+					
+					<div class="control-group ">
+						<label class="control-label">Last Name</label>
+						<div class="controls">
+							<div class="input-prepend">
+								<span class="add-on"><i class="icon-user"></i>
+								</span> <input type="text" class="input-xlarge" id="lname" name="lname"
+									placeholder="Last Name">
+							</div>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label">Email</label>
+						<div class="controls">
+							<div class="input-prepend">
+								<span class="add-on"><i class="icon-envelope"></i>
+								</span> <input type="text" class="input-xlarge" id="email" name="email"
+									placeholder="Email">
+							</div>
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label">Birthday</label>
+						<div class="controls">
+							<div class="input-prepend">
+								<span class="add-on"><i class="icon-user"></i>
+								</span> <input type="text" class="input-xlarge" id="bday" name="bday"
+									placeholder="Birthday">
+							</div>
+						</div>
+					</div>
+
+					<div class="control-group">
+						<div class="controls">
+							<span class="add-ons"><i class="icon-user"></i></span>
+							@select(
+								field = sform("gender"),
+								options(models.user.Gender.values().toList.map(_.toString)),
+								'_label -> "Gender" ) </select>
+						</div>
+					</div>
+
+					<div class="control-group">
+						<div class="controls">
+						<span class="add-ons"><i class="icon-user"></i></span>
+						@select(sform("prefLanguage"),
+							options(models.data.Language.listLanguages().toList.map(_.getCode)),
+							'_label -> "Preferred language" )</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label">Password</label>
+						<div class="controls">
+							<div class="input-prepend">
+								<span class="add-on"><i class="icon-lock"></i>
+								</span> <input type="Password" id="password" class="input-xlarge"
+									name="password" placeholder="Password">
+							</div>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label">Confirm Password</label>
+						<div class="controls">
+							<div class="input-prepend">
+								<span class="add-on"><i class="icon-lock"></i>
+								</span> <input type="Password" id="controle_passwd"
+									class="input-xlarge" name="controle_passwd"
+									placeholder="Re-enter Password">
+							</div>
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label"></label>
+						<div class="controls">
+							<button type="submit" class="btn btn-success" name="btn" id="btn">Create
+								My Account</button>
+						</div>
+					</div>
 					}
 				</div>
 			</div>
