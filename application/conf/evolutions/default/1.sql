@@ -15,7 +15,14 @@ create table Classes (
 
 create table ClassPupil (
   classid                   varchar(255) not null,
-  indid                     varchar(255) not null)
+  indid                     varchar(255) not null,
+  test                      varchar(255))
+;
+
+create table questionsets (
+  id                        varchar(255) not null,
+  active                    boolean,
+  constraint pk_questionsets primary key (id))
 ;
 
 create table servers (
@@ -38,6 +45,7 @@ create table users (
   gender                    varchar(6),
   type                      varchar(13),
   active                    boolean,
+  class                     varchar(255),
   constraint ck_users_gender check (gender in ('MALE','FEMALE','OTHER')),
   constraint ck_users_type check (type in ('ADMINISTRATOR','ORGANIZER','INDEPENDENT','PUPIL','TEACHER','AUTHOR','ANON')),
   constraint pk_users primary key (id))
@@ -46,6 +54,8 @@ create table users (
 create sequence Classes_seq;
 
 create sequence ClassPupil_seq;
+
+create sequence questionsets_seq;
 
 create sequence servers_seq;
 
@@ -62,6 +72,8 @@ drop table if exists Classes;
 
 drop table if exists ClassPupil;
 
+drop table if exists questionsets;
+
 drop table if exists servers;
 
 drop table if exists users;
@@ -71,6 +83,8 @@ SET REFERENTIAL_INTEGRITY TRUE;
 drop sequence if exists Classes_seq;
 
 drop sequence if exists ClassPupil_seq;
+
+drop sequence if exists questionsets_seq;
 
 drop sequence if exists servers_seq;
 
