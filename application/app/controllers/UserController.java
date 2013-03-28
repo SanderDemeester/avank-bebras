@@ -109,15 +109,18 @@ public class UserController extends EController{
 		
 		String r = "Welkom";
 		r += registerForm.get().fname + "!";
-		
-		//random bebras ID. Here needs to go some more logic.
+
+		/*
+		 * There needs to be some more logic here for generating bebras ID's 
+		 * Save user object in database.
+		 */
 		new UserModel(new UserID(Integer.toString(Math.abs(random.nextInt()))), Type.INDEPENDENT,
 				registerForm.get().fname + registerForm.get().lname, 
 				birtyDay, 
 				new Date(), 
 				passwordUTF8, 
 				saltUTF8, registerForm.get().email, 
-				Gender.Male);
+				Gender.Male).save();
 		
 		return ok(emptyPage.render("Succes", new ArrayList<Link>(), r));
 	}

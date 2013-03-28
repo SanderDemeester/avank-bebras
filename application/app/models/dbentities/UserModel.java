@@ -32,11 +32,11 @@ public class UserModel extends Model{
 	public String id;
 	public String name;
 
-	@Formats.DateTime(pattern = "MM/dd/yyyy")
+	@Formats.DateTime(pattern = "yyyy/dd/mm")
 	public Date birthdate;
 
-	@Formats.DateTime(pattern = "MM/dd/yyyy")
-	public Date registrationDate;
+	@Formats.DateTime(pattern = "yyyy/dd/mm")
+	public Date registrationdate;
 	public String prefLanguage;
 	public String password;
 	public String hash;
@@ -64,7 +64,7 @@ public class UserModel extends Model{
 		this.type = loginType; 
 		this.name = name;
 		this.birthdate = birthdate;
-		this.registrationDate = registrationDate;
+		this.registrationdate = registrationdate;
 		this.password = password;
 		this.hash = hash;
 		this.email = email;
