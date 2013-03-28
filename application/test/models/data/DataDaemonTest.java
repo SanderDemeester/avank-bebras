@@ -57,9 +57,36 @@ public class DataDaemonTest {
         public synchronized boolean get() { return bool; }
     }
 
+
+    private static int PRECISION = Calendar.MILLISECOND;
+
     /** Test if the tasks are run at the set time. */
     @Test public void testPrecision() {
-        // TODO
+        Appender appender = new Appender();
+        String checkString = "";
+        for(int i = 1; i < TASKS; i++) {
+            Calendar date = Calendar.getInstance();
+            date.add(PRECISION, 20 * i);
+            daemon.runAt(new NumTask(appender), date);
+            checkString = checkString + (date.get(PRECISION)/20) + " ";
+        }
+        try { Thread.sleep(1000); }
+        catch(InterruptedException e) {}
+        Assert.assertEquals(checkString, appender.get());
+    }
+
+    private static class Appender {
+        private String str = "";
+        public synchronized void append(int s) { str = str + (s/20) + " "; }
+        public synchronized String get() { return str; }
+    }
+
+    private static class NumTask implements Runnable {
+        private Appender a;
+        public NumTask(Appender a) { this.a = a; }
+        public void run() {
+            a.append(Calendar.getInstance().get(PRECISION));
+        }
     }
 
 }
