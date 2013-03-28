@@ -37,7 +37,7 @@ public class UserModel extends Model{
 
 	@Formats.DateTime(pattern = "yyyy/dd/mm")
 	public Date registrationdate;
-	public String prefLanguage;
+	public String preflanguage;
 	public String password;
 	public String hash;
 	public String telephone;
@@ -56,9 +56,9 @@ public class UserModel extends Model{
 	public String classgroup;
 
 	public UserModel(UserID id, Type loginType, String name,
-			Date birthdate, Date registrationDate,
+			Date birthdate, Date registrationdate,
 			String password, String hash, String email,
-			Gender gender){
+			Gender gender, String preflanguage){
 		
 		this.id = id.getUserID();
 		this.type = loginType; 
@@ -69,6 +69,7 @@ public class UserModel extends Model{
 		this.hash = hash;
 		this.email = email;
 		this.gender = gender;
+		this.preflanguage = preflanguage;
 		active = true;
 
 	}

@@ -1,3 +1,5 @@
+@import models.EMessages
+@import helper._
 <div id="navigation" class="navbar">
     <div class="navbar-inner">
         <div class="container">
@@ -8,17 +10,33 @@
                 }
             </ul>
 
-            <ul class="nav pull-right">
-                <li><a href='@routes.UserController.signup'>Sign Up</a></li>
-                <li class="divider-vertical"></li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign In <strong class="caret"></strong></a>
-                    <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
-                      Fancy login form!
-                    </div>
-                </li>
-            </ul>
+			<ul class="nav pull-right">
+				<li><a href='@routes.UserController.signup'>Sign Up</a>
+				</li>
+				<li class="divider-vertical"></li>
+				<li class="dropdown"><a class="dropdown-toggle" href="#"
+					data-toggle="dropdown">Sign In <strong class="caret"></strong>
+				</a>
+					<div class="dropdown-menu"
+						style="padding: 15px; padding-bottom: 0px;">
+						<div class="span8">
+							@helper.form(routes.UserController.validate_login, 'id -> "login"){
+							<div class="control-group">
+								<label class="control-label">Email</label>
+								<div class="controls">
+									class="controls">
+									<div class="input-prepend">
+										<span class="add-on"><i class="icon-user"></i> </span> <input
+											type="text" class="input-xlarge" id="username"
+											name="username" placeholder="Last Name">
+									</div>
+								</div>
+							</div>
+							}
+						</div>
+					</div></li>
+			</ul>
 
-        </div>
+		</div>
     </div>
 </div>

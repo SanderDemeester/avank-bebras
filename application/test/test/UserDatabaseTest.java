@@ -46,7 +46,7 @@ public class UserDatabaseTest extends ContextTest {
 				"password",
 				"salt",
 				"mail@localhost",
-				Gender.Male);
+				Gender.Male,"nl");
 		User user = new Independent(mdl);
 
 		try{
@@ -77,7 +77,7 @@ public class UserDatabaseTest extends ContextTest {
 						"password",
 						"salt",
 						"mail@localhost",
-						Gender.Female)).data.save();
+						Gender.Female,"nl")).data.save();
 			}catch(PersistenceException e){Assert.fail("Could not save the user");}
 		}
 
@@ -91,7 +91,7 @@ public class UserDatabaseTest extends ContextTest {
 				"password",
 				"salt",
 				"mail@localhost",
-				Gender.Female));
+				Gender.Female,"nl"));
 		teacher.data.save();
 
 		Assert.assertNotNull(Ebean.find(UserModel.class).where().eq("id",teacherID).findUnique());
@@ -116,7 +116,7 @@ public class UserDatabaseTest extends ContextTest {
 						"password",
 						"salt",
 						"mail@localhost",
-						Gender.Female)).data.save();
+						Gender.Female,"nl")).data.save();
 			}catch(PersistenceException e){Assert.fail("Could not save the user");}
 		}
 
@@ -131,7 +131,7 @@ public class UserDatabaseTest extends ContextTest {
 				"password",
 				"salt",
 				"mail@localhost",
-				Gender.Female));
+				Gender.Female,"nl"));
 
 		organizer.data.save();
 
@@ -165,7 +165,7 @@ public class UserDatabaseTest extends ContextTest {
 						"password",
 						"salt",
 						"mail@localhost",
-						Gender.Female));
+						Gender.Female,"nl"));
 				ip.data.save();
 
 			}catch(PersistenceException e){Assert.fail("Could not save the user");}
@@ -181,7 +181,7 @@ public class UserDatabaseTest extends ContextTest {
 						"password",
 						"salt",
 						"mail@localhost",
-						Gender.Female));
+						Gender.Female,"nl"));
 				
 				pu.data.save();
 			}catch(PersistenceException e){Assert.fail("Could not save the user");}

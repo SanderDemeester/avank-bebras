@@ -32,6 +32,7 @@ import views.html.landingPages.OrganizerLandingPage;
 import views.html.landingPages.PupilLandingPage;
 import views.html.register;
 import views.html.emptyPage;
+import views.html.login;
 import controllers.user.Type;
 
 /**
@@ -107,7 +108,7 @@ public class UserController extends EController{
 			birtyDay = new SimpleDateFormat("yyyy/dd/mm").parse(registerForm.get().bday);
 		}catch(Exception e){}
 		
-		String r = "Welkom";
+		String r = "Welkom ";
 		r += registerForm.get().fname + "!";
 
 		/*
@@ -120,19 +121,44 @@ public class UserController extends EController{
 				new Date(), 
 				passwordUTF8, 
 				saltUTF8, registerForm.get().email, 
-				Gender.Male).save();
+				Gender.Male, registerForm.get().prefLanguage).save();
 		
 		return ok(emptyPage.render("Succes", new ArrayList<Link>(), r));
 	}
 
 	public static Result login(){
-		//TODO: Delage to authenticationManager
-		return null;
+		setCommonHeaders();
+		Form<Login> loginForm = form(Login.class).bindFromRequest();
+		//We need to do this check, because a user can this URL without providing POST data.
+		if(loginForm.get().email.isEmpty() && loginForm.get().password.isEmpty()){
+			return ok(login.render("login", 
+					new ArrayList<Link>(),
+					form(Login.class)
+			));
+		}else{//POST data is available to us. Try to validate the user.
+			return validate_login();
+		}
+		
+	}
+	
+	public static Result validate_login(){
+		setCommonHeaders();
+		Form<Login> loginForm = form(Login.class).bindFromRequest();
+		//We do the same check here.
+		if(loginForm.get().email.isEmpty() && loginForm.get().password.isEmpty()){
+			//TODO: Build standalone login page so we can redirect the user to that page.
+			return Application.index();
+		}else{ //POST data is available to us. Try to validate the user.
+			
+			String username = loginForm.get().email;
+			String password = loginForm.get().password;
+			
+			return validate_login();
+		}
 	}
 
 	public static Result logout(){
 		//TODO: Tell authenticationManager to log a user out.
-
 		setCommonHeaders();
 		return null;
 	}
@@ -154,6 +180,11 @@ public class UserController extends EController{
 		public String controle_passwd;
 		public String gender;
 		public String prefLanguage;
+	}
+	
+	public static class Login{
+		public String email;
+		public String password;
 	}
 
 }
