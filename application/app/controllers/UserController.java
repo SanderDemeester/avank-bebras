@@ -92,8 +92,6 @@ public class UserController extends EController{
 		random.nextBytes(salt);
 		KeySpec PBKDF2 = new PBEKeySpec(registerForm.get().password.toCharArray(), salt, 1000, 160);
 
-
-
 		try{
 			secretFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
 		}catch(Exception e){}

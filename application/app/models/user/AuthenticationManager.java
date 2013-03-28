@@ -1,7 +1,11 @@
 
 package models.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import play.mvc.Result;
+import controllers.user.Roles;
 
 /**
  * Class to handle UserAuthentication.
@@ -30,6 +34,13 @@ public class AuthenticationManager {
      */
     public void resetPassword(String userID,String emailaddress){
     	
+    }
+    
+    /**
+     * @return Gives back a list of the roles that a given user has. 
+     **/
+    public List<Roles> getUserRolles(User user){
+    	return new ArrayList<Roles>();
     }
 
 }
