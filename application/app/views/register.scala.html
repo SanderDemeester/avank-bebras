@@ -1,6 +1,7 @@
-@(title: String, breadcrumbs : List[models.data.Link], form: Form[UserController.Register]) 
+@(title: String, breadcrumbs : List[models.data.Link], sform: Form[UserController.Register]) 
 @import commons._ 
 @import models.EMessages
+@import helper._
 
 <!DOCTYPE html>
 
@@ -73,10 +74,11 @@
 		<div class="control-group">
 	        <label class="control-label">Gender</label>
 			<div class="controls">
-                  <select class="selectpicker">
-			     @for(gender <-models.user.Gender.values()) {
-			     <option id="gender">@(gender)</option>
-                }
+			@select(
+                field = sform("gender"), 
+                options(models.user.Gender.values().toList.map(_.toString)),
+                '_label -> "Gender"
+            )	
   					</select>
                   </div>
 		</div>
@@ -86,13 +88,12 @@
 	        <label class="control-label">preferred language</label>
 			<div class="controls">
 			@select(
-                form("prefLanguage"), 
-                options = options(models.date.Language.listLanguages),
+                sform("prefLanguage"), 
+                options(models.data.Language.listLanguages().toList.map(_.getCode)),
                 '_default -> "preferred language",
-                '_label -> "preferred language",
-            )
-			
-                  </div>
+                '_label -> "preferred language"
+            )	
+ 	                  </div>
 		</div>
 		
 		<div class="control-group">
