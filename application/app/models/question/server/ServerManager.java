@@ -1,6 +1,6 @@
 package models.question.server;
 
-import controllers.question.routes;
+import controllers.question.server.routes;
 import models.management.Manager;
 import play.db.ebean.Model.Finder;
 import play.mvc.Call;

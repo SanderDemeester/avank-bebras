@@ -1,16 +1,18 @@
-package controllers.question;
+package controllers.question.server;
 
 import java.util.ArrayList;
 
+import controllers.question.server.routes;
 import models.data.Link;
 import models.question.server.Server;
 import models.question.server.ServerManager;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Results;
 import views.html.question.server.newServerForm;
 import views.html.question.server.editServerForm;
-import views.html.management.list;
+import views.html.question.server.serverManagement;
 
 /**
  * ServerController controller.
@@ -27,7 +29,7 @@ public class ServerController extends Controller {
     public static Result list(int page, String orderBy, String order, String filter){
         ServerManager serverManager = new ServerManager();
         return ok(
-            list.render(serverManager.page(page, orderBy, order, filter), serverManager, orderBy, order, filter, new ArrayList<Link>())
+            serverManagement.render(serverManager.page(page, orderBy, order, filter), serverManager, orderBy, order, filter, new ArrayList<Link>())
         );
     }
 
@@ -55,7 +57,7 @@ public class ServerController extends Controller {
         }
         form.get().save();
         // TODO place message in flash for "server add warning" in view
-        return redirect(routes.ServerController.list(0, "name", "asc", ""));
+        return Results.redirect(routes.ServerController.list(0, "name", "asc", ""));
     }
 
     /**
