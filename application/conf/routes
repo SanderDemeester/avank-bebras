@@ -21,8 +21,11 @@ GET     /assets/stylesheets/responsive.min.css            controllers.Assets.at(
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 # Question module
-GET		/questioneditor				controllers.question.QuestionEditorController.index()
-GET     /servers                    controllers.question.ServerController.list(p:Int ?= 0, ps:Int ?=10, s ?= "name", o ?= "asc", f ?= "")
+GET		/questioneditor				controllers.question.editor.QuestionEditorController.index()
+GET		/questioneditor/create		controllers.question.editor.QuestionEditorController.create()
+POST    /questioneditor/            controllers.question.editor.QuestionEditorController.save()
+
+GET     /servers                    controllers.question.ServerController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
 GET     /servers/new                controllers.question.ServerController.create()
 POST    /servers/                   controllers.question.ServerController.save()
@@ -30,4 +33,8 @@ POST    /servers/                   controllers.question.ServerController.save()
 GET     /servers/:name              controllers.question.ServerController.edit(name)
 POST    /servers/:name              controllers.question.ServerController.update(name)
 
-GET    /servers/remove/:name       controllers.question.ServerController.remove(name)
+GET    /servers/remove/:name        controllers.question.ServerController.remove(name)
+
+# Bootstrap resources
+GET     /assets/img/glyphicons-halflings-white.png      controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings-white.png")
+GET     /assets/img/glyphicons-halflings.png            controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings.png")

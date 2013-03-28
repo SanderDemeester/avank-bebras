@@ -1,23 +1,23 @@
 
 package models.user;
 
-import javax.persistence.MappedSuperclass;
-
-import controllers.user.Type;
+import models.dbentities.UserModel;
 
 /**
  * Abstract superUser class
  * @author Sander Demeester
 **/
 
-@MappedSuperclass
 public abstract class SuperUser extends User{
 
-    public SuperUser(UserID id, Type loginType, String name){
-    	super(id,loginType,name);
-    }
+    
 
-    /**
+    public SuperUser(UserModel data) {
+		super(data);
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
      * reset password for user.
      * @param user
      */
