@@ -105,11 +105,29 @@ public class DataDaemon {
     /**
      * Runs the provided task at the named occasions, starting now.
      * @param task What to do.
-     * @param runs When to do it.
+     * @param time When to do it.
      */
     public void repeatedRun(Runnable task, Time time) {
         repeatedRunAt(task, time, Calendar.getInstance());
         timerThread.notifyNewTask();
+    }
+
+    /**
+     * Runs the provided task the next named occasion, once.
+     * @param task What to do.
+     * @param time When to do it.
+     */
+    public void runAt(Runnable task, Time time) {
+        Calendar date = Calendar.getInstance();
+        switch(time) {
+            case MIDNIGHT:  date.set(Calendar.SECOND, 0);
+                            date.set(Calendar.MINUTE, 0);
+                            date.set(Calendar.HOUR_OF_DAY, 0);
+                            date.add(Calendar.DATE, 1);
+                            break;
+            default:        break;
+        }
+        runAt(task, date);
     }
 
     private static class TimedTask implements Comparable<TimedTask>, Runnable {
