@@ -107,10 +107,11 @@ public class UserController extends EController{
 			birtyDay = new SimpleDateFormat("yyyy/dd/mm").parse(registerForm.get().bday);
 		}catch(Exception e){}
 		
-		String r = new String();
-		r += registerForm.get().gender;
+		String r = "Welkom";
+		r += registerForm.get().fname + "!";
 		
-		new UserModel(new UserID("id_aamaken"), Type.INDEPENDENT,
+		//random bebras ID. Here needs to go some more logic.
+		new UserModel(new UserID(Integer.toString(Math.abs(random.nextInt()))), Type.INDEPENDENT,
 				registerForm.get().fname + registerForm.get().lname, 
 				birtyDay, 
 				new Date(), 
