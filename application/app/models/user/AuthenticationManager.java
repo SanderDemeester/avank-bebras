@@ -2,8 +2,8 @@
 package models.user;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
 import play.mvc.Result;
 import controllers.user.Roles;
 
@@ -12,6 +12,12 @@ import controllers.user.Roles;
  * @author Sander Demeester
  */
 public class AuthenticationManager {
+	
+	
+	private HashMap<String,User> mappingFromStringToUser = new HashMap<String,User>();
+	private HashMap<String,LoginState> mappingFromSessieIDtoLoginState = 
+		new HashMap<String,LoginState>();
+	
 
     /**
      * AuthenticationManager constructor.
@@ -41,6 +47,22 @@ public class AuthenticationManager {
      **/
     public List<Roles> getUserRolles(User user){
     	return new ArrayList<Roles>();
+    }
+    
+    /**
+     * get the loginState of the sessieID
+     * @return getLoginState 
+     */
+    public LoginState getLoginState(String sessieID){
+    	return mappingFromSessieIDtoLoginState.get(sessieID);
+    }
+    
+    /**
+     * 
+     * @return get userObject from sessieID
+     */
+    public User getUserObject(String sessieID){
+    	return mappingFromStringToUser.get(sessieID);
     }
 
 }
