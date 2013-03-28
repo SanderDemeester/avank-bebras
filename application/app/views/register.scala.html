@@ -85,11 +85,13 @@
 			<div class="control-group">
 	        <label class="control-label">preferred language</label>
 			<div class="controls">
-			<select class="selectpicker">
-			     @for(lang <- models.data.Language.listLanguages()) {
-			     <option id="prefLanguage">@(lang.getName(lang))</option>
-                }
-  					</select>
+			@select(
+                form("prefLanguage"), 
+                options = options(models.date.Language.listLanguages),
+                '_default -> "preferred language",
+                '_label -> "preferred language",
+            )
+			
                   </div>
 		</div>
 		
