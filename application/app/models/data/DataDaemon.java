@@ -53,8 +53,6 @@ public class DataDaemon {
      */
     public void runAt(Runnable task, Calendar date) {
         TimedTask t = new TimedTask(date, 0, task);
-        if(t == null) System.out.println("What the fuck?");
-        System.out.println("Size: " + queue.size());
         synchronized(queue) { queue.add(t); }
         timerThread.notifyNewTask();
     }
