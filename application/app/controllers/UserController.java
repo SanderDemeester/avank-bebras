@@ -130,7 +130,7 @@ public class UserController extends EController{
 		setCommonHeaders();
 		Form<Login> loginForm = form(Login.class).bindFromRequest();
 		//We need to do this check, because a user can this URL without providing POST data.
-		if(loginForm.get().email.isEmpty() && loginForm.get().password.isEmpty()){
+		if(loginForm.get().email == null && loginForm.get().password == null){
 			return ok(login.render("login", 
 					new ArrayList<Link>(),
 					form(Login.class)
@@ -145,7 +145,7 @@ public class UserController extends EController{
 		setCommonHeaders();
 		Form<Login> loginForm = form(Login.class).bindFromRequest();
 		//We do the same check here.
-		if(loginForm.get().email.isEmpty() && loginForm.get().password.isEmpty()){
+		if(loginForm.get().email == null && loginForm.get().password == null){
 			//TODO: Build standalone login page so we can redirect the user to that page.
 			return Application.index();
 		}else{ //POST data is available to us. Try to validate the user.
