@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import models.dbentities.ClassPupil.ClassPupilPK;
 
 import play.db.ebean.Model;
@@ -18,16 +19,14 @@ import play.db.ebean.Model;
  *
  */
 @Entity
-@Table(name="ClassPupil")
+@Table(name="ClassPupil",uniqueConstraints=@UniqueConstraint(columnNames={"classid","indid"}) )
 @IdClass(ClassPupilPK.class)
 public class ClassPupil extends Model {
 	@Id
 	public String classid;
 	@Id
 	public String indid;
-	
-	public String test;
-	
+		
 	public class ClassPupilPK implements Serializable{
 		public String classid;
 		public String indid;
