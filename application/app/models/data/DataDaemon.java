@@ -3,6 +3,7 @@ package models.data;
 import java.lang.Thread;
 import java.lang.InterruptedException;
 import java.lang.Comparable;
+import java.lang.Runnable;
 
 import java.util.PriorityQueue;
 import java.util.Calendar;
@@ -28,7 +29,7 @@ public class DataDaemon {
     }
 
     private final PriorityQueue<TimedTask> queue;
-    private final Thread timerThread;
+    private final TimerThread timerThread;
 
     // Private constructor.
     private DataDaemon() {
@@ -38,12 +39,24 @@ public class DataDaemon {
     }
 
     /**
+     * Check if their are any tasks left. Mainly for testing purposes.
+     * @return If the queue is empty.
+     */
+    public boolean empty() {
+        return queue.size() == 0;
+    }
+
+    /**
      * Runs the provided task at the specified time.
      * @param task What to to.
      * @param date When to do it.
      */
-    public void runAt(Task task, Calendar date) {
-        queue.add(new TimedTask(date, 0, task));
+    public void runAt(Runnable task, Calendar date) {
+        TimedTask t = new TimedTask(date, 0, task);
+        if(t == null) System.out.println("What the fuck?");
+        System.out.println("Size: " + queue.size());
+        synchronized(queue) { queue.add(t); }
+        timerThread.notifyNewTask();
     }
 
     /**
@@ -53,8 +66,9 @@ public class DataDaemon {
      * @param interval Interval between two runs.
      * @param date When to start the first run.
      */
-    public void repeatedRunAt(Task task, int interval, Calendar date) {
-        queue.add(new TimedTask(date, interval, task));
+    public void repeatedRunAt(Runnable task, int interval, Calendar date) {
+        synchronized(queue) { queue.add(new TimedTask(date, interval, task)); }
+        timerThread.notifyNewTask();
     }
 
     /**
@@ -62,8 +76,11 @@ public class DataDaemon {
      * @param task What to do.
      * @param interval Interval between two runs.
      */
-    public void repeatedRun(Task task, int interval) {
-        queue.add(new TimedTask(Calendar.getInstance(), interval, task));
+    public void repeatedRun(Runnable task, int interval) {
+        synchronized(queue) {
+            queue.add(new TimedTask(Calendar.getInstance(), interval, task));
+        }
+        timerThread.notifyNewTask();
     }
 
     /**
@@ -73,15 +90,18 @@ public class DataDaemon {
      * @param time When to do it.
      * @param date When to start doing it.
      */
-    public void repeatedRunAt(Task task, Time time, Calendar date) {
+    public void repeatedRunAt(Runnable task, Time time, Calendar date) {
         switch(time) {
             case MIDNIGHT:  date.set(Calendar.SECOND, 0);
                             date.set(Calendar.MINUTE, 0);
                             date.set(Calendar.HOUR_OF_DAY, 0);
+                            synchronized(queue) {
                             queue.add(new TimedTask(date, 60 * 60 * 24, task));
+                            }
                             break;
             default:        break;
         }
+        timerThread.notifyNewTask();
     }
 
     /**
@@ -89,12 +109,9 @@ public class DataDaemon {
      * @param task What to do.
      * @param runs When to do it.
      */
-    public void repeatedRun(Task task, Time time) {
-        // TODO
-    }
-
-    public static interface Task {
-        public void run() throws Exception;
+    public void repeatedRun(Runnable task, Time time) {
+        repeatedRunAt(task, time, Calendar.getInstance());
+        timerThread.notifyNewTask();
     }
 
     private static class TimedTask implements Comparable<TimedTask>, Runnable {
@@ -102,11 +119,11 @@ public class DataDaemon {
         /** The time at which this task is set to run. */
         public final Calendar date; // Next run.
         private int interval;       // Interval between runs, <= 0 if none.
-        private Task task;          // The task.
+        private Runnable task;      // The task.
 
         /** Creates a new TimedTask with the given settings. */
-        public TimedTask(Calendar date, int interval, Task task) {
-            this.date = date;
+        public TimedTask(Calendar date, int interval, Runnable task) {
+            this.date = (date != null) ? date : Calendar.getInstance();
             this.interval = interval;
             this.task = task;
         }
@@ -146,11 +163,11 @@ public class DataDaemon {
     private class TimerThread extends Thread {
         private boolean newTask = false;
         private Executor executor = Executors.newCachedThreadPool();
-        public void notifyNewTask() {
+        public synchronized void notifyNewTask() {
             newTask = true;
             notify();
         }
-        public void run() {
+        public synchronized void run() {
             TimedTask next = null;
             long left;
             while(true) {
