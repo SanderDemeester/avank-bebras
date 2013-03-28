@@ -74,7 +74,6 @@ public class Teacher extends SuperUser{
 	 * Queries the database for all Classes that this Teacher is main teacher of
 	 * @return List of all ClassGroups this Teacher is main Teacher of
 	 */
-	//TODO create test
 	public Collection<ClassGroup> getClasses(){
 		
 		java.util.List<ClassGroup> res = Ebean.find(ClassGroup.class).where()

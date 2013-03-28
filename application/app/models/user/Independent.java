@@ -19,6 +19,7 @@ import views.html.landingPages.PupilLandingPage;
 
 /**
  * @author Sander Demeester
+ * @author Jens N. Rammant
  */
 
 public class Independent extends User{
@@ -46,27 +47,8 @@ public class Independent extends User{
 
     }
 
-    /**
-     *
-     * @return Get currentClass.
-     */
-    //TODO: create test
-    public ClassGroup getCurrentClass(List<ClassGroup> classes){
-    	Calendar c = Calendar.getInstance();
-		c.set(Calendar.HOUR, -12);
-		c.set(Calendar.MINUTE, 0);
-		c.set(Calendar.SECOND, 0);
-		c.set(Calendar.MILLISECOND, 0);
-		Date today = c.getTime();
-    	for(ClassGroup cl : classes){
-    		if(!cl.expdate.before(today))return cl;
-    	}
-    	return null;
-    }
-    
-    //TODO create test
     public ClassGroup getCurrentClass(){
-    	return this.getCurrentClass(new ArrayList(this.getClasses()));
+    	return Ebean.find(ClassGroup.class).where().eq("id", this.data.classgroup).findUnique();
     }
 
 	@Override
@@ -83,10 +65,10 @@ public class Independent extends User{
 	}
 	
 	/**
-	 * Queries the database for all class the user is associated with
-	 * @return list of classes the 
+	 * Queries the database for all previous classes the user is associated with
+	 * @return list of previous classes 
 	 */
-	public Collection<ClassGroup> getClasses(){
+	public Collection<ClassGroup> getPreviousClasses(){
 		ArrayList<ClassGroup> res = new ArrayList<>();
 		
 		List<ClassPupil> cp = Ebean.find(ClassPupil.class).where().eq("indid", this.data.id).findList();

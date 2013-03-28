@@ -16,7 +16,7 @@ public class LoginState {
 
     public LoginState(String si) {
         sessionID=si;
-        translatorStack = new Stack<>();
+        translatorStack = new Stack<String>();
     }
     
     /*
@@ -41,7 +41,7 @@ public class LoginState {
      * @return All IDs
      */
     public ArrayList<String> getIDs(){
-        return new ArrayList<>(translatorStack);
+        return new ArrayList<String>(translatorStack);
     } 
     
     /*
