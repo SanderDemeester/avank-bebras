@@ -19,6 +19,12 @@ create table ClassPupil (
   constraint uq_ClassPupil_1 unique (classid,indid))
 ;
 
+create table questionsets (
+  id                        varchar(255) not null,
+  active                    boolean,
+  constraint pk_questionsets primary key (id))
+;
+
 create table servers (
   id                        varchar(255) not null,
   location                  varchar(255),
@@ -49,6 +55,8 @@ create sequence Classes_seq;
 
 create sequence ClassPupil_seq;
 
+create sequence questionsets_seq;
+
 create sequence servers_seq;
 
 create sequence users_seq;
@@ -64,6 +72,8 @@ drop table if exists Classes;
 
 drop table if exists ClassPupil;
 
+drop table if exists questionsets;
+
 drop table if exists servers;
 
 drop table if exists users;
@@ -73,6 +83,8 @@ SET REFERENTIAL_INTEGRITY TRUE;
 drop sequence if exists Classes_seq;
 
 drop sequence if exists ClassPupil_seq;
+
+drop sequence if exists questionsets_seq;
 
 drop sequence if exists servers_seq;
 

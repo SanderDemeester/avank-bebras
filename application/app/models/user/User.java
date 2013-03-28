@@ -11,6 +11,7 @@ import play.mvc.Result;
 **/
 
 public abstract class User{
+
 	public UserModel data;
 
     /**
