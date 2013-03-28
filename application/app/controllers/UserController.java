@@ -108,7 +108,7 @@ public class UserController extends EController{
 		}catch(Exception e){}
 		
 		String r = new String();
-		r += registerForm.get().bday;
+		r += registerForm.get().gender;
 		
 		new UserModel(new UserID("id_aamaken"), Type.INDEPENDENT,
 				registerForm.get().fname + registerForm.get().lname, 
@@ -116,9 +116,9 @@ public class UserController extends EController{
 				new Date(), 
 				passwordUTF8, 
 				saltUTF8, registerForm.get().email, 
-				Gender.valueOf(registerForm.get().gender));
+				Gender.Male);
 		
-		return ok(emptyPage.render("Succes", new ArrayList<Link>(), new Date().toString()));
+		return ok(emptyPage.render("Succes", new ArrayList<Link>(), r));
 	}
 
 	public static Result login(){

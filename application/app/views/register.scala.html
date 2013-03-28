@@ -73,28 +73,24 @@
 		<div class="control-group">
 	        <label class="control-label">Gender</label>
 			<div class="controls">
-			    
-					<p><div  class="btn-group" data-toggle="buttons-radio">  
-                    <button type="button" required="required" name="gender" id="gender" class="btn btn-info">Male</button>  
-                    <button type="button" required="required" name="gender" id="gender" class="btn btn-info">Female</button>  
-                    
+                  <select class="selectpicker">
+			     @for(gender <-models.user.Gender.values()) {
+			     <option id="prefLanguage">@(gender)</option>
+                }
+  					</select>
                   </div>
-				
-			</div>
 		</div>
+		
 		
 			<div class="control-group">
 	        <label class="control-label">preferred language</label>
 			<div class="controls">
-			    
-					<p><div  class="btn-group" data-toggle="buttons-radio">  
-                    <button type="button" required="required" name="prefLanguage" id="prefLanguage" class="btn btn-info">Nederlands</button>  
-                    <button type="button" required="required" name=prefLanguage id="prefLanguage"   class="btn btn-info">français</button>
-                    <button type="button" required="required" name="prefLanguage" id="prefLanguage" class="btn btn-info">Deutsch</button>
-                    
+			<select class="selectpicker">
+			     @for(lang <- models.data.Language.listLanguages()) {
+			     <option id="prefLanguage">@(lang.getName(lang))</option>
+                }
+  					</select>
                   </div>
-				
-			</div>
 		</div>
 		
 		<div class="control-group">
