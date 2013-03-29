@@ -29,43 +29,55 @@ import play.db.ebean.Model.Finder;
 public class UserModel extends Model{
 
 	@Id
-    public String id;
-    public String name;
-    
-    @Formats.DateTime(pattern = "MM/dd/yyyy")
-    public Date birthdate;
-    
-    @Formats.DateTime(pattern = "MM/dd/yyyy")
-    public Date registrationDate;
-    public String prefLanguage;
-    public String password;
-    public String hash;
-    public String telephone;
-    public String address;
-    public String email;
-    
-    @Enumerated(EnumType.STRING)
-    public Gender gender;
-    
-    @Enumerated(EnumType.STRING)
-    public Type type;
-    
-    public boolean active;
+	public String id;
+	public String name;
 
-    @Column(name="class")
-    public String classgroup;
-    
-    public UserModel(UserID id, Type loginType, String name){
-    	this.id = id.getUserID();
-    	this.type = loginType; 
-    	this.name = name;
+	@Formats.DateTime(pattern = "yyyy/dd/mm")
+	public Date birthdate;
 
-    }
-    
-    /**
-     * A finder for User.
-     * We will use this finder to execute specific sql query's.
-     */
-    public static Finder<Integer,UserModel> find = new Model.Finder<Integer, UserModel>(Integer.class,UserModel.class);
-    
+	@Formats.DateTime(pattern = "yyyy/dd/mm")
+	public Date registrationdate;
+	public String preflanguage;
+	public String password;
+	public String hash;
+	public String telephone;
+	public String address;
+	public String email;
+
+	@Enumerated(EnumType.STRING)
+	public Gender gender;
+
+	@Enumerated(EnumType.STRING)
+	public Type type;
+
+	public boolean active;
+
+	@Column(name="class")
+	public String classgroup;
+
+	public UserModel(UserID id, Type loginType, String name,
+			Date birthdate, Date registrationdate,
+			String password, String hash, String email,
+			Gender gender, String preflanguage){
+		
+		this.id = id.getUserID();
+		this.type = loginType; 
+		this.name = name;
+		this.birthdate = birthdate;
+		this.registrationdate = registrationdate;
+		this.password = password;
+		this.hash = hash;
+		this.email = email;
+		this.gender = gender;
+		this.preflanguage = preflanguage;
+		active = true;
+
+	}
+
+	/**
+	 * A finder for User.
+	 * We will use this finder to execute specific sql query's.
+	 */
+	public static Finder<Integer,UserModel> find = new Model.Finder<Integer, UserModel>(Integer.class,UserModel.class);
+
 }

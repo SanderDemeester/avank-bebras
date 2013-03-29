@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
 	$("#signup").validate({
 		rules:{
 			gender:"required",
@@ -14,8 +13,7 @@ $(document).ready(function(){
 				minlength: 8
 			},
 			controle_passwd:{
-				required:true,
-				equalTo: "#password"
+				required:true
 			},
 			bday:{
 				required:true
