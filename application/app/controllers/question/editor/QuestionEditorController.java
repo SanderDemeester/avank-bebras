@@ -1,38 +1,19 @@
 package controllers.question.editor;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
-
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import models.EMessages;
 import models.data.Link;
 import models.question.Question;
 import models.question.QuestionBuilderException;
 import models.question.QuestionFactory;
+import models.question.QuestionIO;
 import models.question.QuestionType;
-import models.question.RegexQuestion;
 
-import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
-import org.w3c.dom.Document;
 
 import play.Play;
 import play.libs.Json;
@@ -82,20 +63,6 @@ public class QuestionEditorController extends EController {
         Question question = QuestionFactory.newQuestion(QuestionType.valueOf(type));
         
         return ok(create.render(breadcrumbs, question));
-    }
-    
-    public static Result save(){
-        /**
-         * TODO!!!! json save
-         */
-        List<Link> breadcrumbs = new ArrayList<Link>();
-        breadcrumbs.add(new Link("Home", "/"));
-        breadcrumbs.add(new Link("Question Editor", "/questioneditor"));
-        breadcrumbs.add(new Link("Create", ""));
-        
-        //questionForm.get().save();
-        return ok(create.render(breadcrumbs, new RegexQuestion()));
-        //return redirect(routes.QuestionEditorController.create());
     }
     
     /**
@@ -174,63 +141,39 @@ public class QuestionEditorController extends EController {
      */
     public static Result validate(String json) {
         try {
-            Question.validateJson(json);
+            QuestionIO.validateJson(json);
             return ok("Valid question.");
         } catch (QuestionBuilderException e) {
             return badRequest(e.getMessage());
         }
     }
     
+    /**
+     * Export the question to a .ZIP file
+     * @param json json encoded question
+     * @return
+     */
     public static Result export(String json) {
         response().setHeader("Content-Disposition", "attachment; filename=question.zip");
         try {
-            return ok(Question.export(json));
+            return ok(QuestionIO.export(json));
         } catch (QuestionBuilderException e) {
             return badRequest(e.getMessage());
         }
     }
     
     /**
-     * TO MOVE
-     * @param doc
+     * Submits the question
+     * param json json encoded question
      * @return
      */
-    public static String toString(Document doc) {
+    public static Result submit(String json){
         try {
-            StringWriter sw = new StringWriter();
-            TransformerFactory tf = TransformerFactory.newInstance();
-            Transformer transformer = tf.newTransformer();
-            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-            transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-
-            transformer.transform(new DOMSource(doc), new StreamResult(sw));
-            return sw.toString();
-        } catch (Exception ex) {
-            throw new RuntimeException("Error converting to String", ex);
-        }
-    }
-    
- // This method writes a DOM document to a file
-    public static void writeXmlFile(Document doc, String filename) {
-        try {
-            // Prepare the DOM document for writing
-            Source source = new DOMSource(doc);
- 
-            // Prepare the output file
-            File file = new File(filename);
-            javax.xml.transform.Result result = new StreamResult(file);
- 
-            // Write the DOM document to the file
-            Transformer xformer = TransformerFactory.newInstance().newTransformer();
-            xformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-            xformer.setOutputProperty(OutputKeys.METHOD, "xml");
-            xformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            xformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-            xformer.transform(source, result);
-        } catch (TransformerConfigurationException e) {
-        } catch (TransformerException e) {
+            Question question = QuestionIO.validateJson(json);
+            // TODO: submit the question
+            return ok("Valid question.");
+        } catch (QuestionBuilderException e) {
+            return badRequest(e.getMessage());
         }
     }
 }
