@@ -11,6 +11,7 @@ import models.question.QuestionBuilderException;
 import models.question.QuestionFactory;
 import models.question.QuestionIO;
 import models.question.QuestionType;
+import models.user.UserID;
 
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
@@ -30,6 +31,20 @@ import controllers.EController;
  *
  */
 public class QuestionEditorController extends EController {
+    
+    private static UserID getUserID() {
+        // TODO: TMP !!!!
+        UserID userID = new UserID("012345");
+        return userID;
+    }
+    
+    private static String getUserDownloadLocation(UserID userID) {
+        return "/assets/files/"+userID.getUserID();
+    }
+    
+    private static String getFileLocation(File file, UserID userID) {
+        return getUserDownloadLocation(userID)+"/"+file.getName();
+    }
     
     /**
      * Make default breadcrumbs for this controller
@@ -70,6 +85,8 @@ public class QuestionEditorController extends EController {
      * @return
      */
     public static Result upload() {
+        UserID userID = getUserID();
+        
         // Prepare json main node
         ObjectNode result = Json.newObject();
         ArrayNode array = result.putArray("files");
@@ -82,14 +99,14 @@ public class QuestionEditorController extends EController {
             
             File file = filePart.getFile();
             
-            File renamed = new File(Play.application().configuration().getString("questioneditor.upload"), name);
+            File renamed = new File(QuestionIO.getUserUploadLocation(userID), name);
             file.renameTo(renamed);
             
             // Add file data to json result
             ObjectNode node = Json.newObject();
             node.put("name", name);
             node.put("size", renamed.length());
-            node.put("url", "/assets/files/"+renamed.getName());
+            node.put("url", getFileLocation(renamed, userID));
             array.add(node);
         }
         
@@ -102,7 +119,7 @@ public class QuestionEditorController extends EController {
      * @return
      */
     public static Result delete(String name) {
-        File file = new File(Play.application().configuration().getString("questioneditor.upload"), name);
+        File file = new File(QuestionIO.getUserUploadLocation(getUserID()), name);
         if(file.isFile())
             file.delete();
         return ok();
@@ -113,21 +130,21 @@ public class QuestionEditorController extends EController {
      * @return
      */
     public static Result getFiles() {
-        // TODO: Make this specific for each user
+        UserID userID = getUserID();
         
         // Prepare json main node
         ObjectNode result = Json.newObject();
         ArrayNode array = result.putArray("files");
         
         // Loop over all files in the upload folder
-        String location = Play.application().configuration().getString("questioneditor.upload");
+        String location = QuestionIO.getUserUploadLocation(userID);
         File folder = new File(location);
         for (File file : folder.listFiles()) {
             // Add file data to json result
             ObjectNode node = Json.newObject();
             node.put("name", file.getName());
             node.put("size", file.length());
-            node.put("url", "/assets/files/"+file.getName());
+            node.put("url", getFileLocation(file, userID));
             array.add(node);
         }
         
@@ -155,8 +172,10 @@ public class QuestionEditorController extends EController {
      */
     public static Result export(String json) {
         response().setHeader("Content-Disposition", "attachment; filename=question.zip");
+        UserID userID = getUserID();
+        
         try {
-            return ok(QuestionIO.export(json));
+            return ok(QuestionIO.export(json, userID, getUserDownloadLocation(userID)));
         } catch (QuestionBuilderException e) {
             return badRequest(e.getMessage());
         }

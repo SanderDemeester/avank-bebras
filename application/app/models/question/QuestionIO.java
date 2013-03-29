@@ -1,35 +1,23 @@
 package models.question;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
+
+import models.user.UserID;
 
 import org.codehaus.jackson.JsonNode;
 import org.w3c.dom.Document;
@@ -38,6 +26,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import play.Play;
 import play.libs.Json;
 
 public class QuestionIO {
@@ -57,73 +46,30 @@ public class QuestionIO {
      */
     public static Question validateJson(String json) throws QuestionBuilderException {
         JsonNode input = Json.parse(json);
-        Document doc = JsonToXml(input);
-        return getFromXml(doc);// The return is not catched because we only have to validate
+        QuestionPack pack = jsonToQuestionPack(input);
+        return getFromXml(pack.getXmlDocument());// The return is not catched because we only have to validate
     }
     
     /**
      * Export the  file encoded with json to a File
      * @param json json formatted question
+     * @param userID the user id for the authenticated user
      * @return The compressed question file
      * @throws QuestionBuilderException any error that can occur
      */
-    public static File export(String json) throws QuestionBuilderException {
-        JsonNode input = Json.parse(json);
-        Document doc = JsonToXml(input);
-        getFromXml(doc);// The return is not catched because we only have to validate
+    public static File export(String json, UserID userID, String userDownloadLocation) throws QuestionBuilderException {
         try {
             // Make hash
             MessageDigest mdEnc = MessageDigest.getInstance("MD5"); 
             mdEnc.update(json.getBytes(), 0, json.length());
             String hash = new BigInteger(1, mdEnc.digest()).toString(16);
             
-            String zipfile = hash+".zip";
-            String xmlfile = hash+".xml";
+            JsonNode input = Json.parse(json);
+            String downloadLocation = Play.application().configuration().getString("questioneditor.download");
+            QuestionPack pack = jsonToQuestionPack(input, downloadLocation, hash, userDownloadLocation);
+            getFromXml(pack.getXmlDocument());// The return is not catched because we only have to validate
             
-            FileOutputStream fout = new FileOutputStream(zipfile);
-            ZipOutputStream zout = new ZipOutputStream(fout);
-            
-            Source source = new DOMSource(doc);
-            
-            // Prepare the xml output file
-            File file = new File(xmlfile);
-            Result result = new StreamResult(file);
- 
-            // Write the DOM document to the file
-            Transformer xformer = TransformerFactory.newInstance().newTransformer();
-            xformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-            xformer.setOutputProperty(OutputKeys.METHOD, "xml");
-            xformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            xformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-            xformer.transform(source, result);
-            
-            // Add xml file to zip
-            ZipEntry ze = new ZipEntry("question.xml");
-            zout.putNextEntry(ze);
-            byte[] buffer = new byte[1024];
-            FileInputStream in = new FileInputStream(xmlfile);
-            int len;
-            while ((len = in.read(buffer)) > 0) {
-                zout.write(buffer, 0, len);
-            }
- 
-            in.close();
-            
-            zout.closeEntry();
-            
-            zout.close();
-            
-            return new File(zipfile);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException("Invalid file.", e);
-        } catch (IOException e) {
-            throw new RuntimeException("IO error.", e);
-        } catch (TransformerConfigurationException e) {
-            throw new RuntimeException("Transformation server error.", e);
-        } catch (TransformerFactoryConfigurationError e) {
-            throw new RuntimeException("Transformation server error.", e);
-        } catch (TransformerException e) {
-            throw new RuntimeException("Transformation error.", e);
+            return pack.export(userID);
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("Internal server error.", e);
         }
@@ -202,12 +148,31 @@ public class QuestionIO {
         return question;
     }
     
-    public static Document JsonToXml(JsonNode json) throws QuestionBuilderException {
+    public static QuestionPack jsonToQuestionPack(JsonNode json) throws QuestionBuilderException {
+        return jsonToQuestionPack(json, null, null, null);
+    }
+    
+    /**
+     * Convert a json formatted question to an xml document
+     * @param json json formatted question
+     * @return a question in xml format
+     * @throws QuestionBuilderException possible things that can go wrong
+     */
+    public static QuestionPack jsonToQuestionPack(JsonNode json, String location, String hash, String userDownloadLocation) throws QuestionBuilderException {
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             
             Document doc = docBuilder.newDocument();
+            
+            QuestionPack pack = new QuestionPack(doc);
+            if(location != null)
+                pack.setTempDownloadLocation(location);
+            if(hash != null)
+                pack.setHash(hash);
+            if(userDownloadLocation != null)
+                pack.setUserDownloadLocation(userDownloadLocation);
+            
             Element root = doc.createElementNS("bebras:Question", "root");
             
             //doc.createElement("root");
@@ -224,18 +189,23 @@ public class QuestionIO {
                 JsonNode language = languages.get(i);
                 
                 Element lang = doc.createElementNS("bebras:Question", "language");
-                lang.setAttribute("code", language.get("language").getTextValue());
+                String langCode = language.get("language").getTextValue();
+                lang.setAttribute("code", langCode);
                 
                 Element index = doc.createElementNS("bebras:Question", "index");
-                index.setTextContent(language.get("index").getTextValue());
+                if(location != null && hash != null)
+                    index.setTextContent(pack.addIndex(langCode, language.get("index").getTextValue()));
+                else
+                    index.setTextContent("validating");
                 lang.appendChild(index);
                 
-                // TODO TMP
                 Element feedback = doc.createElementNS("bebras:Question", "feedback");
-                feedback.setTextContent(language.get("feedback").getTextValue());
+                if(location != null && hash != null)
+                    feedback.setTextContent(pack.addFeedback(langCode, language.get("feedback").getTextValue()));
+                else
+                    feedback.setTextContent("validating");
                 lang.appendChild(feedback);
                 
-                // TODO TMP
                 Element title = doc.createElementNS("bebras:Question", "title");
                 title.setTextContent(language.get("title").getTextValue());
                 lang.appendChild(title);
@@ -267,10 +237,31 @@ public class QuestionIO {
             root.appendChild(questionNode);
             doc.appendChild(root);
             
-            return doc;
+            return pack;
             
         } catch (ParserConfigurationException e) {
-            throw new QuestionBuilderException("An unexpected internal error occured.");
+            throw new QuestionBuilderException("An unexpected internal error occured while parsing.");
+        } catch (IOException e) {
+            throw new QuestionBuilderException("An unexpected internal error occured while saving.");
         }
+    }
+    
+    public static String getUserUploadLocation(UserID userID) {
+        String rootLocation = Play.application().configuration().getString("questioneditor.upload");
+        File rootDirectory = new File(rootLocation);
+        if(!rootDirectory.exists())
+            rootDirectory.mkdir();
+        
+        String location = Play.application().configuration().getString("questioneditor.upload")+"/"+userID.getUserID();
+        File directory = new File(location);
+        if(!directory.exists())
+            directory.mkdir();
+        return location;
+    }
+    
+    public static File addTempFile(String location, String name) {
+        //TODO: add this file to the daemon to be deleted after a certain time
+        
+        return new File(location, name);
     }
 }

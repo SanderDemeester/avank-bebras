@@ -56,7 +56,7 @@ public class XmlQuestionTest extends test.ContextTest {
     private Question testAFile(String file) {
         Question q = null;
         try {
-            q = Question.getFromXml(file);
+            q = QuestionIO.getFromXml(file);
         } catch (QuestionBuilderException e) {
             Assert.fail(e.getMessage());
         }
@@ -128,7 +128,7 @@ public class XmlQuestionTest extends test.ContextTest {
     @Test(expected=QuestionBuilderException.class)
     public void incorrectMultipleChoiceFile1() throws QuestionBuilderException {
         Question q = null;
-        q = Question.getFromXml(INCORRECT_MC_1);
+        q = testAFile(INCORRECT_MC_1);
     }
 
     /**
@@ -138,7 +138,7 @@ public class XmlQuestionTest extends test.ContextTest {
     @Test(expected=QuestionBuilderException.class)
     public void incorrectMultipleChoiceFile2() throws QuestionBuilderException {
         Question q = null;
-        q = Question.getFromXml(INCORRECT_MC_2);
+        q = testAFile(INCORRECT_MC_2);
     }
 
     /**
@@ -148,7 +148,7 @@ public class XmlQuestionTest extends test.ContextTest {
     @Test(expected=QuestionBuilderException.class)
     public void incorrectMultipleChoiceFile3() throws QuestionBuilderException {
         Question q = null;
-        q = Question.getFromXml(INCORRECT_MC_3);
+        q = testAFile(INCORRECT_MC_3);
     }
 
     /**
@@ -158,7 +158,7 @@ public class XmlQuestionTest extends test.ContextTest {
     @Test(expected=QuestionBuilderException.class)
     public void incorrectMultipleChoiceFile4() throws QuestionBuilderException {
         Question q = null;
-        q = Question.getFromXml(INCORRECT_MC_4);
+        q = testAFile(INCORRECT_MC_4);
     }
 
     /**
@@ -168,7 +168,7 @@ public class XmlQuestionTest extends test.ContextTest {
     @Test(expected=QuestionBuilderException.class)
     public void incorrectMultipleChoiceFile5() throws QuestionBuilderException {
         Question q = null;
-        q = Question.getFromXml(INCORRECT_MC_5);
+        q = testAFile(INCORRECT_MC_5);
     }
 
     /**
@@ -178,7 +178,7 @@ public class XmlQuestionTest extends test.ContextTest {
     @Test(expected=QuestionBuilderException.class)
     public void incorrectMultipleChoiceFile6() throws QuestionBuilderException {
         Question q = null;
-        q = Question.getFromXml(INCORRECT_MC_6);
+        q = testAFile(INCORRECT_MC_6);
     }
 
     /**
@@ -188,7 +188,7 @@ public class XmlQuestionTest extends test.ContextTest {
     @Test(expected=QuestionBuilderException.class)
     public void incorrectMultipleChoiceFile7() throws QuestionBuilderException {
         Question q = null;
-        q = Question.getFromXml(INCORRECT_MC_7);
+        q = testAFile(INCORRECT_MC_7);
     }
 
     /**
@@ -198,7 +198,7 @@ public class XmlQuestionTest extends test.ContextTest {
     @Test(expected=QuestionBuilderException.class)
     public void incorrectMultipleChoiceFile8() throws QuestionBuilderException {
         Question q = null;
-        q = Question.getFromXml(INCORRECT_MC_8);
+        q = testAFile(INCORRECT_MC_8);
     }
 
     /**
@@ -208,7 +208,7 @@ public class XmlQuestionTest extends test.ContextTest {
     @Test(expected=QuestionBuilderException.class)
     public void incorrectMultipleChoiceFile9() throws QuestionBuilderException {
         Question q = null;
-        q = Question.getFromXml(INCORRECT_MC_9);
+        q = testAFile(INCORRECT_MC_9);
     }
 
     /**
@@ -218,7 +218,7 @@ public class XmlQuestionTest extends test.ContextTest {
     @Test(expected=QuestionBuilderException.class)
     public void incorrectRegexFile1() throws QuestionBuilderException {
         Question q = null;
-        q = Question.getFromXml(INCORRECT_REGEX_1);
+        q = testAFile(INCORRECT_REGEX_1);
     }
 
     /**
@@ -228,7 +228,7 @@ public class XmlQuestionTest extends test.ContextTest {
     @Test(expected=QuestionBuilderException.class)
     public void incorrectRegexFile2() throws QuestionBuilderException {
         Question q = null;
-        q = Question.getFromXml(INCORRECT_REGEX_2);
+        q = testAFile(INCORRECT_REGEX_2);
     }
 
 }
