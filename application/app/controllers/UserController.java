@@ -14,7 +14,12 @@ import java.util.Date;
 import java.util.Map;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+
+import org.apache.commons.codec.binary.Hex;
 import org.springframework.format.datetime.DateFormatter;
+
+import com.avaje.ebean.Ebean;
+
 import models.data.Link;
 import models.user.AuthenticationManager;
 import models.user.Gender;
@@ -78,8 +83,8 @@ public class UserController extends EController{
 		SecureRandom random = null;
 		SecretKeyFactory secretFactory = null;
 		byte[] passwordByteString = null;
-		String passwordUTF8 = "";
-		String saltUTF8 = "";
+		String passwordHEX = "";
+		String saltHEX = "";
 		Date birtyDay = new Date();
 		
 		try {
@@ -90,6 +95,13 @@ public class UserController extends EController{
 		
 		
 		random.nextBytes(salt);
+		saltHEX = new String(Hex.encodeHex(salt));
+		// We first encode it to hex string and then back to a byte[] array to be sure that we use 
+		// the same thing for logging in.
+		try{
+		salt = Hex.decodeHex(saltHEX.toCharArray());
+		}catch(Exception e){}
+		
 		KeySpec PBKDF2 = new PBEKeySpec(registerForm.get().password.toCharArray(), salt, 1000, 160);
 
 		try{
@@ -101,8 +113,7 @@ public class UserController extends EController{
 			passwordByteString = secretFactory.generateSecret(PBKDF2).getEncoded();
 		} catch (InvalidKeySpecException e) {}
 		try{
-			passwordUTF8 = new String(passwordByteString,"UTF-8");
-			saltUTF8 = new String(salt,"UTF-8");
+			passwordHEX = new String(Hex.encodeHex(passwordByteString));
 			birtyDay = new SimpleDateFormat("yyyy/dd/mm").parse(registerForm.get().bday);
 		}catch(Exception e){}
 		
@@ -117,11 +128,11 @@ public class UserController extends EController{
 				registerForm.get().fname + registerForm.get().lname, 
 				birtyDay, 
 				new Date(), 
-				passwordUTF8, 
-				saltUTF8, registerForm.get().email, 
+				passwordHEX,
+				saltHEX, registerForm.get().email, 
 				Gender.Male, registerForm.get().prefLanguage).save();
 		
-		return ok(emptyPage.render("Succes", new ArrayList<Link>(), r));
+		return ok(emptyPage.render("Succes", new ArrayList<Link>(), passwordHEX));
 	}
 
 	public static Result login(){
@@ -144,16 +155,46 @@ public class UserController extends EController{
 		Form<Login> loginForm = form(Login.class).bindFromRequest();
 		//We do the same check here.
 		if(loginForm.get().email == null && loginForm.get().password == null){
-			//TODO: Build standalone login page so we can redirect the user to that page.
 			return Application.index();
 		}else{ //POST data is available to us. Try to validate the user.
+			byte[] salt = null; //the users salt saved in the db.
+			byte[] passwordByteString = null; //the output from the PBKDF2 function.
+			String passwordHEX = null; // The password from the PBKDF2 output converted into a string.
+			String passwordDB = null; //the pasword as it is saved in the database.
 			
-			String username = loginForm.get().email;
-			String password = loginForm.get().password;
+			UserModel userModel = Ebean.find(UserModel.class).where().eq(
+					"email",loginForm.get().email).findUnique();
+			if(userModel == null){
+				return ok(emptyPage.render("Failed to login", new ArrayList<Link>(), "Error while logging in: email" + loginForm.get().email));
+			}
+			passwordDB = userModel.password;
+			SecretKeyFactory secretFactory = null;
+			try{
+			salt = Hex.decodeHex(userModel.hash.toCharArray());
+			}catch(Exception e){}
 			
-			//TODO: This should be a landing page.
-			return Application.index(); 
+			KeySpec PBKDF2 = new PBEKeySpec(loginForm.get().password.toCharArray(), salt, 1000, 160);
+
+			try{
+				secretFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+			}catch(Exception e){}
+
+
+			try {
+				passwordByteString = secretFactory.generateSecret(PBKDF2).getEncoded();
+			} catch (InvalidKeySpecException e) {}
+			try{
+				passwordHEX = new String(Hex.encodeHex(passwordByteString));
+			}catch(Exception e){}
 			
+			
+			if(passwordHEX.equals(passwordDB)){ 
+				//TODO: this should be users landing page based on type of account.
+				return ok(emptyPage.render("Succes", new ArrayList<Link>(), "Welkom" + userModel.name));
+			}else{
+				return ok(emptyPage.render("Failed to login", new ArrayList<Link>(), passwordHEX + "|" + passwordDB + "|" +
+						new String(Hex.encodeHex(salt))));
+			}
 		}
 	}
 
