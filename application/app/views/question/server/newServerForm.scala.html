@@ -5,7 +5,7 @@
 
 @main("Add new server", breadcrumbs) {
 
-@form(controllers.question.routes.ServerController.save()) {
+@form(controllers.question.server.routes.ServerController.save()) {
 
     <fieldset>
 
@@ -18,7 +18,7 @@
 
     <div class="actions">
         <input type="submit" value="Save" class="btn primary"> or
-        <a href="@controllers.question.routes.ServerController.list()" class="btn">Cancel</a>
+        <a href="@controllers.question.server.routes.ServerController.list()" class="btn">Cancel</a>
     </div>
 
 }

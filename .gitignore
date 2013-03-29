@@ -22,4 +22,5 @@ dist
 *.gz
 */.*
 application/bin/*
-
+application/doc/
+application/conf/evolutions/
