@@ -6,9 +6,14 @@
 GET     /                           controllers.Application.index()
 GET     /test				        controllers.Application.test(id: String)
 GET		/login						controllers.UserController.login()
-GET		/register					controllers.UserController.register()
 GET		/logout						controllers.UserController.logout()
 
+# Registration/signup
+GET		/signup						controllers.UserController.signup()
+POST	/register					controllers.UserController.register()
+
+# Login
+POST	/login_validate				controllers.UserController.validate_login()
 # Bootstrap resources
 GET     /assets/img/glyphicons-halflings-white.png      controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings-white.png")
 GET     /assets/img/glyphicons-halflings.png            controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings.png")
@@ -29,11 +34,21 @@ GET     /questioneditor/validate      controllers.question.editor.QuestionEditor
 GET     /questioneditor/export      controllers.question.editor.QuestionEditorController.export(json)
 GET     /servers                    controllers.question.ServerController.list(p:Int ?= 0, ps:Int ?=10, s ?= "name", o ?= "asc", f ?= "")
 
-GET     /servers/new                controllers.question.ServerController.create()
-POST    /servers/                   controllers.question.ServerController.save()
+GET     /servers                    controllers.question.server.ServerController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
-GET     /servers/:name              controllers.question.ServerController.edit(name)
-POST    /servers/:name              controllers.question.ServerController.update(name)
+GET     /servers/new                controllers.question.server.ServerController.create()
+POST    /servers/                   controllers.question.server.ServerController.save()
 
+GET     /servers/:name              controllers.question.server.ServerController.edit(name)
+POST    /servers/:name              controllers.question.server.ServerController.update(name)
+
+GET    /servers/remove/:name        controllers.question.server.ServerController.remove(name)
+
+<<<<<<< HEAD
 
 GET    /servers/remove/:name       controllers.question.ServerController.remove(name)
+=======
+# Bootstrap resources
+GET     /assets/img/glyphicons-halflings-white.png      controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings-white.png")
+GET     /assets/img/glyphicons-halflings.png            controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings.png")
+>>>>>>> fvdrjeug/test

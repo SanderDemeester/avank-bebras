@@ -1,33 +1,40 @@
 
 package models.user;
 
-import javax.persistence.Entity;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
 
-import controllers.user.Type;
+import models.dbentities.ClassGroup;
+import models.dbentities.UserModel;
+
+import com.avaje.ebean.Ebean;
+import play.mvc.Content;
 import play.mvc.Result;
+import views.html.landingPages.TeacherLandingPage;
 
 /**
  * @author Sander Demeester
+ * @author Jens N. Rammant
  */
 
-@Entity
 public class Teacher extends SuperUser{
 
-    /**
-     * The constructor of teacher.
-     */
-    public Teacher(UserID id, Type loginType, String name){
-    	super(id,loginType,name);
+    
 
-    }
+    public Teacher(UserModel data) {
+		super(data);
+		// TODO Auto-generated constructor stub
+	}
 
-    public void scheduleUnrestrictedCompetition(){
+	public void scheduleUnrestrictedCompetition(){
 
     }
 
     /**
      * @param regex A regex for filtering.
-     * Apply's a seach filter for the teacher to Filter through all students in the System
+     * Applys a seach filter for the teacher to Filter through all students in the System
      */
     public void searchStudents(String regex){
         //TODO: Need to add some filtering system
@@ -46,6 +53,33 @@ public class Teacher extends SuperUser{
      */
     public Result manageCompetitions(){
         return null;
-    }
+    }	
+	
+	/*
+	 * Creates the personalized landing page for this instance of Teacher.
+	 * @return Personalized landing page for this instance of teacher
+	 */
+	public Content getLandingPage(){		
+		//TODO
+		return null;
+	}
+
+	@Override
+	public Result showStatistics() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	/*
+	 * Queries the database for all Classes that this Teacher is main teacher of
+	 * @return List of all ClassGroups this Teacher is main Teacher of
+	 */
+	public Collection<ClassGroup> getClasses(){
+		
+		java.util.List<ClassGroup> res = Ebean.find(ClassGroup.class).where()
+				.eq("teacherid", this.data.id).findList();
+		
+		return res;
+	}
 
 }

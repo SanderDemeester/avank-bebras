@@ -1,33 +1,21 @@
 
 package models.user;
 
-import javax.persistence.Entity;
-
-import controllers.user.Type;
-
 import models.competition.Competition;
+import models.dbentities.UserModel;
 
 /**
  * @author Sander Demeester
  */
-@Entity
 public class Pupil extends Independent{
 
-    //We first need a competition object.
-
-    public Pupil(Independent independent){
-        super(independent);
-    }
-
-
-
-	public Pupil(UserID userID, Type logintType, String name) {
+    public Pupil(UserModel data) {
+		super(data);
 		// TODO Auto-generated constructor stub
-		super(userID,logintType,name);
 	}
 
-
-
+	//We first need a competition object.
+	
 	/**
      *
      * @param competition

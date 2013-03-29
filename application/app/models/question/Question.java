@@ -37,6 +37,7 @@ import models.data.Language;
 import models.user.User;
 
 import org.codehaus.jackson.JsonNode;
+import models.question.server.Server;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -164,6 +165,8 @@ public abstract class Question {
      * @throws QuestionBuilderException possible things that can go wrong
      */
     public static Question getFromXml(String xml) throws QuestionBuilderException {
+        // TODO: Set server and ID upon loading the XML file
+        Question question = null;
         try {
             // Parse the given XML into a DOM tree
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

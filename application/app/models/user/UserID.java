@@ -10,14 +10,14 @@ public class UserID {
     private String userID;
 
     public UserID(String UserID){
-        this.userID = userID;
+        this.userID = UserID;
     }
 
     /**
      *
      * @return Get the users ID.
      */
-    public String geUserID(){
+    public String getUserID(){
         return userID;
     }
 
