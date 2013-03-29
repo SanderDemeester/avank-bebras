@@ -44,11 +44,4 @@ POST    /servers/:name              controllers.question.server.ServerController
 
 GET    /servers/remove/:name        controllers.question.server.ServerController.remove(name)
 
-<<<<<<< HEAD
-
 GET    /servers/remove/:name       controllers.question.ServerController.remove(name)
-=======
-# Bootstrap resources
-GET     /assets/img/glyphicons-halflings-white.png      controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings-white.png")
-GET     /assets/img/glyphicons-halflings.png            controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings.png")
->>>>>>> fvdrjeug/test
