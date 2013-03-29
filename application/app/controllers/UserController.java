@@ -66,13 +66,13 @@ public class UserController extends EController{
 	 * @return Result page.
 	 */
 	public static Result signup(){
-		//TODO: Delegate to authenticationManager
 		setCommonHeaders();
 		return ok(register.render("Registration", 
 				new ArrayList<Link>(),
 				form(Register.class)
 		));
 	}
+	
 	/**
 	 * this methode is called when the user submits his/here register information.
 	 * @return Result page
