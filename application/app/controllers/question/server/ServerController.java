@@ -68,7 +68,7 @@ public class ServerController extends Controller {
      * @return edit a server page
      */
     public static Result edit(String name){
-        Form<Server> form = form(Server.class).bindFromRequest().fill((Server) new ServerManager().getFinder().ref(name));
+        Form<Server> form = form(Server.class).bindFromRequest().fill(new ServerManager().getFinder().ref(name));
         return ok(editServerForm.render(form, name, new ArrayList<Link>()));
     }
 
@@ -80,7 +80,7 @@ public class ServerController extends Controller {
      * @return server list page
      */
     public static Result update(String name){
-        Form<Server> form = form(Server.class).fill((Server) new ServerManager().getFinder().byId(name)).bindFromRequest();
+        Form<Server> form = form(Server.class).fill(new ServerManager().getFinder().byId(name)).bindFromRequest();
         if(form.hasErrors()) {
             return badRequest(editServerForm.render(form, name, new ArrayList<Link>()));
         }
@@ -97,7 +97,7 @@ public class ServerController extends Controller {
      * @return server list page
      */
     public static Result remove(String name){
-        Server server = (Server) new ServerManager().getFinder().byId(name);
+        Server server = new ServerManager().getFinder().byId(name);
         server.delete();
         return redirect(routes.ServerController.list(0, "name", "asc", ""));
     }

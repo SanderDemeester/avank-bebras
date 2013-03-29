@@ -38,8 +38,8 @@ GET     /servers/remove/:name       controllers.question.server.ServerController
 GET     /questionsets               controllers.question.questionset.QuestionSetController.overview(q ?="", p:Int ?= 0, s ?= "", o ?= "", f ?= "")
 GET     /questionsets/new           controllers.question.questionset.QuestionSetController.create()
 # post
-GET     /questionsets/:id           controllers.question.questionset.QuestionSetController.edit(id)
-# post
+GET     /questionsets/:id           controllers.question.questionset.QuestionSetController.edit(id, p:Int ?= 0, s ?= "", o ?= "", f ?= "")
+POST    /questionsets/:id           controllers.question.questionset.QuestionSetController.update(id)
 GET     /questionsets/remove/:id    controllers.question.questionset.QuestionSetController.remove(id)
 
 

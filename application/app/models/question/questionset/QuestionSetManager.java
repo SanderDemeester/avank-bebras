@@ -59,7 +59,7 @@ public class QuestionSetManager extends Manager<QuestionSetModel> {
      */
     @Override
     public Call getEditRoute(String id) {
-        return routes.QuestionSetController.edit(id);
+        return routes.QuestionSetController.edit(id, 0, "", "", "");
     }
 
     /**

@@ -1,0 +1,18 @@
+@(questionSetForm: Form[models.dbentities.QuestionSetModel], id: String)
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@form(controllers.question.questionset.routes.QuestionSetController.update(id)) {
+
+    <fieldset>
+
+        @inputText(questionSetForm("id"), '_label -> "New question set id")
+
+    </fieldset>
+
+    <div class="actions">
+        <input type="submit" value="Save changes" class="btn primary">
+    </div>
+
+}

@@ -5,7 +5,8 @@
 ***************************************@
 
 @(selectedqsid: String, breadcrumbs : List[models.data.Link], currentPage: Page[models.management.Manageable],
-    manager: models.management.Manager[_], currentOrderBy: String, currentOrder: String, currentFilter: String)
+    manager: models.management.Manager[_], currentOrderBy: String, currentOrder: String, currentFilter: String,
+    questionSetForm: Form[models.dbentities.QuestionSetModel])
 
 @import views.html.management.list
 
@@ -31,6 +32,9 @@
                 <h4> No question set selected! </h4>
             } else {
                 <h4> Question set @selectedqsid </h4>
+                <div>
+                    @editQuestionSetForm(questionSetForm, selectedqsid)
+                </div>
             }
         </div>
 
