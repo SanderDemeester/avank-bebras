@@ -27,12 +27,16 @@ public class QuestionSetModel extends Model {
     @Id
     public String id;
 
+    @Transient
     public Grade grade;
+    @Transient
     public Map<Question, Difficulty> difficulties;
+    @Transient
     public boolean active;
+    @Transient
     public Competition competition;
+    @Transient
     public Set<Question> questions;
-
     @Transient
     public List<Language> languages;
 
