@@ -26,14 +26,19 @@ GET		/questioneditor/create		controllers.question.editor.QuestionEditorControlle
 POST    /questioneditor/            controllers.question.editor.QuestionEditorController.save()
 
 GET     /servers                    controllers.question.server.ServerController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
-
 GET     /servers/new                controllers.question.server.ServerController.create()
 POST    /servers/                   controllers.question.server.ServerController.save()
-
 GET     /servers/:name              controllers.question.server.ServerController.edit(name)
 POST    /servers/:name              controllers.question.server.ServerController.update(name)
+GET     /servers/remove/:name       controllers.question.server.ServerController.remove(name)
 
-GET    /servers/remove/:name        controllers.question.server.ServerController.remove(name)
+GET     /questionsets               controllers.question.questionset.QuestionSetController.overview(q ?="", p:Int ?= 0, s ?= "", o ?= "", f ?= "")
+GET     /questionsets/new           controllers.question.questionset.QuestionSetController.create()
+# post
+GET     /questionsets/:id           controllers.question.questionset.QuestionSetController.edit(id)
+# post
+GET     /questionsets/remove/:id    controllers.question.questionset.QuestionSetController.remove(id)
+
 
 # Bootstrap resources
 GET     /assets/img/glyphicons-halflings-white.png      controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings-white.png")

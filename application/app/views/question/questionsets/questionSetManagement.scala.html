@@ -1,0 +1,39 @@
+@***************************************
+*   Question set management page       *
+*                                      *
+*   author: Kevin Stobbelaar           *
+***************************************@
+
+@(selectedqsid: String, breadcrumbs : List[models.data.Link], currentPage: Page[models.management.Manageable],
+    manager: models.management.Manager[_], currentOrderBy: String, currentOrder: String, currentFilter: String)
+
+@import views.html.management.list
+
+@main("Question set management", breadcrumbs){
+
+    <div class="row">
+
+        @*************************************
+        * Overview of existing question sets *
+        *************************************@
+        <div class="span4">
+            <h4>Overview</h4>
+            <div>
+                @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
+            </div>
+        </div>
+
+        @*****************************************************
+        * Information about the selected set in the overview *
+        *****************************************************@
+        <div class="span8">
+            @if(selectedqsid == ""){
+                <h4> No question set selected! </h4>
+            } else {
+                <h4> Question set @selectedqsid </h4>
+            }
+        </div>
+
+    </div>
+
+}

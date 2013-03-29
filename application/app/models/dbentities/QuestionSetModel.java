@@ -4,6 +4,7 @@ import models.competition.Competition;
 import models.data.Difficulty;
 import models.data.Grade;
 import models.data.Language;
+import models.management.Manageable;
 import models.question.Question;
 import play.db.ebean.Model;
 
@@ -21,8 +22,8 @@ import java.util.Set;
  * @author Kevin Stobbelaar
  */
 @Entity
-@Table(name="questionsets")
-public class QuestionSetModel extends Model {
+@Table(name="questionsetstest")
+public class QuestionSetModel extends Model implements Manageable {
 
     @Id
     public String id;
@@ -40,4 +41,24 @@ public class QuestionSetModel extends Model {
     @Transient
     public List<Language> languages;
 
+    /**
+     * Returns those values that have to be represented in a table.
+     *
+     * @return array with the current values of the fields to be represented in the table
+     */
+    @Override
+    public String[] getFieldValues() {
+        String[] result = {id};
+        return result;
+    }
+
+    /**
+     * Returns the id of the object.
+     *
+     * @return id
+     */
+    @Override
+    public String getID() {
+        return id;
+    }
 }
