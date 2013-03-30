@@ -36,8 +36,9 @@ import views.html.landingPages.IndependentPupilLandingPage;
 import views.html.landingPages.OrganizerLandingPage;
 import views.html.landingPages.PupilLandingPage;
 import views.html.register;
-import views.html.emptyPage;
+import views.html.registerLandingPage;
 import views.html.login;
+import views.html.loginLandingPage;
 import controllers.user.Type;
 
 /**
@@ -87,6 +88,10 @@ public class UserController extends EController{
 		String saltHEX = "";
 		Date birtyDay = new Date();
 		
+		
+		//Zijn de 2 eerste letters van uw voornaam en de 7 of MAX letters van uw achternaam.
+		String bebrasID = null; 
+		
 		try {
 			random = SecureRandom.getInstance("SHA1PRNG");
 		} catch (NoSuchAlgorithmException e) {}
@@ -95,12 +100,6 @@ public class UserController extends EController{
 		
 		
 		random.nextBytes(salt);
-		saltHEX = new String(Hex.encodeHex(salt));
-		// We first encode it to hex string and then back to a byte[] array to be sure that we use 
-		// the same thing for logging in.
-		try{
-		salt = Hex.decodeHex(saltHEX.toCharArray());
-		}catch(Exception e){}
 		
 		KeySpec PBKDF2 = new PBEKeySpec(registerForm.get().password.toCharArray(), salt, 1000, 160);
 
@@ -117,6 +116,9 @@ public class UserController extends EController{
 			birtyDay = new SimpleDateFormat("yyyy/dd/mm").parse(registerForm.get().bday);
 		}catch(Exception e){}
 		
+		bebrasID = registerForm.get().fname.toLowerCase().substring(0,2);
+		bebrasID += registerForm.get().lname.toLowerCase().substring(2, registerForm.get().lname.length() < 7 ? registerForm.get().lname.length() : 7);
+		
 		String r = "Welkom ";
 		r += registerForm.get().fname + "!";
 
@@ -124,7 +126,7 @@ public class UserController extends EController{
 		 * There needs to be some more logic here for generating bebras ID's 
 		 * Save user object in database.
 		 */
-		new UserModel(new UserID(Integer.toString(Math.abs(random.nextInt()))), Type.INDEPENDENT,
+		new UserModel(new UserID(bebrasID), Type.INDEPENDENT,
 				registerForm.get().fname + registerForm.get().lname, 
 				birtyDay, 
 				new Date(), 
@@ -132,14 +134,14 @@ public class UserController extends EController{
 				saltHEX, registerForm.get().email, 
 				Gender.Male, registerForm.get().prefLanguage).save();
 		
-		return ok(emptyPage.render("Succes", new ArrayList<Link>(), passwordHEX));
+		return ok(registerLandingPage.render("Succes", new ArrayList<Link>(), bebrasID,passwordHEX));
 	}
 
 	public static Result login(){
 		setCommonHeaders();
 		Form<Login> loginForm = form(Login.class).bindFromRequest();
 		//We need to do this check, because a user can this URL without providing POST data.
-		if(loginForm.get().email == null && loginForm.get().password == null){
+		if(loginForm.get().id == null && loginForm.get().password == null){
 			return ok(login.render("login", 
 					new ArrayList<Link>(),
 					form(Login.class)
@@ -154,7 +156,7 @@ public class UserController extends EController{
 		setCommonHeaders();
 		Form<Login> loginForm = form(Login.class).bindFromRequest();
 		//We do the same check here.
-		if(loginForm.get().email == null && loginForm.get().password == null){
+		if(loginForm.get().id == null && loginForm.get().password == null){
 			return Application.index();
 		}else{ //POST data is available to us. Try to validate the user.
 			byte[] salt = null; //the users salt saved in the db.
@@ -163,9 +165,9 @@ public class UserController extends EController{
 			String passwordDB = null; //the pasword as it is saved in the database.
 			
 			UserModel userModel = Ebean.find(UserModel.class).where().eq(
-					"email",loginForm.get().email).findUnique();
+					"id",loginForm.get().id).findUnique();
 			if(userModel == null){
-				return ok(emptyPage.render("Failed to login", new ArrayList<Link>(), "Error while logging in: email" + loginForm.get().email));
+				return ok(loginLandingPage.render("Failed to login", new ArrayList<Link>(), "Error while logging in: email" + loginForm.get().id));
 			}
 			passwordDB = userModel.password;
 			SecretKeyFactory secretFactory = null;
@@ -190,9 +192,9 @@ public class UserController extends EController{
 			
 			if(passwordHEX.equals(passwordDB)){ 
 				//TODO: this should be users landing page based on type of account.
-				return ok(emptyPage.render("Succes", new ArrayList<Link>(), "Welkom" + userModel.name));
+				return ok(loginLandingPage.render("Succes", new ArrayList<Link>(), "Welkom" + userModel.name));
 			}else{
-				return ok(emptyPage.render("Failed to login", new ArrayList<Link>(), passwordHEX + "|" + passwordDB + "|" +
+				return ok(loginLandingPage.render("Failed to login", new ArrayList<Link>(), passwordHEX + "|" + passwordDB + "|" +
 						new String(Hex.encodeHex(salt))));
 			}
 		}
@@ -224,7 +226,7 @@ public class UserController extends EController{
 	}
 	
 	public static class Login{
-		public String email;
+		public String id;
 		public String password;
 	}
 
