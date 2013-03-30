@@ -27,7 +27,9 @@ public class AuthenticationManager {
 	
 	//private Map<String,User> sessionIdToUser = new HashMap<String,User>();
 	//private Map<String,LoginState> mappingFromSessieIDtoLoginState =	new HashMap<String,LoginState>();
-	private Map<String, Stack<User>> users;
+	
+    // String: value of the COOKIENAME cookie
+    private Map<String, Stack<User>> users;
 	private static final String COOKIENAME = "avank.auth";
 	private static final Map<UserType, UserFactory> FACTORIES = new HashMap<UserType, UserFactory>();
 	
@@ -93,7 +95,10 @@ public class AuthenticationManager {
         User current = getUser();
         User user = create(userModel);
         Stack<User> stack = users.get(getAuthCookie());
-        if(current.canMimic(user)) {
+        if(stack == null) {
+            stack = new Stack<User>();
+            users.put(getAuthCookie(), stack);
+        } else if(current.canMimic(user)) {
             stack.add(user);
         }
         return stack.firstElement();

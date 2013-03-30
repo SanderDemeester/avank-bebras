@@ -14,6 +14,7 @@ import models.dbentities.UserModel;
 public abstract class User{
 
 	public UserModel data;
+	// The roles this user has or can have
 	protected static Set<Role> ROLES = new HashSet<Role>();// Can be made non-static if roles have to be altered on runtime
 	private UserType type;
 	
@@ -73,14 +74,28 @@ public abstract class User{
     	return data.id;
     }
     
+    /**
+     * Check if a user has a certain role
+     * @param role
+     * @return
+     */
     public boolean hasRole(Role role) {
         return ROLES.contains(role);
     }
     
+    /**
+     * Get the type of this user
+     * @return
+     */
     public UserType getType() {
         return this.type;
     }
     
+    /**
+     * Check if this user is able to mimic the given user
+     * @param user
+     * @return
+     */
     public boolean canMimic(User user) {
         return this.getType().ordinal() > user.getType().ordinal()
                 && this.hasRole(Role.MIMIC);
