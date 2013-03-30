@@ -23,6 +23,7 @@ import com.avaje.ebean.Ebean;
 import models.data.Link;
 import models.user.AuthenticationManager;
 import models.user.Gender;
+import models.user.Type;
 import models.user.UserID;
 import play.data.Form;
 import play.mvc.Content;
@@ -39,7 +40,6 @@ import views.html.register;
 import views.html.registerLandingPage;
 import views.html.login;
 import views.html.loginLandingPage;
-import controllers.user.Type;
 
 /**
  * This class receives all GET requests and based on there session identifier (cookie)

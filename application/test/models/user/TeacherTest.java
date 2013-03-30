@@ -22,7 +22,6 @@ import org.junit.Test;
 
 import com.avaje.ebean.Ebean;
 
-import controllers.user.Type;
 
 import test.ContextTest;
 import static models.user.UserTests.createTestUserModel;

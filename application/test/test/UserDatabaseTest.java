@@ -10,6 +10,7 @@ import models.user.Independent;
 import models.user.Organizer;
 import models.user.Pupil;
 import models.user.Teacher;
+import models.user.Type;
 import models.user.User;
 import models.user.UserID;
 
@@ -24,7 +25,6 @@ import java.math.BigInteger;
 import javax.persistence.PersistenceException;
 
 import junit.framework.Assert;
-import controllers.user.Type;
 import static play.test.Helpers.*;
 
 public class UserDatabaseTest extends ContextTest {

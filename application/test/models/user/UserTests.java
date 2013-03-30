@@ -10,7 +10,6 @@ import models.dbentities.UserModel;
 import models.user.Gender;
 import models.user.UserID;
 
-import controllers.user.Type;
 
 @RunWith(Suite.class)
 @SuiteClasses({ LoginStateTest.class })

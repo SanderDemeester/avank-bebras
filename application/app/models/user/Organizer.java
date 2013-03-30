@@ -14,7 +14,12 @@ import play.mvc.Result;
 
 public class Organizer extends SuperUser{
 
-    
+    static {
+        ROLES.add(Role.CREATEQUESTION);
+        ROLES.add(Role.READQUESTION);
+        ROLES.add(Role.UPDATEQUESTION);
+        ROLES.add(Role.DELETEQUESTION);
+    }
 
     public Organizer(UserModel data) {
 		super(data);

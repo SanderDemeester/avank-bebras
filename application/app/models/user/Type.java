@@ -1,4 +1,4 @@
-package controllers.user;
+package models.user;
 
 /**
  * Enumerates the different types of user.

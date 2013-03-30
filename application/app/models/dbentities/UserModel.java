@@ -13,9 +13,9 @@ import javax.persistence.Table;
 import javax.persistence.Column;
 
 import models.user.Gender;
+import models.user.Type;
 import models.user.UserID;
 
-import controllers.user.Type;
 import play.data.format.Formats;
 import play.db.ebean.Model;
 import play.db.ebean.Model.Finder;

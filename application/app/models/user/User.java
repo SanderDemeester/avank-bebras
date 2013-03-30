@@ -1,24 +1,25 @@
 
 package models.user;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import models.dbentities.UserModel;
-import play.mvc.Content;
-import play.mvc.Result;
 
 /**
  * The default abstract class for User.
- * @author Sander Demeester
+ * @author Sander Demeester, Ruben Taelman
 **/
 
 public abstract class User{
 
 	public UserModel data;
+	public static Set<Role> ROLES = new HashSet<Role>();// Can be made non-static if roles have to be altered on runtime
 
     /**
 	 * @param data
 	 */
 	public User(UserModel data) {
-		super();
 		this.data = data;
 	}
 
@@ -71,18 +72,8 @@ public abstract class User{
     	return null;
     }
     
-    /*
-     * Returns the statistics page
-     * @return Statistics Page
-     */
-    //public abstract Result showStatistics();
-    
-    /*
-     * Returns the personal info page
-     * @return Personal Info Page
-     */
-    public Result showPersonalInformation(){
-    	return null;
+    public boolean hasRole(Role role) {
+        return ROLES.contains(role);
     }
     
 

@@ -16,8 +16,6 @@ import models.user.factory.PupilUserFactory;
 import models.user.factory.TeacherUserFactory;
 import models.user.factory.UserFactory;
 import play.mvc.Http.Context;
-import controllers.user.Roles;
-import controllers.user.Type;
 
 /**
  * Class to handle UserAuthentication.
@@ -66,8 +64,8 @@ public class AuthenticationManager {
     /**
      * @return Gives back a list of the roles that a given user has. 
      **/
-    public List<Roles> getUserRolles(User user){
-    	return new ArrayList<Roles>();
+    public List<Role> getUserRolles(User user){
+    	return new ArrayList<Role>();
     }
     
     /**
@@ -102,7 +100,7 @@ public class AuthenticationManager {
      */
     public User getUser() {
         Stack<User> stack = users.get(getAuthCookie());
-        if(stack==null) return null;
+        if(stack==null) return new Anon();
         else            return stack.firstElement();
     }
     

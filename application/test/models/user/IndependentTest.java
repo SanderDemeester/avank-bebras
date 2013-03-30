@@ -18,7 +18,6 @@ import org.junit.Test;
 import com.avaje.ebean.Ebean;
 
 import test.ContextTest;
-import controllers.user.Type;
 import static models.user.UserTests.createTestUserModel;
 
 public class IndependentTest extends ContextTest {
