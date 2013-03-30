@@ -112,12 +112,13 @@ public class UserController extends EController{
 			passwordByteString = secretFactory.generateSecret(PBKDF2).getEncoded();
 		} catch (InvalidKeySpecException e) {}
 		try{
+			saltHEX = new String(Hex.encodeHex(salt));
 			passwordHEX = new String(Hex.encodeHex(passwordByteString));
 			birtyDay = new SimpleDateFormat("yyyy/dd/mm").parse(registerForm.get().bday);
 		}catch(Exception e){}
 		
 		bebrasID = registerForm.get().fname.toLowerCase().substring(0,2);
-		bebrasID += registerForm.get().lname.toLowerCase().substring(2, registerForm.get().lname.length() < 7 ? registerForm.get().lname.length() : 7);
+		bebrasID += registerForm.get().lname.toLowerCase().substring(0, registerForm.get().lname.length() < 7 ? registerForm.get().lname.length() : 7);
 		
 		String r = "Welkom ";
 		r += registerForm.get().fname + "!";
