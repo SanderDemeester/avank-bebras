@@ -54,7 +54,7 @@ public class UserController extends EController{
 	 * beautiful view for the user :)
 	 */
 	private HashMap<Type, Class<?>> landingPageHashmap = new HashMap<Type, Class<?>>();
-	private AuthenticationManager authenticatieManger = new AuthenticationManager();
+	private AuthenticationManager authenticatieManger = AuthenticationManager.getInstance();
 
 	public UserController(){
 		landingPageHashmap.put(Type.ADMINISTRATOR, AdminLandingPage.class);
