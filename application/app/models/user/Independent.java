@@ -48,7 +48,7 @@ public class Independent extends User{
     }
 
     public ClassGroup getCurrentClass(){
-    	return Ebean.find(ClassGroup.class).where().eq("id", this.data.classgroup).findUnique();
+        return Ebean.find(ClassGroup.class).where().eq("id", this.data.classgroup).findUnique();
     }
 
 	@Override

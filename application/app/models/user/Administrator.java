@@ -10,48 +10,48 @@ import play.mvc.Result;
  */
 public class Administrator extends Organizer{
 
-       
-    public Administrator(UserModel data) {
-		super(data);
-		// TODO Auto-generated constructor stub
-	}
 
-	/*
+    public Administrator(UserModel data) {
+        super(data);
+        // TODO Auto-generated constructor stub
+    }
+
+    /*
      * returns the management page for the homepage links
      * @return Homepage Links Management page
      */
     public Result manageHomepageLinks(){
-    	return null;
+        return null;
     }
-    
+
     /*
      * returns the grades page
      * @return Grades Page
      */
     public Result manageGrades(){
-    	return null;
+        return null;
     }
-    
+
     /*
      * returns difficulties page
      * @result Difficulties Page
      */
     public Result manageDifficulties(){
-    	return null;
+        return null;
     }
-    
+
     /*
      * return FAQ management page
      * @return FAQ Management Page
      */
     public Result manageFAQ(){
-    	return null;
+        return null;
     }
-    
+
     @Override
     public Content getLandingPage(){
-    	//TODO
-    	return null;
+        //TODO
+        return null;
     }
 
 }

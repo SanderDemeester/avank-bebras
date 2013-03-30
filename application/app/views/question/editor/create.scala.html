@@ -6,21 +6,21 @@
 @import helper.twitterBootstrap._
 
 @main("Question Editor", breadcrumbs) {
-	@helper.form(action = controllers.question.editor.routes.QuestionEditorController.save(), 'id -> "question") {
-    
-	    @repeat(questionForm("languages"), min = 1) { language =>
-		    @select(
-		    			language,
-		    			options = options(RawQuestion.languageList),
-		    			'_default -> "--- Choose a language ---",
-		    			'_label -> "Language",
-            			'_error -> questionForm("languages").error.map(_.withMessage("Please select a language"))
-		    )
-		}
-	    
-	    <div class="actions">
-	        <input type="submit" name="action" class="btn primary" value="Save" />
-	    </div>
-	    
-	}
+    @helper.form(action = controllers.question.editor.routes.QuestionEditorController.save(), 'id -> "question") {
+
+        @repeat(questionForm("languages"), min = 1) { language =>
+            @select(
+                        language,
+                        options = options(RawQuestion.languageList),
+                        '_default -> "--- Choose a language ---",
+                        '_label -> "Language",
+                        '_error -> questionForm("languages").error.map(_.withMessage("Please select a language"))
+            )
+        }
+
+        <div class="actions">
+            <input type="submit" name="action" class="btn primary" value="Save" />
+        </div>
+
+    }
 }
