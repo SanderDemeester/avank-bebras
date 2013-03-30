@@ -14,21 +14,26 @@ import java.util.Date;
 import java.util.Map;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-
+import play.api.templates.Html;	
+import play.api.templates.Template1;
+import play.templates.Format;
 import org.apache.commons.codec.binary.Hex;
 import org.springframework.format.datetime.DateFormatter;
-
 import com.avaje.ebean.Ebean;
-
 import models.data.Link;
 import models.user.AuthenticationManager;
 import models.user.Gender;
 import models.user.UserType;
 import models.user.UserID;
+import play.Play;
+import play.api.libs.Crypto;
 import play.data.Form;
+import play.libs.Scala;
 import play.mvc.Content;
+import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Results.Redirect;
+import play.templates.BaseScalaTemplate;
 import scala.collection.mutable.HashMap;
 import models.dbentities.UserModel;
 import views.html.index;
@@ -56,6 +61,8 @@ public class UserController extends EController{
 	private HashMap<UserType, Class<?>> landingPageHashmap = new HashMap<UserType, Class<?>>();
 	private AuthenticationManager authenticatieManger = AuthenticationManager.getInstance();
 
+	private static final String COOKIENAME = "avank.auth";
+	
 	public UserController(){
 		landingPageHashmap.put(UserType.ADMINISTRATOR, AdminLandingPage.class);
 		landingPageHashmap.put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
@@ -193,6 +200,20 @@ public class UserController extends EController{
 			
 			if(passwordHEX.equals(passwordDB)){ 
 				//TODO: this should be users landing page based on type of account.
+				String cookie = "";
+				try {
+					//generate random id to auth user.
+					cookie = Integer.toString(Math.abs(SecureRandom.getInstance("SHA1PRNG").nextInt(100)));
+					
+					//set the cookie. There really is no need for Crypto.sign because a cookie should be random value that has no meaning
+					response().setCookie(COOKIENAME, Crypto.sign(cookie));
+					
+					//authenticate the user to the AuthenticationManager
+					AuthenticationManager.getInstance().login(userModel);
+				} catch (NoSuchAlgorithmException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				return ok(loginLandingPage.render("Succes", new ArrayList<Link>(), "Welkom " + userModel.name));
 			}else{
 				return ok(loginLandingPage.render("Failed to login", new ArrayList<Link>(), passwordHEX + "|" + passwordDB + "|" +
@@ -212,6 +233,12 @@ public class UserController extends EController{
 		/*
 		 * The result will come from the landingPageHashMap
 		 */
+		return null;
+	}
+	
+	public Result landingPage(){
+		String cookie = request().cookies().get(COOKIENAME).value();
+		play.api.templates.Template1<java.lang.String, play.api.templates.Html> r = (Template1<String, Html>) landingPageHashmap.get(authenticatieManger.getInstance().getLoginState(cookie).getType());
 		return null;
 	}
 

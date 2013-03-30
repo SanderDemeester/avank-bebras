@@ -74,9 +74,10 @@ public class AuthenticationManager {
      * get the loginState of the sessieID
      * @return getLoginState 
      */
-    /*public LoginState getLoginState(String sessieID){
-    	return mappingFromSessieIDtoLoginState.get(sessieID);
-    }*/
+    
+    public User getLoginState(String sessieID){
+    	return users.get(sessieID).peek();
+    }
     
     /**
      * 
