@@ -14,13 +14,15 @@ import models.dbentities.UserModel;
 public abstract class User{
 
 	public UserModel data;
-	public static Set<Role> ROLES = new HashSet<Role>();// Can be made non-static if roles have to be altered on runtime
-
+	protected static Set<Role> ROLES = new HashSet<Role>();// Can be made non-static if roles have to be altered on runtime
+	private UserType type;
+	
     /**
 	 * @param data
 	 */
-	public User(UserModel data) {
+	public User(UserModel data, UserType type) {
 		this.data = data;
+		this.type = type;
 	}
 
 	/**
@@ -51,10 +53,10 @@ public abstract class User{
     }
 
     /**
-     * Logs out the user. Is delegated to the AuthenticationManager.
+     * Logs out the user or pops a mimic.
      */
     public void logout(){
-
+        AuthenticationManager.getInstance().logout();
     }
     
     /*
@@ -67,15 +69,21 @@ public abstract class User{
      * Returns the userID
      * @return userID
      */
-    public UserID getID(){
-    	//TODO
-    	return null;
+    public String getID(){
+    	return data.id;
     }
     
     public boolean hasRole(Role role) {
         return ROLES.contains(role);
     }
     
-
+    public UserType getType() {
+        return this.type;
+    }
+    
+    public boolean canMimic(User user) {
+        return this.getType().ordinal() > user.getType().ordinal()
+                && this.hasRole(Role.MIMIC);
+    }
 
 }

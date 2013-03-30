@@ -29,15 +29,15 @@ public class AuthenticationManager {
 	//private Map<String,LoginState> mappingFromSessieIDtoLoginState =	new HashMap<String,LoginState>();
 	private Map<String, Stack<User>> users;
 	private static final String COOKIENAME = "avank.auth";
-	private static final Map<Type, UserFactory> FACTORIES = new HashMap<Type, UserFactory>();
+	private static final Map<UserType, UserFactory> FACTORIES = new HashMap<UserType, UserFactory>();
 	
 	static {
-	    FACTORIES.put(Type.ADMINISTRATOR, new AdministratorUserFactory());
-	    FACTORIES.put(Type.AUTHOR, new AuthorUserFactory());
-	    FACTORIES.put(Type.INDEPENDENT, new IndependentUserFactory());
-	    FACTORIES.put(Type.ORGANIZER, new OrganizerUserFactory());
-	    FACTORIES.put(Type.PUPIL, new PupilUserFactory());
-	    FACTORIES.put(Type.TEACHER, new TeacherUserFactory());
+	    FACTORIES.put(UserType.ADMINISTRATOR, new AdministratorUserFactory());
+	    FACTORIES.put(UserType.AUTHOR, new AuthorUserFactory());
+	    FACTORIES.put(UserType.INDEPENDENT, new IndependentUserFactory());
+	    FACTORIES.put(UserType.ORGANIZER, new OrganizerUserFactory());
+	    FACTORIES.put(UserType.PUPIL, new PupilUserFactory());
+	    FACTORIES.put(UserType.TEACHER, new TeacherUserFactory());
 	}
 
     /**
@@ -84,10 +84,29 @@ public class AuthenticationManager {
     	return mappingFromStringToUser.get(sessieID);
     }*/
     
-    public void login(UserModel userModel) {
+    /**
+     * Login or mimic with a new usermodel
+     * @param userModel
+     */
+    public User login(UserModel userModel) {
+        // Check if the current user can mimic that user and login (add to stack) if that's the case
+        User current = getUser();
         User user = create(userModel);
         Stack<User> stack = users.get(getAuthCookie());
-        stack.add(user);
+        if(current.canMimic(user)) {
+            stack.add(user);
+        }
+        return stack.firstElement();
+    }
+    
+    /**
+     * Logout a usermodel (or pop a mimic)
+     * @param userModel
+     */
+    public User logout() {
+        Stack<User> stack = users.get(getAuthCookie());
+        stack.pop();
+        return stack.firstElement();
     }
     
     private User create(UserModel userModel) {

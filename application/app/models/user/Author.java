@@ -9,7 +9,7 @@ public class Author extends Authenticated{
     }
     
     public Author(UserModel data) {
-        super(data);
+        super(data, UserType.AUTHOR);
     }
 
 }

@@ -12,8 +12,7 @@ public class Administrator extends Organizer{
 
        
     public Administrator(UserModel data) {
-		super(data);
-		// TODO Auto-generated constructor stub
+		super(data, UserType.ADMINISTRATOR);
 	}
 
 	/*

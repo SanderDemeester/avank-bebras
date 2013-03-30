@@ -9,8 +9,8 @@ public abstract class Authenticated extends User{
         ROLES.add(Role.LANDINGPAGE);
     }
 
-    public Authenticated(UserModel data) {
-        super(data);
+    public Authenticated(UserModel data, UserType type) {
+        super(data, type);
     }
 
 }

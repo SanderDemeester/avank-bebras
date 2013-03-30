@@ -46,7 +46,7 @@ public class TeacherTest extends ContextTest {
 	 */
 	@Test
 	public void testGetClasses() {
-		UserModel data = createTestUserModel(Type.TEACHER);
+		UserModel data = createTestUserModel(UserType.TEACHER);
 		
 		ClassGroup cp1=new ClassGroup();
 		cp1.id="b";

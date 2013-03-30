@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.Column;
 
 import models.user.Gender;
-import models.user.Type;
+import models.user.UserType;
 import models.user.UserID;
 
 import play.data.format.Formats;
@@ -48,14 +48,14 @@ public class UserModel extends Model{
 	public Gender gender;
 
 	@Enumerated(EnumType.STRING)
-	public Type type;
+	public UserType type;
 
 	public boolean active;
 
 	@Column(name="class")
 	public String classgroup;
 
-	public UserModel(UserID id, Type loginType, String name,
+	public UserModel(UserID id, UserType loginType, String name,
 			Date birthdate, Date registrationdate,
 			String password, String hash, String email,
 			Gender gender, String preflanguage){

@@ -6,6 +6,9 @@ package models.user;
  *
  */
 public enum Role {
+    
+    // Mimicing
+    MIMIC,
 
     // Anon
     LOGIN,

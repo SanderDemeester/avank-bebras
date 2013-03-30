@@ -10,7 +10,7 @@ import models.user.Independent;
 import models.user.Organizer;
 import models.user.Pupil;
 import models.user.Teacher;
-import models.user.Type;
+import models.user.UserType;
 import models.user.User;
 import models.user.UserID;
 
@@ -39,7 +39,7 @@ public class UserDatabaseTest extends ContextTest {
 		String id = "id";
 		String name = "Bertrand Russell";
 		User userFind = null;
-		UserModel mdl = new UserModel(new UserID(id),Type.INDEPENDENT,
+		UserModel mdl = new UserModel(new UserID(id),UserType.INDEPENDENT,
 				name,
 				new Date(),
 				new Date(),
@@ -54,7 +54,7 @@ public class UserDatabaseTest extends ContextTest {
 		}catch(PersistenceException e){
 			Assert.fail("Could not save the user");
 		}
-		Assert.assertNotNull(Ebean.find(UserModel.class).where().eq("id",user.data.id).where().eq("type", Type.INDEPENDENT.toString()).findUnique());
+		Assert.assertNotNull(Ebean.find(UserModel.class).where().eq("id",user.data.id).where().eq("type", UserType.INDEPENDENT.toString()).findUnique());
 		user.data.delete();
 	}
 
@@ -70,7 +70,7 @@ public class UserDatabaseTest extends ContextTest {
 
 		for(int i = 0; i < numberOfTeachers; i++){
 			try{
-				new Teacher(new UserModel(new UserID(new BigInteger(130,random).toString()),Type.TEACHER,
+				new Teacher(new UserModel(new UserID(new BigInteger(130,random).toString()),UserType.TEACHER,
 						new BigInteger(130,random).toString(),
 						new Date(),
 						new Date(),
@@ -84,7 +84,7 @@ public class UserDatabaseTest extends ContextTest {
 		List<UserModel> teacherList = UserModel.find.where().like("type", "TEACHER").findList();
 		Assert.assertTrue(teacherList.size() == numberOfTeachers);
 
-		User teacher = new Teacher(new UserModel(new UserID(teacherID), Type.TEACHER, 
+		User teacher = new Teacher(new UserModel(new UserID(teacherID), UserType.TEACHER, 
 				name,
 				new Date(),
 				new Date(),
@@ -109,7 +109,7 @@ public class UserDatabaseTest extends ContextTest {
 
 		for(int i = 0; i < numberOfOrganizer; i++){
 			try{
-				new Organizer(new UserModel(new UserID(new BigInteger(130,random).toString()),Type.ORGANIZER,
+				new Organizer(new UserModel(new UserID(new BigInteger(130,random).toString()),UserType.ORGANIZER,
 						new BigInteger(130,random).toString(),
 						new Date(),
 						new Date(),
@@ -124,7 +124,7 @@ public class UserDatabaseTest extends ContextTest {
 		Assert.assertTrue(organizerList.size() == numberOfOrganizer);
 
 		User organizer = new Organizer(new UserModel(new UserID(organizerID),
-				Type.ORGANIZER,
+				UserType.ORGANIZER,
 				name,
 				new Date(),
 				new Date(),
@@ -158,7 +158,7 @@ public class UserDatabaseTest extends ContextTest {
 		//generate random IndependentUser and save them.
 		for(int i = 0; i < numberOfIndependentUser; i++){
 			try{
-				Independent ip = new Independent(new UserModel(new UserID(new BigInteger(130,random).toString()),Type.INDEPENDENT,
+				Independent ip = new Independent(new UserModel(new UserID(new BigInteger(130,random).toString()),UserType.INDEPENDENT,
 						new BigInteger(130,random).toString(),
 						new Date(),
 						new Date(),
@@ -174,7 +174,7 @@ public class UserDatabaseTest extends ContextTest {
 		//generate random Pupils.
 		for(int i = 0; i < numberOfPupils; i++){
 			try{
-				Pupil pu = new Pupil(new UserModel(new UserID(new BigInteger(130,random).toString()),Type.PUPIL,
+				Pupil pu = new Pupil(new UserModel(new UserID(new BigInteger(130,random).toString()),UserType.PUPIL,
 						new BigInteger(130,random).toString(),
 						new Date(),
 						new Date(),
@@ -188,8 +188,8 @@ public class UserDatabaseTest extends ContextTest {
 		}
 
 		List<UserModel> allUsers = UserModel.find.all();
-		List<UserModel> allIndepententUser = UserModel.find.where().like("type", Type.INDEPENDENT.toString()).findList();
-		List<UserModel> allPupils = UserModel.find.where().like("type",Type.PUPIL.toString()).findList();
+		List<UserModel> allIndepententUser = UserModel.find.where().like("type", UserType.INDEPENDENT.toString()).findList();
+		List<UserModel> allPupils = UserModel.find.where().like("type",UserType.PUPIL.toString()).findList();
 		System.out.println(allIndepententUser.size());
 		System.out.println(allPupils.size());
 		Assert.assertTrue(Integer.toString(allUsers.size()),allUsers.size() == numberOfIndependentUser+numberOfPupils);

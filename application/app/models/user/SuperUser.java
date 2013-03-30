@@ -14,9 +14,8 @@ public abstract class SuperUser extends Authenticated{
         ROLES.add(Role.QUESTIONEDITOR);
     }
 
-    public SuperUser(UserModel data) {
-		super(data);
-		// TODO Auto-generated constructor stub
+    public SuperUser(UserModel data, UserType type) {
+		super(data, type);
 	}
 
 	/**

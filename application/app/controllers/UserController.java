@@ -23,7 +23,7 @@ import com.avaje.ebean.Ebean;
 import models.data.Link;
 import models.user.AuthenticationManager;
 import models.user.Gender;
-import models.user.Type;
+import models.user.UserType;
 import models.user.UserID;
 import play.data.Form;
 import play.mvc.Content;
@@ -53,14 +53,14 @@ public class UserController extends EController{
 	 * Each view is responsible for getting all information from the DataModel and make a
 	 * beautiful view for the user :)
 	 */
-	private HashMap<Type, Class<?>> landingPageHashmap = new HashMap<Type, Class<?>>();
+	private HashMap<UserType, Class<?>> landingPageHashmap = new HashMap<UserType, Class<?>>();
 	private AuthenticationManager authenticatieManger = AuthenticationManager.getInstance();
 
 	public UserController(){
-		landingPageHashmap.put(Type.ADMINISTRATOR, AdminLandingPage.class);
-		landingPageHashmap.put(Type.INDEPENDENT, IndependentPupilLandingPage.class);
-		landingPageHashmap.put(Type.ORGANIZER, OrganizerLandingPage.class);
-		landingPageHashmap.put(Type.PUPIL,PupilLandingPage.class);
+		landingPageHashmap.put(UserType.ADMINISTRATOR, AdminLandingPage.class);
+		landingPageHashmap.put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
+		landingPageHashmap.put(UserType.ORGANIZER, OrganizerLandingPage.class);
+		landingPageHashmap.put(UserType.PUPIL,PupilLandingPage.class);
 	}
 	/**
 	 * This methode gets requested when the user clicks on "signup".
@@ -126,7 +126,7 @@ public class UserController extends EController{
 		 * There needs to be some more logic here for generating bebras ID's 
 		 * Save user object in database.
 		 */
-		new UserModel(new UserID(bebrasID), Type.INDEPENDENT,
+		new UserModel(new UserID(bebrasID), UserType.INDEPENDENT,
 				registerForm.get().fname + registerForm.get().lname, 
 				birtyDay, 
 				new Date(), 

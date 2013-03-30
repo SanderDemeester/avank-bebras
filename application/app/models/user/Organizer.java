@@ -20,10 +20,13 @@ public class Organizer extends SuperUser{
         ROLES.add(Role.UPDATEQUESTION);
         ROLES.add(Role.DELETEQUESTION);
     }
+    
+    protected Organizer(UserModel data, UserType type) {
+        super(data, type);
+    }
 
     public Organizer(UserModel data) {
-		super(data);
-		// TODO Auto-generated constructor stub
+		this(data, UserType.ORGANIZER);
 	}
 
 	/**

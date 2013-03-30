@@ -10,7 +10,7 @@ public class Anon extends User{
     }
 
     public Anon() {
-        super(null);
+        super(null, UserType.ANON);
         // TODO Auto-generated constructor stub
     }
 

@@ -1,18 +1,13 @@
 
 package models.user;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 
 import models.dbentities.ClassGroup;
 import models.dbentities.UserModel;
+import play.mvc.Result;
 
 import com.avaje.ebean.Ebean;
-import play.mvc.Content;
-import play.mvc.Result;
-import views.html.landingPages.TeacherLandingPage;
 
 /**
  * @author Sander Demeester
@@ -24,8 +19,7 @@ public class Teacher extends SuperUser{
     
 
     public Teacher(UserModel data) {
-		super(data);
-		// TODO Auto-generated constructor stub
+		super(data, UserType.TEACHER);
 	}
 
 	public void scheduleUnrestrictedCompetition(){

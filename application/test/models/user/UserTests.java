@@ -15,7 +15,7 @@ import models.user.UserID;
 @SuiteClasses({ LoginStateTest.class })
 public class UserTests {
 
-    public static UserModel createTestUserModel(Type type) {
+    public static UserModel createTestUserModel(UserType type) {
         return new UserModel(
                 new UserID("a"),
                 type,

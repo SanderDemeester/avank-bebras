@@ -2,6 +2,7 @@
 package models.user;
 
 /**
+ * DEPRECATED
  * Modeling UserID
  * @author Sander Demeester
  */
