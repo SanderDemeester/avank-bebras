@@ -15,14 +15,14 @@ import play.db.ebean.Model;
 @Entity
 @Table(name="Classes")
 public class ClassGroup extends Model{
-	
-	@Id
-	public String id;
-	public String name;
-	public Date expdate;
-	public String schoolid;
-	public String teacherid;
-	public String level;	
+
+    @Id
+    public String id;
+    public String name;
+    public Date expdate;
+    public String schoolid;
+    public String teacherid;
+    public String level;
 
     /**
      * Constructor for ClassGroup.
@@ -30,13 +30,13 @@ public class ClassGroup extends Model{
     public ClassGroup(){
 
     }
-    
+
     public String getName(){
-    	return this.name;
+        return this.name;
     }
-    
+
     public String getID(){
-    	return this.id;
+        return this.id;
     }
 
 }

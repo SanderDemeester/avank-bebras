@@ -12,22 +12,22 @@ import java.util.Stack;
 public class LoginState {
     private String sessionID;
     private Stack<String> translatorStack;
-   
+
 
     public LoginState(String si) {
         sessionID=si;
         translatorStack = new Stack<String>();
     }
-    
+
     /*
      *Returns the ID at the top of the stack.
-     *@return Currently active ID 
+     *@return Currently active ID
      */
     public String getID(){
-    	if(!translatorStack.isEmpty()) return translatorStack.peek();
-    	else return null;
+        if(!translatorStack.isEmpty()) return translatorStack.peek();
+        else return null;
     }
-    
+
     /*
      * Returns whether a user is logged in or not.
      * @return Is user logged in
@@ -35,15 +35,15 @@ public class LoginState {
     public boolean isLoggedIn(){
         return getID()!=null;
     }
-    
+
     /*
      * Returns the full stack of IDs
      * @return All IDs
      */
     public ArrayList<String> getIDs(){
         return new ArrayList<String>(translatorStack);
-    } 
-    
+    }
+
     /*
      * Removes the top ID from the stack. Will not do anything if the stack is empty.
      * @return Was the operation successful?
@@ -55,7 +55,7 @@ public class LoginState {
         }
         return false;
     }
-    
+
     /*
      * Puts an ID on the stack IF the stack is empty.
      * @return Was the operation successful?
@@ -67,7 +67,7 @@ public class LoginState {
         }
         return false;
     }
-    
+
     /*
      * Puts an ID on the stack IF the stack is not empty.
      * @return Was the operation successful?
@@ -79,6 +79,6 @@ public class LoginState {
         }
         return false;
     }
-    
-    
+
+
 }
