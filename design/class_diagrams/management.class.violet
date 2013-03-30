@@ -2,63 +2,56 @@
 <java version="1.6.0_41" class="java.beans.XMLDecoder"> 
  <object class="com.horstmann.violet.ClassDiagramGraph"> 
   <void method="addNode"> 
+   <object id="ClassNode0" class="com.horstmann.violet.ClassNode"> 
+    <void property="attributes"> 
+     <void property="text"> 
+      <string>- Finder&lt;String, T&gt;finder
+- int pageSize</string> 
+     </void> 
+    </void> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>+ Page&lt;Manageable&gt; page (int page, String orderBy, String order, String filter)
++ Finder&lt;String, T&gt; getFinder()
++ int getPageSize()
++ String[] getColumnHeaders()
++ Call getListRoute(int page, String orderBy, String order, String filter)
++ Call getAddRoute()
++ Call getEditRoute(String id)
++ Call getRemoveRoute(String id)</string> 
+     </void> 
+    </void> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>Manager &lt;T extends Manageable&gt;</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>362.0</double> 
+     <double>62.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
    <object id="InterfaceNode0" class="com.horstmann.violet.InterfaceNode"> 
     <void property="methods"> 
      <void property="text"> 
-      <string>+ Page&lt;T&gt; page( int page, int pageSize, String sortBy, String order, String filter)</string> 
+      <string>+ String[] getFieldValues()
++ String getID()</string> 
      </void> 
     </void> 
     <void property="name"> 
      <void property="text"> 
-      <string>«interface»Manager&lt;T&gt;</string> 
+      <string>«interface» Manageable</string> 
      </void> 
     </void> 
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>361.0</double> 
-     <double>193.0</double> 
-    </void> 
-   </object> 
-  </void> 
-  <void method="addNode"> 
-   <object class="com.horstmann.violet.NoteNode"> 
-    <void property="text"> 
-     <void property="text"> 
-      <string>Each Model class that needs a CRUD implementation 
-has to implement this interface. 
-The method &quot;page&quot; will return the &quot;page&quot;-th page with 
-&quot;pageSize&quot; elements on it, ordered by &quot;sortBy&quot; and
-filtered by &quot;filter&quot;.</string> 
-     </void> 
-    </void> 
-   </object> 
-   <object class="java.awt.geom.Point2D$Double"> 
-    <void method="setLocation"> 
-     <double>779.0</double> 
-     <double>91.0</double> 
-    </void> 
-   </object> 
-  </void> 
-  <void method="addNode"> 
-   <object class="com.horstmann.violet.PackageNode"> 
-    <void method="addChild"> 
-     <object id="ClassNode0" class="com.horstmann.violet.ClassNode"> 
-      <void property="name"> 
-       <void property="text"> 
-        <string>User</string> 
-       </void> 
-      </void> 
-     </object> 
-    </void> 
-    <void property="name"> 
-     <string>User</string> 
-    </void> 
-   </object> 
-   <object class="java.awt.geom.Point2D$Double"> 
-    <void method="setLocation"> 
-     <double>350.0</double> 
-     <double>360.0</double> 
+     <double>955.0</double> 
+     <double>109.0</double> 
     </void> 
    </object> 
   </void> 
@@ -66,6 +59,24 @@ filtered by &quot;filter&quot;.</string>
    <object class="com.horstmann.violet.PackageNode"> 
     <void method="addChild"> 
      <object id="ClassNode1" class="com.horstmann.violet.ClassNode"> 
+      <void property="methods"> 
+       <void property="text"> 
+        <string>+ String[] getColumnHeaders()
++ Call getListRoute(int page, String orderBy, String order, String filter)
++ Call getAddRoute()
++ Call getEditRoute(String id)
++ Call getRemoveRoute(String id)</string> 
+       </void> 
+      </void> 
+      <void property="name"> 
+       <void property="text"> 
+        <string>QuestionManager</string> 
+       </void> 
+      </void> 
+     </object> 
+    </void> 
+    <void method="addChild"> 
+     <object id="ClassNode2" class="com.horstmann.violet.ClassNode"> 
       <void property="name"> 
        <void property="text"> 
         <string>Question</string> 
@@ -79,39 +90,8 @@ filtered by &quot;filter&quot;.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>540.0</double> 
-     <double>360.0</double> 
-    </void> 
-   </object> 
-  </void> 
-  <void method="addNode"> 
-   <object class="com.horstmann.violet.PackageNode"> 
-    <void method="addChild"> 
-     <object id="ClassNode2" class="com.horstmann.violet.ClassNode"> 
-      <void property="name"> 
-       <void property="text"> 
-        <string>Competition</string> 
-       </void> 
-      </void> 
-     </object> 
-    </void> 
-    <void property="name"> 
-     <string>Competition</string> 
-    </void> 
-   </object> 
-   <object class="java.awt.geom.Point2D$Double"> 
-    <void method="setLocation"> 
-     <double>720.0</double> 
-     <double>360.0</double> 
-    </void> 
-   </object> 
-  </void> 
-  <void method="addNode"> 
-   <object idref="ClassNode0"/> 
-   <object class="java.awt.geom.Point2D$Double"> 
-    <void method="setLocation"> 
-     <double>364.0</double> 
-     <double>394.0</double> 
+     <double>480.0</double> 
+     <double>380.0</double> 
     </void> 
    </object> 
   </void> 
@@ -119,8 +99,8 @@ filtered by &quot;filter&quot;.</string>
    <object idref="ClassNode1"/> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>545.0</double> 
-     <double>394.0</double> 
+     <double>489.0</double> 
+     <double>411.0</double> 
     </void> 
    </object> 
   </void> 
@@ -128,18 +108,33 @@ filtered by &quot;filter&quot;.</string>
    <object idref="ClassNode2"/> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>726.0</double> 
-     <double>391.0</double> 
+     <double>994.0</double> 
+     <double>443.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object class="com.horstmann.violet.NoteNode"> 
+    <void property="text"> 
+     <void property="text"> 
+      <string>This package supports a default table view for performing CRUD operations
+on database entities. 
+For this, a new Manager (like QuestionManager) has to be made and the database
+entitiy (like Question) has to implement the interface Manageable.</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>77.0</double> 
+     <double>272.0</double> 
     </void> 
    </object> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="VHV"/> 
-    </void> 
     <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
+     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
     </void> 
     <void property="lineStyle"> 
      <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
@@ -160,23 +155,32 @@ filtered by &quot;filter&quot;.</string>
      <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
     </void> 
    </object> 
-   <object idref="ClassNode1"/> 
+   <object idref="ClassNode2"/> 
    <object idref="InterfaceNode0"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="VHV"/> 
-    </void> 
     <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
+     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
     </void> 
     <void property="lineStyle"> 
      <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
     </void> 
    </object> 
+   <object idref="ClassNode1"/> 
    <object idref="ClassNode2"/> 
-   <object idref="InterfaceNode0"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
+    <void property="bentStyle"> 
+     <object class="com.horstmann.violet.BentStyle" field="HVH"/> 
+    </void> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+    </void> 
+   </object> 
+   <object idref="ClassNode1"/> 
+   <object idref="ClassNode0"/> 
   </void> 
  </object> 
 </java> 
