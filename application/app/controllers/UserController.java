@@ -128,7 +128,7 @@ public class UserController extends EController{
 		 * Save user object in database.
 		 */
 		new UserModel(new UserID(bebrasID), UserType.INDEPENDENT,
-				registerForm.get().fname + registerForm.get().lname, 
+				registerForm.get().fname + " " + registerForm.get().lname, 
 				birtyDay, 
 				new Date(), 
 				passwordHEX,
@@ -193,7 +193,7 @@ public class UserController extends EController{
 			
 			if(passwordHEX.equals(passwordDB)){ 
 				//TODO: this should be users landing page based on type of account.
-				return ok(loginLandingPage.render("Succes", new ArrayList<Link>(), "Welkom" + userModel.name));
+				return ok(loginLandingPage.render("Succes", new ArrayList<Link>(), "Welkom " + userModel.name));
 			}else{
 				return ok(loginLandingPage.render("Failed to login", new ArrayList<Link>(), passwordHEX + "|" + passwordDB + "|" +
 						new String(Hex.encodeHex(salt))));
