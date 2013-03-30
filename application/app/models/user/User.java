@@ -60,7 +60,7 @@ public abstract class User{
      * Returns the landing page. Is to be implemented by the child classes
      *@return Landing Page
      */
-    public abstract Content getLandingPage();
+    //public abstract Content getLandingPage();
     
     /*
      * Returns the userID
@@ -75,7 +75,7 @@ public abstract class User{
      * Returns the statistics page
      * @return Statistics Page
      */
-    public abstract Result showStatistics();
+    //public abstract Result showStatistics();
     
     /*
      * Returns the personal info page

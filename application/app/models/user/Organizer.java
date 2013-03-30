@@ -61,16 +61,4 @@ public class Organizer extends SuperUser{
     	return null;
     }
 
-	@Override
-	public Content getLandingPage() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Result showStatistics() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

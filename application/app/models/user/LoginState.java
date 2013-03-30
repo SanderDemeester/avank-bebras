@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 /**
+ * DEPRECATED
  * Class to remember a session's user's history of IDs. This class is merely
  * a data class, and will not check whether a user is allowed to mimic another.
  * @author Jens N. Rammant

@@ -56,21 +56,6 @@ public class Teacher extends SuperUser{
     }	
 	
 	/*
-	 * Creates the personalized landing page for this instance of Teacher.
-	 * @return Personalized landing page for this instance of teacher
-	 */
-	public Content getLandingPage(){		
-		//TODO
-		return null;
-	}
-
-	@Override
-	public Result showStatistics() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	/*
 	 * Queries the database for all Classes that this Teacher is main teacher of
 	 * @return List of all ClassGroups this Teacher is main Teacher of
 	 */

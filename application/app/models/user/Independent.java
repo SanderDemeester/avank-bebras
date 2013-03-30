@@ -50,19 +50,6 @@ public class Independent extends User{
     public ClassGroup getCurrentClass(){
     	return Ebean.find(ClassGroup.class).where().eq("id", this.data.classgroup).findUnique();
     }
-
-	@Override
-	public Content getLandingPage() {
-		
-		//TODO
-		return null;
-	}
-
-	@Override
-	public Result showStatistics() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	/**
 	 * Queries the database for all previous classes the user is associated with

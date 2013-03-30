@@ -39,19 +39,5 @@ public class Administrator extends Organizer{
     public Result manageDifficulties(){
     	return null;
     }
-    
-    /*
-     * return FAQ management page
-     * @return FAQ Management Page
-     */
-    public Result manageFAQ(){
-    	return null;
-    }
-    
-    @Override
-    public Content getLandingPage(){
-    	//TODO
-    	return null;
-    }
 
 }
