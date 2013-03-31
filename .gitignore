@@ -24,4 +24,5 @@ dist
 application/bin/*
 application/doc/
 application/conf/evolutions/
+application/conf/messages.lnk
 application/conf/messages
