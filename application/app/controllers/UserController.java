@@ -1,5 +1,6 @@
 package controllers;
 
+
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -13,16 +14,19 @@ import play.api.templates.Html;
 import play.api.templates.Template1;
 import org.apache.commons.codec.binary.Hex;
 import com.avaje.ebean.Ebean;
+import play.api.templates.Html;
+import play.api.templates.Template1;
+import play.api.libs.Crypto;
+import play.data.Form;
+import play.mvc.Result;
+import play.templates.BaseScalaTemplate;
+import scala.collection.mutable.HashMap;
 import models.data.Link;
 import models.user.AuthenticationManager;
 import models.user.Gender;
 import models.user.User;
 import models.user.UserType;
 import models.user.UserID;
-import play.api.libs.Crypto;
-import play.data.Form;
-import play.mvc.Result;
-import scala.collection.mutable.HashMap;
 import models.dbentities.UserModel;
 import views.html.landingPages.AdminLandingPage;
 import views.html.landingPages.IndependentPupilLandingPage;
