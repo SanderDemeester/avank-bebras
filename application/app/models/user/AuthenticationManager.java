@@ -71,15 +71,6 @@ public class AuthenticationManager {
     }
     
     /**
-     * get the loginState of the sessieID
-     * @return getLoginState 
-     */
-    
-    public User getLoginState(String sessieID){
-    	return users.get(sessieID).peek();
-    }
-    
-    /**
      * 
      * @return get userObject from sessieID
      */

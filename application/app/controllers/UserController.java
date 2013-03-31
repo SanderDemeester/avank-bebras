@@ -1,42 +1,29 @@
 package controllers;
 
-import java.io.UnsupportedEncodingException;
-import java.security.Key;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import play.api.templates.Html;	
 import play.api.templates.Template1;
-import play.templates.Format;
 import org.apache.commons.codec.binary.Hex;
-import org.springframework.format.datetime.DateFormatter;
 import com.avaje.ebean.Ebean;
 import models.data.Link;
 import models.user.AuthenticationManager;
 import models.user.Gender;
+import models.user.User;
 import models.user.UserType;
 import models.user.UserID;
-import play.Play;
 import play.api.libs.Crypto;
 import play.data.Form;
-import play.libs.Scala;
-import play.mvc.Content;
-import play.mvc.Http;
 import play.mvc.Result;
-import play.mvc.Results.Redirect;
-import play.templates.BaseScalaTemplate;
 import scala.collection.mutable.HashMap;
 import models.dbentities.UserModel;
-import views.html.index;
 import views.html.landingPages.AdminLandingPage;
 import views.html.landingPages.IndependentPupilLandingPage;
 import views.html.landingPages.OrganizerLandingPage;
@@ -58,8 +45,8 @@ public class UserController extends EController{
 	 * Each view is responsible for getting all information from the DataModel and make a
 	 * beautiful view for the user :)
 	 */
-	private HashMap<UserType, Class<?>> landingPageHashmap = new HashMap<UserType, Class<?>>();
-	private AuthenticationManager authenticatieManger = AuthenticationManager.getInstance();
+	private static HashMap<UserType, Class<?>> landingPageHashmap = new HashMap<UserType, Class<?>>();
+	private static AuthenticationManager authenticatieManger = AuthenticationManager.getInstance();
 
 	private static final String COOKIENAME = "avank.auth";
 	
@@ -71,6 +58,7 @@ public class UserController extends EController{
 	}
 	/**
 	 * This methode gets requested when the user clicks on "signup".
+	 * @author Sander Demeester
 	 * @return Result page.
 	 */
 	public static Result signup(){
@@ -83,6 +71,7 @@ public class UserController extends EController{
 	
 	/**
 	 * this methode is called when the user submits his/here register information.
+	 * @author Sander Demeester
 	 * @return Result page
 	 */
 	public static Result register(){
@@ -159,7 +148,11 @@ public class UserController extends EController{
 		}
 		
 	}
-	
+	/**
+	 * This methode is called when the users clicks on "login", the purpose of this code is to validate the users login credentials.
+	 * @author Sander Demeester
+	 * @return returns the loginLandingPage succes, this landing page should redirect to /home
+	 */
 	public static Result validate_login(){
 		setCommonHeaders();
 		Form<Login> loginForm = form(Login.class).bindFromRequest();
@@ -228,20 +221,22 @@ public class UserController extends EController{
 		return null;
 	}
 
-	public static Result getLandingPage(String token){ //or whatever the token will be
-		//TODO: Delegate to correct UserController object based on token
-		/*
-		 * The result will come from the landingPageHashMap
-		 */
-		return null;
-	}
-	
-	public Result landingPage(){
-		String cookie = request().cookies().get(COOKIENAME).value();
-		play.api.templates.Template1<java.lang.String, play.api.templates.Html> r = (Template1<String, Html>) landingPageHashmap.get(authenticatieManger.getInstance().getLoginState(cookie).getType());
-		return null;
+	/**
+	 * @author Sander Demeester
+	 * @return Returns a scala template based on the type of user that is requesting the page.
+	 **/
+	@SuppressWarnings("unchecked")
+	public static Result landingPage(){
+		UserType type = authenticatieManger.getUser().getType();
+		Template1<User, Html> landingPage = (Template1<User, Html>) landingPageHashmap.get(type);
+		
+		return ok(landingPage.render(authenticatieManger.getUser()));
 	}
 
+	/**
+	 * Inline class that contains public fields for play forms. 
+	 * @author Sander Demeester
+	 */
 	public static class Register{
 		public String fname;
 		public String lname;
@@ -252,7 +247,10 @@ public class UserController extends EController{
 		public String gender;
 		public String prefLanguage;
 	}
-	
+	/**
+	 * Inline class that contains public fields for play forms.
+	 * @author Sander Demeester
+	 */
 	public static class Login{
 		public String id;
 		public String password;
