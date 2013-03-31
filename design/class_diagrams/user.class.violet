@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="1.7.0_15" class="java.beans.XMLDecoder">
+<java version="1.7.0_17" class="java.beans.XMLDecoder">
  <object class="com.horstmann.violet.ClassDiagramGraph">
   <void method="addNode">
    <object class="com.horstmann.violet.ClassNode" id="ClassNode0">
@@ -7,7 +7,7 @@
      <void property="text">
       <string>- ID: UserID
 - LoginType: String
-</string>
++ data : UserModel</string>
      </void>
     </void>
     <void property="methods">
@@ -16,6 +16,11 @@
 + resetPassword() : void
 + logout() : void
 + getID() : UserID
++ getData() : UserModel
++ setData(data : UserModel) : void
++ getLandingPage() : Content
++ showStatistics() : Result
++ showPersonalInformation() : Result
 </string>
      </void>
     </void>
@@ -31,19 +36,19 @@ User</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double0"/>
-      <double>107.94736208521499</double>
+      <double>101.94736208521499</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double0"/>
-      <double>131.00198976530203</double>
+      <double>128.00198976530203</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>107.94736208521499</double>
-     <double>131.00198976530203</double>
+     <double>101.94736208521499</double>
+     <double>128.00198976530203</double>
     </void>
    </object>
   </void>
@@ -56,9 +61,10 @@ User</string>
     </void>
     <void property="methods">
      <void property="text">
-      <string>+ addPreviousClass : void
-+ addCurrentClass(classGroup : ClassGroup) : Pupil
-+ getCurrentClass : String</string>
+      <string>+ addPreviousClass(oldClass : String) : void
++ addCurrentClass(classGroup : ClassGroup) : void
++ getCurrentClass() : ClassGroup
++ getPreviousClasses() : Collection&lt;ClassGroup&gt;</string>
      </void>
     </void>
     <void property="name">
@@ -127,7 +133,12 @@ SuperUser</string>
    <object class="com.horstmann.violet.ClassNode" id="ClassNode3">
     <void property="methods">
      <void property="text">
-      <string>+ ScheduleUnrestrictedCompetition : void</string>
+      <string>+ scheduleUnrestrictedCompetition() : void
++ searchStudents(regex : String) : void
++ manageClasses() : Result
++ manageCompetitions() : Result
++ getLandingPage() : Content
++ getClasses() : Collection&lt;ClassGroup&gt;</string>
      </void>
     </void>
     <void property="name">
@@ -163,7 +174,9 @@ SuperUser</string>
      <void property="text">
       <string>+ blockPupil(user : User) : void
 + mimickPupil(user : Independent) : void
-+ listTeachers() : Set&lt;Teacher&gt;</string>
++ listTeachers() : Set&lt;Teacher&gt;
++ manageQuestions() : Result
++ manageCompetitions() : Result</string>
      </void>
     </void>
     <void property="name">
@@ -177,33 +190,27 @@ SuperUser</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double4"/>
-      <double>613.3182285254494</double>
+      <double>614.3182285254494</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double4"/>
-      <double>863.9717027964451</double>
+      <double>887.9717027964451</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>613.3182285254494</double>
-     <double>863.9717027964451</double>
+     <double>614.3182285254494</double>
+     <double>887.9717027964451</double>
     </void>
    </object>
   </void>
   <void method="addNode">
    <object class="com.horstmann.violet.ClassNode" id="ClassNode5">
-    <void property="attributes">
-     <void property="text">
-      <string>- currentCompetitions : Set&lt;Competion&gt;</string>
-     </void>
-    </void>
     <void property="methods">
      <void property="text">
-      <string>+ Pupil(Independent) : Pupil
-+ addCompetition(competition : Competition) : bool</string>
+      <string>+ addCompetition(competition : Competition) : boolean</string>
      </void>
     </void>
     <void property="name">
@@ -283,24 +290,39 @@ SuperUser</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double7"/>
-      <double>106.53314852284188</double>
+      <double>36.533148522841884</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double7"/>
-      <double>328.7559223733349</double>
+      <double>394.7559223733349</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>106.53314852284188</double>
-     <double>328.7559223733349</double>
+     <double>36.533148522841884</double>
+     <double>394.7559223733349</double>
     </void>
    </object>
   </void>
   <void method="addNode">
    <object class="com.horstmann.violet.ClassNode" id="ClassNode7">
+    <void property="attributes">
+     <void property="text">
+      <string>- mappingFromStringToUser : HashMap&lt;String, User&gt;
+- mappingFromSessieIDtoLoginState : HashMap&lt;String, LoginState&gt;</string>
+     </void>
+    </void>
+    <void property="methods">
+     <void property="text">
+      <string>+ mimicUser() : Result
++ resetPassword(userID : String, emailaddress : String) : void
++ getUserRoles(user : User) : List&lt;Roles&gt;
++ getLoginState(sessieID : String) : LoginState
++ getUserObject(sessieID : String) : User</string>
+     </void>
+    </void>
     <void property="name">
      <void property="text">
       <string>AuthenticationManager</string>
@@ -312,19 +334,19 @@ SuperUser</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double8"/>
-      <double>478.97790747614295</double>
+      <double>444.97790747614295</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double8"/>
-      <double>153.02970205598456</double>
+      <double>6.029702055984558</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>478.97790747614295</double>
-     <double>153.02970205598456</double>
+     <double>444.97790747614295</double>
+     <double>6.029702055984558</double>
     </void>
    </object>
   </void>
@@ -347,19 +369,19 @@ SuperUser</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double9"/>
-      <double>756.4949792155804</double>
+      <double>923.4949792155804</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double9"/>
-      <double>178.47299145536832</double>
+      <double>119.47299145536832</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>756.4949792155804</double>
-     <double>178.47299145536832</double>
+     <double>923.4949792155804</double>
+     <double>119.47299145536832</double>
     </void>
    </object>
   </void>
@@ -378,19 +400,19 @@ teruggeven.</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double10"/>
-      <double>774.7149802187876</double>
+      <double>1030.7149802187876</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double10"/>
-      <double>55.40235222062147</double>
+      <double>37.40235222062147</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>774.7149802187876</double>
-     <double>55.40235222062147</double>
+     <double>1030.7149802187876</double>
+     <double>37.40235222062147</double>
     </void>
    </object>
   </void>
@@ -398,7 +420,13 @@ teruggeven.</string>
    <object class="com.horstmann.violet.ClassNode" id="ClassNode9">
     <void property="attributes">
      <void property="text">
-      <string>- id : String/int/...</string>
+      <string>- id : String</string>
+     </void>
+    </void>
+    <void property="methods">
+     <void property="text">
+      <string>+ getUserID() : String
++ setUserID(userID : String) : void</string>
      </void>
     </void>
     <void property="name">
@@ -513,12 +541,12 @@ regelen.</string>
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double14"/>
-      <double>1013.9920622058679</double>
+      <double>1029.992062205868</double>
      </void>
     </void>
     <void method="setLocation">
      <double>590.6447381387152</double>
-     <double>1013.9920622058679</double>
+     <double>1029.992062205868</double>
     </void>
    </object>
   </void>
@@ -823,6 +851,88 @@ van de Default Management Table.</string>
     </void>
    </object>
   </void>
+  <void method="addNode">
+   <object class="com.horstmann.violet.ClassNode">
+    <void property="attributes">
+     <void property="text">
+      <string>Male
+Female
+Other</string>
+     </void>
+    </void>
+    <void property="name">
+     <void property="text">
+      <string>&lt;enum&gt;
+Gender</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double24">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double24"/>
+      <double>77.0</double>
+     </void>
+    </void>
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>y</string>
+     <void method="set">
+      <object idref="Point2D$Double24"/>
+      <double>487.0</double>
+     </void>
+    </void>
+    <void method="setLocation">
+     <double>77.0</double>
+     <double>487.0</double>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object class="com.horstmann.violet.ClassNode" id="ClassNode13">
+    <void property="attributes">
+     <void property="text">
+      <string>- sessionID : String
+- translaterStack : Stack&lt;String&gt;</string>
+     </void>
+    </void>
+    <void property="methods">
+     <void property="text">
+      <string>+ getID() : String
++ isLoggedIn() : boolean
++ getIDs() : ArrayList&lt;String&gt;
++ logout() : boolean
++ login(ID: String) : boolean
++ mimic(ID : String) : boolean</string>
+     </void>
+    </void>
+    <void property="name">
+     <void property="text">
+      <string>LoginState</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double25">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double25"/>
+      <double>721.0</double>
+     </void>
+    </void>
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>y</string>
+     <void method="set">
+      <object idref="Point2D$Double25"/>
+      <double>219.0</double>
+     </void>
+    </void>
+    <void method="setLocation">
+     <double>721.0</double>
+     <double>219.0</double>
+    </void>
+   </object>
+  </void>
   <void method="connect">
    <object class="com.horstmann.violet.NoteEdge"/>
    <object idref="ClassNode8"/>
@@ -1063,6 +1173,18 @@ van de Default Management Table.</string>
    </object>
    <object idref="ClassNode12"/>
    <object idref="ClassNode11"/>
+  </void>
+  <void method="connect">
+   <object class="com.horstmann.violet.ClassRelationshipEdge">
+    <void property="bentStyle">
+     <object class="com.horstmann.violet.BentStyle" field="HVH"/>
+    </void>
+    <void property="endArrowHead">
+     <object class="com.horstmann.violet.ArrowHead" field="V"/>
+    </void>
+   </object>
+   <object idref="ClassNode13"/>
+   <object idref="ClassNode7"/>
   </void>
  </object>
 </java>
