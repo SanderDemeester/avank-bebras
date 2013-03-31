@@ -62,7 +62,7 @@ public class QuestionIO {
             // Make hash
             MessageDigest mdEnc = MessageDigest.getInstance("MD5"); 
             mdEnc.update(json.getBytes(), 0, json.length());
-            String hash = new BigInteger(1, mdEnc.digest()).toString(16);
+            String hash = new BigInteger(1, mdEnc.digest()).toString(16) + userID.getUserID();
             
             JsonNode input = Json.parse(json);
             String downloadLocation = Play.application().configuration().getString("questioneditor.download");
