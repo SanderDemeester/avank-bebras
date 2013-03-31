@@ -1,42 +1,33 @@
 package controllers;
 
-import java.io.UnsupportedEncodingException;
-import java.security.Key;
-import java.security.MessageDigest;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Date;
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
+
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import play.api.templates.Html;	
-import play.api.templates.Template1;
-import play.templates.Format;
 import org.apache.commons.codec.binary.Hex;
-import org.springframework.format.datetime.DateFormatter;
 import com.avaje.ebean.Ebean;
+
+import play.api.templates.Html;
+import play.api.templates.Template1;
+import play.api.libs.Crypto;
+import play.data.Form;
+import play.mvc.Result;
+import play.templates.BaseScalaTemplate;
+
 import models.data.Link;
 import models.user.AuthenticationManager;
 import models.user.Gender;
 import models.user.UserType;
 import models.user.UserID;
-import play.Play;
-import play.api.libs.Crypto;
-import play.data.Form;
-import play.libs.Scala;
-import play.mvc.Content;
-import play.mvc.Http;
-import play.mvc.Result;
-import play.mvc.Results.Redirect;
-import play.templates.BaseScalaTemplate;
-import scala.collection.mutable.HashMap;
 import models.dbentities.UserModel;
-import views.html.index;
+
 import views.html.landingPages.AdminLandingPage;
 import views.html.landingPages.IndependentPupilLandingPage;
 import views.html.landingPages.OrganizerLandingPage;
