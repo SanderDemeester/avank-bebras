@@ -135,7 +135,7 @@ public class UserController extends EController{
 				saltHEX, registerForm.get().email, 
 				Gender.Male, registerForm.get().prefLanguage).save();
 		
-		return ok(registerLandingPage.render("Succes", new ArrayList<Link>(), bebrasID,passwordHEX));
+		return ok(registerLandingPage.render("Succes", new ArrayList<Link>(), bebrasID));
 	}
 
 	public static Result login(){
