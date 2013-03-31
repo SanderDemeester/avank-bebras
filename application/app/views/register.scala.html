@@ -95,7 +95,7 @@
 						<div class="controls">
 							<span class="add-ons"><i class="icon-user"></i>
 							</span> @select(sform("prefLanguage"),
-							options(models.data.Language.listLanguages().toList.map(_.getCode)),
+							options(models.data.Language.listLanguages().map(l => (l.getCode(), l.getName())).toMap),
 							'_label -> "Preferred language" )
 						</div>
 					</div>
