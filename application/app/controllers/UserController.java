@@ -1,6 +1,5 @@
 package controllers;
 
-
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -14,12 +13,10 @@ import play.api.templates.Html;
 import play.api.templates.Template1;
 import org.apache.commons.codec.binary.Hex;
 import com.avaje.ebean.Ebean;
-import play.api.templates.Html;
-import play.api.templates.Template1;
 import play.api.libs.Crypto;
 import play.data.Form;
+import play.data.validation.Constraints.Required;
 import play.mvc.Result;
-import play.templates.BaseScalaTemplate;
 import scala.collection.mutable.HashMap;
 import models.data.Link;
 import models.user.AuthenticationManager;
@@ -36,7 +33,7 @@ import views.html.register;
 import views.html.registerLandingPage;
 import views.html.login;
 import views.html.loginLandingPage;
-
+import views.html.error;
 /**
  * This class receives all GET requests and based on there session identifier (cookie)
  * and current role in the system they will be served a different view.
@@ -81,6 +78,9 @@ public class UserController extends EController{
 	public static Result register(){
 		setCommonHeaders();
 		Form<Register> registerForm = form(Register.class).bindFromRequest();
+		if(registerForm.hasErrors()){
+			return badRequest(error.render("Fout", new ArrayList<Link>(), form(Register.class), "Invalid request"));
+		}
 		SecureRandom random = null;
 		SecretKeyFactory secretFactory = null;
 		byte[] passwordByteString = null;
@@ -122,6 +122,14 @@ public class UserController extends EController{
 		
 		String r = "Welkom ";
 		r += registerForm.get().fname + "!";
+		
+		if(!registerForm.get().email.isEmpty()){
+
+			if(Ebean.find(UserModel.class).where().eq(
+					"email",registerForm.get().email).findUnique() != null){
+				return ok(error.render("Fout",new ArrayList<Link>(),form(Register.class),"Er bestaat al een gebruiker met het gekozen email address"));
+			}
+		}
 
 		/*
 		 * There needs to be some more logic here for generating bebras ID's 
@@ -242,13 +250,20 @@ public class UserController extends EController{
 	 * @author Sander Demeester
 	 */
 	public static class Register{
+		@Required
 		public String fname;
+		@Required
 		public String lname;
 		public String email;
+		@Required
 		public String bday;
+		@Required
 		public String password;
+		@Required
 		public String controle_passwd;
+		@Required
 		public String gender;
+		@Required
 		public String prefLanguage;
 	}
 	/**
