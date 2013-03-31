@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -27,7 +28,6 @@ import models.user.UserID;
 
 import org.w3c.dom.Document;
 
-import play.Play;
 import scala.actors.threadpool.Arrays;
 
 public class QuestionPack {
@@ -39,27 +39,51 @@ public class QuestionPack {
     private String hash;
     private String userDownloadLocation;
     
-    private static final String INDEXFILENAME = "index_LANG.html";
-    private static final String FEEDBACKFILENAME = "feedback_LANG.html";
-    private static final String QUESTIONZIPFILE = "question.zip";
-    private static final String QUESTIONXMLFILE = "question.xml";
+    public static final String INDEXFILENAME = "index_LANG.html";
+    public static final String FEEDBACKFILENAME = "feedback_LANG.html";
+    public static final String QUESTIONZIPFILE = "question.zip";
+    public static final String QUESTIONXMLFILE = "question.xml";
     
-    public QuestionPack(Document document) throws IOException {
+    /**
+     * Make a new questionpack with a document-based question as input
+     * @param document xml-formatted question
+     */
+    public QuestionPack(Document document) {
         this.document = document;
     }
     
+    /**
+     * Set the temporary download location for this pack
+     * @param tempDownloadLocation Where the user can temporarily download this pack
+     */
     public void setTempDownloadLocation(String tempDownloadLocation) {
         this.tempDownloadLocation = tempDownloadLocation;
     }
     
+    /**
+     * Set a hash that can be used in this pack
+     * @param hash a chosen hash
+     */
     public void setHash(String hash) {
         this.hash = hash;
     }
     
+    /**
+     * Set the download location for this pack resource files
+     * @param userDownloadLocation The http-accessible resource location for the current user
+     */
     public void setUserDownloadLocation(String userDownloadLocation) {
         this.userDownloadLocation = userDownloadLocation;
     }
     
+    /**
+     * Write a file with some content to a location and replace all the src attributes in html to
+     * remove the userDownloadLocation
+     * @param name the name of the file
+     * @param contents the contents to be written
+     * @return a newly created file
+     * @throws IOException if a problem occured with the File IO
+     */
     private File writeStringToFile(String name, String contents) throws IOException {
         // Remove all user ref's
         contents = contents.replaceAll("src=\""+userDownloadLocation+"/", "src=\"");
@@ -72,18 +96,39 @@ public class QuestionPack {
         return file;
     }
     
+    /**
+     * Add the content from an index page from a certain language
+     * @param lang language code
+     * @param contents content of the page
+     * @return the name of the file that will be created for the index page
+     * @throws IOException
+     */
     public String addIndex(String lang, String contents) throws IOException {
         String name = INDEXFILENAME.replaceAll("LANG", lang);
         this.indexes.add(writeStringToFile(name, contents));
         return name;
     }
     
+    /**
+     * Add the content from an feedback page from a certain language
+     * @param lang language code
+     * @param contents content of the page
+     * @return the name of the file that will be created for the feedback page
+     * @throws IOException
+     */
     public String addFeedback(String lang, String contents) throws IOException {
         String name = FEEDBACKFILENAME.replaceAll("LANG", lang);
         this.feedbacks.add(writeStringToFile(name, contents));
         return name;
     }
     
+    /**
+     * Add a file with a certain name to a zip file
+     * @param zout outputstream for the zip file
+     * @param name the name the file will get inside the zip file
+     * @param file the file that will be added to the zip file
+     * @throws IOException if a problem occured while writing to the zip file
+     */
     private static void addToZip(ZipOutputStream zout, String name, File file) throws IOException {
         ZipEntry ze = new ZipEntry(name);
         zout.putNextEntry(ze);
@@ -99,6 +144,12 @@ public class QuestionPack {
         zout.closeEntry();
     }
     
+    /**
+     * Add multiple files to a zip file that were temporarily saved on the server
+     * @param zout outputstream for the zip file
+     * @param files files to be added to the zip archive
+     * @throws IOException if a problem occured while writing to the zip file
+     */
     private static void addToZip(ZipOutputStream zout, Iterable<File> files) throws IOException {
         for(File file : files) {
             String newName = file.getName().replaceAll("~[^.]*$", "");
@@ -106,6 +157,11 @@ public class QuestionPack {
         }
     }
     
+    /**
+     * Export this questionpack to a zip archive
+     * @param userID the id of the current user
+     * @return a zip archive of this question pack
+     */
     public File export(UserID userID) {
         try {
             File zipFile = QuestionIO.addTempFile(tempDownloadLocation, QUESTIONZIPFILE+"~"+hash);
@@ -137,18 +193,34 @@ public class QuestionPack {
         }
     }
     
+    /**
+     * Get a list of the temporary index files
+     * @return temporary index files
+     */
     public List<File> getIndexes() {
         return this.indexes;
     }
     
+    /**
+     * Get a list of the temporary feedback files
+     * @return temporary feedback files
+     */
     public List<File> getFeedbacks() {
         return this.feedbacks;
     }
     
+    /**
+     * The document file for the question this pack contains
+     * @return xml-formatted question
+     */
     public Document getXmlDocument() {
         return this.document;
     }
     
+    /**
+     * Make a new temporary xml file for the question inside this pack
+     * @return
+     */
     public File getXmlFile() {
         try {
             String xmlfile = QUESTIONXMLFILE+"~"+hash;

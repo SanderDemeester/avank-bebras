@@ -1,8 +1,12 @@
 package controllers.question.editor;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 
 import models.EMessages;
 import models.data.Link;
@@ -16,7 +20,6 @@ import models.user.UserID;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
 
-import play.Play;
 import play.libs.Json;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
@@ -99,7 +102,7 @@ public class QuestionEditorController extends EController {
             
             File file = filePart.getFile();
             
-            File renamed = new File(QuestionIO.getUserUploadLocation(userID), name);
+            File renamed = QuestionIO.addTempFile(QuestionIO.getUserUploadLocation(userID), name);
             file.renameTo(renamed);
             
             // Add file data to json result
@@ -179,6 +182,40 @@ public class QuestionEditorController extends EController {
         } catch (QuestionBuilderException e) {
             return badRequest(e.getMessage());
         }
+    }
+    
+    /**
+     * Upload of a file that has to be imported
+     * @return
+     */
+    public static Result importUpload() {
+        UserID userID = getUserID();
+        String upload = QuestionIO.getUserUploadLocation(userID);
+        
+        MultipartFormData body = request().body().asMultipartFormData();
+        FilePart filePart = body.getFile("files[]");
+        if(filePart !=null) {
+            String name = filePart.getFilename();
+            File file = filePart.getFile();
+            ZipInputStream zis = null;
+            try {
+                zis = new ZipInputStream(new FileInputStream(file));
+                Question question = QuestionIO.importUpload(zis, userID, getUserDownloadLocation(userID));
+                return ok(create.render(defaultBreadcrumbs(), question));
+            } catch (QuestionBuilderException e) {
+                return badRequest(e.getMessage());
+            } catch (IOException e) {
+                return badRequest(e.getMessage());
+            } finally {
+                try {
+                    zis.close();
+                } catch (IOException e) {
+                    return badRequest(e.getMessage());
+                }
+            }
+        }
+        
+        return badRequest("Invalid upload.");
     }
     
     /**
