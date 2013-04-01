@@ -6,6 +6,5 @@ $(document).ready(function(){
 		var PBKDF2_password = CryptoJS.PBKDF2(password,salt,{ keySize: 4, iterations: 2500});
 		$("#passwd").val(PBKDF2_password);
 		$("#controle_passwd").val(PBKDF2_password);
-		alert(PBKDF2_password);
 	});
 });
