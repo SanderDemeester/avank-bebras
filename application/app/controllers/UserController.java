@@ -57,17 +57,19 @@ public class UserController extends EController{
 	 * Each view is responsible for getting all information from the DataModel and make a
 	 * beautiful view for the user :)
 	 */
-	private static HashMap<UserType, Class<?>> landingPageHashmap = new HashMap<UserType, Class<?>>();
+	private static HashMap<UserType, Class<?>> landingPageHashmap = new HashMap<UserType, Class<?>>(){{
+		put(UserType.ADMINISTRATOR, AdminLandingPage.class);
+		put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
+		put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
+		put(UserType.ORGANIZER, OrganizerLandingPage.class);
+		put(UserType.PUPIL,PupilLandingPage.class);
+	}};
 	private static AuthenticationManager authenticatieManger = AuthenticationManager.getInstance();
 
 	private static final String COOKIENAME = "avank.auth";
 
 	public UserController(){
 
-		landingPageHashmap.put(UserType.ADMINISTRATOR, AdminLandingPage.class);
-		landingPageHashmap.put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
-		landingPageHashmap.put(UserType.ORGANIZER, OrganizerLandingPage.class);
-		landingPageHashmap.put(UserType.PUPIL,PupilLandingPage.class);
 	}
 	/**
 	 * This methode gets requested when the user clicks on "signup".
@@ -251,14 +253,7 @@ public class UserController extends EController{
 	@SuppressWarnings("unchecked")
 	public static Result landingPage() throws Exception{
 		UserType type = UserType.INDEPENDENT;
-		Class<?> object = null;
-		
-		if(landingPageHashmap.get(type) == null){
-			object = Play.application().classloader().loadClass("views.html.landingPages." + IndependentPupilLandingPage.class.getSimpleName() + "$");
-		}else{
-			object = Play.application().classloader().loadClass("views.html.landingPages." + landingPageHashmap.get(type).getSimpleName() + "$");
-		}
-		
+		Class<?> object = Play.application().classloader().loadClass("views.html.landingPages." + landingPageHashmap.get(type).getSimpleName() + "$");
 		Template1<User, Html> viewTemplate = (Template1<User, Html>)object.getField("MODULE$").get(null);
 		return ok(viewTemplate.render(authenticatieManger.getUser()));
 	}
