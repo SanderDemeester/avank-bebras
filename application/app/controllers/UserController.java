@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+
+import play.Play;
 import play.api.templates.Html;	
 import play.api.templates.Template1;
 import org.apache.commons.codec.binary.Hex;
@@ -17,11 +19,17 @@ import play.api.libs.Crypto;
 import play.data.Form;
 import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
+import play.libs.Scala;
 import play.mvc.Result;
+import play.mvc.Results;
+import play.templates.BaseScalaTemplate;
+import play.templates.Format;
+import scala.Option;
 import scala.collection.mutable.HashMap;
 import models.data.Link;
 import models.user.AuthenticationManager;
 import models.user.Gender;
+import models.user.Teacher;
 import models.user.User;
 import models.user.UserType;
 import models.user.UserID;
@@ -35,6 +43,7 @@ import views.html.registerLandingPage;
 import views.html.login;
 import views.html.loginLandingPage;
 import views.html.error;
+
 /**
  * This class receives all GET requests and based on there session identifier (cookie)
  * and current role in the system they will be served a different view.
@@ -53,6 +62,7 @@ public class UserController extends EController{
 	private static final String COOKIENAME = "avank.auth";
 	
 	public UserController(){
+		
 		landingPageHashmap.put(UserType.ADMINISTRATOR, AdminLandingPage.class);
 		landingPageHashmap.put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
 		landingPageHashmap.put(UserType.ORGANIZER, OrganizerLandingPage.class);
@@ -222,8 +232,7 @@ public class UserController extends EController{
 				}
 				return ok(loginLandingPage.render("Succes", new ArrayList<Link>(), "Welkom " + userModel.name));
 			}else{
-				return ok(loginLandingPage.render("Failed to login", new ArrayList<Link>(), passwordHEX + "|" + passwordDB + "|" +
-						new String(Hex.encodeHex(salt))));
+				return badRequest(error.render("Failed to login", new ArrayList<Link>(), form(Register.class), "Invalid login"));
 			}
 		}
 	}
@@ -241,9 +250,14 @@ public class UserController extends EController{
 	@SuppressWarnings("unchecked")
 	public static Result landingPage(){
 		UserType type = authenticatieManger.getUser().getType();
-		Template1<User, Html> landingPage = (Template1<User, Html>) landingPageHashmap.get(type);
 		
-		return ok(landingPage.render(authenticatieManger.getUser()));
+		try{
+	    Class<?> object = Play.application().classloader().loadClass(landingPageHashmap.get(type) + ".show$");
+		Template1<User, Html> viewTemplate = (Template1<User, Html>)object.getField("MODULE$").get(null);
+		return ok(viewTemplate.render(authenticatieManger.getUser()));
+		}catch(Exception e){
+			return ok(error.render("Java view reflecation faild", new ArrayList<Link>(), form(Register.class), "Java view reflecation faild"));
+		}
 	}
 
 	/**
@@ -276,5 +290,5 @@ public class UserController extends EController{
 		public String id;
 		public String password;
 	}
-
+	
 }
