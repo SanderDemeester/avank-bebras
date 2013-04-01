@@ -80,6 +80,7 @@ public class AuthenticationManager {
 
 	/**
 	 * Login or mimic with a new usermodel
+	 * @author Sander Demeester & Ruben Taelman
 	 * @param userModel
 	 * @return The logged in user.
 	 */

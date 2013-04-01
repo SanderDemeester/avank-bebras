@@ -7,6 +7,8 @@ import java.security.spec.KeySpec;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
@@ -25,7 +27,6 @@ import play.mvc.Results;
 import play.templates.BaseScalaTemplate;
 import play.templates.Format;
 import scala.Option;
-import scala.collection.mutable.HashMap;
 import models.data.Link;
 import models.user.AuthenticationManager;
 import models.user.Gender;
@@ -248,16 +249,18 @@ public class UserController extends EController{
 	 * @return Returns a scala template based on the type of user that is requesting the page.
 	 **/
 	@SuppressWarnings("unchecked")
-	public static Result landingPage(){
-		UserType type = authenticatieManger.getUser().getType();
-
-		try{
-			Class<?> object = Play.application().classloader().loadClass(landingPageHashmap.get(type) + ".show$");
-			Template1<User, Html> viewTemplate = (Template1<User, Html>)object.getField("MODULE$").get(null);
-			return ok(viewTemplate.render(authenticatieManger.getUser()));
-		}catch(Exception e){
-			return ok(error.render("Java view reflecation faild", new ArrayList<Link>(), form(Register.class), "Java view reflecation faild"));
+	public static Result landingPage() throws Exception{
+		UserType type = UserType.INDEPENDENT;
+		Class<?> object = null;
+		
+		if(landingPageHashmap.get(type) == null){
+			object = Play.application().classloader().loadClass("views.html.landingPages." + IndependentPupilLandingPage.class.getSimpleName() + "$");
+		}else{
+			object = Play.application().classloader().loadClass("views.html.landingPages." + landingPageHashmap.get(type).getSimpleName() + "$");
 		}
+		
+		Template1<User, Html> viewTemplate = (Template1<User, Html>)object.getField("MODULE$").get(null);
+		return ok(viewTemplate.render(authenticatieManger.getUser()));
 	}
 
 	/**
