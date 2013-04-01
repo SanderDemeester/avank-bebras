@@ -15,6 +15,7 @@ import org.apache.commons.codec.binary.Hex;
 import com.avaje.ebean.Ebean;
 import play.api.libs.Crypto;
 import play.data.Form;
+import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
 import play.mvc.Result;
 import scala.collection.mutable.HashMap;
@@ -256,6 +257,7 @@ public class UserController extends EController{
 		public String lname;
 		public String email;
 		@Required
+		@Formats.DateTime(pattern = "yyyy/dd/mm")
 		public String bday;
 		@Required
 		public String password;
