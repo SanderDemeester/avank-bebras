@@ -60,9 +60,9 @@ public class UserController extends EController{
 	private static AuthenticationManager authenticatieManger = AuthenticationManager.getInstance();
 
 	private static final String COOKIENAME = "avank.auth";
-	
+
 	public UserController(){
-		
+
 		landingPageHashmap.put(UserType.ADMINISTRATOR, AdminLandingPage.class);
 		landingPageHashmap.put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
 		landingPageHashmap.put(UserType.ORGANIZER, OrganizerLandingPage.class);
@@ -78,9 +78,9 @@ public class UserController extends EController{
 		return ok(register.render("Registration", 
 				new ArrayList<Link>(),
 				form(Register.class)
-		));
+				));
 	}
-	
+
 	/**
 	 * this methode is called when the user submits his/here register information.
 	 * @author Sander Demeester
@@ -98,20 +98,20 @@ public class UserController extends EController{
 		String passwordHEX = "";
 		String saltHEX = "";
 		Date birtyDay = new Date();
-		
-		
+
+
 		//Zijn de 2 eerste letters van uw voornaam en de 7 of MAX letters van uw achternaam.
 		String bebrasID = null; 
-		
+
 		try {
 			random = SecureRandom.getInstance("SHA1PRNG");
 		} catch (NoSuchAlgorithmException e) {}
 
 		byte[] salt = new byte[16]; //RSA PKCS5
-		
-		
+
+
 		random.nextBytes(salt);
-		
+
 		KeySpec PBKDF2 = new PBEKeySpec(registerForm.get().password.toCharArray(), salt, 1000, 160);
 
 		try{
@@ -127,13 +127,13 @@ public class UserController extends EController{
 			passwordHEX = new String(Hex.encodeHex(passwordByteString));
 			birtyDay = new SimpleDateFormat("yyyy/dd/mm").parse(registerForm.get().bday);
 		}catch(Exception e){}
-		
+
 		bebrasID = registerForm.get().fname.toLowerCase().substring(0,2);
 		bebrasID += registerForm.get().lname.toLowerCase().substring(0, registerForm.get().lname.length() < 7 ? registerForm.get().lname.length() : 7);
-		
+
 		String r = "Welkom ";
 		r += registerForm.get().fname + "!";
-		
+
 		if(!registerForm.get().email.isEmpty()){
 
 			if(Ebean.find(UserModel.class).where().eq(
@@ -153,7 +153,7 @@ public class UserController extends EController{
 				passwordHEX,
 				saltHEX, registerForm.get().email, 
 				Gender.Male, registerForm.get().prefLanguage).save();
-		
+
 		return ok(registerLandingPage.render("Succes", new ArrayList<Link>(), bebrasID));
 	}
 
@@ -165,11 +165,11 @@ public class UserController extends EController{
 			return ok(login.render("login", 
 					new ArrayList<Link>(),
 					form(Login.class)
-			));
+					));
 		}else{//POST data is available to us. Try to validate the user.
 			return validate_login();
 		}
-		
+
 	}
 	/**
 	 * This methode is called when the users clicks on "login", the purpose of this code is to validate the users login credentials.
@@ -187,7 +187,7 @@ public class UserController extends EController{
 			byte[] passwordByteString = null; //the output from the PBKDF2 function.
 			String passwordHEX = null; // The password from the PBKDF2 output converted into a string.
 			String passwordDB = null; //the pasword as it is saved in the database.
-			
+
 			UserModel userModel = Ebean.find(UserModel.class).where().eq(
 					"id",loginForm.get().id).findUnique();
 			if(userModel == null){
@@ -196,9 +196,9 @@ public class UserController extends EController{
 			passwordDB = userModel.password;
 			SecretKeyFactory secretFactory = null;
 			try{
-			salt = Hex.decodeHex(userModel.hash.toCharArray());
+				salt = Hex.decodeHex(userModel.hash.toCharArray());
 			}catch(Exception e){}
-			
+
 			KeySpec PBKDF2 = new PBEKeySpec(loginForm.get().password.toCharArray(), salt, 1000, 160);
 
 			try{
@@ -212,18 +212,18 @@ public class UserController extends EController{
 			try{
 				passwordHEX = new String(Hex.encodeHex(passwordByteString));
 			}catch(Exception e){}
-			
-			
+
+
 			if(passwordHEX.equals(passwordDB)){ 
 				//TODO: this should be users landing page based on type of account.
 				String cookie = "";
 				try {
 					//generate random id to auth user.
 					cookie = Integer.toString(Math.abs(SecureRandom.getInstance("SHA1PRNG").nextInt(100)));
-					
+
 					//set the cookie. There really is no need for Crypto.sign because a cookie should be random value that has no meaning
 					response().setCookie(COOKIENAME, Crypto.sign(cookie));
-					
+
 					//authenticate the user to the AuthenticationManager
 					AuthenticationManager.getInstance().login(userModel);
 				} catch (NoSuchAlgorithmException e) {
@@ -250,11 +250,11 @@ public class UserController extends EController{
 	@SuppressWarnings("unchecked")
 	public static Result landingPage(){
 		UserType type = authenticatieManger.getUser().getType();
-		
+
 		try{
-	    Class<?> object = Play.application().classloader().loadClass(landingPageHashmap.get(type) + ".show$");
-		Template1<User, Html> viewTemplate = (Template1<User, Html>)object.getField("MODULE$").get(null);
-		return ok(viewTemplate.render(authenticatieManger.getUser()));
+			Class<?> object = Play.application().classloader().loadClass(landingPageHashmap.get(type) + ".show$");
+			Template1<User, Html> viewTemplate = (Template1<User, Html>)object.getField("MODULE$").get(null);
+			return ok(viewTemplate.render(authenticatieManger.getUser()));
 		}catch(Exception e){
 			return ok(error.render("Java view reflecation faild", new ArrayList<Link>(), form(Register.class), "Java view reflecation faild"));
 		}
@@ -290,5 +290,5 @@ public class UserController extends EController{
 		public String id;
 		public String password;
 	}
-	
+
 }
