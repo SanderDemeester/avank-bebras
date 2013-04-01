@@ -1,0 +1,42 @@
+@*******************************************
+* Template for creating a new question set *
+*                                          *
+* author: Kevin Stobbelaar                 *
+*******************************************@
+
+@(questionSetForm: Form[models.dbentities.QuestionSetModel], breadcrumbs : List[models.data.Link])
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("Create new question set", breadcrumbs){
+
+    <h3> Create new question set. </h3>
+
+    @form(controllers.question.questionset.routes.QuestionSetController.save) {
+
+        <fieldset>
+
+            <legend> Question set basic info </legend>
+
+            @inputText(questionSetForm("name"), '_label -> "New question set name", '_showConstraints -> false)
+
+            @select(
+            questionSetForm("level"),
+            options = options(models.data.DataHandler.getGrades().toList.map(_.getName())),
+            '_default -> "--- Choose a level ---",
+            '_label -> "Level",
+            '_error -> questionSetForm("level").error.map(_.withMessage("Please select a level"))
+            )
+
+            @checkbox(questionSetForm("active"), '_label -> None, '_text -> "Check to make this question set active.")
+
+        </fieldset>
+
+        <div class="actions">
+            <input type="submit" value="Save changes" class="btn primary">
+            <a href="@controllers.question.questionset.routes.QuestionSetController.overview()" class="btn">Cancel</a>
+        </div>
+    }
+
+}

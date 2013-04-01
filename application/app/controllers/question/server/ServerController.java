@@ -1,13 +1,13 @@
 package controllers.question.server;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import controllers.question.server.routes;
+import controllers.EController;
 import models.data.Link;
 import models.question.server.Server;
 import models.question.server.ServerManager;
 import play.data.Form;
-import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Results;
 import views.html.question.server.newServerForm;
@@ -19,7 +19,7 @@ import views.html.question.server.serverManagement;
  *
  * @author Kevin Stobbelaar
  */
-public class ServerController extends Controller {
+public class ServerController extends EController {
 
     /**
      * This result will redirect to the server list page
@@ -27,9 +27,13 @@ public class ServerController extends Controller {
      * @return server list page
      */
     public static Result list(int page, String orderBy, String order, String filter){
+        setCommonHeaders();
+        List<Link> breadcrumbs = new ArrayList<Link>();
+        breadcrumbs.add(new Link("Home", "/"));
+        breadcrumbs.add(new Link("Servers", "/servers"));
         ServerManager serverManager = new ServerManager();
         return ok(
-            serverManagement.render(serverManager.page(page, orderBy, order, filter), serverManager, orderBy, order, filter, new ArrayList<Link>())
+            serverManagement.render(serverManager.page(page, orderBy, order, filter), serverManager, orderBy, order, filter, breadcrumbs)
         );
     }
 
@@ -40,8 +44,13 @@ public class ServerController extends Controller {
      * @return create a server page
      */
     public static Result create(){
+        setCommonHeaders();
+        List<Link> breadcrumbs = new ArrayList<Link>();
+        breadcrumbs.add(new Link("Home", "/"));
+        breadcrumbs.add(new Link("Servers", "/servers"));
+        breadcrumbs.add(new Link("New server", "/servers/create"));
         Form<Server> form = form(Server.class).bindFromRequest();
-        return ok(newServerForm.render(form, new ArrayList<Link>()));
+        return ok(newServerForm.render(form, breadcrumbs));
     }
 
     /**
@@ -68,6 +77,11 @@ public class ServerController extends Controller {
      * @return edit a server page
      */
     public static Result edit(String name){
+        List<Link> breadcrumbs = new ArrayList<Link>();
+        breadcrumbs.add(new Link("Home", "/"));
+        breadcrumbs.add(new Link("Servers", "/servers"));
+        breadcrumbs.add(new Link("Server " + name, "/servers/:" + name));
+        setCommonHeaders();
         Form<Server> form = form(Server.class).bindFromRequest().fill(new ServerManager().getFinder().ref(name));
         return ok(editServerForm.render(form, name, new ArrayList<Link>()));
     }

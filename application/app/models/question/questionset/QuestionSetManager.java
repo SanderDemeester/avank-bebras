@@ -24,7 +24,7 @@ public class QuestionSetManager extends Manager<QuestionSetModel> {
      */
     @Override
     public String[] getColumnHeaders() {
-        String[] result = {"id"};
+        String[] result = {"name"};
         return result;
     }
 

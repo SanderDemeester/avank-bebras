@@ -7,7 +7,18 @@
 
     <fieldset>
 
-        @inputText(questionSetForm("id"), '_label -> "New question set id")
+        <legend>Question set basic info</legend>
+        @inputText(questionSetForm("name"), '_label -> "New question set name", '_showConstraints -> false)
+
+        @select(
+            questionSetForm("level"),
+            options = options(models.data.DataHandler.getGrades().toList.map(_.getName())),
+            '_default -> "--- Choose a level ---",
+            '_label -> "Level",
+            '_error -> questionSetForm("level").error.map(_.withMessage("Please select a level"))
+        )
+
+        @checkbox(questionSetForm("active"), '_label -> None, '_text -> "Check to make this question set active.")
 
     </fieldset>
 

@@ -6,6 +6,7 @@ import models.data.Grade;
 import models.data.Language;
 import models.management.Manageable;
 import models.question.Question;
+import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
@@ -28,12 +29,16 @@ public class QuestionSetModel extends Model implements Manageable {
     @Id
     public String id;
 
+    public String level;
+    public boolean active;
+    @Required
+    public String name;
+    public String contid;
+
     @Transient
     public Grade grade;
     @Transient
     public Map<Question, Difficulty> difficulties;
-    @Transient
-    public boolean active;
     @Transient
     public Competition competition;
     @Transient
@@ -48,7 +53,7 @@ public class QuestionSetModel extends Model implements Manageable {
      */
     @Override
     public String[] getFieldValues() {
-        String[] result = {id};
+        String[] result = {name};
         return result;
     }
 
@@ -60,5 +65,15 @@ public class QuestionSetModel extends Model implements Manageable {
     @Override
     public String getID() {
         return id;
+    }
+
+    /**
+     * Returns the name of the object.
+     *
+     * @return name
+     */
+    @Override
+    public String getName() {
+        return name;
     }
 }
