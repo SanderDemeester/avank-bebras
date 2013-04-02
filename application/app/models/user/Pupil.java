@@ -10,13 +10,13 @@ import models.dbentities.UserModel;
 public class Pupil extends Independent{
 
     public Pupil(UserModel data) {
-		super(data);
-		// TODO Auto-generated constructor stub
-	}
+        super(data);
+        // TODO Auto-generated constructor stub
+    }
 
-	//We first need a competition object.
-	
-	/**
+    //We first need a competition object.
+
+    /**
      *
      * @param competition
      * @return returns if adding competition was succesfull.

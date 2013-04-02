@@ -52,7 +52,8 @@ public class LangTest extends ContextTest {
     @Test public void checkMessages() {
         BufferedReader reader = null;
         try {
-            Path m = Files.readSymbolicLink(base.resolve("messages"));
+            Path m = base.resolve("messages");
+            m = base.resolve(Files.readSymbolicLink(m));
             reader = Files.newBufferedReader(m, Charset.defaultCharset());
             String line = reader.readLine();
             while(line != null) {

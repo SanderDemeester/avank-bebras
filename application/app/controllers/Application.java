@@ -2,6 +2,8 @@ package controllers;
 
 import java.util.ArrayList;
 
+import controllers.UserController.Register;
+
 import models.data.Link;
 import models.question.Question;
 import models.question.QuestionBuilderException;

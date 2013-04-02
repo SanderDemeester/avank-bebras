@@ -14,14 +14,14 @@ import play.mvc.Result;
 
 public class Organizer extends SuperUser{
 
-    
+
 
     public Organizer(UserModel data) {
-		super(data);
-		// TODO Auto-generated constructor stub
-	}
+        super(data);
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
+    /**
      * Block user.
      * @param user
      */
@@ -44,33 +44,33 @@ public class Organizer extends SuperUser{
     public Set<Teacher> listTeachers(){
         return null;
     }
-    
+
     /*
      * Returns the Question Management Page
      * @return Question Management Page
      */
     public Result manageQuestions(){
-    	return null;
+        return null;
     }
-    
+
     /*
      * Returns the Competition Management Page
      * @return Competition Management Page
      */
     public Result manageCompetitions(){
-    	return null;
+        return null;
     }
 
-	@Override
-	public Content getLandingPage() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Content getLandingPage() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public Result showStatistics() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Result showStatistics() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }
