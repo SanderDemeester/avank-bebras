@@ -1,0 +1,23 @@
+ALTER TABLE Questions DROP COLUMN namedut;
+ALTER TABLE Questions DROP COLUMN namefr;
+ALTER TABLE Questions DROP COLUMN namege;
+ALTER TABLE Questions DROP COLUMN correctansdut;
+ALTER TABLE Questions DROP COLUMN correctansfr;
+ALTER TABLE Questions DROP COLUMN correctansge;
+ALTER TABLE Questions DROP COLUMN type;
+
+ALTER TABLE QuestionSets ADD COLUMN active bool NOT NULL;
+ALTER TABLE QuestionSets ADD COLUMN name text NOT NULL;
+
+ALTER TABLE AnonAnswer DROP COLUMN contestid;
+ALTER TABLE AnonAnswer ADD COLUMN questionsetid text NOT NULL;
+ALTER TABLE AnonAnswer ADD FOREIGN KEY (questionsetid) REFERENCES questionsets;
+ALTER TABLE AnonAnswer ADD COLUMN correct bool NOT NULL;
+ALTER TABLE AnonAnswer ADD COLUMN language text NOT NULL;
+
+ALTER TABLE PupilAnswers DROP COLUMN contid;
+ALTER TABLE PupilAnswers ADD COLUMN questionsetid text NOT NULL;
+ALTER TABLE PupilAnswers ADD FOREIGN KEY (questionsetid) REFERENCES questionsets;
+ALTER TABLE PupilAnswers ADD COLUMN correct bool NOT NULL;
+ALTER TABLE PupilAnswers ADD COLUMN language text NOT NULL;
+
