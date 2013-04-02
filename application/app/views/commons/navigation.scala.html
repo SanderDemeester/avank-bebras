@@ -18,11 +18,10 @@
 				</a>
 					<div class="dropdown-menu"
 						style="padding: 15px; padding-bottom: 0px;">
-						<div class="span8">
+						<div>
 							@helper.form(routes.UserController.validate_login, 'id ->
 							"login"){
 							<div class="control-group">
-								<label class="control-label">BebrasID</label>
 								<div class="controls">
 									<div class="input-prepend">
 										<span class="add-on"><i class="icon-user"></i> </span> <input
@@ -32,11 +31,10 @@
 								</div>
 							</div>
                             <div class="control-group">
-                                <label class="control-label">Pasword</label>
                                 <div class="controls">
                                     <div class="input-prepend">
                                         <span class="add-on"><i class="icon-lock"></i> </span> <input
-                                            type="text" class="input-xlarge" id="password"
+                                            type="password" class="input-xlarge" id="password"
                                             name="password" placeholder="Password">
                                     </div>
                                 </div>

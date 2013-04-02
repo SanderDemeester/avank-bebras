@@ -8,47 +8,46 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
-import play.Play;
-import play.api.templates.Html;	
-import play.api.templates.Template1;
+import models.EMessages;
+import models.data.Link;
+import models.dbentities.UserModel;
+import models.user.AuthenticationManager;
+import models.user.Gender;
+import models.user.User;
+import models.user.UserID;
+import models.user.UserType;
+
 import org.apache.commons.codec.binary.Hex;
-import com.avaje.ebean.Ebean;
+
+import play.Play;
 import play.api.libs.Crypto;
+import play.api.templates.Html;
+import play.api.templates.Template1;
 import play.data.Form;
 import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
-import play.libs.Scala;
 import play.mvc.Result;
 import play.mvc.Results;
-import play.templates.BaseScalaTemplate;
-import play.templates.Format;
-import scala.Option;
-import models.data.Link;
-import models.user.AuthenticationManager;
-import models.user.Gender;
-import models.user.Teacher;
-import models.user.User;
-import models.user.UserType;
-import models.user.UserID;
-import models.dbentities.UserModel;
+import views.html.error;
+import views.html.loginLandingPage;
+import views.html.register;
+import views.html.registerLandingPage;
 import views.html.landingPages.AdminLandingPage;
 import views.html.landingPages.IndependentPupilLandingPage;
 import views.html.landingPages.OrganizerLandingPage;
 import views.html.landingPages.PupilLandingPage;
-import views.html.register;
-import views.html.registerLandingPage;
-import views.html.login;
-import views.html.loginLandingPage;
-import views.html.error;
+
+import com.avaje.ebean.Ebean;
 
 /**
  * This class receives all GET requests and based on there session identifier (cookie)
  * and current role in the system they will be served a different view.
- * @author Sander Demeester
+ * @author Sander Demeester, Ruben Taelman
  */
 public class UserController extends EController{
 
@@ -57,16 +56,13 @@ public class UserController extends EController{
 	 * Each view is responsible for getting all information from the DataModel and make a
 	 * beautiful view for the user :)
 	 */
-	private static HashMap<UserType, Class<?>> landingPageHashmap = new HashMap<UserType, Class<?>>(){{
+	private static HashMap<UserType, Class<?>> landingPages = new HashMap<UserType, Class<?>>(){{
 		put(UserType.ADMINISTRATOR, AdminLandingPage.class);
 		put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
 		put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
 		put(UserType.ORGANIZER, OrganizerLandingPage.class);
 		put(UserType.PUPIL,PupilLandingPage.class);
 	}};
-	private static AuthenticationManager authenticatieManger = AuthenticationManager.getInstance();
-
-	private static final String COOKIENAME = "avank.auth";
 
 	public UserController(){
 
@@ -78,10 +74,13 @@ public class UserController extends EController{
 	 */
 	public static Result signup(){
 		setCommonHeaders();
+		List<Link> breadcrumbs = new ArrayList<Link>();
+		breadcrumbs.add(new Link("Home", "/"));
+        breadcrumbs.add(new Link("Sign Up", "/signup"));
 		return ok(register.render("Registration", 
-				new ArrayList<Link>(),
-				form(Register.class)
-				));
+		          breadcrumbs,
+				  form(Register.class)
+			   ));
 	}
 
 	/**
@@ -101,6 +100,10 @@ public class UserController extends EController{
 		String passwordHEX = "";
 		String saltHEX = "";
 		Date birtyDay = new Date();
+		
+		/**
+		 * TODO: Move this registration logic to AuthenticationManager
+		 */
 
 
 		//Zijn de 2 eerste letters van uw voornaam en de 7 of MAX letters van uw achternaam.
@@ -131,6 +134,7 @@ public class UserController extends EController{
 			birtyDay = new SimpleDateFormat("yyyy/dd/mm").parse(registerForm.get().bday);
 		}catch(Exception e){}
 
+		// TODO: Add support for names with only one character
 		bebrasID = registerForm.get().fname.toLowerCase().substring(0,2);
 		bebrasID += registerForm.get().lname.toLowerCase().substring(0, registerForm.get().lname.length() < 7 ? registerForm.get().lname.length() : 7);
 
@@ -141,7 +145,7 @@ public class UserController extends EController{
 
 			if(Ebean.find(UserModel.class).where().eq(
 					"email",registerForm.get().email).findUnique() != null){
-				return ok(error.render("Fout",new ArrayList<Link>(),form(Register.class),"Er bestaat al een gebruiker met het gekozen email address"));
+				return badRequest(error.render("Fout",new ArrayList<Link>(),form(Register.class),"Er bestaat al een gebruiker met het gekozen email address"));
 			}
 		}
 
@@ -159,21 +163,6 @@ public class UserController extends EController{
 
 		return ok(registerLandingPage.render("Succes", new ArrayList<Link>(), bebrasID));
 	}
-
-	public static Result login(){
-		setCommonHeaders();
-		Form<Login> loginForm = form(Login.class).bindFromRequest();
-		//We need to do this check, because a user can this URL without providing POST data.
-		if(loginForm.get().id == null && loginForm.get().password == null){
-			return ok(login.render("login", 
-					new ArrayList<Link>(),
-					form(Login.class)
-					));
-		}else{//POST data is available to us. Try to validate the user.
-			return validate_login();
-		}
-
-	}
 	/**
 	 * This methode is called when the users clicks on "login", the purpose of this code is to validate the users login credentials.
 	 * @author Sander Demeester
@@ -182,6 +171,11 @@ public class UserController extends EController{
 	public static Result validate_login(){
 		setCommonHeaders();
 		Form<Login> loginForm = form(Login.class).bindFromRequest();
+		
+		/**
+		 * TODO: Move this validation logic to authenticationmanager
+		 */
+		
 		//We do the same check here.
 		if(loginForm.get().id == null && loginForm.get().password == null){
 			return Application.index();
@@ -225,7 +219,7 @@ public class UserController extends EController{
 					cookie = Integer.toString(Math.abs(SecureRandom.getInstance("SHA1PRNG").nextInt(100)));
 
 					//set the cookie. There really is no need for Crypto.sign because a cookie should be random value that has no meaning
-					response().setCookie(COOKIENAME, Crypto.sign(cookie));
+					response().setCookie(AuthenticationManager.COOKIENAME, Crypto.sign(cookie));
 
 					//authenticate the user to the AuthenticationManager
 					AuthenticationManager.getInstance().login(userModel);
@@ -241,9 +235,8 @@ public class UserController extends EController{
 	}
 
 	public static Result logout(){
-		//TODO: Tell authenticationManager to log a user out.
-		setCommonHeaders();
-		return null;
+	    AuthenticationManager.getInstance().logout();
+	    return Results.redirect(routes.Application.index());
 	}
 
 	/**
@@ -253,9 +246,9 @@ public class UserController extends EController{
 	@SuppressWarnings("unchecked")
 	public static Result landingPage() throws Exception{
 		UserType type = UserType.INDEPENDENT;
-		Class<?> object = Play.application().classloader().loadClass("views.html.landingPages." + landingPageHashmap.get(type).getSimpleName() + "$");
+		Class<?> object = Play.application().classloader().loadClass("views.html.landingPages." + landingPages.get(type).getSimpleName() + "$");
 		Template1<User, Html> viewTemplate = (Template1<User, Html>)object.getField("MODULE$").get(null);
-		return ok(viewTemplate.render(authenticatieManger.getUser()));
+		return ok(viewTemplate.render(AuthenticationManager.getInstance().getUser()));
 	}
 
 	/**
