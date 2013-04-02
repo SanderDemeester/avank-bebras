@@ -12,3 +12,16 @@ languages.nl = Dutch
 
 # Login
 redirect_message = You will be redirected to your homepage shortly.
+
+# Register
+register.firstname = First name:
+register.lastname = Last name:  
+register.email = Email;
+register.bday = Birthday:
+register.gender = Gender:
+register.preflan = Preferred language:
+register.password = Password:
+register.confirm_password = Confirm Password
+register.create_account = Create Account
+register.bebras_id_message = Your Bebras ID is: 
+register.inlog_message = You may login with your ID and password.

@@ -10,7 +10,7 @@
 <legend>Sign Up</legend>
 <!--FIRST BLOCK -->
 <div class="control-group row-fluid">
-	<label class="control-label span2">First Name:</label>
+	<label class="control-label span2">@EMessage("register.firstname")</label>
 	<div class="controls span10">
 		<div class="input-prepend inline span12">
 			<span class="add-on"><i class="icon-user"></i> </span> <input
@@ -22,7 +22,7 @@
 
 <!--SECOND BLOCK -->
 <div class="control-group row-fluid">
-	<label class="control-label span2">Last Name: </label>
+	<label class="control-label span2">@EMessage("register.lastname")</label>
 	<div class="controls span10">
 		<div class="input-prepend span12">
 			<span class="add-on"><i class="icon-user"></i> </span> <input
@@ -34,7 +34,7 @@
 
 <!--THIRD BLOCK -->
 <div class="control-group row-fluid">
-	<label class="control-label span2">Email</label>
+	<label class="control-label span2">@EMessage("register.email")</label>
 	<div class="controls span10">
 		<div class="input-prepend span12">
 			<span class="add-on"><i class="icon-envelope"></i> </span> <input
@@ -47,7 +47,7 @@
 
 <!-- FOURTH BLOCK -->
 <div class="control-group row-fluid">
-	<label class="control-label span2">Birthday</label>
+	<label class="control-label span2">@EMessage("register.bday")</label>
 	<div class="controls span10">
 		<div class="input-prepend span12">
 			<span class="add-on"><i class="icon-user"></i> </span> <input
@@ -59,7 +59,7 @@
 
 <!-- FIFTH BLOCK -->
 <div class="control-group row-fluid">
-	<label class="control-label span2">Gender</label>
+	<label class="control-label span2">@EMessage("register.gender")</label>
 	<div class="controls span10">
 		<select name="gender" id="gender" class="span11"> @for(gender <- models.user.Gender.values().toList) {
 			<option value="@gender.toString()">
@@ -72,7 +72,7 @@
 
 <!-- SIXTH BLLOCK -->
 <div class="control-group row-fluid">
-	<label class="control-label span2">Preferred language</label>
+	<label class="control-label span2">@EMessage("register.preflan")</label>
 	<div class="controls span10">
 
 		<select name="prefLanguage" id="prefLanguage" class="span11">
@@ -87,7 +87,7 @@
 
 <!-- SEVENTH BLOCK -->
 <div class="control-group row-fluid">
-	<label class="control-label span2">Password</label>
+	<label class="control-label span2">@EMessage("register.password")</label>
 	<div class="controls span10">
 		<div class="input-prepend span12">
 			<span class="add-on"><i class="icon-lock"></i> </span> <input
@@ -99,7 +99,7 @@
 
 <!-- EIGHTH BLOCK -->
 <div class="control-group row-fluid">
-	<label class="control-label span2">Confirm Password</label>
+	<label class="control-label span2">@EMessage("register.confirm_password")</label>
 	<div class="controls span10">
 		<div class="input-prepend span12">
 			<span class="add-on"><i class="icon-lock"></i> </span> <input
@@ -113,7 +113,7 @@
 <div class="control-group row-fluid">
 	<div class="span2">&nbsp;</div>
 	<div class="controls span2">
-		<button type="submit" class="btn btn-success" name="btn" id="btn">Create Account</button>
+		<button type="submit" class="btn btn-success" name="btn" id="btn">@EMessage("register.create_account")</button>
 	</div>
 	<div class="span8">&nbsp;</div>
 </div>

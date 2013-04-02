@@ -20,8 +20,8 @@
             <div class="container">
                 @{header(title, breadcrumbs)}
                 <div id="content">
-                Uw bebras ID is: @id. 
-                U kan inloggen met uw ID en uw wachtwoord.
+                @EMessage("register.bebras_id_message") @id. 
+               	@EMessage("register.inlog_message")
                 </div>
                 <div id="push"></div>
             </div>
