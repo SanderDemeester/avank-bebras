@@ -35,7 +35,7 @@
                                     <div class="input-prepend">
                                         <span class="add-on"><i class="icon-lock"></i> </span> <input
                                             type="password" class="input-xlarge" id="pw"
-                                            name="password" placeholder="Password">
+                                            name="pw" placeholder="Password">
                                     </div>
                                 </div>
                             </div>
@@ -57,8 +57,13 @@
 </div>
 <script type="text/javascript">
 $("#btn").live("click",function(){
-	alert($("#id").val());
-	$.get('/login_validate', {"id": 'test', "pw": "test"});
+	$.ajax({
+		type: "GET",
+		url: "/login_validate",
+		data: {"id": "data","pw":"data"}
+	}).isdone(function(){
+		alert("done");
+	});
 	return false;
 });
 </script>
