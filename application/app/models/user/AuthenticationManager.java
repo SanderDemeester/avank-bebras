@@ -30,7 +30,7 @@ public class AuthenticationManager {
 
 	// String: value of the COOKIENAME cookie
 	private Map<String, Stack<User>> users;
-	private static final String COOKIENAME = "avank.auth";
+	public static final String COOKIENAME = "avank.auth";
 	private static final Map<UserType, UserFactory> FACTORIES = new HashMap<UserType, UserFactory>();
 
 	static {
