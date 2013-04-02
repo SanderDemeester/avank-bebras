@@ -1,7 +1,6 @@
 @import models.EMessages
 @import helper._
 @import controllers.UserController.Register
-
 <div id="navigation" class="navbar">
     <div class="navbar-inner">
         <div class="container">
@@ -21,14 +20,13 @@
 					<div class="dropdown-menu"
 						style="padding: 15px; padding-bottom: 0px;">
 						<div>
-							@helper.form(routes.UserController.validate_login, 'id ->
-							"login"){
+							<form id="login" method="GET" action="login_validate">
 							<div class="control-group">
 								<div class="controls">
 									<div class="input-prepend">
 										<span class="add-on"><i class="icon-user"></i> </span> <input
 											type="text" class="input-xlarge" id="id"
-											name="username" placeholder="Username">
+											name="id" placeholder="Bebras ID">
 									</div>
 								</div>
 							</div>
@@ -36,7 +34,7 @@
                                 <div class="controls">
                                     <div class="input-prepend">
                                         <span class="add-on"><i class="icon-lock"></i> </span> <input
-                                            type="password" class="input-xlarge" id="password"
+                                            type="password" class="input-xlarge" id="pw"
                                             name="password" placeholder="Password">
                                     </div>
                                 </div>
@@ -49,7 +47,7 @@
                                         id="btn">Login</button>
                                 </div>
                             </div>
-                            }
+                            </form>
                         </div>
                     </div>
             </ul>
@@ -57,3 +55,10 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+$("#btn").live("click",function(){
+	alert($("#id").val());
+	$.get('/login_validate', {"id": 'test', "pw": "test"});
+	return false;
+});
+</script>

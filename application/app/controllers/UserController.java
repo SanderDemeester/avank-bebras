@@ -28,11 +28,13 @@ import play.Play;
 import play.api.libs.Crypto;
 import play.api.templates.Html;
 import play.api.templates.Template1;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
 import play.mvc.Result;
 import play.mvc.Results;
+import scala.collection.mutable.Map;
 import views.html.error;
 import views.html.loginLandingPage;
 import views.html.register;
@@ -76,11 +78,11 @@ public class UserController extends EController{
 		setCommonHeaders();
 		List<Link> breadcrumbs = new ArrayList<Link>();
 		breadcrumbs.add(new Link("Home", "/"));
-        breadcrumbs.add(new Link("Sign Up", "/signup"));
+		breadcrumbs.add(new Link("Sign Up", "/signup"));
 		return ok(register.render("Registration", 
-		          breadcrumbs,
-				  form(Register.class)
-			   ));
+				breadcrumbs,
+				form(Register.class)
+				));
 	}
 
 	/**
@@ -90,30 +92,30 @@ public class UserController extends EController{
 	 */
 	public static Result register(){
 		setCommonHeaders();
-		
+
 		// Bind play form request.
 		Form<Register> registerForm = form(Register.class).bindFromRequest();
-		
+
 		if(registerForm.hasErrors()){ // If the form contains error's (specified by "@"-annotation in the class "Register" then this will be true.
 			return badRequest(error.render("Fout", new ArrayList<Link>(), form(Register.class), "Invalid request"));
 		}
-		
+
 		// Setup a secure PRNG
 		SecureRandom random = null;
-		
+
 		// Init keyFactory to generate a random string using PBKDF2 with SHA1.
 		SecretKeyFactory secretFactory = null;
-		
+
 		// Resulting password will be in a byte[] array.
 		byte[] passwordByteString = null;
-		
+
 		// We will save the password in HEX-format in the database;
 		String passwordHEX = "";
-		
+
 		// Same for salt
 		String saltHEX = "";
 		Date birtyDay = new Date();
-		
+
 		// The first 2 letters of fname and the 7 letters from lname make the bebrasID.
 		String bebrasID = null; 
 
@@ -121,7 +123,7 @@ public class UserController extends EController{
 		try {
 			random = SecureRandom.getInstance("SHA1PRNG");
 		} catch (NoSuchAlgorithmException e) {}
-		
+
 		byte[] salt = new byte[16]; //RSA PKCS5
 
 		// Get salt
@@ -149,7 +151,7 @@ public class UserController extends EController{
 		// Generate bebrasID.
 		bebrasID = registerForm.get().fname.toLowerCase().substring(0,2);
 		bebrasID += registerForm.get().lname.toLowerCase().substring(0, registerForm.get().lname.length() < 7 ? registerForm.get().lname.length() : 7);
-		
+
 		// Construct welcome message.
 		String r = "Welkom ";
 		r += registerForm.get().fname + "!";
@@ -182,32 +184,31 @@ public class UserController extends EController{
 	 * @author Sander Demeester
 	 * @return returns the loginLandingPage succes, this landing page should redirect to /home
 	 */
-	public static Result validate_login(){
+	public static Result validate_login(String id, String pw){
 		setCommonHeaders();
-		Form<Login> loginForm = form(Login.class).bindFromRequest();
-		
+
 		// We do the same check here, if the input forms are empty return a error message.
-		if(loginForm.get().id == null && loginForm.get().password == null){
-			return Application.index();
+		if(id == null || pw == null){
+			return ok(loginLandingPage.render("Failed to login", new ArrayList<Link>(),  id + " " + pw));
 		}else{ //POST data is available to us. Try to validate the user.
 			// For storing the users salt form the database.
 			byte[] salt = null; 
-			
+
 			// For storing the output of the PBKDF2 function.
 			byte[] passwordByteString = null; 
-			
+
 			// To store the output from the PBKDF2 function in HEX.
 			String passwordHEX = null; 
-			
+
 			// To store the password as it is stored in the database.
 			String passwordDB = null; 
 
 			// Get the users information from the database.
 			UserModel userModel = Ebean.find(UserModel.class).where().eq(
-					"id",loginForm.get().id).findUnique();
-			
+					"id",id).findUnique();
+
 			if(userModel == null){
-				return ok(loginLandingPage.render("Failed to login", new ArrayList<Link>(), "Error while logging in: email" + loginForm.get().id));
+				return ok(loginLandingPage.render("Failed to login", new ArrayList<Link>(), "Error while logging in: email" + id));
 			}
 			passwordDB = userModel.password;
 			SecretKeyFactory secretFactory = null;
@@ -215,7 +216,7 @@ public class UserController extends EController{
 				salt = Hex.decodeHex(userModel.hash.toCharArray());
 			}catch(Exception e){}
 
-			KeySpec PBKDF2 = new PBEKeySpec(loginForm.get().password.toCharArray(), salt, 1000, 160);
+			KeySpec PBKDF2 = new PBEKeySpec(pw.toCharArray(), salt, 1000, 160);
 
 			try{
 				secretFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
@@ -254,8 +255,8 @@ public class UserController extends EController{
 	}
 
 	public static Result logout(){
-	    AuthenticationManager.getInstance().logout();
-	    return Results.redirect(routes.Application.index());
+		AuthenticationManager.getInstance().logout();
+		return Results.redirect(routes.Application.index());
 	}
 
 	/**
