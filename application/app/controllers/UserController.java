@@ -90,57 +90,71 @@ public class UserController extends EController{
 	 */
 	public static Result register(){
 		setCommonHeaders();
+		
+		// Bind play form request.
 		Form<Register> registerForm = form(Register.class).bindFromRequest();
-		if(registerForm.hasErrors()){
+		
+		if(registerForm.hasErrors()){ // If the form contains error's (specified by "@"-annotation in the class "Register" then this will be true.
 			return badRequest(error.render("Fout", new ArrayList<Link>(), form(Register.class), "Invalid request"));
 		}
+		
+		// Setup a secure PRNG
 		SecureRandom random = null;
+		
+		// Init keyFactory to generate a random string using PBKDF2 with SHA1.
 		SecretKeyFactory secretFactory = null;
+		
+		// Resulting password will be in a byte[] array.
 		byte[] passwordByteString = null;
+		
+		// We will save the password in HEX-format in the database;
 		String passwordHEX = "";
+		
+		// Same for salt
 		String saltHEX = "";
 		Date birtyDay = new Date();
 		
-		/**
-		 * TODO: Move this registration logic to AuthenticationManager
-		 */
-
-
-		//Zijn de 2 eerste letters van uw voornaam en de 7 of MAX letters van uw achternaam.
+		// The first 2 letters of fname and the 7 letters from lname make the bebrasID.
 		String bebrasID = null; 
 
+		// Get instance of secureRandom.
 		try {
 			random = SecureRandom.getInstance("SHA1PRNG");
 		} catch (NoSuchAlgorithmException e) {}
-
+		
 		byte[] salt = new byte[16]; //RSA PKCS5
 
-
+		// Get salt
 		random.nextBytes(salt);
 
+		// Get the key for PBKDF2.
 		KeySpec PBKDF2 = new PBEKeySpec(registerForm.get().password.toCharArray(), salt, 1000, 160);
 
+		// init keyFactory.
 		try{
 			secretFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
 		}catch(Exception e){}
 
-
+		// Generate password from PBKDF2.
 		try {
 			passwordByteString = secretFactory.generateSecret(PBKDF2).getEncoded();
 		} catch (InvalidKeySpecException e) {}
-		try{
+		try{ // Encocde our byte arrays to HEX dumps (to save in the database).
 			saltHEX = new String(Hex.encodeHex(salt));
 			passwordHEX = new String(Hex.encodeHex(passwordByteString));
 			birtyDay = new SimpleDateFormat("yyyy/dd/mm").parse(registerForm.get().bday);
 		}catch(Exception e){}
 
 		// TODO: Add support for names with only one character
+		// Generate bebrasID.
 		bebrasID = registerForm.get().fname.toLowerCase().substring(0,2);
 		bebrasID += registerForm.get().lname.toLowerCase().substring(0, registerForm.get().lname.length() < 7 ? registerForm.get().lname.length() : 7);
-
+		
+		// Construct welcome message.
 		String r = "Welkom ";
 		r += registerForm.get().fname + "!";
 
+		// Check if the email adres is uniqe.
 		if(!registerForm.get().email.isEmpty()){
 
 			if(Ebean.find(UserModel.class).where().eq(
@@ -172,21 +186,26 @@ public class UserController extends EController{
 		setCommonHeaders();
 		Form<Login> loginForm = form(Login.class).bindFromRequest();
 		
-		/**
-		 * TODO: Move this validation logic to authenticationmanager
-		 */
-		
-		//We do the same check here.
+		// We do the same check here, if the input forms are empty return a error message.
 		if(loginForm.get().id == null && loginForm.get().password == null){
 			return Application.index();
 		}else{ //POST data is available to us. Try to validate the user.
-			byte[] salt = null; //the users salt saved in the db.
-			byte[] passwordByteString = null; //the output from the PBKDF2 function.
-			String passwordHEX = null; // The password from the PBKDF2 output converted into a string.
-			String passwordDB = null; //the pasword as it is saved in the database.
+			// For storing the users salt form the database.
+			byte[] salt = null; 
+			
+			// For storing the output of the PBKDF2 function.
+			byte[] passwordByteString = null; 
+			
+			// To store the output from the PBKDF2 function in HEX.
+			String passwordHEX = null; 
+			
+			// To store the password as it is stored in the database.
+			String passwordDB = null; 
 
+			// Get the users information from the database.
 			UserModel userModel = Ebean.find(UserModel.class).where().eq(
 					"id",loginForm.get().id).findUnique();
+			
 			if(userModel == null){
 				return ok(loginLandingPage.render("Failed to login", new ArrayList<Link>(), "Error while logging in: email" + loginForm.get().id));
 			}
