@@ -42,7 +42,8 @@ public class UserRegistrationTest extends ContextTest{
 				);
 		
 		assertThat(status(result)).isEqualTo(200);		
-		assertThat(contentAsString(result)).contains("Uw bebras ID is: jijones. U kan inloggen met uw ID en uw wachtwoord.");
+		assertThat(contentAsString(result)).contains("Uw bebras ID is: jijones.");
+        assertThat(contentAsString(result)).contains("U kan inloggen met uw ID en uw wachtwoord.");
 		
 		result = callAction(
 				controllers.routes.ref.UserController.register(),fakeRequest().withFormUrlEncodedBody(map)

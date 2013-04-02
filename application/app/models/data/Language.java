@@ -8,8 +8,8 @@ import java.lang.Error;
 import java.lang.RuntimeException;
 
 import play.i18n.Lang;
-import play.i18n.Messages;
 
+import models.EMessages;
 import models.data.UnavailableLanguageException;
 import models.data.UnknownLanguageCodeException;
 
@@ -96,7 +96,7 @@ public class Language implements Comparable<Language> {
      * @return The name of this language in the provided language.
      */
     public String getName(Language language) {
-        return Messages.get(language.getCode(), "language." + lang.code());
+        return EMessages.get(language.getLang(), "languages." + lang.code());
     }
 
     /**
@@ -105,7 +105,7 @@ public class Language implements Comparable<Language> {
      * @return The name of this language in the preferred language.
      */
     public String getName() {
-        return Messages.get("language." + lang.code());
+        return EMessages.get("languages." + lang.code());
     }
 
     /**
