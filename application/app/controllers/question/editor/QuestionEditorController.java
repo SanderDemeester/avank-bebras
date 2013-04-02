@@ -215,7 +215,7 @@ public class QuestionEditorController extends EController {
             }
         }
         
-        return badRequest("Invalid upload.");
+        return badRequest(EMessages.get("question.factory.error.invalidUpload"));
     }
     
     /**
@@ -224,10 +224,11 @@ public class QuestionEditorController extends EController {
      * @return
      */
     public static Result submit(String json){
+        UserID userID = getUserID();
+        
         try {
-            Question question = QuestionIO.validateJson(json);
-            // TODO: submit the question
-            return ok("Valid question.");
+            QuestionIO.submit(json, userID, getUserDownloadLocation(userID));
+            return ok(EMessages.get("question.editor.submitted"));
         } catch (QuestionBuilderException e) {
             return badRequest(e.getMessage());
         }

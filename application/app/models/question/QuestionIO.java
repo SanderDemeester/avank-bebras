@@ -11,6 +11,8 @@ import java.io.OutputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.ZipEntry;
@@ -25,6 +27,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
+import models.data.DataDaemon;
 import models.data.Language;
 import models.user.UserID;
 
@@ -37,6 +40,11 @@ import org.xml.sax.SAXException;
 
 import play.Play;
 import play.libs.Json;
+/**
+ * A class to perform some IO with the questions within the question editor
+ * @author Ruben Taelman
+ *
+ */
 
 public class QuestionIO {
     
@@ -74,15 +82,7 @@ public class QuestionIO {
         return hash;
     }
     
-    /**
-     * Export the  file encoded with json to a File
-     * @param json json formatted question
-     * @param userID the user id for the authenticated user
-     * @param userDownloadLocation the location where the user can http-request his uploaded files
-     * @return The compressed question file
-     * @throws QuestionBuilderException any error that can occur
-     */
-    public static File export(String json, UserID userID, String userDownloadLocation) throws QuestionBuilderException {
+    private static QuestionPack generateQuestionPack(String json, UserID userID, String userDownloadLocation) throws QuestionBuilderException {
         try {
             String hash = makeHash(json, userID);
             
@@ -91,10 +91,34 @@ public class QuestionIO {
             QuestionPack pack = jsonToQuestionPack(input, downloadLocation, hash, userDownloadLocation);
             getFromXml(pack.getXmlDocument());// The return is not catched because we only have to validate
             
-            return pack.export(userID);
+            return pack;
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("Internal server error.", e);
         }
+    }
+    
+    /**
+     * Export the question encoded with json to a File
+     * @param json json formatted question
+     * @param userID the user id for the authenticated user
+     * @param userDownloadLocation the location where the user can http-request his uploaded files
+     * @return The compressed question file
+     * @throws QuestionBuilderException any error that can occur
+     */
+    public static File export(String json, UserID userID, String userDownloadLocation) throws QuestionBuilderException {
+        return generateQuestionPack(json, userID, userDownloadLocation).export(userID);
+    }
+    
+    /**
+     * Submit the question encoded with json to await approval
+     * @param json json formatted question
+     * @param userID the user id for the authenticated user
+     * @param userDownloadLocation the location where the user can http-request his uploaded files
+     * @return The compressed question file
+     * @throws QuestionBuilderException any error that can occur
+     */
+    public static void submit(String json, UserID userID, String userDownloadLocation) throws QuestionBuilderException {
+        generateQuestionPack(json, userID, userDownloadLocation).submit(userID);
     }
     
     /**
@@ -408,14 +432,41 @@ public class QuestionIO {
     }
     
     /**
+     * Return the location where this user can submit to
+     * @param userID the id of the user
+     * @return the location
+     */
+    public static String getUserSubmitLocation(UserID userID) {
+        return getUserFolderLocation("questioneditor.submit", userID);
+    }
+    
+    /**
      * Add a temporary file that will be automatically removed after 24 hours.
+     * The file will also be removed if the server reboots within those 24 hours
      * @param location the location of the file
      * @param name the name of the file
      * @return the newly created file
      */
     public static File addTempFile(String location, String name) {
-        //TODO: add this file to the daemon to be deleted after a certain time
+        // Make a new file on the given location with the given name
+        final File file = new File(location, name);
         
-        return new File(location, name);
+        // Remove the file after 24 hours
+        final Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, 1);
+        DataDaemon.getInstance().runAt(new Runnable() {
+
+            @Override
+            public void run() {
+                file.delete();
+            }
+            
+        }, calendar);
+        
+        // Remove the file if the server shuts down (this is needed for when the server
+        // reboots within those 24 hours, otherwise we'll have file leaks)
+        file.deleteOnExit();
+        
+        return file;
     }
 }

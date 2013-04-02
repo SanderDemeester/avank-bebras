@@ -386,7 +386,30 @@ function validate(success) {
 // Submit the question for approval after validation
 $("#submit").live("click", function(){
 	validate(function() {
-		// Real submission and go to other page
+		$("#submit").attr("disabled", "disabled");
+		$("#export").attr("disabled", "disabled");
+		
+		var request = $.ajax({
+			type: "GET",
+			url: "../submit",
+			data: { json: JSON.stringify(collectData()) }
+		})
+		
+		request.done(function(msg) {
+			$("#alert").show('fast').attr("class", "alert alert-success").text(msg);
+			window.setTimeout(function() { $("#alert").hide('fast'); }, 5000);
+			success();
+		});	
+		
+		request.fail(function(jqXHR, textStatus) {
+			$("#alert").show('fast').attr("class", "alert alert-error").text(jqXHR.responseText);
+			window.setTimeout(function() { $("#alert").hide('fast'); }, 5000);
+		});
+		
+		request.always(function(jqXHR, textStatus, errorThrown) {
+			$("#submit").removeAttr("disabled");
+			$("#export").removeAttr("disabled");
+		});
 		
 		// Call this for removing the warning after save
 		//window.onbeforeunload = null;

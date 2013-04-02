@@ -39,6 +39,7 @@ question.editor.exportAsZip = Export as .ZIP
 question.editor.answerOptionsInfo = Add possible answer solutions to the question and mark one of them as correct.
 question.editor.addAnswerOption = Add answer option
 question.editor.regexInfo = Enter the exact answer of the question. Java-accepted regular expressions are also allowed.
+question.editor.submitted = Your question was successfully submitted.
 
 question.editor.tabs.general = General
 question.editor.tabs.answers = Answers
@@ -57,6 +58,7 @@ question.type.REGEX = Input Question
 question.factory.error.noCorrectAnswers = The answers for language {0} contain no correct answers.
 question.factory.error.moreThanOneCorrectAnswers = The answers for language {0} contain more than one correct answers.
 question.factory.error.invalidRegex = Invalid regular expression found in language {0}
+question.factory.error.invalidUpload = Your upload was invalid
 
 # Languages
 languages.language = Language

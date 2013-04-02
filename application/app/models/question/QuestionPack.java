@@ -28,7 +28,14 @@ import models.user.UserID;
 
 import org.w3c.dom.Document;
 
+import play.Play;
+
 import scala.actors.threadpool.Arrays;
+/**
+ * A wrapper class for the questions before they will be downloaded
+ * @author Ruben Taelman
+ *
+ */
 
 public class QuestionPack {
     private Document document;
@@ -191,6 +198,16 @@ public class QuestionPack {
         } catch (IOException e) {
             throw new RuntimeException("IO error.", e);
         }
+    }
+    
+    /**
+     * Add this question pack to the submit folder of this question author to await approval
+     * @param userID id of the author
+     */
+    public void submit(UserID userID) {
+        File zip = export(userID);
+        File submit = new File(QuestionIO.getUserSubmitLocation(userID), QUESTIONZIPFILE+"~"+hash);
+        zip.renameTo(submit);
     }
     
     /**
