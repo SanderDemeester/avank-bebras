@@ -17,9 +17,9 @@ import org.junit.Test;
 
 import com.avaje.ebean.Ebean;
 
-import controllers.user.Type;
-
 import test.ContextTest;
+import controllers.user.Type;
+import static models.user.UserTests.createTestUserModel;
 
 public class IndependentTest extends ContextTest {
 
@@ -37,7 +37,7 @@ public class IndependentTest extends ContextTest {
 	
 	@Test
 	public void testGetCurrentClass() {
-		UserModel data = new UserModel(new UserID("a"),Type.INDEPENDENT,"Test");
+		UserModel data = createTestUserModel(Type.INDEPENDENT);
 		ClassGroup cl1 = new ClassGroup();
 		cl1.id = "curr";
 		ClassGroup cl2 = new ClassGroup();
@@ -74,7 +74,7 @@ public class IndependentTest extends ContextTest {
 
 	@Test
 	public void testGetPreviousClasses() {
-		UserModel data = new UserModel(new UserID("a"),Type.INDEPENDENT,"Test");
+		UserModel data = createTestUserModel(Type.INDEPENDENT);
 		ClassGroup cl1 = new ClassGroup();
 		cl1.id = "curr";
 		ClassGroup cl2 = new ClassGroup();

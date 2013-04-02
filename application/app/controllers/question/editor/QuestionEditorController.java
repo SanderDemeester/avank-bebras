@@ -32,23 +32,23 @@ public class QuestionEditorController extends EController {
         breadcrumbs.add(new Link("Question Editor", "/questioneditor"));
         return ok(index.render(breadcrumbs));
     }
-    
+
     public static Result create(){
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link("Question Editor", "/questioneditor"));
         breadcrumbs.add(new Link("Create", "/questioneditor/create"));
-        
+
         Form<RawQuestion> questionForm = form(RawQuestion.class);
         return ok(create.render(breadcrumbs, questionForm));
     }
-    
+
     public static Result save(){
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link("Question Editor", "/questioneditor"));
         breadcrumbs.add(new Link("Create", "/questioneditor/create"));
-        
+
         Form<RawQuestion> questionForm = form(RawQuestion.class).bindFromRequest();
         if(questionForm.hasErrors()) {
             return badRequest(create.render(breadcrumbs, questionForm));
