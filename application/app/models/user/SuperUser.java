@@ -10,14 +10,14 @@ import models.dbentities.UserModel;
 
 public abstract class SuperUser extends User{
 
-    
+
 
     public SuperUser(UserModel data) {
-		super(data);
-		// TODO Auto-generated constructor stub
-	}
+        super(data);
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
+    /**
      * reset password for user.
      * @param user
      */
