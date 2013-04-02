@@ -129,5 +129,4 @@ public class AuthenticationManager {
 	private String getAuthCookie() {
 		return Context.current().session().get(COOKIENAME);
 	}
-
 }

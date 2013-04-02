@@ -11,11 +11,9 @@ public class Pupil extends Independent{
 
     public Pupil(UserModel data) {
 		super(data, UserType.PUPIL);
-	}
+    }
 
-	//We first need a competition object.
-	
-	/**
+    /**
      *
      * @param competition
      * @return returns if adding competition was succesfull.

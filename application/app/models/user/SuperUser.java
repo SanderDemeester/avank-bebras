@@ -18,7 +18,7 @@ public abstract class SuperUser extends Authenticated{
 		super(data, type);
 	}
 
-	/**
+    /**
      * reset password for user.
      * @param user
      */
