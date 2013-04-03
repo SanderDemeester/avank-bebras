@@ -6,3 +6,6 @@ question.editor.index.create = Maak een vraag pak
 languages.en = Engels
 languages.nl = Nederlands
 
+# Error
+genericError = Er is iets misgelopen. Probeer opnieuw later.
+

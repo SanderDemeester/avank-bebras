@@ -1,0 +1,9 @@
+@(breadcrumbs : List[models.data.Link],content : List[models.dbentities.FAQModel])
+
+@main("FAQ", breadcrumbs){
+	@for(q <- content){
+		@q.name <br>
+		@q.content <br>
+		<br>
+	}
+}

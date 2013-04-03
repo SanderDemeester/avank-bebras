@@ -8,3 +8,6 @@ question.editor.index.create = Create a question pack
 # Languages
 languages.en = English
 languages.nl = Dutch
+
+#Error
+genericError = Something went wrong. Please try again later.
