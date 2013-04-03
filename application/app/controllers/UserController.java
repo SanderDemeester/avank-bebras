@@ -100,7 +100,12 @@ public class UserController extends EController{
 		}
 		
 		// Delegate create user to Authentication Manager.
-		String bebrasID = AuthenticationManager.getInstance().createUser(registerForm);
+		String bebrasID = null;
+		try {
+			bebrasID = AuthenticationManager.getInstance().createUser(registerForm);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return ok(registerLandingPage.render("Succes", new ArrayList<Link>(), bebrasID));
 	}
 
@@ -109,7 +114,7 @@ public class UserController extends EController{
 	 * @author Sander Demeester, Ruben Taelman
 	 * @return returns the users cookie.
 	 */
-	public static Result validate_login(String id, String password){
+	public static Result validate_login(String id, String password) throws Exception{
 		// We do the same check here, if the input forms are empty return a error message.
 		if(id == "" || password == "") {
 			return badRequest("Please enter an ID and password.");
