@@ -1,12 +1,28 @@
 
 package models.user;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+import play.data.Form;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 
+import org.apache.commons.codec.binary.Hex;
+
+import com.avaje.ebean.Ebean;
+
+import controllers.UserController.Register;
+
+import models.data.Link;
 import models.dbentities.UserModel;
 import models.user.factory.AdministratorUserFactory;
 import models.user.factory.AuthorUserFactory;
@@ -15,7 +31,9 @@ import models.user.factory.OrganizerUserFactory;
 import models.user.factory.PupilUserFactory;
 import models.user.factory.TeacherUserFactory;
 import models.user.factory.UserFactory;
+import play.data.Form;
 import play.mvc.Http.Context;
+import views.html.error;
 
 /**
  * Class to handle UserAuthentication.
@@ -129,8 +147,135 @@ public class AuthenticationManager {
 	private String getAuthCookie() {
 		return Context.current().session().get(COOKIENAME);
 	}
-	
+
 	public boolean isLoggedIn() {
-	    return !this.getUser().getType().equals(UserType.ANON);
+		return !this.getUser().getType().equals(UserType.ANON);
+	}
+
+	/**
+	 * @author Sander Demeester
+	 * @param registerForm
+	 * @return bebrasID
+	 */
+	public String createUser(Form<Register> registerForm){
+		// Setup a secure PRNG
+		SecureRandom random = null;
+
+		// Init keyFactory to generate a random string using PBKDF2 with SHA1.
+		SecretKeyFactory secretFactory = null;
+
+		// Resulting password will be in a byte[] array.
+		byte[] passwordByteString = null;
+
+		// We will save the password in HEX-format in the database;
+		String passwordHEX = "";
+
+		// Same for salt
+		String saltHEX = "";
+		Date birtyDay = new Date();
+
+		// The first 2 letters of fname and the 7 letters from lname make the bebrasID.
+		String bebrasID = null; 
+
+		// Get instance of secureRandom.
+		try {
+			random = SecureRandom.getInstance("SHA1PRNG");
+		} catch (NoSuchAlgorithmException e) {}
+
+		byte[] salt = new byte[16]; //RSA PKCS5
+
+		// Get salt
+		random.nextBytes(salt);
+
+		// Get the key for PBKDF2.
+		KeySpec PBKDF2 = new PBEKeySpec(registerForm.get().password.toCharArray(), salt, 1000, 160);
+
+		// init keyFactory.
+		try{
+			secretFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+		}catch(Exception e){}
+
+		// Generate password from PBKDF2.
+		try {
+			passwordByteString = secretFactory.generateSecret(PBKDF2).getEncoded();
+		} catch (InvalidKeySpecException e) {}
+		try{ // Encocde our byte arrays to HEX dumps (to save in the database).
+			saltHEX = new String(Hex.encodeHex(salt));
+			passwordHEX = new String(Hex.encodeHex(passwordByteString));
+			birtyDay = new SimpleDateFormat("yyyy/dd/mm").parse(registerForm.get().bday);
+		}catch(Exception e){}
+
+		
+
+		// TODO: Add support for names with only one character
+		// TODO: create some logic when user exist with same username.
+		// Generate bebrasID.
+		bebrasID = registerForm.get().fname.toLowerCase().substring(0,2);
+		bebrasID += registerForm.get().lname.toLowerCase().substring(0, registerForm.get().lname.length() < 7 ? registerForm.get().lname.length() : 7);
+		new UserModel(new UserID(bebrasID), UserType.INDEPENDENT,
+				registerForm.get().fname + " " + registerForm.get().lname, 
+				birtyDay, 
+				new Date(), 
+				passwordHEX,
+				saltHEX, registerForm.get().email, 
+				Gender.Male, registerForm.get().prefLanguage).save();
+
+		return bebrasID;
+	}
+	/**
+	 * the purpose of this code is to validate the users login credentials.
+	 * @param id
+	 * @param pw
+	 * @return true if credentials are ok else false.
+	 */
+	public boolean validate_credentials(String id, String pw){
+		// For storing the users salt form the database.
+		byte[] salt = null; 
+
+		// For storing the output of the PBKDF2 function.
+		byte[] passwordByteString = null; 
+
+		// To store the output from the PBKDF2 function in HEX.
+		String passwordHEX = null; 
+
+		// To store the password as it is stored in the database.
+		String passwordDB = null; 
+
+		// Get the users information from the database.
+		UserModel userModel = Ebean.find(UserModel.class).where().eq(
+				"id",id).findUnique();
+
+		if(userModel == null){
+			return false;
+		}
+		passwordDB = userModel.password;
+		SecretKeyFactory secretFactory = null;
+		try{
+			salt = Hex.decodeHex(userModel.hash.toCharArray());
+		}catch(Exception e){}
+
+		KeySpec PBKDF2 = new PBEKeySpec(pw.toCharArray(), salt, 1000, 160);
+
+		try{
+			// TODO: waarom niet de secret van Play zelf?
+			secretFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+		}catch(Exception e){}
+
+
+		try {
+			passwordByteString = secretFactory.generateSecret(PBKDF2).getEncoded();
+		} catch (InvalidKeySpecException e) {}
+		try{
+			passwordHEX = new String(Hex.encodeHex(passwordByteString));
+		}catch(Exception e){}
+		
+		if(passwordHEX.equals(passwordDB)){
+			// authenticate user.
+			login(userModel);
+			return true;
+		}else{
+			return false;
+		}
+
 	}
 }

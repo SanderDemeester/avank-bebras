@@ -52,13 +52,13 @@ public class UserController extends EController{
 	 */
 	private static HashMap<UserType, Class<?>> LANDINGPAGES = new HashMap<UserType, Class<?>>();
 	static {
-	    LANDINGPAGES.put(UserType.ADMINISTRATOR, AdminLandingPage.class);
-	    LANDINGPAGES.put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
-	    LANDINGPAGES.put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
-	    LANDINGPAGES.put(UserType.ORGANIZER, OrganizerLandingPage.class);
-	    LANDINGPAGES.put(UserType.PUPIL,PupilLandingPage.class);
+		LANDINGPAGES.put(UserType.ADMINISTRATOR, AdminLandingPage.class);
+		LANDINGPAGES.put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
+		LANDINGPAGES.put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
+		LANDINGPAGES.put(UserType.ORGANIZER, OrganizerLandingPage.class);
+		LANDINGPAGES.put(UserType.PUPIL,PupilLandingPage.class);
 	};
-	
+
 	/**
 	 * This methode gets requested when the user clicks on "signup".
 	 * @author Sander Demeester
@@ -70,8 +70,8 @@ public class UserController extends EController{
 		breadcrumbs.add(new Link("Home", "/"));
 		breadcrumbs.add(new Link("Sign Up", "/signup"));
 		return ok(register.render("Registration", 
-				  breadcrumbs,
-				  form(Register.class)
+				breadcrumbs,
+				form(Register.class)
 				));
 	}
 
@@ -82,165 +82,53 @@ public class UserController extends EController{
 	 */
 	public static Result register(){
 		setCommonHeaders();
-
 		// Bind play form request.
 		Form<Register> registerForm = form(Register.class).bindFromRequest();
-
-		if(registerForm.hasErrors()){ // If the form contains error's (specified by "@"-annotation in the class "Register" then this will be true.
-			return badRequest(error.render("Fout", new ArrayList<Link>(), form(Register.class), "Invalid request"));
-		}
-
-		// Setup a secure PRNG
-		SecureRandom random = null;
-
-		// Init keyFactory to generate a random string using PBKDF2 with SHA1.
-		SecretKeyFactory secretFactory = null;
-
-		// Resulting password will be in a byte[] array.
-		byte[] passwordByteString = null;
-
-		// We will save the password in HEX-format in the database;
-		String passwordHEX = "";
-
-		// Same for salt
-		String saltHEX = "";
-		Date birtyDay = new Date();
-
-		// The first 2 letters of fname and the 7 letters from lname make the bebrasID.
-		String bebrasID = null; 
-
-		// Get instance of secureRandom.
-		try {
-			random = SecureRandom.getInstance("SHA1PRNG");
-		} catch (NoSuchAlgorithmException e) {}
-
-		byte[] salt = new byte[16]; //RSA PKCS5
-
-		// Get salt
-		random.nextBytes(salt);
-
-		// Get the key for PBKDF2.
-		KeySpec PBKDF2 = new PBEKeySpec(registerForm.get().password.toCharArray(), salt, 1000, 160);
-
-		// init keyFactory.
-		try{
-			secretFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-		}catch(Exception e){}
-
-		// Generate password from PBKDF2.
-		try {
-			passwordByteString = secretFactory.generateSecret(PBKDF2).getEncoded();
-		} catch (InvalidKeySpecException e) {}
-		try{ // Encocde our byte arrays to HEX dumps (to save in the database).
-			saltHEX = new String(Hex.encodeHex(salt));
-			passwordHEX = new String(Hex.encodeHex(passwordByteString));
-			birtyDay = new SimpleDateFormat("yyyy/dd/mm").parse(registerForm.get().bday);
-		}catch(Exception e){}
-
-		// TODO: Add support for names with only one character
-		// Generate bebrasID.
-		bebrasID = registerForm.get().fname.toLowerCase().substring(0,2);
-		bebrasID += registerForm.get().lname.toLowerCase().substring(0, registerForm.get().lname.length() < 7 ? registerForm.get().lname.length() : 7);
-
-		// Construct welcome message.
-		String r = "Welkom ";
-		r += registerForm.get().fname + "!";
-
+		
 		// Check if the email adres is uniqe.
 		if(!registerForm.get().email.isEmpty()){
 
 			if(Ebean.find(UserModel.class).where().eq(
 					"email",registerForm.get().email).findUnique() != null){
-				return badRequest(error.render("Fout",new ArrayList<Link>(),form(Register.class),"Er bestaat al een gebruiker met het gekozen email address"));
+				return badRequest(error.render("Error",new ArrayList<Link>(),form(Register.class),"There is already a user with the selected email address"));
 			}
 		}
 
-		/*
-		 * There needs to be some more logic here for generating bebras ID's 
-		 * Save user object in database.
-		 */
-		new UserModel(new UserID(bebrasID), UserType.INDEPENDENT,
-				registerForm.get().fname + " " + registerForm.get().lname, 
-				birtyDay, 
-				new Date(), 
-				passwordHEX,
-				saltHEX, registerForm.get().email, 
-				Gender.Male, registerForm.get().prefLanguage).save();
-
+		// If the form contains error's (specified by "@"-annotation in the class "Register" then this will be true.
+		if(registerForm.hasErrors()){ 
+			return badRequest(error.render("Error", new ArrayList<Link>(), form(Register.class), "Invalid request"));
+		}
+		
+		// Delegate create user to Authentication Manager.
+		String bebrasID = AuthenticationManager.getInstance().createUser(registerForm);
 		return ok(registerLandingPage.render("Succes", new ArrayList<Link>(), bebrasID));
 	}
+
 	/**
-	 * This methode is called when the users clicks on "login", the purpose of this code is to validate the users login credentials.
+	 * This methode is called when the users clicks on "login".
 	 * @author Sander Demeester, Ruben Taelman
-	 * @return returns the loginLandingPage succes, this landing page should redirect to /home
+	 * @return returns the users cookie.
 	 */
 	public static Result validate_login(String id, String password){
 		// We do the same check here, if the input forms are empty return a error message.
 		if(id == "" || password == "") {
 			return badRequest("Please enter an ID and password.");
-		} else { //POST data is available to us. Try to validate the user.
-			// For storing the users salt form the database.
-			byte[] salt = null; 
-
-			// For storing the output of the PBKDF2 function.
-			byte[] passwordByteString = null; 
-
-			// To store the output from the PBKDF2 function in HEX.
-			String passwordHEX = null; 
-
-			// To store the password as it is stored in the database.
-			String passwordDB = null; 
-
-			// Get the users information from the database.
-			UserModel userModel = Ebean.find(UserModel.class).where().eq(
-					"id",id).findUnique();
-
-			if(userModel == null){
-				return badRequest("Invalid ID and password.");
-			}
-			passwordDB = userModel.password;
-			SecretKeyFactory secretFactory = null;
-			try{
-				salt = Hex.decodeHex(userModel.hash.toCharArray());
-			}catch(Exception e){}
-
-			KeySpec PBKDF2 = new PBEKeySpec(password.toCharArray(), salt, 1000, 160);
-
-			try{
-			    // TODO: waarom niet de secret van Play zelf?
-				secretFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-			}catch(Exception e){}
-
-
+		} else if(AuthenticationManager.getInstance().validate_credentials(id, password)){ 
+			String cookie = "";
 			try {
-				passwordByteString = secretFactory.generateSecret(PBKDF2).getEncoded();
-			} catch (InvalidKeySpecException e) {}
-			try{
-				passwordHEX = new String(Hex.encodeHex(passwordByteString));
-			}catch(Exception e){}
+				//generate random id to auth user.
+				cookie = Integer.toString(Math.abs(SecureRandom.getInstance("SHA1PRNG").nextInt(100)));
 
+				//set the cookie. There really is no need for Crypto.sign because a cookie should be random value that has no meaning
+				cookie = Crypto.sign(cookie);
+				response().setCookie(AuthenticationManager.COOKIENAME, cookie);
 
-			if(passwordHEX.equals(passwordDB)){ 
-				//TODO: this should be users landing page based on type of account.
-				String cookie = "";
-				try {
-					//generate random id to auth user.
-					cookie = Integer.toString(Math.abs(SecureRandom.getInstance("SHA1PRNG").nextInt(100)));
-
-					//set the cookie. There really is no need for Crypto.sign because a cookie should be random value that has no meaning
-					cookie = Crypto.sign(cookie);
-					response().setCookie(AuthenticationManager.COOKIENAME, cookie);
-
-					//authenticate the user to the AuthenticationManager
-					AuthenticationManager.getInstance().login(userModel);
-				} catch (NoSuchAlgorithmException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				return ok(cookie);
-			} else {
-				return badRequest("Invalid ID and password.");
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
 			}
+			return ok(cookie);
+		} else {
+			return badRequest("Invalid ID and password.");
 		}
 	}
 
@@ -255,18 +143,18 @@ public class UserController extends EController{
 	 **/
 	@SuppressWarnings("unchecked")
 	public static Result landingPage() throws Exception{
-	    setCommonHeaders();
-        List<Link> breadcrumbs = new ArrayList<Link>();
-        breadcrumbs.add(new Link("Home", "/"));
-        breadcrumbs.add(new Link("Dashboard", "/home"));
-	    
+		setCommonHeaders();
+		List<Link> breadcrumbs = new ArrayList<Link>();
+		breadcrumbs.add(new Link("Home", "/"));
+		breadcrumbs.add(new Link("Dashboard", "/home"));
+
 		UserType type = AuthenticationManager.getInstance().getUser().getType();
 		if(type.equals(UserType.ANON)) {
-		    return Results.redirect(routes.Application.index());
+			return Results.redirect(routes.Application.index());
 		} else {
-    		Class<?> object = Play.application().classloader().loadClass("views.html.landingPages." + LANDINGPAGES.get(type).getSimpleName() + "$");
-    		Template2<User,List<Link>, Html> viewTemplate = (Template2<User,List<Link>, Html>)object.getField("MODULE$").get(null);
-    		return ok(viewTemplate.render(AuthenticationManager.getInstance().getUser(), breadcrumbs));
+			Class<?> object = Play.application().classloader().loadClass("views.html.landingPages." + LANDINGPAGES.get(type).getSimpleName() + "$");
+			Template2<User,List<Link>, Html> viewTemplate = (Template2<User,List<Link>, Html>)object.getField("MODULE$").get(null);
+			return ok(viewTemplate.render(AuthenticationManager.getInstance().getUser(), breadcrumbs));
 		}
 	}
 
