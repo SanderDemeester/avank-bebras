@@ -1,0 +1,5 @@
+CREATE TABLE faq(
+language text,
+content text,
+PRIMARY KEY (language)
+);
