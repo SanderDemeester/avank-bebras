@@ -28,6 +28,7 @@ import play.Play;
 import play.api.libs.Crypto;
 import play.api.templates.Html;
 import play.api.templates.Template1;
+import play.api.templates.Template2;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.data.format.Formats;
@@ -262,7 +263,7 @@ public class UserController extends EController{
 	 * @return Returns a scala template based on the type of user that is requesting the page.
 	 **/
 	@SuppressWarnings("unchecked")
-	public static Result landingPage(){
+	public static Result landingPage() throws Exception{
 	    setCommonHeaders();
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
@@ -273,7 +274,7 @@ public class UserController extends EController{
 		    return Results.redirect(routes.Application.index());
 		} else {
     		Class<?> object = Play.application().classloader().loadClass("views.html.landingPages." + LANDINGPAGES.get(type).getSimpleName() + "$");
-    		Template1<User, Html> viewTemplate = (Template1<User, Html>)object.getField("MODULE$").get(null);
+    		Template2<User,List<Link>, Html> viewTemplate = (Template2<User,List<Link>, Html>)object.getField("MODULE$").get(null);
     		return ok(viewTemplate.render(AuthenticationManager.getInstance().getUser(), breadcrumbs));
 		}
 	}
