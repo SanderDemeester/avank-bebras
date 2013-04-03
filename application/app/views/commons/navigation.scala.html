@@ -20,7 +20,7 @@
 					<div class="dropdown-menu"
 						style="padding: 15px; padding-bottom: 0px;">
 						<div>
-							<form id="login" method="GET" action="login_validate">
+							<form id="login" method="GET" action="">
 							<div class="control-group">
 								<div class="controls">
 									<div class="input-prepend">
@@ -51,19 +51,20 @@
                         </div>
                     </div>
             </ul>
-
         </div>
     </div>
 </div>
 <script type="text/javascript">
 $("#btn").live("click",function(){
-	$.ajax({
+	var r = $.ajax({
 		type: "GET",
 		url: "/login_validate",
-		data: {"id": "data","pw":"data"}
-	}).isdone(function(){
-		alert("done");
-	});
+		data: {"id": $("#id").val(),"pw":$("#pw").val()}
+		}).done(function( response) {
+			document.open();
+			document.write(response);
+			document.close();
+		});
 	return false;
 });
 </script>
