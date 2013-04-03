@@ -70,7 +70,10 @@ $("#login_btn").live("click",function(){
 		});
 	
 	request.done(function(msg) {
-		document.cookie="@models.user.AuthenticationManager.COOKIENAME" + "=" + msg;
+		var sessionCookieTime = daysInMilliseconds(1); 
+		var currentDate = new Date();
+		
+		document.cookie="@models.user.AuthenticationManager.COOKIENAME" + "=" + msg + ";expires=" + new Date(currdate.getTime() + sessionCookieTime);
 		window.location = "/home";
 	});
 	
