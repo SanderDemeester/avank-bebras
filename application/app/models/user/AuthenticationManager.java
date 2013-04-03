@@ -15,14 +15,9 @@ import java.util.Stack;
 import play.data.Form;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-
 import org.apache.commons.codec.binary.Hex;
-
 import com.avaje.ebean.Ebean;
-
 import controllers.UserController.Register;
-
-import models.data.Link;
 import models.dbentities.UserModel;
 import models.user.factory.AdministratorUserFactory;
 import models.user.factory.AuthorUserFactory;
@@ -31,9 +26,7 @@ import models.user.factory.OrganizerUserFactory;
 import models.user.factory.PupilUserFactory;
 import models.user.factory.TeacherUserFactory;
 import models.user.factory.UserFactory;
-import play.data.Form;
 import play.mvc.Http.Context;
-import views.html.error;
 
 /**
  * Class to handle UserAuthentication.
