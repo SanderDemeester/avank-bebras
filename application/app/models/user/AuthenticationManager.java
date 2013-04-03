@@ -109,7 +109,12 @@ public class AuthenticationManager {
 	public User logout() {
 		Stack<User> stack = users.get(getAuthCookie());
 		stack.pop();
-		return stack.peek();
+		if(stack.isEmpty()) {
+		    users.put(getAuthCookie(), null);
+		    return null;
+		} else {
+		    return stack.peek();
+		}
 	}
 
 	private User create(UserModel userModel) {
