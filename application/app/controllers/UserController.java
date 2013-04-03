@@ -132,6 +132,11 @@ public class UserController extends EController{
 		}
 	}
 
+	/**
+	 * Logout current user
+	 * @author Sander Demeester
+	 * @return Result
+	 */
 	public static Result logout(){
 		AuthenticationManager.getInstance().logout();
 		return Results.redirect(routes.Application.index());

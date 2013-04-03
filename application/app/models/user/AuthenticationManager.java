@@ -153,11 +153,13 @@ public class AuthenticationManager {
 	}
 
 	/**
+	 * Create user.
 	 * @author Sander Demeester
 	 * @param registerForm
 	 * @return bebrasID
+	 * @throws Exception 
 	 */
-	public String createUser(Form<Register> registerForm){
+	public String createUser(Form<Register> registerForm) throws Exception{
 		// Setup a secure PRNG
 		SecureRandom random = null;
 
@@ -193,7 +195,9 @@ public class AuthenticationManager {
 		// init keyFactory.
 		try{
 			secretFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-		}catch(Exception e){}
+		}catch(Exception e){
+			throw new Exception("Erorr while creating PBKDF2 factory.");
+		}
 
 		// Generate password from PBKDF2.
 		try {
@@ -203,7 +207,9 @@ public class AuthenticationManager {
 			saltHEX = new String(Hex.encodeHex(salt));
 			passwordHEX = new String(Hex.encodeHex(passwordByteString));
 			birtyDay = new SimpleDateFormat("yyyy/dd/mm").parse(registerForm.get().bday);
-		}catch(Exception e){}
+		}catch(Exception e){
+			throw new Exception("Error while parsing date");
+		}
 
 		
 
@@ -222,13 +228,15 @@ public class AuthenticationManager {
 
 		return bebrasID;
 	}
+	
 	/**
 	 * the purpose of this code is to validate the users login credentials.
 	 * @param id
 	 * @param pw
 	 * @return true if credentials are ok else false.
+	 * @throws Exception 
 	 */
-	public boolean validate_credentials(String id, String pw){
+	public boolean validate_credentials(String id, String pw) throws Exception{
 		// For storing the users salt form the database.
 		byte[] salt = null; 
 
@@ -259,15 +267,20 @@ public class AuthenticationManager {
 		try{
 			// TODO: waarom niet de secret van Play zelf?
 			secretFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-		}catch(Exception e){}
-
+		}catch(Exception e){
+			throw new Exception("Erorr while creating PBKDF2 factory.");
+		}
 
 		try {
 			passwordByteString = secretFactory.generateSecret(PBKDF2).getEncoded();
-		} catch (InvalidKeySpecException e) {}
+		}catch (InvalidKeySpecException e) {
+			throw new Exception("Error while generating users password");
+		}
 		try{
 			passwordHEX = new String(Hex.encodeHex(passwordByteString));
-		}catch(Exception e){}
+		}catch(Exception e){
+			throw new Exception("Error while encoding users password");
+		}
 		
 		if(passwordHEX.equals(passwordDB)){
 			// authenticate user.
