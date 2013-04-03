@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import models.statistics.Population;
-import models.user.User;
+import models.dbentities.UserModel;
 
 /**
  * Quite a stupid Population, actually. Represents a single user.
@@ -12,20 +12,20 @@ import models.user.User;
  */
 public class SinglePopulation implements Population {
 
-    private User user;
+    private UserModel user;
 
     public SinglePopulation() {}
 
-    public SinglePopulation(User user) {
+    public SinglePopulation(UserModel user) {
         this.user = user;
     }
 
     public String describe() {
-        return user.getData().name + "(" + user.getID() + ")";
+        return user.name + "(" + user.id + ")";
     }
 
-    public List<User> getUsers() {
-        List<User> list = new ArrayList<User>();
+    public List<UserModel> getUsers() {
+        List<UserModel> list = new ArrayList<UserModel>();
         list.add(user);
         return list;
     }

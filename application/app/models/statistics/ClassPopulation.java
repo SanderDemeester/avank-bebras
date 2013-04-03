@@ -1,10 +1,16 @@
 package models.statistics;
 
 import java.util.List;
+import java.util.ArrayList;
+
+import com.avaje.ebean.Ebean;
+
+import play.db.ebean.Model.Finder;
 
 import models.statistics.Population;
 import models.dbentities.ClassGroup;
-import models.user.User;
+import models.dbentities.UserModel;
+import models.dbentities.ClassPupil;
 
 /**
  * A Population of one class.
@@ -24,9 +30,16 @@ public class ClassPopulation implements Population {
         return classGroup.name + " of the " + classGroup.schoolid;
     }
 
-    public List<User> getUsers() {
-        // TODO #72
-        return null;
+    public List<UserModel> getUsers() {
+        List<UserModel> list = Ebean.find(UserModel.class).where()
+                .eq("classid", classGroup.id).findList();
+        if(list != null && list.size() > 0) return list;
+        list = new ArrayList<UserModel>();
+        for(ClassPupil cp : Ebean.find(ClassPupil.class).where()
+                .eq("classID", classGroup.id).findList()) {
+            list.add(Ebean.find(UserModel.class, cp.classid));
+        }
+        return list;
     }
 
 }

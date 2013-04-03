@@ -2,7 +2,7 @@ package models.statistics;
 
 import java.util.List;
 
-import models.user.User;
+import models.dbentities.UserModel;
 
 /**
  * Represents a group of Users, joined together to be summarized as a whole.
@@ -19,6 +19,6 @@ public interface Population {
     /**
      * Returns the list of users in this population.
      */
-    public List<User> getUsers();
+    public List<UserModel> getUsers();
 
 }
