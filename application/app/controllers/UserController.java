@@ -30,7 +30,6 @@ import play.data.validation.Constraints.Required;
 import play.mvc.Result;
 import play.mvc.Results;
 import views.html.error;
-import views.html.login.loginLandingPage;
 import views.html.login.register;
 import views.html.login.registerLandingPage;
 import views.html.landingPages.AdminLandingPage;
