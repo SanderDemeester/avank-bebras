@@ -12,7 +12,6 @@ import models.user.UserID;
 
 
 @RunWith(Suite.class)
-@SuiteClasses({ LoginStateTest.class })
 public class UserTests {
 
     public static UserModel createTestUserModel(UserType type) {
