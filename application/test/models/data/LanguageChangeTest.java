@@ -36,4 +36,13 @@ public class LanguageChangeTest extends ContextTest {
         Assert.assertEquals("English", EMessages.get("languages.en"));
     }
 
+    @Test public void testGetLangDefault() {
+        Assert.assertEquals("nl", EMessages.getLang());
+    }
+
+    @Test public void testGetLangChanged() {
+        EMessages.setLang("en");
+        Assert.assertEquals("en", EMessages.getLang());
+    }
+
 }
