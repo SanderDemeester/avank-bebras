@@ -58,17 +58,15 @@ public class UserController extends EController{
 	 * Each view is responsible for getting all information from the DataModel and make a
 	 * beautiful view for the user :)
 	 */
-	private static HashMap<UserType, Class<?>> landingPages = new HashMap<UserType, Class<?>>(){{
-		put(UserType.ADMINISTRATOR, AdminLandingPage.class);
-		put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
-		put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
-		put(UserType.ORGANIZER, OrganizerLandingPage.class);
-		put(UserType.PUPIL,PupilLandingPage.class);
-	}};
-
-	public UserController(){
-
-	}
+	private static HashMap<UserType, Class<?>> LANDINGPAGES = new HashMap<UserType, Class<?>>();
+	static {
+	    LANDINGPAGES.put(UserType.ADMINISTRATOR, AdminLandingPage.class);
+	    LANDINGPAGES.put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
+	    LANDINGPAGES.put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
+	    LANDINGPAGES.put(UserType.ORGANIZER, OrganizerLandingPage.class);
+	    LANDINGPAGES.put(UserType.PUPIL,PupilLandingPage.class);
+	};
+	
 	/**
 	 * This methode gets requested when the user clicks on "signup".
 	 * @author Sander Demeester
@@ -80,8 +78,8 @@ public class UserController extends EController{
 		breadcrumbs.add(new Link("Home", "/"));
 		breadcrumbs.add(new Link("Sign Up", "/signup"));
 		return ok(register.render("Registration", 
-				breadcrumbs,
-				form(Register.class)
+				  breadcrumbs,
+				  form(Register.class)
 				));
 	}
 
@@ -181,16 +179,14 @@ public class UserController extends EController{
 	}
 	/**
 	 * This methode is called when the users clicks on "login", the purpose of this code is to validate the users login credentials.
-	 * @author Sander Demeester
+	 * @author Sander Demeester, Ruben Taelman
 	 * @return returns the loginLandingPage succes, this landing page should redirect to /home
 	 */
-	public static Result validate_login(String id, String pw){
-		setCommonHeaders();
-
+	public static Result validate_login(String id, String password){
 		// We do the same check here, if the input forms are empty return a error message.
-		if(id == null || pw == null){
-			return ok(loginLandingPage.render("Failed to login", new ArrayList<Link>(),  id + " " + pw));
-		}else{ //POST data is available to us. Try to validate the user.
+		if(id == "" || password == "") {
+			return badRequest("Please enter an ID and password.");
+		} else { //POST data is available to us. Try to validate the user.
 			// For storing the users salt form the database.
 			byte[] salt = null; 
 
@@ -208,7 +204,7 @@ public class UserController extends EController{
 					"id",id).findUnique();
 
 			if(userModel == null){
-				return ok(loginLandingPage.render("Failed to login", new ArrayList<Link>(), "Error while logging in: email" + id));
+				return badRequest("Invalid ID and password.");
 			}
 			passwordDB = userModel.password;
 			SecretKeyFactory secretFactory = null;
@@ -216,9 +212,10 @@ public class UserController extends EController{
 				salt = Hex.decodeHex(userModel.hash.toCharArray());
 			}catch(Exception e){}
 
-			KeySpec PBKDF2 = new PBEKeySpec(pw.toCharArray(), salt, 1000, 160);
+			KeySpec PBKDF2 = new PBEKeySpec(password.toCharArray(), salt, 1000, 160);
 
 			try{
+			    // TODO: waarom niet de secret van Play zelf?
 				secretFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
 			}catch(Exception e){}
 
@@ -239,7 +236,8 @@ public class UserController extends EController{
 					cookie = Integer.toString(Math.abs(SecureRandom.getInstance("SHA1PRNG").nextInt(100)));
 
 					//set the cookie. There really is no need for Crypto.sign because a cookie should be random value that has no meaning
-					response().setCookie(AuthenticationManager.COOKIENAME, Crypto.sign(cookie));
+					cookie = Crypto.sign(cookie);
+					response().setCookie(AuthenticationManager.COOKIENAME, cookie);
 
 					//authenticate the user to the AuthenticationManager
 					AuthenticationManager.getInstance().login(userModel);
@@ -247,9 +245,9 @@ public class UserController extends EController{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				return ok(loginLandingPage.render("Succes", new ArrayList<Link>(), "Welkom " + userModel.name));
-			}else{
-				return badRequest(error.render("Failed to login", new ArrayList<Link>(), form(Register.class), "Invalid login"));
+				return ok(cookie);
+			} else {
+				return badRequest("Invalid ID and password.");
 			}
 		}
 	}
@@ -264,11 +262,20 @@ public class UserController extends EController{
 	 * @return Returns a scala template based on the type of user that is requesting the page.
 	 **/
 	@SuppressWarnings("unchecked")
-	public static Result landingPage() throws Exception{
-		UserType type = UserType.INDEPENDENT;
-		Class<?> object = Play.application().classloader().loadClass("views.html.landingPages." + landingPages.get(type).getSimpleName() + "$");
-		Template1<User, Html> viewTemplate = (Template1<User, Html>)object.getField("MODULE$").get(null);
-		return ok(viewTemplate.render(AuthenticationManager.getInstance().getUser()));
+	public static Result landingPage(){
+	    setCommonHeaders();
+        List<Link> breadcrumbs = new ArrayList<Link>();
+        breadcrumbs.add(new Link("Home", "/"));
+        breadcrumbs.add(new Link("Dashboard", "/home"));
+	    
+		UserType type = AuthenticationManager.getInstance().getUser().getType();
+		if(type.equals(UserType.ANON)) {
+		    return Results.redirect(routes.Application.index());
+		} else {
+    		Class<?> object = Play.application().classloader().loadClass("views.html.landingPages." + LANDINGPAGES.get(type).getSimpleName() + "$");
+    		Template1<User, Html> viewTemplate = (Template1<User, Html>)object.getField("MODULE$").get(null);
+    		return ok(viewTemplate.render(AuthenticationManager.getInstance().getUser(), breadcrumbs));
+		}
 	}
 
 	/**

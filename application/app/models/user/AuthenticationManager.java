@@ -109,7 +109,7 @@ public class AuthenticationManager {
 	public User logout() {
 		Stack<User> stack = users.get(getAuthCookie());
 		stack.pop();
-		return stack.firstElement();
+		return stack.peek();
 	}
 
 	private User create(UserModel userModel) {
@@ -128,5 +128,9 @@ public class AuthenticationManager {
 
 	private String getAuthCookie() {
 		return Context.current().session().get(COOKIENAME);
+	}
+	
+	public boolean isLoggedIn() {
+	    return !this.getUser().getType().equals(UserType.ANON);
 	}
 }

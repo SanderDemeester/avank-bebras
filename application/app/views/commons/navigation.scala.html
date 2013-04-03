@@ -12,6 +12,9 @@
                 }
             </ul>
 			<ul class="nav pull-right">
+				@if(models.user.AuthenticationManager.getInstance().isLoggedIn()) {
+					<li><a href='@routes.UserController.logout'>Sign Out</a></li>
+				} else {
 				<li><a href='@routes.UserController.signup'>Sign Up</a></li>
 				<li class="divider-vertical"></li>
 				<li class="dropdown"><a class="dropdown-toggle" href="#"
@@ -20,12 +23,13 @@
 					<div class="dropdown-menu"
 						style="padding: 15px; padding-bottom: 0px;">
 						<div>
+							<div id="login_alert" class="alert hide"></div>
 							<form id="login" method="GET" action="">
 							<div class="control-group">
 								<div class="controls">
 									<div class="input-prepend">
 										<span class="add-on"><i class="icon-user"></i> </span> <input
-											type="text" class="input-xlarge" id="id"
+											type="text" class="input-xlarge" id="login_id"
 											name="id" placeholder="Bebras ID">
 									</div>
 								</div>
@@ -34,7 +38,7 @@
                                 <div class="controls">
                                     <div class="input-prepend">
                                         <span class="add-on"><i class="icon-lock"></i> </span> <input
-                                            type="password" class="input-xlarge" id="pw"
+                                            type="password" class="input-xlarge" id="login_password"
                                             name="pw" placeholder="Password">
                                     </div>
                                 </div>
@@ -44,27 +48,41 @@
                                 <label class="control-label"></label>
                                 <div class="controls">
                                     <button type="submit" class="btn btn-success" name="btn"
-                                        id="btn">Login</button>
+                                        id="login_btn">Login</button>
                                 </div>
                             </div>
                             </form>
                         </div>
                     </div>
+                }
             </ul>
         </div>
     </div>
 </div>
 <script type="text/javascript">
-$("#btn").live("click",function(){
-	var r = $.ajax({
+$("#login_btn").live("click",function(){
+	$("#login_btn").attr("disabled", "disabled");
+	
+	var request = $.ajax({
 		type: "GET",
 		url: "/login_validate",
-		data: {"id": $("#id").val(),"pw":$("#pw").val()}
-		}).done(function( response) {
-			document.open();
-			document.write(response);
-			document.close();
+		data: {"id": $("#login_id").val(),"password":$("#login_password").val()}
 		});
+	
+	request.done(function(msg) {
+		document.cookie="@models.user.AuthenticationManager.COOKIENAME" + "=" + msg;
+		window.location = "/home";
+	});
+	
+	request.fail(function(jqXHR, textStatus) {
+		$("#login_alert").show('fast').attr("class", "alert alert-error").text(jqXHR.responseText);
+		window.setTimeout(function() { $("#login_alert").hide('fast'); }, 5000);
+	});
+	
+	request.always(function(jqXHR, textStatus, errorThrown) {
+		$("#login_btn").removeAttr("disabled");
+	});
+	
 	return false;
 });
 </script>
