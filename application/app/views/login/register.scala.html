@@ -61,8 +61,11 @@
 <div class="control-group row-fluid">
 	<label class="control-label span2">@EMessages.get("register.gender")</label>
 	<div class="controls span10">
+	<i class="icon-user"></i>
 		<select name="gender" id="gender" class="span11"> @for(gender <- models.user.Gender.values().toList) {
+		
 			<option value="@gender.toString()">
+			
 			@gender.toString()
 			</option> 
 			}
@@ -74,7 +77,7 @@
 <div class="control-group row-fluid">
 	<label class="control-label span2">@EMessages.get("register.preflan")</label>
 	<div class="controls span10">
-
+<i class="icon-user"></i>
 		<select name="prefLanguage" id="prefLanguage" class="span11">
 			@for(language <- models.data.Language.listLanguages().toList) {
 			<option value="@language.getCode()">
