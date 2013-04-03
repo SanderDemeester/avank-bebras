@@ -17,7 +17,6 @@ import models.dbentities.UserModel;
 import models.user.AuthenticationManager;
 import models.user.Gender;
 import models.user.User;
-import models.user.UserID;
 import models.user.UserType;
 import org.apache.commons.codec.binary.Hex;
 import play.Play;

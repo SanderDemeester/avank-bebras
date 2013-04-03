@@ -11,14 +11,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Column;
-
 import models.user.Gender;
 import models.user.UserType;
-import models.user.UserID;
-
 import play.data.format.Formats;
 import play.db.ebean.Model;
-import play.db.ebean.Model.Finder;
 
 /**
  * @author Jens N. Rammant
@@ -55,12 +51,12 @@ public class UserModel extends Model{
 	@Column(name="class")
 	public String classgroup;
 
-	public UserModel(UserID id, UserType loginType, String name,
+	public UserModel(String id, UserType loginType, String name,
 			Date birthdate, Date registrationdate,
 			String password, String hash, String email,
 			Gender gender, String preflanguage){
 		
-		this.id = id.getUserID();
+		this.id = id;
 		this.type = loginType; 
 		this.name = name;
 		this.birthdate = birthdate;

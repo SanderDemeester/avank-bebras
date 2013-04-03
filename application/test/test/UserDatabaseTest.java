@@ -12,18 +12,13 @@ import models.user.Pupil;
 import models.user.Teacher;
 import models.user.UserType;
 import models.user.User;
-import models.user.UserID;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import com.avaje.ebean.Ebean;
-
 import java.security.SecureRandom;
 import java.math.BigInteger;
 import javax.persistence.PersistenceException;
-
 import junit.framework.Assert;
 import static play.test.Helpers.*;
 
@@ -39,7 +34,7 @@ public class UserDatabaseTest extends ContextTest {
 		String id = "id";
 		String name = "Bertrand Russell";
 		User userFind = null;
-		UserModel mdl = new UserModel(new UserID(id),UserType.INDEPENDENT,
+		UserModel mdl = new UserModel(id,UserType.INDEPENDENT,
 				name,
 				new Date(),
 				new Date(),
@@ -70,7 +65,7 @@ public class UserDatabaseTest extends ContextTest {
 
 		for(int i = 0; i < numberOfTeachers; i++){
 			try{
-				new Teacher(new UserModel(new UserID(new BigInteger(130,random).toString()),UserType.TEACHER,
+				new Teacher(new UserModel(new BigInteger(130,random).toString(),UserType.TEACHER,
 						new BigInteger(130,random).toString(),
 						new Date(),
 						new Date(),
@@ -84,7 +79,7 @@ public class UserDatabaseTest extends ContextTest {
 		List<UserModel> teacherList = UserModel.find.where().like("type", "TEACHER").findList();
 		Assert.assertTrue(teacherList.size() == numberOfTeachers);
 
-		User teacher = new Teacher(new UserModel(new UserID(teacherID), UserType.TEACHER, 
+		User teacher = new Teacher(new UserModel(teacherID, UserType.TEACHER, 
 				name,
 				new Date(),
 				new Date(),
@@ -109,7 +104,7 @@ public class UserDatabaseTest extends ContextTest {
 
 		for(int i = 0; i < numberOfOrganizer; i++){
 			try{
-				new Organizer(new UserModel(new UserID(new BigInteger(130,random).toString()),UserType.ORGANIZER,
+				new Organizer(new UserModel(new BigInteger(130,random).toString(),UserType.ORGANIZER,
 						new BigInteger(130,random).toString(),
 						new Date(),
 						new Date(),
@@ -123,7 +118,7 @@ public class UserDatabaseTest extends ContextTest {
 		List<UserModel> organizerList = UserModel.find.where().like("type", "ORGANIZER").findList();
 		Assert.assertTrue(organizerList.size() == numberOfOrganizer);
 
-		User organizer = new Organizer(new UserModel(new UserID(organizerID),
+		User organizer = new Organizer(new UserModel(organizerID,
 				UserType.ORGANIZER,
 				name,
 				new Date(),
@@ -158,7 +153,7 @@ public class UserDatabaseTest extends ContextTest {
 		//generate random IndependentUser and save them.
 		for(int i = 0; i < numberOfIndependentUser; i++){
 			try{
-				Independent ip = new Independent(new UserModel(new UserID(new BigInteger(130,random).toString()),UserType.INDEPENDENT,
+				Independent ip = new Independent(new UserModel(new BigInteger(130,random).toString(),UserType.INDEPENDENT,
 						new BigInteger(130,random).toString(),
 						new Date(),
 						new Date(),
@@ -174,7 +169,7 @@ public class UserDatabaseTest extends ContextTest {
 		//generate random Pupils.
 		for(int i = 0; i < numberOfPupils; i++){
 			try{
-				Pupil pu = new Pupil(new UserModel(new UserID(new BigInteger(130,random).toString()),UserType.PUPIL,
+				Pupil pu = new Pupil(new UserModel(new BigInteger(130,random).toString(),UserType.PUPIL,
 						new BigInteger(130,random).toString(),
 						new Date(),
 						new Date(),

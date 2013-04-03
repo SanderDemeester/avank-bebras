@@ -218,7 +218,7 @@ public class AuthenticationManager {
 		// Generate bebrasID.
 		bebrasID = registerForm.get().fname.toLowerCase().substring(0,2);
 		bebrasID += registerForm.get().lname.toLowerCase().substring(0, registerForm.get().lname.length() < 7 ? registerForm.get().lname.length() : 7);
-		new UserModel(new UserID(bebrasID), UserType.INDEPENDENT,
+		new UserModel(bebrasID, UserType.INDEPENDENT,
 				registerForm.get().fname + " " + registerForm.get().lname, 
 				birtyDay, 
 				new Date(), 
