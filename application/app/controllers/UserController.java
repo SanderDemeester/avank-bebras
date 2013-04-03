@@ -12,8 +12,6 @@ import java.util.List;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-
-import models.EMessages;
 import models.data.Link;
 import models.dbentities.UserModel;
 import models.user.AuthenticationManager;
@@ -21,30 +19,24 @@ import models.user.Gender;
 import models.user.User;
 import models.user.UserID;
 import models.user.UserType;
-
 import org.apache.commons.codec.binary.Hex;
-
 import play.Play;
 import play.api.libs.Crypto;
 import play.api.templates.Html;
-import play.api.templates.Template1;
 import play.api.templates.Template2;
-import play.data.DynamicForm;
 import play.data.Form;
 import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
 import play.mvc.Result;
 import play.mvc.Results;
-import scala.collection.mutable.Map;
 import views.html.error;
-import views.html.loginLandingPage;
-import views.html.register;
-import views.html.registerLandingPage;
+import views.html.login.loginLandingPage;
+import views.html.login.register;
+import views.html.login.registerLandingPage;
 import views.html.landingPages.AdminLandingPage;
 import views.html.landingPages.IndependentPupilLandingPage;
 import views.html.landingPages.OrganizerLandingPage;
 import views.html.landingPages.PupilLandingPage;
-
 import com.avaje.ebean.Ebean;
 
 /**
