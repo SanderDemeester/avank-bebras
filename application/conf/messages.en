@@ -5,6 +5,12 @@ app.Page = Page
 # Question
 question.editor.index.hero = Questions are the key element of the Bebras application. You can become part of this fantastic application and submit your own question by creating them here.
 question.editor.index.create = Create a question pack
+question.editor.index.create.main = Make {0}
+question.editor.index.create.import = Import a .ZIP
+question.editor.confirmLeave = Are you sure you wish to leave this page? Any unsaved chanches will be lost.
+
+question.type.MULTIPLE_CHOICE = Multiple Choice Question
+question.type.REGEX = Open Question
 
 # Languages
 languages.en = English
