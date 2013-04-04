@@ -199,7 +199,7 @@ public class AuthenticationManager {
 		try{ // Encocde our byte arrays to HEX dumps (to save in the database).
 			saltHEX = new String(Hex.encodeHex(salt));
 			passwordHEX = new String(Hex.encodeHex(passwordByteString));
-			birtyDay = new SimpleDateFormat("yyyy/dd/mm").parse(registerForm.get().bday);
+			birtyDay = new SimpleDateFormat("yyyy-mm-dd").parse(registerForm.get().bday);
 		}catch(Exception e){
 			throw new Exception("Error while parsing date");
 		}
