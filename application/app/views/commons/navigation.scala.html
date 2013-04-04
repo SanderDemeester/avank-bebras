@@ -12,7 +12,10 @@
                 }
             </ul>
 			<ul class="nav pull-right">
+				<li class="divider-vertical"></li>
 				@if(models.user.AuthenticationManager.getInstance().isLoggedIn()) {
+					<li><a href="@routes.UserController.landingPage">Signed in as <i>@models.user.AuthenticationManager.getInstance().getUser().getID()</i></a></li>
+					<li class="divider-vertical"></li>
 					<li><a href='@routes.UserController.logout'>Sign Out</a></li>
 				} else {
 				<li><a href='@routes.UserController.signup'>Sign Up</a></li>
