@@ -39,6 +39,9 @@ POST    /servers/:name              controllers.question.server.ServerController
 
 GET    /servers/remove/:name        controllers.question.server.ServerController.remove(name)
 
+# FAQ
+GET		/faq						controllers.faq.FAQController.getFAQ()
+
 # Bootstrap resources
 GET     /assets/img/glyphicons-halflings-white.png      controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings-white.png")
 GET     /assets/img/glyphicons-halflings.png            controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings.png")

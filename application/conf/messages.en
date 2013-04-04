@@ -10,6 +10,9 @@ question.editor.index.create = Create a question pack
 languages.en = English
 languages.nl = Dutch
 
+#Error
+genericError = Something went wrong. Please try again later.
+
 # Login
 redirect_message = You will be redirected to your homepage shortly.
 
@@ -25,3 +28,7 @@ register.confirm_password = Confirm Password
 register.create_account = Create Account
 register.bebras_id_message = Your Bebras ID is: 
 register.inlog_message = You may login with your ID and password.
+
+#faq
+nofaq = The FAQ is empty.
+faqerror = Something went wrong during the retrieval of the FAQ. Try again later.

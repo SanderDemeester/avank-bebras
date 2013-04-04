@@ -46,7 +46,6 @@ public class ClassPupilTest extends ContextTest {
 		}
 	}
 	
-	//TODO: make this test work
 	@Test(expected=PersistenceException.class)
 	public void testDuplicateSave() {
 		ClassPupil cp = new ClassPupil();

@@ -10,6 +10,10 @@ question.editor.index.create = Maak een vraag pak
 languages.en = Engels
 languages.nl = Nederlands
 
+
+# Error
+genericError = Er is iets misgelopen. Probeer opnieuw later.
+
 # Login
 redirect_message = U zal zodadelijk worden doorgestuurd naar uw startpagina.
 
@@ -25,3 +29,7 @@ register.confirm_password = Bevestig password
 register.create_account = Maak account
 register.bebras_id_message = Uw Bebras ID is: 
 register.inlog_message = U kan inloggen me uw ID en wachtwoord.
+
+#faq
+nofaq = De FAQ is leeg.
+faqerror = Er is iets misgelopen bij het ophalen van de FAQ. Probeer opnieuw later.
