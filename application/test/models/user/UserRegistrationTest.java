@@ -42,7 +42,7 @@ public class UserRegistrationTest extends ContextTest{
 				);
 		
 		assertThat(status(result)).isEqualTo(200);		
-		assertThat(contentAsString(result)).contains("Uw bebras ID is: jijones.");
+		assertThat(contentAsString(result)).contains("Your Bebras ID is: jijones.");
         assertThat(contentAsString(result)).contains("U kan inloggen met uw ID en uw wachtwoord.");
 		
 		result = callAction(
