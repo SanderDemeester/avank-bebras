@@ -43,21 +43,14 @@ public class UserRegistrationTest extends ContextTest{
 		
 		assertThat(status(result)).isEqualTo(200);		
 		assertThat(contentAsString(result)).contains("Your Bebras ID is: jijones.");
-        assertThat(contentAsString(result)).contains("U kan inloggen met uw ID en uw wachtwoord.");
+        assertThat(contentAsString(result)).contains("You may login with your ID and password.");
 		
 		result = callAction(
 				controllers.routes.ref.UserController.register(),fakeRequest().withFormUrlEncodedBody(map)
 				);
 		
-		assertThat(contentAsString(result)).contains("Er bestaat al een gebruiker met het gekozen email address");
+		assertThat(contentAsString(result)).contains("There is already a user with the selected email address");
 		
 		assertNotNull(Ebean.find(UserModel.class).where().eq("id","jijones").where().eq("type", UserType.INDEPENDENT.toString()).findUnique());
-		map.remove("gender");
-		
-		result = callAction(
-				controllers.routes.ref.UserController.register(),fakeRequest().withFormUrlEncodedBody(map)
-				);
-		assertThat(status(result)).isEqualTo(BAD_REQUEST);
-				
 	}
 }
