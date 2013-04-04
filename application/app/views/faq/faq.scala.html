@@ -2,8 +2,9 @@
 
 @main("FAQ", breadcrumbs){
 	@for(q <- content){
-		@q.name <br>
-		@q.content <br>
-		<br>
+	<div class="well">
+		<p class="lead">@q.name</p>
+		@q.content
+	</div>
 	}
 }

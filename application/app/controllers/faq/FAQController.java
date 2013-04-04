@@ -12,6 +12,8 @@ import javax.swing.text.html.HTML;
 
 import com.avaje.ebean.Ebean;
 
+import models.EMessages;
+import models.data.Language;
 import models.data.Link;
 import models.dbentities.FAQModel;
 import play.i18n.Lang;
@@ -19,7 +21,6 @@ import play.mvc.Result;
 import views.html.faq.faq;
 import controllers.EController;
 
-//import views.faq.nofaq;
 
 /**
  * @author Jens N. Rammant
@@ -37,16 +38,24 @@ public class FAQController extends EController {
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link("FAQ","/FAQ"));
         
-        List<FAQModel> f=null;
-        //String l = Lang.get(); //TODO
-        String l = "en";
+        
+        List<FAQModel> f=new ArrayList<FAQModel>();
+        String l = EMessages.getLang(); //Retrieve the user's language
         try{
-        	f = Ebean.find(FAQModel.class).where().eq("language", l).findList();
+        	//Retrieve all FAQ elements in that language
+        	f.addAll(Ebean.find(FAQModel.class).where().eq("language", l).findList());
         }catch(PersistenceException e){
-        	//TODO
+        	//add a message to say something went wrong
+        	f.clear();
+        	FAQModel temp = new FAQModel();
+        	temp.name = EMessages.get("faqerror");
+        	f.add(temp);
         }
-        if(f==null || f.isEmpty()){
-        	//TODO
+        if(f.isEmpty()){
+        	//add a message to say the FAQ is empty
+        	FAQModel temp = new FAQModel();
+        	temp.name = EMessages.get("nofaq");
+        	f.add(temp);
         }
         return ok(faq.render(breadcrumbs,f));
   
