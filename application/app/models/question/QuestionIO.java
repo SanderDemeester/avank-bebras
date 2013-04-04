@@ -12,7 +12,6 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.ZipEntry;
@@ -29,7 +28,6 @@ import javax.xml.validation.Validator;
 
 import models.data.DataDaemon;
 import models.data.Language;
-import models.user.UserID;
 
 import org.codehaus.jackson.JsonNode;
 import org.w3c.dom.Document;
@@ -50,7 +48,7 @@ public class QuestionIO {
     
     private static final String XML_NAMESPACE = "bebras:Question";
     private static final String XML_SCHEMA = "conf/questions.xsd";
-    private static final Map<String, QuestionFactory> QUESTION_TYPE_NAMES = new HashMap<String, QuestionFactory>();
+    private static final Map<String, QuestionFactory<?>> QUESTION_TYPE_NAMES = new HashMap<String, QuestionFactory<?>>();
     static {
         QUESTION_TYPE_NAMES.put("multiple-choice-question", new MultipleChoiceQuestionFactory());
         QUESTION_TYPE_NAMES.put("regex-question", new RegexQuestionFactory());
@@ -75,14 +73,14 @@ public class QuestionIO {
      * @return a hash
      * @throws NoSuchAlgorithmException
      */
-    private static String makeHash(String toHash, UserID userID) throws NoSuchAlgorithmException {
+    private static String makeHash(String toHash, String userID) throws NoSuchAlgorithmException {
         MessageDigest mdEnc = MessageDigest.getInstance("MD5"); 
         mdEnc.update(toHash.getBytes(), 0, toHash.length());
-        String hash = new BigInteger(1, mdEnc.digest()).toString(16) + userID.getUserID();
+        String hash = new BigInteger(1, mdEnc.digest()).toString(16) + userID;
         return hash;
     }
     
-    private static QuestionPack generateQuestionPack(String json, UserID userID, String userDownloadLocation) throws QuestionBuilderException {
+    private static QuestionPack generateQuestionPack(String json, String userID, String userDownloadLocation) throws QuestionBuilderException {
         try {
             String hash = makeHash(json, userID);
             
@@ -105,7 +103,7 @@ public class QuestionIO {
      * @return The compressed question file
      * @throws QuestionBuilderException any error that can occur
      */
-    public static File export(String json, UserID userID, String userDownloadLocation) throws QuestionBuilderException {
+    public static File export(String json, String userID, String userDownloadLocation) throws QuestionBuilderException {
         return generateQuestionPack(json, userID, userDownloadLocation).export(userID);
     }
     
@@ -117,7 +115,7 @@ public class QuestionIO {
      * @return The compressed question file
      * @throws QuestionBuilderException any error that can occur
      */
-    public static void submit(String json, UserID userID, String userDownloadLocation) throws QuestionBuilderException {
+    public static void submit(String json, String userID, String userDownloadLocation) throws QuestionBuilderException {
         generateQuestionPack(json, userID, userDownloadLocation).submit(userID);
     }
     
@@ -130,7 +128,7 @@ public class QuestionIO {
      * @throws QuestionBuilderException any error that can occur with questions
      * @throws IOException any IO error that can occur with the zipinputstream
      */
-    public static Question importUpload(ZipInputStream zis, UserID userID, String userDownloadLocation) throws QuestionBuilderException, IOException {
+    public static Question importUpload(ZipInputStream zis, String userID, String userDownloadLocation) throws QuestionBuilderException, IOException {
         // Some strings we need
         String tempUploadLocation = Play.application().configuration().getString("questioneditor.tempUpload");
         String hash;
@@ -409,13 +407,13 @@ public class QuestionIO {
      * @param userID id of the user
      * @return location
      */
-    private static String getUserFolderLocation(String locationToken, UserID userID) {
+    private static String getUserFolderLocation(String locationToken, String userID) {
         String rootLocation = Play.application().configuration().getString(locationToken);
         File rootDirectory = new File(rootLocation);
         if(!rootDirectory.exists())
             rootDirectory.mkdir();
         
-        String location = Play.application().configuration().getString(locationToken)+"/"+userID.getUserID();
+        String location = Play.application().configuration().getString(locationToken)+"/"+userID;
         File directory = new File(location);
         if(!directory.exists())
             directory.mkdir();
@@ -427,7 +425,7 @@ public class QuestionIO {
      * @param userID the id of the user
      * @return the location
      */
-    public static String getUserUploadLocation(UserID userID) {
+    public static String getUserUploadLocation(String userID) {
         return getUserFolderLocation("questioneditor.upload", userID);
     }
     
@@ -436,7 +434,7 @@ public class QuestionIO {
      * @param userID the id of the user
      * @return the location
      */
-    public static String getUserSubmitLocation(UserID userID) {
+    public static String getUserSubmitLocation(String userID) {
         return getUserFolderLocation("questioneditor.submit", userID);
     }
     

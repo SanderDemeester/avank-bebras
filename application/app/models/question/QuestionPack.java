@@ -9,7 +9,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -24,11 +23,7 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import models.user.UserID;
-
 import org.w3c.dom.Document;
-
-import play.Play;
 
 import scala.actors.threadpool.Arrays;
 /**
@@ -169,7 +164,7 @@ public class QuestionPack {
      * @param userID the id of the current user
      * @return a zip archive of this question pack
      */
-    public File export(UserID userID) {
+    public File export(String userID) {
         try {
             File zipFile = QuestionIO.addTempFile(tempDownloadLocation, QUESTIONZIPFILE+"~"+hash);
             
@@ -204,7 +199,7 @@ public class QuestionPack {
      * Add this question pack to the submit folder of this question author to await approval
      * @param userID id of the author
      */
-    public void submit(UserID userID) {
+    public void submit(String userID) {
         File zip = export(userID);
         File submit = new File(QuestionIO.getUserSubmitLocation(userID), QUESTIONZIPFILE+"~"+hash);
         zip.renameTo(submit);

@@ -53,13 +53,8 @@ public class XmlQuestionTest extends test.ContextTest {
         }
     }
 
-    private Question testAFile(String file) {
-        Question q = null;
-        try {
-            q = QuestionIO.getFromXml(file);
-        } catch (QuestionBuilderException e) {
-            Assert.fail(e.getMessage());
-        }
+    private Question testAFile(String file) throws QuestionBuilderException {
+        Question q = QuestionIO.getFromXml(file);
         Assert.assertNotNull(q);
 
         // Check the languages
@@ -86,7 +81,12 @@ public class XmlQuestionTest extends test.ContextTest {
      */
     @Test
     public void correctMultipleChoiceFile() {
-        MultipleChoiceQuestion q = (MultipleChoiceQuestion) testAFile(CORRECT_MC);
+        MultipleChoiceQuestion q = null;
+        try {
+            q = (MultipleChoiceQuestion) testAFile(CORRECT_MC);
+        } catch (QuestionBuilderException e) {
+            Assert.fail();
+        }
         Assert.assertEquals(q.getType(), QuestionType.MULTIPLE_CHOICE);
 
         // Check the answer contents
@@ -113,7 +113,12 @@ public class XmlQuestionTest extends test.ContextTest {
      */
     @Test
     public void correctRegexFile() {
-        RegexQuestion q = (RegexQuestion) testAFile(CORRECT_REGEX);
+        RegexQuestion q = null;
+        try {
+            q = (RegexQuestion) testAFile(CORRECT_REGEX);
+        } catch (QuestionBuilderException e) {
+            Assert.fail();
+        }
         Assert.assertEquals(q.getType(), QuestionType.REGEX);
 
         // Check regex contents

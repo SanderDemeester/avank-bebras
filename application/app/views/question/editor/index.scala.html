@@ -7,16 +7,16 @@
           <h1>Questions</h1>
           <p>@EMessages.get("question.editor.index.hero")</p>
           <p>
-        <a class="btn btn-primary btn-large" href="@controllers.question.editor.routes.QuestionEditorController.create("MULTIPLE_CHOICE")">
+        <a class="btn btn-primary btn-large" href="@controllers.question.routes.QuestionEditorController.create("MULTIPLE_CHOICE")">
             @EMessages.get("question.editor.index.create.main", EMessages.get("question.type.MULTIPLE_CHOICE"))
         </a>
-        <a class="btn btn-primary btn-large" href="@controllers.question.editor.routes.QuestionEditorController.create("REGEX")">
+        <a class="btn btn-primary btn-large" href="@controllers.question.routes.QuestionEditorController.create("REGEX")">
             @EMessages.get("question.editor.index.create.main", EMessages.get("question.type.REGEX"))
         </a>
         <button id="importUpload" type="button" class="btn btn-large">
             @EMessages.get("question.editor.index.create.import")
         </button>
-        <form class="hide" action="@controllers.question.editor.routes.QuestionEditorController.importUpload()" enctype="multipart/form-data" method="post">
+        <form class="hide" action="@controllers.question.routes.QuestionEditorController.importUpload()" enctype="multipart/form-data" method="post">
         	<input type="file" name="files[]" />
         </form>
         </p>
