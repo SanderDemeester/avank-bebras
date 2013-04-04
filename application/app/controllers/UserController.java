@@ -66,7 +66,6 @@ public class UserController extends EController{
      * @return Result page.
      */
     public static Result signup(){
-        setCommonHeaders();
         return ok(register.render("Registration",
                 new ArrayList<Link>(),
                 form(Register.class)
@@ -78,7 +77,6 @@ public class UserController extends EController{
      * @return Result page
      */
     public static Result register(){
-        setCommonHeaders();
         Form<Register> registerForm = form(Register.class).bindFromRequest();
         SecureRandom random = null;
         SecretKeyFactory secretFactory = null;
@@ -136,7 +134,6 @@ public class UserController extends EController{
     }
 
     public static Result login(){
-        setCommonHeaders();
         Form<Login> loginForm = form(Login.class).bindFromRequest();
         //We need to do this check, because a user can this URL without providing POST data.
         if(loginForm.get().email == null && loginForm.get().password == null){
@@ -151,7 +148,6 @@ public class UserController extends EController{
     }
 
     public static Result validate_login(){
-        setCommonHeaders();
         Form<Login> loginForm = form(Login.class).bindFromRequest();
         //We do the same check here.
         if(loginForm.get().email == null && loginForm.get().password == null){
@@ -200,7 +196,6 @@ public class UserController extends EController{
 
     public static Result logout(){
         //TODO: Tell authenticationManager to log a user out.
-        setCommonHeaders();
         return null;
     }
 
