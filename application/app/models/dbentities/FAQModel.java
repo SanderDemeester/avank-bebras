@@ -11,7 +11,7 @@ import play.db.ebean.Model;
 
 /**
  * @author Jens N. Rammant
- *TODO: create test. ESPECIALLY SQL INJECTION TEST.
+ *
  */
 @Entity
 @Table(name="faq")
