@@ -1,4 +1,4 @@
-@(faqForm: Form[models.dbentities.FAQModel], breadcrumbs : List[models.data.Link])
+@(faqForm: Form[models.dbentities.FAQModel], breadcrumbs : List[models.data.Link], langValues : java.util.Map[String, String])
 
 @import helper._
 @import helper.twitterBootstrap._
@@ -9,9 +9,11 @@
 
     <fieldset>
 
-        @inputText(faqForm("name"), '_label -> "New FAQ's name")
+        @inputText(faqForm("name"), '_label -> "New FAQ's title")
         @inputText(faqForm("content"), '_label -> "New FAQ's content")
-        @inputText(faqForm("language"), '_label -> "New FAQ's language")
+        @select(field = faqForm("language"), options = options(langValues)
+        ,'_label -> "New FAQ's language")
+      
 
 
     </fieldset>

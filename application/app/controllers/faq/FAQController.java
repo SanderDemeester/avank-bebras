@@ -4,22 +4,18 @@
 package controllers.faq;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.PersistenceException;
-import javax.swing.text.html.HTML;
-
 import com.avaje.ebean.Ebean;
 
 import models.EMessages;
 import models.data.Language;
 import models.data.Link;
 import models.dbentities.FAQModel;
-import models.question.server.Server;
-import models.question.server.ServerManager;
 import play.data.Form;
-import play.i18n.Lang;
 import play.mvc.Result;
 import play.mvc.Results;
 import views.html.faq.faq;
@@ -76,7 +72,7 @@ public class FAQController extends EController {
      * @return faq list page
      */
 	public static Result list(int page, String orderBy, String order, String filter){
-		//TODO check permissions
+		//TODO check permissions + breadcrumbs
 		FAQManager fm = new FAQManager();
 		return ok( //TODO try-catch
 	            faqManagement.render(fm.page(page, orderBy, order, filter), fm, orderBy, order, filter, new ArrayList<Link>())
@@ -86,7 +82,13 @@ public class FAQController extends EController {
 	public static Result create(){
 		//TODO check permissions
 		Form<FAQModel> form = form(FAQModel.class).bindFromRequest();
-	    return ok(newFAQForm.render(form, new ArrayList<Link>()));
+		Map<String,String> languages = new HashMap<String,String>();
+		for (Language l : Language.listLanguages()){
+			languages.put(l.getCode(), l.getName());
+		}
+	    return ok(newFAQForm.render(form, new ArrayList<Link>(),languages));
+
+		
 	    
 	}
 	
@@ -94,7 +96,11 @@ public class FAQController extends EController {
 		//TODO check permissions
 		Form<FAQModel> form = form(FAQModel.class).bindFromRequest();
         if(form.hasErrors()) {
-            return badRequest(newFAQForm.render(form, new ArrayList<Link>()));
+        	Map<String,String> languages = new HashMap<String,String>();
+    		for (Language l : Language.listLanguages()){
+    			languages.put(l.getCode(), l.getName());
+    		}
+            return badRequest(newFAQForm.render(form, new ArrayList<Link>(),languages));
         }
         FAQModel m = form.get();
         m.save(); //TODO try-catch
@@ -114,7 +120,7 @@ public class FAQController extends EController {
 	}
 	
 	public static Result remove(String id){
-		//TODO check permissions
+		//TODO check permissions, confirmation screen
 		FAQModel fm = (FAQModel) new FAQManager().getFinder().byId(id);
 		//TODO try-catch
         fm.delete();
