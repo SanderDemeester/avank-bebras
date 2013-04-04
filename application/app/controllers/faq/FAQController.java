@@ -32,8 +32,6 @@ public class FAQController extends EController {
 	 * @return the FAQ in the correct language if available;
 	 */
 	public static Result getFAQ(){
-		setCommonHeaders();
-		
 		List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link("FAQ","/FAQ"));

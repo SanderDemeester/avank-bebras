@@ -18,8 +18,6 @@ import views.html.test;
 public class Application extends EController {
 
   public static Result index() {
-      setCommonHeaders();
-
       Question q=null;
       try {
           q = Question.getFromXml("http://www.rubensworks.net/bebras/example_question_mc.xml");
@@ -31,8 +29,6 @@ public class Application extends EController {
   }
 
   public static Result test(String id){
-      setCommonHeaders();
-
       if(id=="link2")
           return ok(test.render("Link2"));
       else

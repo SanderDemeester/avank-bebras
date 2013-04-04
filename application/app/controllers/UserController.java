@@ -64,7 +64,6 @@ public class UserController extends EController{
 	 * @return Result page.
 	 */
 	public static Result signup(){
-		setCommonHeaders();
 		List<Link> breadcrumbs = new ArrayList<Link>();
 		breadcrumbs.add(new Link("Home", "/"));
 		breadcrumbs.add(new Link("Sign Up", "/signup"));
@@ -80,7 +79,6 @@ public class UserController extends EController{
 	 * @return Result page
 	 */
 	public static Result register(){
-		setCommonHeaders();
 		// Bind play form request.
 		Form<Register> registerForm = form(Register.class).bindFromRequest();
 		
@@ -152,7 +150,6 @@ public class UserController extends EController{
 	 **/
 	@SuppressWarnings("unchecked")
 	public static Result landingPage() throws Exception{
-		setCommonHeaders();
 		List<Link> breadcrumbs = new ArrayList<Link>();
 		breadcrumbs.add(new Link("Home", "/"));
 		breadcrumbs.add(new Link("Dashboard", "/home"));
