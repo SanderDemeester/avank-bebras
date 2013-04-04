@@ -60,4 +60,36 @@ public class FAQController extends EController {
         return ok(faq.render(breadcrumbs,f));
   
 	}
+
+	public static Result list(int page, String orderBy, String order, String filter){
+		//TODO
+		return null;
+	}
+	
+	//create save edit update remove
+	
+	public static Result create(){
+		//TODO
+		return null;
+	}
+	
+	public static Result save(){
+		//TODO
+		return null;
+	}
+	
+	public static Result edit(String id){
+		//TODO
+		return null;
+	}
+	
+	public static Result update(String id){
+		//TODO
+		return null;
+	}
+	
+	public static Result remove(String id){
+		//TODO
+		return null;
+	}
 }
