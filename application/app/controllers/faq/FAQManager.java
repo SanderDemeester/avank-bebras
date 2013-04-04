@@ -36,14 +36,12 @@ public class FAQManager extends Manager<FAQModel> {
 
 	@Override
 	public Call getAddRoute() {
-		// TODO Auto-generated method stub
-		return null;
+		return routes.FAQController.create();
 	}
 
 	@Override
 	public Call getEditRoute(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return routes.FAQController.edit(id);
 	}
 
 	@Override

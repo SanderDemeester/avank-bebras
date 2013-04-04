@@ -1,0 +1,26 @@
+@(faqForm: Form[models.dbentities.FAQModel], breadcrumbs : List[models.data.Link])
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("Add new FAQ", breadcrumbs) {
+
+@form(controllers.faq.routes.FAQController.save()) {
+
+    <fieldset>
+
+        @inputText(faqForm("name"), '_label -> "New FAQ's name")
+        @inputText(faqForm("content"), '_label -> "New FAQ's content")
+        @inputText(faqForm("language"), '_label -> "New FAQ's language")
+
+
+    </fieldset>
+
+    <div class="actions">
+        <input type="submit" value="Save" class="btn primary"> or
+        <a href="@controllers.faq.routes.FAQController.list()" class="btn">Cancel</a>
+    </div>
+
+}
+
+}

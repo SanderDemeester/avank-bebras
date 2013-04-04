@@ -18,18 +18,22 @@ import models.data.Link;
 import models.dbentities.FAQModel;
 import models.question.server.Server;
 import models.question.server.ServerManager;
+import play.data.Form;
 import play.i18n.Lang;
 import play.mvc.Result;
+import play.mvc.Results;
 import views.html.faq.faq;
 import controllers.EController;
 import controllers.faq.routes;
 
 import views.html.faq.faqManagement;
+import views.html.faq.newFAQForm;
 
 
 /**
  * @author Jens N. Rammant
  *
+ *TODO i18n (especially in templates)
  */
 public class FAQController extends EController {
 	
@@ -80,26 +84,37 @@ public class FAQController extends EController {
 	}
 	
 	public static Result create(){
-		//TODO
-		return null;
+		//TODO check permissions
+		Form<FAQModel> form = form(FAQModel.class).bindFromRequest();
+	    return ok(newFAQForm.render(form, new ArrayList<Link>()));
+	    
 	}
 	
 	public static Result save(){
-		//TODO
-		return null;
+		//TODO check permissions
+		Form<FAQModel> form = form(FAQModel.class).bindFromRequest();
+        if(form.hasErrors()) {
+            return badRequest(newFAQForm.render(form, new ArrayList<Link>()));
+        }
+        FAQModel m = form.get();
+        m.save(); //TODO try-catch
+        return Results.redirect(routes.FAQController.list(0, "name", "asc", ""));
 	}
 	
 	public static Result edit(String id){
+		//TODO check permissions
 		//TODO
 		return null;
 	}
 	
 	public static Result update(String id){
+		//TODO check permissions
 		//TODO
 		return null;
 	}
 	
 	public static Result remove(String id){
+		//TODO check permissions
 		FAQModel fm = (FAQModel) new FAQManager().getFinder().byId(id);
 		//TODO try-catch
         fm.delete();
