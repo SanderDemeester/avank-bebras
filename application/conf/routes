@@ -40,4 +40,11 @@ GET     /servers/new                controllers.question.server.ServerController
 POST    /servers/                   controllers.question.server.ServerController.save()
 GET     /servers/:name              controllers.question.server.ServerController.edit(name)
 POST    /servers/:name              controllers.question.server.ServerController.update(name)
-GET     /servers/remove/:name       controllers.question.server.ServerController.remove(name)
+GET    /servers/remove/:name        controllers.question.server.ServerController.remove(name)
+
+# FAQ
+GET		/faq						controllers.faq.FAQController.getFAQ()
+
+# Bootstrap resources
+GET     /assets/img/glyphicons-halflings-white.png      controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings-white.png")
+GET     /assets/img/glyphicons-halflings.png            controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings.png")

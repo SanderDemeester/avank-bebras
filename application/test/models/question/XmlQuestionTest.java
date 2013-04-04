@@ -1,6 +1,7 @@
 package models.question;
 
 import java.util.List;
+import java.util.Arrays;
 
 import models.data.Language;
 import models.question.MultipleChoiceElement;
@@ -11,6 +12,9 @@ import models.question.QuestionType;
 import models.question.RegexQuestion;
 import models.data.UnavailableLanguageException;
 import models.data.UnknownLanguageCodeException;
+
+import play.mvc.Http;
+import play.i18n.Lang;
 import static play.test.Helpers.fakeApplication;
 import static play.test.Helpers.running;
 
@@ -19,6 +23,15 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class XmlQuestionTest extends test.ContextTest {
+
+    // Set the accepted languages to Dutch and English.
+    @Override protected Http.Request makeRequest() {
+        return new StubRequest() {
+            @Override public List<Lang> acceptLanguages() {
+                return Arrays.asList(Lang.forCode("nl"), Lang.forCode("en"));
+            }
+        };
+    }
 
     private static final String CORRECT_MC = "testincludes/correct_question_mc.xml";
     private static final String CORRECT_REGEX = "testincludes/correct_question_regex.xml";
