@@ -1,231 +1,201 @@
 package controllers;
 
-import java.io.UnsupportedEncodingException;
-import java.security.Key;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-
-import org.apache.commons.codec.binary.Hex;
-import org.springframework.format.datetime.DateFormatter;
-
-import com.avaje.ebean.Ebean;
-
 import models.data.Link;
+import models.dbentities.UserModel;
 import models.user.AuthenticationManager;
 import models.user.Gender;
-import models.user.UserID;
+import models.user.User;
+import models.user.UserType;
+import org.apache.commons.codec.binary.Hex;
+import play.Play;
+import play.api.libs.Crypto;
+import play.api.templates.Html;
+import play.api.templates.Template2;
 import play.data.Form;
-import play.mvc.Content;
+import play.data.format.Formats;
+import play.data.validation.Constraints.Required;
 import play.mvc.Result;
-import play.mvc.Results.Redirect;
-import scala.collection.mutable.HashMap;
-import models.dbentities.UserModel;
-import views.html.index;
+import play.mvc.Results;
+import views.html.error;
+import views.html.login.register;
+import views.html.login.registerLandingPage;
 import views.html.landingPages.AdminLandingPage;
 import views.html.landingPages.IndependentPupilLandingPage;
 import views.html.landingPages.OrganizerLandingPage;
 import views.html.landingPages.PupilLandingPage;
-import views.html.register;
-import views.html.emptyPage;
-import views.html.login;
-import controllers.user.Type;
+import com.avaje.ebean.Ebean;
 
 /**
  * This class receives all GET requests and based on there session identifier (cookie)
  * and current role in the system they will be served a different view.
- * @author Sander Demeester
+ * @author Sander Demeester, Ruben Taelman
  */
 public class UserController extends EController{
 
-    /**
-     * This hashmap embodies the mapping from a Type to a view.
-     * Each view is responsible for getting all information from the DataModel and make a
-     * beautiful view for the user :)
-     */
-    private HashMap<Type, Class<?>> landingPageHashmap = new HashMap<Type, Class<?>>();
-    private AuthenticationManager authenticatieManger = new AuthenticationManager();
+	/**
+	 * This hashmap embodies the mapping from a Type to a view.
+	 * Each view is responsible for getting all information from the DataModel and make a
+	 * beautiful view for the user :)
+	 */
+	private static HashMap<UserType, Class<?>> LANDINGPAGES = new HashMap<UserType, Class<?>>();
+	static {
+		LANDINGPAGES.put(UserType.ADMINISTRATOR, AdminLandingPage.class);
+		LANDINGPAGES.put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
+		LANDINGPAGES.put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
+		LANDINGPAGES.put(UserType.ORGANIZER, OrganizerLandingPage.class);
+		LANDINGPAGES.put(UserType.PUPIL,PupilLandingPage.class);
+	};
 
-    public UserController(){
-        landingPageHashmap.put(Type.ADMINISTRATOR, AdminLandingPage.class);
-        landingPageHashmap.put(Type.INDEPENDENT, IndependentPupilLandingPage.class);
-        landingPageHashmap.put(Type.ORGANIZER, OrganizerLandingPage.class);
-        landingPageHashmap.put(Type.PUPIL,PupilLandingPage.class);
-    }
-    /**
-     * This methode gets requested when the user clicks on "signup".
-     * @return Result page.
-     */
-    public static Result signup(){
-        setCommonHeaders();
-        return ok(register.render("Registration",
-                new ArrayList<Link>(),
-                form(Register.class)
-        ));
-    }
+	/**
+	 * This methode gets requested when the user clicks on "signup".
+	 * @author Sander Demeester
+	 * @return Result page.
+	 */
+	public static Result signup(){
+		setCommonHeaders();
+		List<Link> breadcrumbs = new ArrayList<Link>();
+		breadcrumbs.add(new Link("Home", "/"));
+		breadcrumbs.add(new Link("Sign Up", "/signup"));
+		return ok(register.render("Registration", 
+				breadcrumbs,
+				form(Register.class)
+				));
+	}
 
-    /**
-     * this methode is called when the user submits his/here register information.
-     * @return Result page
-     */
-    public static Result register(){
-        setCommonHeaders();
-        Form<Register> registerForm = form(Register.class).bindFromRequest();
-        SecureRandom random = null;
-        SecretKeyFactory secretFactory = null;
-        byte[] passwordByteString = null;
-        String passwordHEX = "";
-        String saltHEX = "";
-        Date birtyDay = new Date();
+	/**
+	 * this methode is called when the user submits his/here register information.
+	 * @author Sander Demeester
+	 * @return Result page
+	 */
+	public static Result register(){
+		setCommonHeaders();
+		// Bind play form request.
+		Form<Register> registerForm = form(Register.class).bindFromRequest();
+		
+		// Check if the email adres is uniqe.
+		if(!registerForm.get().email.isEmpty()){
 
-        try {
-            random = SecureRandom.getInstance("SHA1PRNG");
-        } catch (NoSuchAlgorithmException e) {}
+			if(Ebean.find(UserModel.class).where().eq(
+					"email",registerForm.get().email).findUnique() != null){
+				return badRequest(error.render("Error",new ArrayList<Link>(),form(Register.class),"There is already a user with the selected email address"));
+			}
+		}
 
-        byte[] salt = new byte[16]; //RSA PKCS5
+		// If the form contains error's (specified by "@"-annotation in the class "Register" then this will be true.
+		if(registerForm.hasErrors()){ 
+			return badRequest(error.render("Error", new ArrayList<Link>(), form(Register.class), "Invalid request"));
+		}
+		
+		// Delegate create user to Authentication Manager.
+		String bebrasID = null;
+		try {
+			bebrasID = AuthenticationManager.getInstance().createUser(registerForm);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ok(registerLandingPage.render("Succes", new ArrayList<Link>(), bebrasID));
+	}
 
+	/**
+	 * This methode is called when the users clicks on "login".
+	 * @author Sander Demeester, Ruben Taelman
+	 * @return returns the users cookie.
+	 */
+	public static Result validate_login(String id, String password) throws Exception{
+		// We do the same check here, if the input forms are empty return a error message.
+		if(id == "" || password == "") {
+			return badRequest("Please enter an ID and password.");
+		} else if(AuthenticationManager.getInstance().validate_credentials(id, password)){ 
+			String cookie = "";
+			try {
+				//generate random id to auth user.
+				cookie = Integer.toString(Math.abs(SecureRandom.getInstance("SHA1PRNG").nextInt(100)));
 
-        random.nextBytes(salt);
-        saltHEX = new String(Hex.encodeHex(salt));
-        // We first encode it to hex string and then back to a byte[] array to be sure that we use
-        // the same thing for logging in.
-        try{
-        salt = Hex.decodeHex(saltHEX.toCharArray());
-        }catch(Exception e){}
+				//set the cookie. There really is no need for Crypto.sign because a cookie should be random value that has no meaning
+				cookie = Crypto.sign(cookie);
+				response().setCookie(AuthenticationManager.COOKIENAME, cookie);
 
-        KeySpec PBKDF2 = new PBEKeySpec(registerForm.get().password.toCharArray(), salt, 1000, 160);
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			}
+			return ok(cookie);
+		} else {
+			return badRequest("Invalid ID and password.");
+		}
+	}
 
-        try{
-            secretFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        }catch(Exception e){}
+	/**
+	 * Logout current user
+	 * @author Sander Demeester
+	 * @return Result
+	 */
+	public static Result logout(){
+		AuthenticationManager.getInstance().logout();
+		return Results.redirect(routes.Application.index());
+	}
 
+	/**
+	 * @author Sander Demeester
+	 * @return Returns a scala template based on the type of user that is requesting the page.
+	 **/
+	@SuppressWarnings("unchecked")
+	public static Result landingPage() throws Exception{
+		setCommonHeaders();
+		List<Link> breadcrumbs = new ArrayList<Link>();
+		breadcrumbs.add(new Link("Home", "/"));
+		breadcrumbs.add(new Link("Dashboard", "/home"));
 
-        try {
-            passwordByteString = secretFactory.generateSecret(PBKDF2).getEncoded();
-        } catch (InvalidKeySpecException e) {}
-        try{
-            passwordHEX = new String(Hex.encodeHex(passwordByteString));
-            birtyDay = new SimpleDateFormat("yyyy/dd/mm").parse(registerForm.get().bday);
-        }catch(Exception e){}
+		UserType type = AuthenticationManager.getInstance().getUser().getType();
+		if(type.equals(UserType.ANON)) {
+			return Results.redirect(routes.Application.index());
+		} else {
+			Class<?> object = Play.application().classloader().loadClass("views.html.landingPages." + LANDINGPAGES.get(type).getSimpleName() + "$");
+			Template2<User,List<Link>, Html> viewTemplate = (Template2<User,List<Link>, Html>)object.getField("MODULE$").get(null);
+			return ok(viewTemplate.render(AuthenticationManager.getInstance().getUser(), breadcrumbs));
+		}
+	}
 
-        String r = "Welkom ";
-        r += registerForm.get().fname + "!";
-
-        /*
-         * There needs to be some more logic here for generating bebras ID's
-         * Save user object in database.
-         */
-        new UserModel(new UserID(Integer.toString(Math.abs(random.nextInt()))), Type.INDEPENDENT,
-                registerForm.get().fname + registerForm.get().lname,
-                birtyDay,
-                new Date(),
-                passwordHEX,
-                saltHEX, registerForm.get().email,
-                Gender.Male, registerForm.get().prefLanguage).save();
-
-        return ok(emptyPage.render("Succes", new ArrayList<Link>(), passwordHEX));
-    }
-
-    public static Result login(){
-        setCommonHeaders();
-        Form<Login> loginForm = form(Login.class).bindFromRequest();
-        //We need to do this check, because a user can this URL without providing POST data.
-        if(loginForm.get().email == null && loginForm.get().password == null){
-            return ok(login.render("login",
-                    new ArrayList<Link>(),
-                    form(Login.class)
-            ));
-        }else{//POST data is available to us. Try to validate the user.
-            return validate_login();
-        }
-
-    }
-
-    public static Result validate_login(){
-        setCommonHeaders();
-        Form<Login> loginForm = form(Login.class).bindFromRequest();
-        //We do the same check here.
-        if(loginForm.get().email == null && loginForm.get().password == null){
-            return Application.index();
-        }else{ //POST data is available to us. Try to validate the user.
-            byte[] salt = null; //the users salt saved in the db.
-            byte[] passwordByteString = null; //the output from the PBKDF2 function.
-            String passwordHEX = null; // The password from the PBKDF2 output converted into a string.
-            String passwordDB = null; //the pasword as it is saved in the database.
-
-            UserModel userModel = Ebean.find(UserModel.class).where().eq(
-                    "email",loginForm.get().email).findUnique();
-            if(userModel == null){
-                return ok(emptyPage.render("Failed to login", new ArrayList<Link>(), "Error while logging in: email" + loginForm.get().email));
-            }
-            passwordDB = userModel.password;
-            SecretKeyFactory secretFactory = null;
-            try{
-            salt = Hex.decodeHex(userModel.hash.toCharArray());
-            }catch(Exception e){}
-
-            KeySpec PBKDF2 = new PBEKeySpec(loginForm.get().password.toCharArray(), salt, 1000, 160);
-
-            try{
-                secretFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-            }catch(Exception e){}
-
-
-            try {
-                passwordByteString = secretFactory.generateSecret(PBKDF2).getEncoded();
-            } catch (InvalidKeySpecException e) {}
-            try{
-                passwordHEX = new String(Hex.encodeHex(passwordByteString));
-            }catch(Exception e){}
-
-
-            if(passwordHEX.equals(passwordDB)){
-                //TODO: this should be users landing page based on type of account.
-                return ok(emptyPage.render("Succes", new ArrayList<Link>(), "Welkom" + userModel.name));
-            }else{
-                return ok(emptyPage.render("Failed to login", new ArrayList<Link>(), passwordHEX + "|" + passwordDB + "|" +
-                        new String(Hex.encodeHex(salt))));
-            }
-        }
-    }
-
-    public static Result logout(){
-        //TODO: Tell authenticationManager to log a user out.
-        setCommonHeaders();
-        return null;
-    }
-
-    public static Result getLandingPage(String token){ //or whatever the token will be
-        //TODO: Delegate to correct UserController object based on token
-        /*
-         * The result will come from the landingPageHashMap
-         */
-        return null;
-    }
-
-    public static class Register{
-        public String fname;
-        public String lname;
-        public String email;
-        public String bday;
-        public String password;
-        public String controle_passwd;
-        public String gender;
-        public String prefLanguage;
-    }
-
-    public static class Login{
-        public String email;
-        public String password;
-    }
+	/**
+	 * Inline class that contains public fields for play forms. 
+	 * @author Sander Demeester
+	 */
+	public static class Register{
+		@Required
+		public String fname;
+		@Required
+		public String lname;
+		public String email;
+		@Required
+		@Formats.DateTime(pattern = "yyyy/dd/mm")
+		public String bday;
+		@Required
+		public String password;
+		@Required
+		public String controle_passwd;
+		@Required
+		public String gender;
+		@Required
+		public String prefLanguage;
+	}
+	/**
+	 * Inline class that contains public fields for play forms.
+	 * @author Sander Demeester
+	 */
+	public static class Login{
+		public String id;
+		public String password;
+	}
 
 }

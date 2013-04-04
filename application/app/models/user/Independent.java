@@ -22,13 +22,17 @@ import views.html.landingPages.PupilLandingPage;
  * @author Jens N. Rammant
  */
 
-public class Independent extends User{
+public class Independent extends Authenticated{
 
     private List<String> previousClassList;
 
-    public Independent(UserModel data){
-        super(data); //abstract class constructor could init some values
+    protected Independent(UserModel data, UserType type){
+        super(data, type); //abstract class constructor could init some values
         previousClassList = new ArrayList<String>();
+    }
+    
+    public Independent(UserModel data) {
+        this(data, UserType.INDEPENDENT);
     }
 
     /**
@@ -79,6 +83,4 @@ public class Independent extends User{
 
         return res;
     }
-
-
 }

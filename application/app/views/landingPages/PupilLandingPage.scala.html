@@ -1,7 +1,5 @@
-@(User : models.user.Pupil)
+@(User : models.user.Pupil, breadcrumbs : List[models.data.Link])
 
-<html>
-<body>
+@main("Home", breadcrumbs) {
 Pupil landing page
-</body>
-</html>
+}

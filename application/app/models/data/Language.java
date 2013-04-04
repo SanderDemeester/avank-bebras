@@ -7,6 +7,13 @@ import java.util.TreeSet;
 
 import models.EMessages;
 import play.i18n.Lang;
+<<<<<<< HEAD
+=======
+
+import models.EMessages;
+import models.data.UnavailableLanguageException;
+import models.data.UnknownLanguageCodeException;
+>>>>>>> fvdrjeug/test
 
 /**
  * Wrapper class around the Play Lang class. This wrapper adds exceptions to
@@ -91,7 +98,7 @@ public class Language implements Comparable<Language> {
      * @return The name of this language in the provided language.
      */
     public String getName(Language language) {
-        return EMessages.get(language.getCode(), "languages." + language.getCode());
+        return EMessages.get(language.getLang(), "languages." + lang.code());
     }
 
     /**
