@@ -48,13 +48,13 @@ public class FAQController extends EController {
         	//add a message to say something went wrong
         	f.clear();
         	FAQModel temp = new FAQModel();
-        	temp.name = EMessages.get("faqerror");
+        	temp.name = EMessages.get("faq.error");
         	f.add(temp);
         }
         if(f.isEmpty()){
         	//add a message to say the FAQ is empty
         	FAQModel temp = new FAQModel();
-        	temp.name = EMessages.get("nofaq");
+        	temp.name = EMessages.get("faq.empty");
         	f.add(temp);
         }
         return ok(faq.render(breadcrumbs,f));

@@ -1,0 +1,20 @@
+@***************************************
+*   FAQ management page             *
+*                                      *
+*   author: Kevin Stobbelaar           *
+***************************************@
+
+@(currentPage: Page[models.management.Manageable], manager: models.management.Manager[_], currentOrderBy: String,
+    currentOrder: String, currentFilter: String, breadcrumbs : List[models.data.Link])
+
+@import views.html.management.list
+
+@main("List of FAQ", breadcrumbs){
+    <div class="row">
+        <div class="span8">
+            <h2> List of FAQ </h2>
+            @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter, breadcrumbs)
+        </div>
+    </div>
+
+}

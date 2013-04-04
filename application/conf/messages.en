@@ -30,5 +30,5 @@ register.bebras_id_message = Your Bebras ID is:
 register.inlog_message = You may login with your ID and password.
 
 #faq
-nofaq = The FAQ is empty.
-faqerror = Something went wrong during the retrieval of the FAQ. Try again later.
+faq.empty = The FAQ is empty.
+faq.error = Something went wrong during the retrieval of the FAQ. Try again later.
