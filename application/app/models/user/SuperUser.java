@@ -8,14 +8,15 @@ import models.dbentities.UserModel;
  * @author Sander Demeester
 **/
 
-public abstract class SuperUser extends User{
+public abstract class SuperUser extends Authenticated{
 
-
-
-    public SuperUser(UserModel data) {
-        super(data);
-        // TODO Auto-generated constructor stub
+    static {
+        ROLES.add(Role.QUESTIONEDITOR);
     }
+
+    public SuperUser(UserModel data, UserType type) {
+		super(data, type);
+	}
 
     /**
      * reset password for user.

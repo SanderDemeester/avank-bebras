@@ -10,6 +10,7 @@ import play.mvc.Http;
 import play.i18n.Lang;
 
 import models.EMessages;
+import models.data.Language;
 import test.ContextTest;
 
 /**
@@ -34,6 +35,15 @@ public class LanguageChangeTest extends ContextTest {
     @Test public void testSetLanguage() {
         EMessages.setLang("en");
         Assert.assertEquals("English", EMessages.get("languages.en"));
+    }
+
+    @Test public void testGetLangDefault() {
+        Assert.assertEquals("nl", EMessages.getLang());
+    }
+
+    @Test public void testGetLangChanged() {
+        EMessages.setLang("en");
+        Assert.assertEquals("en", EMessages.getLang());
     }
 
 }

@@ -22,7 +22,6 @@ import org.junit.Test;
 
 import com.avaje.ebean.Ebean;
 
-import controllers.user.Type;
 
 import test.ContextTest;
 import static models.user.UserTests.createTestUserModel;
@@ -47,7 +46,7 @@ public class TeacherTest extends ContextTest {
 	 */
 	@Test
 	public void testGetClasses() {
-		UserModel data = createTestUserModel(Type.TEACHER);
+		UserModel data = createTestUserModel(UserType.TEACHER);
 		
 		ClassGroup cp1=new ClassGroup();
 		cp1.id="b";

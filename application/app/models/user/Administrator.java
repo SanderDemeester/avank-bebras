@@ -12,10 +12,8 @@ public class Administrator extends Organizer{
 
 
     public Administrator(UserModel data) {
-        super(data);
-        // TODO Auto-generated constructor stub
-    }
-
+		super(data, UserType.ADMINISTRATOR);
+	}
     /*
      * returns the management page for the homepage links
      * @return Homepage Links Management page
@@ -53,5 +51,4 @@ public class Administrator extends Organizer{
         //TODO
         return null;
     }
-
 }
