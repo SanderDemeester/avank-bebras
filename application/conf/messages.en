@@ -32,3 +32,5 @@ register.inlog_message = You may login with your ID and password.
 #faq
 faq.empty = The FAQ is empty.
 faq.error = Something went wrong during the retrieval of the FAQ. Try again later.
+faq.name = Name
+faq.language = Language

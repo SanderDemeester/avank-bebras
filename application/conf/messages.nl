@@ -33,3 +33,5 @@ register.inlog_message = U kan inloggen me uw ID en wachtwoord.
 #faq
 faq.empty = De FAQ is leeg.
 faq.error = Er is iets misgelopen bij het ophalen van de FAQ. Probeer opnieuw later.
+faq.name = Naam
+faq.language = Taal
