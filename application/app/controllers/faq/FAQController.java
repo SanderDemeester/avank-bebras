@@ -16,10 +16,15 @@ import models.EMessages;
 import models.data.Language;
 import models.data.Link;
 import models.dbentities.FAQModel;
+import models.question.server.Server;
+import models.question.server.ServerManager;
 import play.i18n.Lang;
 import play.mvc.Result;
 import views.html.faq.faq;
 import controllers.EController;
+import controllers.faq.routes;
+
+import views.html.faq.faqManagement;
 
 
 /**
@@ -61,12 +66,18 @@ public class FAQController extends EController {
   
 	}
 
+	/**
+     * This result will redirect to the FAQ list page
+     *
+     * @return faq list page
+     */
 	public static Result list(int page, String orderBy, String order, String filter){
-		//TODO
-		return null;
+		//TODO check permissions
+		FAQManager fm = new FAQManager();
+		return ok( //TODO try-catch
+	            faqManagement.render(fm.page(page, orderBy, order, filter), fm, orderBy, order, filter, new ArrayList<Link>())
+	        );
 	}
-	
-	//create save edit update remove
 	
 	public static Result create(){
 		//TODO
@@ -89,7 +100,9 @@ public class FAQController extends EController {
 	}
 	
 	public static Result remove(String id){
-		//TODO
-		return null;
+		FAQModel fm = (FAQModel) new FAQManager().getFinder().byId(id);
+		//TODO try-catch
+        fm.delete();
+        return redirect(routes.FAQController.list(0, "language", "asc", ""));
 	}
 }

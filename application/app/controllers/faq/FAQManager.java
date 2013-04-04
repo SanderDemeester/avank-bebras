@@ -3,8 +3,10 @@
  */
 package controllers.faq;
 
+import controllers.faq.routes;
 import play.db.ebean.Model.Finder;
 import play.mvc.Call;
+import models.EMessages;
 import models.dbentities.FAQModel;
 import models.management.Manager;
 
@@ -22,15 +24,14 @@ public class FAQManager extends Manager<FAQModel> {
 
 	@Override
 	public String[] getColumnHeaders() {
-		// TODO Auto-generated method stub
-		return null;
+		String[] res = {"id",EMessages.get("faq.language"),EMessages.get("faq.name")};
+		return res;
 	}
 
 	@Override
 	public Call getListRoute(int page, String orderBy, String order,
 			String filter) {
-		// TODO Auto-generated method stub
-		return null;
+		return routes.FAQController.list(page, orderBy, order, filter);
 	}
 
 	@Override
@@ -47,8 +48,7 @@ public class FAQManager extends Manager<FAQModel> {
 
 	@Override
 	public Call getRemoveRoute(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return routes.FAQController.remove(id);
 	}
 
 }

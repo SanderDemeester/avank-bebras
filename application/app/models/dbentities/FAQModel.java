@@ -27,7 +27,7 @@ public class FAQModel extends Model implements Manageable{
 	
 	@Override
 	public String[] getFieldValues() {
-		String[] res = {language,name};
+		String[] res = {Integer.toString(id),language,name};
 		return res;
 	}
 	@Override
