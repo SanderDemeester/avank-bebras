@@ -40,6 +40,7 @@ GET     /servers/new                controllers.question.server.ServerController
 POST    /servers/                   controllers.question.server.ServerController.save()
 GET     /servers/:name              controllers.question.server.ServerController.edit(name)
 POST    /servers/:name              controllers.question.server.ServerController.update(name)
+GET     /servers/remove/:id         controllers.question.server.ServerController.remove(id)
 
 GET     /questionsets               controllers.question.questionset.QuestionSetController.overview(q ?="", p:Int ?= 0, s ?= "", o ?= "", f ?= "")
 GET     /questionsets/new           controllers.question.questionset.QuestionSetController.create()

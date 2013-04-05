@@ -3,7 +3,6 @@ package controllers.question.questionset;
 import controllers.EController;
 import models.data.Link;
 import models.dbentities.QuestionSetModel;
-import models.management.Manageable;
 import models.question.questionset.QuestionSetManager;
 import play.data.Form;
 import play.mvc.Result;
@@ -34,7 +33,6 @@ public class QuestionSetController extends EController {
      * @return overview page
      */
     public static Result overview(String selectedqsid, int page, String orderBy, String order, String filter){
-        setCommonHeaders();
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link("Question sets", "/questionsets"));
@@ -47,7 +45,6 @@ public class QuestionSetController extends EController {
      * @return new question set page
      */
     public static Result create(){
-        setCommonHeaders();
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link("Question sets", "/questionsets"));
@@ -94,7 +91,6 @@ public class QuestionSetController extends EController {
      * @return overview page
      */
     public static Result edit(String id, int page, String orderBy, String order, String filter){
-        setCommonHeaders();
         String qsName = qsm.getFinder().byId(id).getName();
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));

@@ -27,7 +27,6 @@ public class ServerController extends EController {
      * @return server list page
      */
     public static Result list(int page, String orderBy, String order, String filter){
-        setCommonHeaders();
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link("Servers", "/servers"));
@@ -44,7 +43,6 @@ public class ServerController extends EController {
      * @return create a server page
      */
     public static Result create(){
-        setCommonHeaders();
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link("Servers", "/servers"));
@@ -81,7 +79,6 @@ public class ServerController extends EController {
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link("Servers", "/servers"));
         breadcrumbs.add(new Link("Server " + name, "/servers/:" + name));
-        setCommonHeaders();
         Form<Server> form = form(Server.class).bindFromRequest().fill(new ServerManager().getFinder().ref(name));
         return ok(editServerForm.render(form, name, new ArrayList<Link>()));
     }
