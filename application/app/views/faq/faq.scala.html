@@ -4,7 +4,9 @@
 	@for(q <- content){
 	<div class="well">
 		<p class="lead">@q.name</p>
-		@q.content
+		@for(line <- q.content.lines){
+			@line <br>
+		}
 	</div>
 	}
 }

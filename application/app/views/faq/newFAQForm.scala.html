@@ -4,14 +4,15 @@
 @import helper.twitterBootstrap._
 @import models.EMessages
 
-@main("Add new FAQ", breadcrumbs) {
+@main(EMessages.get("faq.addfaq"), breadcrumbs) {
 
 @form(controllers.faq.routes.FAQController.save()) {
 
     <fieldset>
 
         @inputText(faqForm("name"), '_label -> EMessages.get("faq.new.title"))
-        @inputText(faqForm("content"), '_label -> EMessages.get("faq.new.content"))
+        @textarea(faqForm("content"), '_label -> EMessages.get("faq.new.content"),
+        'rows -> 10, 'cols -> 170, 'class->"input-xxlarge")
         @select(field = faqForm("language"), options = options(langValues)
         ,'_label -> EMessages.get("faq.new.language"))
       

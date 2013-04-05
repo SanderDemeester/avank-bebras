@@ -24,11 +24,12 @@ import controllers.faq.routes;
 
 import views.html.faq.faqManagement;
 import views.html.faq.newFAQForm;
+import views.html.faq.alterFAQForm;
 
 
 /**
  * @author Jens N. Rammant
- *
+ * TODO: put link to manageFAQ somewhere (admin control panel)
  */
 public class FAQController extends EController {
 	
@@ -130,17 +131,55 @@ public class FAQController extends EController {
         return Results.redirect(routes.FAQController.list(0, "name", "asc", ""));
 	}
 	
+	/**
+	 * 
+	 * @param id of the to be altered FAQModel
+	 * @return FAQ alter page
+	 */
 	public static Result edit(String id){
 		//TODO check permissions
-		//TODO
-		return null;
+		List<Link> breadcrumbs = new ArrayList<Link>();
+        breadcrumbs.add(new Link("Home", "/"));
+        breadcrumbs.add(new Link(EMessages.get("faq.managefaq"),"/manageFAQ"));
+        breadcrumbs.add(new Link(EMessages.get("faq.alter"),"/manageFAQ/"+id));
+		
+		Map<String,String> languages = new HashMap<String,String>();
+		for (Language l : Language.listLanguages()){
+			languages.put(l.getCode(), l.getName());
+		}
+		
+		Form<FAQModel> form = form(FAQModel.class).bindFromRequest().fill((FAQModel) new FAQManager().getFinder().ref(id));
+        return ok(alterFAQForm.render(form, breadcrumbs,languages,id));
+
 	}
 	
-	public static Result update(String id){
-		//TODO check permissions
-		//TODO
-		return null;
-	}
+	/**
+     * This will handle the update of an existing FAQ and redirect
+     * to the FAQ list
+     *
+     * @param id id of the FAQ to be updated
+     * @return FAQ list page
+     */
+    public static Result update(String id){
+    	//TODO check permissions
+    	List<Link> breadcrumbs = new ArrayList<Link>();
+        breadcrumbs.add(new Link("Home", "/"));
+        breadcrumbs.add(new Link(EMessages.get("faq.managefaq"),"/manageFAQ"));
+        breadcrumbs.add(new Link(EMessages.get("faq.alter"),"/manageFAQ/"+id));
+    	
+        Form<FAQModel> form = form(FAQModel.class).fill((FAQModel) new FAQManager().getFinder().byId(id)).bindFromRequest();
+        if(form.hasErrors()) {
+        	Map<String,String> languages = new HashMap<String,String>();
+    		for (Language l : Language.listLanguages()){
+    			languages.put(l.getCode(), l.getName());
+    		}
+            return badRequest(alterFAQForm.render(form, breadcrumbs,languages,id));
+        }
+        FAQModel updated = form.get();
+        updated.id = Integer.parseInt(id);
+        updated.update(); //TODO try-catch
+        return redirect(routes.FAQController.list(0, "name", "asc", ""));
+    }
 	
 	/**
 	 * This removes a FAQ from the list and then redirects to the FAQ list page

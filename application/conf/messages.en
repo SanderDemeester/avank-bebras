@@ -40,3 +40,7 @@ faq.new.title = New FAQ''s question
 faq.new.content = New FAQ''s answer
 faq.new.language = New FAQ''s language
 faq.list = List of Frequently Asked Questions
+faq.alter = Alter a FAQ
+faq.alter.title = FAQ''s question
+faq.alter.content = FAQ''s answer
+faq.alter.language = FAQ''s language
