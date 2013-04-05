@@ -8,6 +8,8 @@
 @(currentPage: Page[models.management.Manageable], manager: models.management.Manager[_], currentOrderBy: String,
     currentOrder: String, currentFilter: String)
 
+@import models.EMessages
+
 @*****************************************
 * Helper generating the navigation links *
 *****************************************@
@@ -51,15 +53,15 @@
     * Filtering            *
     ***********************@
     <form action="@link(0,"name")" method="GET">
-        <input type="text" class="input-medium search-query" name="f" value="@currentFilter" placeholder="Filter by name...">
-        <input type="submit" id="searchsubmit" value="Filter by name" class="btn">
+        <input type="text" class="input-medium search-query" name="f" value="@currentFilter" placeholder="@EMessages.get("management.filter.input")">
+        <input type="submit" id="searchsubmit" value="@EMessages.get("management.filter.button")" class="btn">
     </form>
 
     @***********************
     * Add new item         *
     ***********************@
     <p>
-        <a class="btn" href="@manager.getAddRoute()"> Add </a>
+        <a class="btn" href="@manager.getAddRoute()"> @EMessages.get("management.add") </a>
     </p>
 
 </div>
@@ -69,7 +71,7 @@
 ***********************@
 @if(currentPage.getTotalRowCount == 0){
     <div>
-        <p> Nothing to display </p>
+        <p> @EMessages.get("management.empty") </p>
     </div>
 } else {
     <table class="table table-striped table-bordered table-hover table-condensed">

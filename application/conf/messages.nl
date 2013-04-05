@@ -41,3 +41,7 @@ nofaq = De FAQ is leeg.
 faqerror = Er is iets misgelopen bij het ophalen van de FAQ. Probeer opnieuw later.
 
 # management
+management.filter.input = Filter...
+management.filter.button = Filter
+management.empty = Niets om weer te geven.
+management.add = Nieuw...
