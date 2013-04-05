@@ -42,15 +42,10 @@ GET     /servers/:name              controllers.question.server.ServerController
 POST    /servers/:name              controllers.question.server.ServerController.update(name)
 GET     /servers/remove/:id         controllers.question.server.ServerController.remove(id)
 
-GET     /questionsets               controllers.question.questionset.QuestionSetController.overview(q ?="", p:Int ?= 0, s ?= "", o ?= "", f ?= "")
-GET     /questionsets/new           controllers.question.questionset.QuestionSetController.create()
-POST    /questionsets/              controllers.question.questionset.QuestionSetController.save()
-GET     /questionsets/:id           controllers.question.questionset.QuestionSetController.edit(id, p:Int ?= 0, s ?= "", o ?= "", f ?= "")
-POST    /questionsets/:id           controllers.question.questionset.QuestionSetController.update(id)
-GET     /questionsets/remove/:id    controllers.question.questionset.QuestionSetController.remove(id)
-
 # Contests module
 GET     /contests                   controllers.competition.CompetitionController.index()
+GET     /contests/new               controllers.competition.CompetitionController.create()
+POST    /contests                   controllers.competition.CompetitionController.save()
 
 # FAQ
 GET		/faq						controllers.faq.FAQController.getFAQ()

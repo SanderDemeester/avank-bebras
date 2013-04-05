@@ -94,3 +94,6 @@ management.filter.input = Filter...
 management.filter.button = Filter
 management.empty = Nothing to display.
 management.add = Create...
+
+# competition
+competition.create = Create new contest!

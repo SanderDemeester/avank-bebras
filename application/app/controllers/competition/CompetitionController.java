@@ -15,6 +15,8 @@ import java.util.List;
  */
 public class CompetitionController extends EController {
 
+    // TODO rekening houden met authentication !
+
     /**
      * Returns the index page for contests.
      *
@@ -25,6 +27,25 @@ public class CompetitionController extends EController {
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link("Contests", "/contests"));
         return ok(views.html.competition.index.render(breadcrumbs));
+    }
+
+    /**
+     * Returns the create page for contests.
+     *
+     * @return create contest page
+     */
+    public static Result create(){
+        return TODO;
+    }
+
+    /**
+     * Saves the newly created contest.
+     * Returns the index page for contests.
+     *
+     * @return index page
+     */
+    public static Result save(){
+        return TODO;
     }
 
 }

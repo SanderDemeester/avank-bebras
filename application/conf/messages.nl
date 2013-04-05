@@ -45,3 +45,6 @@ management.filter.input = Filter...
 management.filter.button = Filter
 management.empty = Niets om weer te geven.
 management.add = Nieuw...
+
+# competition
+competition.create = Maak een nieuwe competitie aan!
