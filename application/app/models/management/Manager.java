@@ -15,6 +15,8 @@ public abstract class Manager<T extends Manageable> {
 
     private Finder<String, T> finder;
     private int pageSize;
+    
+    public static final int DEFAULTPAGESIZE = 10;
 
     /**
      * Constructor for manager.
@@ -38,7 +40,7 @@ public abstract class Manager<T extends Manageable> {
      */
     public Page<Manageable> page(int page, String orderBy, String order, String filter) {
         return (Page<Manageable>) finder.where()
-            .ilike("name", "%" + filter + "%")
+            .ilike(getUniqueField(), "%" + filter + "%")
             .orderBy(orderBy + " " + order)
                 // .fetch("path")
             .findPagingList(pageSize)
@@ -48,6 +50,8 @@ public abstract class Manager<T extends Manageable> {
     public Finder<String, T> getFinder(){
         return finder;
     }
+    
+    public abstract String getUniqueField();
 
     /**
      * Returns the column headers for the objects of type T.

@@ -66,4 +66,9 @@ public class ServerManager extends Manager<Server> {
         return routes.ServerController.remove(id);
     }
 
+    @Override
+    public String getUniqueField() {
+        return "name";
+    }
+
 }
