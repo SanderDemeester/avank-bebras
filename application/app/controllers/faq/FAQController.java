@@ -29,7 +29,6 @@ import views.html.faq.newFAQForm;
 /**
  * @author Jens N. Rammant
  *
- *TODO i18n (especially in templates)
  */
 public class FAQController extends EController {
 	
@@ -38,7 +37,6 @@ public class FAQController extends EController {
 	 */
 	public static Result getFAQ(){
 		setCommonHeaders();
-		
 		List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link("FAQ","/FAQ"));
@@ -72,35 +70,60 @@ public class FAQController extends EController {
      * @return faq list page
      */
 	public static Result list(int page, String orderBy, String order, String filter){
-		//TODO check permissions + breadcrumbs
+		//TODO check permissions 
+		
+		List<Link> breadcrumbs = new ArrayList<Link>();
+        breadcrumbs.add(new Link("Home", "/"));
+        breadcrumbs.add(new Link(EMessages.get("faq.managefaq"),"/manageFAQ"));
+		
 		FAQManager fm = new FAQManager();
 		return ok( //TODO try-catch
-	            faqManagement.render(fm.page(page, orderBy, order, filter), fm, orderBy, order, filter, new ArrayList<Link>())
+	            faqManagement.render(fm.page(page, orderBy, order, filter), fm, orderBy, order, filter, breadcrumbs)
 	        );
 	}
 	
+	/**
+     * This result will redirect to the create a new FAQ page
+     *
+     * @return faq creation page
+     */
 	public static Result create(){
 		//TODO check permissions
+		
+		List<Link> breadcrumbs = new ArrayList<Link>();
+        breadcrumbs.add(new Link("Home", "/"));
+        breadcrumbs.add(new Link(EMessages.get("faq.managefaq"),"/manageFAQ"));
+        breadcrumbs.add(new Link(EMessages.get("faq.addfaq"),"/manageFAQ/new"));
+		
 		Form<FAQModel> form = form(FAQModel.class).bindFromRequest();
 		Map<String,String> languages = new HashMap<String,String>();
 		for (Language l : Language.listLanguages()){
 			languages.put(l.getCode(), l.getName());
 		}
-	    return ok(newFAQForm.render(form, new ArrayList<Link>(),languages));
+	    return ok(newFAQForm.render(form, breadcrumbs,languages));
 
 		
 	    
 	}
-	
+	/**
+	 * This will save the result from the form and then redirect to the list page
+	 * @return FAQ list page
+	 */
 	public static Result save(){
 		//TODO check permissions
+		
+		List<Link> breadcrumbs = new ArrayList<Link>();
+        breadcrumbs.add(new Link("Home", "/"));
+        breadcrumbs.add(new Link(EMessages.get("faq.managefaq"),"/manageFAQ"));
+        breadcrumbs.add(new Link(EMessages.get("faq.addfaq"),"/manageFAQ/new"));
+		
 		Form<FAQModel> form = form(FAQModel.class).bindFromRequest();
         if(form.hasErrors()) {
         	Map<String,String> languages = new HashMap<String,String>();
     		for (Language l : Language.listLanguages()){
     			languages.put(l.getCode(), l.getName());
     		}
-            return badRequest(newFAQForm.render(form, new ArrayList<Link>(),languages));
+            return badRequest(newFAQForm.render(form, breadcrumbs,languages));
         }
         FAQModel m = form.get();
         m.save(); //TODO try-catch
@@ -119,6 +142,11 @@ public class FAQController extends EController {
 		return null;
 	}
 	
+	/**
+	 * This removes a FAQ from the list and then redirects to the FAQ list page
+	 * @param id The ID of the FAQ to be deleted
+	 * @return FAQ list page
+	 */
 	public static Result remove(String id){
 		//TODO check permissions, confirmation screen
 		FAQModel fm = (FAQModel) new FAQManager().getFinder().byId(id);

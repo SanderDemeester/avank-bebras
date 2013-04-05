@@ -2,6 +2,7 @@
 
 @import helper._
 @import helper.twitterBootstrap._
+@import models.EMessages
 
 @main("Add new FAQ", breadcrumbs) {
 
@@ -9,10 +10,10 @@
 
     <fieldset>
 
-        @inputText(faqForm("name"), '_label -> "New FAQ's title")
-        @inputText(faqForm("content"), '_label -> "New FAQ's content")
+        @inputText(faqForm("name"), '_label -> EMessages.get("faq.new.title"))
+        @inputText(faqForm("content"), '_label -> EMessages.get("faq.new.content"))
         @select(field = faqForm("language"), options = options(langValues)
-        ,'_label -> "New FAQ's language")
+        ,'_label -> EMessages.get("faq.new.language"))
       
 
 

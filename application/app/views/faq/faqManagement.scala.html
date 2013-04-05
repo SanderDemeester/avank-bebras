@@ -2,6 +2,7 @@
 *   FAQ management page             *
 *                                      *
 *   author: Kevin Stobbelaar           *
+*	adapted for FAQ by Jens N. Rammant *
 ***************************************@
 
 @(currentPage: Page[models.management.Manageable], manager: models.management.Manager[_], currentOrderBy: String,
@@ -9,10 +10,10 @@
 
 @import views.html.management.list
 
-@main("List of FAQ", breadcrumbs){
+@main(EMessages.get("faq.list"), breadcrumbs){
     <div class="row">
         <div class="span8">
-            <h2> List of FAQ </h2>
+            <h2> @EMessages.get("faq.list") </h2>
             @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter, breadcrumbs)
         </div>
     </div>
