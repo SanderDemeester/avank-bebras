@@ -25,8 +25,14 @@
 
         \begin{uc-fail}{2}{Password and username do not match.}
         \item The system shows a red text below the password field saying
-            ``Username and passworddo not match.'' Only the password textfield
+            ``Username and password do not match.'' Only the password textfield
             is cleared.
+            \return{1}
+        \end{uc-fail}
+				
+				\begin{uc-fail}{2}{This account is being mimiced by someone else. }
+        \item The system shows a red text below the password field saying
+            ``Someone else is currently mimicing you're account. Please try again in a while.'' 
             \return{1}
         \end{uc-fail}
 
