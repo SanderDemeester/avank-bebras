@@ -1,4 +1,4 @@
-@(title: String, breadcrumbs : List[models.data.Link])(content: String)
+@(title: String, breadcrumbs : List[models.data.Link], id: String)
 @import commons._
 @import models.EMessages
 
@@ -19,7 +19,12 @@
             @navigation()
             <div class="container">
                 @{header(title, breadcrumbs)}
-                <div id="content">@content</div>
+                <div id="content">
+                <div class="well">
+                @EMessages.get("register.bebras_id_message") @id. 
+               	@EMessages.get("register.inlog_message")
+                </div>
+                </div>
                 <div id="push"></div>
             </div>
         </div>

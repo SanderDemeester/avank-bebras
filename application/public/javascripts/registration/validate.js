@@ -8,7 +8,7 @@ $(document).ready(function(){
 				required:true,
 				email: true
 			},
-			password:{
+			passwd:{
 				required:true,
 				minlength: 8
 			},

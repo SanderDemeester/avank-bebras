@@ -1,0 +1,7 @@
+@(question: models.question.RegexQuestion, language : models.data.Language)
+
+@import models.EMessages
+
+	<div class="muted">@EMessages.get("question.editor.regexInfo")</div>
+
+	<input type="text" class="regex span12" name="regex" value="@question.getRegex(language)" />

@@ -36,7 +36,7 @@ public class RegexQuestion extends Question{
      * @param language chosen language
      * @return regex for the question
      */
-    protected String getRegex(Language language) {
+    public String getRegex(Language language) {
         return regex.get(language);
     }
 }

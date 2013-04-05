@@ -5,35 +5,41 @@
 # Home page
 GET     /                           controllers.Application.index()
 GET     /test				        controllers.Application.test(id: String)
-GET		/login						controllers.UserController.login()
 GET		/logout						controllers.UserController.logout()
+GET		/home						controllers.UserController.landingPage()
 
 # Registration/signup
 GET		/signup						controllers.UserController.signup()
 POST	/register					controllers.UserController.register()
 
 # Login
-POST	/login_validate				controllers.UserController.validate_login()
+GET		/login_validate		controllers.UserController.validate_login(id, password)
+
 # Bootstrap resources
-GET     /assets/img/glyphicons-halflings-white.png      controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings-white.png")
-GET     /assets/img/glyphicons-halflings.png            controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings.png")
+GET     /assets/img/glyphicons-halflings-white.png       controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings-white.png")
+GET     /assets/img/glyphicons-halflings.png             controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings.png")
 GET     /assets/stylesheets/bootstrap.min.css            controllers.Assets.at(path="/public", file="/stylesheets/bootstrap/bootstrap.min.css")
-GET     /assets/stylesheets/responsive.min.css            controllers.Assets.at(path="/public", file="/stylesheets/bootstrap/responsive.min.css")
+GET     /assets/stylesheets/bootstrap-responsive.min.css controllers.Assets.at(path="/public", file="/stylesheets/bootstrap/bootstrap-responsive.min.css")
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 # Question module
-GET		/questioneditor				controllers.question.editor.QuestionEditorController.index()
-GET		/questioneditor/create		controllers.question.editor.QuestionEditorController.create()
-POST    /questioneditor/            controllers.question.editor.QuestionEditorController.save()
+GET		/questioneditor					controllers.question.QuestionEditorController.index()
+GET		/questioneditor/create/:name	controllers.question.QuestionEditorController.create(name)
+POST    /questioneditor/create/upload   controllers.question.QuestionEditorController.importUpload()
+POST    /questioneditor/upload      	controllers.question.QuestionEditorController.upload()
+GET     /questioneditor/delete      	controllers.question.QuestionEditorController.delete(name)
+GET     /questioneditor/files.json      controllers.question.QuestionEditorController.getFiles()
+GET     /questioneditor/validate      	controllers.question.QuestionEditorController.validate(json)
+GET     /questioneditor/export     		controllers.question.QuestionEditorController.export(json)
+GET     /questioneditor/submit      	controllers.question.QuestionEditorController.submit(json)
 
 GET     /servers                    controllers.question.server.ServerController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 GET     /servers/new                controllers.question.server.ServerController.create()
 POST    /servers/                   controllers.question.server.ServerController.save()
 GET     /servers/:name              controllers.question.server.ServerController.edit(name)
 POST    /servers/:name              controllers.question.server.ServerController.update(name)
-GET     /servers/remove/:name       controllers.question.server.ServerController.remove(name)
 
 GET     /questionsets               controllers.question.questionset.QuestionSetController.overview(q ?="", p:Int ?= 0, s ?= "", o ?= "", f ?= "")
 GET     /questionsets/new           controllers.question.questionset.QuestionSetController.create()
@@ -42,6 +48,8 @@ GET     /questionsets/:id           controllers.question.questionset.QuestionSet
 POST    /questionsets/:id           controllers.question.questionset.QuestionSetController.update(id)
 GET     /questionsets/remove/:id    controllers.question.questionset.QuestionSetController.remove(id)
 
+# FAQ
+GET		/faq						controllers.faq.FAQController.getFAQ()
 
 # Bootstrap resources
 GET     /assets/img/glyphicons-halflings-white.png      controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings-white.png")

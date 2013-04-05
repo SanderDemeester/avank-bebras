@@ -1,10 +1,40 @@
 # App
 app.title = Avank Bebras - {0}
-
+app.error = Error
+app.Page = Page
 # Question
 question.editor.index.hero = Questions are the key element of the Bebras application. You can become part of this fantastic application and submit your own question by creating them here.
 question.editor.index.create = Create a question pack
+question.editor.index.create.main = Make {0}
+question.editor.index.create.import = Import a .ZIP
+question.editor.confirmLeave = Are you sure you wish to leave this page? Any unsaved chanches will be lost.
+
+question.type.MULTIPLE_CHOICE = Multiple Choice Question
+question.type.REGEX = Open Question
 
 # Languages
 languages.en = English
 languages.nl = Dutch
+
+#Error
+genericError = Something went wrong. Please try again later.
+
+# Login
+redirect_message = You will be redirected to your homepage shortly.
+
+# Register
+register.firstname = First name:
+register.lastname = Last name:  
+register.email = Email;
+register.bday = Birthday:
+register.gender = Gender:
+register.preflan = Preferred language:
+register.password = Password:
+register.confirm_password = Confirm Password
+register.create_account = Create Account
+register.bebras_id_message = Your Bebras ID is: 
+register.inlog_message = You may login with your ID and password.
+
+#faq
+nofaq = The FAQ is empty.
+faqerror = Something went wrong during the retrieval of the FAQ. Try again later.
