@@ -1,0 +1,41 @@
+DROP TABLE questionsetquestions;
+DROP TABLE anonanswer;
+DROP TABLE pupilanswers;
+DROP TABLE questions;
+
+CREATE TABLE questions(
+id SERIAL,
+officialid text,
+serverID text NOT NULL REFERENCES servers,
+path text NOT NULL,
+active boolean NOT NULL,
+author text REFERENCES users,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE questionsetquestions(
+qid integer REFERENCES questions,
+qsid text REFERENCES questionsets,
+difficulty text NOT NULL,
+PRIMARY KEY (qid,qsid)
+);
+
+CREATE TABLE anonanswer(
+id SERIAL,
+questionid integer NOT NULL REFERENCES questions,
+answer text NOT NULL,
+correct boolean NOT NULL,
+language text NOT NULL,
+questionsetid text NOT NULL REFERENCES questionsets,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE pupilanswers(
+indid text REFERENCES users,
+qid integer REFERENCES questions,
+questionsetid text REFERENCES questionsets,
+answer text NOT NULL,
+correct boolean NOT NULL,
+language text NOT NULL,
+PRIMARY KEY (indid,qid,questionsetid)
+);
