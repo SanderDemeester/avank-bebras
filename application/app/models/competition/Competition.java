@@ -7,7 +7,6 @@ import models.dbentities.CompetitionModel;
 import models.question.QuestionFeedback;
 import models.question.QuestionSet;
 import models.user.User;
-import net.sf.ehcache.statistics.LiveCacheStatisticsWrapper;
 
 import java.util.Date;
 import java.util.List;

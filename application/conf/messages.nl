@@ -36,6 +36,8 @@ register.create_account = Maak account
 register.bebras_id_message = Uw Bebras ID is: 
 register.inlog_message = U kan inloggen me uw ID en wachtwoord.
 
-#faq
+# faq
 nofaq = De FAQ is leeg.
 faqerror = Er is iets misgelopen bij het ophalen van de FAQ. Probeer opnieuw later.
+
+# management
