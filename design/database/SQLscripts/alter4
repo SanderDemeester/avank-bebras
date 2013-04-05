@@ -1,5 +1,7 @@
 CREATE TABLE faq(
-language text,
+id SERIAL,
+name text,
 content text,
-PRIMARY KEY (language)
+language text NOT NULL,
+PRIMARY KEY (id)
 );

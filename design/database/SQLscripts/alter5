@@ -1,0 +1,14 @@
+ALTER TABLE contests ALTER COLUMN type TYPE text;
+
+ALTER TABLE servers ADD COLUMN ftpUri text;
+ALTER TABLE servers ALTER COLUMN ftpUri SET NOT NULL;
+
+ALTER TABLE servers ADD COLUMN ftpPort text;
+ALTER TABLE servers ALTER COLUMN ftpPort SET NOT NULL;
+
+ALTER TABLE servers ADD COLUMN ftpUser text;
+ALTER TABLE servers ALTER COLUMN ftpUser SET NOT NULL;
+
+ALTER TABLE servers ADD COLUMN ftpPass text;
+ALTER TABLE servers ALTER COLUMN ftpPass SET NOT NULL;
+
