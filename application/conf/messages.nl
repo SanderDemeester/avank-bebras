@@ -47,4 +47,13 @@ management.empty = Niets om weer te geven.
 management.add = Nieuw...
 
 # competition
+competition.name = Competities
+competition.create.breadcrumb = Niewe competitie
 competition.create = Maak een nieuwe competitie aan!
+competition.create.title = Creëer competitie.
+competition.create.step1 = Step 1: Competitie info.
+competition.create.name = Naam van de nieuwe competitie:
+competition.create.type = Type van de nieuwe competitie:
+competition.create.end = Eind tijdstip van de nieuwe competitie:
+competition.create.start = Start tijdstip van de nieuwe competitie:
+competition.create.active = Vink aan om de competitie actief te maken.

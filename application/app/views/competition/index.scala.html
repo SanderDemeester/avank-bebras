@@ -1,3 +1,9 @@
+@*******************************************
+* Index page for contests                  *
+*                                          *
+* author: Kevin Stobbelaar                 *
+*******************************************@
+
 @(breadcrumbs : List[models.data.Link])
 
 @import models.EMessages
@@ -6,7 +12,7 @@
 
     <div>
         <p>
-            <a class="btn btn-primary btn-large" href="controllers.competition.routes.CompetitionController.create()">
+            <a class="btn btn-primary btn-large" href="@controllers.competition.routes.CompetitionController.create()">
                 @EMessages.get("competition.create")
             </a>
         </p>

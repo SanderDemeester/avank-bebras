@@ -1,7 +1,10 @@
 package controllers.competition;
 
 import controllers.EController;
+import models.EMessages;
 import models.data.Link;
+import models.dbentities.CompetitionModel;
+import play.data.Form;
 import play.mvc.Result;
 
 import java.util.ArrayList;
@@ -25,7 +28,7 @@ public class CompetitionController extends EController {
     public static Result index(){
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
-        breadcrumbs.add(new Link("Contests", "/contests"));
+        breadcrumbs.add(new Link(EMessages.get("competition.name"), "/contests"));
         return ok(views.html.competition.index.render(breadcrumbs));
     }
 
@@ -35,7 +38,12 @@ public class CompetitionController extends EController {
      * @return create contest page
      */
     public static Result create(){
-        return TODO;
+        List<Link> breadcrumbs = new ArrayList<Link>();
+        breadcrumbs.add(new Link("Home", "/"));
+        breadcrumbs.add(new Link(EMessages.get("competition.name"), "/contests"));
+        breadcrumbs.add(new Link(EMessages.get("competition.create.breadcrumb"), "/contests/create"));
+        Form<CompetitionModel> form = form(CompetitionModel.class).bindFromRequest();
+        return ok(views.html.competition.create.render(form, breadcrumbs));
     }
 
     /**
