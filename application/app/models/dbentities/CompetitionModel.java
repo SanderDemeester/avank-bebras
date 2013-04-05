@@ -1,11 +1,10 @@
 package models.dbentities;
 
+import models.competition.CompetitionType;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -19,21 +18,24 @@ import java.util.Date;
 public class CompetitionModel {
 
     @Id
-    private String id;
+    public String id;
 
     @Constraints.Required
-    private String name;
+    public String name;
 
     @Constraints.Required
-    private String type;
+    @Enumerated(EnumType.STRING)
+    public CompetitionType type;
 
     @Constraints.Required
-    private boolean active;
+    public boolean active;
 
+    @Constraints.Required
     @Formats.DateTime(pattern = "yyyy/dd/mm")
-    private Date starttime;
+    public Date starttime;
 
+    @Constraints.Required
     @Formats.DateTime(pattern = "yyyy/dd/mm")
-    private Date endtime;
+    public Date endtime;
 
 }

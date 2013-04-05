@@ -49,6 +49,9 @@ GET     /questionsets/:id           controllers.question.questionset.QuestionSet
 POST    /questionsets/:id           controllers.question.questionset.QuestionSetController.update(id)
 GET     /questionsets/remove/:id    controllers.question.questionset.QuestionSetController.remove(id)
 
+# Contests module
+GET     /contests                   controllers.competition.CompetitionController.index()
+
 # FAQ
 GET		/faq						controllers.faq.FAQController.getFAQ()
 
