@@ -3,6 +3,7 @@ package models.dbentities;
 import models.competition.CompetitionType;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
+import play.db.ebean.Model;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,7 +16,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name="contests")
-public class CompetitionModel {
+public class CompetitionModel extends Model {
 
     @Id
     public String id;
@@ -31,11 +32,9 @@ public class CompetitionModel {
     public boolean active;
 
     @Constraints.Required
-    @Formats.DateTime(pattern = "yyyy/dd/mm")
     public Date starttime;
 
     @Constraints.Required
-    @Formats.DateTime(pattern = "yyyy/dd/mm")
     public Date endtime;
 
 }

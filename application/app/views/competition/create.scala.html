@@ -16,9 +16,16 @@
 
     <div class="span2"></div>
     <div class="span8">
+
         <h3> @EMessages.get("competition.create.title") </h3>
 
-        @form(controllers.competition.routes.CompetitionController.save) {
+        @if(contestForm.hasErrors) {
+        <div class="alert">
+            <p>@EMessages.get("forms.error")</p>
+        </div>
+        }
+
+        @form(controllers.competition.routes.CompetitionController.save()) {
 
             <fieldset>
 

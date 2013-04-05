@@ -9,6 +9,7 @@ import play.mvc.Result;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -53,7 +54,20 @@ public class CompetitionController extends EController {
      * @return index page
      */
     public static Result save(){
-        return TODO;
+        Form<CompetitionModel> form = form(CompetitionModel.class).bindFromRequest();
+        if(form.hasErrors()) {
+            List<Link> breadcrumbs = new ArrayList<Link>();
+            breadcrumbs.add(new Link("Home", "/"));
+            breadcrumbs.add(new Link(EMessages.get("competition.name"), "/contests"));
+            breadcrumbs.add(new Link(EMessages.get("competition.create.breadcrumb"), "/contests/create"));
+            return badRequest(views.html.competition.create.render(form, breadcrumbs));
+        }
+        CompetitionModel competitionModel = form.get();
+        competitionModel.id = UUID.randomUUID().toString();
+        // TODO check startdate < enddate
+        competitionModel.save();
+        // TODO go to step 2!
+        return redirect(routes.CompetitionController.index());
     }
 
 }
