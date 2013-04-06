@@ -45,7 +45,6 @@ info.info = Info
 info.warning = Waarschuwing
 info.error = Error
 info.success = Success
-
 # management
 management.filter.input = Filter...
 management.filter.button = Filter
@@ -62,4 +61,3 @@ competition.create.name = Naam van de nieuwe competitie:
 competition.create.type = Type van de nieuwe competitie:
 competition.create.end = Eind tijdstip van de nieuwe competitie:
 competition.create.start = Start tijdstip van de nieuwe competitie:
-competition.create.active = Vink aan om de competitie actief te maken.
