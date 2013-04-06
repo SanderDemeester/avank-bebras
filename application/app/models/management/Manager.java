@@ -30,6 +30,8 @@ public abstract class Manager<T extends Manageable> {
     /**
      * Returns a page with elements of type T.
      *
+     * WARNING: it's better to override this method in your own manager!
+     *
      * @param page     page number
      * @param orderBy  attribute to sort on
      * @param order    sort order
@@ -38,15 +40,28 @@ public abstract class Manager<T extends Manageable> {
      */
     public Page<Manageable> page(int page, String orderBy, String order, String filter) {
         return (Page<Manageable>) finder.where()
-            .ilike("name", "%" + filter + "%")
+                // .ilike("name", "%" + filter + "%")
             .orderBy(orderBy + " " + order)
                 // .fetch("path")
             .findPagingList(pageSize)
             .getPage(page);
     }
 
+    /**
+     * Returns the finder object for this manager.
+     *
+     * @return finder
+     */
     public Finder<String, T> getFinder(){
         return finder;
+    }
+
+    /**
+     * Returns the number of elements per page.
+     * @return page size
+     */
+    public int getPageSize(){
+        return pageSize;
     }
 
     /**

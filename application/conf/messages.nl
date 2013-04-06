@@ -36,6 +36,24 @@ register.create_account = Maak account
 register.bebras_id_message = Uw Bebras ID is: 
 register.inlog_message = U kan inloggen me uw ID en wachtwoord.
 
-#faq
+# faq
 nofaq = De FAQ is leeg.
 faqerror = Er is iets misgelopen bij het ophalen van de FAQ. Probeer opnieuw later.
+
+# management
+management.filter.input = Filter...
+management.filter.button = Filter
+management.empty = Niets om weer te geven.
+management.add = Nieuw...
+
+# competition
+competition.name = Competities
+competition.create.breadcrumb = Niewe competitie
+competition.create = Maak een nieuwe competitie aan!
+competition.create.title = Creëer competitie.
+competition.create.step1 = Step 1: Competitie info.
+competition.create.name = Naam van de nieuwe competitie:
+competition.create.type = Type van de nieuwe competitie:
+competition.create.end = Eind tijdstip van de nieuwe competitie:
+competition.create.start = Start tijdstip van de nieuwe competitie:
+competition.create.active = Vink aan om de competitie actief te maken.

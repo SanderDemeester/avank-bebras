@@ -4,7 +4,9 @@ import models.competition.Competition;
 import models.data.Difficulty;
 import models.data.Grade;
 import models.data.Language;
+import models.management.Manageable;
 import models.question.Question;
+import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
@@ -21,19 +23,57 @@ import java.util.Set;
  * @author Kevin Stobbelaar
  */
 @Entity
-@Table(name="questionsets")
-public class QuestionSetModel extends Model {
+@Table(name="questionsetstest")
+public class QuestionSetModel extends Model implements Manageable {
 
     @Id
     public String id;
 
-    public Grade grade;
-    public Map<Question, Difficulty> difficulties;
+    public String level;
     public boolean active;
-    public Competition competition;
-    public Set<Question> questions;
+    @Required
+    public String name;
+    public String contid;
 
+    @Transient
+    public Grade grade;
+    @Transient
+    public Map<Question, Difficulty> difficulties;
+    @Transient
+    public Competition competition;
+    @Transient
+    public Set<Question> questions;
     @Transient
     public List<Language> languages;
 
+    /**
+     * Returns those values that have to be represented in a table.
+     *
+     * @return array with the current values of the fields to be represented in the table
+     */
+    @Override
+    public String[] getFieldValues() {
+        String[] result = {name};
+        return result;
+    }
+
+    /**
+     * Returns the id of the object.
+     *
+     * @return id
+     */
+    @Override
+    public String getID() {
+        return id;
+    }
+
+    /**
+     * Returns the name of the object.
+     *
+     * @return name
+     */
+    @Override
+    public String getName() {
+        return name;
+    }
 }
