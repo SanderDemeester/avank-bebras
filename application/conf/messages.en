@@ -102,6 +102,9 @@ faq.alter.content = FAQ''s answer
 faq.alter.language = FAQ''s language
 faq.error.notcomplete = Please fill in all required fields
 faq.error.savefail = Could not save the new question. Please try again (later).
+faq.error = Something went wrong.
+faq.remove.error = Could not delete question. Please try again (later).
+faq.list.error = Something went wrong during the retrieval of the list.
 
 #info
 info.info = Info

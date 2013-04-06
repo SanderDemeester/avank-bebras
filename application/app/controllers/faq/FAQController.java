@@ -23,6 +23,7 @@ import play.i18n.Lang;
 
 import play.mvc.Result;
 import play.mvc.Results;
+import views.html.error;
 import views.html.faq.faq;
 import controllers.EController;
 import controllers.faq.routes;
@@ -73,18 +74,31 @@ public class FAQController extends EController {
      *
      * @return faq list page
      */
-	public static Result list(int page, String orderBy, String order, String filter){
+	public static Result list(int page, String orderBy, String order, String filter,OperationResultInfo info){
 		//TODO check permissions 
-		
+				
 		List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link(EMessages.get("faq.managefaq"),"/manageFAQ"));
 		
 		FAQManager fm = new FAQManager();
-		return ok( //TODO try-catch
-	            faqManagement.render(fm.page(page, orderBy, order, filter), fm, orderBy, order, filter, breadcrumbs, new OperationResultInfo())
+		try{
+			return ok(
+	            faqManagement.render(fm.page(page, orderBy, order, filter), fm, orderBy, order, filter, breadcrumbs, info)
 	        );
+		}catch(Exception e){
+			info.add(EMessages.get("faq.list.error"),OperationResultInfo.Type.ERROR);
+			return ok(
+					faqManagement.render(null, fm, orderBy, order, filter, breadcrumbs, info)
+					);
+		}
 	}
+	
+	public static Result list(int page, String orderBy, String order, String filter){
+		return list(page,orderBy,order,filter,new OperationResultInfo());
+	}
+	
+	
 	
 	/**
      * This result will redirect to the create a new FAQ page
@@ -168,8 +182,9 @@ public class FAQController extends EController {
 				ok(alterFAQForm.render(form, breadcrumbs,languages,id, new OperationResultInfo()));
         	return r;
         }catch(Exception e){
-        	//TODO
-        	return null;
+        	OperationResultInfo inf = new OperationResultInfo();
+        	inf.add(EMessages.get("faq.error"), OperationResultInfo.Type.ERROR);
+        	return list(0, "name", "asc", "",inf);
         }
 	}
 	
@@ -195,7 +210,9 @@ public class FAQController extends EController {
         try{
         	 form = form(FAQModel.class).fill((FAQModel) new FAQManager().getFinder().byId(id)).bindFromRequest();
         }catch(Exception e){
-        	//TODO
+        	OperationResultInfo inf = new OperationResultInfo();
+        	inf.add(EMessages.get("faq.error"), OperationResultInfo.Type.ERROR);
+        	return list(0, "name", "asc", "",inf);
         }
         if(form.hasErrors()) {
     		OperationResultInfo ori = new OperationResultInfo();
@@ -222,9 +239,14 @@ public class FAQController extends EController {
 	 */
 	public static Result remove(String id){
 		//TODO check permissions
+		try{
 		FAQModel fm = (FAQModel) new FAQManager().getFinder().byId(id);
-		//TODO try-catch
         fm.delete();
+		}catch(Exception e){
+			OperationResultInfo inf = new OperationResultInfo();
+        	inf.add(EMessages.get("faq.remove.error"), OperationResultInfo.Type.ERROR);
+        	return list(0, "name", "asc", "",inf);
+		}
         return redirect(routes.FAQController.list(0, "language", "asc", ""));
 	}
 	

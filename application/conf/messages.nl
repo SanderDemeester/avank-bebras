@@ -53,6 +53,9 @@ faq.alter.content = FAQ''s antwoord
 faq.alter.language = FAQ''s taal
 faq.error.notcomplete = Gelieve alle verplichte velden in te vullen
 faq.error.savefail = De vraag kon niet opgeslaan worden. Probeer opnieuw later.
+faq.error = Er is iets misgelopen.
+faq.remove.error = De vraag kon niet verwijderd worden. Probeer opnieuw later.
+faq.list.error = Er is iets misgelopen tijdens het ophalen van de lijst.
 
 #info
 info.info = Info

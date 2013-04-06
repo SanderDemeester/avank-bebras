@@ -16,7 +16,9 @@
     <div class="row">
         <div class="span8">
             <h2> @EMessages.get("faq.list") </h2>
+            @if(currentPage!=null){
             @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter, breadcrumbs)
+            }
         </div>
     </div>
 
