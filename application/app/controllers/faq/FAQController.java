@@ -16,6 +16,7 @@ import models.EMessages;
 import models.data.Language;
 import models.data.Link;
 import models.dbentities.FAQModel;
+import models.util.OperationResultInfo;
 import play.i18n.Lang;
 import play.mvc.Result;
 import views.html.faq.faq;
@@ -37,7 +38,6 @@ public class FAQController extends EController {
 		List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link("FAQ","/FAQ"));
-        
         
         List<FAQModel> f=new ArrayList<FAQModel>();
         String l = EMessages.getLang(); //Retrieve the user's language

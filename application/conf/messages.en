@@ -32,3 +32,9 @@ register.inlog_message = You may login with your ID and password.
 #faq
 nofaq = The FAQ is empty.
 faqerror = Something went wrong during the retrieval of the FAQ. Try again later.
+
+#info
+info.info = Info
+info.warning = Warning
+info.error = Error
+info.success = Success
