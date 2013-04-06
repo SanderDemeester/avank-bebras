@@ -22,4 +22,11 @@ public interface Manageable {
      */
     public String getID();
 
+
+    /**
+     * Returns the name of the object.
+     *
+     * @return name
+     */
+    public String getName();
 }

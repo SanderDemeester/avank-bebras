@@ -40,7 +40,12 @@ GET     /servers/new                controllers.question.server.ServerController
 POST    /servers/                   controllers.question.server.ServerController.save()
 GET     /servers/:name              controllers.question.server.ServerController.edit(name)
 POST    /servers/:name              controllers.question.server.ServerController.update(name)
-GET    /servers/remove/:name        controllers.question.server.ServerController.remove(name)
+GET     /servers/remove/:id         controllers.question.server.ServerController.remove(id)
+
+# Contests module
+GET     /contests                   controllers.competition.CompetitionController.index()
+GET     /contests/new               controllers.competition.CompetitionController.create()
+POST    /contests                   controllers.competition.CompetitionController.save()
 
 # FAQ
 GET		/faq						controllers.faq.FAQController.getFAQ()

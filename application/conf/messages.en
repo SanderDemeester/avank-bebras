@@ -19,6 +19,7 @@ forms.create = Create
 forms.createArg = Create {0}
 forms.uploadFile = Upload file
 forms.title = Title
+forms.error = Please fix all errors.
 
 # Question
 question.editor.name = Question Editor
@@ -94,3 +95,21 @@ info.info = Info
 info.warning = Warning
 info.error = Error
 info.success = Success
+
+# management
+management.filter.input = Filter...
+management.filter.button = Filter
+management.empty = Nothing to display.
+management.add = Create...
+
+# competition
+competition.name = Contests
+competition.create.breadcrumb = New contest
+competition.create = Create new contest!
+competition.create.title = Create contest.
+competition.create.step1 = Step 1: Contest Information
+competition.create.name = Name of new contest:
+competition.create.type = Type of new contest:
+competition.create.end = End time of new contest:
+competition.create.start = Start time of new contest:
+competition.create.active = Check this box to make the contest active.
