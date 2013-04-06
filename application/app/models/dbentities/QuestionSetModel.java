@@ -1,21 +1,11 @@
 package models.dbentities;
 
-import models.competition.Competition;
-import models.data.Difficulty;
-import models.data.Grade;
-import models.data.Language;
 import models.management.Manageable;
-import models.question.Question;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import javax.persistence.*;
+
 
 /**
  * Question set entity.
@@ -23,28 +13,21 @@ import java.util.Set;
  * @author Kevin Stobbelaar
  */
 @Entity
-@Table(name="questionsetstest")
+@Table(name="questionsets")
 public class QuestionSetModel extends Model implements Manageable {
 
     @Id
     public String id;
 
+    @Required
     public String level;
+
     public boolean active;
+
     @Required
     public String name;
-    public String contid;
 
-    @Transient
-    public Grade grade;
-    @Transient
-    public Map<Question, Difficulty> difficulties;
-    @Transient
-    public Competition competition;
-    @Transient
-    public Set<Question> questions;
-    @Transient
-    public List<Language> languages;
+    public String contid;
 
     /**
      * Returns those values that have to be represented in a table.

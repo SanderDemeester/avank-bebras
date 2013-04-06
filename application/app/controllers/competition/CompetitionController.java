@@ -1,6 +1,7 @@
 package controllers.competition;
 
 import controllers.EController;
+import controllers.question.QuestionSetController;
 import models.EMessages;
 import models.data.Link;
 import models.dbentities.CompetitionModel;
@@ -49,9 +50,9 @@ public class CompetitionController extends EController {
 
     /**
      * Saves the newly created contest.
-     * Returns the index page for contests.
+     * Returns the page with step 2: create question set.
      *
-     * @return index page
+     * @return create question set page
      */
     public static Result save(){
         Form<CompetitionModel> form = form(CompetitionModel.class).bindFromRequest();
@@ -65,9 +66,9 @@ public class CompetitionController extends EController {
         CompetitionModel competitionModel = form.get();
         competitionModel.id = UUID.randomUUID().toString();
         // TODO check startdate < enddate
+        // TODO datums zijn voorlopig nog zonder tijdstip !
         competitionModel.save();
-        // TODO go to step 2!
-        return redirect(routes.CompetitionController.index());
+        return redirect(controllers.question.routes.QuestionSetController.create(competitionModel.id));
     }
 
 }

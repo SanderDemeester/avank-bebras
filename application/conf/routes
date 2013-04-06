@@ -37,14 +37,17 @@ GET     /questioneditor/submit      	controllers.question.QuestionEditorControll
 
 GET     /servers                    controllers.question.server.ServerController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 GET     /servers/new                controllers.question.server.ServerController.create()
-POST    /servers/                   controllers.question.server.ServerController.save()
+POST    /servers                    controllers.question.server.ServerController.save()
 GET     /servers/:name              controllers.question.server.ServerController.edit(name)
 POST    /servers/:name              controllers.question.server.ServerController.update(name)
 GET     /servers/remove/:id         controllers.question.server.ServerController.remove(id)
 
+GET     /questionset/new            controllers.question.QuestionSetController.create(c)
+POST    /questionset                controllers.question.QuestionSetController.save(c)
+
 # Contests module
 GET     /contests                   controllers.competition.CompetitionController.index()
-GET     /contests/new               controllers.competition.CompetitionController.create()
+GET     /contests/new/contest       controllers.competition.CompetitionController.create()
 POST    /contests                   controllers.competition.CompetitionController.save()
 
 # FAQ

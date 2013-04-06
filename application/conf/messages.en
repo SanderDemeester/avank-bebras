@@ -63,6 +63,15 @@ question.factory.error.moreThanOneCorrectAnswers = The answers for language {0} 
 question.factory.error.invalidRegex = Invalid regular expression found in language {0}
 question.factory.error.invalidUpload = Your upload was invalid
 
+question.questionset.name = Question sets
+question.questionset.create.breadcrumb = New question set
+question.questionset.create = Create new question set!
+question.questionset.create.title = Create question set.
+question.questionset.create.step2 = Step 2: Question Set Information
+question.questionset.create.name = Name of new question set:
+question.questionset.create.level = Level of new question set:
+question.questionset.create.active = Check this box to make the question set active.
+
 # Languages
 languages.en = English
 languages.nl = Dutch

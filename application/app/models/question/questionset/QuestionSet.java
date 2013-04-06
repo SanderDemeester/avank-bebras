@@ -32,7 +32,7 @@ public class QuestionSet {
      * @return supported languages
      */
     public List<Language> getLanguages(){
-        return data.languages;
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -59,7 +59,7 @@ public class QuestionSet {
      * @return the competition for this question set
      */
     public Competition getCompetition(){
-        return data.competition;
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -68,7 +68,7 @@ public class QuestionSet {
      * @param competition competition for this question set
      */
     public void setCompetition(Competition competition){
-        data.competition = competition;
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -77,7 +77,7 @@ public class QuestionSet {
      * @return the grade of this question set
      */
     public Grade getGrade(){
-        return data.grade;
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -86,7 +86,7 @@ public class QuestionSet {
      * @param grade new grade for this question set
      */
     public void setGrade(Grade grade){
-        data.grade = grade;
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -96,7 +96,7 @@ public class QuestionSet {
      * @return difficulty of the given question
      */
     public Difficulty getDifficulty(Question question){
-        return data.difficulties.get(question);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -106,7 +106,7 @@ public class QuestionSet {
      * @param difficulty the new difficulty for the given question
      */
     public void setDifficulty(Question question, Difficulty difficulty){
-        data.difficulties.put(question, difficulty);
+        throw new UnsupportedOperationException();
     }
 
     // TODO what does this method has to do?
