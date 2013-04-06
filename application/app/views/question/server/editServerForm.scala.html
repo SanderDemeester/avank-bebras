@@ -5,21 +5,24 @@
 
 @main("Edit server", breadcrumbs) {
 
-@form(controllers.question.server.routes.ServerController.update(id)) {
+	@form(controllers.question.server.routes.ServerController.update(id)) {
 
-    <fieldset>
+    	<fieldset>
 
-        @inputText(serverForm("name"), '_label -> "Server's new name")
-        @inputText(serverForm("path"), '_label -> "Server's new path")
-        @inputText(serverForm("baseUrl"), '_label -> "Server's new baseUrl")
+            @inputText(serverForm("name"), '_label -> EMessages.get("servermanagement.form.servername"))
+            @inputText(serverForm("path"), '_label -> EMessages.get("servermanagement.form.path"))
+            @inputText(serverForm("ftpuri"), '_label -> EMessages.get("servermanagement.form.ftpuri"))
+            @inputText(serverForm("ftpport"), '_label -> EMessages.get("servermanagement.form.ftpport"))
+            @inputText(serverForm("ftpuser"), '_label -> EMessages.get("servermanagement.form.ftpuser"))
+            @inputText(serverForm("ftppass"), '_label -> EMessages.get("servermanagement.form.ftppass"))
 
 
-    </fieldset>
+        </fieldset>
 
-    <div class="actions">
-        <input type="submit" value="Update" class="btn primary"> or
-        <a href="@controllers.question.server.routes.ServerController.list()" class="btn">Cancel</a>
-    </div>
+	    <div class="actions">
+	        <input type="submit" value="Update" class="btn primary"> or
+	        <a href="@controllers.question.server.routes.ServerController.list()" class="btn">Cancel</a>
+	    </div>
 
     }
 

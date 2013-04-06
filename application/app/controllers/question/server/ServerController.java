@@ -3,16 +3,16 @@ package controllers.question.server;
 import java.util.ArrayList;
 import java.util.List;
 
-import controllers.EController;
 import models.data.Link;
 import models.question.server.Server;
 import models.question.server.ServerManager;
 import play.data.Form;
 import play.mvc.Result;
 import play.mvc.Results;
+import views.html.question.server.serverManagement;
 import views.html.question.server.newServerForm;
 import views.html.question.server.editServerForm;
-import views.html.question.server.serverManagement;
+import controllers.EController;
 
 /**
  * ServerController controller.

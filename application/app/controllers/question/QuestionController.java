@@ -40,7 +40,7 @@ public class QuestionController extends EController{
      */
     public static Result create(){
         Form<QuestionModel> form = form(QuestionModel.class).bindFromRequest();
-        return ok(newQuestionForm.render(form, new ArrayList<Link>()));
+        return ok(newQuestionForm.render(form, new QuestionManager(), new ArrayList<Link>()));
     }
     
     /**
@@ -52,14 +52,13 @@ public class QuestionController extends EController{
     public static Result save(){
         Form<QuestionModel> form = form(QuestionModel.class).bindFromRequest();
         if(form.hasErrors()) {
-            return badRequest(newQuestionForm.render(form, new ArrayList<Link>()));
+            return badRequest(newQuestionForm.render(form, new QuestionManager(), new ArrayList<Link>()));
         }
         
-        new QuestionModel().save();
-        //form.get().save();
+        form.get().save();
         
         // TODO place message in flash for "question add warning" in view
-        
-        return Results.redirect(routes.QuestionController.list(0, "name", "asc", ""));
+        return ok("saved");
+        //return Results.redirect(routes.QuestionController.list(0, "name", "asc", ""));
     }
 }

@@ -8,6 +8,7 @@
 
 @import helper._
 @import helper.twitterBootstrap._
+@import models.EMessages
 
 @main("Add new server", breadcrumbs) {
 
@@ -15,9 +16,12 @@
 
         <fieldset>
 
-            @inputText(serverForm("name"), '_label -> "New server's name")
-            @inputText(serverForm("path"), '_label -> "New server's path")
-            @inputText(serverForm("baseUrl"), '_label -> "New server's baseUrl")
+            @inputText(serverForm("name"), '_label -> EMessages.get("servermanagement.form.servername"))
+            @inputText(serverForm("path"), '_label -> EMessages.get("servermanagement.form.path"))
+            @inputText(serverForm("ftpuri"), '_label -> EMessages.get("servermanagement.form.ftpuri"))
+            @inputText(serverForm("ftpport"), '_label -> EMessages.get("servermanagement.form.ftpport"))
+            @inputText(serverForm("ftpuser"), '_label -> EMessages.get("servermanagement.form.ftpuser"))
+            @inputText(serverForm("ftppass"), '_label -> EMessages.get("servermanagement.form.ftppass"))
 
 
         </fieldset>

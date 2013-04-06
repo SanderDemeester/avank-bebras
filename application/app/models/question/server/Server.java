@@ -1,6 +1,6 @@
 package models.question.server;
 
-import models.management.Manageable;
+import models.management.ManageableModel;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
@@ -15,7 +15,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="servers")
-public class Server extends Model implements Manageable {
+public class Server extends ManageableModel {
 
     // TODO database aanpassen zodat een server een unieke id krijgt, die niet de naam van de server is !
 
@@ -23,13 +23,21 @@ public class Server extends Model implements Manageable {
     @Column(name="id")
     public String name;
 
-    @Transient
-    @Constraints.Required
-    public String baseUrl;
-
     @Column(name="location")
     @Constraints.Required
     public String path;
+    
+    @Constraints.Required
+    public String ftpuri;
+    
+    @Constraints.Required
+    public int ftpport;
+    
+    @Constraints.Required
+    public String ftpuser;
+    
+    @Constraints.Required
+    public String ftppass;
 
     /**
      * Returns those values that have to be represented in a table.
@@ -49,16 +57,6 @@ public class Server extends Model implements Manageable {
      */
     @Override
     public String getID() {
-        return name;
-    }
-
-    /**
-     * Returns the name of the object.
-     *
-     * @return name
-     */
-    @Override
-    public String getName() {
         return name;
     }
 

@@ -2,14 +2,13 @@ package models.question;
 
 import models.dbentities.QuestionModel;
 import models.management.Manager;
-import play.db.ebean.Model.Finder;
 import play.mvc.Call;
 import controllers.question.routes;
 
 public class QuestionManager extends Manager<QuestionModel>{
 
     public QuestionManager() {
-        super(new Finder<String, QuestionModel>(String.class, QuestionModel.class), Manager.DEFAULTPAGESIZE);
+        super(QuestionModel.class);
     }
 
     @Override
@@ -42,8 +41,19 @@ public class QuestionManager extends Manager<QuestionModel>{
     }
 
     @Override
-    public String getUniqueField() {
-        return "id";
+    public play.api.mvc.Call getSaveRoute() {
+        return routes.QuestionController.save();
+    }
+    
+    @Override
+    public String getMessagesPrefix() {
+        return "questions";
+    }
+
+    @Override
+    public play.api.mvc.Call getUpdateRoute() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

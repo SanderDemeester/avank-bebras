@@ -115,3 +115,11 @@ competition.create.type = Type of new contest:
 competition.create.end = End time of new contest:
 competition.create.start = Start time of new contest:
 competition.create.active = Check this box to make the contest active.
+
+# server management
+servermanagement.form.servername = Server name
+servermanagement.form.path = Server location
+servermanagement.form.ftpuri = FTP location
+servermanagement.form.ftpport = FTP port
+servermanagement.form.ftpuser = FTP username
+servermanagement.form.ftppass = FTP password

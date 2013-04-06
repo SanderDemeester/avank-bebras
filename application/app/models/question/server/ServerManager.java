@@ -1,9 +1,8 @@
 package models.question.server;
 
-import controllers.question.server.routes;
 import models.management.Manager;
-import play.db.ebean.Model.Finder;
 import play.mvc.Call;
+import controllers.question.server.routes;
 
 /**
  * Manager for the Server entity.
@@ -13,7 +12,7 @@ import play.mvc.Call;
 public class ServerManager extends Manager<Server> {
 
     public ServerManager(){
-        super(new Finder<String, models.question.server.Server>(String.class, models.question.server.Server.class), 6);
+        super(Server.class);
     }
 
     @Override
@@ -65,10 +64,26 @@ public class ServerManager extends Manager<Server> {
     public Call getRemoveRoute(String id) {
         return routes.ServerController.remove(id);
     }
+    
+    @Override
+    public play.api.mvc.Call getSaveRoute() {
+        return routes.ServerController.save();
+    }
+    
+    /**
+     * Returns the name of the object.
+     *
+     * @return name
+     */
+    @Override
+    public String getMessagesPrefix() {
+        return "servers";
+    }
 
     @Override
-    public String getUniqueField() {
-        return "name";
+    public play.api.mvc.Call getUpdateRoute() {
+        // TODO Auto-generated method stub
+        return routes.ServerController.update("TODO");
     }
 
 }

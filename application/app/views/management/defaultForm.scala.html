@@ -1,0 +1,26 @@
+@(modelForm: Form[_ <: models.management.ManageableModel], manager: models.management.Manager[_])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import models.EMessages
+@import models.management.FieldType
+
+    <fieldset>
+
+		@for((field, fType) <- manager.getFields()) {
+			@if(!field.charAt(0).equals('_')) { @* don't show hidden fields *@
+				
+				@fType match {
+					case FieldType.TEXT => {
+						@inputText(modelForm(field), '_label -> EMessages.get(manager.getMessagesPrefix() + ".form." + field))
+					}
+					case FieldType.CHECKBOX => {
+						@checkbox(modelForm(field), '_label -> EMessages.get(manager.getMessagesPrefix() + ".form." + field))
+					}
+				}
+				
+			}
+		}
+
+
+    </fieldset>

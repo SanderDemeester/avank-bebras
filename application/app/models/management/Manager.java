@@ -1,22 +1,29 @@
 package models.management;
 
-import com.avaje.ebean.Page;
+import java.lang.reflect.Field;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import play.db.ebean.Model.Finder;
 import play.mvc.Call;
+
+import com.avaje.ebean.Page;
 
 /**
  * Abstract class for every manager that contains the functionality for CRUD operations
  * on an entity.
  *
- * @author Kevin Stobbelaar
+ * @author Kevin Stobbelaar, Ruben Taelman
  *
  */
-public abstract class Manager<T extends Manageable> {
+public abstract class Manager<T extends ManageableModel> {
 
     private Finder<String, T> finder;
     private int pageSize;
     
     public static final int DEFAULTPAGESIZE = 10;
+    
+    protected Map<String, FieldType> fields = new LinkedHashMap<String, FieldType>();
 
     /**
      * Constructor for manager.
@@ -24,9 +31,15 @@ public abstract class Manager<T extends Manageable> {
      * @param finder finder object that helps building queries and returning pages.
      * @param pageSize number of elements displayed on one page
      */
-    public Manager(Finder<String, T> finder, int pageSize){
-        this.finder = finder;
-        this.pageSize = pageSize;
+    public Manager(Class modelClass){
+        this.finder = new Finder<String, T>(String.class, modelClass);
+        this.pageSize = DEFAULTPAGESIZE;
+        
+        // Add the necessary fields to the fields-map
+        for(Field field : modelClass.getDeclaredFields()) {
+            if(field.isAnnotationPresent(Editable.class))
+                fields.put(field.getName(), FieldType.getType(field.getType()));
+        }
     }
 
     /**
@@ -40,8 +53,8 @@ public abstract class Manager<T extends Manageable> {
      * @param filter   filter to select specific elements
      * @return the requested page
      */
-    public Page<Manageable> page(int page, String orderBy, String order, String filter) {
-        return (Page<Manageable>) finder.where()
+    public Page<ManageableModel> page(int page, String orderBy, String order, String filter) {
+        return (Page<ManageableModel>) finder.where()
                 // .ilike("name", "%" + filter + "%")
             .orderBy(orderBy + " " + order)
                 // .fetch("path")
@@ -57,8 +70,6 @@ public abstract class Manager<T extends Manageable> {
     public Finder<String, T> getFinder(){
         return finder;
     }
-    
-    public abstract String getUniqueField();
 
     /**
      * Returns the number of elements per page.
@@ -85,6 +96,10 @@ public abstract class Manager<T extends Manageable> {
      * @return Call Route that must be followed
      */
     public abstract Call getListRoute(int page, String orderBy, String order, String filter);
+    
+    public Call getListRoute() {
+        return getListRoute(pageSize, "name", "asc", "");
+    }
 
     /**
      * Returns the path of the route that must be followed to create a new item.
@@ -106,6 +121,31 @@ public abstract class Manager<T extends Manageable> {
      * @result Call path of the route that must be followed
      */
     public abstract Call getRemoveRoute(String id);
-
-
+    
+    /**
+     * Returns the path of the route that must be followed to save the current item.
+     * @return Call path of the route that must be followed
+     */
+    public abstract play.api.mvc.Call getSaveRoute();
+    
+    /**
+     * Returns the path of the route that must be followed to update(save) the current item.
+     * @return Call path of the route that must be followed
+     */
+    public abstract play.api.mvc.Call getUpdateRoute();
+    
+    /**
+     * The fields this manager will show
+     * @return map with field names and their type
+     */
+    public Map<String, FieldType> getFields() {
+        return fields;
+    }
+    
+    /**
+     * Returns the prefix for translation messages.
+     *
+     * @return name
+     */
+    public abstract String getMessagesPrefix();
 }

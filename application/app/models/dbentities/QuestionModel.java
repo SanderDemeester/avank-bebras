@@ -4,12 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import models.management.Manageable;
+import models.management.Editable;
+import models.management.ManageableModel;
 import models.question.server.Server;
 import models.user.Author;
-import play.db.ebean.Model;
 
 /**
  * The model for questions that will be saved and fetched from the database
@@ -18,24 +19,24 @@ import play.db.ebean.Model;
  */
 
 @Entity
+@SequenceGenerator(name="Seq", sequenceName="questions_id_seq")
 @Table(name="questions")
-public class QuestionModel extends Model implements Manageable{
+public class QuestionModel extends ManageableModel{
     
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    public String id;
+    @Id 
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Seq")//@GeneratedValue(strategy = GenerationType.AUTO)
+    public int id;
     
+    @Editable
     public String officialid;
+    @Editable
     public Server server;
+    @Editable
     public String path;
+    @Editable
     public boolean active;
+    @Editable
     public Author author;
-    
-    // TMP!!!
-    public QuestionModel() {
-        //this.id="a";
-        this.officialid="iodtje";
-        this.path="padje";
-    }
     
     /**
      * Returns those values that have to be represented in a table.
@@ -59,6 +60,6 @@ public class QuestionModel extends Model implements Manageable{
      */
     @Override
     public String getID() {
-        return id;
+        return Integer.toString(id);
     }
 }
