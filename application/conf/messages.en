@@ -64,6 +64,8 @@ question.factory.error.invalidRegex = Invalid regular expression found in langua
 question.factory.error.invalidUpload = Your upload was invalid
 
 # Languages
+languages.language = Language
+languages.languages = Languages
 languages.en = English
 languages.nl = Dutch
 

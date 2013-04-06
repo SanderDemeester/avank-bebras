@@ -1,0 +1,25 @@
+@(questionForm: Form[models.dbentities.QuestionModel], breadcrumbs : List[models.data.Link])
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("Add new question", breadcrumbs) {
+
+@form(controllers.question.routes.QuestionController.save()) {
+
+    <fieldset>
+
+        @inputText(questionForm("officialid"), '_label -> "official id")
+        @inputText(questionForm("path"), '_label -> "path")
+
+
+    </fieldset>
+
+    <div class="actions">
+        <input type="submit" value="Save" class="btn primary"> or
+        <a href="@controllers.question.routes.QuestionController.list()" class="btn">Cancel</a>
+    </div>
+
+}
+
+}
