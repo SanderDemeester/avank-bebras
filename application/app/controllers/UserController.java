@@ -144,6 +144,11 @@ public class UserController extends EController{
 		return Results.redirect(routes.Application.index());
 	}
 
+
+    public static Result forgotPwd() {
+        return null;
+    }
+
 	/**
 	 * @author Sander Demeester
 	 * @return Returns a scala template based on the type of user that is requesting the page.
