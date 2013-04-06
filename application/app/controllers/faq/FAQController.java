@@ -19,11 +19,8 @@ import models.dbentities.FAQModel;
 import play.data.Form;
 
 import models.util.OperationResultInfo;
-import play.i18n.Lang;
-
 import play.mvc.Result;
 import play.mvc.Results;
-import views.html.error;
 import views.html.faq.faq;
 import controllers.EController;
 import controllers.faq.routes;
@@ -43,6 +40,7 @@ public class FAQController extends EController {
 	 * @return the FAQ in the correct language if available;
 	 */
 	public static Result getFAQ(){
+		//Creating breadcrumbs
 		List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link("FAQ","/FAQ"));
@@ -70,23 +68,30 @@ public class FAQController extends EController {
 	}
 
 	/**
-     * This result will redirect to the FAQ list page
-     *
-     * @return faq list page
-     */
+	 * Returns the list of FAQs
+	 * @param page Page or results to be displayed
+	 * @param orderBy What field to order on
+	 * @param order Which order the results have to be in
+	 * @param filter Filter to be used on the results
+	 * @param info	Info messages to be displayed
+	 * @return
+	 */
 	public static Result list(int page, String orderBy, String order, String filter,OperationResultInfo info){
 		//TODO check permissions 
 				
+		//Creation of breadcrumbs
 		List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link(EMessages.get("faq.managefaq"),"/manageFAQ"));
 		
 		FAQManager fm = new FAQManager();
 		try{
+			//Try to render the list
 			return ok(
 	            faqManagement.render(fm.page(page, orderBy, order, filter), fm, orderBy, order, filter, breadcrumbs, info)
 	        );
 		}catch(Exception e){
+			//If fails, show no list (page = null) but display an error.
 			info.add(EMessages.get("faq.list.error"),OperationResultInfo.Type.ERROR);
 			return ok(
 					faqManagement.render(null, fm, orderBy, order, filter, breadcrumbs, info)
@@ -94,6 +99,9 @@ public class FAQController extends EController {
 		}
 	}
 	
+	/*
+	 * Same as the other one, but uses an empty OperationResultInfo
+	 */
 	public static Result list(int page, String orderBy, String order, String filter){
 		return list(page,orderBy,order,filter,new OperationResultInfo());
 	}
@@ -108,16 +116,21 @@ public class FAQController extends EController {
 	public static Result create(){
 		//TODO check permissions
 		
+		//Creation of breadcrumbs
 		List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link(EMessages.get("faq.managefaq"),"/manageFAQ"));
         breadcrumbs.add(new Link(EMessages.get("faq.addfaq"),"/manageFAQ/new"));
 		
 		Form<FAQModel> form = form(FAQModel.class).bindFromRequest();
+		
+		//Retrieve list of languages
 		Map<String,String> languages = new HashMap<String,String>();
 		for (Language l : Language.listLanguages()){
 			languages.put(l.getCode(), l.getName());
 		}
+		
+		//Return the form for a new FAQ
 	    return ok(newFAQForm.render(form, breadcrumbs,languages, new OperationResultInfo()));
 
 		
@@ -127,6 +140,7 @@ public class FAQController extends EController {
 	 * This will save the result from the form and then redirect to the list page
 	 * @return FAQ list page
 	 */
+	//TODO comment from here on
 	public static Result save(){
 		//TODO check permissions
 		
