@@ -31,7 +31,7 @@ public class UserRegistrationTest extends ContextTest{
 		map.put("fname", "Jim");
 		map.put("lname","Jones");
 		map.put("email","jimjones@localhost.com");
-		map.put("bday","1931/05/13");
+		map.put("bday","1931-05-13");
 		map.put("gender","Male");
 		map.put("prefLanguage","en");
 		map.put("password","kaituma");

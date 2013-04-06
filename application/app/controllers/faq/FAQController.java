@@ -15,7 +15,12 @@ import models.EMessages;
 import models.data.Language;
 import models.data.Link;
 import models.dbentities.FAQModel;
+
 import play.data.Form;
+
+import models.util.OperationResultInfo;
+import play.i18n.Lang;
+
 import play.mvc.Result;
 import play.mvc.Results;
 import views.html.faq.faq;
@@ -33,15 +38,13 @@ import views.html.faq.alterFAQForm;
  */
 public class FAQController extends EController {
 	
-	/*
+	/**
 	 * @return the FAQ in the correct language if available;
 	 */
 	public static Result getFAQ(){
-		setCommonHeaders();
 		List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link("FAQ","/FAQ"));
-        
         
         List<FAQModel> f=new ArrayList<FAQModel>();
         String l = EMessages.getLang(); //Retrieve the user's language
@@ -101,7 +104,7 @@ public class FAQController extends EController {
 		for (Language l : Language.listLanguages()){
 			languages.put(l.getCode(), l.getName());
 		}
-	    return ok(newFAQForm.render(form, breadcrumbs,languages));
+	    return ok(newFAQForm.render(form, breadcrumbs,languages, new OperationResultInfo()));
 
 		
 	    
@@ -117,17 +120,28 @@ public class FAQController extends EController {
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link(EMessages.get("faq.managefaq"),"/manageFAQ"));
         breadcrumbs.add(new Link(EMessages.get("faq.addfaq"),"/manageFAQ/new"));
+        
+        Map<String,String> languages = new HashMap<String,String>();
+		for (Language l : Language.listLanguages()){
+			languages.put(l.getCode(), l.getName());
+		}
 		
 		Form<FAQModel> form = form(FAQModel.class).bindFromRequest();
-        if(form.hasErrors()) {
-        	Map<String,String> languages = new HashMap<String,String>();
-    		for (Language l : Language.listLanguages()){
-    			languages.put(l.getCode(), l.getName());
-    		}
-            return badRequest(newFAQForm.render(form, breadcrumbs,languages));
+        if(form.hasErrors()) {        	
+        	//Form was not complete.
+    		OperationResultInfo ori = new OperationResultInfo();
+    		ori.add(EMessages.get("faq.error.notcomplete"), OperationResultInfo.Type.WARNING);
+            return badRequest(newFAQForm.render(form, breadcrumbs,languages, ori));
         }
         FAQModel m = form.get();
-        m.save(); //TODO try-catch
+        try{
+        	m.save();
+        }catch(Exception p){
+        	//Something went wrong in the saving. Redirect back to the create page with an error alert
+        	OperationResultInfo ori = new OperationResultInfo();
+    		ori.add(EMessages.get("faq.error.savefail"), OperationResultInfo.Type.ERROR);
+            return badRequest(newFAQForm.render(form, breadcrumbs,languages, ori));
+        }
         return Results.redirect(routes.FAQController.list(0, "name", "asc", ""));
 	}
 	
@@ -149,8 +163,14 @@ public class FAQController extends EController {
 		}
 		
 		Form<FAQModel> form = form(FAQModel.class).bindFromRequest().fill((FAQModel) new FAQManager().getFinder().ref(id));
-        return ok(alterFAQForm.render(form, breadcrumbs,languages,id));
-
+        try{
+        	Result r = 
+				ok(alterFAQForm.render(form, breadcrumbs,languages,id, new OperationResultInfo()));
+        	return r;
+        }catch(Exception e){
+        	//TODO
+        	return null;
+        }
 	}
 	
 	/**
@@ -166,18 +186,32 @@ public class FAQController extends EController {
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link(EMessages.get("faq.managefaq"),"/manageFAQ"));
         breadcrumbs.add(new Link(EMessages.get("faq.alter"),"/manageFAQ/"+id));
+        
+        Map<String,String> languages = new HashMap<String,String>();
+		for (Language l : Language.listLanguages()){
+			languages.put(l.getCode(), l.getName());
+		}
     	
-        Form<FAQModel> form = form(FAQModel.class).fill((FAQModel) new FAQManager().getFinder().byId(id)).bindFromRequest();
+        try{
+        	Form<FAQModel> form = form(FAQModel.class).fill((FAQModel) new FAQManager().getFinder().byId(id)).bindFromRequest();
+        }catch(Exception e){
+        	//TODO
+        }
         if(form.hasErrors()) {
-        	Map<String,String> languages = new HashMap<String,String>();
-    		for (Language l : Language.listLanguages()){
-    			languages.put(l.getCode(), l.getName());
-    		}
-            return badRequest(alterFAQForm.render(form, breadcrumbs,languages,id));
+    		OperationResultInfo ori = new OperationResultInfo();
+    		ori.add(EMessages.get("faq.error.notcomplete"),OperationResultInfo.Type.WARNING);
+            return badRequest(alterFAQForm.render(form, breadcrumbs,languages,id, ori));
         }
         FAQModel updated = form.get();
         updated.id = Integer.parseInt(id);
-        updated.update(); //TODO try-catch
+        try{
+        	updated.update();
+        }catch(Exception p){
+        	//Something went wrong in the saving. Redirect back to the create page with an error alert
+        	OperationResultInfo ori = new OperationResultInfo();
+    		ori.add(EMessages.get("faq.error.savefail"), OperationResultInfo.Type.ERROR);
+            return badRequest(alterFAQForm.render(form, breadcrumbs,languages, id, ori));
+        }
         return redirect(routes.FAQController.list(0, "name", "asc", ""));
     }
 	
@@ -187,10 +221,15 @@ public class FAQController extends EController {
 	 * @return FAQ list page
 	 */
 	public static Result remove(String id){
-		//TODO check permissions, confirmation screen
+		//TODO check permissions
 		FAQModel fm = (FAQModel) new FAQManager().getFinder().byId(id);
 		//TODO try-catch
         fm.delete();
         return redirect(routes.FAQController.list(0, "language", "asc", ""));
+	}
+	
+	public static boolean isAuthorized(){
+		//TODO
+		return true;
 	}
 }

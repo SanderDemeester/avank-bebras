@@ -1,11 +1,12 @@
-@(faqForm: Form[models.dbentities.FAQModel], breadcrumbs : List[models.data.Link], langValues : java.util.Map[String, String], id: String)
+@(faqForm: Form[models.dbentities.FAQModel], breadcrumbs : List[models.data.Link], langValues : java.util.Map[String, String], id: String,
+ inf : models.util.OperationResultInfo)
 
 @import helper._
 @import helper.twitterBootstrap._
 @import models.EMessages
 
 @main(EMessages.get("faq.alter"), breadcrumbs) {
-
+@commons.info(inf)
 @form(controllers.faq.routes.FAQController.update(id)) {
 
     <fieldset>

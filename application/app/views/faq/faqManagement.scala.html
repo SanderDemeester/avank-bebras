@@ -6,11 +6,13 @@
 ***************************************@
 
 @(currentPage: Page[models.management.Manageable], manager: models.management.Manager[_], currentOrderBy: String,
-    currentOrder: String, currentFilter: String, breadcrumbs : List[models.data.Link])
+    currentOrder: String, currentFilter: String, breadcrumbs : List[models.data.Link],
+    inf : models.util.OperationResultInfo)
 
 @import views.html.management.list
 
 @main(EMessages.get("faq.list"), breadcrumbs){
+@commons.info(inf)
     <div class="row">
         <div class="span8">
             <h2> @EMessages.get("faq.list") </h2>

@@ -1,0 +1,30 @@
+@(question: models.question.MultipleChoiceQuestion, language : models.data.Language)
+
+@import models.EMessages
+@import helper._
+@import helper.twitterBootstrap._
+
+@correctValue(aElement : models.question.MultipleChoiceElement) = @{
+	if(aElement == question.getCorrectElement(language)) {
+		"checked"
+	}
+}
+
+@element(aElement : models.question.MultipleChoiceElement) = {
+	<label class="mc_answer row-fluid">
+		<div class="span1"><i class="icon-remove removeanswer"></i></div>
+		<div class="span8"><input class="span12" type="text" name="answer-" id="answer-textbox-" value="@aElement.getContent()" placeholder="A possible answer"/></div>
+		<div class="span3">Correct: <input type="radio" name="correct_answer_@language.getCode()" value="" @correctValue(aElement) ></div>
+	</label>
+}
+
+	<div class="muted">@EMessages.get("question.editor.answerOptionsInfo")</div>
+
+	<div class="answers">
+	@if(language != null) {
+		@for(aElement <- question.getElements(language)) {
+			@element(aElement)
+		}
+	}
+	</div>
+	<button class="btn addMCElement" type="button">@EMessages.get("question.editor.addAnswerOption")</button>
