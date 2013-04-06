@@ -52,4 +52,14 @@ public class Server extends Model implements Manageable {
         return name;
     }
 
+    /**
+     * Returns the name of the object.
+     *
+     * @return name
+     */
+    @Override
+    public String getName() {
+        return name;
+    }
+
 }
