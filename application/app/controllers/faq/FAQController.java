@@ -53,14 +53,14 @@ public class FAQController extends EController {
         	f.addAll(Ebean.find(FAQModel.class).where().eq("language", l).findList());
         }catch(PersistenceException e){
         	//add a message to say something went wrong
-        	f.clear();
+        	f.clear(); //TODO use new view
         	FAQModel temp = new FAQModel();
         	temp.name = EMessages.get("faq.error");
         	f.add(temp);
         }
         if(f.isEmpty()){
         	//add a message to say the FAQ is empty
-        	FAQModel temp = new FAQModel();
+        	FAQModel temp = new FAQModel();//TODO use new view
         	temp.name = EMessages.get("faq.empty");
         	f.add(temp);
         }
@@ -82,7 +82,7 @@ public class FAQController extends EController {
 		
 		FAQManager fm = new FAQManager();
 		return ok( //TODO try-catch
-	            faqManagement.render(fm.page(page, orderBy, order, filter), fm, orderBy, order, filter, breadcrumbs)
+	            faqManagement.render(fm.page(page, orderBy, order, filter), fm, orderBy, order, filter, breadcrumbs, new OperationResultInfo())
 	        );
 	}
 	
@@ -191,9 +191,9 @@ public class FAQController extends EController {
 		for (Language l : Language.listLanguages()){
 			languages.put(l.getCode(), l.getName());
 		}
-    	
+		Form<FAQModel> form = null;
         try{
-        	Form<FAQModel> form = form(FAQModel.class).fill((FAQModel) new FAQManager().getFinder().byId(id)).bindFromRequest();
+        	 form = form(FAQModel.class).fill((FAQModel) new FAQManager().getFinder().byId(id)).bindFromRequest();
         }catch(Exception e){
         	//TODO
         }
