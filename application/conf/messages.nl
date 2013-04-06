@@ -39,3 +39,9 @@ register.inlog_message = U kan inloggen me uw ID en wachtwoord.
 #faq
 nofaq = De FAQ is leeg.
 faqerror = Er is iets misgelopen bij het ophalen van de FAQ. Probeer opnieuw later.
+
+#info
+info.info = Info
+info.warning = Waarschuwing
+info.error = Error
+info.success = Success
