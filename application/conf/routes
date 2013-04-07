@@ -49,6 +49,16 @@ POST    /contests                   controllers.competition.CompetitionControlle
 
 # FAQ
 GET		/faq						controllers.faq.FAQController.getFAQ()
+GET		/manageFAQ					controllers.faq.FAQController.list(p:Int ?= 0, s ?= "language", o ?= "asc", f ?= "")
+
+GET     /manageFAQ/new                controllers.faq.FAQController.create()
+POST    /manageFAQ/                   controllers.faq.FAQController.save()
+
+GET     /manageFAQ/:name              controllers.faq.FAQController.edit(name)
+POST    /manageFAQ/:name              controllers.faq.FAQController.update(name)
+
+GET    /manageFAQ/remove/:name        controllers.faq.FAQController.remove(name)
+
 
 # Bootstrap resources
 GET     /assets/img/glyphicons-halflings-white.png      controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings-white.png")

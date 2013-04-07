@@ -1,0 +1,31 @@
+@(faqForm: Form[models.dbentities.FAQModel], breadcrumbs : List[models.data.Link], langValues : java.util.Map[String, String],
+ inf : models.util.OperationResultInfo)
+
+@import helper._
+@import helper.twitterBootstrap._
+@import models.EMessages
+
+@main(EMessages.get("faq.addfaq"), breadcrumbs) {
+@commons.info(inf)
+@form(controllers.faq.routes.FAQController.save()) {
+
+    <fieldset>
+
+        @inputText(faqForm("name"), '_label -> EMessages.get("faq.new.title"))
+        @textarea(faqForm("content"), '_label -> EMessages.get("faq.new.content"),
+        'rows -> 10, 'cols -> 170, 'class->"input-xxlarge")
+        @select(field = faqForm("language"), options = options(langValues)
+        ,'_label -> EMessages.get("faq.new.language"))
+      
+
+
+    </fieldset>
+
+    <div class="actions">
+        <input type="submit" value="Save" class="btn primary"> or
+        <a href="@controllers.faq.routes.FAQController.list()" class="btn">Cancel</a>
+    </div>
+
+}
+
+}
