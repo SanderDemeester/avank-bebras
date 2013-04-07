@@ -32,6 +32,7 @@ public abstract class Manager<T extends ManageableModel> {
     public static final String DEFAULTORDER = "asc";
     
     protected Map<String, FieldType> fields = new LinkedHashMap<String, FieldType>();
+    protected Map<String, Class> fieldTypes = new HashMap<String, Class>();
     protected Map<String, Boolean> disabledFields = new HashMap<String, Boolean>();
     
     private boolean ignoreErrors = false;
@@ -53,6 +54,7 @@ public abstract class Manager<T extends ManageableModel> {
         for(Field field : modelClass.getDeclaredFields()) {
             if(field.isAnnotationPresent(Editable.class)) {
                 fields.put(field.getName(), FieldType.getType(field.getType()));
+                fieldTypes.put(field.getName(), field.getType());
                 if(field.getAnnotation(Editable.class).uponCreation())
                     this.disableField(field.getName());
             }
@@ -243,6 +245,14 @@ public abstract class Manager<T extends ManageableModel> {
      */
     public Map<String, FieldType> getFields() {
         return fields;
+    }
+    
+    public Object getDummyField(String field) {
+        try {
+            return fieldTypes.get(field).newInstance();
+        } catch (InstantiationException | IllegalAccessException | NullPointerException e) {
+            return null;
+        }
     }
     
     /**

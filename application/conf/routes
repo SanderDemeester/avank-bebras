@@ -36,7 +36,7 @@ GET     /questioneditor/export     		controllers.question.QuestionEditorControll
 GET     /questioneditor/submit      	controllers.question.QuestionEditorController.submit(json)
 
 # Server management
-GET     /servers                    controllers.question.server.ServerController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /servers                    controllers.question.server.ServerController.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")
 GET     /servers/new                controllers.question.server.ServerController.create()
 POST    /servers/                   controllers.question.server.ServerController.save()
 GET     /servers/:name              controllers.question.server.ServerController.edit(name)

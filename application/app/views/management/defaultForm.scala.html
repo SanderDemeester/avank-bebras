@@ -24,10 +24,30 @@
 					@defining(manager.getFields().get(field)) { fType =>
 						@fType match {
 							case FieldType.TEXT => {
-								@inputText(modelForm(field), '_label -> (EMessages.get(manager.getMessagesPrefix() + ".form." + field)+":"), '_class -> "defaultFormElement")
+								@inputText(
+									modelForm(field),
+									'_label -> (EMessages.get(manager.getMessagesPrefix() + ".form." + field)+":"),
+									'_class -> "defaultFormElement",
+									'_showConstraints -> false
+								)
 							}
 							case FieldType.CHECKBOX => {
-								@checkbox(modelForm(field), '_label -> (EMessages.get(manager.getMessagesPrefix() + ".form." + field)+":"), '_class -> "defaultFormElement")
+								@checkbox(
+									modelForm(field),
+									'_label -> (EMessages.get(manager.getMessagesPrefix() + ".form." + field)+":"),
+									'_class -> "defaultFormElement",
+									'_showConstraints -> false
+								)
+							}
+							case FieldType.LIST => {
+								@select(
+									modelForm(field+".id"),
+									options(manager.getDummyField(field).asInstanceOf[models.management.Listable].options()),
+									'_id -> field,
+									'_label -> (EMessages.get(manager.getMessagesPrefix() + ".form." + field)+":"),
+									'_class -> "defaultFormElement",
+									'_showConstraints -> false
+								)
 							}
 						}
 					}

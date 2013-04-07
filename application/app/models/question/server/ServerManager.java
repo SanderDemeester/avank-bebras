@@ -8,7 +8,7 @@ import controllers.question.server.routes;
 /**
  * Manager for the Server entity.
  *
- * @auhtor Kevin Stobbelaar
+ * @author Kevin Stobbelaar, Ruben Taelman
  */
 public class ServerManager extends Manager<Server> {
     private String id;
@@ -20,13 +20,13 @@ public class ServerManager extends Manager<Server> {
     
     public ServerManager(ModelState state){
         super(Server.class, state);
-        this.setOrderBy("name");
-        this.setFilterBy("name");
+        this.setOrderBy("id");
+        this.setFilterBy("id");
     }
 
     @Override
     public String[] getColumnHeaders() {
-        String[] columnHeaders = {"name", "path"};
+        String[] columnHeaders = {"id", "path"};
         return columnHeaders;
     }
 

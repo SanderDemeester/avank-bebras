@@ -83,11 +83,7 @@ body{
 
 .defaultFormElement .input  .help-inline {
 	color:red;
-} 
-
-.defaultFormElement .input  .help-block {
-	display:none;
-} 
+}
 
 .filter-input {
 	width:75%;

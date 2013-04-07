@@ -3,18 +3,21 @@ package controllers.question;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.avaje.ebean.annotation.Transactional;
+
 import models.EMessages;
 import models.data.Link;
 import models.dbentities.QuestionModel;
+import models.management.Listable;
 import models.management.ModelState;
 import models.question.QuestionManager;
+import models.question.server.Server;
 import play.data.Form;
+import play.db.ebean.Model.Finder;
 import play.mvc.Result;
-import play.mvc.Results;
 import views.html.question.newQuestionForm;
 import views.html.question.questionManagement;
 import controllers.EController;
-import controllers.question.routes;
 
 /**
  * Actions for controlling the CRUD actions for questions (including approval)
@@ -22,6 +25,12 @@ import controllers.question.routes;
  *
  */
 public class QuestionController extends EController{
+    
+    private static Finder<String, Server> serverFinder = new Finder<String, Server>(String.class, Server.class);
+    
+    public static Result LIST = redirect(
+            routes.QuestionController.list(0, "id", "asc", "")
+    );
     
     /**
      * Make default breadcrumbs for this controller
@@ -39,6 +48,7 @@ public class QuestionController extends EController{
      *
      * @return question list page
      */
+    @Transactional(readOnly=true)
     public static Result list(int page, String orderBy, String order, String filter){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         
@@ -46,7 +56,6 @@ public class QuestionController extends EController{
         questionManager.setOrder(order);
         questionManager.setOrderBy(orderBy);
         questionManager.setFilter(filter);
-        
         return ok(
             questionManagement.render(questionManager.page(page), questionManager, orderBy, order, filter, breadcrumbs)
         );
@@ -58,6 +67,7 @@ public class QuestionController extends EController{
      *
      * @return create a question page
      */
+    @Transactional(readOnly=true)
     public static Result create(){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questions.new"), "/questions/create"));
@@ -76,11 +86,13 @@ public class QuestionController extends EController{
      *
      * @return question list page
      */
+    @Transactional
     public static Result save(){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questions.new"), "/questions/create"));
         
         Form<QuestionModel> form = form(QuestionModel.class).bindFromRequest();
+        
         if(form.hasErrors()) {
             return badRequest(newQuestionForm.render(form, new QuestionManager(ModelState.CREATE), breadcrumbs));
         }
@@ -88,7 +100,6 @@ public class QuestionController extends EController{
         form.get().save();
         
         // TODO place message in flash for "question add warning" in view
-        return ok("saved");
-        //return Results.redirect(routes.QuestionController.list(0, "name", "asc", ""));
+        return LIST;
     }
 }

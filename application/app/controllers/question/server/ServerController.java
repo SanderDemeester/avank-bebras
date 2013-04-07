@@ -9,11 +9,15 @@ import models.management.ModelState;
 import models.question.server.Server;
 import models.question.server.ServerManager;
 import play.data.Form;
+import play.db.ebean.Model.Finder;
 import play.mvc.Result;
 import play.mvc.Results;
 import views.html.question.server.editServerForm;
 import views.html.question.server.newServerForm;
 import views.html.question.server.serverManagement;
+
+import com.avaje.ebean.annotation.Transactional;
+
 import controllers.EController;
 
 /**
@@ -22,6 +26,8 @@ import controllers.EController;
  * @author Kevin Stobbelaar
  */
 public class ServerController extends EController {
+    
+    private Finder<String,Server> serverFinder = new Finder<String,Server>(String.class, Server.class); 
     
     /**
      * Make default breadcrumbs for this controller
@@ -39,6 +45,7 @@ public class ServerController extends EController {
      *
      * @return server list page
      */
+    @Transactional(readOnly=true)
     public static Result list(int page, String orderBy, String order, String filter){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         
@@ -58,6 +65,7 @@ public class ServerController extends EController {
      *
      * @return create a server page
      */
+    @Transactional(readOnly=true)
     public static Result create(){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("servermanagement.servers.new"), "/servers/create"));
@@ -76,6 +84,7 @@ public class ServerController extends EController {
      *
      * @return server list page
      */
+    @Transactional
     public static Result save(){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("servermanagement.servers.new"), "/servers/create"));
@@ -86,7 +95,7 @@ public class ServerController extends EController {
         }
         form.get().save();
         // TODO place message in flash for "server add warning" in view
-        return Results.redirect(routes.ServerController.list(0, "name", "asc", ""));
+        return Results.redirect(routes.ServerController.list(0, "id", "asc", ""));
     }
 
     /**
@@ -96,6 +105,7 @@ public class ServerController extends EController {
      * @param name name of the server to be changed
      * @return edit a server page
      */
+    @Transactional(readOnly=true)
     public static Result edit(String name){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("servermanagement.servers.server") + " " + name, "/servers/:" + name));
@@ -114,6 +124,7 @@ public class ServerController extends EController {
      * @param name name of the server to be updated
      * @return server list page
      */
+    @Transactional
     public static Result update(String name){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("servermanagement.servers.server") + " " + name, "/servers/:" + name));
@@ -126,7 +137,7 @@ public class ServerController extends EController {
         }
         form.get().update();
         // TODO place message in flash for server edited warning in view
-        return redirect(routes.ServerController.list(0, "name", "asc", ""));
+        return redirect(routes.ServerController.list(0, "id", "asc", ""));
     }
 
     /**
@@ -136,10 +147,11 @@ public class ServerController extends EController {
      * @param name name of the server to be removed
      * @return server list page
      */
+    @Transactional
     public static Result remove(String name){
         Server server = new ServerManager(ModelState.DELETE).getFinder().byId(name);
         server.delete();
-        return redirect(routes.ServerController.list(0, "name", "asc", ""));
+        return redirect(routes.ServerController.list(0, "id", "asc", ""));
     }
 
 }
