@@ -1,10 +1,11 @@
 package models.dbentities;
 
-import models.management.Manageable;
+import models.management.ManageableModel;
 import play.data.validation.Constraints.Required;
-import play.db.ebean.Model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 
 /**
@@ -14,7 +15,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="questionsets")
-public class QuestionSetModel extends Model implements Manageable {
+
+public class QuestionSetModel extends ManageableModel {
 
     @Id
     public String id;
@@ -34,7 +36,6 @@ public class QuestionSetModel extends Model implements Manageable {
      *
      * @return array with the current values of the fields to be represented in the table
      */
-    @Override
     public String[] getFieldValues() {
         String[] result = {name};
         return result;
@@ -45,18 +46,8 @@ public class QuestionSetModel extends Model implements Manageable {
      *
      * @return id
      */
-    @Override
     public String getID() {
         return id;
     }
 
-    /**
-     * Returns the name of the object.
-     *
-     * @return name
-     */
-    @Override
-    public String getName() {
-        return name;
-    }
 }

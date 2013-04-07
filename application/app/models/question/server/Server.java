@@ -1,10 +1,18 @@
 package models.question.server;
 
-import models.management.Manageable;
-import play.data.validation.Constraints;
-import play.db.ebean.Model;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import models.management.Editable;
+import models.management.Listable;
+import models.management.ManageableModel;
+import play.data.validation.Constraints;
 
 /**
  * ServerController entity managed by Ebean.
@@ -15,22 +23,42 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="servers")
-public class Server extends Model implements Manageable {
+public class Server extends ManageableModel implements Listable{
 
     // TODO database aanpassen zodat een server een unieke id krijgt, die niet de naam van de server is !
 
+    @Editable(uponCreation=true)
     @Id
     @Column(name="id")
-    public String name;
+    public String id;
 
-    @Transient
-    @Constraints.Required
-    public String baseUrl;
-
+    @Editable
     @Column(name="location")
     @Constraints.Required
     public String path;
+    
+    @Editable
+    @Constraints.Required
+    public String ftpuri;
+    
+    @Editable
+    @Constraints.Required
+    public int ftpport;
+    
+    @Editable
+    @Constraints.Required
+    public String ftpuser;
+    
+    @Editable
+    @Constraints.Required
+    public String ftppass;
+    
+    public static Finder<String, Server> finder = new Finder<String, Server>(String.class, Server.class);
 
+    public static Server findById(String name) {
+        return finder.byId(name);
+    }
+    
     /**
      * Returns those values that have to be represented in a table.
      *
@@ -38,7 +66,7 @@ public class Server extends Model implements Manageable {
      */
     @Override
     public String[] getFieldValues() {
-        String[] result = {this.name, this.path};
+        String[] result = {this.id, this.path};
         return result;
     }
 
@@ -49,17 +77,17 @@ public class Server extends Model implements Manageable {
      */
     @Override
     public String getID() {
-        return name;
+        return id;
     }
-
-    /**
-     * Returns the name of the object.
-     *
-     * @return name
-     */
+    
     @Override
-    public String getName() {
-        return name;
+    public Map<String, String> options() {
+        List<Server> servers = finder.all();
+        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        for(Server server: servers) {
+            options.put(server.id, server.id);
+        }
+        return options;
     }
 
 }
