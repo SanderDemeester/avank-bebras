@@ -13,6 +13,7 @@ public class ServerManager extends Manager<Server> {
 
     public ServerManager(){
         super(Server.class);
+        this.setOrderBy("name");
     }
 
     @Override
@@ -31,7 +32,7 @@ public class ServerManager extends Manager<Server> {
      * @return Call Route that must be followed
      */
     @Override
-    public Call getListRoute(int page, String orderBy, String order, String filter) {
+    public Call getListRoute(int page, String filter) {
         return routes.ServerController.list(page, orderBy, order, filter);
     }
 

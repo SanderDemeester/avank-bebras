@@ -9,6 +9,7 @@ public class QuestionManager extends Manager<QuestionModel>{
 
     public QuestionManager() {
         super(QuestionModel.class);
+        this.setOrderBy("id");
     }
 
     @Override
@@ -18,8 +19,7 @@ public class QuestionManager extends Manager<QuestionModel>{
     }
 
     @Override
-    public Call getListRoute(int page, String orderBy, String order,
-            String filter) {
+    public Call getListRoute(int page, String filter) {
         return routes.QuestionController.list(page, orderBy, order, filter);
     }
 
