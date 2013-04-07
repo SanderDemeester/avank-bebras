@@ -23,6 +23,8 @@ public abstract class Manager<T extends ManageableModel> {
     protected int pageSize;
     protected String orderBy;
     protected String order;
+    protected String filterBy;
+    protected String filter;
     
     public static final int DEFAULTPAGESIZE = 10;
     public static final String DEFAULTORDER = "asc";
@@ -70,6 +72,22 @@ public abstract class Manager<T extends ManageableModel> {
     public void setOrder(String order) {
         this.order = order;
     }
+    
+    /**
+     * Set the default field on which the filtering should happen
+     * @param filterBy filter field
+     */
+    public void setFilterBy(String filterBy) {
+        this.filterBy = filterBy;
+    }
+    
+    /**
+     * Set the filter value
+     * @param filter the value to filter on
+     */
+    public void setFilter(String filter) {
+        this.filter = filter;
+    }
 
     /**
      * Returns a page with elements of type T.
@@ -77,14 +95,11 @@ public abstract class Manager<T extends ManageableModel> {
      * WARNING: it's better to override this method in your own manager!
      *
      * @param page     page number
-     * @param orderBy  attribute to sort on
-     * @param order    sort order
-     * @param filter   filter to select specific elements
      * @return the requested page
      */
-    public Page<ManageableModel> page(int page, String filter) {
+    public Page<ManageableModel> page(int page) {
         return (Page<ManageableModel>) finder.where()
-                // .ilike("name", "%" + filter + "%")
+                 .ilike(filterBy, "%" + filter + "%")
             .orderBy(orderBy + " " + order)
                 // .fetch("path")
             .findPagingList(pageSize)

@@ -31,7 +31,9 @@
         }
     }
 
-    manager.getListRoute(newPage, orderBy, order, currentFilter)
+	manager.setOrderBy(orderBy)
+	manager.setOrder(order)
+    manager.getListRoute(newPage, currentFilter)
 }
 
 @***************************************

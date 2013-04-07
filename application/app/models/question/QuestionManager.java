@@ -10,6 +10,7 @@ public class QuestionManager extends Manager<QuestionModel>{
     public QuestionManager() {
         super(QuestionModel.class);
         this.setOrderBy("id");
+        this.setFilterBy("officialid");
     }
 
     @Override

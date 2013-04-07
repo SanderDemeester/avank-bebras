@@ -14,6 +14,7 @@ public class ServerManager extends Manager<Server> {
     public ServerManager(){
         super(Server.class);
         this.setOrderBy("name");
+        this.setFilterBy("name");
     }
 
     @Override

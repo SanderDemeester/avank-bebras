@@ -29,8 +29,9 @@ public class QuestionController extends EController{
         QuestionManager questionManager = new QuestionManager();
         questionManager.setOrder(order);
         questionManager.setOrderBy(orderBy);
+        questionManager.setFilter(filter);
         return ok(
-            questionManagement.render(questionManager.page(page, filter), questionManager, orderBy, order, filter, new ArrayList<Link>())
+            questionManagement.render(questionManager.page(page), questionManager, orderBy, order, filter, new ArrayList<Link>())
         );
     }
     
