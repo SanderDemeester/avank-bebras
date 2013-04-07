@@ -45,6 +45,7 @@ public class FAQController extends EController {
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link("FAQ","/FAQ"));
         
+        OperationResultInfo ori = new OperationResultInfo();        
         List<FAQModel> f=new ArrayList<FAQModel>();
         String l = EMessages.getLang(); //Retrieve the user's language
         try{
@@ -52,19 +53,14 @@ public class FAQController extends EController {
         	f.addAll(Ebean.find(FAQModel.class).where().eq("language", l).findList());
         }catch(PersistenceException e){
         	//add a message to say something went wrong
-        	f.clear(); //TODO use new view
-        	FAQModel temp = new FAQModel();
-        	temp.name = EMessages.get("faq.error");
-        	f.add(temp);
+        	f.clear();
+        	ori.add(EMessages.get("faq.view.error"),OperationResultInfo.Type.ERROR);
         }
         if(f.isEmpty()){
         	//add a message to say the FAQ is empty
-        	FAQModel temp = new FAQModel();//TODO use new view
-        	temp.name = EMessages.get("faq.empty");
-        	f.add(temp);
+        	ori.add(EMessages.get("faq.empty"),OperationResultInfo.Type.INFO);
         }
-        return ok(faq.render(breadcrumbs,f));
-  
+        return ok(faq.render(breadcrumbs,f,ori));  
 	}
 
 	/**
