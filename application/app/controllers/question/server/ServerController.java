@@ -31,8 +31,10 @@ public class ServerController extends EController {
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link("Servers", "/servers"));
         ServerManager serverManager = new ServerManager();
+        serverManager.setOrder(order);
+        serverManager.setOrderBy(orderBy);
         return ok(
-            serverManagement.render(serverManager.page(page, orderBy, order, filter), serverManager, orderBy, order, filter, breadcrumbs)
+            serverManagement.render(serverManager.page(page, filter), serverManager, orderBy, order, filter, breadcrumbs)
         );
     }
 

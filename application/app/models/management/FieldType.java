@@ -3,6 +3,11 @@ package models.management;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The different types of fields that are by default supported by the ManageableModel
+ * @author Ruben Taelman
+ *
+ */
 public enum FieldType {
     TEXT,
     CHECKBOX;

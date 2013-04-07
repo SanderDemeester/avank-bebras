@@ -126,6 +126,10 @@ public abstract class Manager<T extends ManageableModel> {
      */
     public abstract Call getListRoute(int page, String filter);
     
+    /**
+     * Returns the route that must be followed to refresh the list with default parameters
+     * @return
+     */
     public Call getListRoute() {
         return getListRoute(pageSize, "");
     }

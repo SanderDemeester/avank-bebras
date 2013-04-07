@@ -27,8 +27,10 @@ public class QuestionController extends EController{
      */
     public static Result list(int page, String orderBy, String order, String filter){
         QuestionManager questionManager = new QuestionManager();
+        questionManager.setOrder(order);
+        questionManager.setOrderBy(orderBy);
         return ok(
-            questionManagement.render(questionManager.page(page, orderBy, order, filter), questionManager, orderBy, order, filter, new ArrayList<Link>())
+            questionManagement.render(questionManager.page(page, filter), questionManager, orderBy, order, filter, new ArrayList<Link>())
         );
     }
     
