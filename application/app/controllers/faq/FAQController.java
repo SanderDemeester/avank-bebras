@@ -18,6 +18,8 @@ import models.dbentities.FAQModel;
 
 import play.data.Form;
 
+import models.user.AuthenticationManager;
+import models.user.Role;
 import models.util.OperationResultInfo;
 import play.mvc.Result;
 import play.mvc.Results;
@@ -33,7 +35,6 @@ import views.html.faq.alterFAQForm;
 
 /**
  * @author Jens N. Rammant
- * TODO: put link to manageFAQ somewhere (admin control panel)
  */
 public class FAQController extends EController {
 	
@@ -243,6 +244,7 @@ public class FAQController extends EController {
 	 * @return whether the current user is authorized to manage the FAQ
 	 */
 	public static boolean isAuthorized(){
+		//return AuthenticationManager.getUser().hasRole(Role.MANAGEFAQ);
 		//TODO
 		return false;
 	}
