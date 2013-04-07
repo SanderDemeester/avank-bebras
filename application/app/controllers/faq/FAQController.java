@@ -140,27 +140,30 @@ public class FAQController extends EController {
 	 * This will save the result from the form and then redirect to the list page
 	 * @return FAQ list page
 	 */
-	//TODO comment from here on
 	public static Result save(){
 		//TODO check permissions
 		
+		//Generate breadcrumbs
 		List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link(EMessages.get("faq.managefaq"),"/manageFAQ"));
         breadcrumbs.add(new Link(EMessages.get("faq.addfaq"),"/manageFAQ/new"));
         
+        //Generate list of languages
         Map<String,String> languages = new HashMap<String,String>();
 		for (Language l : Language.listLanguages()){
 			languages.put(l.getCode(), l.getName());
 		}
 		
+		//Retrieve the form
 		Form<FAQModel> form = form(FAQModel.class).bindFromRequest();
         if(form.hasErrors()) {        	
-        	//Form was not complete.
+        	//Form was not complete --> return form with a warning
     		OperationResultInfo ori = new OperationResultInfo();
     		ori.add(EMessages.get("faq.error.notcomplete"), OperationResultInfo.Type.WARNING);
             return badRequest(newFAQForm.render(form, breadcrumbs,languages, ori));
         }
+        //Try to save the info
         FAQModel m = form.get();
         try{
         	m.save();
@@ -170,32 +173,39 @@ public class FAQController extends EController {
     		ori.add(EMessages.get("faq.error.savefail"), OperationResultInfo.Type.ERROR);
             return badRequest(newFAQForm.render(form, breadcrumbs,languages, ori));
         }
+        //Redirect back to the list
         return Results.redirect(routes.FAQController.list(0, "name", "asc", ""));
 	}
 	
 	/**
-	 * 
+	 * Shows the edit page for a certain FAQModel
 	 * @param id of the to be altered FAQModel
 	 * @return FAQ alter page
 	 */
 	public static Result edit(String id){
 		//TODO check permissions
+		
+		//Generate breadcrumbs
 		List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link(EMessages.get("faq.managefaq"),"/manageFAQ"));
         breadcrumbs.add(new Link(EMessages.get("faq.alter"),"/manageFAQ/"+id));
 		
+        //Generate list of languages
 		Map<String,String> languages = new HashMap<String,String>();
 		for (Language l : Language.listLanguages()){
 			languages.put(l.getCode(), l.getName());
 		}
 		
+		//Try to render a form from the to-be-edited FAQModel
 		Form<FAQModel> form = form(FAQModel.class).bindFromRequest().fill((FAQModel) new FAQManager().getFinder().ref(id));
         try{
         	Result r = 
 				ok(alterFAQForm.render(form, breadcrumbs,languages,id, new OperationResultInfo()));
         	return r;
         }catch(Exception e){
+        	//Something went wrong during the creation of the form (e.g. no database connection
+        	//Redirect back to the list page with an error message
         	OperationResultInfo inf = new OperationResultInfo();
         	inf.add(EMessages.get("faq.error"), OperationResultInfo.Type.ERROR);
         	return list(0, "name", "asc", "",inf);
@@ -211,28 +221,38 @@ public class FAQController extends EController {
      */
     public static Result update(String id){
     	//TODO check permissions
+    	
+    	//Generate breadcrumbs
     	List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link(EMessages.get("faq.managefaq"),"/manageFAQ"));
         breadcrumbs.add(new Link(EMessages.get("faq.alter"),"/manageFAQ/"+id));
         
+        //Generate list of languages
         Map<String,String> languages = new HashMap<String,String>();
 		for (Language l : Language.listLanguages()){
 			languages.put(l.getCode(), l.getName());
 		}
+		
+		//Try to update the FAQModel from the form
 		Form<FAQModel> form = null;
         try{
         	 form = form(FAQModel.class).fill((FAQModel) new FAQManager().getFinder().byId(id)).bindFromRequest();
         }catch(Exception e){
+        	//Something went wrong with the filling of the FAQModel (e.g. no database connection)
+        	//Redirect back to the list of FAQ with an error message
+        	//(Can't go back to the edit-page because the form was incorrectly created)
         	OperationResultInfo inf = new OperationResultInfo();
         	inf.add(EMessages.get("faq.error"), OperationResultInfo.Type.ERROR);
         	return list(0, "name", "asc", "",inf);
         }
         if(form.hasErrors()) {
+        	//Form was incomplete. Show the edit-page again with an error
     		OperationResultInfo ori = new OperationResultInfo();
     		ori.add(EMessages.get("faq.error.notcomplete"),OperationResultInfo.Type.WARNING);
             return badRequest(alterFAQForm.render(form, breadcrumbs,languages,id, ori));
         }
+        //Try to save the updated FAQModel
         FAQModel updated = form.get();
         updated.id = Integer.parseInt(id);
         try{
@@ -243,6 +263,7 @@ public class FAQController extends EController {
     		ori.add(EMessages.get("faq.error.savefail"), OperationResultInfo.Type.ERROR);
             return badRequest(alterFAQForm.render(form, breadcrumbs,languages, id, ori));
         }
+        //Return to the list of FAQ
         return redirect(routes.FAQController.list(0, "name", "asc", ""));
     }
 	
@@ -253,10 +274,13 @@ public class FAQController extends EController {
 	 */
 	public static Result remove(String id){
 		//TODO check permissions
+		
+		//Try to remove the FAQModel
 		try{
-		FAQModel fm = (FAQModel) new FAQManager().getFinder().byId(id);
-        fm.delete();
+			FAQModel fm = (FAQModel) new FAQManager().getFinder().byId(id);
+			fm.delete();
 		}catch(Exception e){
+			//Deleting unsuccessful, return the list with an error
 			OperationResultInfo inf = new OperationResultInfo();
         	inf.add(EMessages.get("faq.remove.error"), OperationResultInfo.Type.ERROR);
         	return list(0, "name", "asc", "",inf);
@@ -264,6 +288,11 @@ public class FAQController extends EController {
         return redirect(routes.FAQController.list(0, "language", "asc", ""));
 	}
 	
+	/**
+	 * Returns whether the current user is authorized to edit the FAQ
+	 * (Everyone is authorized to view the FAQ)
+	 * @return whether the current user is authorized to manage the FAQ
+	 */
 	public static boolean isAuthorized(){
 		//TODO
 		return true;
