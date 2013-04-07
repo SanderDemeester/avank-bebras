@@ -99,7 +99,7 @@ public class QuestionController extends EController{
         
         form.get().save();
         
-        // TODO place message in flash for "question add warning" in view
+        flash("success", "Question " + form.get().officialid + " has been created!");
         return LIST;
     }
 }

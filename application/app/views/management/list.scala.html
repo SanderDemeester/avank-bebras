@@ -45,6 +45,15 @@
     </th>
 }
 
+@***************************************
+* Flash messages *
+***************************************@
+@if(flash.containsKey("success")) {
+     <div class="alert alert-success">
+         <strong>Success!</strong> @flash.get("success")
+     </div>
+} 
+
 @***********************
 * The list view itself *
 ***********************@

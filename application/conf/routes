@@ -49,7 +49,7 @@ POST    /contests                   controllers.competition.CompetitionControlle
 GET     /servers/remove/:name       controllers.question.server.ServerController.remove(name)
 
 # Question Management
-GET     /questions                  controllers.question.QuestionController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /questions                  controllers.question.QuestionController.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")
 GET     /questions/new              controllers.question.QuestionController.create()
 POST    /questions/                 controllers.question.QuestionController.save()
 
