@@ -21,6 +21,7 @@ import play.data.Form;
 import models.util.OperationResultInfo;
 import play.mvc.Result;
 import play.mvc.Results;
+import views.html.commons.noaccess;
 import views.html.faq.faq;
 import controllers.EController;
 import controllers.faq.routes;
@@ -73,10 +74,10 @@ public class FAQController extends EController {
 	 * @return
 	 */
 	public static Result list(int page, String orderBy, String order, String filter,OperationResultInfo info){
-		//TODO check permissions 
-				
 		//Creation of breadcrumbs
 		List<Link> breadcrumbs = manageBreadcrumbs();
+		//Check if authorized
+		if(!isAuthorized())return ok(noaccess.render(breadcrumbs));
 		
 		FAQManager fm = new FAQManager();
 		try{
@@ -104,11 +105,10 @@ public class FAQController extends EController {
      * @return faq creation page
      */
 	public static Result create(){
-		//TODO check permissions
-		
 		//Creation of breadcrumbs
 		List<Link> breadcrumbs = manageBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("faq.addfaq"),"/manageFAQ/new"));
+        if(!isAuthorized())return ok(noaccess.render(breadcrumbs)); //Check if authorized
 		//Return the form for a new FAQ
 		Form<FAQModel> form = form(FAQModel.class).bindFromRequest();		
 	    return ok(newFAQForm.render(form, breadcrumbs,listOfLanguages(), new OperationResultInfo()));
@@ -119,11 +119,10 @@ public class FAQController extends EController {
 	 * @return FAQ list page
 	 */
 	public static Result save(){
-		//TODO check permissions
-		
 		//Generate breadcrumbs
 		List<Link> breadcrumbs = manageBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("faq.addfaq"),"/manageFAQ/new"));
+        if(!isAuthorized())return ok(noaccess.render(breadcrumbs)); //Check if authorized
       		
 		//Retrieve the form
 		Form<FAQModel> form = form(FAQModel.class).bindFromRequest();
@@ -153,11 +152,10 @@ public class FAQController extends EController {
 	 * @return FAQ alter page
 	 */
 	public static Result edit(String id){
-		//TODO check permissions
-		
 		//Generate breadcrumbs
 		List<Link> breadcrumbs = manageBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("faq.alter"),"/manageFAQ/"+id));
+        if(!isAuthorized())return ok(noaccess.render(breadcrumbs)); //Check if authorized
 		
 		//Try to render a form from the to-be-edited FAQModel
 		Form<FAQModel> form = form(FAQModel.class).bindFromRequest().fill((FAQModel) new FAQManager().getFinder().ref(id));
@@ -182,12 +180,10 @@ public class FAQController extends EController {
      * @return FAQ list page
      */
     public static Result update(String id){
-    	//TODO check permissions
-    	
     	//Generate breadcrumbs
     	List<Link> breadcrumbs = manageBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("faq.alter"),"/manageFAQ/"+id));
-       
+        if(!isAuthorized())return ok(noaccess.render(breadcrumbs)); //Check if authorized
 		//Try to update the FAQModel from the form
 		Form<FAQModel> form = null;
         try{
@@ -227,8 +223,7 @@ public class FAQController extends EController {
 	 * @return FAQ list page
 	 */
 	public static Result remove(String id){
-		//TODO check permissions
-		
+		if(!isAuthorized())return ok(noaccess.render(manageBreadcrumbs())); //Check if authorized
 		//Try to remove the FAQModel
 		try{
 			FAQModel fm = (FAQModel) new FAQManager().getFinder().byId(id);
@@ -249,7 +244,7 @@ public class FAQController extends EController {
 	 */
 	public static boolean isAuthorized(){
 		//TODO
-		return true;
+		return false;
 	}
 	
 	/**

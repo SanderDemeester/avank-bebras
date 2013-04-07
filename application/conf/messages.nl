@@ -19,6 +19,11 @@ languages.nl = Nederlands
 
 # Error
 genericError = Er is iets misgelopen. Probeer opnieuw later.
+noAccess.title = Toegang Verboden.
+noAccess.text = U bent niet bevoegd om deze pagina te bekijken / deze actie uit te voeren.
+noAccess.alttext = Toegang verboden symbool
+noAccess.imageAttr = Rechten afbeelding: Door Mikadiou (Eigen werk) [CC-BY-SA-3.0 (http://creativecommons.org/licenses/by-sa/3.0)], via Wikimedia Commons
+
 
 # Login
 redirect_message = U zal zodadelijk worden doorgestuurd naar uw startpagina.

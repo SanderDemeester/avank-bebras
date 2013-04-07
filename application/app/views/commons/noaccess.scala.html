@@ -1,0 +1,8 @@
+@(breadcrumbs : List[models.data.Link])
+
+@main(EMessages.get("noAccess.title"),breadcrumbs){
+	<div class="span12 pagination-centered">
+		<h2>@EMessages.get("noAccess.text")</h2>
+		<img title="@EMessages.get("noAccess.imageAttr")" alt="@EMessages.get("noAccess.alttext")" src="@routes.Assets.at("images/error/noaccess.png")" />
+	</div>
+}
