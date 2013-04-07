@@ -80,9 +80,7 @@ public class FAQController extends EController {
 		//TODO check permissions 
 				
 		//Creation of breadcrumbs
-		List<Link> breadcrumbs = new ArrayList<Link>();
-        breadcrumbs.add(new Link("Home", "/"));
-        breadcrumbs.add(new Link(EMessages.get("faq.managefaq"),"/manageFAQ"));
+		List<Link> breadcrumbs = manageBreadcrumbs();
 		
 		FAQManager fm = new FAQManager();
 		try{
@@ -93,9 +91,7 @@ public class FAQController extends EController {
 		}catch(Exception e){
 			//If fails, show no list (page = null) but display an error.
 			info.add(EMessages.get("faq.list.error"),OperationResultInfo.Type.ERROR);
-			return ok(
-					faqManagement.render(null, fm, orderBy, order, filter, breadcrumbs, info)
-					);
+			return ok(faqManagement.render(null, fm, orderBy, order, filter, breadcrumbs, info));
 		}
 	}
 	
@@ -104,9 +100,7 @@ public class FAQController extends EController {
 	 */
 	public static Result list(int page, String orderBy, String order, String filter){
 		return list(page,orderBy,order,filter,new OperationResultInfo());
-	}
-	
-	
+	}	
 	
 	/**
      * This result will redirect to the create a new FAQ page
@@ -117,25 +111,13 @@ public class FAQController extends EController {
 		//TODO check permissions
 		
 		//Creation of breadcrumbs
-		List<Link> breadcrumbs = new ArrayList<Link>();
-        breadcrumbs.add(new Link("Home", "/"));
-        breadcrumbs.add(new Link(EMessages.get("faq.managefaq"),"/manageFAQ"));
+		List<Link> breadcrumbs = manageBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("faq.addfaq"),"/manageFAQ/new"));
-		
-		Form<FAQModel> form = form(FAQModel.class).bindFromRequest();
-		
-		//Retrieve list of languages
-		Map<String,String> languages = new HashMap<String,String>();
-		for (Language l : Language.listLanguages()){
-			languages.put(l.getCode(), l.getName());
-		}
-		
 		//Return the form for a new FAQ
-	    return ok(newFAQForm.render(form, breadcrumbs,languages, new OperationResultInfo()));
-
-		
-	    
+		Form<FAQModel> form = form(FAQModel.class).bindFromRequest();		
+	    return ok(newFAQForm.render(form, breadcrumbs,listOfLanguages(), new OperationResultInfo()));
 	}
+	
 	/**
 	 * This will save the result from the form and then redirect to the list page
 	 * @return FAQ list page
@@ -144,24 +126,16 @@ public class FAQController extends EController {
 		//TODO check permissions
 		
 		//Generate breadcrumbs
-		List<Link> breadcrumbs = new ArrayList<Link>();
-        breadcrumbs.add(new Link("Home", "/"));
-        breadcrumbs.add(new Link(EMessages.get("faq.managefaq"),"/manageFAQ"));
+		List<Link> breadcrumbs = manageBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("faq.addfaq"),"/manageFAQ/new"));
-        
-        //Generate list of languages
-        Map<String,String> languages = new HashMap<String,String>();
-		for (Language l : Language.listLanguages()){
-			languages.put(l.getCode(), l.getName());
-		}
-		
+      		
 		//Retrieve the form
 		Form<FAQModel> form = form(FAQModel.class).bindFromRequest();
         if(form.hasErrors()) {        	
         	//Form was not complete --> return form with a warning
     		OperationResultInfo ori = new OperationResultInfo();
     		ori.add(EMessages.get("faq.error.notcomplete"), OperationResultInfo.Type.WARNING);
-            return badRequest(newFAQForm.render(form, breadcrumbs,languages, ori));
+            return badRequest(newFAQForm.render(form, breadcrumbs,listOfLanguages(), ori));
         }
         //Try to save the info
         FAQModel m = form.get();
@@ -171,7 +145,7 @@ public class FAQController extends EController {
         	//Something went wrong in the saving. Redirect back to the create page with an error alert
         	OperationResultInfo ori = new OperationResultInfo();
     		ori.add(EMessages.get("faq.error.savefail"), OperationResultInfo.Type.ERROR);
-            return badRequest(newFAQForm.render(form, breadcrumbs,languages, ori));
+            return badRequest(newFAQForm.render(form, breadcrumbs,listOfLanguages(), ori));
         }
         //Redirect back to the list
         return Results.redirect(routes.FAQController.list(0, "name", "asc", ""));
@@ -186,22 +160,14 @@ public class FAQController extends EController {
 		//TODO check permissions
 		
 		//Generate breadcrumbs
-		List<Link> breadcrumbs = new ArrayList<Link>();
-        breadcrumbs.add(new Link("Home", "/"));
-        breadcrumbs.add(new Link(EMessages.get("faq.managefaq"),"/manageFAQ"));
+		List<Link> breadcrumbs = manageBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("faq.alter"),"/manageFAQ/"+id));
-		
-        //Generate list of languages
-		Map<String,String> languages = new HashMap<String,String>();
-		for (Language l : Language.listLanguages()){
-			languages.put(l.getCode(), l.getName());
-		}
 		
 		//Try to render a form from the to-be-edited FAQModel
 		Form<FAQModel> form = form(FAQModel.class).bindFromRequest().fill((FAQModel) new FAQManager().getFinder().ref(id));
         try{
         	Result r = 
-				ok(alterFAQForm.render(form, breadcrumbs,languages,id, new OperationResultInfo()));
+				ok(alterFAQForm.render(form, breadcrumbs,listOfLanguages(),id, new OperationResultInfo()));
         	return r;
         }catch(Exception e){
         	//Something went wrong during the creation of the form (e.g. no database connection
@@ -223,17 +189,9 @@ public class FAQController extends EController {
     	//TODO check permissions
     	
     	//Generate breadcrumbs
-    	List<Link> breadcrumbs = new ArrayList<Link>();
-        breadcrumbs.add(new Link("Home", "/"));
-        breadcrumbs.add(new Link(EMessages.get("faq.managefaq"),"/manageFAQ"));
+    	List<Link> breadcrumbs = manageBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("faq.alter"),"/manageFAQ/"+id));
-        
-        //Generate list of languages
-        Map<String,String> languages = new HashMap<String,String>();
-		for (Language l : Language.listLanguages()){
-			languages.put(l.getCode(), l.getName());
-		}
-		
+       
 		//Try to update the FAQModel from the form
 		Form<FAQModel> form = null;
         try{
@@ -250,7 +208,7 @@ public class FAQController extends EController {
         	//Form was incomplete. Show the edit-page again with an error
     		OperationResultInfo ori = new OperationResultInfo();
     		ori.add(EMessages.get("faq.error.notcomplete"),OperationResultInfo.Type.WARNING);
-            return badRequest(alterFAQForm.render(form, breadcrumbs,languages,id, ori));
+            return badRequest(alterFAQForm.render(form, breadcrumbs,listOfLanguages(),id, ori));
         }
         //Try to save the updated FAQModel
         FAQModel updated = form.get();
@@ -261,7 +219,7 @@ public class FAQController extends EController {
         	//Something went wrong in the saving. Redirect back to the create page with an error alert
         	OperationResultInfo ori = new OperationResultInfo();
     		ori.add(EMessages.get("faq.error.savefail"), OperationResultInfo.Type.ERROR);
-            return badRequest(alterFAQForm.render(form, breadcrumbs,languages, id, ori));
+            return badRequest(alterFAQForm.render(form, breadcrumbs,listOfLanguages(), id, ori));
         }
         //Return to the list of FAQ
         return redirect(routes.FAQController.list(0, "name", "asc", ""));
@@ -296,5 +254,28 @@ public class FAQController extends EController {
 	public static boolean isAuthorized(){
 		//TODO
 		return true;
+	}
+	
+	/**
+	 * 
+	 * @return the list of available languages (in a map useable by a Select item)
+	 */
+	private static Map<String,String> listOfLanguages(){
+		Map<String,String> languages = new HashMap<String,String>();
+		for (Language l : Language.listLanguages()){
+			languages.put(l.getCode(), l.getName());
+		}
+		return languages;
+	}
+	
+	/**
+	 * 
+	 * @return the basic list of breadcrumbs for Manage FAQ
+	 */
+	private static List<Link> manageBreadcrumbs(){
+		List<Link> breadcrumbs = new ArrayList<Link>();
+        breadcrumbs.add(new Link("Home", "/"));
+        breadcrumbs.add(new Link(EMessages.get("faq.managefaq"),"/manageFAQ"));
+        return breadcrumbs;
 	}
 }
