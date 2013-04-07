@@ -4,6 +4,7 @@ import controllers.EController;
 import models.EMessages;
 import models.data.Link;
 import models.dbentities.QuestionSetModel;
+import models.question.questionset.QuestionSetQuestionManager;
 import play.data.Form;
 import play.mvc.Result;
 
@@ -17,6 +18,8 @@ import java.util.UUID;
  * @auhtor Kevin Stobbelaar.
  */
 public class QuestionSetController extends EController {
+
+    // TODO authentication !
 
     /**
      * Returns the "create-question-set" page.
@@ -32,6 +35,13 @@ public class QuestionSetController extends EController {
         return ok(views.html.question.questionset.create.render(form, contestid, breadcrumbs));
     }
 
+    /**
+     * Saves the newly created question set.
+     * Redirects to the question set overview page.
+     *
+     * @param contestid contest linked with this question set
+     * @return question set overview page
+     */
     public static Result save(String contestid){
         Form<QuestionSetModel> form = form(QuestionSetModel.class).bindFromRequest();
         if(form.hasErrors()) {
@@ -41,11 +51,38 @@ public class QuestionSetController extends EController {
             return badRequest(views.html.question.questionset.create.render(form, contestid, breadcrumbs));
         }
         QuestionSetModel questionSetModel = form.get();
-        questionSetModel.id = UUID.randomUUID().toString();
+        String questionSetId = UUID.randomUUID().toString();
+        questionSetModel.id = questionSetId;
         // TODO check of deze question set actief gezet mag worden !
+        // TODO opvangen dat wanneer er op Cancel wordt gedrukt, de contest terug verwijderd wordt uit de database!
         questionSetModel.contid = contestid;
         questionSetModel.save();
-        return redirect(controllers.competition.routes.CompetitionController.index());
+        return redirect(controllers.question.routes.QuestionSetController.list(questionSetId, 0, "", "", ""));
+    }
+
+    /**
+     * Returns the overview page for a question set
+     *
+     * @param questionSetId id of the question set
+     * @return overview page for a question set
+     */
+    public static Result list(String questionSetId, int page, String orderBy, String order, String filter){
+        List<Link> breadcrumbs = new ArrayList<Link>();
+        breadcrumbs.add(new Link("Home", "/"));
+        breadcrumbs.add(new Link(EMessages.get("question.questionset.overview"), "/questionset/questions"));
+        QuestionSetQuestionManager qsqm = new QuestionSetQuestionManager(5, questionSetId);
+        return ok(
+                views.html.question.questionset.overview.render(breadcrumbs, questionSetId,
+                        qsqm.page(page, orderBy, order, filter), qsqm, orderBy, order, filter
+                ));
+    }
+
+    public static Result addQuestion(String questionSetId){
+        return TODO;
+    }
+
+    public static Result update(String questionSetId){
+        return TODO;
     }
 
 }

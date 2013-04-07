@@ -1,0 +1,31 @@
+@*******************************************
+* Overview page for question sets          *
+*                                          *
+* author: Kevin Stobbelaar                 *
+*******************************************@
+
+@(breadcrumbs : List[models.data.Link], qsid: String, currentPage: Page[models.management.Manageable], manager: models.management.Manager[_], currentOrderBy: String,
+currentOrder: String, currentFilter: String)
+
+@import models.EMessages
+@import views.html.management.list
+
+@main(EMessages.get("question.questionset.overview"), breadcrumbs) {
+
+    <div class="row-fluid">
+        <div class="span4">
+            <p>
+                <a class="btn btn-primary btn-large" href="@controllers.question.routes.QuestionSetController.addQuestion(qsid)">
+                    @EMessages.get("question.questionset.addquestion")
+                </a>
+            </p>
+
+        </div>
+
+        <div class="span8">
+            @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
+        </div>
+
+    </div>
+
+}
