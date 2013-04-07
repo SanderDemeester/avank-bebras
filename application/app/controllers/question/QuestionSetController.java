@@ -1,9 +1,11 @@
 package controllers.question;
 
+import com.avaje.ebean.annotation.Transactional;
 import controllers.EController;
 import models.EMessages;
 import models.data.Link;
 import models.dbentities.QuestionSetModel;
+import models.management.ModelState;
 import models.question.questionset.QuestionSetQuestionManager;
 import play.data.Form;
 import play.mvc.Result;
@@ -66,14 +68,18 @@ public class QuestionSetController extends EController {
      * @param questionSetId id of the question set
      * @return overview page for a question set
      */
+    @Transactional(readOnly=true)
     public static Result list(String questionSetId, int page, String orderBy, String order, String filter){
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link(EMessages.get("question.questionset.overview"), "/questionset/questions"));
-        QuestionSetQuestionManager qsqm = new QuestionSetQuestionManager(5, questionSetId);
+        QuestionSetQuestionManager qsqm = new QuestionSetQuestionManager(ModelState.READ, questionSetId);
+        qsqm.setOrder(order);
+        qsqm.setOrderBy(orderBy);
+        qsqm.setFilter(filter);
         return ok(
                 views.html.question.questionset.overview.render(breadcrumbs, questionSetId,
-                        qsqm.page(page, orderBy, order, filter), qsqm, orderBy, order, filter
+                        qsqm.page(page), qsqm, orderBy, order, filter
                 ));
     }
 

@@ -1,7 +1,6 @@
 package models.dbentities;
 
-import models.management.Manageable;
-import play.db.ebean.Model;
+import models.management.ManageableModel;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -13,7 +12,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="questionsetquestions")
-public class QuestionSetQuestion extends Model implements Manageable {
+public class QuestionSetQuestion extends ManageableModel {
 
     public String qsid;
 
@@ -44,13 +43,4 @@ public class QuestionSetQuestion extends Model implements Manageable {
         return qid;
     }
 
-    /**
-     * Returns the name of the object.
-     *
-     * @return name
-     */
-    @Override
-    public String getName() {
-        return qid;
-    }
 }

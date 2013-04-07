@@ -126,10 +126,10 @@ public abstract class Manager<T extends ManageableModel> {
      * @return the requested page
      */
     public Page<ManageableModel> page(int page) {
-        return (Page<ManageableModel>) finder.where()
-                 .ilike(filterBy, "%" + filter + "%")
+        return (Page<ManageableModel>) finder
+            .where()
+            .ilike(filterBy, "%" + filter + "%")
             .orderBy(orderBy + " " + order)
-                // .fetch("path")
             .findPagingList(pageSize)
             .getPage(page);
     }
@@ -162,8 +162,6 @@ public abstract class Manager<T extends ManageableModel> {
      * Returns the route that must be followed to refresh the list.
      *
      * @param page     current page number
-     * @param orderBy  name of the column to sort on
-     * @param order    ASC or DESC
      * @param filter   filter on the items
      * @return Call Route that must be followed
      */
@@ -250,7 +248,11 @@ public abstract class Manager<T extends ManageableModel> {
     public Object getDummyField(String field) {
         try {
             return fieldTypes.get(field).newInstance();
-        } catch (InstantiationException | IllegalAccessException | NullPointerException e) {
+        } catch (InstantiationException ie) {
+            return null;
+        } catch (IllegalAccessException ile) {
+            return null;
+        } catch (NullPointerException e) {
             return null;
         }
     }

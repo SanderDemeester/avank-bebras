@@ -1,11 +1,9 @@
 package models.question.questionset;
 
-import com.avaje.ebean.Page;
 import controllers.question.routes;
 import models.dbentities.QuestionSetQuestion;
-import models.management.Manageable;
 import models.management.Manager;
-import play.db.ebean.Model;
+import models.management.ModelState;
 import play.mvc.Call;
 
 /**
@@ -13,38 +11,19 @@ import play.mvc.Call;
  *
  * @author Kevin Stobbelaar.
  */
-public class QuestionSetQuestionManager extends Manager {
+public class QuestionSetQuestionManager extends Manager<QuestionSetQuestion> {
 
     private String qsid;
 
     /**
      * Constructor for manager.
      *
-     * @param pageSize number of elements displayed on one page
      * @param qsid question set id
      */
-    public QuestionSetQuestionManager(int pageSize, String qsid) {
-        super(new Model.Finder<String, QuestionSetQuestion>(String.class, QuestionSetQuestion.class), pageSize);
+    public QuestionSetQuestionManager(ModelState modelState, String qsid) {
+        super(QuestionSetQuestion.class, modelState);
         this.qsid = qsid;
-    }
-
-    /**
-     * Returns a page with elements of type T.
-     *
-     * WARNING: it's better to override this method in your own manager!
-     *
-     * @param page     page number
-     * @param orderBy  attribute to sort on
-     * @param order    sort order
-     * @param filter   filter to select specific elements
-     * @return the requested page
-     */
-    public Page<Manageable> page(int page, String orderBy, String order, String filter) {
-        return (Page<Manageable>) getFinder()
-                .where().ieq("qsid", qsid)
-                .orderBy(orderBy + " " + order)
-                .findPagingList(getPageSize())
-                .getPage(page);
+        setFilterBy("difficulty");
     }
 
     /**
@@ -61,14 +40,12 @@ public class QuestionSetQuestionManager extends Manager {
     /**
      * Returns the route that must be followed to refresh the list.
      *
-     * @param page    current page number
-     * @param orderBy name of the column to sort on
-     * @param order   ASC or DESC
-     * @param filter  filter on the items
+     * @param page   current page number
+     * @param filter filter on the items
      * @return Call Route that must be followed
      */
     @Override
-    public Call getListRoute(int page, String orderBy, String order, String filter) {
+    public Call getListRoute(int page, String filter) {
         return routes.QuestionSetController.list(qsid, page, orderBy, order, filter);
     }
 
@@ -100,5 +77,35 @@ public class QuestionSetQuestionManager extends Manager {
     @Override
     public Call getRemoveRoute(String id) {
         throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Returns the path of the route that must be followed to save the current item.
+     *
+     * @return Call path of the route that must be followed
+     */
+    @Override
+    public play.api.mvc.Call getSaveRoute() {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Returns the path of the route that must be followed to update(save) the current item.
+     *
+     * @return Call path of the route that must be followed
+     */
+    @Override
+    public play.api.mvc.Call getUpdateRoute() {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Returns the prefix for translation messages.
+     *
+     * @return name
+     */
+    @Override
+    public String getMessagesPrefix() {
+        return "question.questionset";
     }
 }
