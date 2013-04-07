@@ -1,36 +1,6 @@
-@*************************************
-* Template for creating a new server *
-*                                    *
-* author: Kevin Stobbelaar           *
-*************************************@
+@(serverForm: Form[models.question.server.Server], manager: models.management.Manager[_], breadcrumbs : List[models.data.Link])
 
-@(serverForm: Form[models.question.server.Server], breadcrumbs : List[models.data.Link])
+@import views.html.management.defaultAdd
 
-@import helper._
-@import helper.twitterBootstrap._
-@import models.EMessages
+@defaultAdd(serverForm, manager, breadcrumbs)
 
-@main("Add new server", breadcrumbs) {
-
-    @form(controllers.question.server.routes.ServerController.save()) {
-
-        <fieldset>
-
-            @inputText(serverForm("name"), '_label -> EMessages.get("servermanagement.form.servername"))
-            @inputText(serverForm("path"), '_label -> EMessages.get("servermanagement.form.path"))
-            @inputText(serverForm("ftpuri"), '_label -> EMessages.get("servermanagement.form.ftpuri"))
-            @inputText(serverForm("ftpport"), '_label -> EMessages.get("servermanagement.form.ftpport"))
-            @inputText(serverForm("ftpuser"), '_label -> EMessages.get("servermanagement.form.ftpuser"))
-            @inputText(serverForm("ftppass"), '_label -> EMessages.get("servermanagement.form.ftppass"))
-
-
-        </fieldset>
-
-        <div class="actions">
-            <input type="submit" value="Save" class="btn primary"> or
-            <a href="@controllers.question.server.routes.ServerController.list()" class="btn">Cancel</a>
-        </div>
-
-    }
-
-}

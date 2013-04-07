@@ -2,13 +2,14 @@ package models.question;
 
 import models.dbentities.QuestionModel;
 import models.management.Manager;
+import models.management.ModelState;
 import play.mvc.Call;
 import controllers.question.routes;
 
 public class QuestionManager extends Manager<QuestionModel>{
 
-    public QuestionManager() {
-        super(QuestionModel.class);
+    public QuestionManager(ModelState state) {
+        super(QuestionModel.class, state);
         this.setOrderBy("id");
         this.setFilterBy("officialid");
     }

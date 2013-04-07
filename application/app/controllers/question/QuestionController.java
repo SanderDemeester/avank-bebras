@@ -1,9 +1,12 @@
 package controllers.question;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import models.EMessages;
 import models.data.Link;
 import models.dbentities.QuestionModel;
+import models.management.ModelState;
 import models.question.QuestionManager;
 import play.data.Form;
 import play.mvc.Result;
@@ -21,17 +24,31 @@ import controllers.question.routes;
 public class QuestionController extends EController{
     
     /**
+     * Make default breadcrumbs for this controller
+     * @return default breadcrumbs
+     */
+    private static List<Link> defaultBreadcrumbs() {
+        List<Link> breadcrumbs = new ArrayList<Link>();
+        breadcrumbs.add(new Link("Home", "/"));
+        breadcrumbs.add(new Link(EMessages.get("question.questions.name"), "/questions"));
+        return breadcrumbs;
+    }
+    
+    /**
      * This result will redirect to the question list page
      *
      * @return question list page
      */
     public static Result list(int page, String orderBy, String order, String filter){
-        QuestionManager questionManager = new QuestionManager();
+        List<Link> breadcrumbs = defaultBreadcrumbs();
+        
+        QuestionManager questionManager = new QuestionManager(ModelState.READ);
         questionManager.setOrder(order);
         questionManager.setOrderBy(orderBy);
         questionManager.setFilter(filter);
+        
         return ok(
-            questionManagement.render(questionManager.page(page), questionManager, orderBy, order, filter, new ArrayList<Link>())
+            questionManagement.render(questionManager.page(page), questionManager, orderBy, order, filter, breadcrumbs)
         );
     }
     
@@ -42,8 +59,15 @@ public class QuestionController extends EController{
      * @return create a question page
      */
     public static Result create(){
+        List<Link> breadcrumbs = defaultBreadcrumbs();
+        breadcrumbs.add(new Link(EMessages.get("question.questions.new"), "/questions/create"));
+        
         Form<QuestionModel> form = form(QuestionModel.class).bindFromRequest();
-        return ok(newQuestionForm.render(form, new QuestionManager(), new ArrayList<Link>()));
+        
+        QuestionManager manager = new QuestionManager(ModelState.CREATE);
+        manager.setIgnoreErrors(true);
+        
+        return ok(newQuestionForm.render(form, manager, breadcrumbs));
     }
     
     /**
@@ -53,9 +77,12 @@ public class QuestionController extends EController{
      * @return question list page
      */
     public static Result save(){
+        List<Link> breadcrumbs = defaultBreadcrumbs();
+        breadcrumbs.add(new Link(EMessages.get("question.questions.new"), "/questions/create"));
+        
         Form<QuestionModel> form = form(QuestionModel.class).bindFromRequest();
         if(form.hasErrors()) {
-            return badRequest(newQuestionForm.render(form, new QuestionManager(), new ArrayList<Link>()));
+            return badRequest(newQuestionForm.render(form, new QuestionManager(ModelState.CREATE), breadcrumbs));
         }
         
         form.get().save();

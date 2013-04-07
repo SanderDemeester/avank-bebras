@@ -9,11 +9,11 @@
 
 @import views.html.management.list
 
-@main("List of servers", breadcrumbs){
+@main(EMessages.get("servermanagement.servers.list"), breadcrumbs){
     <div class="row">
         <div class="span4"> <h2> Rechts van hier staan de servers! </h2> <p> hier kan extra info komen</p></div>
         <div class="span8">
-            <h2> List of servers </h2>
+            <h2>@EMessages.get("servermanagement.servers.list")</h2>
             @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
         </div>
     </div>

@@ -9,8 +9,8 @@
 
 @import views.html.management.list
 
-@main("List of servers", breadcrumbs){
-    <h2>List of questions</h2>
+@main(EMessages.get("question.questions.list"), breadcrumbs){
+    <h2>@EMessages.get("question.questions.list")</h2>
     @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
 
 }

@@ -1,6 +1,8 @@
 package models.management;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -30,6 +32,10 @@ public abstract class Manager<T extends ManageableModel> {
     public static final String DEFAULTORDER = "asc";
     
     protected Map<String, FieldType> fields = new LinkedHashMap<String, FieldType>();
+    protected Map<String, Boolean> disabledFields = new HashMap<String, Boolean>();
+    
+    private boolean ignoreErrors = false;
+    private ModelState state;
 
     /**
      * Constructor for manager.
@@ -37,16 +43,28 @@ public abstract class Manager<T extends ManageableModel> {
      * @param finder finder object that helps building queries and returning pages.
      * @param pageSize number of elements displayed on one page
      */
-    public Manager(Class modelClass){
+    public Manager(Class modelClass, ModelState state){
         this.finder = new Finder<String, T>(String.class, modelClass);
         this.pageSize = DEFAULTPAGESIZE;
         this.order = DEFAULTORDER;
+        this.state = state;
         
         // Add the necessary fields to the fields-map
         for(Field field : modelClass.getDeclaredFields()) {
-            if(field.isAnnotationPresent(Editable.class))
+            if(field.isAnnotationPresent(Editable.class)) {
                 fields.put(field.getName(), FieldType.getType(field.getType()));
+                if(field.getAnnotation(Editable.class).uponCreation())
+                    this.disableField(field.getName());
+            }
         }
+    }
+    
+    public void setIgnoreErrors(boolean ignoreErrors) {
+        this.ignoreErrors = ignoreErrors;
+    }
+    
+    public boolean isIgnoreErrors() {
+        return this.ignoreErrors;
     }
     
     /**
@@ -87,6 +105,14 @@ public abstract class Manager<T extends ManageableModel> {
      */
     public void setFilter(String filter) {
         this.filter = filter;
+    }
+    
+    /**
+     * Returns the field to filter by
+     * @return the field to filter by depending on the filter input
+     */
+    public String getFilterBy() {
+        return this.filterBy;
     }
 
     /**
@@ -146,7 +172,7 @@ public abstract class Manager<T extends ManageableModel> {
      * @return
      */
     public Call getListRoute() {
-        return getListRoute(pageSize, "");
+        return getListRoute(0, "");
     }
 
     /**
@@ -181,6 +207,35 @@ public abstract class Manager<T extends ManageableModel> {
      * @return Call path of the route that must be followed
      */
     public abstract play.api.mvc.Call getUpdateRoute();
+    
+    /**
+     * The field names this manager will show
+     * @return set with field names
+     */
+    public Iterator<String> getFieldNames() {
+        // A set is required to keep the original order after conversion to a scala collection
+        return fields.keySet().iterator();
+    }
+    
+    /**
+     * Disabling a field will make them uneditable in the form
+     * @param field field name
+     */
+    private void disableField(String field) {
+        disabledFields.put(field, true);
+    }
+    
+    /**
+     * Check if a field is disabled
+     * @param field field name
+     * @return if the field is disabled
+     */
+    public boolean isFieldDisabled(String field) {
+        Boolean val = disabledFields.get(field);
+        if(val == null)                           return false;
+        else if(!state.equals(ModelState.UPDATE)) return false;
+        else                                      return val;
+    }
     
     /**
      * The fields this manager will show

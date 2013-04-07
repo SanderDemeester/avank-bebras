@@ -99,10 +99,10 @@ info.error = Error
 info.success = Success
 
 # management
-management.filter.input = Filter...
+management.filter.input = Filter value
 management.filter.button = Filter
 management.empty = Nothing to display.
-management.add = Create...
+management.add = Create
 
 # competition
 competition.name = Contests
@@ -117,9 +117,23 @@ competition.create.start = Start time of new contest:
 competition.create.active = Check this box to make the contest active.
 
 # server management
-servermanagement.form.servername = Server name
-servermanagement.form.path = Server location
-servermanagement.form.ftpuri = FTP location
-servermanagement.form.ftpport = FTP port
-servermanagement.form.ftpuser = FTP username
-servermanagement.form.ftppass = FTP password
+servers.form.name = Server name
+servers.form.path = Server location
+servers.form.ftpuri = FTP location
+servers.form.ftpport = FTP port
+servers.form.ftpuser = FTP username
+servers.form.ftppass = FTP password
+servermanagement.servers.name = Servers
+servermanagement.servers.new = New Server
+servermanagement.servers.server = Server
+servermanagement.servers.list = List of Servers
+
+# question management
+questions.form.author = Author
+questions.form.officialid = Official ID
+questions.form.path = ??Path??
+questions.form.active = Active
+questions.form.server = Server
+question.questions.name = Questions
+question.questions.new = New Question
+question.questions.list = Lits of Questions

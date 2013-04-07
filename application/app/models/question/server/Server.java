@@ -1,5 +1,6 @@
 package models.question.server;
 
+import models.management.Editable;
 import models.management.ManageableModel;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
@@ -19,23 +20,29 @@ public class Server extends ManageableModel {
 
     // TODO database aanpassen zodat een server een unieke id krijgt, die niet de naam van de server is !
 
+    @Editable(uponCreation=true)
     @Id
     @Column(name="id")
     public String name;
 
+    @Editable
     @Column(name="location")
     @Constraints.Required
     public String path;
     
+    @Editable
     @Constraints.Required
     public String ftpuri;
     
+    @Editable
     @Constraints.Required
     public int ftpport;
     
+    @Editable
     @Constraints.Required
     public String ftpuser;
     
+    @Editable
     @Constraints.Required
     public String ftppass;
 

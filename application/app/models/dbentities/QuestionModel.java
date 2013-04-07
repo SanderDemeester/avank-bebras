@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import play.data.validation.Constraints;
+
 import models.management.Editable;
 import models.management.ManageableModel;
 import models.question.server.Server;
@@ -28,14 +30,19 @@ public class QuestionModel extends ManageableModel{
     public int id;
     
     @Editable
+    @Constraints.Required
     public String officialid;
     @Editable
+    @Constraints.Required
     public Server server;
     @Editable
+    @Constraints.Required
     public String path;
     @Editable
+    @Constraints.Required
     public boolean active;
     @Editable
+    @Constraints.Required
     public Author author;
     
     /**

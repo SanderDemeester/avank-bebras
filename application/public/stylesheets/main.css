@@ -72,3 +72,24 @@ body{
     opacity: 1;
 }
 /* End of question editor styles */
+
+
+
+/* Start of DMTV styles */
+.defaultFormElement label {
+	width:200px;
+	float:left;
+}
+
+.defaultFormElement .input  .help-inline {
+	color:red;
+} 
+
+.defaultFormElement .input  .help-block {
+	display:none;
+} 
+
+.filter-input {
+	width:75%;
+}
+/* End of DMTV styles */

@@ -1,6 +1,7 @@
 package models.question.server;
 
 import models.management.Manager;
+import models.management.ModelState;
 import play.mvc.Call;
 import controllers.question.server.routes;
 
@@ -10,9 +11,15 @@ import controllers.question.server.routes;
  * @auhtor Kevin Stobbelaar
  */
 public class ServerManager extends Manager<Server> {
+    private String id;
 
-    public ServerManager(){
-        super(Server.class);
+    public ServerManager(String id, ModelState state) {
+        this(state);
+        this.id = id;
+    }
+    
+    public ServerManager(ModelState state){
+        super(Server.class, state);
         this.setOrderBy("name");
         this.setFilterBy("name");
     }
@@ -84,8 +91,7 @@ public class ServerManager extends Manager<Server> {
 
     @Override
     public play.api.mvc.Call getUpdateRoute() {
-        // TODO Auto-generated method stub
-        return routes.ServerController.update("TODO");
+        return routes.ServerController.update(id);
     }
 
 }

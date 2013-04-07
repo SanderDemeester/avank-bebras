@@ -3,15 +3,17 @@ package controllers.question.server;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.EMessages;
 import models.data.Link;
+import models.management.ModelState;
 import models.question.server.Server;
 import models.question.server.ServerManager;
 import play.data.Form;
 import play.mvc.Result;
 import play.mvc.Results;
-import views.html.question.server.serverManagement;
-import views.html.question.server.newServerForm;
 import views.html.question.server.editServerForm;
+import views.html.question.server.newServerForm;
+import views.html.question.server.serverManagement;
 import controllers.EController;
 
 /**
@@ -20,6 +22,17 @@ import controllers.EController;
  * @author Kevin Stobbelaar
  */
 public class ServerController extends EController {
+    
+    /**
+     * Make default breadcrumbs for this controller
+     * @return default breadcrumbs
+     */
+    private static List<Link> defaultBreadcrumbs() {
+        List<Link> breadcrumbs = new ArrayList<Link>();
+        breadcrumbs.add(new Link("Home", "/"));
+        breadcrumbs.add(new Link(EMessages.get("servermanagement.servers.name"), "/servers"));
+        return breadcrumbs;
+    }
 
     /**
      * This result will redirect to the server list page
@@ -27,13 +40,13 @@ public class ServerController extends EController {
      * @return server list page
      */
     public static Result list(int page, String orderBy, String order, String filter){
-        List<Link> breadcrumbs = new ArrayList<Link>();
-        breadcrumbs.add(new Link("Home", "/"));
-        breadcrumbs.add(new Link("Servers", "/servers"));
-        ServerManager serverManager = new ServerManager();
+        List<Link> breadcrumbs = defaultBreadcrumbs();
+        
+        ServerManager serverManager = new ServerManager(ModelState.READ);
         serverManager.setOrder(order);
         serverManager.setOrderBy(orderBy);
         serverManager.setFilter(filter);
+        
         return ok(
             serverManagement.render(serverManager.page(page), serverManager, orderBy, order, filter, breadcrumbs)
         );
@@ -46,12 +59,15 @@ public class ServerController extends EController {
      * @return create a server page
      */
     public static Result create(){
-        List<Link> breadcrumbs = new ArrayList<Link>();
-        breadcrumbs.add(new Link("Home", "/"));
-        breadcrumbs.add(new Link("Servers", "/servers"));
-        breadcrumbs.add(new Link("New server", "/servers/create"));
+        List<Link> breadcrumbs = defaultBreadcrumbs();
+        breadcrumbs.add(new Link(EMessages.get("servermanagement.servers.new"), "/servers/create"));
+        
         Form<Server> form = form(Server.class).bindFromRequest();
-        return ok(newServerForm.render(form, breadcrumbs));
+        
+        ServerManager manager = new ServerManager(ModelState.CREATE);
+        manager.setIgnoreErrors(true);
+        
+        return ok(newServerForm.render(form, manager, breadcrumbs));
     }
 
     /**
@@ -61,9 +77,12 @@ public class ServerController extends EController {
      * @return server list page
      */
     public static Result save(){
+        List<Link> breadcrumbs = defaultBreadcrumbs();
+        breadcrumbs.add(new Link(EMessages.get("servermanagement.servers.new"), "/servers/create"));
+        
         Form<Server> form = form(Server.class).bindFromRequest();
         if(form.hasErrors()) {
-            return badRequest(newServerForm.render(form, new ArrayList<Link>()));
+            return badRequest(newServerForm.render(form, new ServerManager(ModelState.CREATE), breadcrumbs));
         }
         form.get().save();
         // TODO place message in flash for "server add warning" in view
@@ -78,12 +97,14 @@ public class ServerController extends EController {
      * @return edit a server page
      */
     public static Result edit(String name){
-        List<Link> breadcrumbs = new ArrayList<Link>();
-        breadcrumbs.add(new Link("Home", "/"));
-        breadcrumbs.add(new Link("Servers", "/servers"));
-        breadcrumbs.add(new Link("Server " + name, "/servers/:" + name));
-        Form<Server> form = form(Server.class).bindFromRequest().fill(new ServerManager().getFinder().ref(name));
-        return ok(editServerForm.render(form, name, new ArrayList<Link>()));
+        List<Link> breadcrumbs = defaultBreadcrumbs();
+        breadcrumbs.add(new Link(EMessages.get("servermanagement.servers.server") + " " + name, "/servers/:" + name));
+        
+        ServerManager manager = new ServerManager(name, ModelState.UPDATE);
+        manager.setIgnoreErrors(true);
+        
+        Form<Server> form = form(Server.class).bindFromRequest().fill(manager.getFinder().ref(name));
+        return ok(editServerForm.render(form, manager, breadcrumbs));
     }
 
     /**
@@ -94,9 +115,14 @@ public class ServerController extends EController {
      * @return server list page
      */
     public static Result update(String name){
-        Form<Server> form = form(Server.class).fill(new ServerManager().getFinder().byId(name)).bindFromRequest();
+        List<Link> breadcrumbs = defaultBreadcrumbs();
+        breadcrumbs.add(new Link(EMessages.get("servermanagement.servers.server") + " " + name, "/servers/:" + name));
+        
+        ServerManager manager = new ServerManager(name, ModelState.UPDATE);
+        
+        Form<Server> form = form(Server.class).fill(manager.getFinder().byId(name)).bindFromRequest();
         if(form.hasErrors()) {
-            return badRequest(editServerForm.render(form, name, new ArrayList<Link>()));
+            return badRequest(editServerForm.render(form, manager, breadcrumbs));
         }
         form.get().update();
         // TODO place message in flash for server edited warning in view
@@ -111,7 +137,7 @@ public class ServerController extends EController {
      * @return server list page
      */
     public static Result remove(String name){
-        Server server = new ServerManager().getFinder().byId(name);
+        Server server = new ServerManager(ModelState.DELETE).getFinder().byId(name);
         server.delete();
         return redirect(routes.ServerController.list(0, "name", "asc", ""));
     }

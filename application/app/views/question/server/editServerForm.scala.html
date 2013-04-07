@@ -1,29 +1,6 @@
-@(serverForm: Form[models.question.server.Server], id: String, breadcrumbs : List[models.data.Link])
+@(serverForm: Form[models.question.server.Server], manager: models.management.Manager[_], breadcrumbs : List[models.data.Link])
 
-@import helper._
-@import helper.twitterBootstrap._
+@import views.html.management.defaultEdit
 
-@main("Edit server", breadcrumbs) {
+@defaultEdit(serverForm, manager, breadcrumbs)
 
-	@form(controllers.question.server.routes.ServerController.update(id)) {
-
-    	<fieldset>
-
-            @inputText(serverForm("name"), '_label -> EMessages.get("servermanagement.form.servername"))
-            @inputText(serverForm("path"), '_label -> EMessages.get("servermanagement.form.path"))
-            @inputText(serverForm("ftpuri"), '_label -> EMessages.get("servermanagement.form.ftpuri"))
-            @inputText(serverForm("ftpport"), '_label -> EMessages.get("servermanagement.form.ftpport"))
-            @inputText(serverForm("ftpuser"), '_label -> EMessages.get("servermanagement.form.ftpuser"))
-            @inputText(serverForm("ftppass"), '_label -> EMessages.get("servermanagement.form.ftppass"))
-
-
-        </fieldset>
-
-	    <div class="actions">
-	        <input type="submit" value="Update" class="btn primary"> or
-	        <a href="@controllers.question.server.routes.ServerController.list()" class="btn">Cancel</a>
-	    </div>
-
-    }
-
-}
