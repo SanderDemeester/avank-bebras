@@ -19,9 +19,7 @@ public class ServerManager extends Manager<Server> {
     }
     
     public ServerManager(ModelState state){
-        super(Server.class, state);
-        this.setOrderBy("id");
-        this.setFilterBy("id");
+        super(Server.class, state, "id", "id");
     }
 
     @Override

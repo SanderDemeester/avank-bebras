@@ -44,11 +44,13 @@ public abstract class Manager<T extends ManageableModel> {
      * @param finder finder object that helps building queries and returning pages.
      * @param pageSize number of elements displayed on one page
      */
-    public Manager(Class modelClass, ModelState state){
+    public Manager(Class modelClass, ModelState state, String orderBy, String filterBy){
         this.finder = new Finder<String, T>(String.class, modelClass);
         this.pageSize = DEFAULTPAGESIZE;
         this.order = DEFAULTORDER;
         this.state = state;
+        this.orderBy = orderBy;
+        this.filterBy = filterBy;
         
         // Add the necessary fields to the fields-map
         for(Field field : modelClass.getDeclaredFields()) {
