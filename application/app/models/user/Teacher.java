@@ -3,7 +3,10 @@ package models.user;
 
 import java.util.Collection;
 
+import javax.persistence.PersistenceException;
+
 import models.dbentities.ClassGroup;
+import models.dbentities.SchoolModel;
 import models.dbentities.UserModel;
 import play.mvc.Result;
 import play.mvc.Content;
@@ -62,16 +65,29 @@ public class Teacher extends SuperUser{
         return null;
     }
 
-    /*
+    /**
      * Queries the database for all Classes that this Teacher is main teacher of
-     * @return List of all ClassGroups this Teacher is main Teacher of
+     * @return a collection of classes that this Teacher is main teacher of
+     * @throws PersistenceException when something goes wrong during the retrieval
      */
-    public Collection<ClassGroup> getClasses(){
+    public Collection<ClassGroup> getClasses() throws PersistenceException{
 
         java.util.List<ClassGroup> res = Ebean.find(ClassGroup.class).where()
                 .eq("teacherid", this.data.id).findList();
 
         return res;
+    }
+    
+    /**
+     * Queries the database for all Schools the Teacher either created or
+     * is associated with via a class he teaches/taught.
+     * @return a list of schools the teacher is/was associated with
+     * @throws PersistenceException when something goes wrong during the retrieval
+     */
+    public Collection<SchoolModel> getSchools() throws PersistenceException{
+    	//TODO
+    	//TODO jUnit test
+    	return null;
     }
 
 }
