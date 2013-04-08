@@ -30,7 +30,7 @@ public class ExampleTest extends ContextTest {
         // Index is the name of our scala template.
         // The scala source file takes one string argument thet the
         // template will render
-        List links = new ArrayList<Link>();
+        List<Link> links = new ArrayList<Link>();
         links.add(new Link("Bebras", "http://www.bebras.be"));
         Content htmlContent = index.render("Test-string", links);
         

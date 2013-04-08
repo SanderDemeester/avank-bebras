@@ -27,7 +27,7 @@ public class UserRegistrationTest extends ContextTest{
 	@Test
 	public void createAccountSucces(){
 		
-		Map map = new HashMap<String,String>();
+		Map<String, String> map = new HashMap<String,String>();
 		map.put("fname", "Jim");
 		map.put("lname","Jones");
 		map.put("email","jimjones@localhost.com");

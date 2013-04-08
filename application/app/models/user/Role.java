@@ -25,6 +25,9 @@ public enum Role {
     DELETEQUESTION,
     
     // Author
-    QUESTIONEDITOR;
+    QUESTIONEDITOR,
+    
+    //ADMIN
+    MANAGEFAQ;
 
 }

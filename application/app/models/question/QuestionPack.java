@@ -183,7 +183,9 @@ public class QuestionPack {
             // Add uploaded files to zip
             String location = QuestionIO.getUserUploadLocation(userID);
             File folder = new File(location);
-            addToZip(zout, Arrays.asList(folder.listFiles()));
+            List<File> list = new LinkedList<File>();
+            for(File f : folder.listFiles()) list.add(f);
+            addToZip(zout, list);
             
             zout.close();
             
