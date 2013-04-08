@@ -1,0 +1,18 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\title{Test documentatie VOPRO}
+\begin{document}
+\section*{Testing: continuous integration}
+Er word gebruik gemaakt van een continuous integration server die is te vinden op avank.ugent.be/jenkins.\\
+jenkins voert de play tests uit die door de verschillende leden zijn gemaakt. De locatie van deze tests zijn \"application/test/\". \\
+
+Omdat het project gebruik maakt van postgresql als database moet deze tijdens het testen ook worden gesimuleerd. Daarvoor maken we gebruik van de "in memory"-database H2. Omdat onze data klasses geanoteerd zijn met \@ -notatie en we gebruik maken van ebeans kan het play framework zelf de database relaties namaken in H2 en onze tests uitvoeren.\\
+
+Om onze junit tests uit te voeren is het uitvoeren van "play test" voldoende.
+\section*{Testing: regression testing}
+Geautomatiseerde tests gebeuren door de OWASP ZAP Proxy. Het nut van deze proxy is het geautomatiseerd testen van de beveiliging van de webapplicatie. \\
+Permanent loopt op de webserver een proxy instantie. Als laatste fase test fase voert jenkins het script \"application/scripts/security\_regressiontest.py\" uit. Dit script staged een versie van de web applicatie (gebaseerd op de zelfde code die jenkins gebruikt) en voert deze uit. Daarna zal de applicatie worden ondervraagd door een ZAP spider via de proxy. Het resultaat hiervan kan worden gevonden bij de jenkins output. 
+\end{document}
