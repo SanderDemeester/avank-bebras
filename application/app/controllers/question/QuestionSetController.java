@@ -5,6 +5,7 @@ import controllers.EController;
 import models.EMessages;
 import models.data.Link;
 import models.dbentities.QuestionSetModel;
+import models.dbentities.QuestionSetQuestion;
 import models.management.ModelState;
 import models.question.questionset.QuestionSetQuestionManager;
 import play.data.Form;
@@ -83,12 +84,42 @@ public class QuestionSetController extends EController {
                 ));
     }
 
+    /**
+     * Returns the page where a user can add a question to the question set
+     *
+     * @param questionSetId question set id
+     * @return add question to set page
+     */
     public static Result addQuestion(String questionSetId){
-        return TODO;
+        Form<QuestionSetQuestion> form = form(QuestionSetQuestion.class).bindFromRequest();
+        List<Link> breadcrumbs = new ArrayList<Link>();
+        breadcrumbs.add(new Link("Home", "/"));
+        breadcrumbs.add(new Link(EMessages.get("question.questionset.overview"), "/questionset/questions"));
+        breadcrumbs.add(new Link(EMessages.get("question.questionset.addquestion.brcr"), "/questionset/questions/add"));
+        return ok(views.html.question.questionset.addQuestion.render(form, questionSetId, breadcrumbs));
     }
 
+    /**
+     * Saves the added question in the database.
+     * Redirects to the overview page.
+     *
+     * @param questionSetId question set id
+     * @return overview page
+     */
     public static Result update(String questionSetId){
-        return TODO;
+        Form<QuestionSetQuestion> form = form(QuestionSetQuestion.class).bindFromRequest();
+        if(form.hasErrors()) {
+            List<Link> breadcrumbs = new ArrayList<Link>();
+            breadcrumbs.add(new Link("Home", "/"));
+            breadcrumbs.add(new Link(EMessages.get("question.questionset.overview"), "/questionset/questions"));
+            breadcrumbs.add(new Link(EMessages.get("question.questionset.addquestion.brcr"), "/questionset/questions/add"));
+            return badRequest(views.html.question.questionset.addQuestion.render(form, questionSetId, breadcrumbs));
+        }
+        QuestionSetQuestion questionSetQuestion = form.get();
+        questionSetQuestion.qsid = questionSetId;
+        // TODO check of de vraag met de opgegeven vraag id wel bestaat !
+        questionSetQuestion.save();
+        return redirect(routes.QuestionSetController.list(questionSetId, 0, "", "", ""));
     }
 
 }

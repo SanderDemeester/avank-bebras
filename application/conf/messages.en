@@ -74,6 +74,9 @@ question.questionset.create.active = Check this box to make the question set act
 question.questionset.overview = Question set overview
 question.questionset.addquestion = Add question to set
 question.questionset.form.difficulty = Difficulty
+question.questionset.addquestion.title = Add new question to the question set.
+question.questionset.addquestion.id = Id of the question:
+question.questionset.addquestion.brcr = Add
 
 # Languages
 languages.language = Language

@@ -66,7 +66,7 @@ public class QuestionSetQuestionManager extends Manager<QuestionSetQuestion> {
      */
     @Override
     public Call getEditRoute(String id) {
-        throw new UnsupportedOperationException();
+        return null;
     }
 
     /**
@@ -76,7 +76,7 @@ public class QuestionSetQuestionManager extends Manager<QuestionSetQuestion> {
      */
     @Override
     public Call getRemoveRoute(String id) {
-        throw new UnsupportedOperationException();
+        return null;
     }
 
     /**
