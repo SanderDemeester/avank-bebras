@@ -18,6 +18,8 @@ import java.util.Date;
 @Table(name="contests")
 public class CompetitionModel extends Model {
 
+    private static final long serialVersionUID = 1L;
+
     @Id
     public String id;
 

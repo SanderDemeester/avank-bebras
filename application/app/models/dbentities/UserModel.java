@@ -30,6 +30,8 @@ import play.db.ebean.Model;
 @Table(name="users")
 public class UserModel extends Model implements Listable{
 
+    private static final long serialVersionUID = 1L;
+
 	@Id
 	public String id;
 	public String name;

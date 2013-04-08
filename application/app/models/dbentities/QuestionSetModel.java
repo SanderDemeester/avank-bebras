@@ -18,6 +18,8 @@ import javax.persistence.Table;
 
 public class QuestionSetModel extends ManageableModel {
 
+    private static final long serialVersionUID = 1L;
+
     @Id
     public String id;
 

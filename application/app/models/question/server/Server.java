@@ -25,6 +25,8 @@ import play.data.validation.Constraints;
 @Table(name="servers")
 public class Server extends ManageableModel implements Listable{
 
+    private static final long serialVersionUID = 1L;
+
     // TODO database aanpassen zodat een server een unieke id krijgt, die niet de naam van de server is !
 
     @Editable(uponCreation=true)

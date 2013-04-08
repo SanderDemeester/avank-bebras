@@ -125,6 +125,7 @@ public abstract class Manager<T extends ManageableModel> {
      * @param page     page number
      * @return the requested page
      */
+    @SuppressWarnings("unchecked")
     public Page<ManageableModel> page(int page) {
         return (Page<ManageableModel>) finder
             .where()

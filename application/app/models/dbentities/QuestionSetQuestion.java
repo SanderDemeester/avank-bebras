@@ -14,6 +14,8 @@ import javax.persistence.Table;
 @Table(name="questionsetquestions")
 public class QuestionSetQuestion extends ManageableModel {
 
+    private static final long serialVersionUID = 1L;
+
     public String qsid;
 
     public String qid;
