@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
  
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -48,7 +50,7 @@ public class XLSXImporter {
 		XSSFCell c;
 		
 		//Iterate over rows
-		Iterator rows = sheet.rowIterator();
+		Iterator<Row> rows = sheet.rowIterator();
 		while(rows.hasNext()){
 			List<String> list= new ArrayList<String>(); 
 			r=(XSSFRow) rows.next();
@@ -59,7 +61,7 @@ public class XLSXImporter {
 			
 			//Iterate over cells
 			colNr = 0;
-			Iterator cells = r.cellIterator();
+			Iterator<Cell> cells = r.cellIterator();
 			while(cells.hasNext()){
 				c=(XSSFCell) cells.next();
 				
