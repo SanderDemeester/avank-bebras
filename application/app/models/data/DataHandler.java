@@ -6,7 +6,6 @@ import java.net.MalformedURLException;
 import java.util.List;
 import java.util.ArrayList;
 
-import models.data.FAQ;
 import models.data.Grade;
 
 /**
@@ -36,9 +35,6 @@ public class DataHandler {
         links.add(new Link("FAQ",  "/faq"));
     };
 
-    private static FAQ[] faqs = new FAQ[] {
-        new FAQ("How do I login?", "Click the login button.")
-    };
 
     /**
      * Returns the different Grades users can belong to.
@@ -70,8 +66,5 @@ public class DataHandler {
      * Returns the Frequently Asked Questions.
      * @return Frequently Asked Questions.
      */
-    public static FAQ[] getFaqs() {
-        return faqs;
-    }
 
 }

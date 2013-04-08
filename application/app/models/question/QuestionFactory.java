@@ -21,7 +21,8 @@ public abstract class QuestionFactory<T extends Question> {
     // NodeActions that will be called when calling processCommonElements
     protected Map<String, NodeAction> nodeActions = new HashMap<String, NodeAction>();
     
-    private static final Map<QuestionType, QuestionFactory> FACTORIES = new HashMap<QuestionType, QuestionFactory>();
+    private static final Map<QuestionType, QuestionFactory<? extends Question>>
+        FACTORIES = new HashMap<QuestionType, QuestionFactory<? extends Question>>();
     static {
         FACTORIES.put(QuestionType.MULTIPLE_CHOICE, new MultipleChoiceQuestionFactory());
         FACTORIES.put(QuestionType.REGEX, new RegexQuestionFactory());

@@ -4,13 +4,19 @@
 package models.dbentities;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Column;
+
+import models.management.Listable;
+import models.question.server.Server;
 import models.user.Gender;
 import models.user.UserType;
 import play.data.format.Formats;
@@ -22,7 +28,8 @@ import play.db.ebean.Model;
  */
 @Entity
 @Table(name="users")
-public class UserModel extends Model{
+public class UserModel extends Model implements Listable{
+    private static final long serialVersionUID = 1L;
 
 	@Id
 	public String id;
@@ -76,4 +83,13 @@ public class UserModel extends Model{
 	 */
 	public static Finder<Integer,UserModel> find = new Model.Finder<Integer, UserModel>(Integer.class,UserModel.class);
 
+	@Override
+    public Map<String, String> options() {
+        List<UserModel> users = find.all();
+        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        for(UserModel user: users) {
+            options.put(user.id, user.id);
+        }
+        return options;
+    }
 }

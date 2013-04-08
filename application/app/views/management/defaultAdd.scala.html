@@ -1,0 +1,20 @@
+@(modelForm: Form[_ <: models.management.ManageableModel], manager: models.management.Manager[_], breadcrumbs : List[models.data.Link])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import models.EMessages
+
+@main(EMessages.get(manager.getMessagesPrefix() + ".title.add"), breadcrumbs) {
+
+	@form(manager.getSaveRoute()) {
+	
+	    @defaultForm(modelForm, manager)
+	
+	    <div class="actions">
+	        <input type="submit" value="@EMessages.get("forms.create")" class="btn btn-primary">
+	        <a href="@manager.getListRoute()" class="btn">@EMessages.get("forms.cancel")</a>
+	    </div>
+	
+	}
+
+}

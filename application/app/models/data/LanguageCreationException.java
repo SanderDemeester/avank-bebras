@@ -7,6 +7,7 @@ import java.lang.Exception;
  * @author Felix Van der Jeugt
  */
 public class LanguageCreationException extends Exception {
+    private static final long serialVersionUID = 1L;
 
     public LanguageCreationException(String message) {
         super(message);

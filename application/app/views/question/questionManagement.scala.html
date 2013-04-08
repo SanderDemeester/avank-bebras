@@ -1,0 +1,16 @@
+@***************************************
+*   Question management page           *
+*                                      *
+*   author: Ruben Taelman              *
+***************************************@
+
+@(currentPage: Page[models.management.ManageableModel], manager: models.management.Manager[_], currentOrderBy: String,
+    currentOrder: String, currentFilter: String, breadcrumbs : List[models.data.Link])
+
+@import views.html.management.list
+
+@main(EMessages.get("question.questions.list"), breadcrumbs){
+    <h2>@EMessages.get("question.questions.list")</h2>
+    @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
+
+}

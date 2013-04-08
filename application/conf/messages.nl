@@ -70,10 +70,10 @@ info.error = Error
 info.success = Success
 
 # management
-management.filter.input = Filter...
+management.filter.input = Filter waarde
 management.filter.button = Filter
 management.empty = Niets om weer te geven.
-management.add = Nieuw...
+management.add = Nieuw
 
 # competition
 competition.name = Competities
