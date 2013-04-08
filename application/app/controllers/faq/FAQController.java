@@ -159,7 +159,7 @@ public class FAQController extends EController {
         if(!isAuthorized())return ok(noaccess.render(breadcrumbs)); //Check if authorized
 		
 		//Try to render a form from the to-be-edited FAQModel
-		Form<FAQModel> form = form(FAQModel.class).bindFromRequest().fill((FAQModel) new FAQManager().getFinder().ref(id));
+		Form<FAQModel> form = form(FAQModel.class).bindFromRequest().fill(new FAQManager().getFinder().ref(id));
         try{
         	Result r = 
 				ok(alterFAQForm.render(form, breadcrumbs,listOfLanguages(),id, new OperationResultInfo()));
@@ -188,7 +188,7 @@ public class FAQController extends EController {
 		//Try to update the FAQModel from the form
 		Form<FAQModel> form = null;
         try{
-        	 form = form(FAQModel.class).fill((FAQModel) new FAQManager().getFinder().byId(id)).bindFromRequest();
+        	 form = form(FAQModel.class).fill(new FAQManager().getFinder().byId(id)).bindFromRequest();
         }catch(Exception e){
         	//Something went wrong with the filling of the FAQModel (e.g. no database connection)
         	//Redirect back to the list of FAQ with an error message
@@ -227,7 +227,7 @@ public class FAQController extends EController {
 		if(!isAuthorized())return ok(noaccess.render(manageBreadcrumbs())); //Check if authorized
 		//Try to remove the FAQModel
 		try{
-			FAQModel fm = (FAQModel) new FAQManager().getFinder().byId(id);
+			FAQModel fm = new FAQManager().getFinder().byId(id);
 			fm.delete();
 		}catch(Exception e){
 			//Deleting unsuccessful, return the list with an error

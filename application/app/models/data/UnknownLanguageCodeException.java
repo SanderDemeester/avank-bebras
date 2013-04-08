@@ -8,6 +8,7 @@ import models.data.LanguageCreationException;
  * @author Felix Van der Jeugt
  */
 public class UnknownLanguageCodeException extends LanguageCreationException {
+    private static final long serialVersionUID = 1L;
 
     public UnknownLanguageCodeException(String code) {
         super("Language code does not exists: " + code);
