@@ -38,6 +38,7 @@ public abstract class Manager<T extends Manageable> {
      * @param filter   filter to select specific elements
      * @return the requested page
      */
+    @SuppressWarnings("unchecked")
     public Page<Manageable> page(int page, String orderBy, String order, String filter) {
         return (Page<Manageable>) finder.where()
                 // .ilike("name", "%" + filter + "%")
