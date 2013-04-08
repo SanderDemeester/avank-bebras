@@ -73,6 +73,7 @@ question.questionset.create.level = Level of new question set:
 question.questionset.create.active = Check this box to make the question set active.
 question.questionset.overview = Question set overview
 question.questionset.addquestion = Add question to set
+question.questionset.form.difficulty = Difficulty
 
 # Languages
 languages.language = Language
