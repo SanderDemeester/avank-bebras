@@ -22,12 +22,16 @@ import play.db.ebean.Model;
 @Table(name="ClassPupil",uniqueConstraints=@UniqueConstraint(columnNames={"classid","indid"}) )
 @IdClass(ClassPupilPK.class)
 public class ClassPupil extends Model {
+    private static final long serialVersionUID = 1L;
+
     @Id
     public String classid;
     @Id
     public String indid;
 
     public class ClassPupilPK implements Serializable{
+        private static final long serialVersionUID = 1L;
+
         public String classid;
         public String indid;
 

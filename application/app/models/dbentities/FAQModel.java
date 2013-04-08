@@ -16,6 +16,7 @@ import play.db.ebean.Model;
 @Entity
 @Table(name="faq")
 public class FAQModel extends Model {
+    private static final long serialVersionUID = 1L;
 
 	@Id
 	public int id;

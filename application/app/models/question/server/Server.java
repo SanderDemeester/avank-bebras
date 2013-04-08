@@ -16,6 +16,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="servers")
 public class Server extends Model implements Manageable {
+    private static final long serialVersionUID = 1L;
 
     // TODO database aanpassen zodat een server een unieke id krijgt, die niet de naam van de server is !
 
