@@ -9,10 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import models.management.Manageable;
-
+import models.management.ManageableModel;
 import play.data.validation.Constraints;
-import play.db.ebean.Model;
 
 /**
  * @author Jens N. Rammant
@@ -20,7 +18,7 @@ import play.db.ebean.Model;
  */
 @Entity
 @Table(name="faq")
-public class FAQModel extends Model implements Manageable{
+public class FAQModel extends ManageableModel {
     private static final long serialVersionUID = 1L;
 
 	@Id
@@ -42,7 +40,6 @@ public class FAQModel extends Model implements Manageable{
 	public String getID() {
 		return Integer.toString(id);
 	}
-	@Override
 	public String getName() {
 		return "FAQ";
 	}

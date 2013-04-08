@@ -51,33 +51,55 @@ public class LangTest extends ContextTest {
 
     @Test public void checkMessages() {
         BufferedReader reader = null;
+
+        // Open messages file.
         try {
             Path m = base.resolve("messages");
             m = base.resolve(Files.readSymbolicLink(m));
             reader = Files.newBufferedReader(m, Charset.defaultCharset());
-            String line = reader.readLine();
-            while(line != null) {
-                if("".equals(line) || line.startsWith("#")) {
-                    // Nothing
-                } else {
-                    String mess = line.split("=")[0].trim();
-                    for(Lang lang : Lang.availables()) {
-                        Assert.assertNotNull("Failed to retrieve " + mess +
-                                " in " + lang.language() + ".",
-                                Messages.get(lang, mess));
-                    }
-                }
-                line = reader.readLine();
-            }
         } catch(IOException e) {
-            Assert.fail("Fail IO: " + e.getMessage());
-        } catch(Exception e) {
-            Assert.fail("Sad: " + e.getMessage());
-        } finally {
+            Assert.fail("Unable to open messages file: " + e.getMessage());
+        }
+
+        // Open other messages files.
+        BufferedReader[] readers = new BufferedReader[Lang.availables().size()];
+        String[] names = new String[readers.length];
+        int i = 0;
+        for(Lang l : Lang.availables()) {
+            String file = "messages." + l.code();
+            readers[i] = null;
+            names[i] = file;
             try {
-                if(reader != null) reader.close();
-            } catch(IOException e) { 
-                Assert.fail("Fail IO close: " + e.getMessage());
+                readers[i] = Files.newBufferedReader(base.resolve(file),
+                        Charset.defaultCharset());
+            } catch(IOException e) {
+                Assert.fail("IO Fail (" + names[i] + "): " + e.getMessage());
+            }
+            i++;
+        }
+
+        // Start testing.
+        String example = nextLine(reader);
+        while(example != null) {
+            example = example.split("=")[0].trim();
+            for(i = 0; i < readers.length; i++) {
+                Assert.assertTrue(
+                    "Files " + names[i] + " does not have a " + example,
+                    nextLine(readers[i]).startsWith(example)
+                );
+            }
+            example = nextLine(reader);
+        }
+    }
+
+    private String nextLine(BufferedReader reader) {
+        String line = null;
+        while(true) {
+            try { line = reader.readLine(); }
+            catch(IOException e) { Assert.fail("Couldn't read the line :-("); }
+
+            if(line == null || !(line.startsWith("#") || line.equals(""))) {
+                return line;
             }
         }
     }
