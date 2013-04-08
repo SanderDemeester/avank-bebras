@@ -1,9 +1,67 @@
 # App
 app.title = Avank Bebras - {0}
+app.error = Error
+app.Page = Page
+
+# Forms
+forms.cancel = Cancel
+forms.delete = Delete
+forms.deleteArg = Delete {0}
+forms.remove = Remove
+forms.removeArg = Remove {0}
+forms.name = Name
+forms.preview = Preview
+forms.dropFilesHere = Drop files here
+forms.selectFileManually = Or select a file manually
+forms.loading = Loading
+forms.submit = Submit
+forms.create = Create
+forms.createArg = Create {0}
+forms.uploadFile = Upload file
+forms.title = Title
+forms.error = Please fix all errors.
 
 # Question
+question.editor.name = Question Editor
+
 question.editor.index.hero = Questions are the key element of the Bebras application. You can become part of this fantastic application and submit your own question by creating them here.
-question.editor.index.create = Create a question pack
+question.editor.index.create.main = Create {0}
+question.editor.index.create.import = Import from .ZIP
+
+question.editor.confirmLeave = Are you sure you want to navigate away from this page? Unsaved changes will be lost.
+question.editor.uploadServerDown = Upload server unavailable
+question.editor.uploading = Uploading
+question.editor.filesUploaded = File(s) uploaded.
+question.editor.filesUploadFailed = File upload failed.
+question.editor.possibleAnswer = A possible answer
+question.editor.uploadFilesInfo = These are your personal files that will be included into this question. They will be removed from the server after 24 hours.
+question.editor.sureRemoveLanguage = Are you sure you want to remove the language
+question.editor.removeLanguageInfo = Once this language is deleted, there is no way to recover the content of this language of the question.
+question.editor.startInfo = Add a new language or select an existing one to get started.
+question.editor.exportAsZip = Export as .ZIP
+question.editor.answerOptionsInfo = Add possible answer solutions to the question and mark one of them as correct.
+question.editor.addAnswerOption = Add answer option
+question.editor.regexInfo = Enter the exact answer of the question. Java-accepted regular expressions are also allowed.
+question.editor.submitted = Your question was successfully submitted.
+
+question.editor.tabs.general = General
+question.editor.tabs.answers = Answers
+question.editor.tabs.question = Question
+question.editor.tabs.feedback = Feedback
+
+question.editor.title.placeholder = The title for this question in the current language.
+question.editor.index.info = This page will be presented to the user when he has to solve this question.
+question.editor.index.placeholder = Enter the question here.
+question.editor.feedback.info = This content will be used to display feedback to the user after a competition.
+question.editor.feedback.placeholder = Enter the question feedback here.
+
+question.type.MULTIPLE_CHOICE = Multiple Choice Question
+question.type.REGEX = Input Question
+
+question.factory.error.noCorrectAnswers = The answers for language {0} contain no correct answers.
+question.factory.error.moreThanOneCorrectAnswers = The answers for language {0} contain more than one correct answers.
+question.factory.error.invalidRegex = Invalid regular expression found in language {0}
+question.factory.error.invalidUpload = Your upload was invalid
 
 # Languages
 languages.en = English
@@ -15,3 +73,49 @@ statistics.boxplot = Boxplot
 statistics.histogram = Histogram
 statistics.piechart = Pie Chart
 
+#Error
+genericError = Something went wrong. Please try again later.
+
+# Login
+redirect_message = You will be redirected to your homepage shortly.
+
+# Register
+register.firstname = First name:
+register.lastname = Last name:  
+register.email = Email;
+register.bday = Birthday:
+register.gender = Gender:
+register.preflan = Preferred language:
+register.password = Password:
+register.confirm_password = Confirm Password
+register.create_account = Create Account
+register.bebras_id_message = Your Bebras ID is: 
+register.inlog_message = You may login with your ID and password.
+
+#faq
+nofaq = The FAQ is empty.
+faqerror = Something went wrong during the retrieval of the FAQ. Try again later.
+
+#info
+info.info = Info
+info.warning = Warning
+info.error = Error
+info.success = Success
+
+# management
+management.filter.input = Filter...
+management.filter.button = Filter
+management.empty = Nothing to display.
+management.add = Create...
+
+# competition
+competition.name = Contests
+competition.create.breadcrumb = New contest
+competition.create = Create new contest!
+competition.create.title = Create contest.
+competition.create.step1 = Step 1: Contest Information
+competition.create.name = Name of new contest:
+competition.create.type = Type of new contest:
+competition.create.end = End time of new contest:
+competition.create.start = Start time of new contest:
+competition.create.active = Check this box to make the contest active.

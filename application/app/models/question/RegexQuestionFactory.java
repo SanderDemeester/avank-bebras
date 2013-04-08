@@ -3,6 +3,7 @@ package models.question;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import models.EMessages;
 import models.data.Language;
 
 import org.w3c.dom.NamedNodeMap;
@@ -24,11 +25,16 @@ public class RegexQuestionFactory extends QuestionFactory<RegexQuestion> {
     }
 
     @Override
-    public Question newQuestion(NodeList nodeList) throws QuestionBuilderException {
+    public Question newQuestion(Node node) throws QuestionBuilderException {
         this.nodeActions.put("input", new InputNodeAction());
         RegexQuestion question = new RegexQuestion();
-        this.processCommonElements(question, nodeList);
+        this.processCommonElements(question, node);
         return question;
+    }
+    
+    @Override
+    public Question newQuestion() {
+        return new RegexQuestion();
     }
 
     /**
@@ -62,7 +68,7 @@ public class RegexQuestionFactory extends QuestionFactory<RegexQuestion> {
             if(isValidRegex(regex))
                 question.setRegex(language, regex);
             else
-                throw new QuestionBuilderException("Invalid regular expression found in language "+language.getCode());
+                throw new QuestionBuilderException(EMessages.get("question.factory.error.invalidRegex", language.getName()));
         }
 
     }

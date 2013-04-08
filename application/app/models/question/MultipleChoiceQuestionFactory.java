@@ -1,5 +1,6 @@
 package models.question;
 
+import models.EMessages;
 import models.data.Language;
 
 import org.w3c.dom.NamedNodeMap;
@@ -21,11 +22,16 @@ public class MultipleChoiceQuestionFactory extends QuestionFactory<MultipleChoic
     }
 
     @Override
-    public Question newQuestion(NodeList nodeList) throws QuestionBuilderException {
+    public Question newQuestion(Node node) throws QuestionBuilderException {
         this.nodeActions.put("answers", new AnswersNodeAction());
         MultipleChoiceQuestion question = new MultipleChoiceQuestion();
-        this.processCommonElements(question, nodeList);
+        this.processCommonElements(question, node);
         return question;
+    }
+    
+    @Override
+    public Question newQuestion() {
+        return new MultipleChoiceQuestion();
     }
 
     /**
@@ -58,7 +64,7 @@ public class MultipleChoiceQuestionFactory extends QuestionFactory<MultipleChoic
                         question.setCorrectElement(language, element);
                         // Throw exception if there already was a correct answer
                         if(containsOneCorrect) {
-                            throw new QuestionBuilderException("The answers for language "+language.getCode()+" contain more than one correct answers.");
+                            throw new QuestionBuilderException(EMessages.get("question.factory.error.moreThanOneCorrectAnswers", language.getName()));
                         }
                         containsOneCorrect = true;
                     }
@@ -67,7 +73,7 @@ public class MultipleChoiceQuestionFactory extends QuestionFactory<MultipleChoic
 
             // Throw exception if there are no correct answers in the answer list
             if(!containsOneCorrect) {
-                throw new QuestionBuilderException("The answers for language "+language.getCode()+" contain no correct answers.");
+                throw new QuestionBuilderException(EMessages.get("question.factory.error.noCorrectAnswers", language.getName()));
             }
         }
 

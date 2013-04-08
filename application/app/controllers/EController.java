@@ -1,13 +1,12 @@
 package controllers;
 
 import play.mvc.Controller;
+import play.mvc.With;
+
+import controllers.CommonHeaders;
 
 /**
  * @author Ruben Taelman
  */
-public class EController extends Controller{
-    public static void setCommonHeaders() {
-        response().setHeader("X-Frame-Options", "SAMEORIGIN");
-        response().setHeader(CACHE_CONTROL, "max-age=3600");
-    }
-}
+@With(CommonHeaders.class)
+public class EController extends Controller{}

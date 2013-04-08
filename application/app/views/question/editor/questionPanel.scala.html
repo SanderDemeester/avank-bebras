@@ -1,0 +1,72 @@
+@(question: models.question.Question, language : models.data.Language)
+
+@import models.EMessages
+@import helper._
+@import helper.twitterBootstrap._
+
+@panelId = @{
+ 	 if(language==null) {
+ 	 	"panelTemplate"
+ 	 } else {
+ 	 	"panel-" + language.getCode()
+ 	 }
+}
+
+@valueTitle = @{
+	if(language!=null) {
+ 	 	"value=" + question.getTitle(language) + ""
+ 	 }
+}
+
+@valueIndex = @{
+	if(language!=null) {
+ 	 	question.getIndex(language)
+ 	 }
+}
+
+@valueFeedback = @{
+	if(language!=null) {
+ 	 	question.getFeedback(language)
+ 	 }
+}
+
+	<!-- Question panel (template) -->
+	<div id="@panelId" class="questionFrame hide">
+		<ul class="nav nav-tabs">
+			<li><a class="tabGeneral" href="#answers" data-toggle="tab">@EMessages.get("question.editor.tabs.general")</a></li>
+			<li><a class="tabAnswers" href="#answers" data-toggle="tab">@EMessages.get("question.editor.tabs.answers")</a></li>
+		  	<li><a class="tabIndex" href="#index" data-toggle="tab">@EMessages.get("question.editor.tabs.question")</a></li>
+		  	<li><a class="tabFeedback" href="#feedback" data-toggle="tab">@EMessages.get("question.editor.tabs.feedback")</a></li>
+		</ul>
+		<div class="generalTab well hide">
+			<h2>@EMessages.get("question.editor.tabs.general")</h2>
+			<div class="form-inline">
+				@EMessages.get("forms.title"): <input type="text" class="title span10" placeholder="@EMessages.get("question.editor.title.placeholder")" @valueTitle />
+			</div>
+		</div>
+		<div class="answersTab well hide">
+			<h2>@EMessages.get("question.editor.tabs.answers")</h2>
+				<div class="input">
+				@defining(question.getType().name()) { qType =>
+					@qType match {
+						case "MULTIPLE_CHOICE" => {
+							@inputMultipleChoice(question.asInstanceOf[models.question.MultipleChoiceQuestion], language)
+						}
+						case "REGEX" => {
+							@inputRegex(question.asInstanceOf[models.question.RegexQuestion], language)
+						}
+					}
+				}
+			</div>
+		</div>
+		<div class="indexTab well hide editorTab">
+			<h2>@EMessages.get("question.editor.tabs.question")</h2>
+			<div class="muted">@EMessages.get("question.editor.index.info")</div>
+			<textarea rows="10" class="span12 editor question" placeholder="@EMessages.get("question.editor.index.placeholder")">@valueIndex</textarea>
+		</div>
+		<div class="feedbackTab well hide editorTab">
+			<h2>@EMessages.get("question.editor.tabs.feedback")</h2>
+			<div class="muted">@EMessages.get("question.editor.feedback.info")</div>
+			<textarea rows="10" class="span12 editor feedback" placeholder="@EMessages.get("question.editor.feedback.placeholder")">@valueFeedback</textarea>
+		</div>
+	</div>

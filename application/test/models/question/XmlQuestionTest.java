@@ -1,6 +1,7 @@
 package models.question;
 
 import java.util.List;
+import java.util.Arrays;
 
 import models.data.Language;
 import models.question.MultipleChoiceElement;
@@ -11,6 +12,9 @@ import models.question.QuestionType;
 import models.question.RegexQuestion;
 import models.data.UnavailableLanguageException;
 import models.data.UnknownLanguageCodeException;
+
+import play.mvc.Http;
+import play.i18n.Lang;
 import static play.test.Helpers.fakeApplication;
 import static play.test.Helpers.running;
 
@@ -19,6 +23,15 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class XmlQuestionTest extends test.ContextTest {
+
+    // Set the accepted languages to Dutch and English.
+    @Override protected Http.Request makeRequest() {
+        return new StubRequest() {
+            @Override public List<Lang> acceptLanguages() {
+                return Arrays.asList(Lang.forCode("nl"), Lang.forCode("en"));
+            }
+        };
+    }
 
     private static final String CORRECT_MC = "testincludes/correct_question_mc.xml";
     private static final String CORRECT_REGEX = "testincludes/correct_question_regex.xml";
@@ -53,13 +66,8 @@ public class XmlQuestionTest extends test.ContextTest {
         }
     }
 
-    private Question testAFile(String file) {
-        Question q = null;
-        try {
-            q = Question.getFromXml(file);
-        } catch (QuestionBuilderException e) {
-            Assert.fail(e.getMessage());
-        }
+    private Question testAFile(String file) throws QuestionBuilderException {
+        Question q = QuestionIO.getFromXml(file);
         Assert.assertNotNull(q);
 
         // Check the languages
@@ -86,7 +94,12 @@ public class XmlQuestionTest extends test.ContextTest {
      */
     @Test
     public void correctMultipleChoiceFile() {
-        MultipleChoiceQuestion q = (MultipleChoiceQuestion) testAFile(CORRECT_MC);
+        MultipleChoiceQuestion q = null;
+        try {
+            q = (MultipleChoiceQuestion) testAFile(CORRECT_MC);
+        } catch (QuestionBuilderException e) {
+            Assert.fail();
+        }
         Assert.assertEquals(q.getType(), QuestionType.MULTIPLE_CHOICE);
 
         // Check the answer contents
@@ -113,7 +126,12 @@ public class XmlQuestionTest extends test.ContextTest {
      */
     @Test
     public void correctRegexFile() {
-        RegexQuestion q = (RegexQuestion) testAFile(CORRECT_REGEX);
+        RegexQuestion q = null;
+        try {
+            q = (RegexQuestion) testAFile(CORRECT_REGEX);
+        } catch (QuestionBuilderException e) {
+            Assert.fail();
+        }
         Assert.assertEquals(q.getType(), QuestionType.REGEX);
 
         // Check regex contents
@@ -128,7 +146,7 @@ public class XmlQuestionTest extends test.ContextTest {
     @Test(expected=QuestionBuilderException.class)
     public void incorrectMultipleChoiceFile1() throws QuestionBuilderException {
         Question q = null;
-        q = Question.getFromXml(INCORRECT_MC_1);
+        q = testAFile(INCORRECT_MC_1);
     }
 
     /**
@@ -138,7 +156,7 @@ public class XmlQuestionTest extends test.ContextTest {
     @Test(expected=QuestionBuilderException.class)
     public void incorrectMultipleChoiceFile2() throws QuestionBuilderException {
         Question q = null;
-        q = Question.getFromXml(INCORRECT_MC_2);
+        q = testAFile(INCORRECT_MC_2);
     }
 
     /**
@@ -148,7 +166,7 @@ public class XmlQuestionTest extends test.ContextTest {
     @Test(expected=QuestionBuilderException.class)
     public void incorrectMultipleChoiceFile3() throws QuestionBuilderException {
         Question q = null;
-        q = Question.getFromXml(INCORRECT_MC_3);
+        q = testAFile(INCORRECT_MC_3);
     }
 
     /**
@@ -158,7 +176,7 @@ public class XmlQuestionTest extends test.ContextTest {
     @Test(expected=QuestionBuilderException.class)
     public void incorrectMultipleChoiceFile4() throws QuestionBuilderException {
         Question q = null;
-        q = Question.getFromXml(INCORRECT_MC_4);
+        q = testAFile(INCORRECT_MC_4);
     }
 
     /**
@@ -168,7 +186,7 @@ public class XmlQuestionTest extends test.ContextTest {
     @Test(expected=QuestionBuilderException.class)
     public void incorrectMultipleChoiceFile5() throws QuestionBuilderException {
         Question q = null;
-        q = Question.getFromXml(INCORRECT_MC_5);
+        q = testAFile(INCORRECT_MC_5);
     }
 
     /**
@@ -178,7 +196,7 @@ public class XmlQuestionTest extends test.ContextTest {
     @Test(expected=QuestionBuilderException.class)
     public void incorrectMultipleChoiceFile6() throws QuestionBuilderException {
         Question q = null;
-        q = Question.getFromXml(INCORRECT_MC_6);
+        q = testAFile(INCORRECT_MC_6);
     }
 
     /**
@@ -188,7 +206,7 @@ public class XmlQuestionTest extends test.ContextTest {
     @Test(expected=QuestionBuilderException.class)
     public void incorrectMultipleChoiceFile7() throws QuestionBuilderException {
         Question q = null;
-        q = Question.getFromXml(INCORRECT_MC_7);
+        q = testAFile(INCORRECT_MC_7);
     }
 
     /**
@@ -198,7 +216,7 @@ public class XmlQuestionTest extends test.ContextTest {
     @Test(expected=QuestionBuilderException.class)
     public void incorrectMultipleChoiceFile8() throws QuestionBuilderException {
         Question q = null;
-        q = Question.getFromXml(INCORRECT_MC_8);
+        q = testAFile(INCORRECT_MC_8);
     }
 
     /**
@@ -208,7 +226,7 @@ public class XmlQuestionTest extends test.ContextTest {
     @Test(expected=QuestionBuilderException.class)
     public void incorrectMultipleChoiceFile9() throws QuestionBuilderException {
         Question q = null;
-        q = Question.getFromXml(INCORRECT_MC_9);
+        q = testAFile(INCORRECT_MC_9);
     }
 
     /**
@@ -218,7 +236,7 @@ public class XmlQuestionTest extends test.ContextTest {
     @Test(expected=QuestionBuilderException.class)
     public void incorrectRegexFile1() throws QuestionBuilderException {
         Question q = null;
-        q = Question.getFromXml(INCORRECT_REGEX_1);
+        q = testAFile(INCORRECT_REGEX_1);
     }
 
     /**
@@ -228,7 +246,7 @@ public class XmlQuestionTest extends test.ContextTest {
     @Test(expected=QuestionBuilderException.class)
     public void incorrectRegexFile2() throws QuestionBuilderException {
         Question q = null;
-        q = Question.getFromXml(INCORRECT_REGEX_2);
+        q = testAFile(INCORRECT_REGEX_2);
     }
 
 }

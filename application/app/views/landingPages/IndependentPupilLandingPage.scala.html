@@ -1,7 +1,5 @@
-@(User: models.user.Independent)
+@(User: models.user.Independent, breadcrumbs : List[models.data.Link])
 
-<html>
-<body>
+@main("Home", breadcrumbs) {
 Independent landing page
-</body>
-</html>
+}

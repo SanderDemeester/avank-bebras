@@ -14,13 +14,20 @@ import play.mvc.Result;
 
 public class Organizer extends SuperUser{
 
-
-
-    public Organizer(UserModel data) {
-        super(data);
-        // TODO Auto-generated constructor stub
+    static {
+        ROLES.add(Role.CREATEQUESTION);
+        ROLES.add(Role.READQUESTION);
+        ROLES.add(Role.UPDATEQUESTION);
+        ROLES.add(Role.DELETEQUESTION);
+    }
+    
+    protected Organizer(UserModel data, UserType type) {
+        super(data, type);
     }
 
+    public Organizer(UserModel data) {
+		this(data, UserType.ORGANIZER);
+	}
     /**
      * Block user.
      * @param user
@@ -72,5 +79,4 @@ public class Organizer extends SuperUser{
         // TODO Auto-generated method stub
         return null;
     }
-
 }

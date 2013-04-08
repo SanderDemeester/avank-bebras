@@ -1,7 +1,5 @@
-@(User: models.user.Administrator)
+@(User: models.user.Administrator, breadcrumbs : List[models.data.Link])
 
-<html>
-<body>
+@main("Home", breadcrumbs) {
 Administrator landing page
-</body>
-</html>
+}

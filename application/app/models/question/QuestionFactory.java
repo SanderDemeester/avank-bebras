@@ -20,13 +20,36 @@ public abstract class QuestionFactory<T extends Question> {
 
     // NodeActions that will be called when calling processCommonElements
     protected Map<String, NodeAction> nodeActions = new HashMap<String, NodeAction>();
-
+    
+    private static final Map<QuestionType, QuestionFactory<? extends Question>>
+        FACTORIES = new HashMap<QuestionType, QuestionFactory<? extends Question>>();
+    static {
+        FACTORIES.put(QuestionType.MULTIPLE_CHOICE, new MultipleChoiceQuestionFactory());
+        FACTORIES.put(QuestionType.REGEX, new RegexQuestionFactory());
+    }
+    
     /**
      * A question will be generated based on a NodeList
      * @param nodeList a NodeList that contains the structure of questions
      * @return a new question based on contents of the NodeList
      */
-    public abstract Question newQuestion(NodeList nodeList) throws QuestionBuilderException;
+    public abstract Question newQuestion(Node node) throws QuestionBuilderException;
+    
+    /**
+     * A blank question will be generated based on a type
+     * @param type the required question type
+     * @return a new blank question of that type
+     */
+    public static Question newQuestion(QuestionType type) {
+        return FACTORIES.get(type).newQuestion();
+    }
+    
+    /**
+     * A blank question will be generated
+     * @return a new blank question
+     */
+    public abstract Question newQuestion();
+    
     /**
      * Creates a new QuestionFactory
      */
@@ -58,9 +81,8 @@ public abstract class QuestionFactory<T extends Question> {
      * @param nodeList starting nodeList
      * @throws QuestionBuilderException An exception has occurred
      */
-    public void processCommonElements(T question, NodeList nodeList) throws QuestionBuilderException {
+    public void processCommonElements(T question, Node rootNode) throws QuestionBuilderException {
         // loop over the languages in the structure
-        Node rootNode = nodeList.item(1);
         NodeList languages = rootNode.getChildNodes();
         for(int i=0; i<languages.getLength();i++) {
             Node node=languages.item(i);

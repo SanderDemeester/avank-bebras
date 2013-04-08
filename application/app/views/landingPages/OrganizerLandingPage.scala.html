@@ -1,7 +1,5 @@
-@(User: models.user.Organizer)
+@(User: models.user.Organizer, breadcrumbs : List[models.data.Link])
 
-<html>
-<body>
+@main("Home", breadcrumbs) {
 Organizer landing page
-</body>
-</html>
+}
