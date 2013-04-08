@@ -1,0 +1,7 @@
+@(breadcrumbs : List[models.data.Link],  inf : models.util.OperationResultInfo , 
+schools : List[models.dbentities.SchoolModel])
+
+@main(EMessages.get("schools.title"),breadcrumbs){
+	@commons.info(inf)
+	@EMessages.get("schools.listtext")
+}

@@ -59,6 +59,9 @@ POST    /manageFAQ/:name              controllers.faq.FAQController.update(name)
 
 GET    /manageFAQ/remove/:name        controllers.faq.FAQController.remove(name)
 
+# Schools
+GET		/schools					controllers.schools.SchoolController.viewSchools()
+
 
 # Bootstrap resources
 GET     /assets/img/glyphicons-halflings-white.png      controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings-white.png")

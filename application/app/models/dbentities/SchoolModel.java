@@ -18,6 +18,13 @@ import play.db.ebean.Model;
 @Table(name="Schools")
 public class SchoolModel extends Model {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
 	@Id
 	public String id;
 	public String name;
