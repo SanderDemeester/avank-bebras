@@ -12,7 +12,10 @@ from pprint import pprint
 from zapv2 import ZAPv2
 null = open("NUL","w")
 os.chdir("..")
-subprocess.check_call(["/opt/play-2.0.4/play","stage"], stdout=null,stderr=null)
+try:
+	subprocess.check_call(["/opt/play-2.0.4/play","stage"], stdout=null,stderr=null)
+except subprocess.CalledProcessError as e:
+	print ""
 time.sleep(10)
 a = os.getcwd()
 path=os.path.join(a,"target/start")

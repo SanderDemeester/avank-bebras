@@ -25,6 +25,7 @@ import java.util.Set;
 @Entity
 @Table(name="questionsetstest")
 public class QuestionSetModel extends Model implements Manageable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     public String id;
