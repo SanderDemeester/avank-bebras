@@ -90,3 +90,6 @@ competition.create.active = Vink aan om de competitie actief te maken.
 # schools
 schools.title = Lijst van Scholen
 schools.listtext = Dit is de lijst van scholen die u ofwel aangemaakt hebt of aan verbonden bent/was via een klas.
+schools.table.id = id
+schools.table.name = Naam
+schools.table.address = Adres

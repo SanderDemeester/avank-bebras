@@ -2,9 +2,7 @@
 package models.user;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import models.dbentities.ClassGroup;
@@ -15,7 +13,6 @@ import com.avaje.ebean.Ebean;
 
 import play.mvc.Content;
 import play.mvc.Result;
-import views.html.landingPages.PupilLandingPage;
 
 /**
  * @author Sander Demeester
@@ -52,6 +49,7 @@ public class Independent extends Authenticated{
     }
 
     public ClassGroup getCurrentClass(){
+    	//TODO safety
         return Ebean.find(ClassGroup.class).where().eq("id", this.data.classgroup).findUnique();
     }
 
@@ -73,6 +71,7 @@ public class Independent extends Authenticated{
 	 * @return list of previous classes 
 	 */
 	public Collection<ClassGroup> getPreviousClasses(){
+		//TODO safety
 		ArrayList<ClassGroup> res = new ArrayList<ClassGroup>();
 		
 		List<ClassPupil> cp = Ebean.find(ClassPupil.class).where().eq("indid", this.data.id).findList();

@@ -2,6 +2,8 @@
 package models.user;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.PersistenceException;
 
@@ -71,7 +73,7 @@ public class Teacher extends SuperUser{
      * @throws PersistenceException when something goes wrong during the retrieval
      */
     public Collection<ClassGroup> getClasses() throws PersistenceException{
-
+    	//TODO safety
         java.util.List<ClassGroup> res = Ebean.find(ClassGroup.class).where()
                 .eq("teacherid", this.data.id).findList();
 
@@ -85,9 +87,25 @@ public class Teacher extends SuperUser{
      * @throws PersistenceException when something goes wrong during the retrieval
      */
     public Collection<SchoolModel> getSchools() throws PersistenceException{
-    	//TODO
     	//TODO jUnit test
-    	return null;
+    	//TODO safety
+    	
+    	//Retrieve all the school the teacher created
+    	Set<SchoolModel> res = new HashSet<SchoolModel>();
+    			res.addAll(Ebean.find(SchoolModel.class).where()
+    			.eq("orig", this.data.id).findList());
+    	//Retrieve all the schoolids from classes the Teacher is associated with
+    	HashSet<String> schoolIDs = new HashSet<String>();
+    	for(ClassGroup cg : this.getClasses()){
+    		schoolIDs.add(cg.id);
+    	}
+    	//Retrieve all the SchoolModels from those ids
+    	for(String s : schoolIDs){
+    		SchoolModel m = Ebean.find(SchoolModel.class).where()
+    				.eq("id", s).findUnique();
+    		if(m!=null)res.add(m);
+    	}
+    	return res;
     }
 
 }

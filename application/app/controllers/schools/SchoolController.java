@@ -4,10 +4,15 @@
 package controllers.schools;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import models.EMessages;
 import models.data.Link;
 import models.dbentities.SchoolModel;
+import models.dbentities.UserModel;
+import models.user.Gender;
+import models.user.Teacher;
+import models.user.UserType;
 import models.util.OperationResultInfo;
 import play.mvc.Result;
 import views.html.schools.schools;
@@ -27,7 +32,9 @@ public class SchoolController extends EController {
 		ArrayList<Link> breadcrumbs = getBreadcrumbs();
 		OperationResultInfo ori = new OperationResultInfo();
 		ArrayList<SchoolModel> list = new ArrayList<SchoolModel>();
-		//TODO
+		//TODO get actual Teacher instead of test
+		Teacher t = new Teacher(new UserModel("a",UserType.TEACHER, "aa", new Date(17), new Date(17), "aa", "aa", "aa", Gender.Other, "gg"));
+		list.addAll(t.getSchools());
 		return ok(schools.render(breadcrumbs,ori,list));
 	}
 	

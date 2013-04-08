@@ -141,7 +141,12 @@ competition.create.active = Check this box to make the contest active.
 
 # schools
 schools.title = List of Schools
-schools.listtest = This is the list of schools you either created or are/were associated with via a class.
+schools.listtext = This is the list of schools you either created or are/were associated with via a class.
+schools.table.id = id
+schools.table.name = Name
+schools.table.address = Address
+
+
 
 # server management
 servers.form.name = Server name
