@@ -9,28 +9,27 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.PersistenceException;
-import com.avaje.ebean.Ebean;
 
 import models.EMessages;
 import models.data.Language;
 import models.data.Link;
 import models.dbentities.FAQModel;
-
-import play.data.Form;
-
+import models.management.ModelState;
 import models.user.AuthenticationManager;
 import models.user.Role;
 import models.util.OperationResultInfo;
+import play.data.Form;
 import play.mvc.Result;
 import play.mvc.Results;
-import views.html.commons.noaccess;
 import views.html.faq.faq;
-import controllers.EController;
-import controllers.faq.routes;
-
+import views.html.faq.alterFAQForm;
 import views.html.faq.faqManagement;
 import views.html.faq.newFAQForm;
-import views.html.faq.alterFAQForm;
+import views.html.commons.noaccess;
+
+import com.avaje.ebean.Ebean;
+
+import controllers.EController;
 
 
 /**
@@ -80,11 +79,11 @@ public class FAQController extends EController {
 		//Check if authorized
 		if(!isAuthorized())return ok(noaccess.render(breadcrumbs));
 		
-		FAQManager fm = new FAQManager();
+		FAQManager fm = new FAQManager(ModelState.READ);
 		try{
 			//Try to render the list
 			return ok(
-	            faqManagement.render(fm.page(page, orderBy, order, filter), fm, orderBy, order, filter, breadcrumbs, info)
+	            faqManagement.render(fm.page(page), fm, orderBy, order, filter, breadcrumbs, info)
 	        );
 		}catch(Exception e){
 			//If fails, show no list (page = null) but display an error.
@@ -159,7 +158,7 @@ public class FAQController extends EController {
         if(!isAuthorized())return ok(noaccess.render(breadcrumbs)); //Check if authorized
 		
 		//Try to render a form from the to-be-edited FAQModel
-		Form<FAQModel> form = form(FAQModel.class).bindFromRequest().fill(new FAQManager().getFinder().ref(id));
+		Form<FAQModel> form = form(FAQModel.class).bindFromRequest().fill(new FAQManager(ModelState.UPDATE).getFinder().ref(id));
         try{
         	Result r = 
 				ok(alterFAQForm.render(form, breadcrumbs,listOfLanguages(),id, new OperationResultInfo()));
@@ -188,7 +187,7 @@ public class FAQController extends EController {
 		//Try to update the FAQModel from the form
 		Form<FAQModel> form = null;
         try{
-        	 form = form(FAQModel.class).fill(new FAQManager().getFinder().byId(id)).bindFromRequest();
+        	 form = form(FAQModel.class).fill(new FAQManager(ModelState.UPDATE).getFinder().byId(id)).bindFromRequest();
         }catch(Exception e){
         	//Something went wrong with the filling of the FAQModel (e.g. no database connection)
         	//Redirect back to the list of FAQ with an error message
@@ -227,7 +226,7 @@ public class FAQController extends EController {
 		if(!isAuthorized())return ok(noaccess.render(manageBreadcrumbs())); //Check if authorized
 		//Try to remove the FAQModel
 		try{
-			FAQModel fm = new FAQManager().getFinder().byId(id);
+			FAQModel fm = new FAQManager(ModelState.DELETE).getFinder().byId(id);
 			fm.delete();
 		}catch(Exception e){
 			//Deleting unsuccessful, return the list with an error
