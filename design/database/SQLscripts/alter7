@@ -1,0 +1,2 @@
+ALTER TABLE contests DROP CONSTRAINT contests_type_check;
+ALTER TABLE schools ADD COLUMN orig text REFERENCES users;
