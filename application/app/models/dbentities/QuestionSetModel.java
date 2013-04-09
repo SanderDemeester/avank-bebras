@@ -4,7 +4,7 @@ import models.competition.Competition;
 import models.data.Difficulty;
 import models.data.Grade;
 import models.data.Language;
-import models.management.Manageable;
+import models.management.ManageableModel;
 import models.question.Question;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
@@ -24,7 +24,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name="questionsetstest")
-public class QuestionSetModel extends Model implements Manageable {
+public class QuestionSetModel extends ManageableModel {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -52,7 +52,6 @@ public class QuestionSetModel extends Model implements Manageable {
      *
      * @return array with the current values of the fields to be represented in the table
      */
-    @Override
     public String[] getFieldValues() {
         String[] result = {name};
         return result;
@@ -63,7 +62,6 @@ public class QuestionSetModel extends Model implements Manageable {
      *
      * @return id
      */
-    @Override
     public String getID() {
         return id;
     }
@@ -73,8 +71,7 @@ public class QuestionSetModel extends Model implements Manageable {
      *
      * @return name
      */
-    @Override
-    public String getName() {
+    public String getTableName() {
         return name;
     }
 }
