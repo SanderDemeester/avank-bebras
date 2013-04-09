@@ -64,11 +64,17 @@ question.factory.error.invalidRegex = Invalid regular expression found in langua
 question.factory.error.invalidUpload = Your upload was invalid
 
 # Languages
+languages.language = Language
+languages.languages = Languages
 languages.en = English
 languages.nl = Dutch
 
 #Error
 genericError = Something went wrong. Please try again later.
+noAccess.title = Access Prohibited
+noAccess.text = You are not authorized to view this page / do this action.
+noAccess.alttext = Access prohibited symbol
+noAccess.imageAttr = Image attribution: By Mikadiou (Own work) [CC-BY-SA-3.0 (http://creativecommons.org/licenses/by-sa/3.0)], via Wikimedia Commons
 
 # Login
 redirect_message = You will be redirected to your homepage shortly.
@@ -87,8 +93,26 @@ register.bebras_id_message = Your Bebras ID is:
 register.inlog_message = You may login with your ID and password.
 
 #faq
-nofaq = The FAQ is empty.
-faqerror = Something went wrong during the retrieval of the FAQ. Try again later.
+faq.empty = The FAQ is empty.
+faq.error = Something went wrong during the retrieval of the FAQ. Try again later.
+faq.name = Name
+faq.language = Language
+faq.managefaq = Manage FAQ
+faq.addfaq = Add new FAQ
+faq.new.title = New FAQ''s question
+faq.new.content = New FAQ''s answer
+faq.new.language = New FAQ''s language
+faq.list = List of Frequently Asked Questions
+faq.alter = Alter a FAQ
+faq.alter.title = FAQ''s question
+faq.alter.content = FAQ''s answer
+faq.alter.language = FAQ''s language
+faq.error.notcomplete = Please fill in all required fields
+faq.error.savefail = Could not save the new question. Please try again (later).
+faq.error = Something went wrong.
+faq.view.error = Something went wrong during the retrieval of the FAQ. Please try again (later).
+faq.remove.error = Could not delete question. Please try again (later).
+faq.list.error = Something went wrong during the retrieval of the list.
 
 #info
 info.info = Info
@@ -97,10 +121,10 @@ info.error = Error
 info.success = Success
 
 # management
-management.filter.input = Filter...
+management.filter.input = Filter value
 management.filter.button = Filter
 management.empty = Nothing to display.
-management.add = Create...
+management.add = Create
 
 # competition
 competition.name = Contests
@@ -113,3 +137,25 @@ competition.create.type = Type of new contest:
 competition.create.end = End time of new contest:
 competition.create.start = Start time of new contest:
 competition.create.active = Check this box to make the contest active.
+
+# server management
+servers.form.name = Server name
+servers.form.path = Server location
+servers.form.ftpuri = FTP location
+servers.form.ftpport = FTP port
+servers.form.ftpuser = FTP username
+servers.form.ftppass = FTP password
+servermanagement.servers.name = Servers
+servermanagement.servers.new = New Server
+servermanagement.servers.server = Server
+servermanagement.servers.list = List of Servers
+
+# question management
+questions.form.author = Author
+questions.form.officialid = Official ID
+questions.form.path = ??Path??
+questions.form.active = Active
+questions.form.server = Server
+question.questions.name = Questions
+question.questions.new = New Question
+question.questions.list = List of Questions
