@@ -26,35 +26,36 @@ import com.avaje.ebean.validation.NotNull;
 @SequenceGenerator(name="Seq", sequenceName="questions_id_seq")
 @Table(name="questions")
 public class QuestionModel extends ManageableModel{
-    
-    @Id 
+    private static final long serialVersionUID = 1L;
+
+    @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Seq")//@GeneratedValue(strategy = GenerationType.AUTO)
     public int id;
-    
+
     @Editable
     @Constraints.Required
     public String officialid;
-    
+
     @Editable
     @ManyToOne
     @NotNull
     @JoinColumn(name="serverid")
     public Server server;
-    
+
     @Editable
     @Constraints.Required
     public String path;
-    
+
     @Editable
     @Constraints.Required
     public boolean active;
-    
+
     @Editable
     @ManyToOne
     @NotNull
     @JoinColumn(name="author")
     public UserModel author;
-    
+
     /**
      * Returns those values that have to be represented in a table.
      *
@@ -79,7 +80,7 @@ public class QuestionModel extends ManageableModel{
     public String getID() {
         return Integer.toString(id);
     }
-    
+
     private void fixServer() {
         if(this.server.id == null) {
             this.server = null;
@@ -87,7 +88,7 @@ public class QuestionModel extends ManageableModel{
             this.server = Server.findById(server.id);
         }
     }
-    
+
     /**
      * Insert this new question
      */

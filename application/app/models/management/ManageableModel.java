@@ -16,16 +16,16 @@ import play.db.ebean.Model;
 public abstract class ManageableModel extends Model{
 
     /**
-     * Returns those values that have to be represented in a table.
+     * Returns those field values that have to be represented in a table.
      *
      * @return array with the current values of the fields to be represented in the table
      */
     public abstract String[] getFieldValues();
 
     /**
-     * Returns the id of the object.
+     * Returns the id (or any primary key field) of the object as a String
      *
-     * @return id
+     * @return id the primary key for the object this Model contains.
      */
     public abstract String getID();
 }

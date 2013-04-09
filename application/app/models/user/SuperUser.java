@@ -15,8 +15,8 @@ public abstract class SuperUser extends Authenticated{
     }
 
     public SuperUser(UserModel data, UserType type) {
-		super(data, type);
-	}
+        super(data, type);
+    }
 
     /**
      * reset password for user.

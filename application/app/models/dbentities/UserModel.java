@@ -16,7 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import models.management.Listable;
-import models.question.server.Server;
 import models.user.Gender;
 import models.user.UserType;
 import play.data.format.Formats;
@@ -31,59 +30,59 @@ import play.db.ebean.Model;
 public class UserModel extends Model implements Listable{
     private static final long serialVersionUID = 1L;
 
-	@Id
-	public String id;
-	public String name;
+    @Id
+    public String id;
+    public String name;
 
-	@Formats.DateTime(pattern = "yyyy/dd/mm")
-	public Date birthdate;
+    @Formats.DateTime(pattern = "yyyy/dd/mm")
+    public Date birthdate;
 
-	@Formats.DateTime(pattern = "yyyy/dd/mm")
-	public Date registrationdate;
-	public String preflanguage;
-	public String password;
-	public String hash;
-	public String telephone;
-	public String address;
-	public String email;
+    @Formats.DateTime(pattern = "yyyy/dd/mm")
+    public Date registrationdate;
+    public String preflanguage;
+    public String password;
+    public String hash;
+    public String telephone;
+    public String address;
+    public String email;
 
-	@Enumerated(EnumType.STRING)
-	public Gender gender;
+    @Enumerated(EnumType.STRING)
+    public Gender gender;
 
-	@Enumerated(EnumType.STRING)
-	public UserType type;
+    @Enumerated(EnumType.STRING)
+    public UserType type;
 
-	public boolean active;
+    public boolean active;
 
-	@Column(name="class")
-	public String classgroup;
+    @Column(name="class")
+    public int classgroup;
 
-	public UserModel(String id, UserType loginType, String name,
-			Date birthdate, Date registrationdate,
-			String password, String hash, String email,
-			Gender gender, String preflanguage){
-		
-		this.id = id;
-		this.type = loginType; 
-		this.name = name;
-		this.birthdate = birthdate;
-		this.registrationdate = registrationdate;
-		this.password = password;
-		this.hash = hash;
-		this.email = email;
-		this.gender = gender;
-		this.preflanguage = preflanguage;
-		active = true;
+    public UserModel(String id, UserType loginType, String name,
+            Date birthdate, Date registrationdate,
+            String password, String hash, String email,
+            Gender gender, String preflanguage){
 
-	}
+        this.id = id;
+        this.type = loginType;
+        this.name = name;
+        this.birthdate = birthdate;
+        this.registrationdate = registrationdate;
+        this.password = password;
+        this.hash = hash;
+        this.email = email;
+        this.gender = gender;
+        this.preflanguage = preflanguage;
+        active = true;
 
-	/**
-	 * A finder for User.
-	 * We will use this finder to execute specific sql query's.
-	 */
-	public static Finder<Integer,UserModel> find = new Model.Finder<Integer, UserModel>(Integer.class,UserModel.class);
+    }
 
-	@Override
+    /**
+     * A finder for User.
+     * We will use this finder to execute specific sql query's.
+     */
+    public static Finder<Integer,UserModel> find = new Model.Finder<Integer, UserModel>(Integer.class,UserModel.class);
+
+    @Override
     public Map<String, String> options() {
         List<UserModel> users = find.all();
         LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();

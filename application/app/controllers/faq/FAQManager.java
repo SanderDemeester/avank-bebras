@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package controllers.faq;
 
@@ -15,32 +15,32 @@ import play.mvc.Call;
  */
 public class FAQManager extends Manager<FAQModel> {
 
-	public static final int PAGESIZE = 15;
-	
-	public FAQManager(ModelState state) {
-		super(FAQModel.class, state, "id", "id");
-	}
+    public static final int PAGESIZE = 15;
 
-	@Override
-	public String[] getColumnHeaders() {
-		String[] res = {"id",EMessages.get("faq.language"),EMessages.get("faq.name")};
-		return res;
-	}
+    public FAQManager(ModelState state) {
+        super(FAQModel.class, state, "id", "id");
+    }
 
-	@Override
-	public Call getAddRoute() {
-		return routes.FAQController.create();
-	}
+    @Override
+    public String[] getColumnHeaders() {
+        String[] res = {"id",EMessages.get("faq.language"),EMessages.get("faq.name")};
+        return res;
+    }
 
-	@Override
-	public Call getEditRoute(String id) {
-		return routes.FAQController.edit(id);
-	}
+    @Override
+    public Call getAddRoute() {
+        return routes.FAQController.create();
+    }
 
-	@Override
-	public Call getRemoveRoute(String id) {
-		return routes.FAQController.remove(id);
-	}
+    @Override
+    public Call getEditRoute(String id) {
+        return routes.FAQController.edit(id);
+    }
+
+    @Override
+    public Call getRemoveRoute(String id) {
+        return routes.FAQController.remove(id);
+    }
 
     @Override
     public Call getListRoute(int page, String filter) {
