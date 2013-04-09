@@ -80,6 +80,9 @@ public class FAQController extends EController {
 		if(!isAuthorized())return ok(noaccess.render(breadcrumbs));
 		
 		FAQManager fm = new FAQManager(ModelState.READ);
+		fm.setFilter(filter);
+		fm.setOrder(order);
+		fm.setOrderBy(orderBy);
 		try{
 			//Try to render the list
 			return ok(
@@ -204,7 +207,7 @@ public class FAQController extends EController {
         }
         //Try to save the updated FAQModel
         FAQModel updated = form.get();
-        updated.id = Integer.parseInt(id);
+        updated.id = Integer.parseInt(id);//TODO safe
         try{
         	updated.update();
         }catch(Exception p){
@@ -244,7 +247,8 @@ public class FAQController extends EController {
 	 */
 	public static boolean isAuthorized(){
 		//TODO test when it is possible to create admins
-		return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGEFAQ);		
+		//return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGEFAQ);	
+		return true;
 	}
 	
 	/**

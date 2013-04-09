@@ -3,10 +3,15 @@
  */
 package controllers.faq;
 
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Page;
+
 import models.EMessages;
 import models.dbentities.FAQModel;
+import models.management.ManageableModel;
 import models.management.Manager;
 import models.management.ModelState;
+import play.db.ebean.Model.Finder;
 import play.mvc.Call;
 
 /**
@@ -18,7 +23,7 @@ public class FAQManager extends Manager<FAQModel> {
 	public static final int PAGESIZE = 15;
 	
 	public FAQManager(ModelState state) {
-		super(FAQModel.class, state, "id", "id");
+		super(FAQModel.class,state, "id", "language");
 	}
 
 	@Override
@@ -49,20 +54,23 @@ public class FAQManager extends Manager<FAQModel> {
 
     @Override
     public play.api.mvc.Call getSaveRoute() {
-        // TODO Auto-generated method stub
+    	//Using non-default form, so not necessary
         return null;
     }
 
     @Override
     public play.api.mvc.Call getUpdateRoute() {
-        // TODO Auto-generated method stub
+        //Using non-default form, so not necessary
         return null;
     }
 
     @Override
     public String getMessagesPrefix() {
-        // TODO Auto-generated method stub
-        return null;
+        return "faq";
     }
+   
+    
+    
+    
 
 }
