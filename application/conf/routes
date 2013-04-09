@@ -66,7 +66,6 @@ POST    /manageFAQ/:name              controllers.faq.FAQController.update(name)
 GET    /manageFAQ/remove/:name        controllers.faq.FAQController.remove(name)
 
 # Data Management
-GET		/manage/:dataType			controllers.data.DataController.show(dataType)
 GET		/manage/:dataType/show		controllers.data.DataController.show(dataType)
 GET		/manage/:dataType/remove	controllers.data.DataController.remove(dataType, id)
 GET		/manage/:dataType/add		controllers.data.DataController.add(dataType, strings)
