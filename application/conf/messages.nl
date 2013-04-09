@@ -159,3 +159,6 @@ questions.form.server = Server
 question.questions.name = Vragen
 question.questions.new = Nieuwe Vraag
 question.questions.list = Lijst van vragen
+
+# Data Management
+links.title = Startpagina Links

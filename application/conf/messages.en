@@ -159,3 +159,6 @@ questions.form.server = Server
 question.questions.name = Questions
 question.questions.new = New Question
 question.questions.list = List of Questions
+
+# Data Management
+links.title = Home Page Links
