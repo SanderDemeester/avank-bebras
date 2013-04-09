@@ -3,8 +3,6 @@
  */
 package models.dbentities;
 
-import static org.junit.Assert.*;
-
 import java.util.List;
 
 import javax.persistence.PersistenceException;
@@ -37,7 +35,7 @@ public class ClassPupilTest extends ContextTest {
 	public void testSave() {
 		ClassPupil cp = new ClassPupil();
 		cp.indid="a";
-		cp.classid="b";
+		cp.classid=1;
 		
 		try{
 			cp.save();
@@ -50,11 +48,11 @@ public class ClassPupilTest extends ContextTest {
 	public void testDuplicateSave() {
 		ClassPupil cp = new ClassPupil();
 		cp.indid="a";
-		cp.classid="b";
+		cp.classid=1;
 		
 		ClassPupil cp2 = new ClassPupil();
 		cp2.indid="a";
-		cp2.classid="b";
+		cp2.classid=1;
 		
 		cp.save();
 		cp2.save();

@@ -49,15 +49,15 @@ public class TeacherTest extends ContextTest {
 		UserModel data = createTestUserModel(UserType.TEACHER);
 		
 		ClassGroup cp1=new ClassGroup();
-		cp1.id="b";
+		cp1.id=1;
 		cp1.teacherid=data.id;
 		
 		ClassGroup cp2=new ClassGroup();
-		cp2.id="c";
+		cp2.id=2;
 		cp2.teacherid=data.id;
 		
 		ClassGroup cp3=new ClassGroup();
-		cp3.id="d";
+		cp3.id=3;
 		cp3.teacherid=data.id+data.id;
 		
 		try{
@@ -74,7 +74,7 @@ public class TeacherTest extends ContextTest {
 		
 		Collection<ClassGroup> fff = iff.getClasses();
 		Assert.assertEquals(2, fff.size());
-		HashSet<String> ids = new HashSet<String>();
+		HashSet<Integer> ids = new HashSet<Integer>();
 		for(ClassGroup cg : fff){
 			ids.add(cg.id);
 		}
