@@ -32,12 +32,12 @@ public abstract class ContextTest {
      * Set up the application.
      */
     @BeforeClass public static void setupApplication() {
-	    Map<String, String> settings = new HashMap<String, String>();
-		settings.put("db.default.driver", "org.h2.Driver");
-	    settings.put("db.default.user", "sa");
-	    settings.put("db.default.password", "");
-	    settings.put("db.default.url", "jdbc:h2:mem:play");
-	    settings.put("evolutionplugin","enabled");
+        Map<String, String> settings = new HashMap<String, String>();
+        settings.put("db.default.driver", "org.h2.Driver");
+        settings.put("db.default.user", "sa");
+        settings.put("db.default.password", "");
+        settings.put("db.default.url", "jdbc:h2:mem:play");
+        settings.put("evolutionplugin","enabled");
         app = Helpers.fakeApplication(settings);
         Helpers.start(app);
     }
