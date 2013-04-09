@@ -4,7 +4,6 @@
 
 # Home page
 GET     /                           controllers.Application.index()
-GET     /test				        controllers.Application.test(id: String)
 GET		/logout						controllers.UserController.logout()
 GET		/home						controllers.UserController.landingPage()
 
