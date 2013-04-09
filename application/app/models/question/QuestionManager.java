@@ -9,9 +9,7 @@ import controllers.question.routes;
 public class QuestionManager extends Manager<QuestionModel>{
 
     public QuestionManager(ModelState state) {
-        super(QuestionModel.class, state);
-        this.setOrderBy("id");
-        this.setFilterBy("officialid");
+        super(QuestionModel.class, state, "id", "officialid");
     }
 
     @Override

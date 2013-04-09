@@ -32,7 +32,7 @@ public abstract class Manager<T extends ManageableModel> {
     public static final String DEFAULTORDER = "asc";
     
     protected Map<String, FieldType> fields = new LinkedHashMap<String, FieldType>();
-    protected Map<String, Class> fieldTypes = new HashMap<String, Class>();
+    protected Map<String, Class<?>> fieldTypes = new HashMap<String, Class<?>>();
     protected Map<String, Boolean> disabledFields = new HashMap<String, Boolean>();
     
     private boolean ignoreErrors = false;
@@ -44,11 +44,13 @@ public abstract class Manager<T extends ManageableModel> {
      * @param finder finder object that helps building queries and returning pages.
      * @param pageSize number of elements displayed on one page
      */
-    public Manager(Class modelClass, ModelState state){
+    public Manager(Class<T> modelClass, ModelState state, String orderBy, String filterBy){
         this.finder = new Finder<String, T>(String.class, modelClass);
         this.pageSize = DEFAULTPAGESIZE;
         this.order = DEFAULTORDER;
         this.state = state;
+        this.orderBy = orderBy;
+        this.filterBy = filterBy;
         
         // Add the necessary fields to the fields-map
         for(Field field : modelClass.getDeclaredFields()) {
@@ -127,8 +129,7 @@ public abstract class Manager<T extends ManageableModel> {
      */
     @SuppressWarnings("unchecked")
     public Page<ManageableModel> page(int page) {
-        return (Page<ManageableModel>) finder
-            .where()
+        return (Page<ManageableModel>) finder.where()
             .ilike(filterBy, "%" + filter + "%")
             .orderBy(orderBy + " " + order)
             .findPagingList(pageSize)
