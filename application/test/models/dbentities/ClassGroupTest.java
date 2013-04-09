@@ -3,8 +3,6 @@
  */
 package models.dbentities;
 
-import static org.junit.Assert.*;
-
 import java.util.List;
 
 import javax.persistence.PersistenceException;
@@ -35,7 +33,7 @@ public class ClassGroupTest extends ContextTest {
 	@Test
 	public void testSave() {
 		ClassGroup cg = new ClassGroup();
-		cg.id="a";
+		cg.id=1;
 		
 		try{
 			cg.save();
@@ -47,10 +45,10 @@ public class ClassGroupTest extends ContextTest {
 	@Test(expected=PersistenceException.class)
 	public void testDuplicateSave() {
 		ClassGroup cg = new ClassGroup();
-		cg.id="a";
+		cg.id=1;
 		
 		ClassGroup cg2 = new ClassGroup();
-		cg2.id="a";
+		cg2.id=1;
 		
 		cg.save();
 		cg2.save();

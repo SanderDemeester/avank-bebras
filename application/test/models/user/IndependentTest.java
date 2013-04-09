@@ -38,11 +38,11 @@ public class IndependentTest extends ContextTest {
 	public void testGetCurrentClass() {
 		UserModel data = createTestUserModel(UserType.INDEPENDENT);
 		ClassGroup cl1 = new ClassGroup();
-		cl1.id = "curr";
+		cl1.id = 1;
 		ClassGroup cl2 = new ClassGroup();
-		cl2.id = "p1";
+		cl2.id = 2;
 		ClassGroup cl3 = new ClassGroup();
-		cl3.id = "p2";
+		cl3.id = 3;
 		data.classgroup = cl1.id;
 		
 		ClassPupil cp1 = new ClassPupil();
@@ -75,11 +75,11 @@ public class IndependentTest extends ContextTest {
 	public void testGetPreviousClasses() {
 		UserModel data = createTestUserModel(UserType.INDEPENDENT);
 		ClassGroup cl1 = new ClassGroup();
-		cl1.id = "curr";
+		cl1.id = 1;
 		ClassGroup cl2 = new ClassGroup();
-		cl2.id = "p1";
+		cl2.id = 2;
 		ClassGroup cl3 = new ClassGroup();
-		cl3.id = "p2";
+		cl3.id = 3;
 		data.classgroup = cl1.id;
 		
 		ClassPupil cp1 = new ClassPupil();
@@ -97,6 +97,7 @@ public class IndependentTest extends ContextTest {
 			cp1.save();
 			cp2.save();
 		}catch(PersistenceException p){
+			p.printStackTrace();
 			Assert.fail("Something went wrong with the saving of the independent");
 		}
 		
@@ -105,7 +106,7 @@ public class IndependentTest extends ContextTest {
 		
 		Collection<ClassGroup> fff = iff.getPreviousClasses();
 		Assert.assertEquals(2, fff.size());
-		HashSet<String> ids = new HashSet<String>();
+		HashSet<Integer> ids = new HashSet<Integer>();
 		for(ClassGroup cg : fff){
 			ids.add(cg.id);
 		}
