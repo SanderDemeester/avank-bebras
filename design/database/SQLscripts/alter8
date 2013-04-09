@@ -1,0 +1,73 @@
+-- create new tables
+
+CREATE TABLE grades(
+name text,
+startage integer NOT NULL,
+endage integer NOT NULL,
+PRIMARY KEY (name)
+);
+
+CREATE TABLE difficulties(
+name text,
+ordr integer NOT NULL,
+PRIMARY KEY (name)
+);
+
+CREATE TABLE links(
+title text,
+url text NOT NULL,
+PRIMARY KEY (title)
+);
+
+-- Change references to classes
+
+DROP TABLE classpupil;
+DROP TABLE contestclasses;
+DROP TABLE helpteachers;
+ALTER TABLE users DROP COLUMN class;
+
+DROP TABLE classes;
+DROP TABLE schools;
+
+-- remake schools & classes with SERIAL
+
+CREATE TABLE schools(
+id SERIAL,
+name text NOT NULL,
+address text NOT NULL,
+orig text REFERENCES users,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE classes(
+id SERIAL,
+name text NOT NULL,
+expdate date NOT NULL,
+schoolid integer NOT NULL REFERENCES schools,
+teacherid text NOT NULL REFERENCES users,
+level text NOT NULL,
+PRIMARY KEY (id)
+);
+
+-- recreate deleted tables
+
+ALTER TABLE users ADD COLUMN class integer;
+ALTER TABLE users ADD FOREIGN KEY (class) REFERENCES classes;
+
+CREATE TABLE helpteachers(
+teacherid text REFERENCES users,
+classid integer REFERENCES classes,
+PRIMARY KEY (teacherid,classid)
+);
+
+CREATE TABLE contestclasses(
+classid integer REFERENCES classes,
+contestid text REFERENCES contests,
+PRIMARY KEY (classid,contestid)
+);
+
+CREATE TABLE classpupil(
+classid integer REFERENCES classes,
+indid text REFERENCES users,
+PRIMARY KEY (classid,indid)
+);
