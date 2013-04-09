@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The different types of fields that are by default supported by the ManageableModel
+ * The different types of fields that are by default supported by the ManageableModel to be
+ * generated in the default form view.
  * @author Ruben Taelman
  *
  */
@@ -13,7 +14,7 @@ public enum FieldType {
     CHECKBOX,
     LIST;
     
-    private static final Map<Class, FieldType> TYPES = new HashMap<Class, FieldType>();
+    private static final Map<Class<?>, FieldType> TYPES = new HashMap<Class<?>, FieldType>();
     static {
         TYPES.put(boolean.class, CHECKBOX);
         TYPES.put(Listable.class, LIST);
@@ -24,7 +25,7 @@ public enum FieldType {
      * @param cls class to get the FieldType for
      * @return a FieldType for the given class
      */
-    public static FieldType getType(Class cls) {
+    public static FieldType getType(Class<?> cls) {
         // Make sure we have the highest possible class type
         if(Listable.class.isAssignableFrom(cls))
             cls = Listable.class;

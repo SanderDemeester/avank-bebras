@@ -11,5 +11,11 @@ import java.lang.annotation.RetentionPolicy;
  */
 @Retention(RetentionPolicy.RUNTIME)  
 public @interface Editable {
+    /**
+     * An optional argument to tell the default form that this field only should
+     * be shown (and be editable) when the Manager in om state ModelState.CREATE
+     * This could be used for user-generated id-fields.
+     * @return if the field should only be editable upon creation of a model
+     */
     boolean uponCreation() default false;
 }
