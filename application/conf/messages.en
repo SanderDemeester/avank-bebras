@@ -152,6 +152,7 @@ competition.create.type = Type of new contest:
 competition.create.end = End time of new contest:
 competition.create.start = Start time of new contest:
 competition.create.active = Check this box to make the contest active.
+competition.manager.form.name = Name
 
 # server management
 servers.form.name = Server name

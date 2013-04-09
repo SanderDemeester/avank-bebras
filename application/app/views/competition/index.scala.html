@@ -4,18 +4,27 @@
 * author: Kevin Stobbelaar                 *
 *******************************************@
 
-@(breadcrumbs : List[models.data.Link])
+@(breadcrumbs : List[models.data.Link], currentPage: Page[models.management.ManageableModel], manager: models.management.Manager[_], currentOrderBy: String,
+currentOrder: String, currentFilter: String)
 
 @import models.EMessages
+@import views.html.management.list
 
 @main(EMessages.get("competition.name"), breadcrumbs) {
+    <div class="row-fluid">
 
-    <div>
-        <p>
-            <a class="btn btn-primary btn-large" href="@controllers.competition.routes.CompetitionController.create()">
-                @EMessages.get("competition.create")
-            </a>
-        </p>
-    </div>
+        <div class="span4">
+            <p>
+                <a class="btn btn-primary btn-large" href="@controllers.competition.routes.CompetitionController.create()">
+                    @EMessages.get("competition.create")
+                </a>
+            </p>
+        </div>
+
+        <div class="span8">
+            @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
+        </div>
+
+   </div>
 
 }

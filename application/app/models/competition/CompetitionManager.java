@@ -1,30 +1,31 @@
-package models.question.questionset;
+package models.competition;
 
 import com.avaje.ebean.Page;
-import controllers.question.routes;
-import models.dbentities.QuestionSetQuestion;
+import controllers.competition.routes;
+import models.dbentities.CompetitionModel;
 import models.management.ManageableModel;
 import models.management.Manager;
 import models.management.ModelState;
 import play.mvc.Call;
 
 /**
- * Manager for question set questions entity.
+ * Manager for the competition entity.
  *
- * @author Kevin Stobbelaar.
+ * @author Kevin Stobbelaar
  */
-public class QuestionSetQuestionManager extends Manager {
+public class CompetitionManager extends Manager {
 
-    private String qsid;
+    // TODO: rekening houden met authentication !
 
     /**
-     * Constructor for manager.
+     * Constructor for manager class.
      *
-     * @param qsid question set id
+     * @param state      model state
+     * @param orderBy    column to be ordered on
      */
-    public QuestionSetQuestionManager(ModelState modelState, String qsid) {
-        super(QuestionSetQuestion.class, modelState, "difficulty", "difficulty");
-        this.qsid = qsid;
+    public CompetitionManager(ModelState state, String orderBy) {
+        super(CompetitionModel.class, state, orderBy, "name");
+        setPageSize(5);
     }
 
     /**
@@ -39,13 +40,11 @@ public class QuestionSetQuestionManager extends Manager {
     public Page<ManageableModel> page(int page) {
         return (Page<ManageableModel>) getFinder()
                 .where()
-                .ieq("qsid", qsid)
                 .ilike(filterBy, "%" + filter + "%")
                 .orderBy(orderBy + " " + order)
                 .findPagingList(pageSize)
                 .getPage(page);
     }
-
 
     /**
      * Returns the column headers for the objects of type T.
@@ -54,8 +53,8 @@ public class QuestionSetQuestionManager extends Manager {
      */
     @Override
     public String[] getColumnHeaders() {
-        String[] result = {"qsid", "qid", "difficulty"};
-        return result;
+        String[] columnHeaders = {"name", "type", "active", "starttime", "endtime"};
+        return columnHeaders;
     }
 
     /**
@@ -67,7 +66,7 @@ public class QuestionSetQuestionManager extends Manager {
      */
     @Override
     public Call getListRoute(int page, String filter) {
-        return routes.QuestionSetController.list(qsid, page, orderBy, order, filter);
+        return routes.CompetitionController.index(page, orderBy, order, filter);
     }
 
     /**
@@ -77,7 +76,7 @@ public class QuestionSetQuestionManager extends Manager {
      */
     @Override
     public Call getAddRoute() {
-        return routes.QuestionSetController.addQuestion(qsid);
+        return null;
     }
 
     /**
@@ -127,6 +126,6 @@ public class QuestionSetQuestionManager extends Manager {
      */
     @Override
     public String getMessagesPrefix() {
-        return "question.questionset";
+        return "competition.manager";
     }
 }

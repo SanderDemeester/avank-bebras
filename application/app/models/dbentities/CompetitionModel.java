@@ -1,6 +1,7 @@
 package models.dbentities;
 
 import models.competition.CompetitionType;
+import models.management.ManageableModel;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
@@ -16,7 +17,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name="contests")
-public class CompetitionModel extends Model {
+public class CompetitionModel extends ManageableModel {
 
     private static final long serialVersionUID = 1L;
 
@@ -39,4 +40,24 @@ public class CompetitionModel extends Model {
     @Constraints.Required
     public Date endtime;
 
+    /**
+     * Returns those values that have to be represented in a table.
+     *
+     * @return array with the current values of the fields to be represented in the table
+     */
+    @Override
+    public String[] getFieldValues() {
+        String[] fieldValues = {name, type.name(), Boolean.toString(active), starttime.toString(), endtime.toString()};
+        return fieldValues;
+    }
+
+    /**
+     * Returns the id of the object.
+     *
+     * @return id
+     */
+    @Override
+    public String getID() {
+        return id;
+    }
 }

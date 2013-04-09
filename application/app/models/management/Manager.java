@@ -39,10 +39,11 @@ public abstract class Manager<T extends ManageableModel> {
     private ModelState state;
 
     /**
-     * Constructor for manager.
-     *
-     * @param finder finder object that helps building queries and returning pages.
-     * @param pageSize number of elements displayed on one page
+     * Constructor for manager class.
+     * @param modelClass model class
+     * @param state model state
+     * @param orderBy column to be ordered on
+     * @param filterBy string to be filtered on
      */
     public Manager(Class<T> modelClass, ModelState state, String orderBy, String filterBy){
         this.finder = new Finder<String, T>(String.class, modelClass);
@@ -62,7 +63,7 @@ public abstract class Manager<T extends ManageableModel> {
             }
         }
     }
-    
+
     public void setIgnoreErrors(boolean ignoreErrors) {
         this.ignoreErrors = ignoreErrors;
     }
@@ -129,7 +130,8 @@ public abstract class Manager<T extends ManageableModel> {
      */
     @SuppressWarnings("unchecked")
     public Page<ManageableModel> page(int page) {
-        return (Page<ManageableModel>) finder.where()
+        return (Page<ManageableModel>) finder
+            .where()
             .ilike(filterBy, "%" + filter + "%")
             .orderBy(orderBy + " " + order)
             .findPagingList(pageSize)

@@ -3,8 +3,11 @@ package controllers.competition;
 import controllers.EController;
 import controllers.question.QuestionSetController;
 import models.EMessages;
+import models.competition.CompetitionManager;
 import models.data.Link;
 import models.dbentities.CompetitionModel;
+import models.management.ModelState;
+import models.question.questionset.QuestionSetQuestionManager;
 import play.data.Form;
 import play.mvc.Result;
 
@@ -23,15 +26,32 @@ public class CompetitionController extends EController {
     // TODO rekening houden met authentication !
 
     /**
-     * Returns the index page for contests.
-     *
-     * @return index page
+     * Returns the default breadcrumbs for the contest pages.
+     * @return breadcrumbs
      */
-    public static Result index(){
+    private static List<Link> defaultBreadcrumbs(){
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link(EMessages.get("competition.name"), "/contests"));
-        return ok(views.html.competition.index.render(breadcrumbs));
+        return breadcrumbs;
+    }
+
+    /**
+     * Returns the index page for contests.
+     * @param page page
+     * @param orderBy column to order on
+     * @param order sort order
+     * @param filter string to filter on
+     * @return index page
+     */
+    @SuppressWarnings("unchecked")
+    public static Result index(int page, String orderBy, String order, String filter){
+        CompetitionManager competitionManager = new CompetitionManager(ModelState.READ, orderBy);
+        competitionManager.setOrder(order);
+        competitionManager.setOrderBy(orderBy);
+        competitionManager.setFilter(filter);
+        return ok(views.html.competition.index.render(defaultBreadcrumbs(), competitionManager.page(page), competitionManager
+                  , orderBy, order, filter));
     }
 
     /**
@@ -40,12 +60,10 @@ public class CompetitionController extends EController {
      * @return create contest page
      */
     public static Result create(){
-        List<Link> breadcrumbs = new ArrayList<Link>();
-        breadcrumbs.add(new Link("Home", "/"));
-        breadcrumbs.add(new Link(EMessages.get("competition.name"), "/contests"));
+        List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("competition.create.breadcrumb"), "/contests/create"));
         Form<CompetitionModel> form = form(CompetitionModel.class).bindFromRequest();
-        return ok(views.html.competition.create.render(form, breadcrumbs));
+        return ok(views.html.competition.create.render(form, breadcrumbs, false));
     }
 
     /**
@@ -57,11 +75,9 @@ public class CompetitionController extends EController {
     public static Result save(){
         Form<CompetitionModel> form = form(CompetitionModel.class).bindFromRequest();
         if(form.hasErrors()) {
-            List<Link> breadcrumbs = new ArrayList<Link>();
-            breadcrumbs.add(new Link("Home", "/"));
-            breadcrumbs.add(new Link(EMessages.get("competition.name"), "/contests"));
+            List<Link> breadcrumbs = defaultBreadcrumbs();
             breadcrumbs.add(new Link(EMessages.get("competition.create.breadcrumb"), "/contests/create"));
-            return badRequest(views.html.competition.create.render(form, breadcrumbs));
+            return badRequest(views.html.competition.create.render(form, breadcrumbs, true));
         }
         CompetitionModel competitionModel = form.get();
         competitionModel.id = UUID.randomUUID().toString();

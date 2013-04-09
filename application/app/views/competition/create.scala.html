@@ -4,7 +4,7 @@
 * author: Kevin Stobbelaar                 *
 *******************************************@
 
-@(contestForm: Form[models.dbentities.CompetitionModel], breadcrumbs : List[models.data.Link])
+@(contestForm: Form[models.dbentities.CompetitionModel], breadcrumbs : List[models.data.Link], showErrors: Boolean)
 
 @import helper._
 @import helper.twitterBootstrap._
@@ -19,17 +19,17 @@
 
         <h3> @EMessages.get("competition.create.title") </h3>
 
-        @if(contestForm.hasErrors) {
-        <div class="alert">
-            <p>@EMessages.get("forms.error")</p>
-        </div>
-        }
-
         @form(controllers.competition.routes.CompetitionController.save()) {
 
             <fieldset>
 
                 <legend> @EMessages.get("competition.create.step1") </legend>
+
+                @if(contestForm.hasErrors() && showErrors) {
+                    <div class="alert alert-error">
+                        <p>@EMessages.get("forms.error")</p>
+                    </div>
+                }
 
                 @inputText(contestForm("name"), '_label -> EMessages.get("competition.create.name"), '_showConstraints -> false)
 
@@ -51,7 +51,7 @@
 
             <div class="actions">
                 <input type="submit" value="@EMessages.get("forms.submit")" class="btn primary">
-                <a href="@controllers.competition.routes.CompetitionController.index()" class="btn"> @EMessages.get("forms.cancel")</a>
+                <a href="@controllers.competition.routes.CompetitionController.index(0, "", "", "")" class="btn"> @EMessages.get("forms.cancel")</a>
             </div>
         }
     </div>

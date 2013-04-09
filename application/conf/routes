@@ -41,6 +41,7 @@ GET     /servers/new                controllers.question.server.ServerController
 POST    /servers                    controllers.question.server.ServerController.save()
 GET     /servers/:name              controllers.question.server.ServerController.edit(name)
 POST    /servers/:name              controllers.question.server.ServerController.update(name)
+GET     /servers/remove/:name       controllers.question.server.ServerController.remove(name)
 
 GET     /questionset/new            controllers.question.QuestionSetController.create(c)
 POST    /questionset                controllers.question.QuestionSetController.save(c)
@@ -49,10 +50,9 @@ GET     /questionset/questions/add  controllers.question.QuestionSetController.a
 POST    /questionset/questions      controllers.question.QuestionSetController.update(qs)
 
 # Contests module
-GET     /contests                   controllers.competition.CompetitionController.index()
+GET     /contests                   controllers.competition.CompetitionController.index(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 GET     /contests/new/contest       controllers.competition.CompetitionController.create()
 POST    /contests                   controllers.competition.CompetitionController.save()
-GET     /servers/remove/:name       controllers.question.server.ServerController.remove(name)
 
 # Question Management
 GET     /questions                  controllers.question.QuestionController.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")

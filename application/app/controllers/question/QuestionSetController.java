@@ -25,17 +25,26 @@ public class QuestionSetController extends EController {
     // TODO authentication !
 
     /**
+     * Returns the default breadcrumbs for the question set pages.
+     * @return breadcrumbs
+     */
+    private static List<Link> defaultBreadcrumbs(){
+        List<Link> breadcrumbs = new ArrayList<Link>();
+        breadcrumbs.add(new Link("Home", "/"));
+        return breadcrumbs;
+    }
+
+    /**
      * Returns the "create-question-set" page.
      *
      * @param contestid competition linked with this question set
      * @return create question set page
      */
     public static Result create(String contestid){
-        List<Link> breadcrumbs = new ArrayList<Link>();
-        breadcrumbs.add(new Link("Home", "/"));
+        List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questionset.create.breadcrumb"), "/questionset/new"));
         Form<QuestionSetModel> form = form(QuestionSetModel.class).bindFromRequest();
-        return ok(views.html.question.questionset.create.render(form, contestid, breadcrumbs));
+        return ok(views.html.question.questionset.create.render(form, contestid, breadcrumbs, false));
     }
 
     /**
@@ -48,10 +57,9 @@ public class QuestionSetController extends EController {
     public static Result save(String contestid){
         Form<QuestionSetModel> form = form(QuestionSetModel.class).bindFromRequest();
         if(form.hasErrors()) {
-            List<Link> breadcrumbs = new ArrayList<Link>();
-            breadcrumbs.add(new Link("Home", "/"));
+            List<Link> breadcrumbs = defaultBreadcrumbs();
             breadcrumbs.add(new Link(EMessages.get("question.questionset.create.breadcrumb"), "/questionset/new"));
-            return badRequest(views.html.question.questionset.create.render(form, contestid, breadcrumbs));
+            return badRequest(views.html.question.questionset.create.render(form, contestid, breadcrumbs, true));
         }
         QuestionSetModel questionSetModel = form.get();
         String questionSetId = UUID.randomUUID().toString();
@@ -71,8 +79,7 @@ public class QuestionSetController extends EController {
      */
     @Transactional(readOnly=true)
     public static Result list(String questionSetId, int page, String orderBy, String order, String filter){
-        List<Link> breadcrumbs = new ArrayList<Link>();
-        breadcrumbs.add(new Link("Home", "/"));
+        List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questionset.overview"), "/questionset/questions"));
         QuestionSetQuestionManager qsqm = new QuestionSetQuestionManager(ModelState.READ, questionSetId);
         qsqm.setOrder(order);
@@ -92,8 +99,7 @@ public class QuestionSetController extends EController {
      */
     public static Result addQuestion(String questionSetId){
         Form<QuestionSetQuestion> form = form(QuestionSetQuestion.class).bindFromRequest();
-        List<Link> breadcrumbs = new ArrayList<Link>();
-        breadcrumbs.add(new Link("Home", "/"));
+        List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questionset.overview"), "/questionset/questions"));
         breadcrumbs.add(new Link(EMessages.get("question.questionset.addquestion.brcr"), "/questionset/questions/add"));
         return ok(views.html.question.questionset.addQuestion.render(form, questionSetId, breadcrumbs));
@@ -109,8 +115,7 @@ public class QuestionSetController extends EController {
     public static Result update(String questionSetId){
         Form<QuestionSetQuestion> form = form(QuestionSetQuestion.class).bindFromRequest();
         if(form.hasErrors()) {
-            List<Link> breadcrumbs = new ArrayList<Link>();
-            breadcrumbs.add(new Link("Home", "/"));
+            List<Link> breadcrumbs = defaultBreadcrumbs();
             breadcrumbs.add(new Link(EMessages.get("question.questionset.overview"), "/questionset/questions"));
             breadcrumbs.add(new Link(EMessages.get("question.questionset.addquestion.brcr"), "/questionset/questions/add"));
             return badRequest(views.html.question.questionset.addQuestion.render(form, questionSetId, breadcrumbs));
