@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The different types of fields that are by default supported by the ManageableModel
+ * The different types of fields that are by default supported by the ManageableModel to be
+ * generated in the default form view.
  * @author Ruben Taelman
  *
  */

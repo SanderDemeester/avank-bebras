@@ -41,8 +41,10 @@ public abstract class Manager<T extends ManageableModel> {
     /**
      * Constructor for manager.
      *
-     * @param finder finder object that helps building queries and returning pages.
-     * @param pageSize number of elements displayed on one page
+     * @param modelClass The class object for the ManageableModel class
+     * @param state The state this manager should be in
+     * @param orderBy The column name the rows should be ordered by
+     * @param filterBy The column name the rows should be filtered by
      */
     public Manager(Class<T> modelClass, ModelState state, String orderBy, String filterBy){
         this.finder = new Finder<String, T>(String.class, modelClass);
@@ -63,10 +65,18 @@ public abstract class Manager<T extends ManageableModel> {
         }
     }
     
+    /**
+     * Enable or disable the display of errors in a form view
+     * @param ignoreErrors if the errors should be ignored
+     */
     public void setIgnoreErrors(boolean ignoreErrors) {
         this.ignoreErrors = ignoreErrors;
     }
     
+    /**
+     * Check if the errors should be ignored in a form view
+     * @return if the errors should be ignored
+     */
     public boolean isIgnoreErrors() {
         return this.ignoreErrors;
     }
@@ -121,8 +131,7 @@ public abstract class Manager<T extends ManageableModel> {
 
     /**
      * Returns a page with elements of type T.
-     *
-     * WARNING: it's better to override this method in your own manager!
+     * Overriding is advised.
      *
      * @param page     page number
      * @return the requested page
@@ -155,7 +164,8 @@ public abstract class Manager<T extends ManageableModel> {
     }
 
     /**
-     * Returns the column headers for the objects of type T.
+     * Returns the column headers for the objects of type T. This array must agree with 
+     * getFieldValues() from the ManageableModel
      *
      * @return column headers
      */
@@ -165,8 +175,6 @@ public abstract class Manager<T extends ManageableModel> {
      * Returns the route that must be followed to refresh the list.
      *
      * @param page     current page number
-     * @param orderBy  name of the column to sort on
-     * @param order    ASC or DESC
      * @param filter   filter on the items
      * @return Call Route that must be followed
      */
@@ -174,7 +182,7 @@ public abstract class Manager<T extends ManageableModel> {
     
     /**
      * Returns the route that must be followed to refresh the list with default parameters
-     * @return
+     * @return Call Route that must be followed
      */
     public Call getListRoute() {
         return getListRoute(0, "");
@@ -250,6 +258,11 @@ public abstract class Manager<T extends ManageableModel> {
         return fields;
     }
     
+    /**
+     * Create an empty dummy object for a certain field from the ManageableModel.
+     * @param field the name of the field
+     * @return a new dummy object for the given field
+     */
     public Object getDummyField(String field) {
         try {
             return fieldTypes.get(field).newInstance();
