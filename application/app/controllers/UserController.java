@@ -2,23 +2,15 @@ package controllers;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
 import models.data.Link;
 import models.dbentities.UserModel;
 import models.user.AuthenticationManager;
-import models.user.Gender;
 import models.user.User;
 import models.user.UserType;
-import org.apache.commons.codec.binary.Hex;
 import play.Play;
 import play.api.libs.Crypto;
 import play.api.templates.Html;
@@ -28,13 +20,14 @@ import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
 import play.mvc.Result;
 import play.mvc.Results;
-import views.html.error;
-import views.html.login.register;
-import views.html.login.registerLandingPage;
 import views.html.landingPages.AdminLandingPage;
 import views.html.landingPages.IndependentPupilLandingPage;
 import views.html.landingPages.OrganizerLandingPage;
 import views.html.landingPages.PupilLandingPage;
+import views.html.login.error;
+import views.html.login.register;
+import views.html.login.registerLandingPage;
+
 import com.avaje.ebean.Ebean;
 
 /**
