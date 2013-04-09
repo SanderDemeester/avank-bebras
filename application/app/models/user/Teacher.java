@@ -95,12 +95,12 @@ public class Teacher extends SuperUser{
     			res.addAll(Ebean.find(SchoolModel.class).where()
     			.eq("orig", this.data.id).findList());
     	//Retrieve all the schoolids from classes the Teacher is associated with
-    	HashSet<String> schoolIDs = new HashSet<String>();
+    	HashSet<Integer> schoolIDs = new HashSet<Integer>();
     	for(ClassGroup cg : this.getClasses()){
     		schoolIDs.add(cg.id);
     	}
     	//Retrieve all the SchoolModels from those ids
-    	for(String s : schoolIDs){
+    	for(Integer s : schoolIDs){
     		SchoolModel m = Ebean.find(SchoolModel.class).where()
     				.eq("id", s).findUnique();
     		if(m!=null)res.add(m);
