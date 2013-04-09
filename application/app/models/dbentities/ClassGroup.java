@@ -3,6 +3,8 @@ package models.dbentities;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -15,10 +17,11 @@ import play.db.ebean.Model;
 @Entity
 @Table(name="Classes")
 public class ClassGroup extends Model{
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     @Id
-    public String id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "classes_id_seq")
+    public int id;
     public String name;
     public Date expdate;
     public String schoolid;
@@ -36,7 +39,7 @@ public class ClassGroup extends Model{
         return this.name;
     }
 
-    public String getID(){
+    public int getID(){
         return this.id;
     }
 

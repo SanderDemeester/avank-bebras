@@ -1,7 +1,6 @@
 package models.dbentities;
 
 import models.competition.CompetitionType;
-import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
@@ -17,7 +16,7 @@ import java.util.Date;
 @Entity
 @Table(name="contests")
 public class CompetitionModel extends Model {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     @Id
     public String id;
@@ -37,5 +36,8 @@ public class CompetitionModel extends Model {
 
     @Constraints.Required
     public Date endtime;
+    
+    @Constraints.Required
+    public String creator;
 
 }
