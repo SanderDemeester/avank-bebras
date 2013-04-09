@@ -13,6 +13,7 @@ POST	/register					controllers.UserController.register()
 
 # Login
 GET		/login_validate		controllers.UserController.validate_login(id, password)
+GET     /forgotPwd          controllers.UserController.forgotPwd()
 
 # Bootstrap resources
 GET     /assets/img/glyphicons-halflings-white.png       controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings-white.png")
