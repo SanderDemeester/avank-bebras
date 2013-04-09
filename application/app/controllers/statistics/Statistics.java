@@ -13,8 +13,6 @@ import views.html.statistics.statistics;
 public class Statistics extends EController {
 
     public static Result statistics() {
-        setCommonHeaders();
-
         return ok(statistics.render());
     }
 

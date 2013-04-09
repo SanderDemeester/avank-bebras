@@ -1,7 +1,18 @@
 # App
 app.title = Avank Bebras - {0}
+app.startTitle = Avank Bebras
+app.home = Home
 app.error = Error
 app.Page = Page
+
+# Error
+notFound.title = Oops!
+notFound.text = The following page does not exist: {0}
+noAccess.title = Oops!
+noAccess.text = You are not authorized to perform this action.
+error.title = Oops!
+error.text = Something went wrong. We've sent our pink monkeys to fix the problem
+error.back = Go back
 
 # Forms
 forms.cancel = Cancel
@@ -64,6 +75,8 @@ question.factory.error.invalidRegex = Invalid regular expression found in langua
 question.factory.error.invalidUpload = Your upload was invalid
 
 # Languages
+languages.language = Language
+languages.languages = Languages
 languages.en = English
 languages.nl = Dutch
 
@@ -72,9 +85,6 @@ statistics.title = Statistics
 statistics.boxplot = Boxplot
 statistics.histogram = Histogram
 statistics.piechart = Pie Chart
-
-#Error
-genericError = Something went wrong. Please try again later.
 
 # Login
 redirect_message = You will be redirected to your homepage shortly.
@@ -91,10 +101,29 @@ register.confirm_password = Confirm Password
 register.create_account = Create Account
 register.bebras_id_message = Your Bebras ID is: 
 register.inlog_message = You may login with your ID and password.
+register.title = Register
 
 #faq
-nofaq = The FAQ is empty.
-faqerror = Something went wrong during the retrieval of the FAQ. Try again later.
+faq.empty = The FAQ is empty.
+faq.error = Something went wrong during the retrieval of the FAQ. Try again later.
+faq.name = Name
+faq.language = Language
+faq.managefaq = Manage FAQ
+faq.addfaq = Add new FAQ
+faq.new.title = New FAQ''s question
+faq.new.content = New FAQ''s answer
+faq.new.language = New FAQ''s language
+faq.list = List of Frequently Asked Questions
+faq.alter = Alter a FAQ
+faq.alter.title = FAQ''s question
+faq.alter.content = FAQ''s answer
+faq.alter.language = FAQ''s language
+faq.error.notcomplete = Please fill in all required fields
+faq.error.savefail = Could not save the new question. Please try again (later).
+faq.error = Something went wrong.
+faq.view.error = Something went wrong during the retrieval of the FAQ. Please try again (later).
+faq.remove.error = Could not delete question. Please try again (later).
+faq.list.error = Something went wrong during the retrieval of the list.
 
 #info
 info.info = Info
@@ -103,10 +132,10 @@ info.error = Error
 info.success = Success
 
 # management
-management.filter.input = Filter...
+management.filter.input = Filter value
 management.filter.button = Filter
 management.empty = Nothing to display.
-management.add = Create...
+management.add = Create
 
 # competition
 competition.name = Contests
@@ -119,3 +148,25 @@ competition.create.type = Type of new contest:
 competition.create.end = End time of new contest:
 competition.create.start = Start time of new contest:
 competition.create.active = Check this box to make the contest active.
+
+# server management
+servers.form.name = Server name
+servers.form.path = Server location
+servers.form.ftpuri = FTP location
+servers.form.ftpport = FTP port
+servers.form.ftpuser = FTP username
+servers.form.ftppass = FTP password
+servermanagement.servers.name = Servers
+servermanagement.servers.new = New Server
+servermanagement.servers.server = Server
+servermanagement.servers.list = List of Servers
+
+# question management
+questions.form.author = Author
+questions.form.officialid = Official ID
+questions.form.path = ??Path??
+questions.form.active = Active
+questions.form.server = Server
+question.questions.name = Questions
+question.questions.new = New Question
+question.questions.list = List of Questions

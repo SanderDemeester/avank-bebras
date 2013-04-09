@@ -1,32 +1,6 @@
-@*************************************
-* Template for creating a new server *
-*                                    *
-* author: Kevin Stobbelaar           *
-*************************************@
+@(serverForm: Form[models.question.server.Server], manager: models.management.Manager[_], breadcrumbs : List[models.data.Link])
 
-@(serverForm: Form[models.question.server.Server], breadcrumbs : List[models.data.Link])
+@import views.html.management.defaultAdd
 
-@import helper._
-@import helper.twitterBootstrap._
+@defaultAdd(serverForm, manager, breadcrumbs)
 
-@main("Add new server", breadcrumbs) {
-
-    @form(controllers.question.server.routes.ServerController.save()) {
-
-        <fieldset>
-
-            @inputText(serverForm("name"), '_label -> "New server's name")
-            @inputText(serverForm("path"), '_label -> "New server's path")
-            @inputText(serverForm("baseUrl"), '_label -> "New server's baseUrl")
-
-
-        </fieldset>
-
-        <div class="actions">
-            <input type="submit" value="Save" class="btn primary"> or
-            <a href="@controllers.question.server.routes.ServerController.list()" class="btn">Cancel</a>
-        </div>
-
-    }
-
-}

@@ -14,7 +14,7 @@ import java.util.Iterator;
 
 import com.avaje.ebean.Ebean;
 
-import controllers.user.Type;
+import models.user.UserType;
 
 import models.user.User;
 import models.statistics.SinglePopulation;
@@ -34,7 +34,7 @@ public class Statistics {
     /**
      * Creates a list of Populations the given user of the given type can view.
      */
-    public static PopulationChooser getPopulationChooser(Type type, User user) {
+    public static PopulationChooser getPopulationChooser(UserType type, User user) {
         return genMap.get(type).choose(user);
     }
 
@@ -48,10 +48,10 @@ public class Statistics {
         public PopulationChooser choose(User user);
     }
 
-    private static Map<Type, PopulationGenerator> genMap =
-        new HashMap<Type, PopulationGenerator>();
+    private static Map<UserType, PopulationGenerator> genMap =
+        new HashMap<UserType, PopulationGenerator>();
     static {
-        genMap.put(Type.ADMINISTRATOR, new PopulationGenerator() {
+        genMap.put(UserType.ADMINISTRATOR, new PopulationGenerator() {
             @Override public PopulationChooser choose(User user) {
                 PopulationChooser chooser = new PopulationChooser();
                 chooser.newType(
@@ -73,27 +73,27 @@ public class Statistics {
                 return chooser;
             }
         });
-        genMap.put(Type.ORGANIZER, new PopulationGenerator() {
+        genMap.put(UserType.ORGANIZER, new PopulationGenerator() {
             @Override public PopulationChooser choose(User user) {
                 return null; // TODO
             }
         });
-        genMap.put(Type.INDEPENDENT, new PopulationGenerator() {
+        genMap.put(UserType.INDEPENDENT, new PopulationGenerator() {
             @Override public PopulationChooser choose(User user) {
                 return null; // TODO
             }
         });
-        genMap.put(Type.PUPIL, new PopulationGenerator() {
+        genMap.put(UserType.PUPIL, new PopulationGenerator() {
             @Override public PopulationChooser choose(User user) {
                 return null; // TODO
             }
         });
-        genMap.put(Type.TEACHER, new PopulationGenerator() {
+        genMap.put(UserType.TEACHER, new PopulationGenerator() {
             @Override public PopulationChooser choose(User user) {
                 return null; // TODO
             }
         });
-        genMap.put(Type.ANON, new PopulationGenerator() {
+        genMap.put(UserType.ANON, new PopulationGenerator() {
             @Override public PopulationChooser choose(User user) {
                 return null; // TODO
             }

@@ -22,21 +22,21 @@ import play.db.ebean.Model;
 @Table(name="ClassPupil",uniqueConstraints=@UniqueConstraint(columnNames={"classid","indid"}) )
 @IdClass(ClassPupilPK.class)
 public class ClassPupil extends Model {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     @Id
-    public String classid;
+    public int classid;
     @Id
     public String indid;
 
     public class ClassPupilPK implements Serializable{
-        private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 2L;
 
-        public String classid;
+        public int classid;
         public String indid;
 
         public ClassPupilPK(){}
-        public ClassPupilPK(String classid,String indid){
+        public ClassPupilPK(int classid,String indid){
             this.classid = classid;
             this.indid = indid;
         }
@@ -48,7 +48,7 @@ public class ClassPupil extends Model {
         public boolean equals(Object other){
             if(! (other instanceof ClassPupilPK))return false;
             ClassPupilPK oth = (ClassPupilPK) other;
-            return this.classid.equals(oth.classid) && this.indid.equals(oth.indid);
+            return this.classid==oth.classid && this.indid.equals(oth.indid);
 
         }
     }

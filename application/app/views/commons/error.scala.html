@@ -1,0 +1,11 @@
+@(breadcrumbs : List[models.data.Link], title : String, text : String)
+
+@main(EMessages.get("noAccess.title"),breadcrumbs){
+	<div class="hero-unit">
+		<h1>@title</h1>
+		<p>@text</p>
+		<p>
+		    <a onclick="window.history.back()" class="btn btn-primary btn-large"><i class="icon-white icon-chevron-left"></i>@EMessages.get("error.back")</a>
+		</p>
+	</div>
+}
