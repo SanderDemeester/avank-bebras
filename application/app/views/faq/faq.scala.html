@@ -3,12 +3,12 @@ messages : models.util.OperationResultInfo)
 
 @main("FAQ", breadcrumbs){
 @commons.info(messages)
-	@for(q <- content){
-	<div class="well">
-		<p class="lead">@q.name</p>
-		@for(line <- q.content.lines){
-			@line <br>
-		}
-	</div>
-	}
+    @for(q <- content){
+    <div class="well">
+        <p class="lead">@q.name</p>
+        @for(line <- q.content.lines){
+            @line <br>
+        }
+    </div>
+    }
 }

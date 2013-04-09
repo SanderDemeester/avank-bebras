@@ -28,7 +28,7 @@ public class MultipleChoiceQuestionFactory extends QuestionFactory<MultipleChoic
         this.processCommonElements(question, node);
         return question;
     }
-    
+
     @Override
     public Question newQuestion() {
         return new MultipleChoiceQuestion();

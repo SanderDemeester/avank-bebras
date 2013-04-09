@@ -31,8 +31,8 @@
         }
     }
 
-	manager.setOrderBy(orderBy)
-	manager.setOrder(order)
+    manager.setOrderBy(orderBy)
+    manager.setOrder(order)
     manager.getListRoute(newPage, currentFilter)
 }
 
@@ -52,7 +52,7 @@
      <div class="alert alert-success">
          <strong>Success!</strong> @flash.get("success")
      </div>
-} 
+}
 
 @***********************
 * The list view itself *
@@ -64,13 +64,13 @@
     * Filtering & Add new item
     ***********************@
     <form action="@link(0,"name")" method="GET" class="row-fluid">
-    	<div class="span9">
-        	@(EMessages.get(manager.getMessagesPrefix() + ".form." + manager.getFilterBy())+":") <input type="text" class="input-large search-query filter-input" name="f" value="@currentFilter" placeholder="@EMessages.get("management.filter.input")">
+        <div class="span9">
+            @(EMessages.get(manager.getMessagesPrefix() + ".form." + manager.getFilterBy())+":") <input type="text" class="input-large search-query filter-input" name="f" value="@currentFilter" placeholder="@EMessages.get("management.filter.input")">
         </div>
         <div class="span3 text-right">
-        	<input type="submit" id="searchsubmit" value="@EMessages.get("management.filter.button")" class="btn">
-    		<a class="btn btn-primary" href="@manager.getAddRoute()"> @EMessages.get("management.add") </a>
-    	</div>
+            <input type="submit" id="searchsubmit" value="@EMessages.get("management.filter.button")" class="btn">
+            <a class="btn btn-primary" href="@manager.getAddRoute()"> @EMessages.get("management.add") </a>
+        </div>
     </form>
 
 </div>

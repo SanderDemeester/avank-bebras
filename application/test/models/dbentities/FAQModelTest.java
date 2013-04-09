@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package models.dbentities;
 
@@ -18,21 +18,21 @@ import test.ContextTest;
  */
 public class FAQModelTest extends ContextTest {
 
-	/**
-	 * Test method for {@link play.db.ebean.Model#save()}.
-	 */
-	@Test
-	public void testSave() {
-		FAQModel ts = new FAQModel();
-		ts.content = "Test";
-		ts.language = "en";
-		ts.name = "Testcase";
-		
-		try{
-			ts.save();
-		}catch(PersistenceException pe){
-			Assert.fail(pe.toString());
-		}
-	}
+    /**
+     * Test method for {@link play.db.ebean.Model#save()}.
+     */
+    @Test
+    public void testSave() {
+        FAQModel ts = new FAQModel();
+        ts.content = "Test";
+        ts.language = "en";
+        ts.name = "Testcase";
+
+        try{
+            ts.save();
+        }catch(PersistenceException pe){
+            Assert.fail(pe.toString());
+        }
+    }
 
 }
