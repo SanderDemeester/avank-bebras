@@ -16,7 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import models.management.Listable;
-import models.question.server.Server;
 import models.user.Gender;
 import models.user.UserType;
 import play.data.format.Formats;
@@ -56,7 +55,7 @@ public class UserModel extends Model implements Listable{
 	public boolean active;
 
 	@Column(name="class")
-	public String classgroup;
+	public int classgroup;
 
 	public UserModel(String id, UserType loginType, String name,
 			Date birthdate, Date registrationdate,
