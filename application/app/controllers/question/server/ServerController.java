@@ -1,5 +1,9 @@
 package controllers.question.server;
 
+import it.sauronsoftware.ftp4j.FTPException;
+import it.sauronsoftware.ftp4j.FTPIllegalReplyException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,12 +93,28 @@ public class ServerController extends EController {
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("servermanagement.servers.new"), "/servers/create"));
         
+        ServerManager manager = new ServerManager(ModelState.CREATE);
+        
+        // Validate form
         Form<Server> form = form(Server.class).bindFromRequest();
         if(form.hasErrors()) {
-            return badRequest(newServerForm.render(form, new ServerManager(ModelState.CREATE), breadcrumbs));
+            return badRequest(newServerForm.render(form, manager, breadcrumbs));
         }
+        
+        // Test connection
+        try {
+            form.get().testConnection();
+        } catch (IllegalStateException | IOException
+                | FTPIllegalReplyException | FTPException e) {
+            flash("error", EMessages.get("servers.error.testConnection", e.getMessage()));
+            return badRequest(newServerForm.render(form, manager, breadcrumbs));
+        }
+        
+        // Save
         form.get().save();
-        // TODO place message in flash for "server add warning" in view
+        
+        // Result
+        flash("success", EMessages.get("servers.success.added", form.get().getID()));
         return Results.redirect(routes.ServerController.list(0, "id", "asc", ""));
     }
 
@@ -131,12 +151,26 @@ public class ServerController extends EController {
         
         ServerManager manager = new ServerManager(name, ModelState.UPDATE);
         
+        // Validate form
         Form<Server> form = form(Server.class).fill(manager.getFinder().byId(name)).bindFromRequest();
         if(form.hasErrors()) {
             return badRequest(editServerForm.render(form, manager, breadcrumbs));
         }
+        
+        // Test connection
+        try {
+            form.get().testConnection();
+        } catch (IllegalStateException | IOException
+                | FTPIllegalReplyException | FTPException e) {
+            flash("error", EMessages.get("servers.error.testConnection", e.getMessage()));
+            return badRequest(editServerForm.render(form, manager, breadcrumbs));
+        }
+        
+        // Update
         form.get().update();
-        // TODO place message in flash for server edited warning in view
+        
+        // Result
+        flash("success", EMessages.get("servers.success.edited", form.get().getID()));
         return redirect(routes.ServerController.list(0, "id", "asc", ""));
     }
 

@@ -26,7 +26,6 @@ import com.avaje.ebean.validation.NotNull;
 @SequenceGenerator(name="Seq", sequenceName="questions_id_seq")
 @Table(name="questions")
 public class QuestionModel extends ManageableModel{
-    private static final long serialVersionUID = 1L;
     
     @Id 
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Seq")//@GeneratedValue(strategy = GenerationType.AUTO)

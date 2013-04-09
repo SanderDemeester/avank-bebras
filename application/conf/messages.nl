@@ -28,6 +28,7 @@ forms.loading = Aan het laden
 forms.submit = Verzend
 forms.create = Maak aan
 forms.createArg = Maak {0} aan
+forms.update = Pas aan
 forms.uploadFile = Laad bestand op
 forms.title = Titel
 forms.error = Gelieve alle fouten te verbeteren.
@@ -152,6 +153,9 @@ servermanagement.servers.name = Servers
 servermanagement.servers.new = Nieuwe Server
 servermanagement.servers.server = Server
 servermanagement.servers.list = Lijst van Servers
+servers.error.testConnection = Fout bij het connecteren met de server: {0}
+servers.success.added = Server {0} is aangemaakt!
+servers.success.edited = Server {0} is aangepast!
 
 # question management
 questions.form.author = Auteur

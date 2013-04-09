@@ -5,6 +5,33 @@
 @import models.EMessages
 @import models.management.FieldType
 
+@***************************************
+* Flash messages *
+***************************************@
+@if(flash.containsKey("success")) {
+     <div class="alert alert-success">
+         <strong>Success!</strong> @flash.get("success")
+     </div>
+} 
+
+@if(flash.containsKey("error")) {
+     <div class="alert alert-error">
+         <strong>Error!</strong> @flash.get("error")
+     </div>
+} 
+
+@if(flash.containsKey("warning")) {
+     <div class="alert alert-warning">
+         <strong>Error!</strong> @flash.get("warning")
+     </div>
+} 
+
+@if(flash.containsKey("info")) {
+     <div class="alert alert-info">
+         <strong>Error!</strong> @flash.get("info")
+     </div>
+} 
+
 	@if(!manager.isIgnoreErrors() && modelForm.hasErrors()) {
 		<div class="alert alert-error">
 			<strong>Error</strong> There seem to be some issues with the following fields:

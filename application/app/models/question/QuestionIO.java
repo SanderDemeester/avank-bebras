@@ -206,7 +206,7 @@ public class QuestionIO {
      * @param out outputstream to where the content should be written to
      * @throws IOException when an error occurs with the I/O-streams
      */
-    private static void copyStream(InputStream in, OutputStream out) throws IOException {
+    public static void copyStream(InputStream in, OutputStream out) throws IOException {
         byte[] buffer = new byte[1024 * 4];
         int n = 0;
         while (-1 != (n = in.read(buffer))) {

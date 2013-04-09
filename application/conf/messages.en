@@ -28,6 +28,7 @@ forms.loading = Loading
 forms.submit = Submit
 forms.create = Create
 forms.createArg = Create {0}
+forms.update = Update
 forms.uploadFile = Upload file
 forms.title = Title
 forms.error = Please fix all errors.
@@ -154,6 +155,9 @@ servermanagement.servers.name = Servers
 servermanagement.servers.new = New Server
 servermanagement.servers.server = Server
 servermanagement.servers.list = List of Servers
+servers.error.testConnection = Error while connecting to server: {0}
+servers.success.added = Server {0} was successfully created!
+servers.success.edited = Server {0} was successfully edited!
 
 # question management
 questions.form.author = Author

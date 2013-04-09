@@ -1,14 +1,12 @@
 package controllers.question;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.avaje.ebean.annotation.Transactional;
 
 import models.EMessages;
 import models.data.Link;
 import models.dbentities.QuestionModel;
-import models.management.Listable;
 import models.management.ModelState;
 import models.question.QuestionManager;
 import models.question.server.Server;
@@ -17,6 +15,9 @@ import play.db.ebean.Model.Finder;
 import play.mvc.Result;
 import views.html.question.newQuestionForm;
 import views.html.question.questionManagement;
+
+import com.avaje.ebean.annotation.Transactional;
+
 import controllers.EController;
 
 /**
@@ -59,6 +60,13 @@ public class QuestionController extends EController{
         return ok(
             questionManagement.render(questionManager.page(page), questionManager, orderBy, order, filter, breadcrumbs)
         );
+    }
+    
+    // TODO: Add this to the question creation
+    public static Result approve() throws Exception{
+        Server server = Server.findById("avank.rubensworks.net");
+        server.sendFile("questionid", new File("questionSubmits/rutaelman/question.zip~c77614c5ffbfe4f5a40a8a5ecef3eaf5rutaelman"), "rutaelman");
+        return ok("ok");
     }
     
     /**

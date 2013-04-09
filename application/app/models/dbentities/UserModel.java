@@ -1,6 +1,3 @@
-/**
- *
- */
 package models.dbentities;
 
 import java.util.Date;
