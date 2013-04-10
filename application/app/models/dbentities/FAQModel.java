@@ -19,7 +19,7 @@ import play.data.validation.Constraints;
 @Entity
 @Table(name="faq")
 public class FAQModel extends ManageableModel {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "faq_id_seq")
@@ -39,8 +39,5 @@ public class FAQModel extends ManageableModel {
 	@Override
 	public String getID() {
 		return Integer.toString(id);
-	}
-	public String getName() {
-		return "FAQ";
 	}
 }

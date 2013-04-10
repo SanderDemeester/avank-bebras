@@ -3,15 +3,10 @@
  */
 package controllers.faq;
 
-import com.avaje.ebean.Ebean;
-import com.avaje.ebean.Page;
-
 import models.EMessages;
 import models.dbentities.FAQModel;
-import models.management.ManageableModel;
 import models.management.Manager;
 import models.management.ModelState;
-import play.db.ebean.Model.Finder;
 import play.mvc.Call;
 
 /**

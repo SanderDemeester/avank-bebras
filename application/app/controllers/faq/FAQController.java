@@ -71,7 +71,7 @@ public class FAQController extends EController {
 	 * @param order Which order the results have to be in
 	 * @param filter Filter to be used on the results
 	 * @param info	Info messages to be displayed
-	 * @return
+	 * @return the list of FAQs
 	 */
 	public static Result list(int page, String orderBy, String order, String filter,OperationResultInfo info){
 		//Creation of breadcrumbs
@@ -159,8 +159,17 @@ public class FAQController extends EController {
 		List<Link> breadcrumbs = manageBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("faq.alter"),"/manageFAQ/"+id));
         if(!isAuthorized())return ok(noaccess.render(breadcrumbs)); //Check if authorized
+        
+        OperationResultInfo inf = new OperationResultInfo();
 		
-		//Try to render a form from the to-be-edited FAQModel
+		//Check if the id is a valid int
+        try{
+        	Integer.parseInt(id);
+        }catch(NumberFormatException ne){
+        	inf.add(EMessages.get("faq.error"), OperationResultInfo.Type.ERROR);
+        	return list(0, "name", "asc", "",inf);
+        }
+        //Try to render form
 		Form<FAQModel> form = form(FAQModel.class).bindFromRequest().fill(new FAQManager(ModelState.UPDATE).getFinder().ref(id));
         try{
         	Result r = 
@@ -169,7 +178,6 @@ public class FAQController extends EController {
         }catch(Exception e){
         	//Something went wrong during the creation of the form (e.g. no database connection
         	//Redirect back to the list page with an error message
-        	OperationResultInfo inf = new OperationResultInfo();
         	inf.add(EMessages.get("faq.error"), OperationResultInfo.Type.ERROR);
         	return list(0, "name", "asc", "",inf);
         }
@@ -207,10 +215,12 @@ public class FAQController extends EController {
         }
         //Try to save the updated FAQModel
         FAQModel updated = form.get();
-        updated.id = Integer.parseInt(id);//TODO safe
+        
         try{
+        	updated.id = Integer.parseInt(id);
         	updated.update();
         }catch(Exception p){
+        	
         	//Something went wrong in the saving. Redirect back to the create page with an error alert
         	OperationResultInfo ori = new OperationResultInfo();
     		ori.add(EMessages.get("faq.error.savefail"), OperationResultInfo.Type.ERROR);
@@ -247,8 +257,7 @@ public class FAQController extends EController {
 	 */
 	public static boolean isAuthorized(){
 		//TODO test when it is possible to create admins
-		//return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGEFAQ);	
-		return true;
+		return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGEFAQ);	
 	}
 	
 	/**
