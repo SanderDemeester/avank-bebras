@@ -92,7 +92,6 @@ public class AuthenticationManager {
 
     /**
      * Login or mimic with a new usermodel
-     * @author Sander Demeester & Ruben Taelman
      * @param userModel
      * @return The logged in user.
      */
@@ -116,7 +115,6 @@ public class AuthenticationManager {
 
     /**
      * Logout a usermodel (or pop a mimic)
-     * @param userModel
      */
     public User logout() {
         Stack<User> stack = users.get(getAuthCookie());
@@ -134,8 +132,8 @@ public class AuthenticationManager {
     }
 
     /**
-     * Get the current authenticated user object
-     * @return
+     * Get the current authenticated user object.
+     * @return the current authenticated user object.
      */
     public User getUser() {
         Stack<User> stack = users.get(getAuthCookie());
@@ -153,7 +151,6 @@ public class AuthenticationManager {
 
     /**
      * Create user.
-     * @author Sander Demeester
      * @param registerForm
      * @return bebrasID
      * @throws Exception

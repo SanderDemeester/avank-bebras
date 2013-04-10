@@ -54,7 +54,6 @@ public class UserController extends EController{
 
     /**
      * This methode gets requested when the user clicks on "signup".
-     * @author Sander Demeester
      * @return Result page.
      */
     public static Result signup(){
@@ -69,7 +68,6 @@ public class UserController extends EController{
 
     /**
      * this methode is called when the user submits his/here register information.
-     * @author Sander Demeester
      * @return Result page
      */
     public static Result register(){
@@ -102,7 +100,6 @@ public class UserController extends EController{
 
     /**
      * This methode is called when the users clicks on "login".
-     * @author Sander Demeester, Ruben Taelman
      * @return returns the users cookie.
      */
     public static Result validate_login(String id, String password) throws Exception{
@@ -130,7 +127,6 @@ public class UserController extends EController{
 
     /**
      * Logout current user
-     * @author Sander Demeester
      * @return Result
      */
     public static Result logout(){
@@ -139,7 +135,6 @@ public class UserController extends EController{
     }
 
     /**
-     * @author Sander Demeester
      * @return Returns a scala template based on the type of user that is requesting the page.
      **/
     @SuppressWarnings("unchecked")
@@ -160,7 +155,6 @@ public class UserController extends EController{
 
     /**
      * Inline class that contains public fields for play forms.
-     * @author Sander Demeester
      */
     public static class Register{
         @Required
@@ -182,7 +176,6 @@ public class UserController extends EController{
     }
     /**
      * Inline class that contains public fields for play forms.
-     * @author Sander Demeester
      */
     public static class Login{
         public String id;
