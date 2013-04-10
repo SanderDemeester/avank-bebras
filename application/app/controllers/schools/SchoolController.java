@@ -138,7 +138,6 @@ public class SchoolController extends EController {
 	 * @return whether the user is authorized to view a School Management page
 	 */
 	private static boolean isAuthorized() {
-		// TODO test if works once it's possible to login as a teacher
 		// user is authorized if they're a teacher
 		return AuthenticationManager.getInstance().getUser().data.type == UserType.TEACHER;
 	}
@@ -150,7 +149,6 @@ public class SchoolController extends EController {
 	 *         isAuthorized)
 	 */
 	private static Teacher getTeacher() {
-		// TODO test if works once it's possible to login as a teacher
 		return (Teacher) AuthenticationManager.getInstance().getUser();
 
 	}
