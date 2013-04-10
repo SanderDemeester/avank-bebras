@@ -13,6 +13,7 @@ noAccess.text = You are not authorized to perform this action.
 error.title = Oops!
 error.text = Something went wrong. We've sent our pink monkeys to fix the problem
 error.back = Go back
+error.login = Invalid login.
 
 # Forms
 forms.cancel = Cancel
@@ -97,6 +98,8 @@ register.create_account = Create Account
 register.bebras_id_message = Your Bebras ID is: 
 register.inlog_message = You may login with your ID and password.
 register.title = Register
+register.same_email = There is already a user with the selected email address.
+register.giveinfo = Please enter an ID and password.
 
 #faq
 faq.empty = The FAQ is empty.

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import models.EMessages;
 import models.data.Link;
 import models.dbentities.UserModel;
 import models.user.AuthenticationManager;
@@ -60,7 +61,7 @@ public class UserController extends EController{
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link("Sign Up", "/signup"));
-        return ok(register.render("Registration",
+        return ok(register.render(EMessages.get("register.title"),
                 breadcrumbs,
                 form(Register.class)
                 ));
@@ -80,13 +81,13 @@ public class UserController extends EController{
 
             if(Ebean.find(UserModel.class).where().eq(
                     "email",registerForm.get().email).findUnique() != null){
-                return badRequest(error.render("Error",new ArrayList<Link>(),form(Register.class),"There is already a user with the selected email address"));
+                return badRequest(error.render(EMessages.get("error.title"),new ArrayList<Link>(),form(Register.class),EMessages.get("register.same_email")));
             }
         }
 
         // If the form contains error's (specified by "@"-annotation in the class "Register" then this will be true.
         if(registerForm.hasErrors()){
-            return badRequest(error.render("Error", new ArrayList<Link>(), form(Register.class), "Invalid request"));
+            return badRequest(error.render(EMessages.get("error.title"), new ArrayList<Link>(), form(Register.class), EMessages.get("error.text")));
         }
 
         // Delegate create user to Authentication Manager.
@@ -96,7 +97,7 @@ public class UserController extends EController{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return ok(registerLandingPage.render("Succes", new ArrayList<Link>(), bebrasID));
+        return ok(registerLandingPage.render(EMessages.get("info.success"), new ArrayList<Link>(), bebrasID));
     }
 
     /**
@@ -107,7 +108,7 @@ public class UserController extends EController{
     public static Result validate_login(String id, String password) throws Exception{
         // We do the same check here, if the input forms are empty return a error message.
         if(id == "" || password == "") {
-            return badRequest("Please enter an ID and password.");
+            return badRequest(EMessages.get("register.giveinfo"));
         } else if(AuthenticationManager.getInstance().validate_credentials(id, password)){
             String cookie = "";
             try {
@@ -123,7 +124,7 @@ public class UserController extends EController{
             }
             return ok(cookie);
         } else {
-            return badRequest("Invalid ID and password.");
+            return badRequest(EMessages.get("error.login"));
         }
     }
 

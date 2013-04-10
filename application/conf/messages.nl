@@ -14,6 +14,7 @@ error.title = Oeps!
 error.text = Er is iets misgelopen. Probeer opnieuw later.
 error.back = Ga terug
 error.date = Kon datum niet verwerken.
+error.login = Ongeldige login poging.
 
 # Forms
 forms.cancel = Annuleer
@@ -96,6 +97,8 @@ register.create_account = Maak account
 register.bebras_id_message = Uw Bebras ID is: 
 register.inlog_message = U kan inloggen me uw ID en wachtwoord.
 register.title = Registreer
+register.same_email = Er is al een gebruiker met het zelfde email addres.
+register.giveinfo = Geef uw Bebras ID en wachtwoord in.
 
 #faq
 faq.empty = De FAQ is leeg.
