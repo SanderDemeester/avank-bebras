@@ -3,7 +3,6 @@ package models.competition;
 import com.avaje.ebean.Page;
 import controllers.competition.routes;
 import models.dbentities.CompetitionModel;
-import models.management.ManageableModel;
 import models.management.Manager;
 import models.management.ModelState;
 import play.mvc.Call;
@@ -13,7 +12,7 @@ import play.mvc.Call;
  *
  * @author Kevin Stobbelaar
  */
-public class CompetitionManager extends Manager {
+public class CompetitionManager extends Manager<CompetitionModel> {
 
     // TODO: rekening houden met authentication !
 
@@ -36,9 +35,10 @@ public class CompetitionManager extends Manager {
      * @param page     page number
      * @return the requested page
      */
+    @Override
     @SuppressWarnings("unchecked")
-    public Page<ManageableModel> page(int page) {
-        return (Page<ManageableModel>) getFinder()
+    public Page page(int page) {
+        return  getFinder()
                 .where()
                 .ilike(filterBy, "%" + filter + "%")
                 .orderBy(orderBy + " " + order)
@@ -86,7 +86,7 @@ public class CompetitionManager extends Manager {
      */
     @Override
     public Call getEditRoute(String id) {
-        return null;
+        return routes.CompetitionController.viewCompetition(id, 0, "", "", "");
     }
 
     /**

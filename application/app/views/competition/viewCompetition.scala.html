@@ -1,0 +1,29 @@
+@*******************************************
+* View contest page                        *
+*                                          *
+* author: Kevin Stobbelaar                 *
+*******************************************@
+
+@(breadcrumbs : List[models.data.Link], currentPage: Page[models.management.ManageableModel], manager: models.management.Manager[_], currentOrderBy: String,
+currentOrder: String, currentFilter: String)
+
+@import models.EMessages
+@import views.html.management.list
+
+@main(EMessages.get("competition.edit"), breadcrumbs) {
+
+    <div class="row-fluid">
+
+        <div class="span6">
+            <p>
+                Hier komt een form met de basis informatie voor een contest.
+            </p>
+        </div>
+
+        <div class="span6">
+            @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
+        </div>
+
+    </div>
+
+}

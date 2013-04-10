@@ -77,6 +77,7 @@ question.questionset.form.difficulty = Difficulty
 question.questionset.addquestion.title = Add new question to the question set.
 question.questionset.addquestion.id = Id of the question:
 question.questionset.addquestion.brcr = Add
+question.questionset.manager.form.level = Level
 
 # Languages
 languages.language = Language
@@ -153,6 +154,8 @@ competition.create.end = End time of new contest:
 competition.create.start = Start time of new contest:
 competition.create.active = Check this box to make the contest active.
 competition.manager.form.name = Name
+competition.edit = Edit contest
+competition.edit.breadcrumb = Edit
 
 # server management
 servers.form.name = Server name

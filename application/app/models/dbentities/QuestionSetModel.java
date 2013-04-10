@@ -39,7 +39,7 @@ public class QuestionSetModel extends ManageableModel {
      * @return array with the current values of the fields to be represented in the table
      */
     public String[] getFieldValues() {
-        String[] result = {name};
+        String[] result = {name, level, Boolean.toString(active)};
         return result;
     }
 

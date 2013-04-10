@@ -6,7 +6,9 @@ import models.EMessages;
 import models.competition.CompetitionManager;
 import models.data.Link;
 import models.dbentities.CompetitionModel;
+import models.dbentities.QuestionSetModel;
 import models.management.ModelState;
+import models.question.questionset.QuestionSetManager;
 import models.question.questionset.QuestionSetQuestionManager;
 import play.data.Form;
 import play.mvc.Result;
@@ -85,6 +87,26 @@ public class CompetitionController extends EController {
         // TODO datums zijn voorlopig nog zonder tijdstip !
         competitionModel.save();
         return redirect(controllers.question.routes.QuestionSetController.create(competitionModel.id));
+    }
+
+    /**
+     * Returns the overview page for editing an existing contest.
+     * @param contestid contest id
+     * @param page page number
+     * @param orderBy column to sort on
+     * @param order sort order
+     * @param filter string to filter on
+     * @return overview page for a single contest
+     */
+    public static Result viewCompetition(String contestid, int page, String orderBy, String order, String filter){
+        List<Link> breadcrumbs = defaultBreadcrumbs();
+        breadcrumbs.add(new Link(EMessages.get("competition.edit.breadcrumb"), "/contests/create/:" + contestid));
+        QuestionSetManager questionSetManager = new QuestionSetManager(QuestionSetModel.class, ModelState.READ, contestid);
+        questionSetManager.setFilter(filter);
+        questionSetManager.setOrderBy(orderBy);
+        questionSetManager.setOrder(order);
+        return ok(views.html.competition.viewCompetition.render(breadcrumbs, questionSetManager.page(page),
+                questionSetManager, orderBy, order, filter ));
     }
 
 }
