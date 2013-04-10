@@ -151,6 +151,14 @@ schools.listtext = This is the list of schools you either created or are/were as
 schools.table.id = id
 schools.table.name = Name
 schools.table.address = Address
+schools.add = Add a new school
+# schools.error.notcomplete
+# schools.error.savefail
+# schools.list.error
+# schools.add.info
+# school.new.name
+# school.new.address
+# schools.add.success
 
 
 

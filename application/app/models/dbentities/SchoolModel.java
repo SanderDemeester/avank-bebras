@@ -4,8 +4,11 @@
 package models.dbentities;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import play.data.validation.Constraints.Required;
 
 import play.db.ebean.Model;
 
@@ -21,13 +24,16 @@ public class SchoolModel extends Model {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 	/**
 	 * 
 	 */
 	@Id
-	public String id;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "schools_id_seq")
+    public int id;
+	@Required
 	public String name;
+	@Required
 	public String address;
 	public String orig;
 	/**
@@ -36,7 +42,7 @@ public class SchoolModel extends Model {
 	 * @param address
 	 * @param orig
 	 */
-	public SchoolModel(String id, String name, String address, String orig) {
+	public SchoolModel(int id, String name, String address, String orig) {
 		this.id = id;
 		this.name = name;
 		this.address = address;
@@ -53,7 +59,7 @@ public class SchoolModel extends Model {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + id;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((orig == null) ? 0 : orig.hashCode());
 		return result;
@@ -76,10 +82,7 @@ public class SchoolModel extends Model {
 				return false;
 		} else if (!address.equals(other.address))
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if (id != other.id)
 			return false;
 		if (name == null) {
 			if (other.name != null)
@@ -93,6 +96,8 @@ public class SchoolModel extends Model {
 			return false;
 		return true;
 	}
+
+	
 	
 	
 	

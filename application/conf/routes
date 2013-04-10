@@ -68,6 +68,8 @@ GET    /manageFAQ/remove/:name        controllers.faq.FAQController.remove(name)
 # Schools
 
 GET		/schools						controllers.schools.SchoolController.viewSchools()
+GET		/schools/new					controllers.schools.SchoolController.create()
+POST	/schools/						controllers.schools.SchoolController.save()
 
 
 # Bootstrap resources

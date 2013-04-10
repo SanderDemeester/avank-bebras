@@ -148,6 +148,14 @@ schools.listtext = Dit is de lijst van scholen die u ofwel aangemaakt hebt of aa
 schools.table.id = id
 schools.table.name = Naam
 schools.table.address = Adres
+schools.add = Voeg een nieuwe school toe.
+# schools.error.notcomplete
+# schools.error.savefail
+# schools.list.error
+# schools.add.info
+# school.new.name
+# school.new.address
+# schools.add.success
 
 # server management
 servers.form.name = Server naam
