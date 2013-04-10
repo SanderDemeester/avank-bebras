@@ -10,6 +10,7 @@ import models.dbentities.QuestionSetModel;
 import models.management.ModelState;
 import models.question.questionset.QuestionSetManager;
 import models.question.questionset.QuestionSetQuestionManager;
+import models.user.AuthenticationManager;
 import play.data.Form;
 import play.mvc.Result;
 
@@ -83,6 +84,7 @@ public class CompetitionController extends EController {
         }
         CompetitionModel competitionModel = form.get();
         competitionModel.id = UUID.randomUUID().toString();
+        competitionModel.creator = AuthenticationManager.getInstance().getUser().getID();
         // TODO check startdate < enddate
         // TODO datums zijn voorlopig nog zonder tijdstip !
         competitionModel.save();

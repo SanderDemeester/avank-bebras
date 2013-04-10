@@ -1,7 +1,18 @@
 # App
 app.title = Avank Bebras - {0}
+app.startTitle = Avank Bebras
+app.home = Home
 app.error = Error
 app.Page = Page
+
+# Error
+notFound.title = Oops!
+notFound.text = The following page does not exist: {0}
+noAccess.title = Oops!
+noAccess.text = You are not authorized to perform this action.
+error.title = Oops!
+error.text = Something went wrong. We've sent our pink monkeys to fix the problem
+error.back = Go back
 
 # Forms
 forms.cancel = Cancel
@@ -85,13 +96,6 @@ languages.languages = Languages
 languages.en = English
 languages.nl = Dutch
 
-#Error
-genericError = Something went wrong. Please try again later.
-noAccess.title = Access Prohibited
-noAccess.text = You are not authorized to view this page / do this action.
-noAccess.alttext = Access prohibited symbol
-noAccess.imageAttr = Image attribution: By Mikadiou (Own work) [CC-BY-SA-3.0 (http://creativecommons.org/licenses/by-sa/3.0)], via Wikimedia Commons
-
 # Login
 redirect_message = You will be redirected to your homepage shortly.
 
@@ -107,12 +111,14 @@ register.confirm_password = Confirm Password
 register.create_account = Create Account
 register.bebras_id_message = Your Bebras ID is: 
 register.inlog_message = You may login with your ID and password.
+register.title = Register
 
 #faq
 faq.empty = The FAQ is empty.
 faq.error = Something went wrong during the retrieval of the FAQ. Try again later.
 faq.name = Name
 faq.language = Language
+faq.form.language = Language
 faq.managefaq = Manage FAQ
 faq.addfaq = Add new FAQ
 faq.new.title = New FAQ''s question

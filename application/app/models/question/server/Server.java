@@ -38,29 +38,29 @@ public class Server extends ManageableModel implements Listable{
     @Column(name="location")
     @Constraints.Required
     public String path;
-    
+
     @Editable
     @Constraints.Required
     public String ftpuri;
-    
+
     @Editable
     @Constraints.Required
     public int ftpport;
-    
+
     @Editable
     @Constraints.Required
     public String ftpuser;
-    
+
     @Editable
     @Constraints.Required
     public String ftppass;
-    
+
     public static Finder<String, Server> finder = new Finder<String, Server>(String.class, Server.class);
 
     public static Server findById(String name) {
         return finder.byId(name);
     }
-    
+
     /**
      * Returns those values that have to be represented in a table.
      *
@@ -81,7 +81,7 @@ public class Server extends ManageableModel implements Listable{
     public String getID() {
         return id;
     }
-    
+
     @Override
     public Map<String, String> options() {
         List<Server> servers = finder.all();

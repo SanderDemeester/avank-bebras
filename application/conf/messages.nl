@@ -1,7 +1,18 @@
 # App
 app.title = Avank Bebras - {0}
+app.startTitle = Avank Bebras
+app.home = Start
 app.error = Fout
 app.Page = Pagina
+
+# Error
+notFound.title = Oeps!
+notFound.text = Deze pagina bestaat niet: {0}
+noAccess.title = Oeps!
+noAccess.text = U bent niet bevoegd om deze actie uit te voeren.
+error.title = Oeps!
+error.text = Er is iets misgelopen. Probeer opnieuw later.
+error.back = Ga terug
 
 # Forms
 forms.cancel = Annuleer
@@ -67,15 +78,6 @@ languages.languages = Talen
 languages.en = Engels
 languages.nl = Nederlands
 
-
-# Error
-genericError = Er is iets misgelopen. Probeer opnieuw later.
-noAccess.title = Toegang Verboden.
-noAccess.text = U bent niet bevoegd om deze pagina te bekijken / deze actie uit te voeren.
-noAccess.alttext = Toegang verboden symbool
-noAccess.imageAttr = Rechten afbeelding: Door Mikadiou (Eigen werk) [CC-BY-SA-3.0 (http://creativecommons.org/licenses/by-sa/3.0)], via Wikimedia Commons
-
-
 # Login
 redirect_message = U zal zodadelijk worden doorgestuurd naar uw startpagina.
 
@@ -91,12 +93,14 @@ register.confirm_password = Bevestig password
 register.create_account = Maak account
 register.bebras_id_message = Uw Bebras ID is: 
 register.inlog_message = U kan inloggen me uw ID en wachtwoord.
+register.title = Registreer
 
 #faq
 faq.empty = De FAQ is leeg.
 faq.error = Er is iets misgelopen bij het ophalen van de FAQ. Probeer opnieuw later.
 faq.name = Naam
 faq.language = Taal
+faq.form.language = Taal
 faq.managefaq = Beheer FAQ
 faq.addfaq = Voeg nieuwe FAQ toe
 faq.new.title = Nieuwe FAQ''s vraag

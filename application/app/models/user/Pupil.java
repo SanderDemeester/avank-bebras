@@ -10,7 +10,7 @@ import models.dbentities.UserModel;
 public class Pupil extends Independent{
 
     public Pupil(UserModel data) {
-		super(data, UserType.PUPIL);
+        super(data, UserType.PUPIL);
     }
 
     /**

@@ -20,14 +20,14 @@ public class Organizer extends SuperUser{
         ROLES.add(Role.UPDATEQUESTION);
         ROLES.add(Role.DELETEQUESTION);
     }
-    
+
     protected Organizer(UserModel data, UserType type) {
         super(data, type);
     }
 
     public Organizer(UserModel data) {
-		this(data, UserType.ORGANIZER);
-	}
+        this(data, UserType.ORGANIZER);
+    }
     /**
      * Block user.
      * @param user
