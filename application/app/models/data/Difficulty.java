@@ -14,20 +14,20 @@ import models.data.manager.DataElement;
  */
 @Entity @Table(
         name="Difficulties",
-        uniqueConstraints=@UniqueConstraint(columnNames={"order"})
+        uniqueConstraints=@UniqueConstraint(columnNames={"ordr"})
 )
 public class Difficulty implements DataElement {
 
     @Id public String name;
-    public int order;
+    public int ordr;
 
-    public Difficulty(String name, int order) {
+    public Difficulty(String name, int ordr) {
         this.name = name;
-        this.order = order;
+        this.ordr = ordr;
     }
 
     @Override public String[] strings() {
-        return new String[] { name, Integer.toString(order) };
+        return new String[] { name, Integer.toString(ordr) };
     }
 
     @Override public String id() {
