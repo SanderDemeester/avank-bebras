@@ -1,4 +1,4 @@
-@(title: String, breadcrumbs : List[models.data.Link])
+@(breadcrumbs : List[models.data.Link])
 <ul class="breadcrumb">
 @for(link <- breadcrumbs) {
   @if(breadcrumbs.lastIndexOf(link)!=breadcrumbs.size()-1) {

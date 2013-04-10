@@ -24,8 +24,8 @@ public class Teacher extends SuperUser{
 
 
     public Teacher(UserModel data) {
-		super(data, UserType.TEACHER);
-	}
+        super(data, UserType.TEACHER);
+    }
     public void scheduleUnrestrictedCompetition(){
 
     }
@@ -51,7 +51,7 @@ public class Teacher extends SuperUser{
      */
     public Result manageCompetitions(){
         return null;
-    }	
+    }
     /*
      * Creates the personalized landing page for this instance of Teacher.
      * @return Personalized landing page for this instance of teacher

@@ -5,7 +5,6 @@
 
 # Home page
 GET     /                           controllers.Application.index()
-GET     /test				        controllers.Application.test(id: String)
 GET		/logout						controllers.UserController.logout()
 GET		/home						controllers.UserController.landingPage()
 
@@ -61,8 +60,8 @@ GET		/manageFAQ					controllers.faq.FAQController.list(p:Int ?= 0, s ?= "languag
 GET     /manageFAQ/new                controllers.faq.FAQController.create()
 POST    /manageFAQ/                   controllers.faq.FAQController.save()
 
-GET     /manageFAQ/:name              controllers.faq.FAQController.edit(name)
-POST    /manageFAQ/:name              controllers.faq.FAQController.update(name)
+GET     /manageFAQ/edit/:name              controllers.faq.FAQController.edit(name)
+POST    /manageFAQ/edit/:name              controllers.faq.FAQController.update(name)
 
 GET    /manageFAQ/remove/:name        controllers.faq.FAQController.remove(name)
 
@@ -74,3 +73,10 @@ GET		/schools						controllers.schools.SchoolController.viewSchools()
 # Bootstrap resources
 GET     /assets/img/glyphicons-halflings-white.png      controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings-white.png")
 GET     /assets/img/glyphicons-halflings.png            controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings.png")
+
+# Settings
+GET		/personal					controllers.user.PersonalPageController.show()
+GET		/personaledit				controllers.user.PersonalPageController.edit()
+POST	/personaledit/submit		controllers.user.PersonalPageController.changeInformation()
+GET		/passwedit					controllers.user.PersonalPageController.changePassword()
+POST	/passwedit/apply			controllers.user.PersonalPageController.checkValid()

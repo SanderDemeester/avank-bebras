@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import models.data.Link;
 import models.question.Question;
@@ -8,7 +9,6 @@ import models.question.QuestionBuilderException;
 import models.question.QuestionIO;
 import play.mvc.Result;
 import views.html.index;
-import views.html.test;
 
 /**
  * @author Ruben Taelman
@@ -16,21 +16,12 @@ import views.html.test;
  */
 public class Application extends EController {
 
-  public static Result index() {
-      Question q=null;
-      try {
-          q = QuestionIO.getFromXml("http://www.rubensworks.net/bebras/example_question_mc.xml");
-      } catch (QuestionBuilderException e) {
-        // TODO Auto-generated catch block
-          return internalServerError(e.getMessage());
-      }
-      return ok(index.render(q.getID(), new ArrayList<Link>()));
-  }
+    private static List<Link> breadcrumbs = new ArrayList<Link>();
+    static {
+        breadcrumbs.add(new Link("Home", "/"));
+    }
 
-  public static Result test(String id){
-      if(id=="link2")
-          return ok(test.render("Link2"));
-      else
-          return ok(test.render(id));
-  }
+    public static Result index() {
+        return ok(index.render("Nothing here yet...", breadcrumbs));
+    }
 }

@@ -27,7 +27,7 @@ public class Independent extends Authenticated{
         super(data, type); //abstract class constructor could init some values
         previousClassList = new ArrayList<String>();
     }
-    
+
     public Independent(UserModel data) {
         this(data, UserType.INDEPENDENT);
     }
@@ -82,5 +82,6 @@ public class Independent extends Authenticated{
 		
 		return res;
 	}
+
 
 }
