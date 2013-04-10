@@ -87,9 +87,6 @@ public class Teacher extends SuperUser{
      * @throws PersistenceException when something goes wrong during the retrieval
      */
     public Collection<SchoolModel> getSchools() throws PersistenceException{
-    	//TODO jUnit test
-    	//TODO safety
-    	
     	//Retrieve all the school the teacher created
     	Set<SchoolModel> res = new HashSet<SchoolModel>();
     			res.addAll(Ebean.find(SchoolModel.class).where()
@@ -97,7 +94,7 @@ public class Teacher extends SuperUser{
     	//Retrieve all the schoolids from classes the Teacher is associated with
     	HashSet<Integer> schoolIDs = new HashSet<Integer>();
     	for(ClassGroup cg : this.getClasses()){
-    		schoolIDs.add(cg.id);
+    		schoolIDs.add(cg.schoolid);
     	}
     	//Retrieve all the SchoolModels from those ids
     	for(Integer s : schoolIDs){
