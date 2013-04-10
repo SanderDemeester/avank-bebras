@@ -1,12 +1,8 @@
 @(message: String, breadcrumbs : List[models.data.Link])
 
-@main("Welcome to Bebras", breadcrumbs) {
-
-    <p class="lead">Some fancy intro.</p>
-    <p>@message</p>
-    <p>A wild progressbar appeared!</p>
-    <div class="progress progress-striped active">
-      <div class="bar" style="width: 20%;"></div>
+@main(EMessages.get("app.home"), breadcrumbs) {
+    <div class="hero-unit">
+        <h1>@EMessages.get("app.startTitle")</h1>
+        <p>@message</p>
     </div>
-    <i class="icon-search"></i>
 }

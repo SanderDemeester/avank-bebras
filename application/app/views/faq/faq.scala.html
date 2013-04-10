@@ -1,10 +1,14 @@
-@(breadcrumbs : List[models.data.Link],content : List[models.dbentities.FAQModel])
+@(breadcrumbs : List[models.data.Link],content : List[models.dbentities.FAQModel],
+messages : models.util.OperationResultInfo)
 
 @main("FAQ", breadcrumbs){
-	@for(q <- content){
-	<div class="well">
-		<p class="lead">@q.name</p>
-		@q.content
-	</div>
-	}
+@commons.info(messages)
+    @for(q <- content){
+    <div class="well">
+        <p class="lead">@q.name</p>
+        @for(line <- q.content.lines){
+            @line <br>
+        }
+    </div>
+    }
 }

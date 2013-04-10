@@ -47,10 +47,10 @@ public class XmlQuestionTest extends test.ContextTest {
     private static final String INCORRECT_MC_9 = "testincludes/incorrect_question_mc_9.xml";
     private static final String INCORRECT_REGEX_1 = "testincludes/incorrect_question_regex_1.xml";
     private static final String INCORRECT_REGEX_2 = "testincludes/incorrect_question_regex_2.xml";
-    
+
     private static Language en;
     private static Language nl;
-    
+
     /**
      * Fetch the languages
      */
@@ -85,7 +85,7 @@ public class XmlQuestionTest extends test.ContextTest {
         // Check the feedback
         Assert.assertEquals(q.getFeedback(en), "feedback_en.html");
         Assert.assertEquals(q.getFeedback(nl), "feedback_nl.html");
-        
+
         return q;
     }
 

@@ -1,24 +1,30 @@
 package models.question.server;
 
-import controllers.question.server.routes;
 import models.management.Manager;
-import play.db.ebean.Model.Finder;
+import models.management.ModelState;
 import play.mvc.Call;
+import controllers.question.server.routes;
 
 /**
  * Manager for the Server entity.
  *
- * @auhtor Kevin Stobbelaar
+ * @author Kevin Stobbelaar, Ruben Taelman
  */
 public class ServerManager extends Manager<Server> {
+    private String id;
 
-    public ServerManager(){
-        super(new Finder<String, models.question.server.Server>(String.class, models.question.server.Server.class), 6);
+    public ServerManager(String id, ModelState state) {
+        this(state);
+        this.id = id;
+    }
+
+    public ServerManager(ModelState state){
+        super(Server.class, state, "id", "id");
     }
 
     @Override
     public String[] getColumnHeaders() {
-        String[] columnHeaders = {"name", "path"};
+        String[] columnHeaders = {"id", "path"};
         return columnHeaders;
     }
 
@@ -32,7 +38,7 @@ public class ServerManager extends Manager<Server> {
      * @return Call Route that must be followed
      */
     @Override
-    public Call getListRoute(int page, String orderBy, String order, String filter) {
+    public Call getListRoute(int page, String filter) {
         return routes.ServerController.list(page, orderBy, order, filter);
     }
 
@@ -64,6 +70,26 @@ public class ServerManager extends Manager<Server> {
     @Override
     public Call getRemoveRoute(String id) {
         return routes.ServerController.remove(id);
+    }
+
+    @Override
+    public play.api.mvc.Call getSaveRoute() {
+        return routes.ServerController.save();
+    }
+
+    /**
+     * Returns the name of the object.
+     *
+     * @return name
+     */
+    @Override
+    public String getMessagesPrefix() {
+        return "servers";
+    }
+
+    @Override
+    public play.api.mvc.Call getUpdateRoute() {
+        return routes.ServerController.update(id);
     }
 
 }
