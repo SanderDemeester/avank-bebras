@@ -17,7 +17,7 @@ public class ServerManager extends Manager<Server> {
         this(state);
         this.id = id;
     }
-    
+
     public ServerManager(ModelState state){
         super(Server.class, state, "id", "id");
     }
@@ -71,12 +71,12 @@ public class ServerManager extends Manager<Server> {
     public Call getRemoveRoute(String id) {
         return routes.ServerController.remove(id);
     }
-    
+
     @Override
     public play.api.mvc.Call getSaveRoute() {
         return routes.ServerController.save();
     }
-    
+
     /**
      * Returns the name of the object.
      *

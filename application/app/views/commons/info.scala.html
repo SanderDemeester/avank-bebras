@@ -1,25 +1,25 @@
 @(info : models.util.OperationResultInfo)
 
 @for( i <- info.getList(models.util.OperationResultInfo.Type.SUCCESS)){
-	<div class="alert alert-success">
+    <div class="alert alert-success">
     <strong>@EMessages.get("info.success")!</strong> @i
     </div>
 }
 
 @for( i <- info.getList(models.util.OperationResultInfo.Type.INFO)){
-	<div class="alert alert-info">
+    <div class="alert alert-info">
     <strong>@EMessages.get("info.info")!</strong> @i
     </div>
 }
 
 @for( i <- info.getList(models.util.OperationResultInfo.Type.WARNING)){
-	<div class="alert alert-warning">
+    <div class="alert alert-warning">
     <strong>@EMessages.get("info.warning")!</strong> @i
     </div>
 }
 
 @for( i <- info.getList(models.util.OperationResultInfo.Type.ERROR)){
-	<div class="alert alert-error">
+    <div class="alert alert-error">
     <strong>@EMessages.get("info.error")!</strong> @i
     </div>
 }
