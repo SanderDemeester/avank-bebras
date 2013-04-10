@@ -10,7 +10,7 @@ import models.data.manager.DataManager;
 public class LinkManager extends DataManager<Link> {
 
     @Override public String[] columns() {
-        return new String[]{ "Name", "URL" };
+        return new String[]{ "forms.name", "links.url" };
     }
 
     @Override public String url() {
@@ -18,11 +18,15 @@ public class LinkManager extends DataManager<Link> {
     }
 
     @Override public String title() {
-        return EMessages.get("links.title");
+        return "links.title";
     }
 
     @Override public Class<Link> getTClass() {
         return Link.class;
+    }
+
+    @Override public Link createFromStrings(String... strings) {
+        return new Link(strings[0], strings[1]);
     }
 
 }

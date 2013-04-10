@@ -13,10 +13,10 @@ import controllers.EController;
 
 import models.data.Link;
 import models.data.manager.DataElement;
-import models.data.manager.DataFactory;
 import models.data.manager.DataManager;
-import models.data.links.LinkFactory;
 import models.data.links.LinkManager;
+import models.data.grades.GradeManager;
+import models.data.difficulties.DifficultyManager;
 
 import views.html.data.data_view;
 
@@ -26,14 +26,13 @@ import views.html.data.data_view;
  */
 public class DataController extends EController {
 
-    protected static Map<String, DataFactory<?>> factories
-        = new HashMap<String, DataFactory<?>>();
     protected static Map<String, DataManager<?>> managers
         = new HashMap<String, DataManager<?>>();
 
     static {
-        factories.put("links", new LinkFactory());
-        managers.put("links",  new LinkManager());
+        managers.put("links",        new LinkManager());
+        managers.put("grades",       new GradeManager());
+        managers.put("difficulties", new DifficultyManager());
     }
 
     /**
@@ -43,7 +42,6 @@ public class DataController extends EController {
     public static Result show(String t) {
         return ok(data_view.render(
             managers.get(t),
-            factories.get(t),
             breadcrumbs(t)
         ));
     }
@@ -55,9 +53,8 @@ public class DataController extends EController {
      //* @param fields The strings describing the new element.
     public static Result add(String t) {
         FakeForm ff = form(FakeForm.class).bindFromRequest().get();
-        String[] fields = ff.fields.toArray(new String[2]);
-        System.out.println(t + fields[0] + fields[1]);
-        managers.get(t).add(factories.get(t).createFromStrings(fields));
+        String[] fields = ff.fields.toArray(new String[0]);
+        managers.get(t).add(managers.get(t).createFromStrings(fields));
         return show(t);
     }
 

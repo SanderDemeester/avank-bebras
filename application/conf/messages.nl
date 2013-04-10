@@ -166,3 +166,9 @@ question.questions.list = Lijst van vragen
 
 # Data Management
 links.title = Startpagina Links
+links.url = URL
+grades.title = Leeftijdscategoriën
+grades.lowerbound = Minimale leeftijd
+grades.upperbound = Maximale leeftijd (exclusief)
+difficulties.title = Moeilijkheidsgraden
+difficulties.numerical = Getalsvoorstelling van de moeilijkheid (hoe hoger, hoe moeilijker)

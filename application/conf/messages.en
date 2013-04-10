@@ -168,3 +168,9 @@ question.questions.list = List of Questions
 
 # Data Management
 links.title = Home Page Links
+links.url = URL
+grades.title = Grades
+grades.lowerbound = Lowest Age
+grades.upperbound = Highest Age (exclusief)
+difficulties.title = Difficulty Levels
+difficulties.numerical = Numerical Difficulty Representation (Ascending difficulty)

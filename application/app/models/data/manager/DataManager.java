@@ -36,6 +36,12 @@ public abstract class DataManager<T extends DataElement> {
     public abstract Class<T> getTClass();
 
     /**
+     * Creates a new object from the Strings supplied.
+     * @return The factorized object.
+     */
+    public abstract T createFromStrings(String... strings);
+
+    /**
      * Adds the given element to the list of data elements.
      * @param element The new element
      */
