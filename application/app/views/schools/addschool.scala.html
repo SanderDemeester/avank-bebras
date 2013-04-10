@@ -6,7 +6,9 @@
 
 @main(EMessages.get("schools.add"),breadcrumbs){
 	@commons.info(inf)
-	@EMessages.get("schools.add.info") <br>
+	<div class="well">
+	@EMessages.get("schools.add.info") 
+	</div>
 	
 	@form(controllers.schools.routes.SchoolController.save()) {
 

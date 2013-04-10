@@ -26,7 +26,6 @@ import views.html.commons.noaccess;
 import views.html.schools.addschool;
 import views.html.schools.schools;
 import controllers.EController;
-import controllers.faq.routes;
 
 /**
  * @author Jens N. Rammant
@@ -55,7 +54,6 @@ public class SchoolController extends EController {
 	}
 	
 	 public static Result create(){
-		 //TODO write info 
 		 List<Link> breadcrumbs = getBreadcrumbs();
 	     breadcrumbs.add(new Link(EMessages.get("schools.add"),"/schools/new"));
 	     if(!isAuthorized())return ok(noaccess.render(breadcrumbs)); //Check if authorized
@@ -69,7 +67,7 @@ public class SchoolController extends EController {
 	 public static Result save(){
 		//Generate breadcrumbs
 	        List<Link> breadcrumbs = getBreadcrumbs();
-	        breadcrumbs.add(new Link(EMessages.get("schools.addfaq"),"/schools/new"));
+	        breadcrumbs.add(new Link(EMessages.get("schools.add"),"/schools/new"));
 	        if(!isAuthorized())return ok(noaccess.render(breadcrumbs)); //Check if authorized
 
 	        //Retrieve the form
