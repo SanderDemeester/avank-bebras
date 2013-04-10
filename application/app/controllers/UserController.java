@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import controllers.util.Mails;
 import models.EMessages;
 import models.data.Link;
 import models.dbentities.UserModel;
@@ -35,7 +36,7 @@ import com.avaje.ebean.Ebean;
 /**
  * This class receives all GET requests and based on there session identifier (cookie)
  * and current role in the system they will be served a different view.
- * @author Sander Demeester, Ruben Taelman
+ * @author Sander Demeester, Ruben Taelman, Eddy Van Den Heuvel
  */
 public class UserController extends EController{
 
@@ -139,7 +140,14 @@ public class UserController extends EController{
         return Results.redirect(routes.Application.index());
     }
 
+    /**
+     * This method is called when a user hits the 'Forgot Password' button.
+     * @return forgot_pwd page
+     */
     public static Result forgotPwd() {
+        Mails mail = new Mails();
+        mail.sendMail();
+
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link(EMessages.get("forgot_pwd.forgot_pwd"), "/forgotPwd"));
