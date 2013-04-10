@@ -1,9 +1,49 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
+@(title: String, breadcrumbs : List[models.data.Link])
+@import commons._
+@import models.EMessages
 
-</body>
-</html>
+@main(title, breadcrumbs){
+
+<legend>@EMessages.get("forgot_pwd.forgot_pwd")</legend>
+
+<div class="control-group row-fluid">
+    <label class="control-label span2">@EMessages.get("forgot_pwd.email")</label>
+    <div class="controls span10">
+        <div class="input-prepend span12">
+            <span class="add-on"><i class="icon-envelope"></i> </span> <input
+                type="text" class="input-xlarge span11" id="email" name="email"
+                placeholder="Email">
+        </div>
+    </div>
+</div>
+
+<div class="control-group row-fluid">
+    <label class="control-label span2">@EMessages.get("forgot_pwd.pwd")</label>
+    <div class="controls span10">
+        <div class="input-prepend span12">
+            <span class="add-on"><i class="icon-lock"></i> </span> <input
+                type="Password" id="reg_passwd" class="input-xlarge span11"
+                name="password" placeholder="Password">
+        </div>
+    </div>
+</div>
+
+<div class="control-group row-fluid">
+    <label class="control-label span2">@EMessages.get("forgot_pwd.confirm_pwd")</label>
+    <div class="controls span10">
+        <div class="input-prepend span12">
+            <span class="add-on"><i class="icon-lock"></i> </span> <input
+                type="Password" id="controle_passwd" class="input-xlarge span11"
+                name="controle_passwd" placeholder="Re-enter Password">
+        </div>
+    </div>
+</div>
+
+<div class="control-group row-fluid">
+    <div class="span2">&nbsp;</div>
+    <div class="controls span2">
+        <button type="submit" class="btn btn-primary" name="btn" id="btn">@EMessages.get("forgot_pwd.submit")</button>
+    </div>
+    <div class="span8">&nbsp;</div>
+</div>
+}

@@ -95,6 +95,13 @@ register.bebras_id_message = Uw Bebras ID is:
 register.inlog_message = U kan inloggen me uw ID en wachtwoord.
 register.title = Registreer
 
+# Forgot pwd
+forgot_pwd.forgot_pwd = Wachtwoord vergeten
+forgot_pwd.email = E-mail
+forgot_pwd.pwd = Wachtwoord
+forgot_pwd.confirm_pwd = Bevestig wachtwoord
+forgot_pwd.submit = Verzoek reset wachtwoord
+
 #faq
 faq.empty = De FAQ is leeg.
 faq.error = Er is iets misgelopen bij het ophalen van de FAQ. Probeer opnieuw later.
