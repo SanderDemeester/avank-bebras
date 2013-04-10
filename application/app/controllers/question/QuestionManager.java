@@ -1,4 +1,4 @@
-package models.question;
+package controllers.question;
 
 import models.dbentities.QuestionModel;
 import models.management.Manager;
@@ -25,7 +25,8 @@ public class QuestionManager extends Manager<QuestionModel>{
 
     @Override
     public Call getAddRoute() {
-        return routes.QuestionController.create();
+        // Not really an "add" page, but more an approval page for semi-created questions
+        return routes.QuestionController.listSubmits(0, "");
     }
 
     @Override

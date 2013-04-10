@@ -9,6 +9,7 @@
     currentOrder: String, currentFilter: String)
 
 @import models.EMessages
+@import views.html.commons.showflash
 
 @*****************************************
 * Helper generating the navigation links *
@@ -40,7 +41,8 @@
 * Helper generating the column headers *
 ***************************************@
 @header(key: String, title: String) = {
-    <th class="@key.replace(".","_") header @if(currentOrderBy == key) @{if(currentOrder == "asc") "headerSortDown" else "headerSortUp"}">
+    <th class="@key.replace(".","_") header">
+        <i class="icon @if(currentOrderBy.equals(key)) @{if(currentOrder == "asc") "icon-arrow-down" else "icon-arrow-up"}"></i>
         <a href="@link(0, key)">@title</a>
     </th>
 }
@@ -48,11 +50,7 @@
 @***************************************
 * Flash messages *
 ***************************************@
-@if(flash.containsKey("success")) {
-     <div class="alert alert-success">
-         <strong>Success!</strong> @flash.get("success")
-     </div>
-}
+@showflash()
 
 @***********************
 * The list view itself *
@@ -90,6 +88,7 @@
                 @for(headerName <- manager.getColumnHeaders){
                     @header(headerName, headerName)
                 }
+                <th></th>
             </tr>
         </thead>
 
@@ -100,14 +99,17 @@
                 @for(fieldValue <- item.getFieldValues){
                     <td>
                         @fieldValue
-                        <a class="button succes" id="edit" href="@manager.getEditRoute(item.getID())">
-                            <i class="icon-edit"></i>
-                        </a>
-                        <a class="button succes" id="remove" href="@manager.getRemoveRoute(item.getID())">
-                            <i class="icon-remove"></i>
-                        </a>
+                        
                     </td>
                 }
+                	<td>
+                		<a class="btn" id="edit" href="@manager.getEditRoute(item.getID())">
+                            <i class="icon-edit"></i>
+                        </a>
+                        <a class="btn" id="remove" href="@manager.getRemoveRoute(item.getID())">
+                            <i class="icon-remove"></i>
+                        </a>
+                	</td>
                 </tr>
             }
 
@@ -119,4 +121,11 @@
     * Pagination           *
     ***********************@
     @pagination(currentPage, currentOrderBy, currentOrder, currentFilter, manager)
+    
+    @* JS in view because of the EMessage *@
+    <script>
+		$("#remove").live("click", function() {
+			return confirm("@EMessages.get("management.confirmDelete")");
+		});
+	</script>
 }

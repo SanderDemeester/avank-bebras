@@ -1,5 +1,6 @@
 package models.question.server;
 
+import models.EMessages;
 import models.management.Manager;
 import models.management.ModelState;
 import play.mvc.Call;
@@ -24,7 +25,7 @@ public class ServerManager extends Manager<Server> {
 
     @Override
     public String[] getColumnHeaders() {
-        String[] columnHeaders = {"id", "path"};
+        String[] columnHeaders = {EMessages.get("servers.form.id"), EMessages.get("servers.form.path")};
         return columnHeaders;
     }
 

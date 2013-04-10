@@ -4,33 +4,12 @@
 @import helper.twitterBootstrap._
 @import models.EMessages
 @import models.management.FieldType
+@import views.html.commons.showflash
 
 @***************************************
 * Flash messages *
 ***************************************@
-@if(flash.containsKey("success")) {
-     <div class="alert alert-success">
-         <strong>Success!</strong> @flash.get("success")
-     </div>
-} 
-
-@if(flash.containsKey("error")) {
-     <div class="alert alert-error">
-         <strong>Error!</strong> @flash.get("error")
-     </div>
-} 
-
-@if(flash.containsKey("warning")) {
-     <div class="alert alert-warning">
-         <strong>Error!</strong> @flash.get("warning")
-     </div>
-} 
-
-@if(flash.containsKey("info")) {
-     <div class="alert alert-info">
-         <strong>Error!</strong> @flash.get("info")
-     </div>
-} 
+@showflash()
 
 	@if(!manager.isIgnoreErrors() && modelForm.hasErrors()) {
 		<div class="alert alert-error">

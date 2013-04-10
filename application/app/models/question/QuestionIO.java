@@ -222,7 +222,6 @@ public class QuestionIO {
      * @throws QuestionBuilderException possible things that can go wrong
      */
     public static Question getFromXml(String xml) throws QuestionBuilderException {
-        // TODO: Set server and ID upon loading the XML file
         Question question = null;
         try {
             // Parse the given XML into a DOM tree
@@ -250,7 +249,6 @@ public class QuestionIO {
      * @throws QuestionBuilderException possible things that can go wrong
      */
     public static Question getFromXml(Document doc) throws QuestionBuilderException {
-        // TODO: Set Server and ID upon loading the XML file
         Question question = null;
         try {
             // create a SchemaFactory capable of understanding our schemas

@@ -62,7 +62,7 @@ public class Server extends ManageableModel implements Listable{
 
     @Editable
     @Constraints.Required
-    public int ftpport;
+    public Integer ftpport;
 
     @Editable
     @Constraints.Required
@@ -71,6 +71,10 @@ public class Server extends ManageableModel implements Listable{
     @Editable
     @Constraints.Required
     public String ftppass;
+    
+    @Editable
+    @Constraints.Required
+    public String ftppath;
 
     public static Finder<String, Server> finder = new Finder<String, Server>(String.class, Server.class);
 
@@ -116,53 +120,46 @@ public class Server extends ManageableModel implements Listable{
         client.login(ftpuser, ftppass);
         
         // TODO: non-static dit
-        client.changeDirectory("avank.rubensworks.net/questions");
+        client.changeDirectory(ftppath);
         
         // Close server connection
         client.disconnect(true);
     }
     
-    public void sendFile(String questionID, File compressedQuestion, String userID) throws Exception {
+    public void sendFile(String questionID, File compressedQuestion, String userID) throws IllegalStateException, IOException, FTPIllegalReplyException, FTPException, FTPDataTransferException, FTPAbortedException {
         FTPClient client = new FTPClient();
-        try {
+        
+        // Connect to server
+        client.connect(ftpuri, ftpport);
+        client.login(ftpuser, ftppass);
+        // TODO: non-static dit
+        client.changeDirectory(ftppath);
+        client.createDirectory(questionID);
+        client.changeDirectory(questionID);
+        
+        // Extract question file
+        ZipInputStream zis = new ZipInputStream(new FileInputStream(compressedQuestion));
+        
+        // Loop over the entries
+        ZipEntry entry = zis.getNextEntry();
+        while(entry != null) {
+            File file = QuestionIO.addTempFile(
+                            QuestionIO.getUserUploadLocation(userID),
+                            entry.getName()
+                        );
+            QuestionIO.copyStream(zis, new FileOutputStream(file));
             
-            // Connect to server
-            client.connect(ftpuri, ftpport);
-            client.login(ftpuser, ftppass);
-            // TODO: non-static dit
-            client.changeDirectory("avank.rubensworks.net/questions");
-            client.createDirectory(questionID);
-            client.changeDirectory(questionID);
+            // Upload the new file
+            client.upload(file);
             
-            // Extract question file
-            ZipInputStream zis = new ZipInputStream(new FileInputStream(compressedQuestion));
-            
-            // Loop over the entries
-            ZipEntry entry = zis.getNextEntry();
-            while(entry != null) {
-                File file = QuestionIO.addTempFile(
-                                QuestionIO.getUserUploadLocation(userID),
-                                entry.getName()
-                            );
-                QuestionIO.copyStream(zis, new FileOutputStream(file));
-                
-                // Upload the new file
-                client.upload(file);
-                
-                // Close everything to avoid leaks
-                zis.closeEntry();
-                entry = zis.getNextEntry();
-            }
-            zis.close();
-        } catch (IllegalStateException | IOException | FTPIllegalReplyException
-                | FTPException | FTPDataTransferException | FTPAbortedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            throw new Exception(e);
-        } finally {
-            // Close server connection
-            client.disconnect(true);
+            // Close everything to avoid leaks
+            zis.closeEntry();
+            entry = zis.getNextEntry();
         }
+        zis.close();
+        
+        // We are nice and close the connection
+        client.disconnect(true);
     }
 
 }

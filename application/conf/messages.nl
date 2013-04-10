@@ -16,6 +16,7 @@ error.back = Ga terug
 
 # Forms
 forms.cancel = Annuleer
+forms.approve = Keur goed
 forms.delete = Verwijder
 forms.deleteArg = Verwijder {0}
 forms.remove = Verwijder
@@ -32,6 +33,7 @@ forms.update = Pas aan
 forms.uploadFile = Laad bestand op
 forms.title = Titel
 forms.error = Gelieve alle fouten te verbeteren.
+forms.open = Open
 
 # Question
 question.editor.name = Vraagstukontwerper
@@ -130,6 +132,7 @@ management.filter.input = Filter waarde
 management.filter.button = Filter
 management.empty = Niets om weer te geven.
 management.add = Nieuw
+management.confirmDelete = Ben je zeker dat je deze record wilt verwijderen?
 
 # competition
 competition.name = Competities
@@ -144,16 +147,17 @@ competition.create.start = Start tijdstip van de nieuwe competitie:
 competition.create.active = Vink aan om de competitie actief te maken.
 
 # server management
-servers.form.name = Server naam
+servers.form.id = Server naam
 servers.form.path = Server locatie
 servers.form.ftpuri = FTP locatie
 servers.form.ftpport = FTP poort
 servers.form.ftpuser = FTP gebruikersnaam
 servers.form.ftppass = FTP paswoord
+servers.form.ftppath = FTP pad
 servermanagement.servers.name = Servers
 servermanagement.servers.new = Nieuwe Server
 servermanagement.servers.server = Server
-servermanagement.servers.list = Lijst van Servers
+servermanagement.servers.list = Servers
 servers.error.testConnection = Fout bij het connecteren met de server: {0}
 servers.success.added = Server {0} is aangemaakt!
 servers.success.edited = Server {0} is aangepast!
@@ -166,4 +170,8 @@ questions.form.active = Actief
 questions.form.server = Server
 question.questions.name = Vragen
 question.questions.new = Nieuwe Vraag
-question.questions.list = Lijst van vragen
+question.questions.list = Vragen
+question.questions.listsubmits = Ingediende vragen
+question.questions.submitslist.user = Auteur
+question.questions.submitslist.date = Indien datum
+question.questions.submissions = Ingediende vragen
