@@ -103,6 +103,7 @@ faq.empty = The FAQ is empty.
 faq.error = Something went wrong during the retrieval of the FAQ. Try again later.
 faq.name = Name
 faq.language = Language
+faq.form.language = Language
 faq.managefaq = Manage FAQ
 faq.addfaq = Add new FAQ
 faq.new.title = New FAQ''s question

@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy;
  * @author Ruben Taelman
  *
  */
-@Retention(RetentionPolicy.RUNTIME)  
+@Retention(RetentionPolicy.RUNTIME)
 public @interface Editable {
     /**
      * An optional argument to tell the default form that this field only should

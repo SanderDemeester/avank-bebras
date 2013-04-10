@@ -6,27 +6,27 @@ package models.user;
  *
  */
 public enum Role {
-    
+
     // Mimicing
     MIMIC,
 
     // Anon
     LOGIN,
     REGISTER,
-    
+
     // Authenticated
     LANDINGPAGE,
     CHANGEPASSWORD,
-    
+
     // Organiser
     CREATEQUESTION,
     READQUESTION,
     UPDATEQUESTION,
     DELETEQUESTION,
-    
+
     // Author
     QUESTIONEDITOR,
-    
+
     //ADMIN
     MANAGEFAQ;
 

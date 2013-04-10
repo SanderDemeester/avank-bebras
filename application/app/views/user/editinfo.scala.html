@@ -1,7 +1,7 @@
 @(title: String, breadcrumbs : List[models.data.Link])
-@import commons._ 
-@import models.EMessages.get 
-@import helper._ 
+@import commons._
+@import models.EMessages.get
+@import helper._
 @import helper.twitterBootstrap._
 
 @main("Edit", breadcrumbs) {
@@ -18,57 +18,57 @@
               <li class="active"><a href="#">Edit information</a></li>
               <li><a href="passwedit">Edit password</a></li>
             </ul>
-          </div>  
+          </div>
     </div>
     <div class="span10">
-   		<legend>Edit my information</legend>
-   		Below you can edit your personal information.<br><br>
-   		<strong>@EMessages.get("Full name:")</strong><br>
- 		<div class="input-prepend">
-  			<span class="add-on"><i class="icon-user"></i></span>
-  			<input class="span12" type="text" id="fname" name="fname" placeholder="@models.user.AuthenticationManager.getInstance().getUser().data.name">
-		</div><br><br>
-				
-   		<strong>@EMessages.get("register.email")</strong><br>
- 		<div class="input-prepend">
-  			<span class="add-on"><i class="icon-envelope"></i></span>
-  			<input class="span12" type="text" id="email" name="email" placeholder="@models.user.AuthenticationManager.getInstance().getUser().data.email">
-		</div><br><br>
-		
-   		<strong>@EMessages.get("register.bday")</strong><br>
- 		<div class="input-prepend">
-  			<span class="add-on"><i class="icon-calendar"></i></span>
-			<input type="text" class="input-xlarge span11" id="bday" name="bday" 
-			placeholder="@models.user.AuthenticationManager.getInstance().getUser().data.birthdate">
-		</div><br><br>
-		
-   		<strong>@EMessages.get("register.gender")</strong><br>
- 		<div class="input-prepend">
-  			<span class="add-on"><i class="icon-user"></i></span>
- 				<select name="gender" id="gender" class="span12"
- 				placeholder="@models.user.AuthenticationManager.getInstance().getUser().data.gender"> 
- 					@for(gender <- models.user.Gender.values().toList) {
-						<option value="@gender.toString()">
-						@gender.toString()
-						</option> 
-					}
-				</select>
-		</div><br><br>
-		
-		
-		<strong>@EMessages.get("register.preflan")</strong><br>
- 		<div class="input-prepend">
-  			<span class="add-on"><i class="icon-globe"></i></span>
-				<select name="prefLanguage" id="prefLanguage" class="span12" 
-				placeholder="@models.user.AuthenticationManager.getInstance().getUser().data.preflanguage">
-					@for(language <- models.data.Language.listLanguages().toList) {
-						<option value="@language.getCode()">
-						@language.getName()
-						</option> 
-					}
-				</select>
-		</div><br><br>
-		
+           <legend>Edit my information</legend>
+           Below you can edit your personal information.<br><br>
+           <strong>@EMessages.get("Full name:")</strong><br>
+         <div class="input-prepend">
+              <span class="add-on"><i class="icon-user"></i></span>
+              <input class="span12" type="text" id="fname" name="fname" placeholder="@models.user.AuthenticationManager.getInstance().getUser().data.name">
+        </div><br><br>
+
+           <strong>@EMessages.get("register.email")</strong><br>
+         <div class="input-prepend">
+              <span class="add-on"><i class="icon-envelope"></i></span>
+              <input class="span12" type="text" id="email" name="email" placeholder="@models.user.AuthenticationManager.getInstance().getUser().data.email">
+        </div><br><br>
+
+           <strong>@EMessages.get("register.bday")</strong><br>
+         <div class="input-prepend">
+              <span class="add-on"><i class="icon-calendar"></i></span>
+            <input type="text" class="input-xlarge span11" id="bday" name="bday"
+            placeholder="@models.user.AuthenticationManager.getInstance().getUser().data.birthdate">
+        </div><br><br>
+
+           <strong>@EMessages.get("register.gender")</strong><br>
+         <div class="input-prepend">
+              <span class="add-on"><i class="icon-user"></i></span>
+                 <select name="gender" id="gender" class="span12"
+                 placeholder="@models.user.AuthenticationManager.getInstance().getUser().data.gender">
+                     @for(gender <- models.user.Gender.values().toList) {
+                        <option value="@gender.toString()">
+                        @gender.toString()
+                        </option>
+                    }
+                </select>
+        </div><br><br>
+
+
+        <strong>@EMessages.get("register.preflan")</strong><br>
+         <div class="input-prepend">
+              <span class="add-on"><i class="icon-globe"></i></span>
+                <select name="prefLanguage" id="prefLanguage" class="span12"
+                placeholder="@models.user.AuthenticationManager.getInstance().getUser().data.preflanguage">
+                    @for(language <- models.data.Language.listLanguages().toList) {
+                        <option value="@language.getCode()">
+                        @language.getName()
+                        </option>
+                    }
+                </select>
+        </div><br><br>
+
     </div>
   </div>
 </div>
