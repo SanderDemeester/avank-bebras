@@ -99,10 +99,16 @@ register.title = Register
 
 # Forgot pwd
 forgot_pwd.forgot_pwd = Forgot password
+forgot_pwd.id = Bebras-ID
 forgot_pwd.email = Email
-forgot_pwd.pwd = Password
-forgot_pwd.confirm_pwd = Confirm Password
 forgot_pwd.submit = Reset password
+
+# Edit pwd
+edit_pwd.edit_pwd = Edit password
+edit_pwd.current_pwd = Current password
+edit_pwd.new_pwd = New password
+edit_pwd.confirm_new_pwd = Confirm new password
+edit_pwd.submit = Ok
 
 #faq
 faq.empty = The FAQ is empty.

@@ -97,10 +97,16 @@ register.title = Registreer
 
 # Forgot pwd
 forgot_pwd.forgot_pwd = Wachtwoord vergeten
+forgot_pwd.id = Bebras-ID
 forgot_pwd.email = E-mail
-forgot_pwd.pwd = Wachtwoord
-forgot_pwd.confirm_pwd = Bevestig wachtwoord
 forgot_pwd.submit = Verzoek reset wachtwoord
+
+# Edit pwd
+edit_pwd.edit_pwd = Wachtwoord veranderen
+edit_pwd.current_pwd = Huidig wachtwoord
+edit_pwd.new_pwd = Nieuw wachtwoord
+edit_pwd.confirm_new_pwd = Herhaal nieuw wachtwoord
+edit_pwd.submit = Bevestigen
 
 #faq
 faq.empty = De FAQ is leeg.
