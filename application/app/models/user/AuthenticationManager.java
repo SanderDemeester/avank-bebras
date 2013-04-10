@@ -18,6 +18,7 @@ import javax.crypto.spec.PBEKeySpec;
 import org.apache.commons.codec.binary.Hex;
 import com.avaje.ebean.Ebean;
 import controllers.UserController.Register;
+import models.EMessages;
 import models.dbentities.UserModel;
 import models.user.factory.AdministratorUserFactory;
 import models.user.factory.AuthorUserFactory;
@@ -194,7 +195,7 @@ public class AuthenticationManager {
         try{
             secretFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
         }catch(Exception e){
-            throw new Exception("Erorr while creating PBKDF2 factory.");
+            throw new Exception(EMessages.get("error.text"));
         }
 
         // Generate password from PBKDF2.
@@ -206,7 +207,7 @@ public class AuthenticationManager {
             passwordHEX = new String(Hex.encodeHex(passwordByteString));
             birtyDay = new SimpleDateFormat("yyyy-mm-dd").parse(registerForm.get().bday);
         }catch(Exception e){
-            throw new Exception("Error while parsing date");
+            throw new Exception(EMessages.get("error.date"));
         }
 
 
@@ -266,18 +267,18 @@ public class AuthenticationManager {
             // TODO: waarom niet de secret van Play zelf?
             secretFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
         }catch(Exception e){
-            throw new Exception("Erorr while creating PBKDF2 factory.");
+            throw new Exception(EMessages.get("error.text"));
         }
 
         try {
             passwordByteString = secretFactory.generateSecret(PBKDF2).getEncoded();
         }catch (InvalidKeySpecException e) {
-            throw new Exception("Error while generating users password");
+            throw new Exception(EMessages.get("error.text"));
         }
         try{
             passwordHEX = new String(Hex.encodeHex(passwordByteString));
         }catch(Exception e){
-            throw new Exception("Error while encoding users password");
+            throw new Exception(EMessages.get("error.text"));
         }
 
         if(passwordHEX.equals(passwordDB)){

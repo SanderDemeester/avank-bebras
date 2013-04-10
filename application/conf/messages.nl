@@ -13,6 +13,7 @@ noAccess.text = U bent niet bevoegd om deze actie uit te voeren.
 error.title = Oeps!
 error.text = Er is iets misgelopen. Probeer opnieuw later.
 error.back = Ga terug
+error.date = Kon datum niet verwerken.
 
 # Forms
 forms.cancel = Annuleer
