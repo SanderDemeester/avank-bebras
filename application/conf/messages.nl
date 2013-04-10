@@ -80,6 +80,7 @@ languages.nl = Nederlands
 
 # Login
 redirect_message = U zal zodadelijk worden doorgestuurd naar uw startpagina.
+login.bebras_ID = Bebras ID
 
 # Register
 register.firstname = Voornaam: 

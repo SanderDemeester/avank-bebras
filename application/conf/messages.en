@@ -82,6 +82,7 @@ languages.nl = Dutch
 
 # Login
 redirect_message = You will be redirected to your homepage shortly.
+login.bebras_ID = Bebras ID
 
 # Register
 register.firstname = First name:
