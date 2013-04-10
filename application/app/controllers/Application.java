@@ -15,7 +15,7 @@ import views.html.index;
  * @author Sander Demeester
  */
 public class Application extends EController {
-    
+
     private static List<Link> breadcrumbs = new ArrayList<Link>();
     static {
         breadcrumbs.add(new Link("Home", "/"));

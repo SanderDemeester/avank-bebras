@@ -1,7 +1,7 @@
-@(title: String, breadcrumbs : List[models.data.Link], sform: Form[UserController.Register]) 
-@import commons._ 
-@import models.EMessages.get 
-@import helper._ 
+@(title: String, breadcrumbs : List[models.data.Link], sform: Form[UserController.Register])
+@import commons._
+@import models.EMessages.get
+@import helper._
 @import helper.twitterBootstrap._
 
 @main(EMessages.get("register.title"), breadcrumbs) {
@@ -10,115 +10,115 @@
 <legend>Sign Up</legend>
 <!--FIRST BLOCK -->
 <div class="control-group row-fluid">
-	<label class="control-label span2">@EMessages.get("register.firstname")</label>
-	<div class="controls span10">
-		<div class="input-prepend inline span12">
-			<span class="add-on"><i class="icon-user"></i> </span> <input
-				type="text" class="input-xlarge span11" id="fname" name="fname"
-				placeholder="First Name">
-		</div>
-	</div>
+    <label class="control-label span2">@EMessages.get("register.firstname")</label>
+    <div class="controls span10">
+        <div class="input-prepend inline span12">
+            <span class="add-on"><i class="icon-user"></i> </span> <input
+                type="text" class="input-xlarge span11" id="fname" name="fname"
+                placeholder="First Name">
+        </div>
+    </div>
 </div>
 
 <!--SECOND BLOCK -->
 <div class="control-group row-fluid">
-	<label class="control-label span2">@EMessages.get("register.lastname")</label>
-	<div class="controls span10">
-		<div class="input-prepend span12">
-			<span class="add-on"><i class="icon-user"></i> </span> <input
-				type="text" class="input-xlarge span11" id="lname" name="lname"
-				placeholder="Last Name">
-		</div>
-	</div>
+    <label class="control-label span2">@EMessages.get("register.lastname")</label>
+    <div class="controls span10">
+        <div class="input-prepend span12">
+            <span class="add-on"><i class="icon-user"></i> </span> <input
+                type="text" class="input-xlarge span11" id="lname" name="lname"
+                placeholder="Last Name">
+        </div>
+    </div>
 </div>
 
 <!--THIRD BLOCK -->
 <div class="control-group row-fluid">
-	<label class="control-label span2">@EMessages.get("register.email")</label>
-	<div class="controls span10">
-		<div class="input-prepend span12">
-			<span class="add-on"><i class="icon-envelope"></i> </span> <input
-				type="text" class="input-xlarge span11" id="email" name="email"
-				placeholder="Email">
-		</div>
-	</div>
+    <label class="control-label span2">@EMessages.get("register.email")</label>
+    <div class="controls span10">
+        <div class="input-prepend span12">
+            <span class="add-on"><i class="icon-envelope"></i> </span> <input
+                type="text" class="input-xlarge span11" id="email" name="email"
+                placeholder="Email">
+        </div>
+    </div>
 </div>
 
 
 <!-- FOURTH BLOCK -->
 <div class="control-group row-fluid">
-	<label class="control-label span2">@EMessages.get("register.bday")</label>
-	<div class="controls span10">
-		<div class="input-prepend span12">
-			<span class="add-on"><i class="icon-user"></i> </span> <input
-				type="text" class="input-xlarge span11" id="bday" name="bday"
-				placeholder="Birthday">
-		</div>
-	</div>
+    <label class="control-label span2">@EMessages.get("register.bday")</label>
+    <div class="controls span10">
+        <div class="input-prepend span12">
+            <span class="add-on"><i class="icon-user"></i> </span> <input
+                type="text" class="input-xlarge span11" id="bday" name="bday"
+                placeholder="Birthday">
+        </div>
+    </div>
 </div>
 
 <!-- FIFTH BLOCK -->
 <div class="control-group row-fluid">
-	<label class="control-label span2">@EMessages.get("register.gender")</label>
-	<div class="controls span10">
-	<i class="icon-user"></i>
-		<select name="gender" id="gender" class="span11"> @for(gender <- models.user.Gender.values().toList) {
-		
-			<option value="@gender.toString()">
-			
-			@gender.toString()
-			</option> 
-			}
-		</select>
-	</div>
+    <label class="control-label span2">@EMessages.get("register.gender")</label>
+    <div class="controls span10">
+    <i class="icon-user"></i>
+        <select name="gender" id="gender" class="span11"> @for(gender <- models.user.Gender.values().toList) {
+
+            <option value="@gender.toString()">
+
+            @gender.toString()
+            </option>
+            }
+        </select>
+    </div>
 </div>
 
 <!-- SIXTH BLLOCK -->
 <div class="control-group row-fluid">
-	<label class="control-label span2">@EMessages.get("register.preflan")</label>
-	<div class="controls span10">
+    <label class="control-label span2">@EMessages.get("register.preflan")</label>
+    <div class="controls span10">
 <i class="icon-user"></i>
-		<select name="prefLanguage" id="prefLanguage" class="span11">
-			@for(language <- models.data.Language.listLanguages().toList) {
-			<option value="@language.getCode()">
-			@language.getName()
-			</option> 
-			}
-		</select>
-	</div>
+        <select name="prefLanguage" id="prefLanguage" class="span11">
+            @for(language <- models.data.Language.listLanguages().toList) {
+            <option value="@language.getCode()">
+            @language.getName()
+            </option>
+            }
+        </select>
+    </div>
 </div>
 
 <!-- SEVENTH BLOCK -->
 <div class="control-group row-fluid">
-	<label class="control-label span2">@EMessages.get("register.password")</label>
-	<div class="controls span10">
-		<div class="input-prepend span12">
-			<span class="add-on"><i class="icon-lock"></i> </span> <input
-				type="Password" id="reg_passwd" class="input-xlarge span11"
-				name="password" placeholder="Password">
-		</div>
-	</div>
+    <label class="control-label span2">@EMessages.get("register.password")</label>
+    <div class="controls span10">
+        <div class="input-prepend span12">
+            <span class="add-on"><i class="icon-lock"></i> </span> <input
+                type="Password" id="reg_passwd" class="input-xlarge span11"
+                name="password" placeholder="Password">
+        </div>
+    </div>
 </div>
 
 <!-- EIGHTH BLOCK -->
 <div class="control-group row-fluid">
-	<label class="control-label span2">@EMessages.get("register.confirm_password")</label>
-	<div class="controls span10">
-		<div class="input-prepend span12">
-			<span class="add-on"><i class="icon-lock"></i> </span> <input
-				type="Password" id="controle_passwd" class="input-xlarge span11"
-				name="controle_passwd" placeholder="Re-enter Password">
-		</div>
-	</div>
+    <label class="control-label span2">@EMessages.get("register.confirm_password")</label>
+    <div class="controls span10">
+        <div class="input-prepend span12">
+            <span class="add-on"><i class="icon-lock"></i> </span> <input
+                type="Password" id="controle_passwd" class="input-xlarge span11"
+                name="controle_passwd" placeholder="Re-enter Password">
+        </div>
+    </div>
 </div>
 
 <!-- NINTH BLOCK -->
 <div class="control-group row-fluid">
-	<div class="span2">&nbsp;</div>
-	<div class="controls span2">
-		<button type="submit" class="btn btn-primary" name="btn" id="btn">@EMessages.get("register.create_account")</button>
-	</div>
-	<div class="span8">&nbsp;</div>
+    <div class="span2">&nbsp;</div>
+    <div class="controls span2">
+        <button type="submit" class="btn btn-primary" name="btn" id="btn">@EMessages.get("register.create_account")</button>
+    </div>
+    <div class="span8">&nbsp;</div>
 </div>
 }
 <script src="@routes.Assets.at("javascripts/registration/bday_datepicker.js")" type="text/javascript"></script>

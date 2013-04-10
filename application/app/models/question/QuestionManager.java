@@ -44,7 +44,7 @@ public class QuestionManager extends Manager<QuestionModel>{
     public play.api.mvc.Call getSaveRoute() {
         return routes.QuestionController.save();
     }
-    
+
     @Override
     public String getMessagesPrefix() {
         return "questions";

@@ -26,13 +26,13 @@ import controllers.EController;
  *
  */
 public class QuestionController extends EController{
-    
+
     private static Finder<String, Server> serverFinder = new Finder<String, Server>(String.class, Server.class);
-    
+
     public static Result LIST = redirect(
             routes.QuestionController.list(0, "id", "asc", "")
     );
-    
+
     /**
      * Make default breadcrumbs for this controller
      * @return default breadcrumbs
@@ -43,7 +43,7 @@ public class QuestionController extends EController{
         breadcrumbs.add(new Link(EMessages.get("question.questions.name"), "/questions"));
         return breadcrumbs;
     }
-    
+
     /**
      * This result will redirect to the question list page
      *
@@ -52,7 +52,7 @@ public class QuestionController extends EController{
     @Transactional(readOnly=true)
     public static Result list(int page, String orderBy, String order, String filter){
         List<Link> breadcrumbs = defaultBreadcrumbs();
-        
+
         QuestionManager questionManager = new QuestionManager(ModelState.READ);
         questionManager.setOrder(order);
         questionManager.setOrderBy(orderBy);
@@ -79,15 +79,15 @@ public class QuestionController extends EController{
     public static Result create(){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questions.new"), "/questions/create"));
-        
+
         Form<QuestionModel> form = form(QuestionModel.class).bindFromRequest();
-        
+
         QuestionManager manager = new QuestionManager(ModelState.CREATE);
         manager.setIgnoreErrors(true);
-        
+
         return ok(newQuestionForm.render(form, manager, breadcrumbs));
     }
-    
+
     /**
      * This will handle the creation of a new question and redirect
      * to the question list
@@ -98,15 +98,15 @@ public class QuestionController extends EController{
     public static Result save(){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questions.new"), "/questions/create"));
-        
+
         Form<QuestionModel> form = form(QuestionModel.class).bindFromRequest();
-        
+
         if(form.hasErrors()) {
             return badRequest(newQuestionForm.render(form, new QuestionManager(ModelState.CREATE), breadcrumbs));
         }
-        
+
         form.get().save();
-        
+
         flash("success", "Question " + form.get().officialid + " has been created!");
         return LIST;
     }

@@ -30,9 +30,9 @@ import controllers.EController;
  * @author Kevin Stobbelaar
  */
 public class ServerController extends EController {
-    
-    private Finder<String,Server> serverFinder = new Finder<String,Server>(String.class, Server.class); 
-    
+
+    private Finder<String,Server> serverFinder = new Finder<String,Server>(String.class, Server.class);
+
     /**
      * Make default breadcrumbs for this controller
      * @return default breadcrumbs
@@ -52,12 +52,12 @@ public class ServerController extends EController {
     @Transactional(readOnly=true)
     public static Result list(int page, String orderBy, String order, String filter){
         List<Link> breadcrumbs = defaultBreadcrumbs();
-        
+
         ServerManager serverManager = new ServerManager(ModelState.READ);
         serverManager.setOrder(order);
         serverManager.setOrderBy(orderBy);
         serverManager.setFilter(filter);
-        
+
         return ok(
             serverManagement.render(serverManager.page(page), serverManager, orderBy, order, filter, breadcrumbs)
         );
@@ -73,12 +73,12 @@ public class ServerController extends EController {
     public static Result create(){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("servermanagement.servers.new"), "/servers/create"));
-        
+
         Form<Server> form = form(Server.class).bindFromRequest();
-        
+
         ServerManager manager = new ServerManager(ModelState.CREATE);
         manager.setIgnoreErrors(true);
-        
+
         return ok(newServerForm.render(form, manager, breadcrumbs));
     }
 
@@ -129,10 +129,10 @@ public class ServerController extends EController {
     public static Result edit(String name){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("servermanagement.servers.server") + " " + name, "/servers/:" + name));
-        
+
         ServerManager manager = new ServerManager(name, ModelState.UPDATE);
         manager.setIgnoreErrors(true);
-        
+
         Form<Server> form = form(Server.class).bindFromRequest().fill(manager.getFinder().ref(name));
         return ok(editServerForm.render(form, manager, breadcrumbs));
     }
@@ -148,7 +148,7 @@ public class ServerController extends EController {
     public static Result update(String name){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("servermanagement.servers.server") + " " + name, "/servers/:" + name));
-        
+
         ServerManager manager = new ServerManager(name, ModelState.UPDATE);
         
         // Validate form

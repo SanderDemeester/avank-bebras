@@ -31,7 +31,7 @@ public class RegexQuestionFactory extends QuestionFactory<RegexQuestion> {
         this.processCommonElements(question, node);
         return question;
     }
-    
+
     @Override
     public Question newQuestion() {
         return new RegexQuestion();
