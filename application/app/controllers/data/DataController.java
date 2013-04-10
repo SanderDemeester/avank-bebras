@@ -40,9 +40,19 @@ public class DataController extends EController {
      * @param t The type of elements, for instance "links".
      */
     public static Result show(String t) {
+        return fail(t, null);
+    }
+
+    /**
+     * Show the current list of elements along with an error message.
+     * @param t The type of elements, for instance "links".
+     * @param exception The exception message, or null if none.
+     */
+    public static Result fail(String t, String exception) {
         return ok(data_view.render(
             managers.get(t),
-            breadcrumbs(t)
+            breadcrumbs(t),
+            exception
         ));
     }
 
@@ -54,7 +64,11 @@ public class DataController extends EController {
     public static Result add(String t) {
         FakeForm ff = form(FakeForm.class).bindFromRequest().get();
         String[] fields = ff.fields.toArray(new String[0]);
-        managers.get(t).add(managers.get(t).createFromStrings(fields));
+        try {
+            managers.get(t).add(managers.get(t).createFromStrings(fields));
+        } catch(GradeManager.CreationException e) {
+            return fail(t, e.getEMessage());
+        }
         return show(t);
     }
 

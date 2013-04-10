@@ -166,6 +166,9 @@ question.questions.new = Nieuwe Vraag
 question.questions.list = Lijst van vragen
 
 # Data Management
+manager.error.fieldno = Het aantal voorziene velden is incorrect.
+manager.error.empty = Gelieve alle velden in te vullen.
+manager.error.nan = Gelieve een geheel getal in te vullen.
 links.title = Startpagina Links
 links.url = URL
 grades.title = Leeftijdscategoriën

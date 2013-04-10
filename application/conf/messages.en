@@ -168,6 +168,9 @@ question.questions.new = New Question
 question.questions.list = List of Questions
 
 # Data Management
+manager.error.fieldno = Please provide all fields.
+manager.error.empty = Please fill in all fields.
+manager.error.nan = Please provide an integer number.
 links.title = Home Page Links
 links.url = URL
 grades.title = Grades

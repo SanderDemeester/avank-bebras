@@ -1,5 +1,7 @@
 package models.data.grades;
 
+import java.lang.NumberFormatException;
+
 import models.data.Grade;
 import models.data.manager.DataManager;
 
@@ -26,12 +28,27 @@ public class GradeManager extends DataManager<Grade> {
         return Grade.class;
     }
 
-    @Override public Grade createFromStrings(String... strings) {
-        return new Grade(
-            strings[0],
-            Integer.parseInt(strings[1]),
-            Integer.parseInt(strings[2])
+    @Override public Grade createFromStrings(String... strings) 
+            throws CreationException {
+        if(strings.length != 3) throw new CreationException(
+                "Incorrect strings length.",
+                "manager.error.fieldno"
         );
+        if("".equals(strings[0])) throw new CreationException(
+                "Name field left empty.",
+                "manager.error.empty"
+        );
+        int upper = 0, lower = 0;
+        try {
+            upper = Integer.parseInt(strings[1]);
+            lower = Integer.parseInt(strings[2]);
+        } catch(NumberFormatException e) {
+            throw new CreationException(
+                    "Not a number as bound.",
+                    "manager.error.nan"
+            );
+        }
+        return new Grade(strings[0], upper, lower);
     }
 
 }

@@ -25,7 +25,16 @@ public class LinkManager extends DataManager<Link> {
         return Link.class;
     }
 
-    @Override public Link createFromStrings(String... strings) {
+    @Override public Link createFromStrings(String... strings)
+            throws CreationException {
+        if(strings.length != 2) throw new CreationException(
+                "Incorrect number of fields.",
+                "manager.error.fieldno"
+        );
+        if("".equals(strings[0]) || "".equals(strings[1])) throw new CreationException(
+                "Empty fields.",
+                "manager.error.empty"
+        );
         return new Link(strings[0], strings[1]);
     }
 
