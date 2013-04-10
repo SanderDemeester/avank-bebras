@@ -19,7 +19,7 @@ import play.db.ebean.Model;
  */
 @Entity
 @Table(name="Schools")
-public class SchoolModel extends Model {
+public class SchoolModel extends Model implements Comparable<SchoolModel>{
 
 	/**
 	 * 
@@ -95,6 +95,15 @@ public class SchoolModel extends Model {
 		} else if (!orig.equals(other.orig))
 			return false;
 		return true;
+	}
+
+	@Override
+	public int compareTo(SchoolModel o) {
+		int res = this.name.toLowerCase().compareTo(o.name.toLowerCase());
+		if (res!=0) return res;
+		res = this.address.toLowerCase().compareTo(o.address.toLowerCase());
+		if(res!=0) return res;
+		return Integer.compare(this.id, o.id);
 	}
 
 	
