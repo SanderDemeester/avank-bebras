@@ -1,0 +1,31 @@
+@(title: String, breadcrumbs : List[models.data.Link])
+@import commons._
+@import models.EMessages.get
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("Edit password", breadcrumbs) {
+
+@helper.form(action=controllers.user.routes.PersonalPageController.changePassword) {
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span2">
+        <h3>Welcome!</h3>
+          <div class="bs-docs-example">
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="personal">Personal information</a></li>
+              <li><a href="personaledit">Edit information</a></li>
+              <li class="active"><a href="#">Edit Password</a></li>
+            </ul>
+          </div>
+    </div>
+    <div class="span10">
+           <legend>Edit password</legend>
+        TODO EDDY
+    </div
+  </div>
+</div>
+
+}
+}

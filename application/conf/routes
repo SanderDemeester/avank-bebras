@@ -4,7 +4,6 @@
 
 # Home page
 GET     /                           controllers.Application.index()
-GET     /test				        controllers.Application.test(id: String)
 GET		/logout						controllers.UserController.logout()
 GET		/home						controllers.UserController.landingPage()
 
@@ -69,3 +68,10 @@ GET    /manageFAQ/remove/:name        controllers.faq.FAQController.remove(name)
 # Bootstrap resources
 GET     /assets/img/glyphicons-halflings-white.png      controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings-white.png")
 GET     /assets/img/glyphicons-halflings.png            controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings.png")
+
+# Settings
+GET		/personal					controllers.user.PersonalPageController.show()
+GET		/personaledit				controllers.user.PersonalPageController.edit()
+POST	/personaledit/submit		controllers.user.PersonalPageController.changeInformation()
+GET		/passwedit					controllers.user.PersonalPageController.changePassword()
+POST	/passwedit/apply			controllers.user.PersonalPageController.checkValid()

@@ -111,7 +111,7 @@ public abstract class Question {
     public List<Language> getLanguages() {
         return languages;
     }
-    
+
     /**
      * Returns a list of all languages that are not available in this question
      * @return list of languages

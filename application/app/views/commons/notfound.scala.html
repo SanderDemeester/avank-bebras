@@ -1,0 +1,3 @@
+@(breadcrumbs : List[models.data.Link], path : String)
+
+@error(breadcrumbs, EMessages.get("notFound.title"), EMessages.get("notFound.text", path))

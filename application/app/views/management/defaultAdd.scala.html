@@ -6,15 +6,15 @@
 
 @main(EMessages.get(manager.getMessagesPrefix() + ".title.add"), breadcrumbs) {
 
-	@form(manager.getSaveRoute()) {
-	
-	    @defaultForm(modelForm, manager)
-	
-	    <div class="actions">
-	        <input type="submit" value="@EMessages.get("forms.create")" class="btn btn-primary">
-	        <a href="@manager.getListRoute()" class="btn">@EMessages.get("forms.cancel")</a>
-	    </div>
-	
-	}
+    @form(manager.getSaveRoute()) {
+
+        @defaultForm(modelForm, manager)
+
+        <div class="actions">
+            <input type="submit" value="@EMessages.get("forms.create")" class="btn btn-primary">
+            <a href="@manager.getListRoute()" class="btn">@EMessages.get("forms.cancel")</a>
+        </div>
+
+    }
 
 }

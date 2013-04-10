@@ -21,28 +21,30 @@ import com.avaje.ebean.Page;
 public abstract class Manager<T extends ManageableModel> {
 
     private Finder<String, T> finder;
-    
+
     protected int pageSize;
     protected String orderBy;
     protected String order;
     protected String filterBy;
     protected String filter;
-    
+
     public static final int DEFAULTPAGESIZE = 10;
     public static final String DEFAULTORDER = "asc";
-    
+
     protected Map<String, FieldType> fields = new LinkedHashMap<String, FieldType>();
     protected Map<String, Class<?>> fieldTypes = new HashMap<String, Class<?>>();
     protected Map<String, Boolean> disabledFields = new HashMap<String, Boolean>();
-    
+
     private boolean ignoreErrors = false;
     private ModelState state;
 
     /**
      * Constructor for manager.
      *
-     * @param finder finder object that helps building queries and returning pages.
-     * @param pageSize number of elements displayed on one page
+     * @param modelClass The class object for the ManageableModel class
+     * @param state The state this manager should be in
+     * @param orderBy The column name the rows should be ordered by
+     * @param filterBy The column name the rows should be filtered by
      */
     public Manager(Class<T> modelClass, ModelState state, String orderBy, String filterBy){
         this.finder = new Finder<String, T>(String.class, modelClass);
@@ -51,7 +53,7 @@ public abstract class Manager<T extends ManageableModel> {
         this.state = state;
         this.orderBy = orderBy;
         this.filterBy = filterBy;
-        
+
         // Add the necessary fields to the fields-map
         for(Field field : modelClass.getDeclaredFields()) {
             if(field.isAnnotationPresent(Editable.class)) {
@@ -62,15 +64,23 @@ public abstract class Manager<T extends ManageableModel> {
             }
         }
     }
-    
+
+    /**
+     * Enable or disable the display of errors in a form view
+     * @param ignoreErrors if the errors should be ignored
+     */
     public void setIgnoreErrors(boolean ignoreErrors) {
         this.ignoreErrors = ignoreErrors;
     }
-    
+
+    /**
+     * Check if the errors should be ignored in a form view
+     * @return if the errors should be ignored
+     */
     public boolean isIgnoreErrors() {
         return this.ignoreErrors;
     }
-    
+
     /**
      * Set the pagesize for pagination
      * @param pageSize new pagesize
@@ -78,7 +88,7 @@ public abstract class Manager<T extends ManageableModel> {
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
     }
-    
+
     /**
      * Set the default field on which the sorting should happen
      * @param orderBy order field
@@ -86,7 +96,7 @@ public abstract class Manager<T extends ManageableModel> {
     public void setOrderBy(String orderBy) {
         this.orderBy = orderBy;
     }
-    
+
     /**
      * Set the sorting order
      * @param order "asc" or "desc"
@@ -94,7 +104,7 @@ public abstract class Manager<T extends ManageableModel> {
     public void setOrder(String order) {
         this.order = order;
     }
-    
+
     /**
      * Set the default field on which the filtering should happen
      * @param filterBy filter field
@@ -102,7 +112,7 @@ public abstract class Manager<T extends ManageableModel> {
     public void setFilterBy(String filterBy) {
         this.filterBy = filterBy;
     }
-    
+
     /**
      * Set the filter value
      * @param filter the value to filter on
@@ -110,7 +120,7 @@ public abstract class Manager<T extends ManageableModel> {
     public void setFilter(String filter) {
         this.filter = filter;
     }
-    
+
     /**
      * Returns the field to filter by
      * @return the field to filter by depending on the filter input
@@ -121,8 +131,7 @@ public abstract class Manager<T extends ManageableModel> {
 
     /**
      * Returns a page with elements of type T.
-     *
-     * WARNING: it's better to override this method in your own manager!
+     * Overriding is advised.
      *
      * @param page     page number
      * @return the requested page
@@ -155,7 +164,8 @@ public abstract class Manager<T extends ManageableModel> {
     }
 
     /**
-     * Returns the column headers for the objects of type T.
+     * Returns the column headers for the objects of type T. This array must agree with
+     * getFieldValues() from the ManageableModel
      *
      * @return column headers
      */
@@ -165,16 +175,14 @@ public abstract class Manager<T extends ManageableModel> {
      * Returns the route that must be followed to refresh the list.
      *
      * @param page     current page number
-     * @param orderBy  name of the column to sort on
-     * @param order    ASC or DESC
      * @param filter   filter on the items
      * @return Call Route that must be followed
      */
     public abstract Call getListRoute(int page, String filter);
-    
+
     /**
      * Returns the route that must be followed to refresh the list with default parameters
-     * @return
+     * @return Call Route that must be followed
      */
     public Call getListRoute() {
         return getListRoute(0, "");
@@ -200,19 +208,19 @@ public abstract class Manager<T extends ManageableModel> {
      * @result Call path of the route that must be followed
      */
     public abstract Call getRemoveRoute(String id);
-    
+
     /**
      * Returns the path of the route that must be followed to save the current item.
      * @return Call path of the route that must be followed
      */
     public abstract play.api.mvc.Call getSaveRoute();
-    
+
     /**
      * Returns the path of the route that must be followed to update(save) the current item.
      * @return Call path of the route that must be followed
      */
     public abstract play.api.mvc.Call getUpdateRoute();
-    
+
     /**
      * The field names this manager will show
      * @return set with field names
@@ -221,7 +229,7 @@ public abstract class Manager<T extends ManageableModel> {
         // A set is required to keep the original order after conversion to a scala collection
         return fields.keySet().iterator();
     }
-    
+
     /**
      * Disabling a field will make them uneditable in the form
      * @param field field name
@@ -229,7 +237,7 @@ public abstract class Manager<T extends ManageableModel> {
     private void disableField(String field) {
         disabledFields.put(field, true);
     }
-    
+
     /**
      * Check if a field is disabled
      * @param field field name
@@ -241,7 +249,7 @@ public abstract class Manager<T extends ManageableModel> {
         else if(!state.equals(ModelState.UPDATE)) return false;
         else                                      return val;
     }
-    
+
     /**
      * The fields this manager will show
      * @return map with field names and their type
@@ -249,7 +257,12 @@ public abstract class Manager<T extends ManageableModel> {
     public Map<String, FieldType> getFields() {
         return fields;
     }
-    
+
+    /**
+     * Create an empty dummy object for a certain field from the ManageableModel.
+     * @param field the name of the field
+     * @return a new dummy object for the given field
+     */
     public Object getDummyField(String field) {
         try {
             return fieldTypes.get(field).newInstance();
@@ -257,7 +270,7 @@ public abstract class Manager<T extends ManageableModel> {
             return null;
         }
     }
-    
+
     /**
      * Returns the prefix for translation messages.
      *
