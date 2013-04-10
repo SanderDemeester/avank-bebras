@@ -7,7 +7,7 @@
 @import models.EMessages
 
 @main(manager.title(), breadcrumbs) {
-<table class="table table-striped table-bordered table-hover table-condensed">
+<table class="table table-striped table-hover">
     <thead>
         <tr>
             @for(title <- manager.columns()) { <!---->
@@ -22,10 +22,19 @@
             <td>@field</td>
             }
             <td>
-                <a class="button minibutton" href="/manage/@manager.url()/remove?id=@element.id()">@EMessages.get("forms.delete")</a>
+                <a class="btn btn-small" href="/manage/@manager.url()/remove?id=@element.id()">@EMessages.get("forms.delete")</a>
             </td>
         </tr>
         }
+        <tr>
+            <form method="get" action="/manage/@manager.url()/add">
+                @for(i <- 0 to factory.stringsExpected() - 1) { <!-- each input field -->
+                <td><input type="text" name="fields[@i]" /></td>
+                }
+                <td><input type="submit" class="btn btn-small"
+                    value="@EMessages.get("forms.add")" /></td>
+            </form>
+        </tr>
     </tbody>
 </table>
 }

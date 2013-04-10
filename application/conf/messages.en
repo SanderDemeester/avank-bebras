@@ -31,6 +31,7 @@ forms.createArg = Create {0}
 forms.uploadFile = Upload file
 forms.title = Title
 forms.error = Please fix all errors.
+forms.add = Add
 
 # Question
 question.editor.name = Question Editor

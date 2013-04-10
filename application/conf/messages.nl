@@ -31,6 +31,7 @@ forms.createArg = Maak {0} aan
 forms.uploadFile = Laad bestand op
 forms.title = Titel
 forms.error = Gelieve alle fouten te verbeteren.
+forms.add = Voeg toe
 
 # Question
 question.editor.name = Vraagstukontwerper

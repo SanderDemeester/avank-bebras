@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 
+import javax.validation.Valid;
+
 import play.mvc.Result;
 
 import controllers.EController;
@@ -49,9 +51,12 @@ public class DataController extends EController {
     /**
      * This method adds a new element of T to the list.
      * @param t The type of elements, for instance "links".
-     * @param fields The strings describing the new element.
      */
-    public static Result add(String t, String... fields) {
+     //* @param fields The strings describing the new element.
+    public static Result add(String t) {
+        FakeForm ff = form(FakeForm.class).bindFromRequest().get();
+        String[] fields = ff.fields.toArray(new String[2]);
+        System.out.println(t + fields[0] + fields[1]);
         managers.get(t).add(factories.get(t).createFromStrings(fields));
         return show(t);
     }
@@ -72,6 +77,11 @@ public class DataController extends EController {
         crumbs.add(new Link("Home", "/"));
         crumbs.add(new Link(managers.get(t).title(), "/manage/" + managers.get(t).url()));
         return crumbs;
+    }
+
+    public static class FakeForm {
+        @Valid public List<String> fields;
+        public FakeForm() {}
     }
 
 }
