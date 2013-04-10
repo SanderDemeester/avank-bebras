@@ -24,7 +24,7 @@ public class ClassGroup extends Model{
     public int id;
     public String name;
     public Date expdate;
-    public String schoolid;
+    public int schoolid;
     public String teacherid;
     public String level;
 

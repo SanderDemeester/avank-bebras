@@ -257,8 +257,7 @@ public class FAQController extends EController {
 	 */
 	public static boolean isAuthorized(){
 		//TODO test when it is possible to create admins
-		//return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGEFAQ);	
-		return true;
+		return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGEFAQ);	
 	}
 	
 	/**

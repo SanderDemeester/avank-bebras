@@ -2,6 +2,7 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+
 # Home page
 GET     /                           controllers.Application.index()
 GET		/logout						controllers.UserController.logout()
@@ -63,6 +64,12 @@ GET     /manageFAQ/edit/:name              controllers.faq.FAQController.edit(na
 POST    /manageFAQ/edit/:name              controllers.faq.FAQController.update(name)
 
 GET    /manageFAQ/remove/:name        controllers.faq.FAQController.remove(name)
+
+# Schools
+
+GET		/schools						controllers.schools.SchoolController.viewSchools()
+GET		/schools/new					controllers.schools.SchoolController.create()
+POST	/schools/						controllers.schools.SchoolController.save()
 
 
 # Bootstrap resources
