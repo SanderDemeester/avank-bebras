@@ -16,14 +16,18 @@ public class CompetitionManager extends Manager<CompetitionModel> {
 
     // TODO: rekening houden met authentication !
 
+    private String contestid;
+
     /**
      * Constructor for manager class.
      *
+     * @param contestid  contest id
      * @param state      model state
      * @param orderBy    column to be ordered on
      */
-    public CompetitionManager(ModelState state, String orderBy) {
+    public CompetitionManager(ModelState state, String orderBy, String contestid) {
         super(CompetitionModel.class, state, orderBy, "name");
+        this.contestid = contestid;
         setPageSize(5);
     }
 
@@ -116,7 +120,7 @@ public class CompetitionManager extends Manager<CompetitionModel> {
      */
     @Override
     public play.api.mvc.Call getUpdateRoute() {
-        return null;
+        return routes.CompetitionController.updateCompetition(contestid);
     }
 
     /**

@@ -59,7 +59,7 @@ public abstract class Manager<T extends ManageableModel> {
             if(field.isAnnotationPresent(Editable.class)) {
                 fields.put(field.getName(), FieldType.getType(field.getType()));
                 fieldTypes.put(field.getName(), field.getType());
-                if(field.getAnnotation(Editable.class).uponCreation())
+                if(field.getAnnotation(Editable.class).uponCreation() || field.getAnnotation(Editable.class).alwaysHidden())
                     this.disableField(field.getName());
             }
         }

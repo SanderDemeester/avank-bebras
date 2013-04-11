@@ -18,4 +18,5 @@ public @interface Editable {
      * @return if the field should only be editable upon creation of a model
      */
     boolean uponCreation() default false;
+    boolean alwaysHidden() default false;
 }

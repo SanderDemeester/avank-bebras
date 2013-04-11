@@ -4,24 +4,59 @@
 * author: Kevin Stobbelaar                 *
 *******************************************@
 
-@(breadcrumbs : List[models.data.Link], currentPage: Page[models.management.ManageableModel], manager: models.management.Manager[_], currentOrderBy: String,
-currentOrder: String, currentFilter: String)
+@(breadcrumbs : List[models.data.Link], currentPage: Page[models.management.ManageableModel],
+QSmanager: models.management.Manager[_], currentOrderBy: String, currentOrder: String, currentFilter: String,
+modelForm: Form[_ <: models.management.ManageableModel], Cmanager: models.management.Manager[_])
 
 @import models.EMessages
 @import views.html.management.list
+@import helper._
+@import helper.twitterBootstrap._
 
 @main(EMessages.get("competition.edit"), breadcrumbs) {
 
     <div class="row-fluid">
 
-        <div class="span6">
-            <p>
-                Hier komt een form met de basis informatie voor een contest.
-            </p>
+        <div class="span4">
+
+            <div>
+                <h3> @EMessages.get("competition.view.edit") </h3>
+            </div>
+
+            <div>
+                @form(Cmanager.getUpdateRoute()) {
+
+                    @inputText(modelForm("name"), '_label -> EMessages.get("competition.create.name"), '_showConstraints -> false)
+
+                    @select(
+                        modelForm("type"),
+                        options = options(models.competition.CompetitionType.values().toList.map(_.toString)),
+                        '_label -> EMessages.get("competition.create.type"),
+                        '_showConstraints -> false
+                    )
+
+                    @checkbox(modelForm("active"), '_label -> None, '_text -> EMessages.get("competition.create.active"), '_showConstraints -> false)
+
+                    @inputDate(modelForm("starttime"), '_label -> EMessages.get("competition.create.start"), '_showConstraints -> false)
+
+                    @inputDate(modelForm("endtime"), '_label -> EMessages.get("competition.create.end"), '_showConstraints -> false)
+
+                    <div class="actions">
+                        <input type="submit" value="@EMessages.get("forms.update")" class="btn btn-primary">
+                        <a href="@Cmanager.getListRoute()" class="btn">@EMessages.get("forms.cancel")</a>
+                    </div>
+                }
+            </div>
         </div>
 
-        <div class="span6">
-            @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
+        <div class="span8">
+            <div>
+                <h3> @EMessages.get("competition.view.qs") </h3>
+            </div>
+
+            <div>
+                @list(currentPage, QSmanager, currentOrderBy, currentOrder, currentFilter)
+            </div>
         </div>
 
     </div>

@@ -52,7 +52,8 @@ POST    /questionset/questions      controllers.question.QuestionSetController.u
 GET     /contests                   controllers.competition.CompetitionController.index(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 GET     /contests/new/contest       controllers.competition.CompetitionController.create()
 POST    /contests                   controllers.competition.CompetitionController.save()
-GET     /contests/:id               controllers.competition.CompetitionController.viewCompetition(id, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /contest/:id                controllers.competition.CompetitionController.viewCompetition(id, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+POST    /contests/                  controllers.competition.CompetitionController.updateCompetition(id)
 
 # Question Management
 GET     /questions                  controllers.question.QuestionController.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")

@@ -150,7 +150,7 @@ public class ServerController extends EController {
     @Transactional
     public static Result remove(String name){
         Server server = new ServerManager(ModelState.DELETE).getFinder().byId(name);
-        server.delete();
+        server.delete(name);
         return redirect(routes.ServerController.list(0, "id", "asc", ""));
     }
 

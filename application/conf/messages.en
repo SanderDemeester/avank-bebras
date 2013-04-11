@@ -31,6 +31,7 @@ forms.createArg = Create {0}
 forms.uploadFile = Upload file
 forms.title = Title
 forms.error = Please fix all errors.
+forms.update = Update
 
 # Question
 question.editor.name = Question Editor
@@ -160,6 +161,13 @@ competition.create.end = End time of new contest:
 competition.create.start = Start time of new contest:
 competition.create.active = Check this box to make the contest active.
 competition.manager.form.name = Name
+competition.manager.form.type = Type
+competition.manager.form.active = Active
+competition.manager.form.starttime = Start time
+competition.manager.form.endtime = End time
+competition.view.edit = Edit contest information.
+competition.view.qs = Question sets for this contest:
+
 competition.edit = Edit contest
 competition.edit.breadcrumb = Edit
 

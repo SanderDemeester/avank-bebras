@@ -17,9 +17,8 @@ import java.util.Date;
 @Table(name="contests")
 public class CompetitionModel extends ManageableModel {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 4L;
 
-    @Constraints.Required
     public String creator;
 
     @Id
