@@ -1,12 +1,5 @@
 package controllers.question;
 
-import it.sauronsoftware.ftp4j.FTPAbortedException;
-import it.sauronsoftware.ftp4j.FTPDataTransferException;
-import it.sauronsoftware.ftp4j.FTPException;
-import it.sauronsoftware.ftp4j.FTPIllegalReplyException;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,20 +9,22 @@ import models.dbentities.QuestionModel;
 import models.dbentities.UserModel;
 import models.management.ModelState;
 import models.question.server.Server;
+import models.question.server.ServerManager;
 import models.question.submits.Submit;
 import models.question.submits.SubmitsPage;
-import models.user.AuthenticationManager;
 import play.data.Form;
 import play.db.ebean.Model.Finder;
 import play.mvc.Result;
-import views.html.question.newQuestionForm;
 import views.html.question.approveQuestionForm;
+import views.html.question.newQuestionForm;
+import views.html.question.editQuestionForm;
 import views.html.question.questionManagement;
 import views.html.question.submitsManagement;
 
 import com.avaje.ebean.annotation.Transactional;
 
 import controllers.EController;
+import controllers.question.routes;
 
 /**
  * Actions for controlling the CRUD actions for questions (including approval)
@@ -203,7 +198,72 @@ public class QuestionController extends EController{
 
         form.get().save();
 
-        flash("success", "Question " + form.get().officialid + " has been created!");
+        flash("success", EMessages.get("question.success.added", form.get().officialid));
+        return LIST;
+    }
+    
+    /**
+     * This result will redirect to the edit a question page containing the
+     * corresponding form.
+     *
+     * @param name name of the question to be changed
+     * @return edit a question page
+     */
+    @Transactional(readOnly=true)
+    public static Result edit(String name){
+        List<Link> breadcrumbs = defaultBreadcrumbs();
+        breadcrumbs.add(new Link(EMessages.get("question.questions.question") + " " + name, ""));
+
+        QuestionManager manager = new QuestionManager(name, ModelState.UPDATE);
+        manager.setIgnoreErrors(true);
+
+        Form<QuestionModel> form = form(QuestionModel.class).bindFromRequest().fill(manager.getFinder().ref(name));
+        return ok(editQuestionForm.render(form, manager, breadcrumbs));
+    }
+
+    /**
+     * This will handle the update of an existing question and redirect
+     * to the question list
+     *
+     * @param name name of the question to be updated
+     * @return question list page
+     * @throws Exception 
+     */
+    @Transactional
+    public static Result update(String name) throws Exception{
+        List<Link> breadcrumbs = defaultBreadcrumbs();
+        breadcrumbs.add(new Link(EMessages.get("question.questions.question") + " " + name, ""));
+
+        QuestionManager manager = new QuestionManager(name, ModelState.UPDATE);
+        
+        // Validate form
+        Form<QuestionModel> form = form(QuestionModel.class).fill(manager.getFinder().byId(name)).bindFromRequest();
+        if(form.hasErrors()) {
+            return badRequest(editQuestionForm.render(form, manager, breadcrumbs));
+        }
+        
+        // Update
+        form.get().update();
+        
+        // Result
+        flash("success", EMessages.get("question.success.edited", form.get().getID()));
+        return LIST;
+    }
+
+    /**
+     * This will handle the removing of an existing question and redirect
+     * to the question list
+     *
+     * @param name name of the question to be removed
+     * @return question list page
+     */
+    @Transactional
+    public static Result remove(String name){
+        QuestionModel question = new QuestionManager(ModelState.DELETE).getFinder().byId(name);
+        question.delete();
+        
+        // Result
+        flash("success", EMessages.get("question.success.removed", question.getID()));
         return LIST;
     }
 }

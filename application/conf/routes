@@ -45,7 +45,7 @@ POST    /servers/:name              controllers.question.server.ServerController
 GET     /contests                   controllers.competition.CompetitionController.index()
 GET     /contest/new               controllers.competition.CompetitionController.create()
 POST    /contests                   controllers.competition.CompetitionController.save()
-GET     /servers/remove/:name       controllers.question.server.ServerController.remove(name)
+GET     /server/remove/:name       controllers.question.server.ServerController.remove(name)
 
 # Question Management
 GET     /questions                  		 controllers.question.QuestionController.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")
@@ -55,6 +55,9 @@ GET     /question/new               		 controllers.question.QuestionController.c
 GET     /questionsubmits/approve/:user/:file controllers.question.QuestionController.approve(user, file)
 POST    /questionsubmits/approve/:user/:file controllers.question.QuestionController.saveApprove(user, file)
 POST    /question/                  		 controllers.question.QuestionController.save()
+GET     /questions/:name              		 controllers.question.QuestionController.edit(name)
+POST    /questions/:name              		 controllers.question.QuestionController.update(name)
+GET     /question/remove/:name      		 controllers.question.QuestionController.remove(name)
 
 # FAQ
 GET		/faq						controllers.faq.FAQController.getFAQ()

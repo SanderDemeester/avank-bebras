@@ -7,7 +7,13 @@ import play.mvc.Call;
 import controllers.question.routes;
 
 public class QuestionManager extends Manager<QuestionModel>{
+    private String id;
 
+    public QuestionManager(String id, ModelState state) {
+        this(state);
+        this.id = id;
+    }
+    
     public QuestionManager(ModelState state) {
         super(QuestionModel.class, state, "id", "officialid");
     }
@@ -31,14 +37,12 @@ public class QuestionManager extends Manager<QuestionModel>{
 
     @Override
     public Call getEditRoute(String id) {
-        // TODO Auto-generated method stub
-        return null;
+        return routes.QuestionController.edit(id);
     }
 
     @Override
     public Call getRemoveRoute(String id) {
-        // TODO Auto-generated method stub
-        return null;
+        return routes.QuestionController.remove(id);
     }
 
     @Override
@@ -53,8 +57,7 @@ public class QuestionManager extends Manager<QuestionModel>{
 
     @Override
     public play.api.mvc.Call getUpdateRoute() {
-        // TODO Auto-generated method stub
-        return null;
+        return routes.QuestionController.update(id);
     }
 
 }

@@ -175,3 +175,4 @@ question.questions.listsubmits = Ingediende vragen
 question.questions.submitslist.user = Auteur
 question.questions.submitslist.date = Indien datum
 question.questions.submissions = Ingediende vragen
+question.questions.question = Vraag

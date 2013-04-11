@@ -163,6 +163,7 @@ servermanagement.servers.list = Servers
 servers.error.testConnection = Error while connecting to server: {0}
 servers.success.added = Server {0} was successfully created!
 servers.success.edited = Server {0} was successfully edited!
+servers.success.removed = Server {0} was successfully removed!
 
 # question management
 questions.form.author = Author
@@ -177,3 +178,7 @@ question.questions.listsubmits = Question submissions
 question.questions.submitslist.user = Author
 question.questions.submitslist.date = Submission date
 question.questions.submissions = Submissions
+question.questions.question = Question
+question.success.added = Question {0} was successfully created!
+question.success.edited = Question {0} was successfully edited!
+question.success.removed = Question {0} was successfully removed!

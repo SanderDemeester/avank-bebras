@@ -185,6 +185,9 @@ public class ServerController extends EController {
     public static Result remove(String name){
         Server server = new ServerManager(ModelState.DELETE).getFinder().byId(name);
         server.delete();
+        
+        // Result
+        flash("success", EMessages.get("servers.success.removed", server.getID()));
         return redirect(routes.ServerController.list(0, "id", "asc", ""));
     }
 

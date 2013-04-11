@@ -30,10 +30,11 @@ public class QuestionModel extends ManageableModel{
     private static final long serialVersionUID = 1L;
 
     @Id
+    @Editable(alwaysHidden=true)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Seq")//@GeneratedValue(strategy = GenerationType.AUTO)
     public int id;
 
-    @Editable
+    @Editable(uponCreation=true)
     @Constraints.Required
     public String officialid;
 
