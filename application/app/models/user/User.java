@@ -16,7 +16,7 @@ public abstract class User{
 
     public UserModel data;
     // The roles this user has or can have
-    protected static Set<Role> ROLES = new HashSet<Role>();// Can be made non-static if roles have to be altered on runtime
+    protected Set<Role> ROLES = new HashSet<Role>();// Can be made non-static if roles have to be altered on runtime
     private UserType type;
 
     /**

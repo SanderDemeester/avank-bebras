@@ -10,14 +10,12 @@ import play.mvc.Result;
  */
 public class Administrator extends Organizer{
 
-    static{
+    public Administrator(UserModel data) {
+        super(data, UserType.ADMINISTRATOR);
         ROLES.add(Role.MANAGEFAQ); //Give admin the ability to manage FAQ
         ROLES.add(Role.DATAMANAGER);
     }
 
-    public Administrator(UserModel data) {
-        super(data, UserType.ADMINISTRATOR);
-    }
     /*
      * returns the management page for the homepage links
      * @return Homepage Links Management page
