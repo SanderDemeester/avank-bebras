@@ -85,5 +85,24 @@ public class UserRegistrationTest extends ContextTest{
         assertThat(status(result)).isEqualTo(400);
         assertThat(contentAsString(result)).contains("Geen geldig email addres.");
         
+        
+        Map<String, String> map4 = new HashMap<String,String>();
+        map4.put("name", "Isaac Chauncey");
+        map4.put("email","isaacchauncey@localhost.com");
+        map4.put("bday","1779-02-20");
+        map4.put("gender","Male");
+        map4.put("prefLanguage","en");
+        map4.put("password","Chauncey");
+        map4.put("controle_passwd","Chauncey");
+        
+        result = callAction(
+                controllers.routes.ref.UserController.register(),fakeRequest().withFormUrlEncodedBody(map4)
+        		);
+        assertThat(status(result)).isEqualTo(400);
+        assertThat(contentAsString(result)).contains("Invalid date format, please use (yyyy/mm/dd).");
+        
+        
+        
+        
     }
 }
