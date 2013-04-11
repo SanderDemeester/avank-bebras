@@ -3,8 +3,6 @@
  */
 package models.dbentities;
 
-import static org.junit.Assert.*;
-
 import javax.persistence.PersistenceException;
 
 import org.junit.Assert;
