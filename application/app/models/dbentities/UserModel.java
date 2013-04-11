@@ -55,7 +55,7 @@ public class UserModel extends Model implements Listable{
     public boolean active;
 
     @Column(name="class")
-    public int classgroup;
+    public Integer classgroup;
 
     public UserModel(String id, UserType loginType, String name,
             Date birthdate, Date registrationdate,
@@ -84,7 +84,7 @@ public class UserModel extends Model implements Listable{
 
     @Override
     public Map<String, String> options() {
-        List<UserModel> users = find.all();
+        List<UserModel> users = find.all(); //TODO try-catch
         LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
         for(UserModel user: users) {
             options.put(user.id, user.id);

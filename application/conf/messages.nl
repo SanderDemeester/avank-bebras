@@ -105,6 +105,7 @@ faq.empty = De FAQ is leeg.
 faq.error = Er is iets misgelopen bij het ophalen van de FAQ. Probeer opnieuw later.
 faq.name = Naam
 faq.language = Taal
+faq.form.language = Taal
 faq.managefaq = Beheer FAQ
 faq.addfaq = Voeg nieuwe FAQ toe
 faq.new.title = Nieuwe FAQ''s vraag
