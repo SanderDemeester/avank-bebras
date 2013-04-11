@@ -77,7 +77,6 @@ public class QuestionSetController extends EController {
      * @param questionSetId id of the question set
      * @return overview page for a question set
      */
-    @Transactional(readOnly=true)
     public static Result list(String questionSetId, int page, String orderBy, String order, String filter){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questionset.overview"), "/questionset/questions"));

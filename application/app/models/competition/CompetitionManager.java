@@ -100,7 +100,7 @@ public class CompetitionManager extends Manager<CompetitionModel> {
      */
     @Override
     public Call getRemoveRoute(String id) {
-        return null;
+        return routes.CompetitionController.removeCompetition(id);
     }
 
     /**

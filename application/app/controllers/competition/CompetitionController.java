@@ -1,5 +1,6 @@
 package controllers.competition;
 
+import com.avaje.ebean.ExpressionList;
 import controllers.EController;
 import controllers.question.QuestionSetController;
 import models.EMessages;
@@ -141,15 +142,44 @@ public class CompetitionController extends EController {
      * @return overview page for a single contest
      */
     public static Result viewCompetition(String contestid, int page, String orderBy, String order, String filter){
-        CompetitionManager competitionManager = new CompetitionManager(ModelState.UPDATE, orderBy, contestid);
-        System.out.println("BLEKEN contestid: " + contestid);
+        CompetitionManager competitionManager = new CompetitionManager(ModelState.UPDATE, "", contestid);
         Form<CompetitionModel> form = form(CompetitionModel.class).bindFromRequest().fill(competitionManager.getFinder().byId(contestid));
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("competition.edit.breadcrumb"), "/contest/:" + contestid));
         QuestionSetManager questionSetManager = getQuestionSetManager(ModelState.READ, orderBy, order, filter, contestid);
-        System.out.println("dit is vreemd");
         return ok(views.html.competition.viewCompetition.render(breadcrumbs, questionSetManager.page(page),
                 questionSetManager, orderBy, order, filter, form, competitionManager));
+    }
+
+    /**
+     * Deletes the selected contest.
+     * Also deletes every question set linked with the selected contest.
+     * Redirects to the contest index page.
+     * @param contestid contest id
+     * @return redirect to contest index page.
+     */
+    public static Result removeCompetition(String contestid){
+        QuestionSetManager questionSetManager = new QuestionSetManager(QuestionSetModel.class, ModelState.DELETE, contestid);
+        List<QuestionSetModel> questionSetModels = questionSetManager.getFinder().where().ieq("contid", contestid).findList();
+        for (QuestionSetModel questionSetModel : questionSetModels){
+            questionSetModel.delete();
+        }
+        CompetitionManager competitionManager = new CompetitionManager(ModelState.DELETE, "name", contestid);
+        competitionManager.getFinder().byId(contestid).delete();
+        return redirect(routes.CompetitionController.index(0,"name","asc",""));
+    }
+
+    /**
+     * Deletes the selected question set.
+     * Redirects to the contest overview page.
+     * @param qsid      question set id
+     * @param contestid contest id
+     * @return redirect to the contest overview page
+     */
+    public static Result removeQuestionSet(String qsid, String contestid){
+        QuestionSetManager questionSetManager = new QuestionSetManager(QuestionSetModel.class, ModelState.DELETE, contestid);
+        questionSetManager.getFinder().byId(qsid).delete();
+        return redirect(routes.CompetitionController.viewCompetition(contestid, 0, "level", "asc", ""));
     }
 
 

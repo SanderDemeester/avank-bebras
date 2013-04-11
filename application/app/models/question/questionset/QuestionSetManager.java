@@ -1,8 +1,8 @@
 package models.question.questionset;
 
 import com.avaje.ebean.Page;
+import controllers.question.routes;
 import models.dbentities.QuestionSetModel;
-import models.management.ManageableModel;
 import models.management.Manager;
 import models.management.ModelState;
 import play.mvc.Call;
@@ -77,7 +77,7 @@ public class QuestionSetManager extends Manager<QuestionSetModel> {
      */
     @Override
     public Call getAddRoute() {
-        return null;
+        return routes.QuestionSetController.create(contestid);
     }
 
     /**
@@ -87,7 +87,7 @@ public class QuestionSetManager extends Manager<QuestionSetModel> {
      */
     @Override
     public Call getEditRoute(String id) {
-        return null;
+        return routes.QuestionSetController.list(id, 0, "qid", "asc", "");
     }
 
     /**
@@ -97,7 +97,7 @@ public class QuestionSetManager extends Manager<QuestionSetModel> {
      */
     @Override
     public Call getRemoveRoute(String id) {
-        return null;
+        return controllers.competition.routes.CompetitionController.removeQuestionSet(id, contestid);
     }
 
     /**
