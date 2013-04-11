@@ -15,6 +15,7 @@ error.text = Something went wrong. We've sent our pink monkeys to fix the proble
 error.back = Go back
 error.login = Invalid login.
 error.invalid_symbols = Input contains invalid symbols.
+error.invalid_email = Invalid email addres.
 
 # Forms
 forms.cancel = Cancel

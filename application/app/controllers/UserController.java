@@ -75,8 +75,8 @@ public class UserController extends EController{
     public static Result register(){
         // Bind play form request.
         Form<Register> registerForm = form(Register.class).bindFromRequest();
-        Pattern asciiPattern = Pattern.compile("[^a-z ]", Pattern.CASE_INSENSITIVE);
-        Matcher asciiMatcher = asciiPattern.matcher(registerForm.get().name);
+        Pattern pattern = Pattern.compile("[^a-z ]", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(registerForm.get().name);
 
         // Check if the email adres is uniqe.
         if(!registerForm.get().email.isEmpty()){
@@ -92,8 +92,15 @@ public class UserController extends EController{
             return badRequest(error.render(EMessages.get("error.title"), new ArrayList<Link>(), form(Register.class), EMessages.get("error.text")));
         }
         
-        if(asciiMatcher.find()){
+        if(matcher.find()){
             return badRequest(error.render(EMessages.get("error.title"), new ArrayList<Link>(), form(Register.class), EMessages.get("error.invalid_symbols")));
+        }
+        
+        pattern = Pattern.compile("[^a-z.@0-9]");
+        matcher = pattern.matcher(registerForm.get().email);
+        
+        if(matcher.find()){
+            return badRequest(error.render(EMessages.get("error.title"), new ArrayList<Link>(), form(Register.class), EMessages.get("error.invalid_email")));
         }
         
 

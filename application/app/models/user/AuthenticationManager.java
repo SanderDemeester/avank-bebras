@@ -203,12 +203,10 @@ public class AuthenticationManager {
         try{ // Encocde our byte arrays to HEX dumps (to save in the database).
             saltHEX = new String(Hex.encodeHex(salt));
             passwordHEX = new String(Hex.encodeHex(passwordByteString));
-            birtyDay = new SimpleDateFormat("yyyy-mm-dd").parse(registerForm.get().bday);
+            birtyDay = new SimpleDateFormat("yyyy/mm/dd").parse(registerForm.get().bday);
         }catch(Exception e){
             throw new Exception(EMessages.get("error.date"));
         }
-
-
 
         // TODO: Add support for names with only one character
         // TODO: create some logic when user exist with same username.

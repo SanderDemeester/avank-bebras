@@ -16,6 +16,7 @@ error.back = Ga terug
 error.date = Kon datum niet verwerken.
 error.login = Ongeldige login poging.
 error.invalid_symbols = Input bevat foutieve tekens.
+error.invalid_email = Geen geldig email addres.
 
 # Forms
 forms.cancel = Annuleer
