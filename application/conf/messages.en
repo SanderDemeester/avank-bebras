@@ -16,6 +16,7 @@ error.back = Go back
 error.login = Invalid login.
 error.invalid_symbols = Input contains invalid symbols.
 error.invalid_email = Invalid email addres.
+error.invalid_date = Invalid date format, please use (yyyy/mm/dd).
 
 # Forms
 forms.cancel = Cancel

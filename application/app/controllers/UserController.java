@@ -103,6 +103,15 @@ public class UserController extends EController{
             return badRequest(error.render(EMessages.get("error.title"), new ArrayList<Link>(), form(Register.class), EMessages.get("error.invalid_email")));
         }
         
+        
+        pattern = Pattern.compile("[^([0-9])\1{3}\\\1{2}\\\1{2}]");
+        matcher = pattern.matcher(registerForm.get().bday);
+        //TODO: check date range.
+        
+        if(matcher.find()){
+            return badRequest(error.render(EMessages.get("error.title"), new ArrayList<Link>(), form(Register.class), EMessages.get("error.error.invalid_date")));
+        }
+        
 
         // Delegate create user to Authentication Manager.
         String bebrasID = null;

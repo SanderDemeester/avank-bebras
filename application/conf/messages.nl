@@ -17,6 +17,8 @@ error.date = Kon datum niet verwerken.
 error.login = Ongeldige login poging.
 error.invalid_symbols = Input bevat foutieve tekens.
 error.invalid_email = Geen geldig email addres.
+error.invalid_date = Geen geldig datum formaat, gebruik (yyyy/mm/dd).
+
 
 # Forms
 forms.cancel = Annuleer
