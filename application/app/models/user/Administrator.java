@@ -12,6 +12,7 @@ public class Administrator extends Organizer{
 
     static{
         ROLES.add(Role.MANAGEFAQ); //Give admin the ability to manage FAQ
+        ROLES.add(Role.DATAMANAGER);
     }
 
     public Administrator(UserModel data) {

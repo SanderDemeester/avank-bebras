@@ -31,7 +31,10 @@ public class LinkManager extends DataManager<Link> {
                 "Incorrect number of fields.",
                 "manager.error.fieldno"
         );
-        if("".equals(strings[0]) || "".equals(strings[1])) throw new CreationException(
+        removed = strings;
+        System.out.println('"' + strings[1] + '"');
+        if("".equals(strings[0].trim()) || "".equals(strings[1].trim())) 
+            throw new CreationException(
                 "Empty fields.",
                 "manager.error.empty"
         );

@@ -32,7 +32,8 @@ public class DifficultyManager extends DataManager<Difficulty> {
                 "Incorrect strings length.",
                 "manager.error.fieldno"
         );
-        if("".equals(strings[0])) throw new CreationException(
+        removed = strings;
+        if("".equals(strings[0].trim())) throw new CreationException(
                 "Name field left empty.",
                 "manager.error.empty"
         );

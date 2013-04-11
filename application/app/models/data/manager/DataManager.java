@@ -14,7 +14,11 @@ import com.avaje.ebean.Ebean;
  */
 public abstract class DataManager<T extends DataElement> {
 
-    private T removed;
+    /**
+     * This array of strings will be shown in the input fields. This is useful
+     * for values that were just removed, then they can be editted.
+     */
+    protected String[] removed;
 
     /**
      * List the column titles for this Manager
@@ -49,29 +53,41 @@ public abstract class DataManager<T extends DataElement> {
      * @param element The new element
      */
     @SuppressWarnings("unchecked")
-    public void add(DataElement element) {
+    public void add(DataElement element) throws InsertionException {
         try {
             if(element.getClass().equals(getTClass())) Ebean.save((T) element);
             else throw new RuntimeException("You managed with the wrong element.");
         } catch(PersistenceException e) {
-            System.out.println(e.getMessage());
+            if(e.getMessage().contains("duplicate")) {
+                throw new InsertionException("Duplicate element.",
+                        "manager.error.duplicate");
+            } else throw e;
         }
+        removed = null;
     }
 
     /**
      * Removes the element with the given id from the list of data element.
      * @param id The identifier
      */
-    public void remove(String id) {
-        removed = Ebean.find(getTClass(), id);
+    public void remove(String id) throws RemovalException {
+        T remove = Ebean.find(getTClass(), id);
         Ebean.delete(getTClass(), id);
+        if(remove == null) {
+            removed = null;
+            throw new RemovalException(
+                "Nothing there to remove.",
+                "manager.error.notthere"
+            );
+        }
+        removed = remove.strings();
     }
 
     /**
-     * Returns the element that was last removed as an array of strings.
+     * Returns the element that was last removed.
      */
     public String[] lastRemoved() {
-        return removed.strings();
+        return removed;
     }
 
     /**
@@ -82,7 +98,7 @@ public abstract class DataManager<T extends DataElement> {
         return Ebean.find(getTClass()).findList();
     }
 
-    private static class ManagerException extends Exception {
+    public static class ManagerException extends Exception {
         private static final long serialVersionUID = 1L;
 
         private String emessage;
@@ -133,7 +149,6 @@ public abstract class DataManager<T extends DataElement> {
     /**
      * Represents any problem with saving a <tt>T</tt> object to the database,
      * for instance duplication exceptions.
-     * TODO use it
      */
     public static class InsertionException extends ManagerException {
         private static final long serialVersionUID = 1L;
@@ -147,24 +162,11 @@ public abstract class DataManager<T extends DataElement> {
      * Represents any problem with removing a <tt>T</tt> object from the
      * database, which will mostly be unexisting objects someone is driven to
      * remove.
-     * TODO use it
      */
     public static class RemovalException extends ManagerException {
         private static final long serialVersionUID = 1L;
         public RemovalException(String emessage) { super(emessage); }
         public RemovalException(String message, String emessage) {
-            super(message, emessage);
-        }
-    }
-
-    /**
-     * Represents any problem with listing the values from a manager.
-     * TODO use it
-     */
-    public static class ListException extends ManagerException {
-        private static final long serialVersionUID = 1L;
-        public ListException(String emessage) { super(emessage); }
-        public ListException(String message, String emessage) {
             super(message, emessage);
         }
     }
