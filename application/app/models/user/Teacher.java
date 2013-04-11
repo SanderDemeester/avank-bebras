@@ -16,11 +16,10 @@ import com.avaje.ebean.Ebean;
 
 public class Teacher extends SuperUser{
 
-
-
     public Teacher(UserModel data) {
         super(data, UserType.TEACHER);
     }
+
     public void scheduleUnrestrictedCompetition(){
 
     }
