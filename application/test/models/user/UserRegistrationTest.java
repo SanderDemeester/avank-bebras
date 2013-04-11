@@ -53,13 +53,22 @@ public class UserRegistrationTest extends ContextTest{
         assertNotNull(Ebean.find(UserModel.class).where().eq("id","jimjones").where().eq("type", UserType.INDEPENDENT.toString()).findUnique());
         
         
+        // ok.. He is not dutch.. 
         Map<String, String> map2 = new HashMap<String,String>();
-        map.put("name", "Wang\\ Xiaoyun");
-        map.put("email","wangxiaoyn@localhost.com");
-        map.put("bday","1966/02/20");
-        map.put("gender","Male");
-        map.put("prefLanguage","en");
-        map.put("password","genealogy");
-        map.put("controle_passwd","genealogy");
+        map2.put("name", "Wang\\ Xiaoyun");
+        map2.put("email","wangxiaoyn@localhost.com");
+        map2.put("bday","1966/02/20");
+        map2.put("gender","Male");
+        map2.put("prefLanguage","nl");
+        map2.put("password","genealogy");
+        map2.put("controle_passwd","genealogy");
+        
+        result = callAction(
+                controllers.routes.ref.UserController.register(),fakeRequest().withFormUrlEncodedBody(map2)
+        		);
+        
+        assertThat(status(result)).isEqualTo(200);
+        assertThat(contentAsString(result)).contains("Input bevat foutieve tekens.");
+        
     }
 }
