@@ -96,7 +96,7 @@ public class UserController extends EController{
             return badRequest(error.render(EMessages.get("error.title"), new ArrayList<Link>(), form(Register.class), EMessages.get("error.invalid_symbols")));
         }
         
-        pattern = Pattern.compile("[^a-z.@0-9]");
+        pattern = Pattern.compile("[^a-z._+@0-9]");
         matcher = pattern.matcher(registerForm.get().email);
         
         if(matcher.find()){

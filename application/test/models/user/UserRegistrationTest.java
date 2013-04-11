@@ -70,5 +70,20 @@ public class UserRegistrationTest extends ContextTest{
         assertThat(status(result)).isEqualTo(400);
         assertThat(contentAsString(result)).contains("Input bevat foutieve tekens.");
         
+        Map<String, String> map3 = new HashMap<String,String>();
+        map3.put("name", "Robert Wilhelm");
+        map3.put("email","roberw\\ilhelm@localhost.com");
+        map3.put("bday","1811/03/31");
+        map3.put("gender","Male");
+        map3.put("prefLanguage","nl");
+        map3.put("password","hydrojet");
+        map3.put("controle_passwd","hydrojet");
+        
+        result = callAction(
+                controllers.routes.ref.UserController.register(),fakeRequest().withFormUrlEncodedBody(map3)
+        		);
+        assertThat(status(result)).isEqualTo(400);
+        assertThat(contentAsString(result)).contains("Geen geldig email addres.");
+        
     }
 }
