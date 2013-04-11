@@ -1,5 +1,6 @@
 package models.dbentities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +14,6 @@ import models.management.Editable;
 import models.management.ManageableModel;
 import models.question.Server;
 import play.data.validation.Constraints;
-import play.db.ebean.Model.Finder;
 
 import com.avaje.ebean.validation.NotNull;
 

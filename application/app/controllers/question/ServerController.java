@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.PersistenceException;
+
 import models.EMessages;
 import models.data.Link;
 import models.management.ModelState;
@@ -20,10 +22,10 @@ import views.html.question.server.editServerForm;
 import views.html.question.server.newServerForm;
 import views.html.question.server.serverManagement;
 
+import com.avaje.ebean.Ebean;
 import com.avaje.ebean.annotation.Transactional;
 
 import controllers.EController;
-import controllers.question.routes;
 
 /**
  * ServerController controller.
@@ -218,16 +220,18 @@ public class ServerController extends EController {
     public static Result remove(String name){
         if(!isAuthorized()) return ok(noaccess.render(defaultBreadcrumbs()));
         
-        Server server = new ServerManager(ModelState.DELETE).getFinder().byId(name);
         try {
-            server.delete();
+            Ebean.delete(Server.class, name);
+        } catch (PersistenceException e) {
+            flash("error", EMessages.get("servers.error.removePersistent"));
+            return LIST;
         } catch (Exception e) {
-            flash("error", e.getMessage()+name);
+            flash("error", e.getMessage());
             return LIST;
         }
         
         // Result
-        flash("success", EMessages.get("servers.success.removed", server.getID()));
+        flash("success", EMessages.get("servers.success.removed", name));
         return LIST;
     }
 

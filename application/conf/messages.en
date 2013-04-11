@@ -184,6 +184,7 @@ servermanagement.servers.new = New Server
 servermanagement.servers.server = Server
 servermanagement.servers.list = Servers
 servers.error.testConnection = Error while connecting to server: {0}
+servers.error.removePersistent = There are still questions that are on this server, change them before removing this server.
 servers.success.added = Server {0} was successfully created
 servers.success.edited = Server {0} was successfully edited
 servers.success.removed = Server {0} was successfully removed

@@ -21,13 +21,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import models.EMessages;
-import models.data.Link;
 import models.management.Editable;
 import models.management.Listable;
 import models.management.ManageableModel;
 import play.data.validation.Constraints;
-import views.html.question.editor.create;
 
 /**
  * Server entity managed by Ebean.

@@ -180,6 +180,7 @@ servermanagement.servers.new = Nieuwe Server
 servermanagement.servers.server = Server
 servermanagement.servers.list = Servers
 servers.error.testConnection = Fout bij het connecteren met de server: {0}
+servers.error.removePersistent = Er zijn nog vragen op deze server, pas ze aan voor deze server te verwijderen.
 servers.success.added = Server {0} is aangemaakt
 servers.success.edited = Server {0} is aangepast
 servers.success.removed = Server {0} is verwijderd
