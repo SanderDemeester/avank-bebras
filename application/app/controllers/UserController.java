@@ -106,11 +106,11 @@ public class UserController extends EController{
 		}
 
 		try{
-		new SimpleDateFormat("yyyy/mm/dd").parse(registerForm.get().bday);
+			new SimpleDateFormat("yyyy/mm/dd").parse(registerForm.get().bday);
 		}catch(Exception e){
 			return badRequest(error.render(EMessages.get("error.title"), new ArrayList<Link>(), form(Register.class), EMessages.get("error.invalid_date")));
 		}
-		
+
 		// Delegate create user to Authentication Manager.
 		String bebrasID = null;
 		try {
