@@ -142,6 +142,21 @@ competition.create.end = Eind tijdstip van de nieuwe competitie:
 competition.create.start = Start tijdstip van de nieuwe competitie:
 competition.create.active = Vink aan om de competitie actief te maken.
 
+# schools
+schools.title = Lijst van Scholen
+schools.listtext = Dit is de lijst van scholen die u ofwel aangemaakt hebt of aan verbonden bent/was via een klas.
+schools.table.id = id
+schools.table.name = Naam
+schools.table.address = Adres
+schools.add = Voeg een nieuwe school toe.
+schools.error.notcomplete = Gelieve alle verplichte velden in te vullen.
+schools.error.savefail = De school kon niet opgeslaan worden. Probeer opniew (later).
+schools.list.error = De lijst van scholen kon niet opgevraagd worden. Probeer opnieuw (later).
+schools.add.info = Dit is bedoeld om scholen toe te voegen die nog NIET in het systeem zitten. Als de school al in het systeem zit, gelieve iemand op de school om het ID te vragen. Voeg GEEN dubbele scholen toe. De school zal verschijnen in uw lijst als u (in het systeem) verbonden bent met een klas op die school.
+school.new.name = Naam van de nieuwe school
+school.new.address = Adres van de nieuwe school
+schools.add.success = Opslaan van school was succesvol. ID: 
+
 # server management
 servers.form.name = Server naam
 servers.form.path = Server locatie
