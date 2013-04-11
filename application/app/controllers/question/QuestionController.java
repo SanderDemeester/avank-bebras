@@ -8,7 +8,7 @@ import models.data.Link;
 import models.dbentities.QuestionModel;
 import models.dbentities.UserModel;
 import models.management.ModelState;
-import models.question.server.Server;
+import models.question.Server;
 import models.question.submits.Submit;
 import models.question.submits.SubmitsPage;
 import play.data.Form;

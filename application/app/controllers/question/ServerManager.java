@@ -1,10 +1,11 @@
-package models.question.server;
+package controllers.question;
 
 import models.EMessages;
 import models.management.Manager;
 import models.management.ModelState;
+import models.question.Server;
 import play.mvc.Call;
-import controllers.question.server.routes;
+import controllers.question.routes;
 
 /**
  * Manager for the Server entity.

@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 import models.management.Editable;
 import models.management.ManageableModel;
-import models.question.server.Server;
+import models.question.Server;
 import play.data.validation.Constraints;
 import play.db.ebean.Model.Finder;
 

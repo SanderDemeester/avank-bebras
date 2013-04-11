@@ -1,4 +1,4 @@
-package models.question.server;
+package models.question;
 
 import it.sauronsoftware.ftp4j.FTPAbortedException;
 import it.sauronsoftware.ftp4j.FTPClient;
@@ -26,10 +26,6 @@ import models.data.Link;
 import models.management.Editable;
 import models.management.Listable;
 import models.management.ManageableModel;
-import models.question.Question;
-import models.question.QuestionBuilderException;
-import models.question.QuestionIO;
-import models.question.QuestionPack;
 import play.data.validation.Constraints;
 import views.html.question.editor.create;
 

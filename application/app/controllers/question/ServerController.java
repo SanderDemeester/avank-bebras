@@ -1,4 +1,4 @@
-package controllers.question.server;
+package controllers.question;
 
 import it.sauronsoftware.ftp4j.FTPException;
 import it.sauronsoftware.ftp4j.FTPIllegalReplyException;
@@ -10,8 +10,7 @@ import java.util.List;
 import models.EMessages;
 import models.data.Link;
 import models.management.ModelState;
-import models.question.server.Server;
-import models.question.server.ServerManager;
+import models.question.Server;
 import play.data.Form;
 import play.db.ebean.Model.Finder;
 import play.mvc.Result;
@@ -24,6 +23,7 @@ import views.html.question.server.serverManagement;
 import com.avaje.ebean.annotation.Transactional;
 
 import controllers.EController;
+import controllers.question.routes;
 
 /**
  * ServerController controller.
