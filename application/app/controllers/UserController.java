@@ -93,18 +93,24 @@ public class UserController extends EController{
 		if(registerForm.hasErrors()){
 			return badRequest(error.render(EMessages.get("error.title"), new ArrayList<Link>(), form(Register.class), EMessages.get("error.text")));
 		}
-
+		
+		// Check if full name contains invalid symbols.
 		if(matcher.find()){
 			return badRequest(error.render(EMessages.get("error.title"), new ArrayList<Link>(), form(Register.class), EMessages.get("error.invalid_symbols")));
 		}
 
-		pattern = Pattern.compile("[^a-z._+@0-9]");
+		// Compile new pattern to check for invalid email symbols. 
+		// These are all the symbols that are allow in email addresses.
+		// Alle symbols are containd in character classes, so no need for escaping.
+		pattern = Pattern.compile("[^a-z._+@0-9!#$%&'*+-/=?^_`{|}~]");
 		matcher = pattern.matcher(registerForm.get().email);
 
 		if(matcher.find()){
 			return badRequest(error.render(EMessages.get("error.title"), new ArrayList<Link>(), form(Register.class), EMessages.get("error.invalid_email")));
 		}
 
+		// Try to validate email, this check happens on the client side, but date can be send without using the form.
+		// If the check fails the user is presented with a error page.
 		try{
 			new SimpleDateFormat("yyyy/mm/dd").parse(registerForm.get().bday);
 		}catch(Exception e){
@@ -118,6 +124,8 @@ public class UserController extends EController{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		// Return a register succes page.
 		return ok(registerLandingPage.render(EMessages.get("info.success"), new ArrayList<Link>(), bebrasID));
 	}
 
