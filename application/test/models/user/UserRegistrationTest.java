@@ -67,7 +67,7 @@ public class UserRegistrationTest extends ContextTest{
                 controllers.routes.ref.UserController.register(),fakeRequest().withFormUrlEncodedBody(map2)
         		);
         
-        assertThat(status(result)).isEqualTo(200);
+        assertThat(status(result)).isEqualTo(400);
         assertThat(contentAsString(result)).contains("Input bevat foutieve tekens.");
         
     }
