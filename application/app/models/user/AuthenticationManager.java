@@ -28,6 +28,7 @@ import models.user.factory.PupilUserFactory;
 import models.user.factory.TeacherUserFactory;
 import models.user.factory.UserFactory;
 import play.mvc.Http.Context;
+import sun.reflect.generics.visitor.Reifier;
 
 /**
  * Class to handle UserAuthentication.
@@ -212,10 +213,11 @@ public class AuthenticationManager {
         // TODO: Add support for names with only one character
         // TODO: create some logic when user exist with same username.
         // Generate bebrasID.
-        bebrasID = registerForm.get().fname.toLowerCase().substring(0,2);
-        bebrasID += registerForm.get().lname.toLowerCase().substring(0, registerForm.get().lname.length() < 7 ? registerForm.get().lname.length() : 7);
+        
+        String name = registerForm.get().name;
+        bebrasID = registerForm.get().name.toLowerCase().replaceAll(" ", "");
         new UserModel(bebrasID, UserType.INDEPENDENT,
-                registerForm.get().fname + " " + registerForm.get().lname,
+        		name,
                 birtyDay,
                 new Date(),
                 passwordHEX,

@@ -2,8 +2,7 @@ $(document).ready(function(){
 	$("#signup").validate({
 		rules:{
 			gender:"required",
-			fname:"required",
-			lname:"required",
+			name:"required",
 			email:{
 				required:true,
 				email: true

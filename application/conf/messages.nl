@@ -15,6 +15,7 @@ error.text = Er is iets misgelopen. Probeer opnieuw later.
 error.back = Ga terug
 error.date = Kon datum niet verwerken.
 error.login = Ongeldige login poging.
+error.invalid_symbols = Input bevat foutieve tekens.
 
 # Forms
 forms.cancel = Annuleer
@@ -85,8 +86,7 @@ redirect_message = U zal zodadelijk worden doorgestuurd naar uw startpagina.
 login.bebras_ID = Bebras ID
 
 # Register
-register.firstname = Voornaam: 
-register.lastname = Achternaam:
+register.name = Volledige naam 
 register.email = Email:
 register.bday = Geboortedag:
 register.gender = Geslacht:

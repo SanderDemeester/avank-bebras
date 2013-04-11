@@ -14,6 +14,7 @@ error.title = Oops!
 error.text = Something went wrong. We've sent our pink monkeys to fix the problem
 error.back = Go back
 error.login = Invalid login.
+error.invalid_symbols = Input contains invalid symbols.
 
 # Forms
 forms.cancel = Cancel
@@ -86,8 +87,7 @@ redirect_message = You will be redirected to your homepage shortly.
 login.bebras_ID = Bebras ID
 
 # Register
-register.firstname = First name:
-register.lastname = Last name:  
+register.name = Full name
 register.email = Email;
 register.bday = Birthday:
 register.gender = Gender:

@@ -5,6 +5,8 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import models.EMessages;
 import models.data.Link;
@@ -73,6 +75,8 @@ public class UserController extends EController{
     public static Result register(){
         // Bind play form request.
         Form<Register> registerForm = form(Register.class).bindFromRequest();
+        Pattern asciiPattern = Pattern.compile("[^a-z ]", Pattern.CASE_INSENSITIVE);
+        Matcher asciiMatcher = asciiPattern.matcher(registerForm.get().name);
 
         // Check if the email adres is uniqe.
         if(!registerForm.get().email.isEmpty()){
@@ -87,6 +91,11 @@ public class UserController extends EController{
         if(registerForm.hasErrors()){
             return badRequest(error.render(EMessages.get("error.title"), new ArrayList<Link>(), form(Register.class), EMessages.get("error.text")));
         }
+        
+        if(asciiMatcher.find()){
+            return badRequest(error.render(EMessages.get("error.title"), new ArrayList<Link>(), form(Register.class), EMessages.get("error.invalid_symbols")));
+        }
+        
 
         // Delegate create user to Authentication Manager.
         String bebrasID = null;
@@ -158,9 +167,7 @@ public class UserController extends EController{
      */
     public static class Register{
         @Required
-        public String fname;
-        @Required
-        public String lname;
+        public String name;
         public String email;
         @Required
         @Formats.DateTime(pattern = "yyyy/dd/mm")
@@ -181,5 +188,7 @@ public class UserController extends EController{
         public String id;
         public String password;
     }
+    
+    
 
 }
