@@ -9,12 +9,12 @@ import models.dbentities.QuestionModel;
 import models.dbentities.UserModel;
 import models.management.ModelState;
 import models.question.server.Server;
-import models.question.server.ServerManager;
 import models.question.submits.Submit;
 import models.question.submits.SubmitsPage;
 import play.data.Form;
 import play.db.ebean.Model.Finder;
 import play.mvc.Result;
+import views.html.commons.noaccess;
 import views.html.question.approveQuestionForm;
 import views.html.question.newQuestionForm;
 import views.html.question.editQuestionForm;
@@ -43,7 +43,12 @@ public class QuestionController extends EController{
             routes.QuestionController.listSubmits(0, "")
     );
     
+    /**
+     * Check if the current user is authorized for these actions
+     * @return is the user authorized
+     */
     public static boolean isAuthorized() {
+        // TODO: enable this authorization
         //return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGEQUESTIONS);
         return true;
     }
@@ -67,6 +72,8 @@ public class QuestionController extends EController{
     @Transactional(readOnly=true)
     public static Result list(int page, String orderBy, String order, String filter){
         List<Link> breadcrumbs = defaultBreadcrumbs();
+        
+        if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
 
         QuestionManager questionManager = new QuestionManager(ModelState.READ);
         questionManager.setOrder(order);
@@ -84,6 +91,9 @@ public class QuestionController extends EController{
      */
     public static Result listSubmits(int page, String filter){
         List<Link> breadcrumbs = defaultBreadcrumbs();
+        
+        if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
+        
         breadcrumbs.add(new Link(EMessages.get("question.questions.submissions"), "/questionsubmits"));
         
         return ok(
@@ -94,6 +104,8 @@ public class QuestionController extends EController{
     public static Result approve(String userID, String file){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questions.approve"), ""));
+        
+        if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
 
         Form<QuestionModel> form = form(QuestionModel.class)
                 .bindFromRequest()
@@ -109,6 +121,8 @@ public class QuestionController extends EController{
     public static Result saveApprove(String userID, String file){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questions.approve"), ""));
+        
+        if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
         
         Form<QuestionModel> form = form(QuestionModel.class).bindFromRequest();
         
@@ -149,6 +163,8 @@ public class QuestionController extends EController{
     }
     
     public static Result removeSubmit(String userID, String file) throws Exception{
+        if(!isAuthorized()) return ok(noaccess.render(defaultBreadcrumbs()));
+        
         Submit submit = Submit.find(userID, file);
         if(submit != null){
             submit.delete();
@@ -170,6 +186,8 @@ public class QuestionController extends EController{
     public static Result create(){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questions.new"), "/questions/create"));
+        
+        if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
 
         Form<QuestionModel> form = form(QuestionModel.class).bindFromRequest();
 
@@ -189,6 +207,8 @@ public class QuestionController extends EController{
     public static Result save(){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questions.new"), "/questions/create"));
+        
+        if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
 
         Form<QuestionModel> form = form(QuestionModel.class).bindFromRequest();
 
@@ -218,6 +238,8 @@ public class QuestionController extends EController{
     public static Result edit(String name){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questions.question") + " " + name, ""));
+        
+        if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
 
         QuestionManager manager = new QuestionManager(name, ModelState.UPDATE);
         manager.setIgnoreErrors(true);
@@ -238,6 +260,8 @@ public class QuestionController extends EController{
     public static Result update(String name) throws Exception{
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questions.question") + " " + name, ""));
+        
+        if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
 
         QuestionManager manager = new QuestionManager(name, ModelState.UPDATE);
         
@@ -269,6 +293,8 @@ public class QuestionController extends EController{
      */
     @Transactional
     public static Result remove(String name){
+        if(!isAuthorized()) return ok(noaccess.render(defaultBreadcrumbs()));
+        
         QuestionModel question = new QuestionManager(ModelState.DELETE).getFinder().byId(name);
         try{
             question.delete();

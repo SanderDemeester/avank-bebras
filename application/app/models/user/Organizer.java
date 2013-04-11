@@ -16,6 +16,7 @@ public class Organizer extends SuperUser{
 
     static {
         ROLES.add(Role.MANAGEQUESTIONS);
+        ROLES.add(Role.MANAGESERVERS);
     }
 
     protected Organizer(UserModel data, UserType type) {

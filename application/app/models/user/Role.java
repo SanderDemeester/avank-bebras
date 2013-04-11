@@ -20,6 +20,7 @@ public enum Role {
 
     // Organiser
     MANAGEQUESTIONS,
+    MANAGESERVERS,
 
     // Author
     QUESTIONEDITOR,
