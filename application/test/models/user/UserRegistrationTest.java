@@ -50,7 +50,7 @@ public class UserRegistrationTest extends ContextTest{
 
         assertThat(contentAsString(result)).contains("There is already a user with the selected email address");
 
-        assertNotNull(Ebean.find(UserModel.class).where().eq("id","jijones").where().eq("type", UserType.INDEPENDENT.toString()).findUnique());
+        assertNotNull(Ebean.find(UserModel.class).where().eq("id","jimjones").where().eq("type", UserType.INDEPENDENT.toString()).findUnique());
         
         
         Map<String, String> map2 = new HashMap<String,String>();
