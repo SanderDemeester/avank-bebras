@@ -26,6 +26,7 @@ public enum Role {
     QUESTIONEDITOR,
 
     //ADMIN
-    MANAGEFAQ;
+    MANAGEFAQ,
+    DATAMANAGER;
 
 }

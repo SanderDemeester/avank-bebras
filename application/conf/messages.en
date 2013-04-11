@@ -35,6 +35,7 @@ forms.title = Title
 forms.error = Please fix all errors.
 forms.open = Open
 forms.unknownError = An error occured.
+forms.add = Add
 
 # Question
 question.editor.name = Question Editor
@@ -210,3 +211,18 @@ question.success.edited = Question {0} was successfully edited
 question.success.removed = Question {0} was successfully removed
 question.success.approved = Question {0} was successfully approved
 question.error.officialidTaken = This official ID is already in use
+question.questions.list = List of Questions
+
+# Data Management
+manager.error.fieldno = Please provide all fields.
+manager.error.empty = Please fill in all fields.
+manager.error.nan = Please provide an integer number.
+manager.error.duplicate = I''m that key already exists.
+manager.error.notthere = Are you shizofrenic, trying to remove things not even there?
+links.title = Home Page Links
+links.url = URL
+grades.title = Grades
+grades.lowerbound = Lowest Age
+grades.upperbound = Highest Age (exclusief)
+difficulties.title = Difficulty Levels
+difficulties.numerical = Numerical Difficulty Representation (Ascending difficulty)

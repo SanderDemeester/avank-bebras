@@ -35,6 +35,7 @@ forms.title = Titel
 forms.error = Gelieve alle fouten te verbeteren.
 forms.open = Open
 forms.unknownError = Er is een interne fout opgetreden.
+forms.add = Voeg toe
 
 # Question
 question.editor.name = Vraagstukontwerper
@@ -206,3 +207,18 @@ question.success.edited = Vraag {0} is aangepast
 question.success.removed = Vraag {0} is verwijderd
 question.success.approved = Vraag {0} is goedgekeurd
 question.error.officialidTaken = Deze Officiële ID is al reeds in gebruik
+question.questions.list = Lijst van vragen
+
+# Data Management
+manager.error.fieldno = Het aantal voorziene velden is incorrect.
+manager.error.empty = Gelieve alle velden in te vullen.
+manager.error.nan = Gelieve een geheel getal in te vullen.
+manager.error.duplicate = Die sleutel bestaat helaas al.
+manager.error.notthere = Ofwel probeert u ons te hacken, ofwel lijdt u aan schizofrenie, want u probeert dingen te verwijderen die er niet zijn.
+links.title = Startpagina Links
+links.url = URL
+grades.title = Leeftijdscategoriën
+grades.lowerbound = Minimale leeftijd
+grades.upperbound = Maximale leeftijd (exclusief)
+difficulties.title = Moeilijkheidsgraden
+difficulties.numerical = Getalsvoorstelling van de moeilijkheid (hoe hoger, hoe moeilijker)

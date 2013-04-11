@@ -73,11 +73,14 @@ POST    /manageFAQ/edit/:name              controllers.faq.FAQController.update(
 GET    /manageFAQ/remove/:name        controllers.faq.FAQController.remove(name)
 
 # Schools
-
 GET		/schools						controllers.schools.SchoolController.viewSchools()
 GET		/schools/new					controllers.schools.SchoolController.create()
 POST	/schools/						controllers.schools.SchoolController.save()
 
+# Data Management
+GET		/manage/:dataType/show		controllers.data.DataController.show(dataType)
+GET		/manage/:dataType/remove	controllers.data.DataController.remove(dataType, id)
+GET		/manage/:dataType/add		controllers.data.DataController.add(dataType)
 
 # Bootstrap resources
 GET     /assets/img/glyphicons-halflings-white.png      controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings-white.png")
