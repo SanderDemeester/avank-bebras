@@ -30,7 +30,7 @@ public class UserRegistrationTest extends ContextTest{
         Map<String, String> map = new HashMap<String,String>();
         map.put("name", "Jim Jones");
         map.put("email","jimjones@localhost.com");
-        map.put("bday","1931-05-13");
+        map.put("bday","1931/05/13");
         map.put("gender","Male");
         map.put("prefLanguage","en");
         map.put("password","kaituma");
@@ -51,5 +51,15 @@ public class UserRegistrationTest extends ContextTest{
         assertThat(contentAsString(result)).contains("There is already a user with the selected email address");
 
         assertNotNull(Ebean.find(UserModel.class).where().eq("id","jijones").where().eq("type", UserType.INDEPENDENT.toString()).findUnique());
+        
+        
+        Map<String, String> map2 = new HashMap<String,String>();
+        map.put("name", "Wang\\ Xiaoyun");
+        map.put("email","wangxiaoyn@localhost.com");
+        map.put("bday","1966/02/20");
+        map.put("gender","Male");
+        map.put("prefLanguage","en");
+        map.put("password","genealogy");
+        map.put("controle_passwd","genealogy");
     }
 }
