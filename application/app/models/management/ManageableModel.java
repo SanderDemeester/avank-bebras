@@ -10,7 +10,8 @@ import play.db.ebean.Model;
  * Annotate field with models.management.Editable to let the Manager
  * know that this field can be edited from within a form.
  *
- * @auhtor Kevin Stobbelaar, Ruben
+ * @author Kevin Stobbelaar
+ * @author Ruben Taelman
  */
 @MappedSuperclass
 public abstract class ManageableModel extends Model{

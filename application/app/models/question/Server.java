@@ -30,9 +30,10 @@ import play.data.validation.Constraints;
 import views.html.question.editor.create;
 
 /**
- * ServerController entity managed by Ebean.
+ * Server entity managed by Ebean.
  *
- * @author Ruben Taelman, Kevin Stobbelaar
+ * @author Ruben Taelman
+ * @author Kevin Stobbelaar
  *
  */
 @Entity

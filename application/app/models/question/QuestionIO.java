@@ -112,7 +112,6 @@ public class QuestionIO {
      * @param json json formatted question
      * @param userID the user id for the authenticated user
      * @param userDownloadLocation the location where the user can http-request his uploaded files
-     * @return The compressed question file
      * @throws QuestionBuilderException any error that can occur
      */
     public static void submit(String json, String userID, String userDownloadLocation) throws QuestionBuilderException {
@@ -244,7 +243,7 @@ public class QuestionIO {
 
     /**
      * Creates a new question from a certain XML input
-     * @param xml  input stream of an xml file
+     * @param doc  document of an xml file
      * @return a new question
      * @throws QuestionBuilderException possible things that can go wrong
      */

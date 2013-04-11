@@ -67,6 +67,9 @@ question.editor.index.info = Deze pagina wordt aan de gebruiker voorgeschoteld w
 question.editor.index.placeholder = Vul de vraag hier in.
 question.editor.feedback.info = Deze inhoud zal gebruikt worden om na de competitie feedback te verschaffen aan de gebruiker.
 question.editor.feedback.placeholder = Vul de feedback voor deze vraag hier in.
+
+question.editor.validate.ok = Geldige vraag
+
 question.type.MULTIPLE_CHOICE = Meer-Keuze Vraag
 question.type.REGEX = Input Vraag
 

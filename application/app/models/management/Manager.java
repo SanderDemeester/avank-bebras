@@ -15,7 +15,8 @@ import com.avaje.ebean.Page;
  * Abstract class for every manager that contains the functionality for CRUD operations
  * on an entity.
  *
- * @author Kevin Stobbelaar, Ruben Taelman
+ * @author Ruben Taelman
+ * @author Kevin Stobbelaar
  *
  */
 public abstract class Manager<T extends ManageableModel> {
@@ -207,7 +208,7 @@ public abstract class Manager<T extends ManageableModel> {
     /**
      * Returns the path of the route that must be followed to remove the selected item.
      *
-     * @result Call path of the route that must be followed
+     * @return Call path of the route that must be followed
      */
     public abstract Call getRemoveRoute(String id);
 

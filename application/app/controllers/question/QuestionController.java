@@ -67,6 +67,10 @@ public class QuestionController extends EController{
     /**
      * This result will redirect to the question list page
      *
+     * @param oderBy the field to order by
+     * @param order "asc" or "desc"
+     * @param filter the string to filter on
+     *
      * @return question list page
      */
     @Transactional(readOnly=true)
@@ -87,6 +91,9 @@ public class QuestionController extends EController{
     /**
      * This result will redirect to the question submits list page
      *
+     * @param page the index of the requested page
+     * @param filter the string to filter on
+     *
      * @return question submits list page
      */
     public static Result listSubmits(int page, String filter){
@@ -101,6 +108,12 @@ public class QuestionController extends EController{
         );
     }
     
+    /**
+     * The approval page for submitted questions
+     * @param userID the userID of the author
+     * @param file the filename of the submitted question
+     * @return question approval page
+     */
     public static Result approve(String userID, String file){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questions.approve"), ""));
@@ -117,6 +130,12 @@ public class QuestionController extends EController{
         return ok(approveQuestionForm.render(form, manager, breadcrumbs, userID, file));
     }
     
+    /**
+     * Handle the approval of the question
+     * @param userID the userID of the author
+     * @param file the filename of the submitted question
+     * @return the question approval list
+     */
     @Transactional
     public static Result saveApprove(String userID, String file){
         List<Link> breadcrumbs = defaultBreadcrumbs();
@@ -162,7 +181,13 @@ public class QuestionController extends EController{
         return LISTSUBMITS;
     }
     
-    public static Result removeSubmit(String userID, String file) throws Exception{
+    /**
+     * Remove a submitted question
+     * @param userID the userID of the author
+     * @param file the filename of the submitted question
+     * @return the question approval list
+     */
+    public static Result removeSubmit(String userID, String file){
         if(!isAuthorized()) return ok(noaccess.render(defaultBreadcrumbs()));
         
         Submit submit = Submit.find(userID, file);
@@ -254,10 +279,9 @@ public class QuestionController extends EController{
      *
      * @param name name of the question to be updated
      * @return question list page
-     * @throws Exception 
      */
     @Transactional
-    public static Result update(String name) throws Exception{
+    public static Result update(String name){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questions.question") + " " + name, ""));
         

@@ -69,6 +69,8 @@ question.editor.index.placeholder = Enter the question here.
 question.editor.feedback.info = This content will be used to display feedback to the user after a competition.
 question.editor.feedback.placeholder = Enter the question feedback here.
 
+question.editor.validate.ok = Valid question
+
 question.type.MULTIPLE_CHOICE = Multiple Choice Question
 question.type.REGEX = Input Question
 

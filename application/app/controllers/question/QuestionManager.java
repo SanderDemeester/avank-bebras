@@ -9,11 +9,20 @@ import controllers.question.routes;
 public class QuestionManager extends Manager<QuestionModel>{
     private String id;
 
+    /**
+     * Create a new QuestionManager based
+     * @param id the id for the requested question, only used when editing a question
+     * @param state the state the manager should be in
+     */
     public QuestionManager(String id, ModelState state) {
         this(state);
         this.id = id;
     }
     
+    /**
+     * Create a new QuestionManager based
+     * @param state the state the manager should be in
+     */
     public QuestionManager(ModelState state) {
         super(QuestionModel.class, state, "id", "officialid");
     }

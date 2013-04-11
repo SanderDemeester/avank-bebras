@@ -93,6 +93,9 @@ public class QuestionModel extends ManageableModel{
         return Integer.toString(id);
     }
 
+    /**
+     * Set the correct server field by the already saved server.id
+     */
     public void fixServer() {
         if(this.server.id == null) {
             this.server = null;
