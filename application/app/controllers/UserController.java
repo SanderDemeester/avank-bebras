@@ -24,6 +24,7 @@ import views.html.landingPages.AdminLandingPage;
 import views.html.landingPages.IndependentPupilLandingPage;
 import views.html.landingPages.OrganizerLandingPage;
 import views.html.landingPages.PupilLandingPage;
+import views.html.landingPages.TeacherLandingPage;
 import views.html.login.error;
 import views.html.login.register;
 import views.html.login.registerLandingPage;
@@ -49,6 +50,7 @@ public class UserController extends EController{
         LANDINGPAGES.put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
         LANDINGPAGES.put(UserType.ORGANIZER, OrganizerLandingPage.class);
         LANDINGPAGES.put(UserType.PUPIL,PupilLandingPage.class);
+        LANDINGPAGES.put(UserType.TEACHER, TeacherLandingPage.class);
     };
 
     /**
