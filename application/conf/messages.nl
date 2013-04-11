@@ -96,6 +96,7 @@ register.inlog_message = U kan inloggen me uw ID en wachtwoord.
 register.title = Registreer
 
 #faq
+faq.title = Veel Gestelde Vragen
 faq.empty = De FAQ is leeg.
 faq.error = Er is iets misgelopen bij het ophalen van de FAQ. Probeer opnieuw later.
 faq.name = Naam
