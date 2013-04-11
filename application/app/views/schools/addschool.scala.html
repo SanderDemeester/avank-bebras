@@ -1,0 +1,27 @@
+@(schoolForm: Form[models.dbentities.SchoolModel], breadcrumbs : List[models.data.Link],inf : models.util.OperationResultInfo)
+
+@import helper._
+@import helper.twitterBootstrap._
+@import models.EMessages
+
+@main(EMessages.get("schools.add"),breadcrumbs){
+	@commons.info(inf)
+	<div class="well">
+	@EMessages.get("schools.add.info") 
+	</div>
+	
+	@form(controllers.schools.routes.SchoolController.save()) {
+
+    <fieldset>
+
+        @inputText(schoolForm("name"), '_label -> EMessages.get("school.new.name"))
+        @inputText(schoolForm("address"), '_label -> EMessages.get("school.new.address"))
+
+    </fieldset>
+
+    <div class="actions">
+        <input type="submit" value="Save" class="btn primary"> or
+        <a href="@controllers.schools.routes.SchoolController.viewSchools()" class="btn">Cancel</a>
+    </div>
+    }
+}

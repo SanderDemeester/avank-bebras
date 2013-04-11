@@ -3,6 +3,8 @@
  */
 package models.dbentities;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.util.List;
 
 import javax.persistence.PersistenceException;
@@ -42,6 +44,9 @@ public class ClassPupilTest extends ContextTest {
         }catch(PersistenceException p){
             Assert.fail(p.toString());
         }
+        
+        // Test that this model is actually present in the database
+        assertNotNull(Ebean.find(ClassPupil.class).where().eq("indid","a").findUnique());
     }
 
     @Test(expected=PersistenceException.class)
