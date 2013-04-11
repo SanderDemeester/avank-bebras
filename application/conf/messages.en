@@ -16,6 +16,7 @@ error.back = Go back
 
 # Forms
 forms.cancel = Cancel
+forms.approve = Approve
 forms.delete = Delete
 forms.deleteArg = Delete {0}
 forms.remove = Remove
@@ -28,9 +29,12 @@ forms.loading = Loading
 forms.submit = Submit
 forms.create = Create
 forms.createArg = Create {0}
+forms.update = Update
 forms.uploadFile = Upload file
 forms.title = Title
 forms.error = Please fix all errors.
+forms.open = Open
+forms.unknownError = An error occured.
 
 # Question
 question.editor.name = Question Editor
@@ -65,6 +69,8 @@ question.editor.index.info = This page will be presented to the user when he has
 question.editor.index.placeholder = Enter the question here.
 question.editor.feedback.info = This content will be used to display feedback to the user after a competition.
 question.editor.feedback.placeholder = Enter the question feedback here.
+
+question.editor.validate.ok = Valid question
 
 question.type.MULTIPLE_CHOICE = Multiple Choice Question
 question.type.REGEX = Input Question
@@ -103,6 +109,8 @@ faq.error = Something went wrong during the retrieval of the FAQ. Try again late
 faq.name = Name
 faq.language = Language
 faq.form.language = Language
+faq.form.name = Name
+faq.form.id = ID
 faq.managefaq = Manage FAQ
 faq.addfaq = Add new FAQ
 faq.new.title = New FAQ''s question
@@ -131,6 +139,7 @@ management.filter.input = Filter value
 management.filter.button = Filter
 management.empty = Nothing to display.
 management.add = Create
+management.confirmDelete = Are you certain you want to delete this record?
 
 # competition
 competition.name = Contests
@@ -163,16 +172,21 @@ schools.add.success = School succesfully saved. ID:
 
 
 # server management
-servers.form.name = Server name
+servers.form.id = Server name
 servers.form.path = Server location
 servers.form.ftpuri = FTP location
 servers.form.ftpport = FTP port
 servers.form.ftpuser = FTP username
 servers.form.ftppass = FTP password
+servers.form.ftppath = FTP path
 servermanagement.servers.name = Servers
 servermanagement.servers.new = New Server
 servermanagement.servers.server = Server
-servermanagement.servers.list = List of Servers
+servermanagement.servers.list = Servers
+servers.error.testConnection = Error while connecting to server: {0}
+servers.success.added = Server {0} was successfully created
+servers.success.edited = Server {0} was successfully edited
+servers.success.removed = Server {0} was successfully removed
 
 # question management
 questions.form.author = Author
@@ -182,4 +196,15 @@ questions.form.active = Active
 questions.form.server = Server
 question.questions.name = Questions
 question.questions.new = New Question
-question.questions.list = List of Questions
+question.questions.list = Questions
+question.questions.listsubmits = Question submissions
+question.questions.submitslist.user = Author
+question.questions.submitslist.date = Submission date
+question.questions.submissions = Submissions
+question.questions.submitDeleted = The submitted question was deleted
+question.questions.question = Question
+question.success.added = Question {0} was successfully created
+question.success.edited = Question {0} was successfully edited
+question.success.removed = Question {0} was successfully removed
+question.success.approved = Question {0} was successfully approved
+question.error.officialidTaken = This official ID is already in use

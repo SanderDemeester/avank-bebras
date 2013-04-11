@@ -16,6 +16,7 @@ error.back = Ga terug
 
 # Forms
 forms.cancel = Annuleer
+forms.approve = Keur goed
 forms.delete = Verwijder
 forms.deleteArg = Verwijder {0}
 forms.remove = Verwijder
@@ -28,9 +29,12 @@ forms.loading = Aan het laden
 forms.submit = Verzend
 forms.create = Maak aan
 forms.createArg = Maak {0} aan
+forms.update = Pas aan
 forms.uploadFile = Laad bestand op
 forms.title = Titel
 forms.error = Gelieve alle fouten te verbeteren.
+forms.open = Open
+forms.unknownError = Er is een interne fout opgetreden.
 
 # Question
 question.editor.name = Vraagstukontwerper
@@ -64,6 +68,9 @@ question.editor.index.info = Deze pagina wordt aan de gebruiker voorgeschoteld w
 question.editor.index.placeholder = Vul de vraag hier in.
 question.editor.feedback.info = Deze inhoud zal gebruikt worden om na de competitie feedback te verschaffen aan de gebruiker.
 question.editor.feedback.placeholder = Vul de feedback voor deze vraag hier in.
+
+question.editor.validate.ok = Geldige vraag
+
 question.type.MULTIPLE_CHOICE = Meer-Keuze Vraag
 question.type.REGEX = Input Vraag
 
@@ -101,6 +108,8 @@ faq.error = Er is iets misgelopen bij het ophalen van de FAQ. Probeer opnieuw la
 faq.name = Naam
 faq.language = Taal
 faq.form.language = Taal
+faq.form.name = Naam
+faq.form.id = ID
 faq.managefaq = Beheer FAQ
 faq.addfaq = Voeg nieuwe FAQ toe
 faq.new.title = Nieuwe FAQ''s vraag
@@ -129,6 +138,7 @@ management.filter.input = Filter waarde
 management.filter.button = Filter
 management.empty = Niets om weer te geven.
 management.add = Nieuw
+management.confirmDelete = Ben je zeker dat je deze record wilt verwijderen?
 
 # competition
 competition.name = Competities
@@ -158,16 +168,21 @@ school.new.address = Adres van de nieuwe school
 schools.add.success = Opslaan van school was succesvol. ID: 
 
 # server management
-servers.form.name = Server naam
+servers.form.id = Server naam
 servers.form.path = Server locatie
 servers.form.ftpuri = FTP locatie
 servers.form.ftpport = FTP poort
 servers.form.ftpuser = FTP gebruikersnaam
 servers.form.ftppass = FTP paswoord
+servers.form.ftppath = FTP pad
 servermanagement.servers.name = Servers
 servermanagement.servers.new = Nieuwe Server
 servermanagement.servers.server = Server
-servermanagement.servers.list = Lijst van Servers
+servermanagement.servers.list = Servers
+servers.error.testConnection = Fout bij het connecteren met de server: {0}
+servers.success.added = Server {0} is aangemaakt
+servers.success.edited = Server {0} is aangepast
+servers.success.removed = Server {0} is verwijderd
 
 # question management
 questions.form.author = Auteur
@@ -177,4 +192,15 @@ questions.form.active = Actief
 questions.form.server = Server
 question.questions.name = Vragen
 question.questions.new = Nieuwe Vraag
-question.questions.list = Lijst van vragen
+question.questions.list = Vragen
+question.questions.listsubmits = Ingediende vragen
+question.questions.submitslist.user = Auteur
+question.questions.submitslist.date = Indien datum
+question.questions.submissions = Ingediende vragen
+question.questions.submitDeleted = De ingediende vraag is verwijderd
+question.questions.question = Vraag
+question.success.added = Vraag {0} is aangemaakt
+question.success.edited = Vraag {0} is aangepast
+question.success.removed = Vraag {0} is verwijderd
+question.success.approved = Vraag {0} is goedgekeurd
+question.error.officialidTaken = Deze Officiële ID is al reeds in gebruik

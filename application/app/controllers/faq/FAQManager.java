@@ -22,12 +22,6 @@ public class FAQManager extends Manager<FAQModel> {
 	}
 
     @Override
-    public String[] getColumnHeaders() {
-        String[] res = {"id",EMessages.get("faq.language"),EMessages.get("faq.name")};
-        return res;
-    }
-
-    @Override
     public Call getAddRoute() {
         return routes.FAQController.create();
     }

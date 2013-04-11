@@ -19,10 +19,8 @@ public enum Role {
     CHANGEPASSWORD,
 
     // Organiser
-    CREATEQUESTION,
-    READQUESTION,
-    UPDATEQUESTION,
-    DELETEQUESTION,
+    MANAGEQUESTIONS,
+    MANAGESERVERS,
 
     // Author
     QUESTIONEDITOR,

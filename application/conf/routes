@@ -36,22 +36,29 @@ GET     /questioneditor/export     		controllers.question.QuestionEditorControll
 GET     /questioneditor/submit      	controllers.question.QuestionEditorController.submit(json)
 
 # Server management
-GET     /servers                    controllers.question.server.ServerController.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")
-GET     /servers/new                controllers.question.server.ServerController.create()
-POST    /servers/                   controllers.question.server.ServerController.save()
-GET     /servers/:name              controllers.question.server.ServerController.edit(name)
-POST    /servers/:name              controllers.question.server.ServerController.update(name)
+GET     /servers                    controllers.question.ServerController.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")
+GET     /server/new                 controllers.question.ServerController.create()
+POST    /servers/                   controllers.question.ServerController.save()
+GET     /servers/:name              controllers.question.ServerController.edit(name)
+POST    /servers/:name              controllers.question.ServerController.update(name)
+GET     /server/remove/:name        controllers.question.ServerController.remove(name)
 
 # Contests module
 GET     /contests                   controllers.competition.CompetitionController.index()
-GET     /contests/new               controllers.competition.CompetitionController.create()
+GET     /contest/new               controllers.competition.CompetitionController.create()
 POST    /contests                   controllers.competition.CompetitionController.save()
-GET     /servers/remove/:name       controllers.question.server.ServerController.remove(name)
 
 # Question Management
-GET     /questions                  controllers.question.QuestionController.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")
-GET     /questions/new              controllers.question.QuestionController.create()
-POST    /questions/                 controllers.question.QuestionController.save()
+GET     /questions                  		 controllers.question.QuestionController.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")
+GET     /questionsubmits            		 controllers.question.QuestionController.listSubmits(p:Int ?= 0, f ?= "")
+GET     /questionsubmits/remove/:user/:file  controllers.question.QuestionController.removeSubmit(user, file)
+GET     /question/new               		 controllers.question.QuestionController.create()
+GET     /questionsubmits/approve/:user/:file controllers.question.QuestionController.approve(user, file)
+POST    /questionsubmits/approve/:user/:file controllers.question.QuestionController.saveApprove(user, file)
+POST    /question/                  		 controllers.question.QuestionController.save()
+GET     /questions/:name              		 controllers.question.QuestionController.edit(name)
+POST    /questions/:name              		 controllers.question.QuestionController.update(name)
+GET     /question/remove/:name      		 controllers.question.QuestionController.remove(name)
 
 # FAQ
 GET		/faq						controllers.faq.FAQController.getFAQ()

@@ -1,17 +1,21 @@
-package controllers.question.server;
+package controllers.question;
 
+import it.sauronsoftware.ftp4j.FTPException;
+import it.sauronsoftware.ftp4j.FTPIllegalReplyException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import models.EMessages;
 import models.data.Link;
 import models.management.ModelState;
-import models.question.server.Server;
-import models.question.server.ServerManager;
+import models.question.Server;
 import play.data.Form;
 import play.db.ebean.Model.Finder;
 import play.mvc.Result;
 import play.mvc.Results;
+import views.html.commons.noaccess;
 import views.html.question.server.editServerForm;
 import views.html.question.server.newServerForm;
 import views.html.question.server.serverManagement;
@@ -19,6 +23,7 @@ import views.html.question.server.serverManagement;
 import com.avaje.ebean.annotation.Transactional;
 
 import controllers.EController;
+import controllers.question.routes;
 
 /**
  * ServerController controller.
@@ -26,9 +31,21 @@ import controllers.EController;
  * @author Kevin Stobbelaar
  */
 public class ServerController extends EController {
+    
+    private static Result LIST = redirect(routes.ServerController.list(0, "id", "asc", ""));
 
     private Finder<String,Server> serverFinder = new Finder<String,Server>(String.class, Server.class);
 
+    /**
+     * Check if the current user is authorized for these actions
+     * @return is the user authorized
+     */
+    public static boolean isAuthorized() {
+        // TODO: enable this authorization
+        //return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGESERVERS);
+        return true;
+    }
+    
     /**
      * Make default breadcrumbs for this controller
      * @return default breadcrumbs
@@ -48,6 +65,8 @@ public class ServerController extends EController {
     @Transactional(readOnly=true)
     public static Result list(int page, String orderBy, String order, String filter){
         List<Link> breadcrumbs = defaultBreadcrumbs();
+        
+        if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
 
         ServerManager serverManager = new ServerManager(ModelState.READ);
         serverManager.setOrder(order);
@@ -69,6 +88,8 @@ public class ServerController extends EController {
     public static Result create(){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("servermanagement.servers.new"), "/servers/create"));
+        
+        if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
 
         Form<Server> form = form(Server.class).bindFromRequest();
 
@@ -88,13 +109,36 @@ public class ServerController extends EController {
     public static Result save(){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("servermanagement.servers.new"), "/servers/create"));
-
+        
+        if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
+        
+        ServerManager manager = new ServerManager(ModelState.CREATE);
+        
+        // Validate form
         Form<Server> form = form(Server.class).bindFromRequest();
         if(form.hasErrors()) {
-            return badRequest(newServerForm.render(form, new ServerManager(ModelState.CREATE), breadcrumbs));
+            return badRequest(newServerForm.render(form, manager, breadcrumbs));
         }
-        form.get().save();
-        // TODO place message in flash for "server add warning" in view
+        
+        // Test connection
+        try {
+            form.get().testConnection();
+        } catch (IllegalStateException | IOException
+                | FTPIllegalReplyException | FTPException e) {
+            flash("error", EMessages.get("servers.error.testConnection", e.getMessage()));
+            return badRequest(newServerForm.render(form, manager, breadcrumbs));
+        }
+        
+        // Save
+        try {
+            form.get().save();
+        } catch (Exception e) {
+            flash("error", e.getMessage());
+            return badRequest(newServerForm.render(form, manager, breadcrumbs));
+        }
+        
+        // Result
+        flash("success", EMessages.get("servers.success.added", form.get().getID()));
         return Results.redirect(routes.ServerController.list(0, "id", "asc", ""));
     }
 
@@ -110,6 +154,8 @@ public class ServerController extends EController {
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("servermanagement.servers.server") + " " + name, "/servers/:" + name));
 
+        if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
+        
         ServerManager manager = new ServerManager(name, ModelState.UPDATE);
         manager.setIgnoreErrors(true);
 
@@ -129,15 +175,36 @@ public class ServerController extends EController {
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("servermanagement.servers.server") + " " + name, "/servers/:" + name));
 
+        if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
+        
         ServerManager manager = new ServerManager(name, ModelState.UPDATE);
-
+        
+        // Validate form
         Form<Server> form = form(Server.class).fill(manager.getFinder().byId(name)).bindFromRequest();
         if(form.hasErrors()) {
             return badRequest(editServerForm.render(form, manager, breadcrumbs));
         }
+        
+        // Test connection
+        try {
+            form.get().testConnection();
+        } catch (IllegalStateException | IOException
+                | FTPIllegalReplyException | FTPException e) {
+            flash("error", EMessages.get("servers.error.testConnection", e.getMessage()));
+            return badRequest(editServerForm.render(form, manager, breadcrumbs));
+        }
+        
+        // Update
+        try {
         form.get().update();
-        // TODO place message in flash for server edited warning in view
-        return redirect(routes.ServerController.list(0, "id", "asc", ""));
+        } catch (Exception e) {
+            flash("error", e.getMessage());
+            return badRequest(editServerForm.render(form, manager, breadcrumbs));
+        }
+        
+        // Result
+        flash("success", EMessages.get("servers.success.edited", form.get().getID()));
+        return LIST;
     }
 
     /**
@@ -149,9 +216,19 @@ public class ServerController extends EController {
      */
     @Transactional
     public static Result remove(String name){
+        if(!isAuthorized()) return ok(noaccess.render(defaultBreadcrumbs()));
+        
         Server server = new ServerManager(ModelState.DELETE).getFinder().byId(name);
-        server.delete();
-        return redirect(routes.ServerController.list(0, "id", "asc", ""));
+        try {
+            server.delete();
+        } catch (Exception e) {
+            flash("error", e.getMessage()+name);
+            return LIST;
+        }
+        
+        // Result
+        flash("success", EMessages.get("servers.success.removed", server.getID()));
+        return LIST;
     }
 
 }
