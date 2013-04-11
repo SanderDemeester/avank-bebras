@@ -68,11 +68,11 @@ public class UserRegistrationTest extends ContextTest{
         		);
         
         assertThat(status(result)).isEqualTo(400);
-        assertThat(contentAsString(result)).contains("Input bevat foutieve tekens.");
+        assertThat(contentAsString(result)).contains("Input contains invalid symbols.");
         
         Map<String, String> map3 = new HashMap<String,String>();
         map3.put("name", "Robert Wilhelm");
-        map3.put("email","roberw\\ilhelm@localhost.com");
+        map3.put("email","rober\\wilhelm@localhost.com");
         map3.put("bday","1811/03/31");
         map3.put("gender","Male");
         map3.put("prefLanguage","nl");
@@ -83,7 +83,7 @@ public class UserRegistrationTest extends ContextTest{
                 controllers.routes.ref.UserController.register(),fakeRequest().withFormUrlEncodedBody(map3)
         		);
         assertThat(status(result)).isEqualTo(400);
-        assertThat(contentAsString(result)).contains("Geen geldig email addres.");
+        assertThat(contentAsString(result)).contains("Invalid email addres.");
         
         
         Map<String, String> map4 = new HashMap<String,String>();
@@ -99,7 +99,7 @@ public class UserRegistrationTest extends ContextTest{
                 controllers.routes.ref.UserController.register(),fakeRequest().withFormUrlEncodedBody(map4)
         		);
         assertThat(status(result)).isEqualTo(400);
-        assertThat(contentAsString(result)).contains("Geen geldig datum formaat, gebruik (yyyy/mm/dd).");
+        assertThat(contentAsString(result)).contains("Invalid date format, please use (yyyy/mm/dd).");
         
         
         
