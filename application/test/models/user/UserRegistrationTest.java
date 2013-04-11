@@ -28,8 +28,7 @@ public class UserRegistrationTest extends ContextTest{
     public void createAccountSucces(){
 
         Map<String, String> map = new HashMap<String,String>();
-        map.put("fname", "Jim");
-        map.put("lname","Jones");
+        map.put("name", "Jim Jones"),
         map.put("email","jimjones@localhost.com");
         map.put("bday","1931-05-13");
         map.put("gender","Male");
@@ -42,7 +41,7 @@ public class UserRegistrationTest extends ContextTest{
                 );
 
         assertThat(status(result)).isEqualTo(200);
-        assertThat(contentAsString(result)).contains("Your Bebras ID is: jijones.");
+        assertThat(contentAsString(result)).contains("Your Bebras ID is: jimjones.");
         assertThat(contentAsString(result)).contains("You may login with your ID and password.");
 
         result = callAction(
