@@ -85,8 +85,8 @@
 
         <thead>
             <tr>
-                @for(headerName <- manager.getColumnHeaders){
-                    @header(headerName, headerName)
+                @for(headerField <- manager.getColumnHeaders){
+                    @header(headerField, EMessages.get(manager.getMessagesPrefix() + ".form." + headerField))
                 }
                 <th></th>
             </tr>

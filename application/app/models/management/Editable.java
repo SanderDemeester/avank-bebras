@@ -27,4 +27,11 @@ public @interface Editable {
      * @return if the field should be hidden in forms
      */
     boolean alwaysHidden() default false;
+    
+    /**
+     * An optional argument to tell the default form that this field should never be shown
+     * to the user in lists.
+     * @return if the field should be hidden in lists
+     */
+    boolean hiddenInList() default false;
 }

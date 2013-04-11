@@ -51,23 +51,23 @@ public class Server extends ManageableModel implements Listable{
     @Constraints.Required
     public String path;
 
-    @Editable
+    @Editable(hiddenInList=true)
     @Constraints.Required
     public String ftpuri;
 
-    @Editable
+    @Editable(hiddenInList=true)
     @Constraints.Required
     public Integer ftpport;
 
-    @Editable
+    @Editable(hiddenInList=true)
     @Constraints.Required
     public String ftpuser;
 
-    @Editable
+    @Editable(hiddenInList=true)
     @Constraints.Required
     public String ftppass;
     
-    @Editable
+    @Editable(hiddenInList=true)
     @Constraints.Required
     public String ftppath;
 

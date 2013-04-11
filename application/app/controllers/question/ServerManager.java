@@ -34,12 +34,6 @@ public class ServerManager extends Manager<Server> {
         super(Server.class, state, "id", "id");
     }
 
-    @Override
-    public String[] getColumnHeaders() {
-        String[] columnHeaders = {EMessages.get("servers.form.id"), EMessages.get("servers.form.path")};
-        return columnHeaders;
-    }
-
     /**
      * Returns the route that must be followed to refresh the list.
      *

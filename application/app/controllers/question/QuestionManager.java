@@ -28,12 +28,6 @@ public class QuestionManager extends Manager<QuestionModel>{
     }
 
     @Override
-    public String[] getColumnHeaders() {
-        String[] columnHeaders = {"Official ID", "Server", "Path", "Active", "Author"};
-        return columnHeaders;
-    }
-
-    @Override
     public Call getListRoute(int page, String filter) {
         return routes.QuestionController.list(page, orderBy, order, filter);
     }

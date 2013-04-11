@@ -1,9 +1,11 @@
 package models.management;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import play.db.ebean.Model.Finder;
@@ -35,6 +37,7 @@ public abstract class Manager<T extends ManageableModel> {
     protected Map<String, FieldType> fields = new LinkedHashMap<String, FieldType>();
     protected Map<String, Class<?>> fieldTypes = new HashMap<String, Class<?>>();
     protected Map<String, Boolean> disabledFields = new HashMap<String, Boolean>();
+    protected Map<String, Boolean> hiddenListFields = new HashMap<String, Boolean>();
 
     private boolean ignoreErrors = false;
     private ModelState state;
@@ -64,6 +67,8 @@ public abstract class Manager<T extends ManageableModel> {
                         || field.getAnnotation(Editable.class).alwaysHidden()
                   )
                     this.disableField(field.getName());
+                if(field.getAnnotation(Editable.class).hiddenInList())
+                    this.disableListField(field.getName());
             }
         }
     }
@@ -172,7 +177,13 @@ public abstract class Manager<T extends ManageableModel> {
      *
      * @return column headers
      */
-    public abstract String[] getColumnHeaders();
+    public List<String> getColumnHeaders() {
+        List<String> headers = new ArrayList<String>();
+        for(String key : fields.keySet()) {
+            if(this.isFieldListVisible(key)) headers.add(key);
+        }
+        return headers;
+    }
 
     /**
      * Returns the route that must be followed to refresh the list.
@@ -240,6 +251,14 @@ public abstract class Manager<T extends ManageableModel> {
     private void disableField(String field) {
         disabledFields.put(field, true);
     }
+    
+    /**
+     * Make a field hidden in the listview
+     * @param field field name
+     */
+    private void disableListField(String field) {
+        hiddenListFields.put(field, true);
+    }
 
     /**
      * Check if a field is disabled
@@ -251,6 +270,17 @@ public abstract class Manager<T extends ManageableModel> {
         if(val == null)                           return false;
         else if(!state.equals(ModelState.UPDATE)) return false;
         else                                      return val;
+    }
+    
+    /**
+     * Check if a field is visible in the list view
+     * @param field field name
+     * @return if the field is disabled in a listview
+     */
+    public boolean isFieldListVisible(String field) {
+        Boolean val = hiddenListFields.get(field);
+        if(val == null)                           return true;
+        else                                      return !val;
     }
 
     /**

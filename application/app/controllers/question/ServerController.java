@@ -222,7 +222,7 @@ public class ServerController extends EController {
         try {
             server.delete();
         } catch (Exception e) {
-            flash("error", e.getMessage());
+            flash("error", e.getMessage()+name);
             return LIST;
         }
         
