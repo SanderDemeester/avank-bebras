@@ -17,12 +17,14 @@ import play.Play;
 import play.api.libs.Crypto;
 import play.api.templates.Html;
 import play.api.templates.Template2;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
 import play.mvc.Result;
 import play.mvc.Results;
 import views.html.forgotPwd;
+import views.html.index;
 import views.html.landingPages.AdminLandingPage;
 import views.html.landingPages.IndependentPupilLandingPage;
 import views.html.landingPages.OrganizerLandingPage;
@@ -145,13 +147,17 @@ public class UserController extends EController{
      * @return forgot_pwd page
      */
     public static Result forgotPwd() {
-        Mails mail = new Mails();
-        mail.sendMail();
-
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link(EMessages.get("forgot_pwd.forgot_pwd"), "/forgotPwd"));
         return ok(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs));
+    }
+
+    public static Result forgotPwdSendMail(){
+        DynamicForm form = form().bindFromRequest();
+        Mails mail = new Mails();
+        mail.sendMail(form.get("email"));
+        return Results.redirect("/");
     }
 
     /**

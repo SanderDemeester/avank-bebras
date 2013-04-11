@@ -1,8 +1,12 @@
 @(title: String, breadcrumbs : List[models.data.Link])
 @import commons._
 @import models.EMessages
+@import helper._
+@import helper.twitterBootstrap._
 
 @main(title, breadcrumbs){
+
+@helper.form(action=controllers.routes.UserController.forgotPwd()) {
 
 <legend>@EMessages.get("forgot_pwd.forgot_pwd")</legend>
 
@@ -30,8 +34,10 @@
 <div class="control-group row-fluid">
     <div class="span2">&nbsp;</div>
     <div class="controls span2">
-        <button type="submit" class="btn btn-primary" name="btn" id="btn">@EMessages.get("forgot_pwd.submit")</button>
+        <a href="forgotPwd_sendMail"><button type="submit" class="btn btn-primary" name="btn" id="btn">@EMessages.get("forgot_pwd.submit")</button></a>
     </div>
     <div class="span8">&nbsp;</div>
 </div>
+}
+
 }
