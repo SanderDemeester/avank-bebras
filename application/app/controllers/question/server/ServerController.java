@@ -30,6 +30,8 @@ import controllers.EController;
  * @author Kevin Stobbelaar
  */
 public class ServerController extends EController {
+    
+    private static Result LIST = redirect(routes.ServerController.list(0, "id", "asc", ""));
 
     private Finder<String,Server> serverFinder = new Finder<String,Server>(String.class, Server.class);
 
@@ -111,7 +113,12 @@ public class ServerController extends EController {
         }
         
         // Save
-        form.get().save();
+        try {
+            form.get().save();
+        } catch (Exception e) {
+            flash("error", e.getMessage());
+            return badRequest(newServerForm.render(form, manager, breadcrumbs));
+        }
         
         // Result
         flash("success", EMessages.get("servers.success.added", form.get().getID()));
@@ -167,11 +174,16 @@ public class ServerController extends EController {
         }
         
         // Update
+        try {
         form.get().update();
+        } catch (Exception e) {
+            flash("error", e.getMessage());
+            return badRequest(editServerForm.render(form, manager, breadcrumbs));
+        }
         
         // Result
         flash("success", EMessages.get("servers.success.edited", form.get().getID()));
-        return redirect(routes.ServerController.list(0, "id", "asc", ""));
+        return LIST;
     }
 
     /**
@@ -184,11 +196,16 @@ public class ServerController extends EController {
     @Transactional
     public static Result remove(String name){
         Server server = new ServerManager(ModelState.DELETE).getFinder().byId(name);
-        server.delete();
+        try {
+            server.delete();
+        } catch (Exception e) {
+            flash("error", e.getMessage());
+            return LIST;
+        }
         
         // Result
         flash("success", EMessages.get("servers.success.removed", server.getID()));
-        return redirect(routes.ServerController.list(0, "id", "asc", ""));
+        return LIST;
     }
 
 }

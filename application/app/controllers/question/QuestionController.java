@@ -195,8 +195,13 @@ public class QuestionController extends EController{
         if(form.hasErrors()) {
             return badRequest(newQuestionForm.render(form, new QuestionManager(ModelState.CREATE), breadcrumbs));
         }
-
-        form.get().save();
+        
+        try {
+            form.get().save();
+        } catch (Exception e) {
+            flash("error", e.getMessage());
+            return badRequest(newQuestionForm.render(form, new QuestionManager(ModelState.CREATE), breadcrumbs));
+        }
 
         flash("success", EMessages.get("question.success.added", form.get().officialid));
         return LIST;
@@ -243,10 +248,15 @@ public class QuestionController extends EController{
         }
         
         // Update
-        form.get().update();
+        try {
+            form.get().update();
+        } catch (Exception e) {
+            flash("error", e.getMessage());
+            return badRequest(editQuestionForm.render(form, manager, breadcrumbs));
+        }
         
         // Result
-        flash("success", EMessages.get("question.success.edited", form.get().getID()));
+        flash("success", EMessages.get("question.success.edited", form.get().officialid));
         return LIST;
     }
 
@@ -260,10 +270,15 @@ public class QuestionController extends EController{
     @Transactional
     public static Result remove(String name){
         QuestionModel question = new QuestionManager(ModelState.DELETE).getFinder().byId(name);
-        question.delete();
+        try{
+            question.delete();
+        } catch (Exception e) {
+            flash("error", e.getMessage());
+            return LIST;
+        }
         
         // Result
-        flash("success", EMessages.get("question.success.removed", question.getID()));
+        flash("success", EMessages.get("question.success.removed", question.officialid));
         return LIST;
     }
 }
