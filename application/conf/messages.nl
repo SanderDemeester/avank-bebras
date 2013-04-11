@@ -34,6 +34,7 @@ forms.uploadFile = Laad bestand op
 forms.title = Titel
 forms.error = Gelieve alle fouten te verbeteren.
 forms.open = Open
+forms.unknownError = Er is een interne fout opgetreden.
 
 # Question
 question.editor.name = Vraagstukontwerper
@@ -162,8 +163,9 @@ servermanagement.servers.new = Nieuwe Server
 servermanagement.servers.server = Server
 servermanagement.servers.list = Servers
 servers.error.testConnection = Fout bij het connecteren met de server: {0}
-servers.success.added = Server {0} is aangemaakt!
-servers.success.edited = Server {0} is aangepast!
+servers.success.added = Server {0} is aangemaakt
+servers.success.edited = Server {0} is aangepast
+servers.success.removed = Server {0} is verwijderd
 
 # question management
 questions.form.author = Auteur
@@ -178,4 +180,10 @@ question.questions.listsubmits = Ingediende vragen
 question.questions.submitslist.user = Auteur
 question.questions.submitslist.date = Indien datum
 question.questions.submissions = Ingediende vragen
+question.questions.submitDeleted = De ingediende vraag is verwijderd
 question.questions.question = Vraag
+question.success.added = Vraag {0} is aangemaakt
+question.success.edited = Vraag {0} is aangepast
+question.success.removed = Vraag {0} is verwijderd
+question.success.approved = Vraag {0} is goedgekeurd
+question.error.officialidTaken = Deze Officiële ID is al reeds in gebruik

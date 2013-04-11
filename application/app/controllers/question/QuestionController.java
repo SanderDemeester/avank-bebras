@@ -12,7 +12,6 @@ import models.question.Server;
 import models.question.submits.Submit;
 import models.question.submits.SubmitsPage;
 import play.data.Form;
-import play.db.ebean.Model.Finder;
 import play.mvc.Result;
 import views.html.commons.noaccess;
 import views.html.question.approveQuestionForm;
@@ -32,9 +31,7 @@ import controllers.question.routes;
  *
  */
 public class QuestionController extends EController{
-
-    private static Finder<String, Server> serverFinder = new Finder<String, Server>(String.class, Server.class);
-
+    
     public static Result LIST = redirect(
             routes.QuestionController.list(0, "id", "asc", "")
     );
@@ -154,7 +151,7 @@ public class QuestionController extends EController{
         
         // Check the uniqueness of the officialid
         if(!form.get().isUnique()) {
-            flash("error", "This official ID is already taken.");
+            flash("error", EMessages.get("question.error.officialidTaken"));
             return badRequest(approveQuestionForm.render(form, manager, breadcrumbs, userID, file));
         }
         
@@ -177,7 +174,7 @@ public class QuestionController extends EController{
         // Only if the saving went well, we can delete the submitted archive file
         submit.getFile().delete();
 
-        flash("success", "Question " + form.get().officialid + " has been approved!");
+        flash("success", EMessages.get("question.success.approved", form.get().officialid));
         return LISTSUBMITS;
     }
     
@@ -193,10 +190,10 @@ public class QuestionController extends EController{
         Submit submit = Submit.find(userID, file);
         if(submit != null){
             submit.delete();
-            flash("success", "The question is deleted.");
+            flash("success", EMessages.get("question.questions.submitDeleted"));
         }
         else {
-            flash("error", "An error occured.");
+            flash("error", EMessages.get("forms.unknownError"));
         }
         return LISTSUBMITS;
     }
