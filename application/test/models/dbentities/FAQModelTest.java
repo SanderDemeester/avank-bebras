@@ -5,10 +5,17 @@ package models.dbentities;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import javax.persistence.PersistenceException;
 
+import models.question.Server;
+
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+
+import com.avaje.ebean.Ebean;
 
 import test.ContextTest;
 
@@ -17,6 +24,12 @@ import test.ContextTest;
  *
  */
 public class FAQModelTest extends ContextTest {
+    
+    @Before
+    public void clear(){
+        List<FAQModel> cp = Ebean.find(FAQModel.class).findList();
+        for(FAQModel c:cp)c.delete();
+    }
 
     /**
      * Test method for {@link play.db.ebean.Model#save()}.
@@ -33,6 +46,9 @@ public class FAQModelTest extends ContextTest {
         }catch(PersistenceException pe){
             Assert.fail(pe.toString());
         }
+        
+        // Test that this model is actually present in the database
+        assertNotNull(Ebean.find(FAQModel.class).where().eq("name","Testcase").findUnique());
     }
 
 }
