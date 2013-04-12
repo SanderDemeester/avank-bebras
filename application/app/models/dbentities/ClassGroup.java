@@ -1,5 +1,7 @@
 package models.dbentities;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -83,8 +85,13 @@ public class ClassGroup extends ManageableModel{
 
 	@Override
 	public String[] getFieldValues() {
-		String[] res = {Integer.toString(id),name,Integer.toString(schoolid),level,expdate.toString(),Boolean.toString(isActive())};
+		String[] res = {Integer.toString(id),name,Integer.toString(schoolid),level,getExpDate(),Boolean.toString(isActive())};
 		return res;
+	}
+	
+	private String getExpDate(){
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		return df.format(expdate);
 	}
 
 }

@@ -230,3 +230,13 @@ grades.lowerbound = Minimale leeftijd
 grades.upperbound = Maximale leeftijd (exclusief)
 difficulties.title = Moeilijkheidsgraden
 difficulties.numerical = Getalsvoorstelling van de moeilijkheid (hoe hoger, hoe moeilijker)
+
+# Classes
+classes.main.form.id = id
+classes.main.form.name = Naam
+classes.main.form.schoolid = School ID
+classes.main.form.level = Level
+classes.main.form.isactive = Is Actief
+classes.main.form.expdate = Vervallingsdatum
+classes.main.listerror = Er is iets misgelopen tijdens het ophalen van de lijst van klassen. Probeer opnieuw (later).
+classes.list = Lijst van klassen

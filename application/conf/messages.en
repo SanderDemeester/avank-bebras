@@ -233,3 +233,13 @@ grades.lowerbound = Lowest Age
 grades.upperbound = Highest Age (exclusief)
 difficulties.title = Difficulty Levels
 difficulties.numerical = Numerical Difficulty Representation (Ascending difficulty)
+
+# Classes
+classes.main.form.id = id
+classes.main.form.name = Name
+classes.main.form.schoolid = School ID
+classes.main.form.level = Level
+classes.main.form.isactive = Is Active
+classes.main.form.expdate = Expiration date
+classes.main.listerror = Something went wrong during the retrieval of the main classes. Please try again (later)
+classes.list = List of Classes

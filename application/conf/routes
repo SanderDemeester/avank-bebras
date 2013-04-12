@@ -95,4 +95,4 @@ POST	/passwedit/apply			controllers.user.PersonalPageController.checkValid()
 
 # Classes
 
-GET		/classes					controllers.user.ClassGroupController.viewClasses()
+GET		/classes					controllers.classgroups.ClassGroupController.viewClasses(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")

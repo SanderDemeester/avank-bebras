@@ -3,14 +3,13 @@
  */
 package controllers.classgroups;
 
-import com.avaje.ebean.Ebean;
-import com.avaje.ebean.ExpressionList;
-import com.avaje.ebean.Page;
+import java.util.ArrayList;
+import java.util.List;
 
-import play.db.ebean.Model.Finder;
+import com.avaje.ebean.ExpressionList;
 import play.mvc.Call;
+import models.EMessages;
 import models.dbentities.ClassGroup;
-import models.management.ManageableModel;
 import models.management.Manager;
 import models.management.ModelState;
 
@@ -22,23 +21,21 @@ public class MainClassesManager extends Manager<ClassGroup> {
 	
 	private String teacherID;
 
-	public MainClassesManager(String teacherID, Class<ClassGroup> modelClass, ModelState state,
-			String orderBy, String filterBy) {
-		super(modelClass, state, orderBy, filterBy);
+	public MainClassesManager(String teacherID, ModelState state) {
+		super(ClassGroup.class, state, "name", "name");
 		this.teacherID=teacherID;
 	}
 	
 	@Override
 	protected ExpressionList<ClassGroup> getDataSet(){
-		//TODO
-		return null;
+		ExpressionList<ClassGroup> l = super.getDataSet();
+		return l.eq("teacherid", teacherID);
 		
 	}
 
 	@Override
 	public Call getListRoute(int page, String filter) {
-		// TODO Auto-generated method stub
-		return null;
+		return routes.ClassGroupController.viewClasses(page, orderBy, order, filter);
 	}
 
 	@Override
@@ -74,6 +71,18 @@ public class MainClassesManager extends Manager<ClassGroup> {
 	@Override
 	public String getMessagesPrefix() {
 		return "classes.main";
+	}
+	
+	@Override
+	public List<String> getColumnHeaders(){
+		ArrayList<String> res = new ArrayList<String>();
+		res.add("id");
+		res.add("name");
+		res.add("schoolid");
+		res.add("level");
+		res.add("expdate");
+		res.add("isactive");
+		return res;
 	}
 
 }
