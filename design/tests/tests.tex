@@ -4,6 +4,7 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{hyperref}
 
 \title{Test documentatie VOPRO}
 
@@ -28,7 +29,20 @@ De laatste versie van onze documentatie is te vinden op avank.ugent.be/javadoc.
 \section*{Database setup}
 Wij gebruiken als databank postgresql. Als algemene authenticatie methode gebruiken we "md5", dus we laten postgresql zelf instaan voor het afhandelen van authenticatie. 
 We maken gebruik van de databank "avank". De gebruiker "postgresql" met wachtwoord "sander" heeft daarop alle rechten (zoals is te zien in de folder application/conf/application.conf".
-De play applicatie zelf praat met de databank via ebeans. De driver voor de communicatie is opgenomen als een play dependency en is te vinden in "Build.scala"
+De play applicatie zelf praat met de databank via ebeans. De driver voor de communicatie is opgenomen als een play dependency en is te vinden in "Build.scala".\\
+
+De locatie van de datbase scripts zijn te vinden op github:
+\url{https://github.ugent.be/fvdrjeug/avank-bebras/blob/master/design/database/SQLscripts/createTablesComplete}
+\href{https://github.ugent.be/fvdrjeug/avank-bebras/blob/master/design/database/SQLscripts/createTablesComplete}{database scripts}\\
+
+Om deze uit te voeren maakt u verbinding met de databank met het commando
+\begin{itemize}
+\item psql -U postgres
+\item $\backslash$ c
+\item $\backslash$ i <<locatie van het script>>
+\end{itemize} 
+Let wel, hiervoor is het nodig dat "md5" de gebruikte authenticatie methode is.
+
 \section*{System requirements}
 Het is nodig dat er een sendmail daemon loopt op de server om emails te versturen.
 \end{document}
