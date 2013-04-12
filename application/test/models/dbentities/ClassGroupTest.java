@@ -5,6 +5,9 @@ package models.dbentities;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
@@ -57,6 +60,28 @@ public class ClassGroupTest extends ContextTest {
 
         cg.save();
         cg2.save();
+    }
+    
+    @Test
+    public void testIsActive(){
+    	Calendar c = new GregorianCalendar(2015, 3, 14);
+    	Date piDay = c.getTime();
+    	
+    	ClassGroup cg = new ClassGroup();
+    	cg.expdate = piDay;
+    	
+    	Assert.assertTrue("Today case failed",cg.isActive(piDay));
+    	c.add(Calendar.HOUR, 5);
+    	Date someHoursLater = c.getTime();
+    	Assert.assertTrue("Hours later case failed",cg.isActive(someHoursLater));
+    	
+    	c.add(Calendar.DATE, -1);
+    	Date dayBefore = c.getTime();
+    	Assert.assertTrue("Day before case failed",cg.isActive(dayBefore));
+    	
+    	c.add(Calendar.DATE, 2);
+    	Date dayAfter = c.getTime();
+    	Assert.assertFalse("Day after case failed",cg.isActive(dayAfter));
     }
 
 }
