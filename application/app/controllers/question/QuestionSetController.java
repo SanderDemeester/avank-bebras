@@ -137,7 +137,16 @@ public class QuestionSetController extends EController {
         }
         QuestionSetQuestion questionSetQuestion = form.get();
         questionSetQuestion.qsid = questionSetId;
-        // TODO check of de vraag met de opgegeven vraag id wel bestaat !
+        int questionId = questionSetQuestion.qid;
+        QuestionManager questionManager = new QuestionManager(ModelState.READ);
+        if (questionManager.getFinder().byId("" + questionId) == null){
+            // question does not exist
+            List<Link> breadcrumbs = defaultBreadcrumbs();
+            breadcrumbs.add(new Link(EMessages.get("question.questionset.overview"), "/questionset/questions"));
+            breadcrumbs.add(new Link(EMessages.get("question.questionset.addquestion.brcr"), "/questionset/questions/add"));
+            flash("error", "The question with id = " + questionId + " does not exist.");
+            return badRequest(views.html.question.questionset.addQuestion.render(form, questionSetId, breadcrumbs));
+        }
         questionSetQuestion.save();
         return redirect(routes.QuestionSetController.list(questionSetId, 0, "", "", ""));
     }

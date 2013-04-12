@@ -9,6 +9,7 @@
 @import helper._
 @import helper.twitterBootstrap._
 @import models.EMessages
+@import views.html.commons.showflash
 
 @main(EMessages.get("question.questionset.addquestion.title"), breadcrumbs){
 
@@ -23,23 +24,25 @@
 
         @form(controllers.question.routes.QuestionSetController.updateQuestions(qsid)) {
 
-        <fieldset>
+            @showflash()
 
-            @inputText(qsqForm("qid"), '_label -> EMessages.get("question.questionset.addquestion.id"), '_showConstraints -> false)
+            <fieldset>
 
-            @select(
-                qsqForm("difficulty"),
-                options = options(models.data.DataHandler.getDifficulties().toList.map(_.toString)),
-                '_label -> EMessages.get("question.questionset.form.difficulty"),
-                '_showConstraints -> false
-            )
+                @inputText(qsqForm("qid"), '_label -> EMessages.get("question.questionset.addquestion.id"), '_showConstraints -> false)
 
-        </fieldset>
+                @select(
+                    qsqForm("difficulty"),
+                    options = options(models.data.DataHandler.getDifficulties().toList.map(_.id)),
+                    '_label -> EMessages.get("question.questionset.form.difficulty"),
+                    '_showConstraints -> false
+                )
 
-        <div class="actions">
-            <input type="submit" value="@EMessages.get("forms.submit")" class="btn primary">
-            <a href="@controllers.question.routes.QuestionSetController.list(qsid, 0, "", "", "")" class="btn"> @EMessages.get("forms.cancel")</a>
-        </div>
+            </fieldset>
+
+            <div class="actions">
+                <input type="submit" value="@EMessages.get("forms.submit")" class="btn primary">
+                <a href="@controllers.question.routes.QuestionSetController.list(qsid, 0, "", "", "")" class="btn"> @EMessages.get("forms.cancel")</a>
+            </div>
         }
 
     </div>
