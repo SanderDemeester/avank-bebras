@@ -20,7 +20,6 @@ public class Application extends EController {
     static {
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link("Info", "/info"));
-        breadcrumbs.add(new Link("Team Pagina","http://avank.ugent.be/~rtaelman/"));
     }
 
     public static Result index() {
