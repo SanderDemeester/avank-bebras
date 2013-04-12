@@ -1,6 +1,5 @@
 package models.dbentities;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import models.management.Editable;
 import models.management.ManageableModel;
@@ -27,7 +27,7 @@ import com.avaje.ebean.validation.NotNull;
 @SequenceGenerator(name="Seq", sequenceName="questions_id_seq")
 @Table(name="questions")
 public class QuestionModel extends ManageableModel{
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     @Id
     @Editable(alwaysHidden=true, hiddenInList=true)
@@ -44,8 +44,7 @@ public class QuestionModel extends ManageableModel{
     @JoinColumn(name="serverid")
     public Server server;
 
-    @Editable
-    @Constraints.Required
+    @Transient
     public String path;
 
     @Editable
