@@ -65,6 +65,12 @@ public class Role {
         new Link("Manage the student grades", "/manage/grades/show")
     );
 
+    // Contest management
+    public static Role MANAGECONTESTS = new Role(
+        "Manage contests",
+        new Link("Contests overview", "/contests")
+    );
+
 
 
     /* ====================================================================== *\

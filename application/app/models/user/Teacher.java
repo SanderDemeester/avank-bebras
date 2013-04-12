@@ -23,6 +23,7 @@ public class Teacher extends SuperUser{
 
     public Teacher(UserModel data) {
         super(data, UserType.TEACHER);
+        ROLES.add(Role.MANAGECONTESTS);
     }
 
     public void scheduleUnrestrictedCompetition(){

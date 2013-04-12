@@ -86,6 +86,28 @@ question.factory.error.moreThanOneCorrectAnswers = Voor de vraag in het {0} zijn
 question.factory.error.invalidRegex = De vraag bevat een foutieve reguliere expressie in het {0}.
 question.factory.error.invalidUpload = Uw bestand is ongeldig
 
+question.questionset.name = Vragenbundels.
+question.questionset.create.breadcrumb = Niewe vragenbundel
+question.questionset.create = Maak een nieuwe vragenbundel aan!
+question.questionset.create.title = Maak een nieuwe vragenbundel aan.
+question.questionset.create.step2 = Stap 2: Vragenbundel informatie.
+question.questionset.create.name = Naam van de vragenbundel:
+question.questionset.create.level = Niveau van de vragenbundel:
+question.questionset.create.active = Vink aan om deze vragenbundel actief te maken.
+question.questionset.overview = Vragenbundel overzicht.
+question.questionset.addquestion = Voeg een vraag toe aan de bundel.
+question.questionset.form.difficulty = Moeilijkheidsgraad
+question.questionset.addquestion.title = Voeg een nieuwe vraag toe aan de bundel.
+question.questionset.addquestion.id = Id van de vraag:
+question.questionset.addquestion.brcr = Voeg toe
+question.questionset.manager.form.level = Niveau
+question.questionset.manager.form.name = Naam
+question.questionset.manager.form.active = Actief
+question.questionset.overview.questions = Deze vragenbundel bevat de volgende vragen:
+question.questionset.overview.basic = Bewerk vragenbundel:
+question.questionset.form.qid = Vraag id
+question.questionset.form.qsid = Vragenbundel id
+
 # Languages
 languages.language = Taal
 languages.languages = Talen
@@ -152,15 +174,27 @@ management.confirmDelete = Ben je zeker dat je deze record wilt verwijderen?
 
 # competition
 competition.name = Competities
-competition.create.breadcrumb = Niewe competitie
-competition.create = Maak een nieuwe competitie aan!
-competition.create.title = Creëer competitie.
-competition.create.step1 = Step 1: Competitie info.
-competition.create.name = Naam van de nieuwe competitie:
-competition.create.type = Type van de nieuwe competitie:
-competition.create.end = Eind tijdstip van de nieuwe competitie:
-competition.create.start = Start tijdstip van de nieuwe competitie:
-competition.create.active = Vink aan om de competitie actief te maken.
+competition.create.breadcrumb = Nieuwe competitie
+competition.create = Maak een nieuwe competitie aan.
+competition.create.title = Maak een nieuwe competitie aan.
+competition.create.step1 = Stap 1: Competitie informatie:
+competition.create.name = Naam van de competitie:
+competition.create.type = Type van de competitie:
+competition.create.end = Eindtijdstip van de competitie:
+competition.create.start = Starttijdstip van de competitie:
+competition.create.active = Vink aan om deze competitie actief te maken.
+competition.manager.form.name = Naam
+competition.manager.form.type = Type
+competition.manager.form.active = Actief
+competition.manager.form.starttime = Starttijdstip
+competition.manager.form.endtime = Eindtijdstip
+competition.manager.form.creator = Auteur
+competition.view.edit = Bewerk de competitie:
+competition.view.qs = Vragenbundels voor deze competitie:
+competition.edit = Bewerk competitie
+competition.edit.breadcrumb = Bewerk
+competition.overview = Competitie overzicht
+competition.overview.info = Op deze pagina, kan je de voor jouw zichtbare competities bekijken. Je kan nieuwe competities aanmaken of een al bestaande competitie aanpassen.
 
 # schools
 schools.title = Lijst van Scholen

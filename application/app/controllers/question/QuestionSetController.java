@@ -9,6 +9,8 @@ import models.dbentities.QuestionSetQuestion;
 import models.management.ModelState;
 import models.question.questionset.QuestionSetManager;
 import models.question.questionset.QuestionSetQuestionManager;
+import models.user.AuthenticationManager;
+import models.user.Role;
 import play.data.Form;
 import play.mvc.Result;
 
@@ -23,7 +25,13 @@ import java.util.UUID;
  */
 public class QuestionSetController extends EController {
 
-    // TODO authentication !
+    /**
+     * Check if the current user is authorized for this editor
+     * @return is the user authorized
+     */
+    private static boolean isAuthorized() {
+        return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGECONTESTS);
+    }
 
     /**
      * Returns the default breadcrumbs for the question set pages.
@@ -42,6 +50,7 @@ public class QuestionSetController extends EController {
      * @return create question set page
      */
     public static Result create(String contestid){
+        if (!isAuthorized()) return redirect(controllers.routes.Application.index());
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questionset.create.breadcrumb"), "/questionset/new"));
         Form<QuestionSetModel> form = form(QuestionSetModel.class).bindFromRequest();
@@ -56,6 +65,7 @@ public class QuestionSetController extends EController {
      * @return question set overview page
      */
     public static Result save(String contestid){
+        if (!isAuthorized()) return redirect(controllers.routes.Application.index());
         Form<QuestionSetModel> form = form(QuestionSetModel.class).bindFromRequest();
         if(form.hasErrors()) {
             List<Link> breadcrumbs = defaultBreadcrumbs();
@@ -79,6 +89,7 @@ public class QuestionSetController extends EController {
      * @return overview page for a question set
      */
     public static Result list(String questionSetId, int page, String orderBy, String order, String filter){
+        if (!isAuthorized()) return redirect(controllers.routes.Application.index());
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questionset.overview"), "/questionset/questions"));
         QuestionSetQuestionManager qsqm = new QuestionSetQuestionManager(ModelState.READ, questionSetId);
@@ -100,6 +111,7 @@ public class QuestionSetController extends EController {
      * @return add question to set page
      */
     public static Result addQuestion(String questionSetId){
+        if (!isAuthorized()) return redirect(controllers.routes.Application.index());
         Form<QuestionSetQuestion> form = form(QuestionSetQuestion.class).bindFromRequest();
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questionset.overview"), "/questionset/questions"));
@@ -115,6 +127,7 @@ public class QuestionSetController extends EController {
      * @return overview page
      */
     public static Result updateQuestions(String questionSetId){
+        if (!isAuthorized()) return redirect(controllers.routes.Application.index());
         Form<QuestionSetQuestion> form = form(QuestionSetQuestion.class).bindFromRequest();
         if(form.hasErrors()) {
             List<Link> breadcrumbs = defaultBreadcrumbs();
@@ -137,6 +150,7 @@ public class QuestionSetController extends EController {
      * @return redirect to question set overview page.
      */
     public static Result update(String questionSetId){
+        if (!isAuthorized()) return redirect(controllers.routes.Application.index());
         QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.UPDATE, "", questionSetId);
         Form<QuestionSetModel> form = form(QuestionSetModel.class).fill(questionSetManager.getFinder().byId(questionSetId)).bindFromRequest();
         if (form.hasErrors()) {
@@ -154,7 +168,16 @@ public class QuestionSetController extends EController {
         return redirect(routes.QuestionSetController.list(questionSetId, 0, "qid", "asc", ""));
     }
 
+    /**
+     * Removes a question for this question set.
+     * Redirects to the question set overview page.
+     *
+     * @param questionSetId question set id
+     * @param questionId question id
+     * @return redirect to question set overview page
+     */
     public static Result removeQuestion(String questionSetId, String questionId){
+        if (!isAuthorized()) return redirect(controllers.routes.Application.index());
         QuestionSetQuestionManager qsqm = new QuestionSetQuestionManager(ModelState.DELETE, questionId);
         qsqm.getFinder().byId(questionId).delete();
         return redirect(routes.QuestionSetController.list(questionSetId, 0, "qid", "asc", ""));
