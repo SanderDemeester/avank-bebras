@@ -4,12 +4,17 @@
 package controllers.classgroups;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Expr;
+import com.avaje.ebean.Expression;
 import com.avaje.ebean.ExpressionList;
 import play.mvc.Call;
 import models.EMessages;
 import models.dbentities.ClassGroup;
+import models.dbentities.HelpTeacher;
 import models.management.Manager;
 import models.management.ModelState;
 
@@ -19,17 +24,24 @@ import models.management.ModelState;
  */
 public class MainClassesManager extends Manager<ClassGroup> {
 	
-	private String teacherID;
+	protected String teacherID;
 
 	public MainClassesManager(String teacherID, ModelState state) {
-		super(ClassGroup.class, state, "name", "name");
+		super(ClassGroup.class, state, "name", "teacherid");
 		this.teacherID=teacherID;
 	}
 	
 	@Override
 	protected ExpressionList<ClassGroup> getDataSet(){
+		Collection<HelpTeacher> ht = Ebean.find(HelpTeacher.class).where().eq("teacherid", teacherID).findList();
+    	Collection<Integer> helpIDs = new ArrayList<Integer>();
+		for(HelpTeacher h : ht){
+    		helpIDs.add(h.classid);
+    	}
+		Expression ex1 = Expr.eq("teacherid", teacherID);
+		Expression ex2 = Expr.in("id", helpIDs);
 		ExpressionList<ClassGroup> l = super.getDataSet();
-		return l.eq("teacherid", teacherID);
+		return l.or(ex1, ex2);
 		
 	}
 
@@ -79,6 +91,7 @@ public class MainClassesManager extends Manager<ClassGroup> {
 		res.add("id");
 		res.add("name");
 		res.add("schoolid");
+		res.add("teacherid");
 		res.add("level");
 		res.add("expdate");
 		res.add("isactive");

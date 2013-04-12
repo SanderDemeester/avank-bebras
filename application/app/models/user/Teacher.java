@@ -1,6 +1,7 @@
 
 package models.user;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,6 +9,7 @@ import java.util.Set;
 import javax.persistence.PersistenceException;
 
 import models.dbentities.ClassGroup;
+import models.dbentities.HelpTeacher;
 import models.dbentities.SchoolModel;
 import models.dbentities.UserModel;
 import play.mvc.Result;
@@ -37,13 +39,6 @@ public class Teacher extends SuperUser{
         //TODO: Need to add some filtering system
     }
 
-
-    /**
-     * @return A view to manageClassGroups.
-     */
-    public Result manageClasses(){
-        return null;
-    }
 
     /**
      * @return A view to manageCompetitions.
@@ -100,6 +95,24 @@ public class Teacher extends SuperUser{
     		SchoolModel m = Ebean.find(SchoolModel.class).where()
     				.eq("id", s).findUnique();
     		if(m!=null)res.add(m);
+    	}
+    	return res;
+    }
+    
+    /**
+     * 
+     * @return a list of classes the Teacher is help teacher for
+     * @throws PersistenceException when something goes wrong with the db
+     */
+    public Collection<ClassGroup> getHelpClasses() throws PersistenceException{
+    	//TODO write jUnit
+    	ArrayList<ClassGroup> res = new ArrayList<ClassGroup>();
+    	
+    	Collection<HelpTeacher> ht = Ebean.find(HelpTeacher.class).where().eq("teacherid", this.data.id).findList();
+    	for(HelpTeacher h : ht){
+    		ClassGroup cg = Ebean.find(ClassGroup.class).where().eq("id",h.classid).findUnique();
+    		if(cg==null)throw new PersistenceException("Could not find ClassGroup with that id.");
+    		res.add(cg);
     	}
     	return res;
     }

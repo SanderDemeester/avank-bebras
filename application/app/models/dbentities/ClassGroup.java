@@ -85,7 +85,7 @@ public class ClassGroup extends ManageableModel{
 
 	@Override
 	public String[] getFieldValues() {
-		String[] res = {Integer.toString(id),name,Integer.toString(schoolid),level,getExpDate(),Boolean.toString(isActive())};
+		String[] res = {Integer.toString(id),name,Integer.toString(schoolid),teacherid,level,getExpDate(),Boolean.toString(isActive())};
 		return res;
 	}
 	

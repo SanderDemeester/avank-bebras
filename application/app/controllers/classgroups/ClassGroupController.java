@@ -41,6 +41,7 @@ public class ClassGroupController extends EController {
 		mcm.setFilter(filter);
 		mcm.setOrder(order);
 		mcm.setOrderBy(orderBy);
+		
 		try{
 			return ok(
 					classManagement.render(mcm.page(page), mcm, orderBy, order, filter, breadcrumbs,ori));

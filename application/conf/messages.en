@@ -240,6 +240,7 @@ classes.main.form.name = Name
 classes.main.form.schoolid = School ID
 classes.main.form.level = Level
 classes.main.form.isactive = Is Active
+classes.main.form.teacherid = Teacher ID
 classes.main.form.expdate = Expiration date
 classes.main.listerror = Something went wrong during the retrieval of the main classes. Please try again (later)
 classes.list = List of Classes

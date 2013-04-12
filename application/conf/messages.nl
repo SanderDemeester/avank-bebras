@@ -238,5 +238,6 @@ classes.main.form.schoolid = School ID
 classes.main.form.level = Level
 classes.main.form.isactive = Is Actief
 classes.main.form.expdate = Vervallingsdatum
+classes.main.form.teacherid = Leraar ID
 classes.main.listerror = Er is iets misgelopen tijdens het ophalen van de lijst van klassen. Probeer opnieuw (later).
 classes.list = Lijst van klassen
