@@ -4,9 +4,9 @@
 
 
 # Home page
-GET     /                           controllers.Application.index()
+GET     /                           controllers.UserController.landingPage()
 GET		/logout						controllers.UserController.logout()
-GET		/home						controllers.UserController.landingPage()
+GET		/info						controllers.Application.index()
 
 # Registration/signup
 GET		/signup						controllers.UserController.signup()
