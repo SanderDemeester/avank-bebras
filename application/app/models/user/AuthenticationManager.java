@@ -18,6 +18,7 @@ import javax.crypto.spec.PBEKeySpec;
 import org.apache.commons.codec.binary.Hex;
 import com.avaje.ebean.Ebean;
 import controllers.UserController.Register;
+import models.EMessages;
 import models.dbentities.UserModel;
 import models.user.factory.AdministratorUserFactory;
 import models.user.factory.AuthorUserFactory;
@@ -27,6 +28,7 @@ import models.user.factory.PupilUserFactory;
 import models.user.factory.TeacherUserFactory;
 import models.user.factory.UserFactory;
 import play.mvc.Http.Context;
+import sun.reflect.generics.visitor.Reifier;
 
 /**
  * Class to handle UserAuthentication.
@@ -91,7 +93,6 @@ public class AuthenticationManager {
 
     /**
      * Login or mimic with a new usermodel
-     * @author Sander Demeester & Ruben Taelman
      * @param userModel
      * @return The logged in user.
      */
@@ -115,7 +116,6 @@ public class AuthenticationManager {
 
     /**
      * Logout a usermodel (or pop a mimic)
-     * @param userModel
      */
     public User logout() {
         Stack<User> stack = users.get(getAuthCookie());
@@ -133,8 +133,8 @@ public class AuthenticationManager {
     }
 
     /**
-     * Get the current authenticated user object
-     * @return
+     * Get the current authenticated user object.
+     * @return the current authenticated user object.
      */
     public User getUser() {
         Stack<User> stack = users.get(getAuthCookie());
@@ -152,7 +152,6 @@ public class AuthenticationManager {
 
     /**
      * Create user.
-     * @author Sander Demeester
      * @param registerForm
      * @return bebrasID
      * @throws Exception
@@ -194,7 +193,7 @@ public class AuthenticationManager {
         try{
             secretFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
         }catch(Exception e){
-            throw new Exception("Erorr while creating PBKDF2 factory.");
+            throw new Exception(EMessages.get("error.text"));
         }
 
         // Generate password from PBKDF2.
@@ -204,20 +203,19 @@ public class AuthenticationManager {
         try{ // Encocde our byte arrays to HEX dumps (to save in the database).
             saltHEX = new String(Hex.encodeHex(salt));
             passwordHEX = new String(Hex.encodeHex(passwordByteString));
-            birtyDay = new SimpleDateFormat("yyyy-mm-dd").parse(registerForm.get().bday);
+            birtyDay = new SimpleDateFormat("yyyy/mm/dd").parse(registerForm.get().bday);
         }catch(Exception e){
-            throw new Exception("Error while parsing date");
+            throw new Exception(EMessages.get("error.date"));
         }
-
-
 
         // TODO: Add support for names with only one character
         // TODO: create some logic when user exist with same username.
         // Generate bebrasID.
-        bebrasID = registerForm.get().fname.toLowerCase().substring(0,2);
-        bebrasID += registerForm.get().lname.toLowerCase().substring(0, registerForm.get().lname.length() < 7 ? registerForm.get().lname.length() : 7);
+        
+        String name = registerForm.get().name;
+        bebrasID = registerForm.get().name.toLowerCase().replaceAll(" ", "");
         new UserModel(bebrasID, UserType.INDEPENDENT,
-                registerForm.get().fname + " " + registerForm.get().lname,
+        		name,
                 birtyDay,
                 new Date(),
                 passwordHEX,
@@ -266,18 +264,18 @@ public class AuthenticationManager {
             // TODO: waarom niet de secret van Play zelf?
             secretFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
         }catch(Exception e){
-            throw new Exception("Erorr while creating PBKDF2 factory.");
+            throw new Exception(EMessages.get("error.text"));
         }
 
         try {
             passwordByteString = secretFactory.generateSecret(PBKDF2).getEncoded();
         }catch (InvalidKeySpecException e) {
-            throw new Exception("Error while generating users password");
+            throw new Exception(EMessages.get("error.text"));
         }
         try{
             passwordHEX = new String(Hex.encodeHex(passwordByteString));
         }catch(Exception e){
-            throw new Exception("Error while encoding users password");
+            throw new Exception(EMessages.get("error.text"));
         }
 
         if(passwordHEX.equals(passwordDB)){

@@ -10,24 +10,12 @@
 <legend>Sign Up</legend>
 <!--FIRST BLOCK -->
 <div class="control-group row-fluid">
-    <label class="control-label span2">@EMessages.get("register.firstname")</label>
+    <label class="control-label span2">@EMessages.get("register.name")</label>
     <div class="controls span10">
         <div class="input-prepend inline span12">
             <span class="add-on"><i class="icon-user"></i> </span> <input
-                type="text" class="input-xlarge span11" id="fname" name="fname"
-                placeholder="First Name">
-        </div>
-    </div>
-</div>
-
-<!--SECOND BLOCK -->
-<div class="control-group row-fluid">
-    <label class="control-label span2">@EMessages.get("register.lastname")</label>
-    <div class="controls span10">
-        <div class="input-prepend span12">
-            <span class="add-on"><i class="icon-user"></i> </span> <input
-                type="text" class="input-xlarge span11" id="lname" name="lname"
-                placeholder="Last Name">
+                type="text" class="input-xlarge span11" id="name" name="name"
+                placeholder="@EMessages.get("register.name")">
         </div>
     </div>
 </div>
@@ -39,7 +27,7 @@
         <div class="input-prepend span12">
             <span class="add-on"><i class="icon-envelope"></i> </span> <input
                 type="text" class="input-xlarge span11" id="email" name="email"
-                placeholder="Email">
+                placeholder="@EMessages.get("register.email")">
         </div>
     </div>
 </div>
@@ -52,7 +40,7 @@
         <div class="input-prepend span12">
             <span class="add-on"><i class="icon-user"></i> </span> <input
                 type="text" class="input-xlarge span11" id="bday" name="bday"
-                placeholder="Birthday">
+                placeholder="@EMessages.get("register.bday")">
         </div>
     </div>
 </div>
@@ -95,7 +83,7 @@
         <div class="input-prepend span12">
             <span class="add-on"><i class="icon-lock"></i> </span> <input
                 type="Password" id="reg_passwd" class="input-xlarge span11"
-                name="password" placeholder="Password">
+                name="password" placeholder="@EMessages.get("register.password")">
         </div>
     </div>
 </div>
@@ -107,7 +95,7 @@
         <div class="input-prepend span12">
             <span class="add-on"><i class="icon-lock"></i> </span> <input
                 type="Password" id="controle_passwd" class="input-xlarge span11"
-                name="controle_passwd" placeholder="Re-enter Password">
+                name="controle_passwd" placeholder="@EMessages.get("register.confirm_password")">
         </div>
     </div>
 </div>

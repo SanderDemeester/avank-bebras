@@ -1,5 +1,6 @@
 package models.dbentities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +12,7 @@ import javax.persistence.Table;
 
 import models.management.Editable;
 import models.management.ManageableModel;
-import models.question.server.Server;
+import models.question.Server;
 import play.data.validation.Constraints;
 
 import com.avaje.ebean.validation.NotNull;
@@ -29,10 +30,11 @@ public class QuestionModel extends ManageableModel{
     private static final long serialVersionUID = 1L;
 
     @Id
+    @Editable(alwaysHidden=true, hiddenInList=true)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Seq")//@GeneratedValue(strategy = GenerationType.AUTO)
     public int id;
 
-    @Editable
+    @Editable(uponCreation=true)
     @Constraints.Required
     public String officialid;
 
@@ -55,6 +57,16 @@ public class QuestionModel extends ManageableModel{
     @NotNull
     @JoinColumn(name="author")
     public UserModel author;
+    
+    /**
+     * Constructor to create an empty model
+     * @param user the author model
+     * @param path the temp file name
+     */
+    public QuestionModel(UserModel user, String path) {
+        this.author = user;
+        this.path = path;
+    }
 
     /**
      * Returns those values that have to be represented in a table.
@@ -81,7 +93,10 @@ public class QuestionModel extends ManageableModel{
         return Integer.toString(id);
     }
 
-    private void fixServer() {
+    /**
+     * Set the correct server field by the already saved server.id
+     */
+    public void fixServer() {
         if(this.server.id == null) {
             this.server = null;
         } else {
@@ -96,5 +111,14 @@ public class QuestionModel extends ManageableModel{
     public void save() {
         fixServer();
         super.save();
+    }
+    
+    /**
+     * Check if the officialid in this model is not yet present in the database
+     * @return is the officialid unique?
+     */
+    public boolean isUnique() {
+        Finder<String, QuestionModel> finder = new Finder<String, QuestionModel>(String.class, QuestionModel.class);
+        return finder.where().ilike("officialid", officialid).findList().isEmpty();
     }
 }

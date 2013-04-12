@@ -1,6 +1,3 @@
-/**
- *
- */
 package models.dbentities;
 
 import java.util.Date;
@@ -81,7 +78,7 @@ public class UserModel extends Model implements Listable{
      * A finder for User.
      * We will use this finder to execute specific sql query's.
      */
-    public static Finder<Integer,UserModel> find = new Model.Finder<Integer, UserModel>(Integer.class,UserModel.class);
+    public static Finder<String,UserModel> find = new Model.Finder<String, UserModel>(String.class,UserModel.class);
 
     @Override
     public Map<String, String> options() {
