@@ -47,7 +47,7 @@ public class CompetitionModel extends ManageableModel {
      */
     @Override
     public String[] getFieldValues() {
-        String[] fieldValues = {name, type.name(), Boolean.toString(active), starttime.toString(), endtime.toString()};
+        String[] fieldValues = {name, type.name(), Boolean.toString(active), starttime.toString(), endtime.toString(), creator};
         return fieldValues;
     }
 

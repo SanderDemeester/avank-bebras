@@ -52,7 +52,7 @@ public class CompetitionController extends EController {
      */
     private static QuestionSetManager getQuestionSetManager(ModelState modelState, String orderBy, String order,
                                                             String filter, String contid){
-        QuestionSetManager questionSetManager = new QuestionSetManager(QuestionSetModel.class, modelState, contid);
+        QuestionSetManager questionSetManager = new QuestionSetManager(modelState, contid, "");
         questionSetManager.setOrderBy(orderBy);
         questionSetManager.setOrder(order);
         questionSetManager.setFilter(filter);
@@ -159,7 +159,7 @@ public class CompetitionController extends EController {
      * @return redirect to contest index page.
      */
     public static Result removeCompetition(String contestid){
-        QuestionSetManager questionSetManager = new QuestionSetManager(QuestionSetModel.class, ModelState.DELETE, contestid);
+        QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.DELETE, contestid, "");
         List<QuestionSetModel> questionSetModels = questionSetManager.getFinder().where().ieq("contid", contestid).findList();
         for (QuestionSetModel questionSetModel : questionSetModels){
             questionSetModel.delete();
@@ -177,7 +177,7 @@ public class CompetitionController extends EController {
      * @return redirect to the contest overview page
      */
     public static Result removeQuestionSet(String qsid, String contestid){
-        QuestionSetManager questionSetManager = new QuestionSetManager(QuestionSetModel.class, ModelState.DELETE, contestid);
+        QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.DELETE, contestid, "");
         questionSetManager.getFinder().byId(qsid).delete();
         return redirect(routes.CompetitionController.viewCompetition(contestid, 0, "level", "asc", ""));
     }

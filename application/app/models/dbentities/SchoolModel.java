@@ -105,11 +105,4 @@ public class SchoolModel extends Model implements Comparable<SchoolModel>{
 		return Integer.compare(this.id, o.id);
 	}
 
-	
-	
-	
-	
-	
-	
-
 }

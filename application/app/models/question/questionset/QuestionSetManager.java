@@ -7,6 +7,9 @@ import models.management.Manager;
 import models.management.ModelState;
 import play.mvc.Call;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Manager for the question set entity.
  *
@@ -15,16 +18,17 @@ import play.mvc.Call;
 public class QuestionSetManager extends Manager<QuestionSetModel> {
 
     private String contestid;
+    private String questionsetid;
 
     /**
      * Constructor for manager class.
      *
-     * @param modelClass model class
      * @param state      model state
      */
-    public QuestionSetManager(Class modelClass, ModelState state, String contestid) {
-        super(modelClass, state, "level", "level");
+    public QuestionSetManager(ModelState state, String contestid, String questionsetid) {
+        super(QuestionSetModel.class, state, "level", "level");
         this.contestid = contestid;
+        this.questionsetid = questionsetid;
     }
 
     /**
@@ -36,8 +40,7 @@ public class QuestionSetManager extends Manager<QuestionSetModel> {
      * @return the requested page
      */
     @Override
-    @SuppressWarnings("unchecked")
-    public Page page(int page) {
+    public Page<QuestionSetModel> page(int page) {
         return  getFinder()
                 .where()
                 .ieq("contid", contestid)
@@ -48,13 +51,16 @@ public class QuestionSetManager extends Manager<QuestionSetModel> {
     }
 
     /**
-     * Returns the column headers for the objects of type T.
+     * Returns the column headers for the objects of type T. This array must agree with
+     * getFieldValues() from the ManageableModel
      *
      * @return column headers
      */
-    @Override
-    public String[] getColumnHeaders() {
-        String[] columnHeaders = {"name", "level", "active"};
+    public List<String> getColumnHeaders() {
+        ArrayList<String> columnHeaders = new ArrayList<String>();
+        columnHeaders.add("name");
+        columnHeaders.add("level");
+        columnHeaders.add("active");
         return columnHeaders;
     }
 
@@ -117,7 +123,7 @@ public class QuestionSetManager extends Manager<QuestionSetModel> {
      */
     @Override
     public play.api.mvc.Call getUpdateRoute() {
-        return null;
+        return routes.QuestionSetController.update(questionsetid);
     }
 
     /**

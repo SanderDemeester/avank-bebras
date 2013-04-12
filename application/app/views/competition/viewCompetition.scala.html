@@ -4,7 +4,7 @@
 * author: Kevin Stobbelaar                 *
 *******************************************@
 
-@(breadcrumbs : List[models.data.Link], currentPage: Page[models.management.ManageableModel],
+@(breadcrumbs : List[models.data.Link], currentPage: Page[_ <: models.management.ManageableModel],
 QSmanager: models.management.Manager[_], currentOrderBy: String, currentOrder: String, currentFilter: String,
 modelForm: Form[_ <: models.management.ManageableModel], Cmanager: models.management.Manager[_])
 
@@ -46,6 +46,7 @@ modelForm: Form[_ <: models.management.ManageableModel], Cmanager: models.manage
                     </div>
                 }
             </div>
+
         </div>
 
         <div class="span8">

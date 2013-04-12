@@ -8,6 +8,9 @@ import models.management.Manager;
 import models.management.ModelState;
 import play.mvc.Call;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Manager for question set questions entity.
  *
@@ -35,8 +38,7 @@ public class QuestionSetQuestionManager extends Manager<QuestionSetQuestion> {
      * @param page     page number
      * @return the requested page
      */
-    @SuppressWarnings("unchecked")
-    public Page page(int page) {
+    public Page<QuestionSetQuestion> page(int page) {
         return  getFinder()
                 .where()
                 .ieq("qsid", qsid)
@@ -53,9 +55,12 @@ public class QuestionSetQuestionManager extends Manager<QuestionSetQuestion> {
      * @return column headers
      */
     @Override
-    public String[] getColumnHeaders() {
-        String[] result = {"qsid", "qid", "difficulty"};
-        return result;
+    public List<String> getColumnHeaders() {
+        ArrayList<String> columnHeaders = new ArrayList<String>();
+        columnHeaders.add("qid");
+        columnHeaders.add("qsid");
+        columnHeaders.add("difficulty");
+        return columnHeaders;
     }
 
     /**

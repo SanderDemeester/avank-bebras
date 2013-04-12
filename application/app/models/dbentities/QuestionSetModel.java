@@ -1,5 +1,6 @@
 package models.dbentities;
 
+import models.management.Editable;
 import models.management.ManageableModel;
 import play.data.validation.Constraints.Required;
 
@@ -23,11 +24,14 @@ public class QuestionSetModel extends ManageableModel {
     @Id
     public String id;
 
+    @Editable
     @Required
     public String level;
 
+    @Editable
     public boolean active;
 
+    @Editable
     @Required
     public String name;
 

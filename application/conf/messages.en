@@ -102,7 +102,10 @@ question.questionset.addquestion.title = Add new question to the question set.
 question.questionset.addquestion.id = Id of the question:
 question.questionset.addquestion.brcr = Add
 question.questionset.manager.form.level = Level
+question.questionset.manager.form.name = Name
+question.questionset.manager.form.active = Active
 question.questionset.overview.questions = This question set contains the following questions:
+question.questionset.overview.basic = Edit question set information.
 
 # Languages
 languages.language = Language
@@ -184,9 +187,9 @@ competition.manager.form.type = Type
 competition.manager.form.active = Active
 competition.manager.form.starttime = Start time
 competition.manager.form.endtime = End time
+competition.manager.form.creator = Creator
 competition.view.edit = Edit contest information.
 competition.view.qs = Question sets for this contest:
-
 competition.edit = Edit contest
 competition.edit.breadcrumb = Edit
 

@@ -7,6 +7,7 @@ import models.data.Link;
 import models.dbentities.QuestionSetModel;
 import models.dbentities.QuestionSetQuestion;
 import models.management.ModelState;
+import models.question.questionset.QuestionSetManager;
 import models.question.questionset.QuestionSetQuestionManager;
 import play.data.Form;
 import play.mvc.Result;
@@ -84,9 +85,11 @@ public class QuestionSetController extends EController {
         qsqm.setOrder(order);
         qsqm.setOrderBy(orderBy);
         qsqm.setFilter(filter);
+        QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.UPDATE, "", questionSetId);
+        Form<QuestionSetModel> form = form(QuestionSetModel.class).bindFromRequest().fill(questionSetManager.getFinder().byId(questionSetId));
         return ok(
                 views.html.question.questionset.overview.render(breadcrumbs, questionSetId,
-                        qsqm.page(page), qsqm, orderBy, order, filter
+                        qsqm.page(page), qsqm, orderBy, order, filter, form, questionSetManager
                 ));
     }
 
@@ -111,7 +114,7 @@ public class QuestionSetController extends EController {
      * @param questionSetId question set id
      * @return overview page
      */
-    public static Result update(String questionSetId){
+    public static Result updateQuestions(String questionSetId){
         Form<QuestionSetQuestion> form = form(QuestionSetQuestion.class).bindFromRequest();
         if(form.hasErrors()) {
             List<Link> breadcrumbs = defaultBreadcrumbs();
@@ -124,6 +127,24 @@ public class QuestionSetController extends EController {
         // TODO check of de vraag met de opgegeven vraag id wel bestaat !
         questionSetQuestion.save();
         return redirect(routes.QuestionSetController.list(questionSetId, 0, "", "", ""));
+    }
+
+    public static Result update(String questionSetId){
+        QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.UPDATE, "", questionSetId);
+        Form<QuestionSetModel> form = form(QuestionSetModel.class).fill(questionSetManager.getFinder().byId(questionSetId)).bindFromRequest();
+        if (form.hasErrors()) {
+            List<Link> breadcrumbs = defaultBreadcrumbs();
+            breadcrumbs.add(new Link(EMessages.get("question.questionset.overview"), "/questionset/questions"));
+            QuestionSetQuestionManager qsqm = new QuestionSetQuestionManager(ModelState.READ, questionSetId);
+            qsqm.setOrder("asc");
+            qsqm.setOrderBy("qid");
+            qsqm.setFilter("");
+            return badRequest(views.html.question.questionset.overview.render(
+                breadcrumbs, questionSetId, qsqm.page(0), qsqm, "qid", "asc", "", form, questionSetManager
+            ));
+        }
+        form.get().update();
+        return redirect(routes.QuestionSetController.list(questionSetId, 0, "qid", "asc", ""));
     }
 
 }

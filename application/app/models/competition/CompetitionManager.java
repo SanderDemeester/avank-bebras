@@ -7,6 +7,9 @@ import models.management.Manager;
 import models.management.ModelState;
 import play.mvc.Call;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Manager for the competition entity.
  *
@@ -40,8 +43,7 @@ public class CompetitionManager extends Manager<CompetitionModel> {
      * @return the requested page
      */
     @Override
-    @SuppressWarnings("unchecked")
-    public Page page(int page) {
+    public Page<CompetitionModel> page(int page) {
         return  getFinder()
                 .where()
                 .ilike(filterBy, "%" + filter + "%")
@@ -56,8 +58,14 @@ public class CompetitionManager extends Manager<CompetitionModel> {
      * @return column headers
      */
     @Override
-    public String[] getColumnHeaders() {
-        String[] columnHeaders = {"name", "type", "active", "starttime", "endtime"};
+    public List<String> getColumnHeaders() {
+        ArrayList<String> columnHeaders = new ArrayList<String>();
+        columnHeaders.add("name");
+        columnHeaders.add("type");
+        columnHeaders.add("active");
+        columnHeaders.add("starttime");
+        columnHeaders.add("endtime");
+        columnHeaders.add("creator");
         return columnHeaders;
     }
 

@@ -141,9 +141,8 @@ public abstract class Manager<T extends ManageableModel> {
      * @param page     page number
      * @return the requested page
      */
-    @SuppressWarnings("unchecked")
-    public Page<ManageableModel> page(int page) {
-        return (Page<ManageableModel>) finder
+    public Page<T> page(int page) {
+        return finder
             .where()
             .ilike(filterBy, "%" + filter + "%")
             .orderBy(orderBy + " " + order)
