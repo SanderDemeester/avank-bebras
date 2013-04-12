@@ -2,9 +2,11 @@ package controllers;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import controllers.util.Mails;
 import models.EMessages;
@@ -19,6 +21,7 @@ import play.api.libs.Crypto;
 import play.api.templates.Html;
 import play.api.templates.Template2;
 import play.data.DynamicForm;
+import play.api.libs.Crypto;
 import play.data.Form;
 import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
@@ -32,6 +35,14 @@ import views.html.landingPages.AdminLandingPage;
 import views.html.landingPages.IndependentPupilLandingPage;
 import views.html.landingPages.OrganizerLandingPage;
 import views.html.landingPages.PupilLandingPage;
+
+import models.EMessages;
+import models.data.Link;
+import models.dbentities.UserModel;
+import models.user.AuthenticationManager;
+import models.user.UserType;
+
+import views.html.landing_page;
 import views.html.login.error;
 import views.html.login.register;
 import views.html.login.registerLandingPage;
@@ -63,51 +74,94 @@ public class UserController extends EController {
 
     ;
 
-    /**
-     * This methode gets requested when the user clicks on "signup".
-     *
-     * @return Result page.
-     * @author Sander Demeester
-     */
-    public static Result signup() {
-        List<Link> breadcrumbs = new ArrayList<Link>();
-        breadcrumbs.add(new Link("Home", "/"));
-        breadcrumbs.add(new Link("Sign Up", "/signup"));
-        return ok(register.render("Registration",
-                breadcrumbs,
-                form(Register.class)
+	/**
+	 * This methode gets requested when the user clicks on "signup".
+	 * @return Result page.
+	 */
+	public static Result signup(){
+		List<Link> breadcrumbs = new ArrayList<Link>();
+		breadcrumbs.add(new Link("Home", "/"));
+		breadcrumbs.add(new Link("Sign Up", "/signup"));
+		return ok(register.render(EMessages.get("register.title"),
+            breadcrumbs,
+            form(Register.class)
         ));
-    }
+	}
 
-    /**
-     * this methode is called when the user submits his/here register information.
-     *
-     * @return Result page
-     * @author Sander Demeester
-     */
-    public static Result register() {
-        // Bind play form request.
-        Form<Register> registerForm = form(Register.class).bindFromRequest();
+	/**
+	 * this methode is called when the user submits his/here register information.
+	 * @return Result page
+	 */
+	public static Result register(){
+		// Bind play form request.
+		Form<Register> registerForm = form(Register.class).bindFromRequest();
+		Pattern pattern = Pattern.compile("[^a-z ]", Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(registerForm.get().name);
 
-        // Check if the email adres is uniqe.
-        if (!registerForm.get().email.isEmpty()) {
+		// Check if the email adres is uniqe.
+		if(!registerForm.get().email.isEmpty()){
 
-            if (Ebean.find(UserModel.class).where().eq(
-                    "email", registerForm.get().email).findUnique() != null) {
-                return badRequest(error.render("Error", new ArrayList<Link>(), form(Register.class), "There is already a user with the selected email address"));
-            }
-        }
+			if(Ebean.find(UserModel.class).where().eq(
+					"email",registerForm.get().email).findUnique() != null){
+				return badRequest(error.render(EMessages.get("error.title"),new ArrayList<Link>(),form(Register.class),EMessages.get("register.same_email")));
+			}
+		}
 
-        // If the form contains error's (specified by "@"-annotation in the class "Register" then this will be true.
-        if (registerForm.hasErrors()) {
-            return badRequest(error.render("Error", new ArrayList<Link>(), form(Register.class), "Invalid request"));
-        }
+		// If the form contains error's (specified by "@"-annotation in the class "Register" then this will be true.
+		if(registerForm.hasErrors()){
+			return badRequest(error.render(EMessages.get("error.title"), new ArrayList<Link>(), form(Register.class), EMessages.get("error.text")));
+		}
+		
+		// Check if full name contains invalid symbols.
+		if(matcher.find()){
+			return badRequest(error.render(EMessages.get("error.title"), new ArrayList<Link>(), form(Register.class), EMessages.get("error.invalid_symbols")));
+		}
 
-        // Delegate create user to Authentication Manager.
-        String bebrasID = null;
+		// Compile new pattern to check for invalid email symbols. 
+		// These are all the symbols that are allow in email addresses.
+		// Alle symbols are containd in character classes, so no need for escaping.
+		pattern = Pattern.compile("[^a-z._+@0-9!#$%&'*+-/=?^_`{|}~]");
+		matcher = pattern.matcher(registerForm.get().email);
+
+		if(matcher.find()){
+			return badRequest(error.render(EMessages.get("error.title"), new ArrayList<Link>(), form(Register.class), EMessages.get("error.invalid_email")));
+		}
+
+		// Try to validate email, this check happens on the client side, but date can be send without using the form.
+		// If the check fails the user is presented with a error page.
+		try{
+			new SimpleDateFormat("yyyy/mm/dd").parse(registerForm.get().bday);
+		}catch(Exception e){
+			return badRequest(error.render(EMessages.get("error.title"), new ArrayList<Link>(), form(Register.class), EMessages.get("error.invalid_date")));
+		}
+
+		// Delegate create user to Authentication Manager.
+		String bebrasID = null;
+		try {
+			bebrasID = AuthenticationManager.getInstance().createUser(registerForm);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		// Return a register succes page.
+		return ok(registerLandingPage.render(EMessages.get("info.success"), new ArrayList<Link>(), bebrasID));
+	}
+
+	/**
+	 * This methode is called when the users clicks on "login".
+	 * @return returns the users cookie.
+	 */
+	public static Result validate_login(String id, String password) throws Exception{
+	    String cookie = "";
         try {
-            bebrasID = AuthenticationManager.getInstance().createUser(registerForm);
-        } catch (Exception e) {
+            //generate random id to auth user.
+            cookie = Integer.toString(Math.abs(SecureRandom.getInstance("SHA1PRNG").nextInt(100)));
+
+            //set the cookie. There really is no need for Crypto.sign because a cookie should be random value that has no meaning
+            cookie = Crypto.sign(cookie);
+            //response().setCookie(AuthenticationManager.COOKIENAME, cookie);
+
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         return ok(registerLandingPage.render("Succes", new ArrayList<Link>(), bebrasID));
@@ -119,41 +173,46 @@ public class UserController extends EController {
      * @return returns the users cookie.
      * @author Sander Demeester, Ruben Taelman
      */
-    public static Result validate_login(String id, String password) throws Exception {
-        // We do the same check here, if the input forms are empty return a error message.
-        if (id == "" || password == "") {
-            return badRequest("Please enter an ID and password.");
-        } else if (AuthenticationManager.getInstance().validate_credentials(id, password)) {
-            String cookie = "";
-            try {
-                //generate random id to auth user.
-                cookie = Integer.toString(Math.abs(SecureRandom.getInstance("SHA1PRNG").nextInt(100)));
+    public static Result validate_login(String id, String password) throws Exception {    
+		// We do the same check here, if the input forms are empty return a error message.
+		if(id == "" || password == "") {
+			return badRequest(EMessages.get("register.giveinfo"));
+		} else if(AuthenticationManager.getInstance().validate_credentials(id, password, cookie)){
+			return ok(cookie);
+		} else {
+			return badRequest(EMessages.get("error.login"));
+		}
+	}
 
-                //set the cookie. There really is no need for Crypto.sign because a cookie should be random value that has no meaning
-                cookie = Crypto.sign(cookie);
-                response().setCookie(AuthenticationManager.COOKIENAME, cookie);
+	/**
+	 * Logout current user
+	 * @return Result
+	 */
+	public static Result logout(){
+		AuthenticationManager.getInstance().logout();
+		return Results.redirect(routes.Application.index());
+	}
 
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            }
-            return ok(cookie);
-        } else {
-            return badRequest("Invalid ID and password.");
-        }
-    }
+	/**
+	 * @return Returns a scala template based on the type of user that is requesting the page.
+	 **/
+	@SuppressWarnings("unchecked")
+	public static Result landingPage() throws Exception{
+		List<Link> breadcrumbs = new ArrayList<Link>();
+		breadcrumbs.add(new Link("Home", "/"));
 
-    /**
-     * Logout current user
-     *
-     * @return Result
-     * @author Sander Demeester
-     */
-    public static Result logout() {
-        AuthenticationManager.getInstance().logout();
-        return Results.redirect(routes.Application.index());
-    }
+		UserType type = AuthenticationManager.getInstance().getUser().getType();
+		if(UserType.ANON.equals(type)) {
+			return Results.redirect(routes.Application.index());
+		} else {
+            return ok(views.html.landing_page.render(
+                AuthenticationManager.getInstance().getUser(),
+                breadcrumbs
+            ));
+		}
+	}
 
-    /**
+ /**
      * This method is called when a user hits the 'Forgot Password' button.
      *
      * @return forgot_pwd page
@@ -188,64 +247,37 @@ public class UserController extends EController {
         return Results.redirect("/");
     }
 
-    /**
-     * @return Returns a scala template based on the type of user that is requesting the page.
-     * @author Sander Demeester
-     */
-    @SuppressWarnings("unchecked")
-    public static Result landingPage() throws Exception {
-        List<Link> breadcrumbs = new ArrayList<Link>();
-        breadcrumbs.add(new Link("Home", "/"));
-        breadcrumbs.add(new Link("Dashboard", "/home"));
 
-        UserType type = AuthenticationManager.getInstance().getUser().getType();
-        if (type.equals(UserType.ANON)) {
-            return Results.redirect(routes.Application.index());
-        } else {
-            Class<?> object = Play.application().classloader().loadClass("views.html.landingPages." + LANDINGPAGES.get(type).getSimpleName() + "$");
-            Template2<User, List<Link>, Html> viewTemplate = (Template2<User, List<Link>, Html>) object.getField("MODULE$").get(null);
-            return ok(viewTemplate.render(AuthenticationManager.getInstance().getUser(), breadcrumbs));
-        }
-    }
+	/**
+	 * Inline class that contains public fields for play forms.
+	 */
+	public static class Register{
+		@Required
+		public String name;
+		public String email;
+		@Required
+		@Formats.DateTime(pattern = "yyyy/dd/mm")
+		public String bday;
+		@Required
+		public String password;
+		@Required
+		public String controle_passwd;
+		@Required
+		public String gender;
+		@Required
+		public String prefLanguage;
+	}
+	/**
+	 * Inline class that contains public fields for play forms.
+	 */
+	public static class Login{
+		public String id;
+		public String password;
+	}
 
-    /**
-     * Inline class that contains public fields for play forms.
-     *
-     * @author Sander Demeester
-     */
-    public static class Register {
-        @Required
-        public String fname;
-        @Required
-        public String lname;
-        public String email;
-        @Required
-        @Formats.DateTime(pattern = "yyyy/dd/mm")
-        public String bday;
-        @Required
-        public String password;
-        @Required
-        public String controle_passwd;
-        @Required
-        public String gender;
-        @Required
-        public String prefLanguage;
-    }
-
-    /**
-     * Inline class that contains public fields for play forms.
-     *
-     * @author Sander Demeester
-     */
-    public static class Login {
-        public String id;
-        public String password;
-    }
-
-    public static class ForgotPwd {
-        @Required
-        public String id;
-        public String email;
-    }
-
+	public static class ForgotPwd {
+         @Required
+         public String id;
+         public String email;
+     }
 }

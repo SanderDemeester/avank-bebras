@@ -1,6 +1,3 @@
-/**
- *
- */
 package models.dbentities;
 
 import java.util.Date;
@@ -55,7 +52,7 @@ public class UserModel extends Model implements Listable{
     public boolean active;
 
     @Column(name="class")
-    public int classgroup;
+    public Integer classgroup;
 
     public UserModel(String id, UserType loginType, String name,
             Date birthdate, Date registrationdate,
@@ -80,11 +77,11 @@ public class UserModel extends Model implements Listable{
      * A finder for User.
      * We will use this finder to execute specific sql query's.
      */
-    public static Finder<Integer,UserModel> find = new Model.Finder<Integer, UserModel>(Integer.class,UserModel.class);
+    public static Finder<String,UserModel> find = new Model.Finder<String, UserModel>(String.class,UserModel.class);
 
     @Override
     public Map<String, String> options() {
-        List<UserModel> users = find.all();
+        List<UserModel> users = find.all(); //TODO try-catch
         LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
         for(UserModel user: users) {
             options.put(user.id, user.id);
