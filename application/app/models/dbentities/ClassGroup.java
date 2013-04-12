@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import play.db.ebean.Model;
+import models.management.ManageableModel;
 
 /**
  * This class contains information that models a group of pupils
@@ -17,8 +17,8 @@ import play.db.ebean.Model;
  */
 @Entity
 @Table(name="Classes")
-public class ClassGroup extends Model{
-    private static final long serialVersionUID = 3L;
+public class ClassGroup extends ManageableModel{
+    private static final long serialVersionUID = 4L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "classes_id_seq")
@@ -40,8 +40,8 @@ public class ClassGroup extends Model{
         return this.name;
     }
 
-    public int getID(){
-        return this.id;
+    public String getID(){
+        return Integer.toString(this.id);
     }
     /**
      * 
@@ -80,5 +80,11 @@ public class ClassGroup extends Model{
     	c.set(Calendar.MILLISECOND, 0);
     	return c.getTime();
     }
+
+	@Override
+	public String[] getFieldValues() {
+		String[] res = {Integer.toString(id),name,Integer.toString(schoolid),level,expdate.toString(),Boolean.toString(isActive())};
+		return res;
+	}
 
 }
