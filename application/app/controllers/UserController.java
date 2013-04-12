@@ -44,9 +44,9 @@ public class UserController extends EController{
 		breadcrumbs.add(new Link("Home", "/"));
 		breadcrumbs.add(new Link("Sign Up", "/signup"));
 		return ok(register.render(EMessages.get("register.title"),
-            breadcrumbs,
-            form(Register.class)
-        ));
+				breadcrumbs,
+				form(Register.class)
+				));
 	}
 
 	/**
@@ -58,24 +58,31 @@ public class UserController extends EController{
 		Form<Register> registerForm = form(Register.class).bindFromRequest();
 		Pattern pattern = Pattern.compile("[^a-z ]", Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(registerForm.get().name);
+		List<Link> breadcrumbs = new ArrayList<Link>();
+		breadcrumbs.add(new Link("Home", "/"));
+		breadcrumbs.add(new Link("Sign Up", "/signup"));
 
 		// Check if the email adres is uniqe.
 		if(!registerForm.get().email.isEmpty()){
 
 			if(Ebean.find(UserModel.class).where().eq(
 					"email",registerForm.get().email).findUnique() != null){
-				return badRequest(error.render(EMessages.get("error.title"),new ArrayList<Link>(),form(Register.class),EMessages.get("register.same_email")));
+				
+				flash("error", EMessages.get(EMessages.get("register.same_email")));
+				return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
 			}
 		}
 
 		// If the form contains error's (specified by "@"-annotation in the class "Register" then this will be true.
 		if(registerForm.hasErrors()){
-			return badRequest(error.render(EMessages.get("error.title"), new ArrayList<Link>(), form(Register.class), EMessages.get("error.text")));
+			flash("error", EMessages.get(EMessages.get("error.text")));
+			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
 		}
-		
+
 		// Check if full name contains invalid symbols.
 		if(matcher.find()){
-			return badRequest(error.render(EMessages.get("error.title"), new ArrayList<Link>(), form(Register.class), EMessages.get("error.invalid_symbols")));
+			flash("error", EMessages.get(EMessages.get("error.invalid_symbols")));
+			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
 		}
 
 		// Compile new pattern to check for invalid email symbols. 
@@ -85,7 +92,8 @@ public class UserController extends EController{
 		matcher = pattern.matcher(registerForm.get().email);
 
 		if(matcher.find()){
-			return badRequest(error.render(EMessages.get("error.title"), new ArrayList<Link>(), form(Register.class), EMessages.get("error.invalid_email")));
+			flash("error", EMessages.get(EMessages.get("error.invalid_email")));
+			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
 		}
 
 		// Try to validate email, this check happens on the client side, but date can be send without using the form.
@@ -93,7 +101,8 @@ public class UserController extends EController{
 		try{
 			new SimpleDateFormat("yyyy/mm/dd").parse(registerForm.get().bday);
 		}catch(Exception e){
-			return badRequest(error.render(EMessages.get("error.title"), new ArrayList<Link>(), form(Register.class), EMessages.get("error.invalid_date")));
+			flash("error", EMessages.get(EMessages.get("error.invalid_date")));
+			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
 		}
 
 		// Delegate create user to Authentication Manager.
@@ -103,7 +112,7 @@ public class UserController extends EController{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		// Return a register succes page.
 		return ok(registerLandingPage.render(EMessages.get("info.success"), new ArrayList<Link>(), bebrasID));
 	}
@@ -113,19 +122,19 @@ public class UserController extends EController{
 	 * @return returns the users cookie.
 	 */
 	public static Result validate_login(String id, String password) throws Exception{
-	    String cookie = "";
-        try {
-            //generate random id to auth user.
-            cookie = Integer.toString(Math.abs(SecureRandom.getInstance("SHA1PRNG").nextInt(100)));
+		String cookie = "";
+		try {
+			//generate random id to auth user.
+			cookie = Integer.toString(Math.abs(SecureRandom.getInstance("SHA1PRNG").nextInt(100)));
 
-            //set the cookie. There really is no need for Crypto.sign because a cookie should be random value that has no meaning
-            cookie = Crypto.sign(cookie);
-            //response().setCookie(AuthenticationManager.COOKIENAME, cookie);
+			//set the cookie. There really is no need for Crypto.sign because a cookie should be random value that has no meaning
+			cookie = Crypto.sign(cookie);
+			//response().setCookie(AuthenticationManager.COOKIENAME, cookie);
 
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-	    
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+
 		// We do the same check here, if the input forms are empty return a error message.
 		if(id == "" || password == "") {
 			return badRequest(EMessages.get("register.giveinfo"));
@@ -157,10 +166,10 @@ public class UserController extends EController{
 		if(UserType.ANON.equals(type)) {
 			return Results.redirect(routes.Application.index());
 		} else {
-            return ok(views.html.landing_page.render(
-                AuthenticationManager.getInstance().getUser(),
-                breadcrumbs
-            ));
+			return ok(views.html.landing_page.render(
+					AuthenticationManager.getInstance().getUser(),
+					breadcrumbs
+					));
 		}
 	}
 
