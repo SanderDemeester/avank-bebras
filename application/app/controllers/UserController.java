@@ -76,13 +76,13 @@ public class UserController extends EController{
 		// If the form contains error's (specified by "@"-annotation in the class "Register" then this will be true.
 		if(registerForm.hasErrors()){
 			flash("error", EMessages.get(EMessages.get("error.text")));
-			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
+			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, form(Register.class).bindFromRequest()));
 		}
 
 		// Check if full name contains invalid symbols.
 		if(matcher.find()){
 			flash("error", EMessages.get(EMessages.get("error.invalid_symbols")));
-			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
+			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, form(Register.class).bindFromRequest()));
 		}
 
 		// Compile new pattern to check for invalid email symbols. 
@@ -93,7 +93,7 @@ public class UserController extends EController{
 
 		if(matcher.find()){
 			flash("error", EMessages.get(EMessages.get("error.invalid_email")));
-			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
+			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, form(Register.class).bindFromRequest()));
 		}
 
 		// Try to validate email, this check happens on the client side, but date can be send without using the form.
@@ -102,7 +102,7 @@ public class UserController extends EController{
 			new SimpleDateFormat("yyyy/mm/dd").parse(registerForm.get().bday);
 		}catch(Exception e){
 			flash("error", EMessages.get(EMessages.get("error.invalid_date")));
-			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
+			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, form(Register.class).bindFromRequest()));
 		}
 
 		// Delegate create user to Authentication Manager.
