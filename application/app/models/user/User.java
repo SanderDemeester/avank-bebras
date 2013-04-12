@@ -3,13 +3,19 @@ package models.user;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
+
 import play.mvc.Content;
 import play.mvc.Result;
+
 import models.dbentities.UserModel;
 
 /**
  * The default abstract class for User.
- * @author Sander Demeester, Ruben Taelman
+ * @author Sander Demeester
+ * @author Ruben Taelman
+ * @author Felix Van der Jeugt
  **/
 
 public abstract class User{
@@ -91,6 +97,14 @@ public abstract class User{
      */
     public boolean hasRole(Role role) {
         return ROLES.contains(role);
+    }
+
+    /**
+     * Returns all the roles this user has.
+     * @return This user's roles.
+     */
+    public List<Role> roles() {
+        return new ArrayList<Role>(ROLES);
     }
 
     /**

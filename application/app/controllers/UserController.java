@@ -4,32 +4,24 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import models.EMessages;
-import models.data.Link;
-import models.dbentities.UserModel;
-import models.user.AuthenticationManager;
-import models.user.User;
-import models.user.UserType;
-import play.Play;
 import play.api.libs.Crypto;
-import play.api.templates.Html;
-import play.api.templates.Template2;
 import play.data.Form;
 import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
 import play.mvc.Result;
 import play.mvc.Results;
-import views.html.landingPages.AdminLandingPage;
-import views.html.landingPages.IndependentPupilLandingPage;
-import views.html.landingPages.OrganizerLandingPage;
-import views.html.landingPages.PupilLandingPage;
-import views.html.landingPages.TeacherLandingPage;
+
+import models.EMessages;
+import models.data.Link;
+import models.dbentities.UserModel;
+import models.user.AuthenticationManager;
+import models.user.UserType;
+
+import views.html.landing_page;
 import views.html.login.error;
 import views.html.login.register;
 import views.html.login.registerLandingPage;
@@ -44,21 +36,6 @@ import com.avaje.ebean.Ebean;
 public class UserController extends EController{
 
 	/**
-	 * This hashmap embodies the mapping from a Type to a view.
-	 * Each view is responsible for getting all information from the DataModel and make a
-	 * beautiful view for the user :)
-	 */
-	private static HashMap<UserType, Class<?>> LANDINGPAGES = new HashMap<UserType, Class<?>>();
-	static {
-		LANDINGPAGES.put(UserType.ADMINISTRATOR, AdminLandingPage.class);
-		LANDINGPAGES.put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
-		LANDINGPAGES.put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
-		LANDINGPAGES.put(UserType.ORGANIZER, OrganizerLandingPage.class);
-		LANDINGPAGES.put(UserType.PUPIL,PupilLandingPage.class);
-		LANDINGPAGES.put(UserType.TEACHER, TeacherLandingPage.class);
-	};
-
-	/**
 	 * This methode gets requested when the user clicks on "signup".
 	 * @return Result page.
 	 */
@@ -67,9 +44,9 @@ public class UserController extends EController{
 		breadcrumbs.add(new Link("Home", "/"));
 		breadcrumbs.add(new Link("Sign Up", "/signup"));
 		return ok(register.render(EMessages.get("register.title"),
-				breadcrumbs,
-				form(Register.class)
-				));
+            breadcrumbs,
+            form(Register.class)
+        ));
 	}
 
 	/**
@@ -177,12 +154,13 @@ public class UserController extends EController{
 		breadcrumbs.add(new Link("Dashboard", "/home"));
 
 		UserType type = AuthenticationManager.getInstance().getUser().getType();
-		if(type.equals(UserType.ANON)) {
+		if(UserType.ANON.equals(type)) {
 			return Results.redirect(routes.Application.index());
 		} else {
-			Class<?> object = Play.application().classloader().loadClass("views.html.landingPages." + LANDINGPAGES.get(type).getSimpleName() + "$");
-			Template2<User,List<Link>, Html> viewTemplate = (Template2<User,List<Link>, Html>)object.getField("MODULE$").get(null);
-			return ok(viewTemplate.render(AuthenticationManager.getInstance().getUser(), breadcrumbs));
+            return ok(views.html.landing_page.render(
+                AuthenticationManager.getInstance().getUser(),
+                breadcrumbs
+            ));
 		}
 	}
 
