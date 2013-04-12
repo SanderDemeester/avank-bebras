@@ -49,7 +49,6 @@ public class ClassPupil extends Model {
             if(! (other instanceof ClassPupilPK))return false;
             ClassPupilPK oth = (ClassPupilPK) other;
             return this.classid==oth.classid && this.indid.equals(oth.indid);
-
         }
     }
 }

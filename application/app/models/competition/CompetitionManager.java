@@ -17,8 +17,6 @@ import java.util.List;
  */
 public class CompetitionManager extends Manager<CompetitionModel> {
 
-    // TODO: rekening houden met authentication !
-
     private String contestid;
 
     /**
@@ -88,7 +86,7 @@ public class CompetitionManager extends Manager<CompetitionModel> {
      */
     @Override
     public Call getAddRoute() {
-        return null;
+        return routes.CompetitionController.create();
     }
 
     /**

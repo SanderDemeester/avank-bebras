@@ -129,6 +129,13 @@ public class QuestionSetController extends EController {
         return redirect(routes.QuestionSetController.list(questionSetId, 0, "", "", ""));
     }
 
+    /**
+     * Updates the edited question set in the database.
+     * Redirects to the question set overview page.
+     *
+     * @param questionSetId question set id
+     * @return redirect to question set overview page.
+     */
     public static Result update(String questionSetId){
         QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.UPDATE, "", questionSetId);
         Form<QuestionSetModel> form = form(QuestionSetModel.class).fill(questionSetManager.getFinder().byId(questionSetId)).bindFromRequest();
@@ -144,6 +151,12 @@ public class QuestionSetController extends EController {
             ));
         }
         form.get().update();
+        return redirect(routes.QuestionSetController.list(questionSetId, 0, "qid", "asc", ""));
+    }
+
+    public static Result removeQuestion(String questionSetId, String questionId){
+        QuestionSetQuestionManager qsqm = new QuestionSetQuestionManager(ModelState.DELETE, questionId);
+        qsqm.getFinder().byId(questionId).delete();
         return redirect(routes.QuestionSetController.list(questionSetId, 0, "qid", "asc", ""));
     }
 

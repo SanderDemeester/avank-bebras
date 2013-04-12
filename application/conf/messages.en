@@ -106,6 +106,8 @@ question.questionset.manager.form.name = Name
 question.questionset.manager.form.active = Active
 question.questionset.overview.questions = This question set contains the following questions:
 question.questionset.overview.basic = Edit question set information.
+question.questionset.form.qid = Question id
+question.questionset.form.qsid = Question set id
 
 # Languages
 languages.language = Language
@@ -192,6 +194,8 @@ competition.view.edit = Edit contest information.
 competition.view.qs = Question sets for this contest:
 competition.edit = Edit contest
 competition.edit.breadcrumb = Edit
+competition.overview = Contest overview.
+competition.overview.info = On this page, you can view contest which are open for you. You can create new contests or edit an existing contest.
 
 
 # schools

@@ -3,6 +3,8 @@ package models.dbentities;
 import models.management.ManageableModel;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 /**
@@ -12,13 +14,16 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="questionsetquestions")
+@IdClass(QuestionSetQuestion.QuestionSetQuestionPK.class)
 public class QuestionSetQuestion extends ManageableModel {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
+    @Id
     public String qsid;
 
-    public String qid;
+    @Id
+    public int qid;
 
     public String difficulty;
 
@@ -31,7 +36,7 @@ public class QuestionSetQuestion extends ManageableModel {
      */
     @Override
     public String[] getFieldValues() {
-        String[] result = {qsid, qid, difficulty};
+        String[] result = {"" + qid, qsid, difficulty};
         return result;
     }
 
@@ -42,7 +47,32 @@ public class QuestionSetQuestion extends ManageableModel {
      */
     @Override
     public String getID() {
-        return qid;
+        return qsid;
+    }
+
+    public class QuestionSetQuestionPK {
+
+        private static final long serialVersionUID = 2L;
+
+        public int qid;
+        public String qsid;
+
+        public QuestionSetQuestionPK(){}
+
+        public QuestionSetQuestionPK(int qid,String qsid){
+            this.qid = qid;
+            this.qsid = qsid;
+        }
+
+        public int hashCode(){
+            return super.hashCode();
+        }
+
+        public boolean equals(Object other){
+            if(! (other instanceof QuestionSetQuestionPK))return false;
+            QuestionSetQuestionPK oth = (QuestionSetQuestionPK) other;
+            return this.qid==oth.qid && this.qsid.equals(oth.qsid);
+        }
     }
 
 }

@@ -11,6 +11,13 @@ currentOrder: String, currentFilter: String)
 @import views.html.management.list
 
 @main(EMessages.get("competition.name"), breadcrumbs) {
+
+    <div class="hero-unit">
+        <h2> @EMessages.get("competition.overview") </h2>
+        <p> @EMessages.get("competition.overview.info") </p>
+    </div>
+
+
     <div class="row-fluid">
 
         <div class="span4">

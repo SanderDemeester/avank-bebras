@@ -18,7 +18,10 @@ qsForm: Form[_ <: models.management.ManageableModel], qsmanager: models.manageme
     <div class="row-fluid">
 
         <div class="span4">
-            <h4> @EMessages.get("question.questionset.overview.basic") </h4>
+
+            <div class="well">
+                <h4> @EMessages.get("question.questionset.overview.basic") </h4>
+            </div>
 
             <div>
                 @form(qsmanager.getUpdateRoute()) {
@@ -43,7 +46,9 @@ qsForm: Form[_ <: models.management.ManageableModel], qsmanager: models.manageme
         </div>
 
         <div class="span8">
-            <h4> @EMessages.get("question.questionset.overview.questions") </h4>
+            <div class="well">
+                <h4> @EMessages.get("question.questionset.overview.questions") </h4>
+            </div>
 
             @list(currentPage, qsqmanager, currentOrderBy, currentOrder, currentFilter)
 
