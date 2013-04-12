@@ -109,7 +109,6 @@ public class QuestionSet {
         throw new UnsupportedOperationException();
     }
 
-    // TODO what does this method has to do?
     public boolean canActivate(){
         return true;
     }
