@@ -151,7 +151,6 @@ public class UserController extends EController{
 	public static Result landingPage() throws Exception{
 		List<Link> breadcrumbs = new ArrayList<Link>();
 		breadcrumbs.add(new Link("Home", "/"));
-		breadcrumbs.add(new Link("Dashboard", "/home"));
 
 		UserType type = AuthenticationManager.getInstance().getUser().getType();
 		if(UserType.ANON.equals(type)) {
