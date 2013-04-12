@@ -14,6 +14,10 @@ error.title = Oeps!
 error.text = Er is iets misgelopen. Probeer opnieuw later.
 error.back = Ga terug
 
+#Success
+success.success = Gereed
+success.goHome = Terug naar startpagina
+
 # Forms
 forms.cancel = Annuleer
 forms.delete = Verwijder
@@ -100,6 +104,8 @@ forgot_pwd.forgot_pwd = Wachtwoord vergeten
 forgot_pwd.id = Bebras-ID
 forgot_pwd.email = E-mail
 forgot_pwd.submit = Verzoek reset wachtwoord
+forgot_pwd.success = Ok.
+forgot_pwd.mail = Er werd een e-mail gestuurd naar het opgegeven adres.
 
 # Edit pwd
 edit_pwd.edit_pwd = Wachtwoord veranderen

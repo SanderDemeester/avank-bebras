@@ -18,9 +18,9 @@ public class Mails {
 
     public void sendMail(String recipient){
         MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
-        mail.setSubject("test");
+        mail.setSubject("Password reset");
         mail.addRecipient(recipient);
         mail.addFrom("My Play App<noreply@email.com>");
-        mail.send("Text","<html><body><p>Dit is een test.</p></body></html>");
+        mail.send("Text","<html><body><p>You're password is reset.</p></body></html>");
     }
 }

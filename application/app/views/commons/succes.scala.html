@@ -1,0 +1,11 @@
+@(breadcrumbs : List[models.data.Link], title : String, text : String)
+
+@main(title,breadcrumbs){
+<div class="hero-unit">
+    <h1>@title</h1>
+    <p>@text</p>
+    <p>
+        <a href="/" class="btn btn-primary btn-large"><i class="icon-white icon-chevron-right"></i>@EMessages.get("error.back")</a>
+    </p>
+</div>
+}

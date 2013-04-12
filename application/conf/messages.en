@@ -14,6 +14,10 @@ error.title = Oops!
 error.text = Something went wrong. We've sent our pink monkeys to fix the problem
 error.back = Go back
 
+#Success
+success.success = Success
+success.goHome = Go home
+
 # Forms
 forms.cancel = Cancel
 forms.delete = Delete
@@ -102,6 +106,8 @@ forgot_pwd.forgot_pwd = Forgot password
 forgot_pwd.id = Bebras-ID
 forgot_pwd.email = Email
 forgot_pwd.submit = Reset password
+forgot_pwd.success = Password successfully reset.
+forgot_pwd.mail = A mail was sent to the provided address.
 
 # Edit pwd
 edit_pwd.edit_pwd = Edit password
