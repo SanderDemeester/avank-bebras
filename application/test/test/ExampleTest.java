@@ -49,6 +49,13 @@ public class ExampleTest extends ContextTest {
                 l.add(Lang.forCode("en-US"));
                 return l;
             }
+            @Override public Http.Cookies cookies() {
+                return new Http.Cookies() {
+                    @Override public Http.Cookie get(String name) {
+                        return null;
+                    }
+                };
+            }
         };
     }
 
