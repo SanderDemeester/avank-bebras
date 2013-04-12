@@ -113,22 +113,23 @@ public class UserController extends EController{
 	 * @return returns the users cookie.
 	 */
 	public static Result validate_login(String id, String password) throws Exception{
+	    String cookie = "";
+        try {
+            //generate random id to auth user.
+            cookie = Integer.toString(Math.abs(SecureRandom.getInstance("SHA1PRNG").nextInt(100)));
+
+            //set the cookie. There really is no need for Crypto.sign because a cookie should be random value that has no meaning
+            cookie = Crypto.sign(cookie);
+            //response().setCookie(AuthenticationManager.COOKIENAME, cookie);
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+	    
 		// We do the same check here, if the input forms are empty return a error message.
 		if(id == "" || password == "") {
 			return badRequest(EMessages.get("register.giveinfo"));
-		} else if(AuthenticationManager.getInstance().validate_credentials(id, password)){
-			String cookie = "";
-			try {
-				//generate random id to auth user.
-				cookie = Integer.toString(Math.abs(SecureRandom.getInstance("SHA1PRNG").nextInt(100)));
-
-				//set the cookie. There really is no need for Crypto.sign because a cookie should be random value that has no meaning
-				cookie = Crypto.sign(cookie);
-				response().setCookie(AuthenticationManager.COOKIENAME, cookie);
-
-			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
-			}
+		} else if(AuthenticationManager.getInstance().validate_credentials(id, password, cookie)){
 			return ok(cookie);
 		} else {
 			return badRequest(EMessages.get("error.login"));

@@ -146,8 +146,8 @@ public abstract class Manager<T extends ManageableModel> {
      * @return the requested page
      */
     @SuppressWarnings("unchecked")
-    public Page<T> page(int page) {
-        return (Page<T>) getDataSet()
+	public Page<ManageableModel> page(int page) {
+        return (Page<ManageableModel>) getDataSet()
                  .ilike(filterBy, "%" + filter + "%")
             .orderBy(orderBy + " " + order)
                 // .fetch("path")
@@ -155,6 +155,10 @@ public abstract class Manager<T extends ManageableModel> {
             .getPage(page);
     }
     
+    /**
+     * 
+     * @return The Dataset the Manager is working
+     */
     protected ExpressionList<T> getDataSet(){
     	return getFinder().where();
     }

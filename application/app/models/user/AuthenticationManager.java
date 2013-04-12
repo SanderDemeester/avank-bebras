@@ -12,12 +12,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
-import play.data.Form;
+
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import org.apache.commons.codec.binary.Hex;
-import com.avaje.ebean.Ebean;
-import controllers.UserController.Register;
+
 import models.EMessages;
 import models.dbentities.UserModel;
 import models.user.factory.AdministratorUserFactory;
@@ -27,8 +25,17 @@ import models.user.factory.OrganizerUserFactory;
 import models.user.factory.PupilUserFactory;
 import models.user.factory.TeacherUserFactory;
 import models.user.factory.UserFactory;
+
+import org.apache.commons.codec.binary.Hex;
+
+import play.Logger;
+import play.data.Form;
 import play.mvc.Http.Context;
-import sun.reflect.generics.visitor.Reifier;
+import play.mvc.Http.Cookie;
+
+import com.avaje.ebean.Ebean;
+
+import controllers.UserController.Register;
 
 /**
  * Class to handle UserAuthentication.
@@ -96,15 +103,17 @@ public class AuthenticationManager {
      * @param userModel
      * @return The logged in user.
      */
-    public User login(UserModel userModel) {
+    public User login(UserModel userModel, String cookie) {
+        // TODO: kick users when they are logged in from somewhere else, unless a superuser is mimicking them
+        
         // Check if the current user can mimic that user and login (add to stack) if that's the case
         User current = getUser();
         User user = create(userModel);
-        Stack<User> stack = users.get(getAuthCookie());
+        Stack<User> stack = users.get(cookie);
         if(stack == null) { // The user is not yet logged in (would be the case if the stack is empty)
             stack = new Stack<User>();
             stack.push(user);
-            users.put(getAuthCookie(), stack);
+            users.put(cookie, stack);
         } else if(current.canMimic(user)) { // If the current user can mimic the other user.
             stack.add(user);
         }
@@ -143,7 +152,10 @@ public class AuthenticationManager {
     }
 
     private String getAuthCookie() {
-        return Context.current().session().get(COOKIENAME);
+        Cookie cookie = Context.current().request().cookies().get(COOKIENAME);
+        if(cookie == null)
+            return null;
+        return cookie.value();
     }
 
     public boolean isLoggedIn() {
@@ -232,7 +244,7 @@ public class AuthenticationManager {
      * @return true if credentials are ok else false.
      * @throws Exception
      */
-    public boolean validate_credentials(String id, String pw) throws Exception{
+    public boolean validate_credentials(String id, String pw, String cookie) throws Exception{
         // For storing the users salt form the database.
         byte[] salt = null;
 
@@ -280,7 +292,7 @@ public class AuthenticationManager {
 
         if(passwordHEX.equals(passwordDB)){
             // authenticate user.
-            login(userModel);
+            User user = login(userModel, cookie);
             return true;
         }else{
             return false;
