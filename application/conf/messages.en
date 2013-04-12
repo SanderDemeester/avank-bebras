@@ -90,6 +90,7 @@ question.questionset.addquestion.title = Add new question to the question set.
 question.questionset.addquestion.id = Id of the question:
 question.questionset.addquestion.brcr = Add
 question.questionset.manager.form.level = Level
+question.questionset.overview.questions = This question set contains the following questions:
 
 # Languages
 languages.language = Language

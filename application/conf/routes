@@ -56,7 +56,7 @@ POST    /contests                   controllers.competition.CompetitionControlle
 GET     /contest/:id                controllers.competition.CompetitionController.viewCompetition(id, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 POST    /contests/                  controllers.competition.CompetitionController.updateCompetition(id)
 GET     /contests/remove/:id        controllers.competition.CompetitionController.removeCompetition(id)
-GET     /contests/remove/qs         controllers.competition.CompetitionController.removeQuestionSet(qsid, contestid)
+GET     /contests/qs/remove/:qsid   controllers.competition.CompetitionController.removeQuestionSet(qsid, contestid)
 
 # Question Management
 GET     /questions                  controllers.question.QuestionController.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")
