@@ -63,7 +63,7 @@ public class ClassGroupController extends EController {
 		
 	}
 	
-	private static List<Link> getBreadcrumbs(){
+	public static List<Link> getBreadcrumbs(){
 		ArrayList<Link> res = new ArrayList<Link>();
 		res.add(new Link("Home","/"));
 		res.add(new Link(EMessages.get("classes.list"),"/classes"));

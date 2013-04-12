@@ -11,9 +11,11 @@ import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Expr;
 import com.avaje.ebean.Expression;
 import com.avaje.ebean.ExpressionList;
+
 import play.mvc.Call;
 import models.dbentities.ClassGroup;
-import models.dbentities.HelpTeacher;
+import models.dbentities.ClassPupil;
+import models.dbentities.UserModel;
 import models.management.Manager;
 import models.management.ModelState;
 
@@ -21,32 +23,21 @@ import models.management.ModelState;
  * @author Jens N. Rammant
  *
  */
-public class MainClassesManager extends Manager<ClassGroup> {
-	
-	protected String teacherID;
+public class ClassPupilManager extends Manager<UserModel> {
 
-	public MainClassesManager(String teacherID, ModelState state) {
-		super(ClassGroup.class, state, "name", "teacherid");
-		this.teacherID=teacherID;
-	}
+	private int classID;
+	private DataSet data;
 	
-	@Override
-	protected ExpressionList<ClassGroup> getDataSet(){
-		Collection<HelpTeacher> ht = Ebean.find(HelpTeacher.class).where().eq("teacherid", teacherID).findList();
-    	Collection<Integer> helpIDs = new ArrayList<Integer>();
-		for(HelpTeacher h : ht){
-    		helpIDs.add(h.classid);
-    	}
-		Expression ex1 = Expr.eq("teacherid", teacherID);
-		Expression ex2 = Expr.in("id", helpIDs);
-		ExpressionList<ClassGroup> l = super.getDataSet();
-		return l.or(ex1, ex2);
-		
+	public ClassPupilManager(int classID, DataSet data, ModelState state) {
+		super(UserModel.class, state, "id", "name");
+		this.classID=classID;
+		this.data = data;
 	}
 
 	@Override
 	public Call getListRoute(int page, String filter) {
-		return routes.ClassGroupController.viewClasses(page, orderBy, order, filter);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -81,7 +72,27 @@ public class MainClassesManager extends Manager<ClassGroup> {
 
 	@Override
 	public String getMessagesPrefix() {
-		return "classes.main";
+		return "classes.pupil";
+	}
+	/**
+	 * TODO write explanation
+	 */
+	@Override
+	protected ExpressionList<UserModel> getDataSet(){
+		Collection<String> pupIDs = new ArrayList<String>();
+		Collection<ClassPupil> cp = Ebean.find(ClassPupil.class).where().eq("classid", classID).findList();
+		for(ClassPupil c : cp)pupIDs.add(c.indid);
+		
+		Expression active = Expr.eq("classgroup", classID);
+		Expression nonActive = Expr.in("id", pupIDs);
+		if(data==DataSet.ACTIVE)
+			return super.getDataSet().add(active);
+		if(data==DataSet.NOTACTIVE)
+			return super.getDataSet().add(nonActive);	
+		if(data==DataSet.ALL)
+			return super.getDataSet().or(active, nonActive);
+		return null;
+		
 	}
 	
 	@Override
@@ -89,12 +100,17 @@ public class MainClassesManager extends Manager<ClassGroup> {
 		ArrayList<String> res = new ArrayList<String>();
 		res.add("id");
 		res.add("name");
-		res.add("schoolid");
-		res.add("teacherid");
-		res.add("level");
-		res.add("expdate");
-		res.add("isactive");
+		res.add("gender");
+		res.add("birthdate");
+		res.add("preflanguage");
+		res.add("active");
 		return res;
+	}
+	
+	public enum DataSet {
+		ACTIVE,
+		NOTACTIVE,
+		ALL
 	}
 
 }
