@@ -37,7 +37,7 @@ public class Role {
     public static Role MANAGEQUESTIONS = new Role(
         "Manage the Questions",
         new Link("View questions", "/questions"),
-        new Link("New question", "/question/new")
+        new Link("View submitted questions", "/questionsubmits")
     );
     public static Role MANAGESERVERS = new Role(
         "Manage the Question servers",

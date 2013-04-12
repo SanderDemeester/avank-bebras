@@ -52,7 +52,6 @@ POST    /contests                   controllers.competition.CompetitionControlle
 GET     /questions                  		 controllers.question.QuestionController.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")
 GET     /questionsubmits            		 controllers.question.QuestionController.listSubmits(p:Int ?= 0, f ?= "")
 GET     /questionsubmits/remove/:user/:file  controllers.question.QuestionController.removeSubmit(user, file)
-GET     /question/new               		 controllers.question.QuestionController.create()
 GET     /questionsubmits/approve/:user/:file controllers.question.QuestionController.approve(user, file)
 POST    /questionsubmits/approve/:user/:file controllers.question.QuestionController.saveApprove(user, file)
 POST    /question/                  		 controllers.question.QuestionController.save()
