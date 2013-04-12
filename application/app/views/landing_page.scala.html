@@ -1,0 +1,41 @@
+@(
+    user: models.user.User,
+    breadcrumbs: List[models.data.Link]
+)
+
+@main("Your Dashboard", breadcrumbs) {
+@defining(user.roles()) { roles =>
+<style type="text/css"><!--
+    div#content {
+        -moz-column-count: 3; /* Firefox */
+        -webkit-column-count: 3; /* Safari and Chrome */
+        column-count: 3; /* IE 10 */
+        /* Other browsers will jsut show one column. */
+        margin-bottom: 20px;
+    }
+    div.no-margin {
+        margin: 0;
+    }
+    div.column-fast {
+        -moz-column-break-inside: avoid; /* Firefox */
+        -webkit-column-break-inside: avoid; /* Safari and Chome */
+        column-break-inside: avoid; /* IE 10 */
+    }
+    //-->
+</style>
+@for(i <- 0 to roles.size() - 1) { <!-- stupid &lt; -->
+@if(roles(i).onLandingPage()) {
+<div class="column-fast">
+    <div class="navbar navbar-inner no-margin"><div class="container">
+        <span class="brand">@roles(i).title()</span>
+    </div></div>
+    <div class="well well-small"><ul>
+        @for(link <- roles(i).pages()) { <!-- stupid &lt; -->
+        <li><a href="@link.getUrl()">@link.getName()</a></li>
+        }
+    </ul></div>
+</div>
+}
+}
+}
+}

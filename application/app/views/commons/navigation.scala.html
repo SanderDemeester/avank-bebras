@@ -18,7 +18,7 @@
                     data-toggle="dropdown">Signed in as <i>@models.user.AuthenticationManager.getInstance().getUser().getID()</i> <strong class="icon-cog"></strong><strong class="caret"></strong>
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                        <li><a tabindex="-1" href="/home">Home</a></li>
+                        <li><a tabindex="-1" href="@routes.UserController.landingPage">Home</a></li>
                         <li class="divider"></li>
                           <li><a tabindex="-1" href="@controllers.user.routes.PersonalPageController.show">Settings</a></li>
                           <li><a tabindex="-1" href="@routes.UserController.logout">Sign out</a></li>
@@ -80,7 +80,7 @@ $("#login_btn").live("click",function(){
 
     request.done(function(msg) {
         document.cookie="@models.user.AuthenticationManager.COOKIENAME" + "=" + msg + ";expires=1000";
-        window.location = "/home";
+        window.location = "/";
     });
 
     request.fail(function(jqXHR, textStatus) {
