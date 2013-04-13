@@ -1,0 +1,7 @@
+ALTER TABLE questions DROP COLUMN path;
+
+ALTER TABLE grades RENAME COLUMN startage TO lowerbound;
+ALTER TABLE grades RENAME COLUMN endage TO upperbound;
+
+ALTER TABLE difficulties RENAME COLUMN ordr TO rank;
+ALTER TABLE difficulties ADD CONSTRAINT diff_uniq_rank UNIQUE (rank);
