@@ -59,10 +59,10 @@ public class Role {
         new Link("Create a new frequently asked question", "/manageFAQ/new")
     );
     public static Role DATAMANAGER = new Role(
-        "Manipulate the database",
-        new Link("Manage navigation bar links", "/manage/links/show"),
-        new Link("Manage the difficulty levels", "/manage/difficulties/show"),
-        new Link("Manage the student grades", "/manage/grades/show")
+        "links.datamanager.title",
+        new Link("links.datamanager.links", "/manage/links/show"),
+        new Link("links.datamanager.diffs", "/manage/difficulties/show"),
+        new Link("links.datamanager.grades", "/manage/grades/show")
     );
 
 
