@@ -21,6 +21,20 @@ error.wrong_date_time = Time traveler?
 error.invalid_date = Invalid date format, please use (yyyy/mm/dd).
 error.no_password = No password.
 
+# Links from roles
+links.managequestions.title = Question management
+links.managequestions.list = View questions
+links.managequestions.listsubmitted = Approve questions
+links.manageserver.title = Server management
+links.manageserver.list = View servers
+links.manageserver.create = Add server
+links.questioneditor.title = Question Editor
+links.questioneditor.open = Open editor
+links.datamanager.title = Manipulate the database
+links.datamanager.links = Manage navigation bar links
+links.datamanager.diffs = Manage the difficulty levels
+links.datamanager.grades = Manage the student grades
+
 # Forms
 forms.cancel = Cancel
 forms.approve = Approve

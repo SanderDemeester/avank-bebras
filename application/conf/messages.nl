@@ -21,6 +21,19 @@ error.wrong_date_time = Tijd reizer?
 error.invalid_date = Geen geldig datum formaat, gebruik (yyyy/mm/dd).
 error.no_password = Geen password.
 
+# Links from roles
+links.managequestions.title = Vragen beheer
+links.managequestions.list = Bekijk vragen
+links.managequestions.listsubmitted = Keur vragen goed
+links.manageserver.title = Server beheer
+links.manageserver.list = Bekijk servers
+links.manageserver.create = Voeg server toe
+links.questioneditor.title = Vragen editor
+links.questioneditor.open = Open editor
+links.datamanager.title = Pas de databank aan
+links.datamanager.links = Wijzig de navigatiebalk
+links.datamanager.diffs = Wijzig de moeilijkheidsgraden
+links.datamanager.grades = Wijzig de graden voor studenten
 
 # Forms
 forms.cancel = Annuleer
