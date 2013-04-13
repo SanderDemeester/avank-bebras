@@ -67,7 +67,6 @@ public class Teacher extends SuperUser{
      * @throws PersistenceException when something goes wrong during the retrieval
      */
     public Collection<ClassGroup> getClasses() throws PersistenceException{
-    	//TODO safety
         java.util.List<ClassGroup> res = Ebean.find(ClassGroup.class).where()
                 .eq("teacherid", this.data.id).findList();
 
@@ -105,7 +104,7 @@ public class Teacher extends SuperUser{
      * @throws PersistenceException when something goes wrong with the db
      */
     public Collection<ClassGroup> getHelpClasses() throws PersistenceException{
-    	//TODO write jUnit
+    	//TODO write jUnit, possibly remove (unused atm)
     	ArrayList<ClassGroup> res = new ArrayList<ClassGroup>();
     	
     	Collection<HelpTeacher> ht = Ebean.find(HelpTeacher.class).where().eq("teacherid", this.data.id).findList();

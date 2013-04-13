@@ -51,7 +51,7 @@ public class MainClassesManager extends Manager<ClassGroup> {
 
 	@Override
 	public Call getAddRoute() {
-		// TODO Auto-generated method stub
+		// TODO
 		return null;
 	}
 
@@ -62,19 +62,19 @@ public class MainClassesManager extends Manager<ClassGroup> {
 
 	@Override
 	public Call getRemoveRoute(String id) {
-		// TODO Auto-generated method stub
+		// not used
 		return null;
 	}
 
 	@Override
 	public play.api.mvc.Call getSaveRoute() {
-		// TODO Auto-generated method stub
+		// not used
 		return null;
 	}
 
 	@Override
 	public play.api.mvc.Call getUpdateRoute() {
-		// TODO Auto-generated method stub
+		// not used
 		return null;
 	}
 

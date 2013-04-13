@@ -27,35 +27,54 @@ import controllers.EController;
 
 /**
  * @author Jens N. Rammant
- * TODO comments
  */
 public class ClassGroupController extends EController {
 
+	/**
+	 * 
+	 * @param page which page of classes to show
+	 * @param orderBy what to order the classes in
+	 * @param order what order to use
+	 * @param filter what filter to use
+	 * @return a page that lists all the classes of the teacher
+	 */
 	public static Result viewClasses(int page, String orderBy, String order, String filter){
+		//Initialize template argument
 		List<Link> breadcrumbs = getBreadcrumbs();
 		OperationResultInfo ori = new OperationResultInfo();
+		//Check if authorized
 		if(!isAuthorized())return ok(noaccess.render(breadcrumbs));
+		//Configure the manager
 		Teacher t = getTeacher();
 		MainClassesManager mcm = new MainClassesManager(t.getID(),
 				ModelState.READ);
 		mcm.setFilter(filter);
 		mcm.setOrder(order);
 		mcm.setOrderBy(orderBy);
-		
+		//Try to render the list
 		try{
 			return ok(
 					classManagement.render(mcm.page(page), mcm, orderBy, order, filter, breadcrumbs,ori));
 		}catch(PersistenceException pe){
+			//Show empty page with error
 			ori.add(EMessages.get("classes.main.listerror"), OperationResultInfo.Type.ERROR);
 					return ok(classManagement.render(null, mcm, orderBy, order, filter, breadcrumbs,ori));
 				}
 	}
 	
+	/**
+	 * 
+	 * @return whether the user is authorized to view Classes
+	 */
 	private static boolean isAuthorized(){
 		//TODO
 		return true;
 	}
 	
+	/**
+	 * 
+	 * @return the Teacher that is currently logged in. 
+	 */
 	private static Teacher getTeacher(){
 		//TODO
 		//return (Teacher)AuthenticationManager.getInstance().getUser();
@@ -63,6 +82,10 @@ public class ClassGroupController extends EController {
 		
 	}
 	
+	/**
+	 * 
+	 * @return the basic breadcrumbs
+	 */
 	public static List<Link> getBreadcrumbs(){
 		ArrayList<Link> res = new ArrayList<Link>();
 		res.add(new Link("Home","/"));

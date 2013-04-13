@@ -17,7 +17,7 @@ import play.db.ebean.Model;
 
 /**
  * @author Jens N. Rammant
- *TODO write test
+ * 
  */
 @Entity
 @Table(name="helpteachers", uniqueConstraints=@UniqueConstraint(columnNames={"teacherid","classid"}))

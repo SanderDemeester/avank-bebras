@@ -57,12 +57,12 @@ public class HelpTeacherManager extends Manager<UserModel> {
 	}
 	@Override
 	public Call getAddRoute() {
-		// TODO Auto-generated method stub
+		// TODO
 		return null;
 	}
 	@Override
 	public Call getEditRoute(String id) {
-		// TODO Auto-generated method stub
+		// not used
 		return null;
 	}
 	@Override
@@ -71,12 +71,12 @@ public class HelpTeacherManager extends Manager<UserModel> {
 	}
 	@Override
 	public play.api.mvc.Call getSaveRoute() {
-		// TODO Auto-generated method stub
+		// not used
 		return null;
 	}
 	@Override
 	public play.api.mvc.Call getUpdateRoute() {
-		// TODO Auto-generated method stub
+		// not used
 		return null;
 	}
 	@Override

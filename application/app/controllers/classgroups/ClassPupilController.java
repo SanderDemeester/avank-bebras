@@ -17,7 +17,6 @@ import models.dbentities.ClassPupil;
 import models.dbentities.UserModel;
 import models.management.ModelState;
 import models.util.OperationResultInfo;
-import play.db.ebean.Transactional;
 import play.mvc.Result;
 import views.html.classes.classpupilManagement;
 import views.html.classes.oldClassPupilManagement;
@@ -27,7 +26,6 @@ import controllers.classgroups.ClassPupilManager.DataSet;
 
 /**
  * @author Jens N. Rammant
- * TODO comments
  */
 public class ClassPupilController extends EController {
 	
@@ -94,6 +92,11 @@ public class ClassPupilController extends EController {
 		
 	}
 
+	/**
+	 * 
+	 * @param id id of the class
+	 * @return an edit page for the class
+	 */
 	public static Result editClass(String id){
 		//TODO
 		return null;
@@ -146,9 +149,7 @@ public class ClassPupilController extends EController {
 		}
 	}
 	
-	public static Result removeStudent(String classID,String pupilID){
-		//TODO
-		
+	public static Result removeStudent(String classID,String pupilID){		
 		//Setting up template arguments
 		List<Link> breadcrumbs = getBreadCrumbs(classID);
 		OperationResultInfo ori = new OperationResultInfo();
@@ -164,6 +165,10 @@ public class ClassPupilController extends EController {
 					classpupilManagement.render(null,null,"id","asc","",breadcrumbs,ori,null)
 					);
 		}
+		//Check if authorized
+		if(!isAuthorized(idInt))return ok(noaccess.render(breadcrumbs));
+		
+		//Do the actual deleting from the class. Needs to be in a transaction
 		Ebean.beginTransaction();
 		try{
 			remove(idInt,pupilID);
@@ -175,10 +180,15 @@ public class ClassPupilController extends EController {
 		} finally {
 			Ebean.endTransaction();
 		}
-		
+		//Return to the list page
 		return redirect(routes.ClassPupilController.viewClass(classID, 0,"id", "asc", ""));
 	}
 	
+	/**
+	 * 
+	 * @param id the id of the class
+	 * @return whether the current user is authorized to view/edit this class
+	 */
 	protected static boolean isAuthorized(int id){
 		//TODO
 		return true;
@@ -197,14 +207,22 @@ public class ClassPupilController extends EController {
 		return res;
 	}
 	
+	/**
+	 * Does the removing of an  active student from a class
+	 * @param classID id of the class
+	 * @param userID id of the student
+	 */
 	private static void remove(int classID,String userID){
+		//Find the ClassPupil object to see if the user is already registered as "previous pupil"
 		ClassPupil cp = Ebean.find(ClassPupil.class).where().eq("indid",userID).eq("classid", classID).findUnique();
 		if(cp==null){
+			//if not, create a new object and save it
 			cp = new ClassPupil();
 			cp.classid = classID;
 			cp.indid = userID;
 			cp.save();
 		}
+		//Remove the class from the "current class" attribute in the user object
 		UserModel um = Ebean.find(UserModel.class).where().eq("id", userID).findUnique();
 		if(um==null) throw new PersistenceException("Could not find user");
 		um.classgroup = null;

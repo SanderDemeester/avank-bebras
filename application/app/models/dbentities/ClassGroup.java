@@ -94,21 +94,33 @@ public class ClassGroup extends ManageableModel{
 		return res;
 	}
 	
+	/**
+	 * 
+	 * @return the expiration date in a compact string format
+	 */
 	public String getExpDate(){
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		return df.format(expdate);
 	}
 	
+	/**
+	 * 
+	 * @return the Teacher object that is linked to this classgroup
+	 * @throws PersistenceException if something goes wrong during the retrieval
+	 */
 	public Teacher getTeacher() throws PersistenceException{
-		//TODO test & comment
 		UserModel data = Ebean.find(UserModel.class).where().eq("id", teacherid).findUnique();
 		if(data==null)return null;
 		if(data.type!=UserType.TEACHER)return null;
 		return new Teacher(data);
 	}
 	
+	/**
+	 * 
+	 * @return the SchoolModel object that is linked to this classgroup
+	 * @throws PersistenceException if something goes wrong during the retrieval
+	 */
 	public SchoolModel getSchool() throws PersistenceException{
-		//TODO test & comment
 		return Ebean.find(SchoolModel.class).where().eq("id",schoolid).findUnique();
 	}
 

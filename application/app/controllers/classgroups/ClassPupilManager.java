@@ -20,11 +20,12 @@ import models.management.ModelState;
 
 /**
  * @author Jens N. Rammant
- * TODO comments
  */
 public class ClassPupilManager extends Manager<UserModel> {
 
+	//The class this manager manages
 	private int classID;
+	//Which subset of pupils to use
 	private DataSet data;
 	//Determines whether the remove link does anything or not. Standard is false
 	private boolean canRemove;
@@ -43,13 +44,13 @@ public class ClassPupilManager extends Manager<UserModel> {
 
 	@Override
 	public Call getAddRoute() {
-		// TODO Auto-generated method stub
+		// TODO 
 		return null;
 	}
 
 	@Override
 	public Call getEditRoute(String id) {
-		// TODO Auto-generated method stub
+		// TODO link to the pupil's edit page
 		return null;
 	}
 
@@ -63,13 +64,13 @@ public class ClassPupilManager extends Manager<UserModel> {
 
 	@Override
 	public play.api.mvc.Call getSaveRoute() {
-		// TODO Auto-generated method stub
+		// not used
 		return null;
 	}
 
 	@Override
 	public play.api.mvc.Call getUpdateRoute() {
-		// TODO Auto-generated method stub
+		// not used
 		return null;
 	}
 
@@ -77,23 +78,22 @@ public class ClassPupilManager extends Manager<UserModel> {
 	public String getMessagesPrefix() {
 		return "classes.pupil";
 	}
-	/**
-	 * TODO write explanation
-	 */
+	
 	@Override
 	protected ExpressionList<UserModel> getDataSet(){
+		//Retrieve all the ClassPupil objects that are linked to this class & extract ids
 		Collection<String> pupIDs = new ArrayList<String>();
 		Collection<ClassPupil> cp = Ebean.find(ClassPupil.class).where().eq("classid", classID).findList();
 		for(ClassPupil c : cp)pupIDs.add(c.indid);
 		
-		Expression active = Expr.eq("classgroup", classID);
-		Expression nonActive = Expr.in("id", pupIDs);
+		Expression active = Expr.eq("classgroup", classID); //Find all active students
+		Expression nonActive = Expr.in("id", pupIDs); //Find all non-active students
 		if(data==DataSet.ACTIVE)
 			return super.getDataSet().add(active);
 		if(data==DataSet.NOTACTIVE)
 			return super.getDataSet().add(nonActive);	
 		if(data==DataSet.ALL)
-			return super.getDataSet().or(active, nonActive);
+			return super.getDataSet().or(active, nonActive); //Find all
 		return null;
 		
 	}
@@ -110,6 +110,10 @@ public class ClassPupilManager extends Manager<UserModel> {
 		return res;
 	}
 	
+	/**
+	 * 
+	 * @param b whether the remove link works or not
+	 */
 	public void setCanRemove(boolean b){
 		this.canRemove = b;
 	}

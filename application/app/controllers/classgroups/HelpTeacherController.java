@@ -58,7 +58,6 @@ public class HelpTeacherController extends ClassPupilController {
 	}
 	
 	public static Result removeHelp(String id,String helpID){
-		//TODO
 		List<Link> breadcrumbs = getBreadCrumbs(id);
 		OperationResultInfo ori = new OperationResultInfo();
 		
