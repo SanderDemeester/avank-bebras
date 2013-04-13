@@ -108,7 +108,9 @@ public abstract class ContextTest {
         }
 
         @Override public List<Lang> acceptLanguages() {
-            throw new UnsupportedOperationException();
+            List<Lang> l = new ArrayList<Lang>();
+            l.add(Lang.forCode("en-US"));
+            return l;
         }
 
         @Override public boolean accepts(String mediaType) {
@@ -116,7 +118,11 @@ public abstract class ContextTest {
         }
 
         @Override public Http.Cookies cookies() {
-            throw new UnsupportedOperationException();
+            return new Http.Cookies() {
+                @Override public Http.Cookie get(String name) {
+                    return null;
+                }
+            };
         }
 
         @Override public Map<String,String[]> headers() {
