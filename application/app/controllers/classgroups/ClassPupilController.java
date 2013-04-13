@@ -17,6 +17,7 @@ import models.management.ModelState;
 import models.util.OperationResultInfo;
 import play.mvc.Result;
 import views.html.classes.classpupilManagement;
+import views.html.classes.helpteacherManagement;
 import views.html.classes.oldClassPupilManagement;
 import views.html.commons.noaccess;
 import controllers.EController;
@@ -48,7 +49,7 @@ public class ClassPupilController extends EController {
 			idInt = Integer.parseInt(id);
 		}catch(NumberFormatException nfe){
 			//Return empty page with error
-			ori.add(EMessages.get("classes.pupil.novalidclassid"),OperationResultInfo.Type.ERROR);
+			ori.add(EMessages.get("classes.novalidclassid"),OperationResultInfo.Type.ERROR);
 			return ok(
 					classpupilManagement.render(null,null,orderBy,order,filter,breadcrumbs,ori,null)
 					);
@@ -93,9 +94,37 @@ public class ClassPupilController extends EController {
 		//TODO
 		return null;
 	}
-	public static Result viewHelp(String id,int page, String orderBy, String order, String filter){
-		//TODO 
-		return null;
+	public static Result viewHelp(String id,int page, String orderBy, String order, String filter){		
+		List<Link> breadcrumbs = getBreadCrumbs(id);
+		breadcrumbs.add(new Link(EMessages.get("classes.helpteacher.list"),"/classes/"+id+"/help"));
+		OperationResultInfo ori = new OperationResultInfo();
+		
+		int idInt = -1;
+		try{
+			idInt = Integer.parseInt(id);
+		}catch(NumberFormatException nfe){
+			ori.add(EMessages.get("classes.novalidclassid"),OperationResultInfo.Type.ERROR);
+			return ok(
+					helpteacherManagement.render(null, null, orderBy, order, filter, breadcrumbs, ori));
+		}
+		
+		//Check if authorized
+		if(!isAuthorized(idInt))return ok(noaccess.render(breadcrumbs));
+		
+		HelpTeacherManager htm = new HelpTeacherManager(idInt, ModelState.READ);
+		htm.setFilter(filter);
+		htm.setOrder(order);
+		htm.setOrderBy(orderBy);
+		
+		try{
+			return ok(
+				helpteacherManagement.render(htm.page(page), htm, orderBy, order, filter, breadcrumbs, ori));
+		}catch(PersistenceException pe){
+			ori.add(EMessages.get("classes.helpteacher.error"),OperationResultInfo.Type.ERROR);
+			return ok(
+					helpteacherManagement.render(null, htm, orderBy, order, filter, breadcrumbs, ori));
+		}
+
 	}
 	/**
 	 * Returns the page of students that used to be in this class
@@ -109,7 +138,7 @@ public class ClassPupilController extends EController {
 	public static Result viewOldPupils(String id,int page, String orderBy, String order, String filter){
 		//Setting up template arguments
 		List<Link> breadcrumbs = getBreadCrumbs(id);
-		breadcrumbs.add(new Link(EMessages.get("classes.pupil.oldpupillist"),"/classes/"+id+"old"));
+		breadcrumbs.add(new Link(EMessages.get("classes.pupil.oldpupillist"),"/classes/"+id+"/old"));
 		OperationResultInfo ori = new OperationResultInfo();
 			
 		//Parse ID to int
@@ -159,7 +188,7 @@ public class ClassPupilController extends EController {
 		ArrayList<Link> res = new ArrayList<Link>();
 		res.add(new Link("Home","/"));
 		res.add(new Link(EMessages.get("classes.list"),"/classes"));
-		res.add(new Link(EMessages.get("classes.pupil.list"),"/classes/"+id));
+		res.add(new Link(EMessages.get("classes.pupil.title"),"/classes/"+id));
 		return res;
 	}
 

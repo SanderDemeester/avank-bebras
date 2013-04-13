@@ -13,7 +13,6 @@ import com.avaje.ebean.Expression;
 import com.avaje.ebean.ExpressionList;
 
 import play.mvc.Call;
-import models.dbentities.ClassGroup;
 import models.dbentities.ClassPupil;
 import models.dbentities.UserModel;
 import models.management.Manager;
@@ -36,8 +35,7 @@ public class ClassPupilManager extends Manager<UserModel> {
 
 	@Override
 	public Call getListRoute(int page, String filter) {
-		// TODO Auto-generated method stub
-		return null;
+		return routes.ClassPupilController.viewClass(Integer.toString(classID), page, orderBy, order, filter);
 	}
 
 	@Override
