@@ -56,18 +56,22 @@ public class UserController extends EController{
 	public static Result register(){
 		// Bind play form request.
 		Form<Register> registerForm = form(Register.class).bindFromRequest();
-		Pattern pattern = Pattern.compile("[^a-z ]", Pattern.CASE_INSENSITIVE);
-		Matcher matcher = pattern.matcher(registerForm.get().name);
 		List<Link> breadcrumbs = new ArrayList<Link>();
 		breadcrumbs.add(new Link("Home", "/"));
 		breadcrumbs.add(new Link("Sign Up", "/signup"));
-
-
+		
 		// If the form contains error's (specified by "@"-annotation in the class "Register" then this will be true.
 		if(registerForm.hasErrors()){
 			flash("error", EMessages.get(EMessages.get("error.text")));
 			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
 		}
+		
+		Pattern pattern = Pattern.compile("[^a-z ]", Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(registerForm.get().name);
+		
+
+
+	
 		// Check if the email adres is uniqe.
 		if(!registerForm.get().email.isEmpty()){
 
