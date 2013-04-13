@@ -8,9 +8,7 @@
 
 @helper.form(routes.UserController.register, 'id -> "signup"){
 <legend>Sign Up</legend>
-	     <div class="alert alert-error">
-			@showflash()	     
-	     </div>
+@showflash()	     
 
 <p> @sform("name").value </p>
 <!--FIRST BLOCK -->
