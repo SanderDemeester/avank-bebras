@@ -26,6 +26,7 @@ import views.html.landing_page;
 import views.html.login.error;
 import views.html.login.register;
 import views.html.login.registerLandingPage;
+import views.html.forgotPwd;
 
 import com.avaje.ebean.Ebean;
 
@@ -224,6 +225,10 @@ public class UserController extends EController{
             if (Ebean.find(UserModel.class).where().eq("email", form.get().email) != null) {
                 Mails mail = new Mails();
                 mail.sendMail(form.get().email);
+                UserModel userModel = Ebean.find(UserModel.class).where().eq(
+                        "id", form.get().id).findUnique();
+                userModel.password = "reset";
+                Ebean.save(userModel);
                 return ok(views.html.commons.succes.render(new ArrayList<Link>(), EMessages.get("success.success"), EMessages.get("forgot_pwd.success") + "\n" + EMessages.get("forgot_pwd.mail")));
             } else {
                 return badRequest(views.html.commons.error.render(new ArrayList<Link>(), "Error", "This email address is not valid"));
