@@ -8,33 +8,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import controllers.util.Mails;
-import models.EMessages;
-import models.data.Link;
-import models.dbentities.UserModel;
-import models.user.AuthenticationManager;
-import models.user.User;
-import models.user.UserType;
-import models.util.OperationResultInfo;
-import play.Play;
-import play.api.libs.Crypto;
-import play.api.templates.Html;
-import play.api.templates.Template2;
-import play.data.DynamicForm;
 import play.api.libs.Crypto;
 import play.data.Form;
 import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
 import play.mvc.Result;
 import play.mvc.Results;
-import views.html.commons.info;
-import views.html.forgotPwd;
-import views.html.helper.form;
-import views.html.index;
-import views.html.landingPages.AdminLandingPage;
-import views.html.landingPages.IndependentPupilLandingPage;
-import views.html.landingPages.OrganizerLandingPage;
-import views.html.landingPages.PupilLandingPage;
 
 import models.EMessages;
 import models.data.Link;
@@ -52,27 +31,9 @@ import com.avaje.ebean.Ebean;
 /**
  * This class receives all GET requests and based on there session identifier (cookie)
  * and current role in the system they will be served a different view.
- *
- * @author Sander Demeester, Ruben Taelman, Eddy Van Den Heuvel
+ * @author Sander Demeester, Ruben Taelman
  */
-public class UserController extends EController {
-
-    /**
-     * This hashmap embodies the mapping from a Type to a view.
-     * Each view is responsible for getting all information from the DataModel and make a
-     * beautiful view for the user :)
-     */
-    private static HashMap<UserType, Class<?>> LANDINGPAGES = new HashMap<UserType, Class<?>>();
-
-    static {
-        LANDINGPAGES.put(UserType.ADMINISTRATOR, AdminLandingPage.class);
-        LANDINGPAGES.put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
-        LANDINGPAGES.put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
-        LANDINGPAGES.put(UserType.ORGANIZER, OrganizerLandingPage.class);
-        LANDINGPAGES.put(UserType.PUPIL, PupilLandingPage.class);
-    }
-
-    ;
+public class UserController extends EController{
 
 	/**
 	 * This methode gets requested when the user clicks on "signup".
@@ -83,9 +44,9 @@ public class UserController extends EController {
 		breadcrumbs.add(new Link("Home", "/"));
 		breadcrumbs.add(new Link("Sign Up", "/signup"));
 		return ok(register.render(EMessages.get("register.title"),
-            breadcrumbs,
-            form(Register.class)
-        ));
+				breadcrumbs,
+				form(Register.class)
+				));
 	}
 
 	/**
@@ -97,24 +58,31 @@ public class UserController extends EController {
 		Form<Register> registerForm = form(Register.class).bindFromRequest();
 		Pattern pattern = Pattern.compile("[^a-z ]", Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(registerForm.get().name);
+		List<Link> breadcrumbs = new ArrayList<Link>();
+		breadcrumbs.add(new Link("Home", "/"));
+		breadcrumbs.add(new Link("Sign Up", "/signup"));
 
 		// Check if the email adres is uniqe.
 		if(!registerForm.get().email.isEmpty()){
 
 			if(Ebean.find(UserModel.class).where().eq(
 					"email",registerForm.get().email).findUnique() != null){
-				return badRequest(error.render(EMessages.get("error.title"),new ArrayList<Link>(),form(Register.class),EMessages.get("register.same_email")));
+				
+				flash("error", EMessages.get(EMessages.get("register.same_email")));
+				return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
 			}
 		}
 
 		// If the form contains error's (specified by "@"-annotation in the class "Register" then this will be true.
 		if(registerForm.hasErrors()){
-			return badRequest(error.render(EMessages.get("error.title"), new ArrayList<Link>(), form(Register.class), EMessages.get("error.text")));
+			flash("error", EMessages.get(EMessages.get("error.text")));
+			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
 		}
-		
+
 		// Check if full name contains invalid symbols.
 		if(matcher.find()){
-			return badRequest(error.render(EMessages.get("error.title"), new ArrayList<Link>(), form(Register.class), EMessages.get("error.invalid_symbols")));
+			flash("error", EMessages.get(EMessages.get("error.invalid_symbols")));
+			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
 		}
 
 		// Compile new pattern to check for invalid email symbols. 
@@ -124,7 +92,8 @@ public class UserController extends EController {
 		matcher = pattern.matcher(registerForm.get().email);
 
 		if(matcher.find()){
-			return badRequest(error.render(EMessages.get("error.title"), new ArrayList<Link>(), form(Register.class), EMessages.get("error.invalid_email")));
+			flash("error", EMessages.get(EMessages.get("error.invalid_email")));
+			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
 		}
 
 		// Try to validate email, this check happens on the client side, but date can be send without using the form.
@@ -132,7 +101,8 @@ public class UserController extends EController {
 		try{
 			new SimpleDateFormat("yyyy/mm/dd").parse(registerForm.get().bday);
 		}catch(Exception e){
-			return badRequest(error.render(EMessages.get("error.title"), new ArrayList<Link>(), form(Register.class), EMessages.get("error.invalid_date")));
+			flash("error", EMessages.get(EMessages.get("error.invalid_date")));
+			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
 		}
 
 		// Delegate create user to Authentication Manager.
@@ -142,7 +112,7 @@ public class UserController extends EController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		// Return a register succes page.
 		return ok(registerLandingPage.render(EMessages.get("info.success"), new ArrayList<Link>(), bebrasID));
 	}
@@ -152,28 +122,19 @@ public class UserController extends EController {
 	 * @return returns the users cookie.
 	 */
 	public static Result validate_login(String id, String password) throws Exception{
-	    String cookie = "";
-        try {
-            //generate random id to auth user.
-            cookie = Integer.toString(Math.abs(SecureRandom.getInstance("SHA1PRNG").nextInt(100)));
+		String cookie = "";
+		try {
+			//generate random id to auth user.
+			cookie = Integer.toString(Math.abs(SecureRandom.getInstance("SHA1PRNG").nextInt(100)));
 
-            //set the cookie. There really is no need for Crypto.sign because a cookie should be random value that has no meaning
-            cookie = Crypto.sign(cookie);
-            //response().setCookie(AuthenticationManager.COOKIENAME, cookie);
+			//set the cookie. There really is no need for Crypto.sign because a cookie should be random value that has no meaning
+			cookie = Crypto.sign(cookie);
+			//response().setCookie(AuthenticationManager.COOKIENAME, cookie);
 
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return ok(registerLandingPage.render("Succes", new ArrayList<Link>(), bebrasID));
-    }
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
 
-    /**
-     * This methode is called when the users clicks on "login".
-     *
-     * @return returns the users cookie.
-     * @author Sander Demeester, Ruben Taelman
-     */
-    public static Result validate_login(String id, String password) throws Exception {    
 		// We do the same check here, if the input forms are empty return a error message.
 		if(id == "" || password == "") {
 			return badRequest(EMessages.get("register.giveinfo"));
@@ -205,48 +166,12 @@ public class UserController extends EController {
 		if(UserType.ANON.equals(type)) {
 			return Results.redirect(routes.Application.index());
 		} else {
-            return ok(views.html.landing_page.render(
-                AuthenticationManager.getInstance().getUser(),
-                breadcrumbs
-            ));
+			return ok(views.html.landing_page.render(
+					AuthenticationManager.getInstance().getUser(),
+					breadcrumbs
+					));
 		}
 	}
-
- /**
-     * This method is called when a user hits the 'Forgot Password' button.
-     *
-     * @return forgot_pwd page
-     */
-    public static Result forgotPwd() {
-        List<Link> breadcrumbs = new ArrayList<Link>();
-        breadcrumbs.add(new Link("Home", "/"));
-        breadcrumbs.add(new Link(EMessages.get("forgot_pwd.forgot_pwd"), "/forgotPwd"));
-        return ok(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"),
-                breadcrumbs,
-                form(ForgotPwd.class)
-        ));
-    }
-
-    public static Result forgotPwdSendMail() {
-        Form<ForgotPwd> form = form(ForgotPwd.class).bindFromRequest();
-
-        //Check email address
-        if (!form.get().email.isEmpty()) {
-            if (Ebean.find(UserModel.class).where().eq("email", form.get().email) != null) {
-                Mails mail = new Mails();
-                mail.sendMail(form.get().email);
-                return ok(views.html.commons.succes.render(new ArrayList<Link>(), EMessages.get("success.success"), EMessages.get("forgot_pwd.success") + "\n" + EMessages.get("forgot_pwd.mail")));
-            }
-            else{
-                return badRequest(views.html.commons.error.render(new ArrayList<Link>(), "Error", "This email address is not valid"));
-            }
-        }
-        if (form.hasErrors()) {
-            return badRequest(views.html.commons.error.render(new ArrayList<Link>(), "Error", "Invalid request"));
-        }
-        return Results.redirect("/");
-    }
-
 
 	/**
 	 * Inline class that contains public fields for play forms.
@@ -275,9 +200,43 @@ public class UserController extends EController {
 		public String password;
 	}
 
-	public static class ForgotPwd {
-         @Required
-         public String id;
-         public String email;
-     }
+    /**
+     * This method is called when a user hits the 'Forgot Password' button.
+     *
+     * @return forgot_pwd page
+     */
+    public static Result forgotPwd() {
+        List<Link> breadcrumbs = new ArrayList<Link>();
+        breadcrumbs.add(new Link("Home", "/"));
+        breadcrumbs.add(new Link(EMessages.get("forgot_pwd.forgot_pwd"), "/forgotPwd"));
+        return ok(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"),
+                breadcrumbs,
+                form(ForgotPwd.class)
+        ));
+    }
+
+    public static Result forgotPwdSendMail() {
+        Form<ForgotPwd> form = form(ForgotPwd.class).bindFromRequest();
+
+        //Check email address
+        if (!form.get().email.isEmpty()) {
+            if (Ebean.find(UserModel.class).where().eq("email", form.get().email) != null) {
+                Mails mail = new Mails();
+                mail.sendMail(form.get().email);
+                return ok(views.html.commons.succes.render(new ArrayList<Link>(), EMessages.get("success.success"), EMessages.get("forgot_pwd.success") + "\n" + EMessages.get("forgot_pwd.mail")));
+            } else {
+                return badRequest(views.html.commons.error.render(new ArrayList<Link>(), "Error", "This email address is not valid"));
+            }
+        }
+        if (form.hasErrors()) {
+            return badRequest(views.html.commons.error.render(new ArrayList<Link>(), "Error", "Invalid request"));
+        }
+        return Results.redirect("/");
+    }
+
+    public static class ForgotPwd {
+        @Required
+        public String id;
+        public String email;
+    }
 }
