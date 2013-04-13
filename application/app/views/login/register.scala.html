@@ -9,19 +9,22 @@
 @helper.form(routes.UserController.register, 'id -> "signup"){
 <legend>Sign Up</legend>
 @if(flash.containsKey("error")) {
-	     <div class="alert alert-error">
+	     <div class="alert alert-error"><
 	         <strong>Error!</strong> @flash.get("error")
 	     </div>
 	}
 
+<p> @sform("name").value </p>
 <!--FIRST BLOCK -->
 <div class="control-group row-fluid">
     <label class="control-label span2">@EMessages.get("register.name")</label>
     <div class="controls span10">
         <div class="input-prepend inline span12">
-            <span class="add-on"><i class="icon-user"></i> </span> <input
+            <span class="add-on"><i class="icon-user"></i> </span> 
+            	<input
                 type="text" class="input-xlarge span11" id="name" name="name"
-                placeholder="@EMessages.get("register.name")">
+                placeholder="@EMessages.get("register.name")" 
+                value="@sform("name").value">
         </div>
     </div>
 </div>
@@ -33,7 +36,8 @@
         <div class="input-prepend span12">
             <span class="add-on"><i class="icon-envelope"></i> </span> <input
                 type="text" class="input-xlarge span11" id="email" name="email"
-                placeholder="@EMessages.get("register.email")">
+                placeholder="@EMessages.get("register.email")"
+                value="@sform("email").value">
         </div>
     </div>
 </div>
@@ -46,7 +50,8 @@
         <div class="input-prepend span12">
             <span class="add-on"><i class="icon-user"></i> </span> <input
                 type="text" class="input-xlarge span11" id="bday" name="bday"
-                placeholder="@EMessages.get("register.bday")">
+                placeholder="@EMessages.get("register.bday")"
+                value="@sform("bday").value">
         </div>
     </div>
 </div>
