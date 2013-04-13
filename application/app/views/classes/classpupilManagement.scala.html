@@ -1,11 +1,69 @@
 @(currentPage: Page[models.management.ManageableModel], manager: models.management.Manager[_], currentOrderBy: String,
     currentOrder: String, currentFilter: String, breadcrumbs : List[models.data.Link],
-    ori : models.util.OperationResultInfo)
+    ori : models.util.OperationResultInfo,
+    cg : models.dbentities.ClassGroup)
     
     @import views.html.management.list
     
     @main(EMessages.get("classes.pupil.list"), breadcrumbs){
     @commons.info(ori)
+  	@if(cg!=null){
+  		@EMessages.get("classes.pupil.classinfo")<br>
+  		<table class="table">
+  			<tr>
+  				<th>@EMessages.get("classes.main.form.id")</th>
+  				<th>@EMessages.get("classes.main.form.name")</th>
+  				<th>@EMessages.get("classes.main.form.level")</th>
+  				<th>@EMessages.get("classes.main.form.expdate")</th>  		
+  			</tr>
+  			<tr>
+  				<td>@cg.id</td>
+  				<td>@cg.name</td>
+  				<td>@cg.level</td>
+  				<td>@cg.getExpDate()</td>
+  			</tr>
+  		
+  		</table>
+  		
+  		@EMessages.get("classes.pupil.schoolinfo")<br>
+  		<table class="table">
+  			<tr>
+  				<th>@EMessages.get("schools.table.id")</th>
+  				<th>@EMessages.get("schools.table.name")</th>
+  				<th>@EMessages.get("schools.table.address")</th>
+  			</tr>
+  			<tr>
+  				<td>@cg.getSchool().id</td>
+  				<td>@cg.getSchool().name</td>
+  				<td>@cg.getSchool().address</td>
+  			</tr>  		
+  		</table>
+  		
+  		@EMessages.get("classes.pupil.teacherinfo")<br>
+  		<table class="table"> 
+  			<tr> 		
+  				<th>@EMessages.get("classes.teacher.id")</th>
+  				<th>@EMessages.get("classes.teacher.name")</th> 
+  			</tr> 	
+  			<tr>
+  				<td>@cg.getTeacher().data.id</td>
+  				<td>@cg.getTeacher().data.name</td>
+  			</tr>	
+  		</table>
+  		
+  		@if(cg.isActive()){
+  			@EMessages.get("classes.pupil.activeinfo")
+  		}else{
+  			@EMessages.get("classes.pupil.notactiveinfo")
+  		}
+  		<div class="actions">
+        	<a href="@controllers.classgroups.routes.ClassPupilController.editClass(cg.getID())" class="btn">@EMessages.get("classes.pupil.editclassinfo")</a>
+        	<a href="@controllers.classgroups.routes.ClassPupilController.viewHelp(cg.getID())" class="btn">@EMessages.get("classes.pupil.viewhelp")</a>
+        	@if(cg.isActive()){
+        		<a href="@controllers.classgroups.routes.ClassPupilController.viewOldPupils(cg.getID())" class="btn">@EMessages.get("classes.pupil.oldpupils")</a>
+        	}
+    	</div>
+  	}
     <h2>@EMessages.get("classes.pupil.list")</h2>
     @if(currentPage!=null){
     @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)

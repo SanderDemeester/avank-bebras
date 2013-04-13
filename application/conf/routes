@@ -97,3 +97,7 @@ POST	/passwedit/apply			controllers.user.PersonalPageController.checkValid()
 
 GET		/classes					controllers.classgroups.ClassGroupController.viewClasses(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 GET		/classes/:id				controllers.classgroups.ClassPupilController.viewClass(id, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+
+GET		/classes/:id/edit			controllers.classgroups.ClassPupilController.editClass(id)
+GET		/classes/:id/help			controllers.classgroups.ClassPupilController.viewHelp(id,p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET		/classes/:id/old			controllers.classgroups.ClassPupilController.viewOldPupils(id,p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")

@@ -19,7 +19,7 @@ import models.management.ModelState;
 
 /**
  * @author Jens N. Rammant
- *
+ * TODO comments
  */
 public class MainClassesManager extends Manager<ClassGroup> {
 	
@@ -57,8 +57,7 @@ public class MainClassesManager extends Manager<ClassGroup> {
 
 	@Override
 	public Call getEditRoute(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return routes.ClassPupilController.viewClass(id, 0, "name", "asc", "");
 	}
 
 	@Override
