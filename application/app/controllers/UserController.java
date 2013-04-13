@@ -62,22 +62,24 @@ public class UserController extends EController{
 		breadcrumbs.add(new Link("Home", "/"));
 		breadcrumbs.add(new Link("Sign Up", "/signup"));
 
-		// Check if the email adres is uniqe.
-		if(!registerForm.get().email.isEmpty()){
-
-			if(Ebean.find(UserModel.class).where().eq(
-					"email",registerForm.get().email).findUnique() != null){
-				
-				flash("error", EMessages.get(EMessages.get("register.same_email")));
-				return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
-			}
-		}
 
 		// If the form contains error's (specified by "@"-annotation in the class "Register" then this will be true.
 		if(registerForm.hasErrors()){
 			flash("error", EMessages.get(EMessages.get("error.text")));
 			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
 		}
+		// Check if the email adres is uniqe.
+		if(!registerForm.get().email.isEmpty()){
+
+			if(Ebean.find(UserModel.class).where().eq(
+					"email",registerForm.get().email).findUnique() != null){
+
+				flash("error", EMessages.get(EMessages.get("register.same_email")));
+				return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
+			}
+		}
+
+
 
 		// Check if full name contains invalid symbols.
 		if(matcher.find()){
