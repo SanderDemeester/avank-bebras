@@ -4,6 +4,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -73,12 +74,13 @@ public class UserController extends EController{
 
 		// check if date is lower then current date
 		try{
-			Date birtyDay = new SimpleDateFormat("yyyy/mm/dd").parse(registerForm.get().bday);
-			if(birtyDay.after(new Date())){
+			Date birtyDay    = new SimpleDateFormat("yyyy/mm/dd").parse(registerForm.get().bday);
+			Date currentDate = new Date();
+			
+			if(birtyDay.after(currentDate)){
 				flash("error", EMessages.get(EMessages.get("error.wrong_date_time")));
 				return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
 			}
-
 		}catch(Exception e){
 			flash("error", EMessages.get(EMessages.get("error.date")));
 			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
