@@ -3,31 +3,23 @@
 @import models.EMessages.get
 @import helper._
 @import helper.twitterBootstrap._
-
+@import views.html.commons.showflash
 @main(EMessages.get("register.title"), breadcrumbs) {
 
 @helper.form(routes.UserController.register, 'id -> "signup"){
 <legend>Sign Up</legend>
+@showflash()	     
+
 <!--FIRST BLOCK -->
 <div class="control-group row-fluid">
-    <label class="control-label span2">@EMessages.get("register.firstname")</label>
+    <label class="control-label span2">@EMessages.get("register.name")</label>
     <div class="controls span10">
         <div class="input-prepend inline span12">
-            <span class="add-on"><i class="icon-user"></i> </span> <input
-                type="text" class="input-xlarge span11" id="fname" name="fname"
-                placeholder="First Name">
-        </div>
-    </div>
-</div>
-
-<!--SECOND BLOCK -->
-<div class="control-group row-fluid">
-    <label class="control-label span2">@EMessages.get("register.lastname")</label>
-    <div class="controls span10">
-        <div class="input-prepend span12">
-            <span class="add-on"><i class="icon-user"></i> </span> <input
-                type="text" class="input-xlarge span11" id="lname" name="lname"
-                placeholder="Last Name">
+            <span class="add-on"><i class="icon-user"></i> </span> 
+            	<input
+                type="text" class="input-xlarge span11" id="name" name="name"
+                placeholder="@EMessages.get("register.name")" 
+                value="@sform("name").value">
         </div>
     </div>
 </div>
@@ -39,7 +31,8 @@
         <div class="input-prepend span12">
             <span class="add-on"><i class="icon-envelope"></i> </span> <input
                 type="text" class="input-xlarge span11" id="email" name="email"
-                placeholder="Email">
+                placeholder="@EMessages.get("register.email")"
+                value="@sform("email").value">
         </div>
     </div>
 </div>
@@ -52,7 +45,8 @@
         <div class="input-prepend span12">
             <span class="add-on"><i class="icon-user"></i> </span> <input
                 type="text" class="input-xlarge span11" id="bday" name="bday"
-                placeholder="Birthday">
+                placeholder="@EMessages.get("register.bday")"
+                value="@sform("bday").value">
         </div>
     </div>
 </div>
@@ -95,7 +89,7 @@
         <div class="input-prepend span12">
             <span class="add-on"><i class="icon-lock"></i> </span> <input
                 type="Password" id="reg_passwd" class="input-xlarge span11"
-                name="password" placeholder="Password">
+                name="password" placeholder="@EMessages.get("register.password")">
         </div>
     </div>
 </div>
@@ -107,7 +101,7 @@
         <div class="input-prepend span12">
             <span class="add-on"><i class="icon-lock"></i> </span> <input
                 type="Password" id="controle_passwd" class="input-xlarge span11"
-                name="controle_passwd" placeholder="Re-enter Password">
+                name="controle_passwd" placeholder="@EMessages.get("register.confirm_password")">
         </div>
     </div>
 </div>

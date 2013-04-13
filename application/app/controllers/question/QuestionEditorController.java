@@ -25,6 +25,7 @@ import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 import play.mvc.Results;
+import views.html.commons.noaccess;
 import views.html.question.editor.create;
 import views.html.question.editor.index;
 import controllers.EController;
@@ -85,18 +86,18 @@ public class QuestionEditorController extends EController {
 
     /**
      * Index page to select a question type to create
-     * @return
+     * @return the index page
      */
     public static Result index(){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         if(isAuthorized())  return ok(index.render(breadcrumbs));
-        else                return Results.redirect(routes.Application.index());
+        else                return ok(noaccess.render(breadcrumbs));
     }
 
     /**
      * Creation of a question type
      * @param type question type (QuestionType)
-     * @return
+     * @return the creation page
      */
     public static Result create(String type){
         List<Link> breadcrumbs = defaultBreadcrumbs();
@@ -105,12 +106,12 @@ public class QuestionEditorController extends EController {
         Question question = QuestionFactory.newQuestion(QuestionType.valueOf(type));
 
         if(isAuthorized())  return ok(create.render(breadcrumbs, question));
-        else                return Results.redirect(routes.Application.index());
+        else                return ok(noaccess.render(breadcrumbs));
     }
 
     /**
      * Upload of a file to be added to a question
-     * @return
+     * @return the json list of added files
      */
     public static Result upload() {
         if(isAuthorized()) {
@@ -148,7 +149,7 @@ public class QuestionEditorController extends EController {
     /**
      * Deletion of a file in a question
      * @param name
-     * @return
+     * @return an empty "ok" or "forbidden"
      */
     public static Result delete(String name) {
         if(isAuthorized()) {
@@ -163,7 +164,7 @@ public class QuestionEditorController extends EController {
 
     /**
      * Return the current files inside this question in json format
-     * @return
+     * @return the list of files by this user
      */
     public static Result getFiles() {
         if(isAuthorized()) {
@@ -194,13 +195,13 @@ public class QuestionEditorController extends EController {
     /**
      * Validate the question by json input
      * @param json json encoded question
-     * @return
+     * @return a validation message
      */
     public static Result validate(String json) {
         if(isAuthorized()) {
             try {
                 QuestionIO.validateJson(json);
-                return ok("Valid question.");
+                return ok(EMessages.get("question.editor.validate.ok"));
             } catch (QuestionBuilderException e) {
                 return badRequest(e.getMessage());
             }
@@ -212,7 +213,7 @@ public class QuestionEditorController extends EController {
     /**
      * Export the question to a .ZIP file
      * @param json json encoded question
-     * @return
+     * @return the archived question file
      */
     public static Result export(String json) {
         if(isAuthorized()) {
@@ -231,7 +232,7 @@ public class QuestionEditorController extends EController {
 
     /**
      * Upload of a file that has to be imported
-     * @return
+     * @return redirect to editor
      */
     public static Result importUpload() {
         if(isAuthorized()) {
@@ -272,7 +273,7 @@ public class QuestionEditorController extends EController {
     /**
      * Submits the question
      * param json json encoded question
-     * @return
+     * @return submission result message
      */
     public static Result submit(String json){
         if(isAuthorized()) {

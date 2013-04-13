@@ -15,17 +15,11 @@ import play.mvc.Call;
  */
 public class FAQManager extends Manager<FAQModel> {
 
-    public static final int PAGESIZE = 15;
-
-    public FAQManager(ModelState state) {
-        super(FAQModel.class, state, "id", "id");
-    }
-
-    @Override
-    public String[] getColumnHeaders() {
-        String[] res = {"id",EMessages.get("faq.language"),EMessages.get("faq.name")};
-        return res;
-    }
+	public static final int PAGESIZE = 15;
+	
+	public FAQManager(ModelState state) {
+		super(FAQModel.class,state, "id", "language");
+	}
 
     @Override
     public Call getAddRoute() {
@@ -49,20 +43,23 @@ public class FAQManager extends Manager<FAQModel> {
 
     @Override
     public play.api.mvc.Call getSaveRoute() {
-        // TODO Auto-generated method stub
+    	//Using non-default form, so not necessary
         return null;
     }
 
     @Override
     public play.api.mvc.Call getUpdateRoute() {
-        // TODO Auto-generated method stub
+        //Using non-default form, so not necessary
         return null;
     }
 
     @Override
     public String getMessagesPrefix() {
-        // TODO Auto-generated method stub
-        return null;
+        return "faq";
     }
+   
+    
+    
+    
 
 }

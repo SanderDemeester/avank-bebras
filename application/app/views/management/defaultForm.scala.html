@@ -4,17 +4,23 @@
 @import helper.twitterBootstrap._
 @import models.EMessages
 @import models.management.FieldType
+@import views.html.commons.showflash
 
-    @if(!manager.isIgnoreErrors() && modelForm.hasErrors()) {
-        <div class="alert alert-error">
-            <strong>Error</strong> There seem to be some issues with the following fields:
-            <ul>
-            @for((k, v) <- modelForm.errors()) {
-                <li>@EMessages.get(manager.getMessagesPrefix() + ".form." + k)</li>
-            }
-            </ul>
-        </div>
-    }
+@***************************************
+* Flash messages *
+***************************************@
+@showflash()
+
+	@if(!manager.isIgnoreErrors() && modelForm.hasErrors()) {
+		<div class="alert alert-error">
+			<strong>Error</strong> There seem to be some issues with the following fields:
+			<ul>
+			@for((k, v) <- modelForm.errors()) {
+				<li>@EMessages.get(manager.getMessagesPrefix() + ".form." + k)</li>
+			}
+			</ul>
+		</div>
+	}
 
     <fieldset>
 

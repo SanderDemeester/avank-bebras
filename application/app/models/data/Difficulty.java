@@ -1,26 +1,37 @@
 package models.data;
 
+import javax.persistence.Id;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import models.data.manager.DataElement;
+
 /**
  * Represents a Difficulty that can be used in various QuestionSets
- * @author Ruben Taelman, Eddy Van Den Heuvel
+ * @author Ruben Taelman
+ * @author Felix Van der Jeugt
  */
-public class Difficulty {
+@Entity @Table(
+        name="Difficulties",
+        uniqueConstraints=@UniqueConstraint(columnNames={"ordr"})
+)
+public class Difficulty implements DataElement {
 
-    private String name;
+    @Id public String name;
+    public int ordr;
 
-    /**
-     * Creates a new Difficulty based on the provided name.
-     * @param name The name of the new Difficulty.
-     */
-    public Difficulty(String name) {
+    public Difficulty(String name, int ordr) {
         this.name = name;
+        this.ordr = ordr;
     }
 
-    /**
-     * Returns the name of the difficulty.
-     * @return The name of the difficulty
-     */
-    public String getName() {
+    @Override public String[] strings() {
+        return new String[] { name, Integer.toString(ordr) };
+    }
+
+    @Override public String id() {
         return name;
     }
+
 }

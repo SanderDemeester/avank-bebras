@@ -1,18 +1,14 @@
 package models.user;
 
-import models.dbentities.UserModel;
 import play.mvc.Content;
 import play.mvc.Result;
 
 public class Anon extends User{
 
-    static {
-        ROLES.add(Role.REGISTER);
-        ROLES.add(Role.LOGIN);
-    }
-
     public Anon() {
         super(null, UserType.ANON);
+        ROLES.add(Role.REGISTER);
+        ROLES.add(Role.LOGIN);
         // TODO Auto-generated constructor stub
     }
 
