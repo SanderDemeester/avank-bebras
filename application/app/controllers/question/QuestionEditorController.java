@@ -25,6 +25,7 @@ import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 import play.mvc.Results;
+import views.html.commons.noaccess;
 import views.html.question.editor.create;
 import views.html.question.editor.index;
 import controllers.EController;
@@ -90,7 +91,7 @@ public class QuestionEditorController extends EController {
     public static Result index(){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         if(isAuthorized())  return ok(index.render(breadcrumbs));
-        else                return Results.redirect(routes.Application.index());
+        else                return ok(noaccess.render(breadcrumbs));
     }
 
     /**
@@ -105,7 +106,7 @@ public class QuestionEditorController extends EController {
         Question question = QuestionFactory.newQuestion(QuestionType.valueOf(type));
 
         if(isAuthorized())  return ok(create.render(breadcrumbs, question));
-        else                return Results.redirect(routes.Application.index());
+        else                return ok(noaccess.render(breadcrumbs));
     }
 
     /**
