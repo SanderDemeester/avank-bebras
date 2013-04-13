@@ -19,6 +19,7 @@ error.invalid_symbols = Input bevat foutieve tekens.
 error.invalid_email = Geen geldig email addres.
 error.wrong_date_time = Tijd reizer?
 error.invalid_date = Geen geldig datum formaat, gebruik (yyyy/mm/dd).
+error.no_password = Geen password.
 
 
 # Forms

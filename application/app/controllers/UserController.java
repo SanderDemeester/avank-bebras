@@ -11,6 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import play.api.libs.Crypto;
+import play.data.validation.ValidationError;
 import play.data.Form;
 import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
@@ -64,7 +65,7 @@ public class UserController extends EController{
 
 		// If the form contains error's (specified by "@"-annotation in the class "Register" then this will be true.
 		if(registerForm.hasErrors()){
-			flash("error", EMessages.get(EMessages.get("error.text")));
+			flash("error", EMessages.get(EMessages.get("error.no_password")));
 			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
 		}
 
