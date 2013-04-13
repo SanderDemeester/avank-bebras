@@ -51,8 +51,7 @@ public class MainClassesManager extends Manager<ClassGroup> {
 
 	@Override
 	public Call getAddRoute() {
-		// TODO
-		return null;
+		return routes.ClassGroupController.create();
 	}
 
 	@Override
