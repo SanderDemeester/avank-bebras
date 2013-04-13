@@ -86,6 +86,8 @@ public class QuestionIO {
 
             JsonNode input = Json.parse(json);
             String downloadLocation = Play.application().configuration().getString("questioneditor.download");
+            File dir = new File(downloadLocation);
+            if(!dir.exists()) dir.mkdir();
             QuestionPack pack = jsonToQuestionPack(input, downloadLocation, hash, userDownloadLocation);
             getFromXml(pack.getXmlDocument());// The return is not catched because we only have to validate
 
