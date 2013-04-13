@@ -7,6 +7,19 @@
     
     @main(EMessages.get("classes.pupil.title"), breadcrumbs){
     @commons.info(ori)
+    
+     @if(flash.containsKey("deleteerror")) {
+        <div class="alert alert-error">
+            @EMessages.get("classes.pupil.delete.error")
+        </div>
+    } else {
+    	@if(flash.containsKey("deletesuccess")) {
+        <div class="alert alert-success">
+            @EMessages.get("classes.pupil.delete.success")
+        </div>
+    }
+    }
+    
   	@if(cg!=null){
   		@EMessages.get("classes.pupil.classinfo")<br>
   		<table class="table">

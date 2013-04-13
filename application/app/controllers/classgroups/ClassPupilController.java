@@ -13,8 +13,11 @@ import com.avaje.ebean.Ebean;
 import models.EMessages;
 import models.data.Link;
 import models.dbentities.ClassGroup;
+import models.dbentities.ClassPupil;
+import models.dbentities.UserModel;
 import models.management.ModelState;
 import models.util.OperationResultInfo;
+import play.db.ebean.Transactional;
 import play.mvc.Result;
 import views.html.classes.classpupilManagement;
 import views.html.classes.oldClassPupilManagement;
@@ -72,6 +75,8 @@ public class ClassPupilController extends EController {
 		cpm.setFilter(filter);
 		cpm.setOrder(order);
 		cpm.setOrderBy(orderBy);
+		//Allow removal of students is class is active
+		if(cg!=null && cg.isActive())cpm.setCanRemove(true);
 		//Try to render the list
 		try{
 			@SuppressWarnings("unused")
@@ -141,6 +146,39 @@ public class ClassPupilController extends EController {
 		}
 	}
 	
+	public static Result removeStudent(String classID,String pupilID){
+		//TODO
+		
+		//Setting up template arguments
+		List<Link> breadcrumbs = getBreadCrumbs(classID);
+		OperationResultInfo ori = new OperationResultInfo();
+		
+		//Parse ID to int
+		int idInt = -1;
+		try{
+			idInt = Integer.parseInt(classID);
+		}catch(NumberFormatException nfe){
+			//Return empty page with error
+			ori.add(EMessages.get("classes.novalidclassid"),OperationResultInfo.Type.ERROR);
+			return ok(
+					classpupilManagement.render(null,null,"id","asc","",breadcrumbs,ori,null)
+					);
+		}
+		Ebean.beginTransaction();
+		try{
+			remove(idInt,pupilID);
+			flash("deletesuccess","");
+			Ebean.commitTransaction();
+		}catch(PersistenceException pe){
+			flash("deleteerror","");
+			Ebean.rollbackTransaction();
+		} finally {
+			Ebean.endTransaction();
+		}
+		
+		return redirect(routes.ClassPupilController.viewClass(classID, 0,"id", "asc", ""));
+	}
+	
 	protected static boolean isAuthorized(int id){
 		//TODO
 		return true;
@@ -157,6 +195,20 @@ public class ClassPupilController extends EController {
 		res.add(new Link(EMessages.get("classes.list"),"/classes"));
 		res.add(new Link(EMessages.get("classes.pupil.title"),"/classes/"+id));
 		return res;
+	}
+	
+	private static void remove(int classID,String userID){
+		ClassPupil cp = Ebean.find(ClassPupil.class).where().eq("indid",userID).eq("classid", classID).findUnique();
+		if(cp==null){
+			cp = new ClassPupil();
+			cp.classid = classID;
+			cp.indid = userID;
+			cp.save();
+		}
+		UserModel um = Ebean.find(UserModel.class).where().eq("id", userID).findUnique();
+		if(um==null) throw new PersistenceException("Could not find user");
+		um.classgroup = null;
+		um.update();
 	}
 
 }

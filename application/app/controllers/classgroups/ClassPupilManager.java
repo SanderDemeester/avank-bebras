@@ -20,17 +20,20 @@ import models.management.ModelState;
 
 /**
  * @author Jens N. Rammant
- *
+ * TODO comments
  */
 public class ClassPupilManager extends Manager<UserModel> {
 
 	private int classID;
 	private DataSet data;
+	//Determines whether the remove link does anything or not. Standard is false
+	private boolean canRemove;
 	
 	public ClassPupilManager(int classID, DataSet data, ModelState state) {
 		super(UserModel.class, state, "id", "name");
 		this.classID=classID;
 		this.data = data;
+		this.canRemove = false;
 	}
 
 	@Override
@@ -52,7 +55,9 @@ public class ClassPupilManager extends Manager<UserModel> {
 
 	@Override
 	public Call getRemoveRoute(String id) {
-		// TODO Auto-generated method stub
+		if(canRemove){
+			return routes.ClassPupilController.removeStudent(Integer.toString(classID),id);
+		}
 		return null;
 	}
 
@@ -103,6 +108,10 @@ public class ClassPupilManager extends Manager<UserModel> {
 		res.add("preflanguage");
 		res.add("active");
 		return res;
+	}
+	
+	public void setCanRemove(boolean b){
+		this.canRemove = b;
 	}
 	
 	public enum DataSet {
