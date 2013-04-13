@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import controllers.util.Mails;
 import play.api.libs.Crypto;
 import play.data.Form;
 import play.data.format.Formats;
