@@ -113,7 +113,7 @@ public class UserController extends EController{
 		// Compile new pattern to check for invalid email symbols. 
 		// These are all the symbols that are allow in email addresses.
 		// Alle symbols are containd in character classes, so no need for escaping.
-		pattern = Pattern.compile(EMAIL_PATTERN);
+		pattern = Pattern.compile("[^A-Za-z._+@0-9!#$%&'*+-/=?^_`{|}~]");
 		matcher = pattern.matcher(registerForm.get().email);
 
 		if(matcher.find()){
