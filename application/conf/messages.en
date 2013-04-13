@@ -17,7 +17,9 @@ error.date = Could not parse date.
 error.login = Invalid login.
 error.invalid_symbols = Input contains invalid symbols.
 error.invalid_email = Invalid email addres.
+error.wrong_date_time = Time traveler?
 error.invalid_date = Invalid date format, please use (yyyy/mm/dd).
+error.no_password = No password.
 
 # Forms
 forms.cancel = Cancel
