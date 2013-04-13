@@ -277,5 +277,13 @@ classes.helpteacher.list = List of help teachers.
 classes.helpteacher.error = Something went wrong during the retrieval. Try again (later).
 classes.helpteacher.delete.error = Something went wrong during the deleting. Try again (later).
 classes.helpteacher.delete.success = Removal was successful.
+classes.helpteacher.add = Add a new help teacher
+# classes.help.add.explanation
+# classes.helpteacher.add.incomplete
+# classes.helpteacher.add.error
+# classes.helpteacher.add.usernotexist
+# classes.helpteacher.add.usernotteacher
+# classes.helpteacher.add.useralreadyhelp
+# classes.helpteacher.add.useralreadyteacher
 classes.pupil.delete.success = Removal was successful.
 classes.pupil.delete.error = Something went wrong during the deleting. Try again (later).

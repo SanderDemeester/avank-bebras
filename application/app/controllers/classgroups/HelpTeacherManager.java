@@ -57,8 +57,7 @@ public class HelpTeacherManager extends Manager<UserModel> {
 	}
 	@Override
 	public Call getAddRoute() {
-		// TODO
-		return null;
+		return routes.HelpTeacherController.create(Integer.toString(classID));
 	}
 	@Override
 	public Call getEditRoute(String id) {

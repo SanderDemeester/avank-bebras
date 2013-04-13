@@ -274,5 +274,12 @@ classes.helpteacher.list = Lijst van hulp leraren.
 classes.helpteacher.error = Er is iets misgelopen tijdens het ophalen van de lijst. Probeer opnieuw (later).
 classes.helpteacher.delete.error = Er liep iets mis tijdens het verwijderen. Probeer opnieuw later.
 classes.helpteacher.delete.success = Verwijderen was successvol.
+classes.helpteacher.add = Voeg een nieuwe hulp leraar toe
+# classes.help.add.explanation
+# classes.helpteacher.add.incomplete
+# classes.helpteacher.add.error
+# classes.helpteacher.add.usernotexist
+# classes.helpteacher.add.usernotteacher
+# classes.helpteacher.add.useralreadyhelp
 classes.pupil.delete.error = Er liep iets mis tijdens het verwijderen. Probeer opnieuw later.
 classes.pupil.delete.success = Verwijderen was successvol.
