@@ -103,6 +103,7 @@ public class PersonalPageController extends EController {
                 userModel.password = editPass.get("new_password");
                 AuthenticationManager.getInstance().getUser().data.password = editPass.get("new_password");
                 Ebean.save(userModel);
+                flash("success", EMessages.get("edit_pwd.success"));
             }
         }
         else {

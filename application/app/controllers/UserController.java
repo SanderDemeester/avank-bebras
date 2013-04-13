@@ -239,7 +239,6 @@ public class UserController extends EController{
 
     public static Result forgotPwdSendMail() {
         Form<ForgotPwd> form = form(ForgotPwd.class).bindFromRequest();
-
         //Check email address
         if (!form.get().email.isEmpty()) {
             if (Ebean.find(UserModel.class).where().eq("email", form.get().email) != null) {
@@ -249,7 +248,7 @@ public class UserController extends EController{
                         "id", form.get().id).findUnique();
                 userModel.password = "reset";
                 Ebean.save(userModel);
-                return ok(views.html.commons.succes.render(new ArrayList<Link>(), EMessages.get("success.success"), EMessages.get("forgot_pwd.success") + "\n" + EMessages.get("forgot_pwd.mail")));
+                flash("success", EMessages.get("forgot_pwd.success") + "\n" + EMessages.get("forgot_pwd.mail"));
             } else {
                 return badRequest(views.html.commons.error.render(new ArrayList<Link>(), "Error", "This email address is not valid"));
             }

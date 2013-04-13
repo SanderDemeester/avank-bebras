@@ -35,10 +35,6 @@ links.datamanager.links = Wijzig de navigatiebalk
 links.datamanager.diffs = Wijzig de moeilijkheidsgraden
 links.datamanager.grades = Wijzig de graden voor studenten
 
-#Success
-success.success = Gereed
-success.goHome = Terug naar startpagina
-
 # Forms
 forms.cancel = Annuleer
 forms.approve = Keur goed
@@ -144,6 +140,11 @@ edit_pwd.current_pwd = Huidig wachtwoord
 edit_pwd.new_pwd = Nieuw wachtwoord
 edit_pwd.confirm_new_pwd = Herhaal nieuw wachtwoord
 edit_pwd.submit = Bevestigen
+edit_pwd.success = Wachtwoord veranderd.
+
+# Personal Info
+pers_info.pers_info = Profiel
+pers_info.edit = Bewerk profiel
 
 #faq
 faq.title = Veel Gestelde Vragen
