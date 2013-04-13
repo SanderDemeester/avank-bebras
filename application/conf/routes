@@ -91,3 +91,23 @@ GET		/personaledit				controllers.user.PersonalPageController.edit()
 POST	/personaledit/submit		controllers.user.PersonalPageController.changeInformation()
 GET		/passwedit					controllers.user.PersonalPageController.changePassword()
 POST	/passwedit/apply			controllers.user.PersonalPageController.checkValid()
+
+# Classes
+
+GET		/classes					controllers.classgroups.ClassGroupController.viewClasses(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET 		/classes/add					controllers.classgroups.ClassGroupController.create()
+GET		/classes/view/:id				controllers.classgroups.ClassPupilController.viewClass(id, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+
+
+GET		/classes/view/:id/:studid/remove		controllers.classgroups.ClassPupilController.removeStudent(id,studid)
+GET		/classes/view/:id/add			controllers.classgroups.ClassPupilController.addExistingStudent(id)
+POST		/classes/view/:id/				controllers.classgroups.ClassPupilController.saveExisting(id)
+
+GET		/classes/view/:id/edit			controllers.classgroups.ClassPupilController.editClass(id)
+
+GET		/classes/view/:id/help			controllers.classgroups.HelpTeacherController.viewHelp(id,p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET		/classes/view/:id/help/:teachid/remove	controllers.classgroups.HelpTeacherController.removeHelp(id,teachid)
+GET		/classes/view/:id/help/add			controllers.classgroups.HelpTeacherController.create(id)
+POST		/classes/view/:id/help/			controllers.classgroups.HelpTeacherController.save(id)
+
+GET		/classes/:id/old			controllers.classgroups.ClassPupilController.viewOldPupils(id,p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
