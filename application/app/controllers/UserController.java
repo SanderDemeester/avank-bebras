@@ -74,7 +74,7 @@ public class UserController extends EController{
 		// check if date is lower then current date
 		try{
 			Date birtyDay = new SimpleDateFormat("yyyy/mm/dd").parse(registerForm.get().bday);
-			if(birtyDay.before(new Date())){
+			if(birtyDay.after(new Date())){
 				flash("error", EMessages.get(EMessages.get("error.wrong_date_time")));
 				return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
 			}
