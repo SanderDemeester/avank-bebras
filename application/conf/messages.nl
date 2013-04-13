@@ -252,8 +252,8 @@ classes.main.form.name = Naam
 classes.main.form.schoolid = School ID
 classes.main.form.level = Level
 classes.main.form.isactive = Is Actief
-classes.main.form.expdate = Vervallingsdatum
 classes.main.form.teacherid = Leraar ID
+classes.main.form.expdate = Vervallingsdatum
 classes.main.listerror = Er is iets misgelopen tijdens het ophalen van de lijst van klassen. Probeer opnieuw (later).
 classes.list = Lijst van klassen
 classes.pupil.error.classfetch = Er is iets misgelopen tijdens het ophalen van de informatie. Probeer opnieuw (later).
@@ -265,7 +265,7 @@ classes.teacher.name = Naam
 classes.pupil.notactiveinfo = Deze klas is momenteel niet actief. Deze pagina toont alle studenten die ooit in deze klas zaten.
 classes.pupil.activeinfo  = Deze klas is momenteel actief. Deze pagina toont alle studenten die de klas als ''huidige klas'' hebben.
 classes.pupil.list = Lijst van studenten
-classes.pupil.classinfo = Klas info
+classes.pupil.title = Klas info
 classes.pupil.form.id = id
 classes.pupil.form.name = Naam
 classes.pupil.form.gender = Geslacht
@@ -299,5 +299,5 @@ classes.helpteacher.add = Voeg een nieuwe hulp leraar toe
 # classes.helpteacher.add.useralreadyteacher
 # classes.pupil.add.explanation
 # classes.pupil.add
-classes.pupil.delete.error = Er liep iets mis tijdens het verwijderen. Probeer opnieuw later.
 classes.pupil.delete.success = Verwijderen was successvol.
+classes.pupil.delete.error = Er liep iets mis tijdens het verwijderen. Probeer opnieuw later.
