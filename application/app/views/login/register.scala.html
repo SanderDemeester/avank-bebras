@@ -3,14 +3,14 @@
 @import models.EMessages.get
 @import helper._
 @import helper.twitterBootstrap._
-
+@import views.html.commons.showflash
 @main(EMessages.get("register.title"), breadcrumbs) {
 
 @helper.form(routes.UserController.register, 'id -> "signup"){
 <legend>Sign Up</legend>
 @if(flash.containsKey("error")) {
-	     <div class="alert alert-error"><
-	         <strong>Error!</strong> @flash.get("error")
+	     <div class="alert alert-error">
+			@showflash()	     
 	     </div>
 	}
 
