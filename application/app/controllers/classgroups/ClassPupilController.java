@@ -17,7 +17,6 @@ import models.management.ModelState;
 import models.util.OperationResultInfo;
 import play.mvc.Result;
 import views.html.classes.classpupilManagement;
-import views.html.classes.helpteacherManagement;
 import views.html.classes.oldClassPupilManagement;
 import views.html.commons.noaccess;
 import controllers.EController;
@@ -94,38 +93,6 @@ public class ClassPupilController extends EController {
 		//TODO
 		return null;
 	}
-	public static Result viewHelp(String id,int page, String orderBy, String order, String filter){		
-		List<Link> breadcrumbs = getBreadCrumbs(id);
-		breadcrumbs.add(new Link(EMessages.get("classes.helpteacher.list"),"/classes/"+id+"/help"));
-		OperationResultInfo ori = new OperationResultInfo();
-		
-		int idInt = -1;
-		try{
-			idInt = Integer.parseInt(id);
-		}catch(NumberFormatException nfe){
-			ori.add(EMessages.get("classes.novalidclassid"),OperationResultInfo.Type.ERROR);
-			return ok(
-					helpteacherManagement.render(null, null, orderBy, order, filter, breadcrumbs, ori));
-		}
-		
-		//Check if authorized
-		if(!isAuthorized(idInt))return ok(noaccess.render(breadcrumbs));
-		
-		HelpTeacherManager htm = new HelpTeacherManager(idInt, ModelState.READ);
-		htm.setFilter(filter);
-		htm.setOrder(order);
-		htm.setOrderBy(orderBy);
-		
-		try{
-			return ok(
-				helpteacherManagement.render(htm.page(page), htm, orderBy, order, filter, breadcrumbs, ori));
-		}catch(PersistenceException pe){
-			ori.add(EMessages.get("classes.helpteacher.error"),OperationResultInfo.Type.ERROR);
-			return ok(
-					helpteacherManagement.render(null, htm, orderBy, order, filter, breadcrumbs, ori));
-		}
-
-	}
 	/**
 	 * Returns the page of students that used to be in this class
 	 * @param id id of the class
@@ -174,7 +141,7 @@ public class ClassPupilController extends EController {
 		}
 	}
 	
-	private static boolean isAuthorized(int id){
+	protected static boolean isAuthorized(int id){
 		//TODO
 		return true;
 	}
@@ -184,7 +151,7 @@ public class ClassPupilController extends EController {
 	 * @param id id of the class
 	 * @return the basic breadcrumbs
 	 */
-	private static List<Link> getBreadCrumbs(String id){
+	protected static List<Link> getBreadCrumbs(String id){
 		ArrayList<Link> res = new ArrayList<Link>();
 		res.add(new Link("Home","/"));
 		res.add(new Link(EMessages.get("classes.list"),"/classes"));

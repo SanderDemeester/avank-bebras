@@ -275,3 +275,5 @@ classes.helpteacher.form.preflanguage = Preferred language
 classes.helpteacher.form.active = Is the user not-blocked?
 classes.helpteacher.list = List of help teachers.
 classes.helpteacher.error = Something went wrong during the retrieval. Try again (later).
+classes.helpteacher.delete.error = Something went wrong during the deleting. Try again (later).
+classes.helpteacher.delete.success = Removal was successful.

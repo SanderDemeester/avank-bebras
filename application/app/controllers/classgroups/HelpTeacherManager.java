@@ -33,7 +33,6 @@ public class HelpTeacherManager extends Manager<UserModel> {
 		Collection<HelpTeacher> helpTeacher = Ebean.find(HelpTeacher.class).where().eq("classid", classID).findList();		
 		Collection<String> teacherIDs = new ArrayList<String>();
 		for(HelpTeacher h : helpTeacher){
-			System.out.println(h.teacherid);
 			teacherIDs.add(h.teacherid);
 		}
 		return super.getDataSet().in("id", teacherIDs);
@@ -53,7 +52,8 @@ public class HelpTeacherManager extends Manager<UserModel> {
 	
 	@Override
 	public Call getListRoute(int page, String filter) {
-		return routes.ClassPupilController.viewHelp(Integer.toString(classID), page, orderBy, order,filter);
+		return routes.HelpTeacherController.viewHelp(Integer.toString(classID), page, orderBy, order,filter);
+
 	}
 	@Override
 	public Call getAddRoute() {
@@ -67,8 +67,7 @@ public class HelpTeacherManager extends Manager<UserModel> {
 	}
 	@Override
 	public Call getRemoveRoute(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return routes.HelpTeacherController.removeHelp(Integer.toString(classID),id);
 	}
 	@Override
 	public play.api.mvc.Call getSaveRoute() {

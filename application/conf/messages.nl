@@ -272,3 +272,5 @@ classes.helpteacher.form.preflanguage = Voorkeurstaal
 classes.helpteacher.form.active = Is de user niet geblokkeerd?
 classes.helpteacher.list = Lijst van hulp leraren.
 classes.helpteacher.error = Er is iets misgelopen tijdens het ophalen van de lijst. Probeer opnieuw (later).
+classes.helpteacher.delete.error = Er liep iets mis tijdens het verwijderen. Probeer opnieuw later.
+classes.helpteacher.delete.success = Verwijderen was successvol.

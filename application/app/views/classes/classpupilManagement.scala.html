@@ -58,7 +58,7 @@
   		}
   		<div class="actions">
         	<a href="@controllers.classgroups.routes.ClassPupilController.editClass(cg.getID())" class="btn">@EMessages.get("classes.pupil.editclassinfo")</a>
-        	<a href="@controllers.classgroups.routes.ClassPupilController.viewHelp(cg.getID())" class="btn">@EMessages.get("classes.pupil.viewhelp")</a>
+        	<a href="@controllers.classgroups.routes.HelpTeacherController.viewHelp(cg.getID())" class="btn">@EMessages.get("classes.pupil.viewhelp")</a>
         	@if(cg.isActive()){
         		<a href="@controllers.classgroups.routes.ClassPupilController.viewOldPupils(cg.getID())" class="btn">@EMessages.get("classes.pupil.oldpupils")</a>
         	}

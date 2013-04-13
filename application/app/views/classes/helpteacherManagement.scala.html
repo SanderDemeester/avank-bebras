@@ -6,6 +6,17 @@
     
     @main(EMessages.get("classes.helpteacher.list"), breadcrumbs){
     @commons.info(ori)
+    @if(flash.containsKey("deleteerror")) {
+        <div class="alert alert-error">
+            @EMessages.get("classes.helpteacher.delete.error")
+        </div>
+    } else {
+    	@if(flash.containsKey("deletesuccess")) {
+        <div class="alert alert-success">
+            @EMessages.get("classes.helpteacher.delete.success")
+        </div>
+    }
+    }
     @if(currentPage!=null){
     @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
     }
