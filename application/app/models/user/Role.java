@@ -35,20 +35,20 @@ public class Role {
 
     // Organiser
     public static Role MANAGEQUESTIONS = new Role(
-        "Manage the Questions",
-        new Link("View questions", "/questions"),
-        new Link("View submitted questions", "/questionsubmits")
+        EMessages.get("links.managequestions.title"),
+        new Link(EMessages.get("links.managequestions.list"), "/questions"),
+        new Link(EMessages.get("links.managequestions.listsubmitted"), "/questionsubmits")
     );
     public static Role MANAGESERVERS = new Role(
-        "Manage the Question servers",
-        new Link("View servers", "/servers"),
-        new Link("New server", "/server/new")
+            EMessages.get("links.manageserver.title"),
+        new Link(EMessages.get("links.manageserver.list"), "/servers"),
+        new Link(EMessages.get("links.manageserver.create"), "/server/new")
     );
 
     // Author
     public static Role QUESTIONEDITOR = new Role(
-        "Create and modify Questions",
-        new Link("Question Editor", "/questioneditor")
+            EMessages.get("links.questioneditor.title"),
+        new Link(EMessages.get("links.questioneditor.open"), "/questioneditor")
     );
 
     //ADMIN
