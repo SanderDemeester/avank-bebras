@@ -10,7 +10,7 @@ GET		/info						controllers.Application.index()
 
 # Registration/signup
 GET		/signup						controllers.UserController.signup()
-POST	/register					controllers.UserController.register()
+POST	/signup 					controllers.UserController.register()
 
 # Login
 GET		/login_validate		controllers.UserController.validate_login(id, password)
