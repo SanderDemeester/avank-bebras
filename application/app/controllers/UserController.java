@@ -4,11 +4,14 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import play.api.libs.Crypto;
+import play.data.validation.ValidationError;
 import play.data.Form;
 import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
@@ -56,28 +59,45 @@ public class UserController extends EController{
 	public static Result register(){
 		// Bind play form request.
 		Form<Register> registerForm = form(Register.class).bindFromRequest();
-		Pattern pattern = Pattern.compile("[^a-z ]", Pattern.CASE_INSENSITIVE);
-		Matcher matcher = pattern.matcher(registerForm.get().name);
 		List<Link> breadcrumbs = new ArrayList<Link>();
 		breadcrumbs.add(new Link("Home", "/"));
 		breadcrumbs.add(new Link("Sign Up", "/signup"));
 
+		// If the form contains error's (specified by "@"-annotation in the class "Register" then this will be true.
+		if(registerForm.hasErrors()){
+			flash("error", EMessages.get(EMessages.get("error.no_password")));
+			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
+		}
+
+		Pattern pattern = Pattern.compile("[^a-z ]", Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(registerForm.get().name);
+
+
+		// check if date is lower then current date
+		try{
+			Date birtyDay    = new SimpleDateFormat("yyyy/mm/dd").parse(registerForm.get().bday);
+			Date currentDate = new Date();
+			
+			if(birtyDay.after(currentDate)){
+				flash("error", EMessages.get(EMessages.get("error.wrong_date_time")));
+				return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
+			}
+		}catch(Exception e){
+			flash("error", EMessages.get(EMessages.get("error.date")));
+			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
+		}
 		// Check if the email adres is uniqe.
 		if(!registerForm.get().email.isEmpty()){
 
 			if(Ebean.find(UserModel.class).where().eq(
 					"email",registerForm.get().email).findUnique() != null){
-				
+
 				flash("error", EMessages.get(EMessages.get("register.same_email")));
 				return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
 			}
 		}
 
-		// If the form contains error's (specified by "@"-annotation in the class "Register" then this will be true.
-		if(registerForm.hasErrors()){
-			flash("error", EMessages.get(EMessages.get("error.text")));
-			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
-		}
+
 
 		// Check if full name contains invalid symbols.
 		if(matcher.find()){
