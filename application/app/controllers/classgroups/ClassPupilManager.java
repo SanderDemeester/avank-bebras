@@ -44,8 +44,7 @@ public class ClassPupilManager extends Manager<UserModel> {
 
 	@Override
 	public Call getAddRoute() {
-		// TODO 
-		return null;
+		return routes.ClassPupilController.addExistingStudent(Integer.toString(classID));
 	}
 
 	@Override

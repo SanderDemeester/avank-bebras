@@ -281,5 +281,8 @@ classes.helpteacher.add = Voeg een nieuwe hulp leraar toe
 # classes.helpteacher.add.usernotexist
 # classes.helpteacher.add.usernotteacher
 # classes.helpteacher.add.useralreadyhelp
+# classes.helpteacher.add.useralreadyteacher
+# classes.pupil.add.explanation
+# classes.pupil.add
 classes.pupil.delete.error = Er liep iets mis tijdens het verwijderen. Probeer opnieuw later.
 classes.pupil.delete.success = Verwijderen was successvol.

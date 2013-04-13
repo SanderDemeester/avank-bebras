@@ -99,6 +99,9 @@ GET		/classes					controllers.classgroups.ClassGroupController.viewClasses(p:Int
 GET		/classes/:id				controllers.classgroups.ClassPupilController.viewClass(id, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
 GET		/classes/:id/:studid/remove		controllers.classgroups.ClassPupilController.removeStudent(id,studid)
+GET		/classes/:id/add			controllers.classgroups.ClassPupilController.addExistingStudent(id)
+POST		/classes/:id/				controllers.classgroups.ClassPupilController.saveExisting(id)
+
 GET		/classes/:id/edit			controllers.classgroups.ClassPupilController.editClass(id)
 
 GET		/classes/:id/help			controllers.classgroups.HelpTeacherController.viewHelp(id,p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")

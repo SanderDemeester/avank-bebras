@@ -285,5 +285,7 @@ classes.helpteacher.add = Add a new help teacher
 # classes.helpteacher.add.usernotteacher
 # classes.helpteacher.add.useralreadyhelp
 # classes.helpteacher.add.useralreadyteacher
+# classes.pupil.add.explanation
+# classes.pupil.add
 classes.pupil.delete.success = Removal was successful.
 classes.pupil.delete.error = Something went wrong during the deleting. Try again (later).

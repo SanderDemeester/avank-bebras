@@ -16,8 +16,12 @@ import models.dbentities.ClassGroup;
 import models.dbentities.ClassPupil;
 import models.dbentities.UserModel;
 import models.management.ModelState;
+import models.user.UserType;
+import models.util.IDWrapper;
 import models.util.OperationResultInfo;
+import play.data.Form;
 import play.mvc.Result;
+import views.html.classes.addExistingPupil;
 import views.html.classes.classpupilManagement;
 import views.html.classes.oldClassPupilManagement;
 import views.html.commons.noaccess;
@@ -26,6 +30,7 @@ import controllers.classgroups.ClassPupilManager.DataSet;
 
 /**
  * @author Jens N. Rammant
+ * TODO split in multiple classes, confirmation screen, emessages
  */
 public class ClassPupilController extends EController {
 	
@@ -186,6 +191,107 @@ public class ClassPupilController extends EController {
 	
 	/**
 	 * 
+	 * @param id of the classgroup
+	 * @return a form to add an existing student to the classgroup
+	 */
+	public static Result addExistingStudent(String id){
+		List<Link> bc = getBreadCrumbs(id);
+		bc.add(new Link(EMessages.get("classes.pupil.add"),"/classes/"+id+"/add"));
+		OperationResultInfo ori = new OperationResultInfo();
+		//TODO check id and authorized
+		Form<IDWrapper> f = new Form<IDWrapper>(IDWrapper.class);
+		return ok(
+				addExistingPupil.render(f, bc, ori, id));
+	}
+
+	/**
+	 * Saves the linking of the existing student to the classgroup
+	 * 
+	 * @param id
+	 *            of the classgroup
+	 * @return the page with the list og students
+	 */
+	public static Result saveExisting(String id) {
+		// Initialize template arguments
+		List<Link> bc = getBreadCrumbs(id);
+		OperationResultInfo ori = new OperationResultInfo();
+		// Check if valid id
+		int classID = -1;
+		try {
+			classID = Integer.parseInt(id);
+		} catch (NumberFormatException nfe) {
+			//Return empty page with error
+			ori.add(EMessages.get("classes.novalidclassid"),OperationResultInfo.Type.ERROR);
+			return ok(
+					classpupilManagement.render(null,null,"id","asc","",bc,ori,null)
+					);
+		}
+
+		// Check if authorized
+		if (!isAuthorized(classID))
+			return ok(noaccess.render(bc));
+
+		// Retrieve form
+		Form<IDWrapper> f = form(IDWrapper.class).bindFromRequest();
+		if (f.hasErrors()) {
+			// If incomplete, show form with warning
+			ori.add(EMessages.get("classes.pupil.add.incomplete"),
+					OperationResultInfo.Type.WARNING);
+			return badRequest(addExistingPupil.render(f, bc, ori, id));
+		}
+		// Retrieve id
+		IDWrapper i = f.get();
+		UserModel um = null;
+		// Retrieve usermodel of to be linked pupil
+		try {
+			um = Ebean.find(UserModel.class, i.id);
+		} catch (PersistenceException pe) {
+			// Retrieval failed, Show form with error
+			ori.add(EMessages.get("classes.pupil.add.error"),
+					OperationResultInfo.Type.ERROR);
+			return badRequest(addExistingPupil.render(f, bc, ori, id));
+		}
+		if (um == null) {
+			// No user with that id exists
+			ori.add(EMessages.get("classes.pupil.add.usernotexist"),
+					OperationResultInfo.Type.WARNING);
+			return badRequest(addExistingPupil.render(f, bc, ori, id));
+		}
+		if (um.type != UserType.INDEPENDENT && um.type != UserType.PUPIL) { //TODO check if both are needed
+			// User is not a pupil
+			ori.add(EMessages.get("classes.pupil.add.usernotpupil"),
+					OperationResultInfo.Type.WARNING);
+			return badRequest(addExistingPupil.render(f, bc, ori, id));
+		}
+		// Check if pupil is already in the class
+		if ( um.classgroup!=null && um.classgroup == classID) {
+			ori.add(EMessages
+				.get("classes.pupil.add.useralreadyinclass"),
+				OperationResultInfo.Type.WARNING);
+				return badRequest(addExistingPupil.render(f, bc, ori, id));
+		}
+		//Actually save the linking
+		Ebean.beginTransaction();
+		try {
+			add(classID, um.id);
+			Ebean.commitTransaction();
+			
+			
+		} catch (PersistenceException pe) {
+			// Saving/retrieval failed, show error
+			Ebean.rollbackTransaction();
+			ori.add(EMessages.get("classes.user.add.error"),
+					OperationResultInfo.Type.ERROR);
+			return badRequest(addExistingPupil.render(f, bc, ori, id));
+		}finally{
+			Ebean.endTransaction();
+		}
+		// redirect to list page
+		return redirect(routes.ClassPupilController.viewClass(id, 0, "id", "asc", ""));
+	}
+	
+	/**
+	 * 
 	 * @param id the id of the class
 	 * @return whether the current user is authorized to view/edit this class
 	 */
@@ -226,6 +332,31 @@ public class ClassPupilController extends EController {
 		UserModel um = Ebean.find(UserModel.class).where().eq("id", userID).findUnique();
 		if(um==null) throw new PersistenceException("Could not find user");
 		um.classgroup = null;
+		um.update();
+	}
+	
+	/**
+	 * Adds the user to the class
+	 * @param classID id of the class
+	 * @param userID id of the user
+	 */
+	private static void add(int classID,String userID){
+		UserModel um = Ebean.find(UserModel.class, userID);
+		if(um==null) throw new PersistenceException();
+		//If the pupil is already in a classgroup, create a new ClassPupil linking (if it doesn't already exist)
+		if(um.classgroup!=null){
+			ClassPupil cp = Ebean.find(ClassPupil.class).where().eq("classid", um.classgroup).where().eq("indid", userID).findUnique();
+			if(cp==null){
+				ClassPupil cpNew = new ClassPupil();
+				cpNew.classid=um.classgroup;
+				cpNew.indid=userID;
+				cpNew.save();
+			}
+		}
+		//If the pupil is already linked to the class by a ClassPupil linking, remove the latter
+		ClassPupil cpOld = Ebean.find(ClassPupil.class).where().eq("classid", classID).where().eq("indid", userID).findUnique();
+		if(cpOld!=null)cpOld.delete();
+		um.classgroup=classID;
 		um.update();
 	}
 

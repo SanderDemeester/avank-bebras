@@ -76,9 +76,7 @@ public class ClassGroupController extends EController {
 	 * @return the Teacher that is currently logged in. 
 	 */
 	private static Teacher getTeacher(){
-		//TODO
-		//return (Teacher)AuthenticationManager.getInstance().getUser();
-		return new Teacher(new UserModel("1", UserType.TEACHER, "", new Date(17), new Date(17), "", "", "", Gender.Female, ""));
+		return (Teacher)AuthenticationManager.getInstance().getUser();
 		
 	}
 	

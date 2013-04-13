@@ -24,7 +24,7 @@ import views.html.commons.noaccess;
 
 /**
  * @author Jens N. Rammant
- * TODO write emessages
+ * TODO write emessages, confirmation screen
  */
 public class HelpTeacherController extends ClassPupilController {
 
