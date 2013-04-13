@@ -99,7 +99,7 @@ public class UserRegistrationTest extends ContextTest{
                 controllers.routes.ref.UserController.register(),fakeRequest().withFormUrlEncodedBody(map4)
         		);
         assertThat(status(result)).isEqualTo(400);
-        assertThat(contentAsString(result)).contains("Invalid date format, please use (yyyy/mm/dd).");
+        assertThat(contentAsString(result)).contains("Could not parse date.");
         
         
         
