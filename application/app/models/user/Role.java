@@ -53,16 +53,28 @@ public class Role {
 
     //ADMIN
     public static Role MANAGEFAQ = new Role(
-        "Manage Frequently Asked Questions",
-        new Link("View the frequently asked questions", "/faq"),
-        new Link("Manage the frequently asked questions", "/manageFAQ"),
-        new Link("Create a new frequently asked question", "/manageFAQ/new")
+        EMessages.get("faq.managefaq"),
+        new Link(EMessages.get("faq.title"), "/faq"),
+        new Link(EMessages.get("faq.managefaq"), "/manageFAQ"),
+        new Link(EMessages.get("faq.addfaq"), "/manageFAQ/new")
     );
+    
     public static Role DATAMANAGER = new Role(
         "links.datamanager.title",
         new Link("links.datamanager.links", "/manage/links/show"),
         new Link("links.datamanager.diffs", "/manage/difficulties/show"),
         new Link("links.datamanager.grades", "/manage/grades/show")
+    );
+    
+    //TEACHER
+    public static Role MANAGESCHOOLS = new Role(
+        EMessages.get("schools.title"),
+	    new Link(EMessages.get("schools.title"),"/schools")
+    );
+
+    public static Role MANAGECLASSES = new Role(
+	    EMessages.get("classes.list"),
+	    new Link(EMessages.get("classes.list"),"/classes"
     );
 
 

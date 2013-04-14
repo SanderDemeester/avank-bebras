@@ -1,4 +1,3 @@
-
 package models.user;
 
 import java.util.ArrayList;
@@ -24,7 +23,9 @@ import com.avaje.ebean.Ebean;
 public class Teacher extends SuperUser{
 
     public Teacher(UserModel data) {
-        super(data, UserType.TEACHER);
+        super(data, UserType.TEACHER);        
+        ROLES.add(Role.MANAGESCHOOLS);
+        ROLES.add(Role.MANAGECLASSES);
     }
 
     public void scheduleUnrestrictedCompetition(){
