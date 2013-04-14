@@ -1,8 +1,7 @@
-/**
- *
- */
 package models.dbentities;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -16,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import models.management.Listable;
+import models.management.ManageableModel;
 import models.user.Gender;
 import models.user.UserType;
 import play.data.format.Formats;
@@ -27,7 +27,7 @@ import play.db.ebean.Model;
  */
 @Entity
 @Table(name="users")
-public class UserModel extends Model implements Listable{
+public class UserModel extends ManageableModel implements Listable{
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -55,7 +55,7 @@ public class UserModel extends Model implements Listable{
     public boolean active;
 
     @Column(name="class")
-    public int classgroup;
+    public Integer classgroup;
 
     public UserModel(String id, UserType loginType, String name,
             Date birthdate, Date registrationdate,
@@ -80,15 +80,38 @@ public class UserModel extends Model implements Listable{
      * A finder for User.
      * We will use this finder to execute specific sql query's.
      */
-    public static Finder<Integer,UserModel> find = new Model.Finder<Integer, UserModel>(Integer.class,UserModel.class);
+    public static Finder<String,UserModel> find = new Model.Finder<String, UserModel>(String.class,UserModel.class);
 
     @Override
     public Map<String, String> options() {
-        List<UserModel> users = find.all();
+        List<UserModel> users = find.all(); //TODO try-catch
         LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
         for(UserModel user: users) {
             options.put(user.id, user.id);
         }
         return options;
     }
+
+	@Override
+	public String[] getFieldValues() {
+		String[] res = {
+				id,
+				name,
+				gender.toString(),
+				convertDate(birthdate),
+				preflanguage,
+				Boolean.toString(active)				
+		};		
+		return res;
+	}
+
+	@Override
+	public String getID() {
+		return id;
+	}
+	
+	private String convertDate(Date d){
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		return df.format(d);
+	}
 }

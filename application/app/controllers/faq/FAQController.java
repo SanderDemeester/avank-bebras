@@ -64,42 +64,46 @@ public class FAQController extends EController {
         return ok(faq.render(breadcrumbs,f,ori));
     }
 
-    /**
-     * Returns the list of FAQs
-     * @param page Page or results to be displayed
-     * @param orderBy What field to order on
-     * @param order Which order the results have to be in
-     * @param filter Filter to be used on the results
-     * @param info    Info messages to be displayed
-     * @return
-     */
-    public static Result list(int page, String orderBy, String order, String filter,OperationResultInfo info){
-        //Creation of breadcrumbs
-        List<Link> breadcrumbs = manageBreadcrumbs();
-        //Check if authorized
-        if(!isAuthorized())return ok(noaccess.render(breadcrumbs));
 
-        FAQManager fm = new FAQManager(ModelState.READ);
-        try{
-            //Try to render the list
-            return ok(
-                faqManagement.render(fm.page(page), fm, orderBy, order, filter, breadcrumbs, info)
-            );
-        }catch(Exception e){
-            //If fails, show no list (page = null) but display an error.
-            info.add(EMessages.get("faq.list.error"),OperationResultInfo.Type.ERROR);
-            return ok(faqManagement.render(null, fm, orderBy, order, filter, breadcrumbs, info));
-        }
-    }
-
-    /*
-     * Same as the other one, but uses an empty OperationResultInfo
-     */
-    public static Result list(int page, String orderBy, String order, String filter){
-        return list(page,orderBy,order,filter,new OperationResultInfo());
-    }
-
-    /**
+	/**
+	 * Returns the list of FAQs
+	 * @param page Page or results to be displayed
+	 * @param orderBy What field to order on
+	 * @param order Which order the results have to be in
+	 * @param filter Filter to be used on the results
+	 * @param info	Info messages to be displayed
+	 * @return the list of FAQs
+	 */
+	public static Result list(int page, String orderBy, String order, String filter,OperationResultInfo info){
+		//Creation of breadcrumbs
+		List<Link> breadcrumbs = manageBreadcrumbs();
+		//Check if authorized
+		if(!isAuthorized())return ok(noaccess.render(breadcrumbs));
+		
+		FAQManager fm = new FAQManager(ModelState.READ);
+		fm.setFilter(filter);
+		fm.setOrder(order);
+		fm.setOrderBy(orderBy);
+		try{
+			//Try to render the list
+			return ok(
+	            faqManagement.render(fm.page(page), fm, orderBy, order, filter, breadcrumbs, info)
+	        );
+		}catch(Exception e){
+			//If fails, show no list (page = null) but display an error.
+			info.add(EMessages.get("faq.list.error"),OperationResultInfo.Type.ERROR);
+			return ok(faqManagement.render(null, fm, orderBy, order, filter, breadcrumbs, info));
+		}
+	}
+	
+	/*
+	 * Same as the other one, but uses an empty OperationResultInfo
+	 */
+	public static Result list(int page, String orderBy, String order, String filter){
+		return list(page,orderBy,order,filter,new OperationResultInfo());
+	}	
+	
+	/**
      * This result will redirect to the create a new FAQ page
      *
      * @return faq creation page
@@ -156,19 +160,27 @@ public class FAQController extends EController {
         List<Link> breadcrumbs = manageBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("faq.alter"),"/manageFAQ/"+id));
         if(!isAuthorized())return ok(noaccess.render(breadcrumbs)); //Check if authorized
-
-        //Try to render a form from the to-be-edited FAQModel
-        Form<FAQModel> form = form(FAQModel.class).bindFromRequest().fill(new FAQManager(ModelState.UPDATE).getFinder().ref(id));
+        
+        OperationResultInfo inf = new OperationResultInfo();
+		
+		//Check if the id is a valid int
+        try{
+        	Integer.parseInt(id);
+        }catch(NumberFormatException ne){
+        	inf.add(EMessages.get("faq.error"), OperationResultInfo.Type.ERROR);
+        	return list(0, "name", "asc", "",inf);
+        }
+        //Try to render form
+		Form<FAQModel> form = form(FAQModel.class).bindFromRequest().fill(new FAQManager(ModelState.UPDATE).getFinder().ref(id));
         try{
             Result r =
                 ok(alterFAQForm.render(form, breadcrumbs,listOfLanguages(),id, new OperationResultInfo()));
             return r;
         }catch(Exception e){
-            //Something went wrong during the creation of the form (e.g. no database connection
-            //Redirect back to the list page with an error message
-            OperationResultInfo inf = new OperationResultInfo();
-            inf.add(EMessages.get("faq.error"), OperationResultInfo.Type.ERROR);
-            return list(0, "name", "asc", "",inf);
+        	//Something went wrong during the creation of the form (e.g. no database connection
+        	//Redirect back to the list page with an error message
+        	inf.add(EMessages.get("faq.error"), OperationResultInfo.Type.ERROR);
+        	return list(0, "name", "asc", "",inf);
         }
     }
 
@@ -204,13 +216,14 @@ public class FAQController extends EController {
         }
         //Try to save the updated FAQModel
         FAQModel updated = form.get();
-        updated.id = Integer.parseInt(id);
+        
         try{
-            updated.update();
-        }catch(Exception p){
-            //Something went wrong in the saving. Redirect back to the create page with an error alert
-            OperationResultInfo ori = new OperationResultInfo();
-            ori.add(EMessages.get("faq.error.savefail"), OperationResultInfo.Type.ERROR);
+        	updated.id = Integer.parseInt(id);
+        	updated.update();
+        }catch(Exception p){        	
+        	//Something went wrong in the saving. Redirect back to the create page with an error alert
+        	OperationResultInfo ori = new OperationResultInfo();
+    		ori.add(EMessages.get("faq.error.savefail"), OperationResultInfo.Type.ERROR);
             return badRequest(alterFAQForm.render(form, breadcrumbs,listOfLanguages(), id, ori));
         }
         //Return to the list of FAQ
@@ -235,36 +248,35 @@ public class FAQController extends EController {
             return list(0, "name", "asc", "",inf);
         }
         return redirect(routes.FAQController.list(0, "language", "asc", ""));
-    }
-
-    /**
-     * Returns whether the current user is authorized to edit the FAQ
-     * (Everyone is authorized to view the FAQ)
-     * @return whether the current user is authorized to manage the FAQ
-     */
-    public static boolean isAuthorized(){
-        //TODO test when it is possible to create admins
-        return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGEFAQ);
-    }
-
-    /**
-     *
-     * @return the list of available languages (in a map useable by a Select item)
-     */
-    private static Map<String,String> listOfLanguages(){
-        Map<String,String> languages = new HashMap<String,String>();
-        for (Language l : Language.listLanguages()){
-            languages.put(l.getCode(), l.getName());
-        }
-        return languages;
-    }
-
-    /**
-     *
-     * @return the basic list of breadcrumbs for Manage FAQ
-     */
-    private static List<Link> manageBreadcrumbs(){
-        List<Link> breadcrumbs = new ArrayList<Link>();
+	}
+	
+	/**
+	 * Returns whether the current user is authorized to edit the FAQ
+	 * (Everyone is authorized to view the FAQ)
+	 * @return whether the current user is authorized to manage the FAQ
+	 */
+	public static boolean isAuthorized(){
+		return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGEFAQ);	
+	}
+	
+	/**
+	 * 
+	 * @return the list of available languages (in a map useable by a Select item)
+	 */
+	private static Map<String,String> listOfLanguages(){
+		Map<String,String> languages = new HashMap<String,String>();
+		for (Language l : Language.listLanguages()){
+			languages.put(l.getCode(), l.getName());
+		}
+		return languages;
+	}
+	
+	/**
+	 * 
+	 * @return the basic list of breadcrumbs for Manage FAQ
+	 */
+	private static List<Link> manageBreadcrumbs(){
+		List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link(EMessages.get("faq.managefaq"),"/manageFAQ"));
         return breadcrumbs;

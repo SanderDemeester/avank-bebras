@@ -14,20 +14,16 @@ import play.mvc.Result;
 
 public class Organizer extends SuperUser{
 
-    static {
-        ROLES.add(Role.CREATEQUESTION);
-        ROLES.add(Role.READQUESTION);
-        ROLES.add(Role.UPDATEQUESTION);
-        ROLES.add(Role.DELETEQUESTION);
-    }
-
     protected Organizer(UserModel data, UserType type) {
         super(data, type);
+        ROLES.add(Role.MANAGEQUESTIONS);
+        ROLES.add(Role.MANAGESERVERS);
     }
 
     public Organizer(UserModel data) {
         this(data, UserType.ORGANIZER);
     }
+
     /**
      * Block user.
      * @param user

@@ -1,21 +1,25 @@
 package models.management;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import play.db.ebean.Model.Finder;
 import play.mvc.Call;
 
+import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.Page;
 
 /**
  * Abstract class for every manager that contains the functionality for CRUD operations
  * on an entity.
  *
- * @author Kevin Stobbelaar, Ruben Taelman
+ * @author Ruben Taelman
+ * @author Kevin Stobbelaar
  *
  */
 public abstract class Manager<T extends ManageableModel> {
@@ -34,6 +38,7 @@ public abstract class Manager<T extends ManageableModel> {
     protected Map<String, FieldType> fields = new LinkedHashMap<String, FieldType>();
     protected Map<String, Class<?>> fieldTypes = new HashMap<String, Class<?>>();
     protected Map<String, Boolean> disabledFields = new HashMap<String, Boolean>();
+    protected Map<String, Boolean> hiddenListFields = new HashMap<String, Boolean>();
 
     private boolean ignoreErrors = false;
     private ModelState state;
@@ -59,8 +64,12 @@ public abstract class Manager<T extends ManageableModel> {
             if(field.isAnnotationPresent(Editable.class)) {
                 fields.put(field.getName(), FieldType.getType(field.getType()));
                 fieldTypes.put(field.getName(), field.getType());
-                if(field.getAnnotation(Editable.class).uponCreation())
+                if(field.getAnnotation(Editable.class).uponCreation()
+                        || field.getAnnotation(Editable.class).alwaysHidden()
+                  )
                     this.disableField(field.getName());
+                if(field.getAnnotation(Editable.class).hiddenInList())
+                    this.disableListField(field.getName());
             }
         }
     }
@@ -137,13 +146,21 @@ public abstract class Manager<T extends ManageableModel> {
      * @return the requested page
      */
     @SuppressWarnings("unchecked")
-    public Page<ManageableModel> page(int page) {
-        return (Page<ManageableModel>) finder.where()
+	public Page<ManageableModel> page(int page) {
+        return (Page<ManageableModel>) getDataSet()
                  .ilike(filterBy, "%" + filter + "%")
             .orderBy(orderBy + " " + order)
                 // .fetch("path")
             .findPagingList(pageSize)
             .getPage(page);
+    }
+    
+    /**
+     * 
+     * @return The Dataset the Manager is working
+     */
+    protected ExpressionList<T> getDataSet(){
+    	return getFinder().where();
     }
 
     /**
@@ -169,7 +186,13 @@ public abstract class Manager<T extends ManageableModel> {
      *
      * @return column headers
      */
-    public abstract String[] getColumnHeaders();
+    public List<String> getColumnHeaders() {
+        List<String> headers = new ArrayList<String>();
+        for(String key : fields.keySet()) {
+            if(this.isFieldListVisible(key)) headers.add(key);
+        }
+        return headers;
+    }
 
     /**
      * Returns the route that must be followed to refresh the list.
@@ -205,7 +228,7 @@ public abstract class Manager<T extends ManageableModel> {
     /**
      * Returns the path of the route that must be followed to remove the selected item.
      *
-     * @result Call path of the route that must be followed
+     * @return Call path of the route that must be followed
      */
     public abstract Call getRemoveRoute(String id);
 
@@ -237,6 +260,14 @@ public abstract class Manager<T extends ManageableModel> {
     private void disableField(String field) {
         disabledFields.put(field, true);
     }
+    
+    /**
+     * Make a field hidden in the listview
+     * @param field field name
+     */
+    private void disableListField(String field) {
+        hiddenListFields.put(field, true);
+    }
 
     /**
      * Check if a field is disabled
@@ -248,6 +279,17 @@ public abstract class Manager<T extends ManageableModel> {
         if(val == null)                           return false;
         else if(!state.equals(ModelState.UPDATE)) return false;
         else                                      return val;
+    }
+    
+    /**
+     * Check if a field is visible in the list view
+     * @param field field name
+     * @return if the field is disabled in a listview
+     */
+    public boolean isFieldListVisible(String field) {
+        Boolean val = hiddenListFields.get(field);
+        if(val == null)                           return true;
+        else                                      return !val;
     }
 
     /**

@@ -41,15 +41,4 @@ public class ExampleTest extends ContextTest {
             "Test-string");
     }
 
-    @Override
-    protected Http.Request makeRequest() {
-        return new StubRequest() {
-            @Override public List<Lang> acceptLanguages() {
-                List<Lang> l = new ArrayList<Lang>();
-                l.add(Lang.forCode("en-US"));
-                return l;
-            }
-        };
-    }
-
 }

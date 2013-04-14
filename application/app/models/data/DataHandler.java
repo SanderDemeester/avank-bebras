@@ -7,6 +7,11 @@ import java.util.List;
 import java.util.ArrayList;
 
 import models.data.Grade;
+import models.data.Link;
+import models.data.Difficulty;
+import models.data.grades.GradeManager;
+import models.data.links.LinkManager;
+import models.data.difficulties.DifficultyManager;
 
 /**
  * Stub class for DataHandler.
@@ -16,42 +21,24 @@ import models.data.Grade;
  */
 public class DataHandler {
 
-    private static Grade[] grades = new Grade[] {
-        new Grade("Ewok",    10, 12),
-        new Grade("Wooky",   12, 14),
-        new Grade("Padawan", 14, 16),
-        new Grade("Jedi",    16, 18)
-    };
-
-    private static String[] difficulties = new String[] {
-        "Easy",
-        "Medium",
-        "Hard"
-    };
-
-    private static List<Link> links = new ArrayList<Link>(2);
-    static {
-        links.add(new Link("Home", "http://www.bebras.be"));
-        links.add(new Link("FAQ",  "/faq"));
-    };
-
+    private static GradeManager      gm = new GradeManager();
+    private static LinkManager       lm = new LinkManager();
+    private static DifficultyManager dm = new DifficultyManager();
 
     /**
      * Returns the different Grades users can belong to.
-     * The grades are sorted by ascending age.
-     * @return Array of grades.
+     * @return List of grades.
      */
-    public static Grade[] getGrades() {
-        return grades;
+    public static List<Grade> getGrades() {
+        return gm.list();
     }
 
     /**
      * Returns the different difficulties a question can have.
-     * The difficulties are sorted by ascending difficulty.
      * @return Array of difficulties.
      */
-    public static String[] getDifficulties() {
-        return difficulties;
+    public static List<Difficulty> getDifficulties() {
+        return dm.list();
     }
 
     /**
@@ -59,12 +46,7 @@ public class DataHandler {
      * @return Links for the home page.
      */
     public static List<Link> getLinks() {
-        return links;
+        return lm.list();
     }
-
-    /**
-     * Returns the Frequently Asked Questions.
-     * @return Frequently Asked Questions.
-     */
 
 }

@@ -86,6 +86,8 @@ public class QuestionIO {
 
             JsonNode input = Json.parse(json);
             String downloadLocation = Play.application().configuration().getString("questioneditor.download");
+            File dir = new File(downloadLocation);
+            if(!dir.exists()) dir.mkdir();
             QuestionPack pack = jsonToQuestionPack(input, downloadLocation, hash, userDownloadLocation);
             getFromXml(pack.getXmlDocument());// The return is not catched because we only have to validate
 
@@ -112,7 +114,6 @@ public class QuestionIO {
      * @param json json formatted question
      * @param userID the user id for the authenticated user
      * @param userDownloadLocation the location where the user can http-request his uploaded files
-     * @return The compressed question file
      * @throws QuestionBuilderException any error that can occur
      */
     public static void submit(String json, String userID, String userDownloadLocation) throws QuestionBuilderException {
@@ -206,7 +207,7 @@ public class QuestionIO {
      * @param out outputstream to where the content should be written to
      * @throws IOException when an error occurs with the I/O-streams
      */
-    private static void copyStream(InputStream in, OutputStream out) throws IOException {
+    public static void copyStream(InputStream in, OutputStream out) throws IOException {
         byte[] buffer = new byte[1024 * 4];
         int n = 0;
         while (-1 != (n = in.read(buffer))) {
@@ -222,7 +223,6 @@ public class QuestionIO {
      * @throws QuestionBuilderException possible things that can go wrong
      */
     public static Question getFromXml(String xml) throws QuestionBuilderException {
-        // TODO: Set server and ID upon loading the XML file
         Question question = null;
         try {
             // Parse the given XML into a DOM tree
@@ -245,12 +245,11 @@ public class QuestionIO {
 
     /**
      * Creates a new question from a certain XML input
-     * @param xml  input stream of an xml file
+     * @param doc  document of an xml file
      * @return a new question
      * @throws QuestionBuilderException possible things that can go wrong
      */
     public static Question getFromXml(Document doc) throws QuestionBuilderException {
-        // TODO: Set Server and ID upon loading the XML file
         Question question = null;
         try {
             // create a SchemaFactory capable of understanding our schemas

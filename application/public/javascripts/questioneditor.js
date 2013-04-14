@@ -140,6 +140,7 @@ function makeEditor(editor) {
 			"html": false,
 			"link": false,
 			"image": true,
+			stylesheets: ["/assets/stylesheets/main.css"], 
 			customTemplates: myCustomTemplates,
 		});
 		$(this).data("editor", instance);
