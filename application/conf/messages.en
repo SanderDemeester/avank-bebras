@@ -27,6 +27,9 @@ error.no_input_email = Empty E-Mail!
 error.no_info = Information is not available!
 
 # Links from roles
+links.settings.title = Settings
+links.settings.editinfo = Edit Info
+links.settings.changepassword = Change password
 links.managequestions.title = Question management
 links.managequestions.list = View questions
 links.managequestions.listsubmitted = Approve questions

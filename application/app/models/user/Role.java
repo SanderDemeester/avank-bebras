@@ -28,10 +28,12 @@ public class Role {
 
     // Authenticated
     public static Role LANDINGPAGE = new Role();
-    public static Role CHANGEPASSWORD = new Role(
-        "Change your password",
-        new Link("Change password", "/passwedit")
-    );
+    public static Role SETTINGS = new Role();
+    // TODO readd after demo.
+    //    "links.settings.title",
+    //        new Link(EMessages.get("links.settings.editinfo"), "/editpersonal"),
+    //        new Link(EMessages.get("links.settings.changepassword"), "/passwedit")
+    //);
 
     // Organiser
     public static Role MANAGEQUESTIONS = new Role(

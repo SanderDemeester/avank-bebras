@@ -21,9 +21,9 @@ public class Difficulty implements DataElement {
     @Id public String name;
     public int rank;
 
-    public Difficulty(String name, int ordr) {
+    public Difficulty(String name, int rank) {
         this.name = name;
-        this.rank = ordr;
+        this.rank = rank;
     }
 
     @Override public String[] strings() {
@@ -33,5 +33,4 @@ public class Difficulty implements DataElement {
     @Override public String id() {
         return name;
     }
-
 }
