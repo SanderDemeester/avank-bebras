@@ -23,6 +23,7 @@ error.invalid_date = Geen geldig datum formaat, gebruik (yyyy/mm/dd).
 error.no_password = Geen password.
 
 # Links from roles
+links.changepassword.title = Wachtwoord veranderen
 links.managequestions.title = Vragen beheer
 links.managequestions.list = Bekijk vragen
 links.managequestions.listsubmitted = Keur vragen goed

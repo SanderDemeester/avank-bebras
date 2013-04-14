@@ -29,8 +29,8 @@ public class Role {
     // Authenticated
     public static Role LANDINGPAGE = new Role();
     public static Role CHANGEPASSWORD = new Role(
-        "Change your password",
-        new Link("Change password", "/passwedit")
+        "links.changepassword.title",
+        new Link("links.changepassword.title", "/passwedit")
     );
 
     // Organiser

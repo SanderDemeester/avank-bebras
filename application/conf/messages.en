@@ -23,6 +23,7 @@ error.invalid_date = Invalid date format, please use (yyyy/mm/dd).
 error.no_password = No password.
 
 # Links from roles
+links.changepassword.title = Change password
 links.managequestions.title = Question management
 links.managequestions.list = View questions
 links.managequestions.listsubmitted = Approve questions
