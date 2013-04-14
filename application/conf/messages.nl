@@ -27,6 +27,9 @@ error.no_input_email = Lege E-Mail!
 error.no_info = Informatie is niet beschikbaar!
 
 # Links from roles
+links.settings.title = Instellingen
+links.settings.editinfo = Bewerk profiel
+links.settings.changepassword = Wachtwoord veranderen
 links.managequestions.title = Vragen beheer
 links.managequestions.list = Bekijk vragen
 links.managequestions.listsubmitted = Keur vragen goed
