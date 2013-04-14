@@ -15,7 +15,7 @@
                 <li class="divider-vertical"></li>
                 @if(models.user.AuthenticationManager.getInstance().isLoggedIn()) {
                     <li class="dropdown"><a class="dropdown-toggle" href="#"
-                    data-toggle="dropdown">Signed in as <i>@models.user.AuthenticationManager.getInstance().getUser().getID()</i> <strong class="icon-cog"></strong><strong class="caret"></strong>
+                    data-toggle="dropdown">@EMessages.get("app.signed.in.as") <i>@models.user.AuthenticationManager.getInstance().getUser().getID()</i> <strong class="icon-cog"></strong><strong class="caret"></strong>
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
                         <li><a tabindex="-1" href="@routes.UserController.landingPage">Home</a></li>
