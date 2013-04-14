@@ -13,9 +13,31 @@ noAccess.text = U bent niet bevoegd om deze actie uit te voeren.
 error.title = Oeps!
 error.text = Er is iets misgelopen. Probeer opnieuw later.
 error.back = Ga terug
+error.date = Kon datum niet verwerken.
+error.login = Ongeldige login poging.
+error.invalid_symbols = Input bevat foutieve tekens.
+error.invalid_email = Geen geldig email addres.
+error.wrong_date_time = Tijd reizer?
+error.invalid_date = Geen geldig datum formaat, gebruik (yyyy/mm/dd).
+error.no_password = Geen password.
+
+# Links from roles
+links.managequestions.title = Vragen beheer
+links.managequestions.list = Bekijk vragen
+links.managequestions.listsubmitted = Keur vragen goed
+links.manageserver.title = Server beheer
+links.manageserver.list = Bekijk servers
+links.manageserver.create = Voeg server toe
+links.questioneditor.title = Vragen editor
+links.questioneditor.open = Open editor
+links.datamanager.title = Pas de databank aan
+links.datamanager.links = Wijzig de navigatiebalk
+links.datamanager.diffs = Wijzig de moeilijkheidsgraden
+links.datamanager.grades = Wijzig de graden voor studenten
 
 # Forms
 forms.cancel = Annuleer
+forms.approve = Keur goed
 forms.delete = Verwijder
 forms.deleteArg = Verwijder {0}
 forms.remove = Verwijder
@@ -28,9 +50,13 @@ forms.loading = Aan het laden
 forms.submit = Verzend
 forms.create = Maak aan
 forms.createArg = Maak {0} aan
+forms.update = Pas aan
 forms.uploadFile = Laad bestand op
 forms.title = Titel
 forms.error = Gelieve alle fouten te verbeteren.
+forms.open = Open
+forms.unknownError = Er is een interne fout opgetreden.
+forms.add = Voeg toe
 
 # Question
 question.editor.name = Vraagstukontwerper
@@ -64,6 +90,9 @@ question.editor.index.info = Deze pagina wordt aan de gebruiker voorgeschoteld w
 question.editor.index.placeholder = Vul de vraag hier in.
 question.editor.feedback.info = Deze inhoud zal gebruikt worden om na de competitie feedback te verschaffen aan de gebruiker.
 question.editor.feedback.placeholder = Vul de feedback voor deze vraag hier in.
+
+question.editor.validate.ok = Geldige vraag
+
 question.type.MULTIPLE_CHOICE = Meer-Keuze Vraag
 question.type.REGEX = Input Vraag
 
@@ -80,10 +109,10 @@ languages.nl = Nederlands
 
 # Login
 redirect_message = U zal zodadelijk worden doorgestuurd naar uw startpagina.
+login.bebras_ID = Bebras ID
 
 # Register
-register.firstname = Voornaam: 
-register.lastname = Achternaam:
+register.name = Volledige naam 
 register.email = Email:
 register.bday = Geboortedag:
 register.gender = Geslacht:
@@ -94,13 +123,18 @@ register.create_account = Maak account
 register.bebras_id_message = Uw Bebras ID is: 
 register.inlog_message = U kan inloggen me uw ID en wachtwoord.
 register.title = Registreer
+register.same_email = Er is al een gebruiker met het zelfde email addres.
+register.giveinfo = Geef uw Bebras ID en wachtwoord in.
 
 #faq
+faq.title = Veel Gestelde Vragen
 faq.empty = De FAQ is leeg.
 faq.error = Er is iets misgelopen bij het ophalen van de FAQ. Probeer opnieuw later.
 faq.name = Naam
 faq.language = Taal
 faq.form.language = Taal
+faq.form.name = Naam
+faq.form.id = ID
 faq.managefaq = Beheer FAQ
 faq.addfaq = Voeg nieuwe FAQ toe
 faq.new.title = Nieuwe FAQ''s vraag
@@ -129,6 +163,7 @@ management.filter.input = Filter waarde
 management.filter.button = Filter
 management.empty = Niets om weer te geven.
 management.add = Nieuw
+management.confirmDelete = Ben je zeker dat je deze record wilt verwijderen?
 
 # competition
 competition.name = Competities
@@ -158,16 +193,22 @@ school.new.address = Adres van de nieuwe school
 schools.add.success = Opslaan van school was succesvol. ID: 
 
 # server management
-servers.form.name = Server naam
+servers.form.id = Server naam
 servers.form.path = Server locatie
 servers.form.ftpuri = FTP locatie
 servers.form.ftpport = FTP poort
 servers.form.ftpuser = FTP gebruikersnaam
 servers.form.ftppass = FTP paswoord
+servers.form.ftppath = FTP pad
 servermanagement.servers.name = Servers
 servermanagement.servers.new = Nieuwe Server
 servermanagement.servers.server = Server
-servermanagement.servers.list = Lijst van Servers
+servermanagement.servers.list = Servers
+servers.error.testConnection = Fout bij het connecteren met de server: {0}
+servers.error.removePersistent = Er zijn nog vragen op deze server, pas ze aan voor deze server te verwijderen.
+servers.success.added = Server {0} is aangemaakt
+servers.success.edited = Server {0} is aangepast
+servers.success.removed = Server {0} is verwijderd
 
 # question management
 questions.form.author = Auteur
@@ -177,4 +218,86 @@ questions.form.active = Actief
 questions.form.server = Server
 question.questions.name = Vragen
 question.questions.new = Nieuwe Vraag
+question.questions.list = Vragen
+question.questions.listsubmits = Ingediende vragen
+question.questions.submitslist.user = Auteur
+question.questions.submitslist.date = Indien datum
+question.questions.submissions = Ingediende vragen
+question.questions.submitDeleted = De ingediende vraag is verwijderd
+question.questions.question = Vraag
+question.success.added = Vraag {0} is aangemaakt
+question.success.edited = Vraag {0} is aangepast
+question.success.removed = Vraag {0} is verwijderd
+question.success.approved = Vraag {0} is goedgekeurd
+question.error.officialidTaken = Deze Officiële ID is al reeds in gebruik
 question.questions.list = Lijst van vragen
+
+# Data Management
+manager.error.fieldno = Het aantal voorziene velden is incorrect.
+manager.error.empty = Gelieve alle velden in te vullen.
+manager.error.nan = Gelieve een geheel getal in te vullen.
+manager.error.duplicate = Die sleutel bestaat helaas al.
+manager.error.notthere = Ofwel probeert u ons te hacken, ofwel lijdt u aan schizofrenie, want u probeert dingen te verwijderen die er niet zijn.
+links.title = Startpagina Links
+links.url = URL
+grades.title = Leeftijdscategoriën
+grades.lowerbound = Minimale leeftijd
+grades.upperbound = Maximale leeftijd (exclusief)
+difficulties.title = Moeilijkheidsgraden
+difficulties.numerical = Getalsvoorstelling van de moeilijkheid (hoe hoger, hoe moeilijker)
+
+# Classes
+classes.main.form.id = id
+classes.main.form.name = Naam
+classes.main.form.schoolid = School ID
+classes.main.form.level = Level
+classes.main.form.isactive = Is Actief
+classes.main.form.teacherid = Leraar ID
+classes.main.form.expdate = Vervallingsdatum
+classes.main.listerror = Er is iets misgelopen tijdens het ophalen van de lijst van klassen. Probeer opnieuw (later).
+classes.list = Lijst van klassen
+classes.pupil.error.classfetch = Er is iets misgelopen tijdens het ophalen van de informatie. Probeer opnieuw (later).
+classes.pupil.classinfo = Info over de klas
+classes.pupil.schoolinfo = Info over de school
+classes.pupil.teacherinfo = Info over de leraar
+classes.teacher.id = id
+classes.teacher.name = Naam
+classes.pupil.notactiveinfo = Deze klas is momenteel niet actief. Deze pagina toont alle studenten die ooit in deze klas zaten.
+classes.pupil.activeinfo  = Deze klas is momenteel actief. Deze pagina toont alle studenten die de klas als ''huidige klas'' hebben.
+classes.pupil.list = Lijst van studenten
+classes.pupil.title = Klas info
+classes.pupil.form.id = id
+classes.pupil.form.name = Naam
+classes.pupil.form.gender = Geslacht
+classes.pupil.form.birthdate 	= Geboortedatum
+classes.pupil.form.preflanguage = Voorkeurstaal
+classes.pupil.form.active = Is de user niet geblokkeerd?
+classes.novalidclassid = Dit is geen geldig klas ID.
+classes.pupil.editclassinfo = Bewerk de info van de klas.
+classes.pupil.oldpupils = Bekijk de oud-studenten.
+classes.pupil.viewhelp = Bekijk de hulp leraren.
+classes.oldpupil.list = Lijst van oud-studenten.
+classes.oldpupil.info = Dit is de lijst van studenten die ooit in de klas zaten maar de klas niet langer als ''huidige klas'' hebben.
+classes.pupil.oldpupillist = Lijst van oud-studenten.
+classes.helpteacher.form.id = id
+classes.helpteacher.form.name = Naam
+classes.helpteacher.form.gender = Geslacht
+classes.helpteacher.form.birthdate 	= Geboortedatum
+classes.helpteacher.form.preflanguage = Voorkeurstaal
+classes.helpteacher.form.active = Is de user niet geblokkeerd?
+classes.helpteacher.list = Lijst van hulp leraren.
+classes.helpteacher.error = Er is iets misgelopen tijdens het ophalen van de lijst. Probeer opnieuw (later).
+classes.helpteacher.delete.error = Er liep iets mis tijdens het verwijderen. Probeer opnieuw later.
+classes.helpteacher.delete.success = Verwijderen was successvol.
+classes.helpteacher.add = Voeg een nieuwe hulp leraar toe
+# classes.help.add.explanation
+# classes.helpteacher.add.incomplete
+# classes.helpteacher.add.error
+# classes.helpteacher.add.usernotexist
+# classes.helpteacher.add.usernotteacher
+# classes.helpteacher.add.useralreadyhelp
+# classes.helpteacher.add.useralreadyteacher
+# classes.pupil.add.explanation
+# classes.pupil.add
+classes.pupil.delete.success = Verwijderen was successvol.
+classes.pupil.delete.error = Er liep iets mis tijdens het verwijderen. Probeer opnieuw later.

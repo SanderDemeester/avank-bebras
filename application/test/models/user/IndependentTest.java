@@ -1,6 +1,7 @@
 package models.user;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -112,6 +113,31 @@ public class IndependentTest extends ContextTest {
         }
         Assert.assertTrue(ids.contains(cl2.id));
         Assert.assertTrue(ids.contains(cl3.id));
+    }
+    
+    @Test
+    public void isActiveInClass(){
+    	Independent i = new Independent(
+    			new UserModel(
+    					"a",
+    					UserType.INDEPENDENT,
+    					"hh",
+    					new Date(17),
+    					new Date(17),
+    					"gg",
+    					"hh",
+    					"tt",
+    					Gender.Other,
+    					"hh"
+    					));
+    	int actualClassID = 42;
+    	i.data.classgroup = actualClassID;
+    	
+    	Assert.assertTrue("True case failed", i.isActiveInClass(actualClassID));
+    	Assert.assertFalse("False case failed", i.isActiveInClass(actualClassID+1));
+    	
+    	i.data.classgroup = null;
+    	Assert.assertFalse("Null case failed",i.isActiveInClass(actualClassID));
     }
 
 }

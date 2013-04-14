@@ -13,9 +13,31 @@ noAccess.text = You are not authorized to perform this action.
 error.title = Oops!
 error.text = Something went wrong. We've sent our pink monkeys to fix the problem
 error.back = Go back
+error.date = Could not parse date.
+error.login = Invalid login.
+error.invalid_symbols = Input contains invalid symbols.
+error.invalid_email = Invalid email addres.
+error.wrong_date_time = Time traveler?
+error.invalid_date = Invalid date format, please use (yyyy/mm/dd).
+error.no_password = No password.
+
+# Links from roles
+links.managequestions.title = Question management
+links.managequestions.list = View questions
+links.managequestions.listsubmitted = Approve questions
+links.manageserver.title = Server management
+links.manageserver.list = View servers
+links.manageserver.create = Add server
+links.questioneditor.title = Question Editor
+links.questioneditor.open = Open editor
+links.datamanager.title = Manipulate the database
+links.datamanager.links = Manage navigation bar links
+links.datamanager.diffs = Manage the difficulty levels
+links.datamanager.grades = Manage the student grades
 
 # Forms
 forms.cancel = Cancel
+forms.approve = Approve
 forms.delete = Delete
 forms.deleteArg = Delete {0}
 forms.remove = Remove
@@ -28,9 +50,13 @@ forms.loading = Loading
 forms.submit = Submit
 forms.create = Create
 forms.createArg = Create {0}
+forms.update = Update
 forms.uploadFile = Upload file
 forms.title = Title
 forms.error = Please fix all errors.
+forms.open = Open
+forms.unknownError = An error occured.
+forms.add = Add
 
 # Question
 question.editor.name = Question Editor
@@ -66,6 +92,8 @@ question.editor.index.placeholder = Enter the question here.
 question.editor.feedback.info = This content will be used to display feedback to the user after a competition.
 question.editor.feedback.placeholder = Enter the question feedback here.
 
+question.editor.validate.ok = Valid question
+
 question.type.MULTIPLE_CHOICE = Multiple Choice Question
 question.type.REGEX = Input Question
 
@@ -82,10 +110,10 @@ languages.nl = Dutch
 
 # Login
 redirect_message = You will be redirected to your homepage shortly.
+login.bebras_ID = Bebras ID
 
 # Register
-register.firstname = First name:
-register.lastname = Last name:  
+register.name = Full name
 register.email = Email;
 register.bday = Birthday:
 register.gender = Gender:
@@ -96,13 +124,18 @@ register.create_account = Create Account
 register.bebras_id_message = Your Bebras ID is: 
 register.inlog_message = You may login with your ID and password.
 register.title = Register
+register.same_email = There is already a user with the selected email address.
+register.giveinfo = Please enter an ID and password.
 
 #faq
+faq.title = Frequently Asked Questions
 faq.empty = The FAQ is empty.
 faq.error = Something went wrong during the retrieval of the FAQ. Try again later.
 faq.name = Name
 faq.language = Language
 faq.form.language = Language
+faq.form.name = Name
+faq.form.id = ID
 faq.managefaq = Manage FAQ
 faq.addfaq = Add new FAQ
 faq.new.title = New FAQ''s question
@@ -131,6 +164,7 @@ management.filter.input = Filter value
 management.filter.button = Filter
 management.empty = Nothing to display.
 management.add = Create
+management.confirmDelete = Are you certain you want to delete this record?
 
 # competition
 competition.name = Contests
@@ -163,16 +197,22 @@ schools.add.success = School succesfully saved. ID:
 
 
 # server management
-servers.form.name = Server name
+servers.form.id = Server name
 servers.form.path = Server location
 servers.form.ftpuri = FTP location
 servers.form.ftpport = FTP port
 servers.form.ftpuser = FTP username
 servers.form.ftppass = FTP password
+servers.form.ftppath = FTP path
 servermanagement.servers.name = Servers
 servermanagement.servers.new = New Server
 servermanagement.servers.server = Server
-servermanagement.servers.list = List of Servers
+servermanagement.servers.list = Servers
+servers.error.testConnection = Error while connecting to server: {0}
+servers.error.removePersistent = There are still questions that are on this server, change them before removing this server.
+servers.success.added = Server {0} was successfully created
+servers.success.edited = Server {0} was successfully edited
+servers.success.removed = Server {0} was successfully removed
 
 # question management
 questions.form.author = Author
@@ -182,4 +222,86 @@ questions.form.active = Active
 questions.form.server = Server
 question.questions.name = Questions
 question.questions.new = New Question
+question.questions.list = Questions
+question.questions.listsubmits = Question submissions
+question.questions.submitslist.user = Author
+question.questions.submitslist.date = Submission date
+question.questions.submissions = Submissions
+question.questions.submitDeleted = The submitted question was deleted
+question.questions.question = Question
+question.success.added = Question {0} was successfully created
+question.success.edited = Question {0} was successfully edited
+question.success.removed = Question {0} was successfully removed
+question.success.approved = Question {0} was successfully approved
+question.error.officialidTaken = This official ID is already in use
 question.questions.list = List of Questions
+
+# Data Management
+manager.error.fieldno = Please provide all fields.
+manager.error.empty = Please fill in all fields.
+manager.error.nan = Please provide an integer number.
+manager.error.duplicate = I''m that key already exists.
+manager.error.notthere = Are you shizofrenic, trying to remove things not even there?
+links.title = Home Page Links
+links.url = URL
+grades.title = Grades
+grades.lowerbound = Lowest Age
+grades.upperbound = Highest Age (exclusief)
+difficulties.title = Difficulty Levels
+difficulties.numerical = Numerical Difficulty Representation (Ascending difficulty)
+
+# Classes
+classes.main.form.id = id
+classes.main.form.name = Name
+classes.main.form.schoolid = School ID
+classes.main.form.level = Level
+classes.main.form.isactive = Is Active
+classes.main.form.teacherid = Teacher ID
+classes.main.form.expdate = Expiration date
+classes.main.listerror = Something went wrong during the retrieval of the main classes. Please try again (later)
+classes.list = List of Classes
+classes.pupil.error.classfetch = Something went wrong during the retrieval of the info. Please try again (later)
+classes.pupil.classinfo = Info about the class
+classes.pupil.schoolinfo = Info about the school
+classes.pupil.teacherinfo = Info about the teacher
+classes.teacher.id = id
+classes.teacher.name = Name
+classes.pupil.notactiveinfo = The class is currently not active. This page shows all the students that at one point were in it. 
+classes.pupil.activeinfo  = The class is currently active. This page shows all the students that currently have it as main class.
+classes.pupil.list = List of pupils
+classes.pupil.title = Class info
+classes.pupil.form.id = id
+classes.pupil.form.name = Name
+classes.pupil.form.gender = Gender
+classes.pupil.form.birthdate 	= Birthdate
+classes.pupil.form.preflanguage = Preferred language
+classes.pupil.form.active = Is the user not-blocked?
+classes.novalidclassid = This is not a valid class ID.
+classes.pupil.editclassinfo = Edit the class info
+classes.pupil.oldpupils = View the old pupils
+classes.pupil.viewhelp = View the help teachers
+classes.oldpupil.list = List of old pupils
+classes.oldpupil.info = This is the list of pupils that were once in the class, but no longer have it as their main class
+classes.pupil.oldpupillist = List of old pupils
+classes.helpteacher.form.id = id
+classes.helpteacher.form.name = Name
+classes.helpteacher.form.gender = Gender
+classes.helpteacher.form.birthdate 	= Birthdate
+classes.helpteacher.form.preflanguage = Preferred language
+classes.helpteacher.form.active = Is the user not-blocked?
+classes.helpteacher.list = List of help teachers.
+classes.helpteacher.error = Something went wrong during the retrieval. Try again (later).
+classes.helpteacher.delete.error = Something went wrong during the deleting. Try again (later).
+classes.helpteacher.delete.success = Removal was successful.
+classes.helpteacher.add = Add a new help teacher
+# classes.help.add.explanation
+# classes.helpteacher.add.incomplete
+# classes.helpteacher.add.error
+# classes.helpteacher.add.usernotexist
+# classes.helpteacher.add.usernotteacher
+# classes.helpteacher.add.useralreadyhelp
+# classes.helpteacher.add.useralreadyteacher
+# classes.pupil.add.explanation
+# classes.pupil.add
+classes.pupil.delete.success = Removal was successful.
+classes.pupil.delete.error = Something went wrong during the deleting. Try again (later).

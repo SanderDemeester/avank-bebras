@@ -89,3 +89,7 @@ body{
 	width:75%;
 }
 /* End of DMTV styles */
+
+.wysiwyg-text-decoration-underline {
+	text-decoration:underline;
+}

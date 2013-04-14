@@ -233,7 +233,7 @@ public class QuestionPack {
 
     /**
      * Make a new temporary xml file for the question inside this pack
-     * @return
+     * @return a file that contains the xml
      */
     public File getXmlFile() {
         try {

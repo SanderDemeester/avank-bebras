@@ -16,15 +16,14 @@ public class Organizer extends SuperUser{
 
     protected Organizer(UserModel data, UserType type) {
         super(data, type);
-        ROLES.add(Role.CREATEQUESTION);
-        ROLES.add(Role.READQUESTION);
-        ROLES.add(Role.UPDATEQUESTION);
-        ROLES.add(Role.DELETEQUESTION);
+        ROLES.add(Role.MANAGEQUESTIONS);
+        ROLES.add(Role.MANAGESERVERS);
     }
 
     public Organizer(UserModel data) {
         this(data, UserType.ORGANIZER);
     }
+
     /**
      * Block user.
      * @param user
