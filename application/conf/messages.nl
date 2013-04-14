@@ -21,6 +21,10 @@ error.invalid_email = Geen geldig email addres.
 error.wrong_date_time = Tijd reizer?
 error.invalid_date = Geen geldig datum formaat, gebruik (yyyy/mm/dd).
 error.no_password = Geen password.
+error.no_input = Lege invoer.
+error.no_input_fname = Lege naam!
+error.no_input_email = Lege E-Mail!
+error.no_info = Informatie is niet beschikbaar!
 
 # Links from roles
 links.managequestions.title = Vragen beheer
@@ -302,3 +306,24 @@ classes.helpteacher.add = Voeg een nieuwe hulp leraar toe
 # classes.pupil.add
 classes.pupil.delete.success = Verwijderen was successvol.
 classes.pupil.delete.error = Er liep iets mis tijdens het verwijderen. Probeer opnieuw later.
+
+# User
+user.pip.welcome = Welkom!
+user.pip.personalinfo = Persoonlijke informatie
+user.pip.editinfo = Bewerk informatie
+user.pip.editpassw = Verander wachtwoord
+user.pip.aboutme = Over mijzelf
+user.pip.intro = Hieronder uw informatie die is opgeslaan in de databank.
+user.pip.fulln = Volledige naam
+user.pip.birth = Geboortedatum
+user.pip.gender = Geslacht
+user.pip.preflan = Taal
+user.pip.email = E-mail
+user.pie.edit = Bewerk
+user.pie.welcome = Welkom!
+user.pie.personalinfo = Persoonlijke informatie
+user.pie.editinfo = Bewerk informatie
+user.pie.editpassw = Verander wachtwoord
+user.pie.editintro = Bewerk mijn informatie 
+user.pie.intro = Hieronder kan u uw persoonlijke informatie veranderen.
+user.error.no_login = Uw persoonlijke informatie is niet beschikbaar! U moet zich eerst aanmelden!

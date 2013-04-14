@@ -21,6 +21,10 @@ error.invalid_email = Invalid email addres.
 error.wrong_date_time = Time traveler?
 error.invalid_date = Invalid date format, please use (yyyy/mm/dd).
 error.no_password = No password.
+error.no_input = Empty string.
+error.no_input_fname = Empty name!
+error.no_input_email = Empty E-Mail!
+error.no_info = Information is not available!
 
 # Links from roles
 links.managequestions.title = Question management
@@ -306,3 +310,24 @@ classes.helpteacher.add = Add a new help teacher
 # classes.pupil.add
 classes.pupil.delete.success = Removal was successful.
 classes.pupil.delete.error = Something went wrong during the deleting. Try again (later).
+
+# User
+user.pip.welcome = Welcome!
+user.pip.personalinfo = Personal information
+user.pip.editinfo = Edit information
+user.pip.editpassw = Edit password
+user.pip.aboutme = About me
+user.pip.intro = Information about you which is stored in our database.
+user.pip.fulln = Full name
+user.pip.birth = Birthdate
+user.pip.gender = Gender
+user.pip.preflan = Language
+user.pip.email = E-mail
+user.pie.edit = Edit
+user.pie.welcome = Welcome!
+user.pie.personalinfo = Personal information
+user.pie.editinfo = Edit information
+user.pie.editpassw = Edit password
+user.pie.editintro = Edit my information 
+user.pie.intro = Below you can edit your personal information.
+user.error.no_login = Your personal information is not available! Please make sure you are logged in.
