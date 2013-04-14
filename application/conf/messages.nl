@@ -20,6 +20,10 @@ error.invalid_email = Geen geldig email addres.
 error.wrong_date_time = Tijd reizer?
 error.invalid_date = Geen geldig datum formaat, gebruik (yyyy/mm/dd).
 error.no_password = Geen password.
+error.no_input = Lege invoer.
+error.no_input_fname = Lege naam!
+error.no_input_email = Lege E-Mail!
+error.no_info = Informatie is niet beschikbaar!
 
 # Links from roles
 links.managequestions.title = Vragen beheer
@@ -246,58 +250,23 @@ grades.upperbound = Maximale leeftijd (exclusief)
 difficulties.title = Moeilijkheidsgraden
 difficulties.numerical = Getalsvoorstelling van de moeilijkheid (hoe hoger, hoe moeilijker)
 
-# Classes
-classes.main.form.id = id
-classes.main.form.name = Naam
-classes.main.form.schoolid = School ID
-classes.main.form.level = Level
-classes.main.form.isactive = Is Actief
-classes.main.form.teacherid = Leraar ID
-classes.main.form.expdate = Vervallingsdatum
-classes.main.listerror = Er is iets misgelopen tijdens het ophalen van de lijst van klassen. Probeer opnieuw (later).
-classes.list = Lijst van klassen
-classes.pupil.error.classfetch = Er is iets misgelopen tijdens het ophalen van de informatie. Probeer opnieuw (later).
-classes.pupil.classinfo = Info over de klas
-classes.pupil.schoolinfo = Info over de school
-classes.pupil.teacherinfo = Info over de leraar
-classes.teacher.id = id
-classes.teacher.name = Naam
-classes.pupil.notactiveinfo = Deze klas is momenteel niet actief. Deze pagina toont alle studenten die ooit in deze klas zaten.
-classes.pupil.activeinfo  = Deze klas is momenteel actief. Deze pagina toont alle studenten die de klas als ''huidige klas'' hebben.
-classes.pupil.list = Lijst van studenten
-classes.pupil.title = Klas info
-classes.pupil.form.id = id
-classes.pupil.form.name = Naam
-classes.pupil.form.gender = Geslacht
-classes.pupil.form.birthdate 	= Geboortedatum
-classes.pupil.form.preflanguage = Voorkeurstaal
-classes.pupil.form.active = Is de user niet geblokkeerd?
-classes.novalidclassid = Dit is geen geldig klas ID.
-classes.pupil.editclassinfo = Bewerk de info van de klas.
-classes.pupil.oldpupils = Bekijk de oud-studenten.
-classes.pupil.viewhelp = Bekijk de hulp leraren.
-classes.oldpupil.list = Lijst van oud-studenten.
-classes.oldpupil.info = Dit is de lijst van studenten die ooit in de klas zaten maar de klas niet langer als ''huidige klas'' hebben.
-classes.pupil.oldpupillist = Lijst van oud-studenten.
-classes.helpteacher.form.id = id
-classes.helpteacher.form.name = Naam
-classes.helpteacher.form.gender = Geslacht
-classes.helpteacher.form.birthdate 	= Geboortedatum
-classes.helpteacher.form.preflanguage = Voorkeurstaal
-classes.helpteacher.form.active = Is de user niet geblokkeerd?
-classes.helpteacher.list = Lijst van hulp leraren.
-classes.helpteacher.error = Er is iets misgelopen tijdens het ophalen van de lijst. Probeer opnieuw (later).
-classes.helpteacher.delete.error = Er liep iets mis tijdens het verwijderen. Probeer opnieuw later.
-classes.helpteacher.delete.success = Verwijderen was successvol.
-classes.helpteacher.add = Voeg een nieuwe hulp leraar toe
-# classes.help.add.explanation
-# classes.helpteacher.add.incomplete
-# classes.helpteacher.add.error
-# classes.helpteacher.add.usernotexist
-# classes.helpteacher.add.usernotteacher
-# classes.helpteacher.add.useralreadyhelp
-# classes.helpteacher.add.useralreadyteacher
-# classes.pupil.add.explanation
-# classes.pupil.add
-classes.pupil.delete.success = Verwijderen was successvol.
-classes.pupil.delete.error = Er liep iets mis tijdens het verwijderen. Probeer opnieuw later.
+# User
+user.pip.welcome = Welkom!
+user.pip.personalinfo = Persoonlijke informatie
+user.pip.editinfo = Bewerk informatie
+user.pip.editpassw = Verander wachtwoord
+user.pip.aboutme = Over mijzelf
+user.pip.intro = Hieronder uw informatie die is opgeslaan in de databank.
+user.pip.fulln = Volledige naam
+user.pip.birth = Geboortedatum
+user.pip.gender = Geslacht
+user.pip.preflan = Taal
+user.pip.email = E-mail
+user.pie.edit = Bewerk
+user.pie.welcome = Welkom!
+user.pie.personalinfo = Persoonlijke informatie
+user.pie.editinfo = Bewerk informatie
+user.pie.editpassw = Verander wachtwoord
+user.pie.editintro = Bewerk mijn informatie 
+user.pie.intro = Hieronder kan u uw persoonlijke informatie veranderen.
+user.error.no_login = Uw persoonlijke informatie is niet beschikbaar! U moet zich eerst aanmelden!

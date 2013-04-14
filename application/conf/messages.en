@@ -20,6 +20,10 @@ error.invalid_email = Invalid email addres.
 error.wrong_date_time = Time traveler?
 error.invalid_date = Invalid date format, please use (yyyy/mm/dd).
 error.no_password = No password.
+error.no_input = Empty string.
+error.no_input_fname = Empty name!
+error.no_input_email = Empty E-Mail!
+error.no_info = Information is not available!
 
 # Links from roles
 links.managequestions.title = Question management
@@ -114,7 +118,7 @@ login.bebras_ID = Bebras ID
 
 # Register
 register.name = Full name
-register.email = Email;
+register.email = Email:
 register.bday = Birthday:
 register.gender = Gender:
 register.preflan = Preferred language:
@@ -250,58 +254,23 @@ grades.upperbound = Highest Age (exclusief)
 difficulties.title = Difficulty Levels
 difficulties.numerical = Numerical Difficulty Representation (Ascending difficulty)
 
-# Classes
-classes.main.form.id = id
-classes.main.form.name = Name
-classes.main.form.schoolid = School ID
-classes.main.form.level = Level
-classes.main.form.isactive = Is Active
-classes.main.form.teacherid = Teacher ID
-classes.main.form.expdate = Expiration date
-classes.main.listerror = Something went wrong during the retrieval of the main classes. Please try again (later)
-classes.list = List of Classes
-classes.pupil.error.classfetch = Something went wrong during the retrieval of the info. Please try again (later)
-classes.pupil.classinfo = Info about the class
-classes.pupil.schoolinfo = Info about the school
-classes.pupil.teacherinfo = Info about the teacher
-classes.teacher.id = id
-classes.teacher.name = Name
-classes.pupil.notactiveinfo = The class is currently not active. This page shows all the students that at one point were in it. 
-classes.pupil.activeinfo  = The class is currently active. This page shows all the students that currently have it as main class.
-classes.pupil.list = List of pupils
-classes.pupil.title = Class info
-classes.pupil.form.id = id
-classes.pupil.form.name = Name
-classes.pupil.form.gender = Gender
-classes.pupil.form.birthdate 	= Birthdate
-classes.pupil.form.preflanguage = Preferred language
-classes.pupil.form.active = Is the user not-blocked?
-classes.novalidclassid = This is not a valid class ID.
-classes.pupil.editclassinfo = Edit the class info
-classes.pupil.oldpupils = View the old pupils
-classes.pupil.viewhelp = View the help teachers
-classes.oldpupil.list = List of old pupils
-classes.oldpupil.info = This is the list of pupils that were once in the class, but no longer have it as their main class
-classes.pupil.oldpupillist = List of old pupils
-classes.helpteacher.form.id = id
-classes.helpteacher.form.name = Name
-classes.helpteacher.form.gender = Gender
-classes.helpteacher.form.birthdate 	= Birthdate
-classes.helpteacher.form.preflanguage = Preferred language
-classes.helpteacher.form.active = Is the user not-blocked?
-classes.helpteacher.list = List of help teachers.
-classes.helpteacher.error = Something went wrong during the retrieval. Try again (later).
-classes.helpteacher.delete.error = Something went wrong during the deleting. Try again (later).
-classes.helpteacher.delete.success = Removal was successful.
-classes.helpteacher.add = Add a new help teacher
-# classes.help.add.explanation
-# classes.helpteacher.add.incomplete
-# classes.helpteacher.add.error
-# classes.helpteacher.add.usernotexist
-# classes.helpteacher.add.usernotteacher
-# classes.helpteacher.add.useralreadyhelp
-# classes.helpteacher.add.useralreadyteacher
-# classes.pupil.add.explanation
-# classes.pupil.add
-classes.pupil.delete.success = Removal was successful.
-classes.pupil.delete.error = Something went wrong during the deleting. Try again (later).
+# User
+user.pip.welcome = Welcome!
+user.pip.personalinfo = Personal information
+user.pip.editinfo = Edit information
+user.pip.editpassw = Edit password
+user.pip.aboutme = About me
+user.pip.intro = Information about you which is stored in our database.
+user.pip.fulln = Full name
+user.pip.birth = Birthdate
+user.pip.gender = Gender
+user.pip.preflan = Language
+user.pip.email = E-mail
+user.pie.edit = Edit
+user.pie.welcome = Welcome!
+user.pie.personalinfo = Personal information
+user.pie.editinfo = Edit information
+user.pie.editpassw = Edit password
+user.pie.editintro = Edit my information 
+user.pie.intro = Below you can edit your personal information.
+user.error.no_login = Your personal information is not available! Please make sure you are logged in.
