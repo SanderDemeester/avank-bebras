@@ -33,5 +33,4 @@ public class Difficulty implements DataElement {
     @Override public String id() {
         return name;
     }
-
 }
