@@ -4,6 +4,7 @@ app.startTitle = Avank Bebras
 app.home = Start
 app.error = Fout
 app.Page = Pagina
+app.signed.in.as = Ingelogd als
 
 # Error
 notFound.title = Oeps!
