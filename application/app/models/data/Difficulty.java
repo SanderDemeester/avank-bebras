@@ -19,7 +19,7 @@ import models.data.manager.DataElement;
 public class Difficulty implements DataElement {
 
     @Id public String name;
-    public int ordr;
+    public int rank;
 
     public Difficulty(String name, int ordr) {
         this.name = name;
