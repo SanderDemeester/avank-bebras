@@ -34,6 +34,8 @@ links.datamanager.title = Pas de databank aan
 links.datamanager.links = Wijzig de navigatiebalk
 links.datamanager.diffs = Wijzig de moeilijkheidsgraden
 links.datamanager.grades = Wijzig de graden voor studenten
+links.contestmanager.title = Competitie beheer
+links.contestmanager.overview = Competitie overzicht
 
 # Forms
 forms.cancel = Annuleer

@@ -34,6 +34,8 @@ links.datamanager.title = Manipulate the database
 links.datamanager.links = Manage navigation bar links
 links.datamanager.diffs = Manage the difficulty levels
 links.datamanager.grades = Manage the student grades
+links.contestmanager.title = Contest management
+links.contestmanager.overview = Contest overview
 
 # Forms
 forms.cancel = Cancel

@@ -67,8 +67,8 @@ public class Role {
 
     // Contest management
     public static Role MANAGECONTESTS = new Role(
-        "Manage contests",
-        new Link("Contests overview", "/contests")
+        EMessages.get("links.contestmanager.title"),
+        new Link(EMessages.get("links.contestmanager.overview"), "/contests")
     );
 
 

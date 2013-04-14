@@ -103,12 +103,16 @@
                     </td>
                 }
                 	<td>
-                		<a class="btn" id="edit" href="@manager.getEditRoute(item.getID())">
-                            <i class="icon-edit"></i>
-                        </a>
-                        <a class="btn" id="remove" href="@manager.getRemoveRoute(item.getID())">
-                            <i class="icon-remove"></i>
-                        </a>
+                        @if(manager.getEditRoute(item.getID()) != null){
+                            <a class="btn" id="edit" href="@manager.getEditRoute(item.getID())">
+                                <i class="icon-edit"></i>
+                            </a>
+                        }
+                        @if(manager.getRemoveRoute(item.getID()) != null){
+                            <a class="btn" id="remove" href="@manager.getRemoveRoute(item.getID())">
+                                <i class="icon-remove"></i>
+                            </a>
+                        }
                 	</td>
                 </tr>
             }
