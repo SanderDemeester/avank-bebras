@@ -35,28 +35,28 @@ public class Role {
 
     // Organiser
     public static Role MANAGEQUESTIONS = new Role(
-        EMessages.get("links.managequestions.title"),
-        new Link(EMessages.get("links.managequestions.list"), "/questions"),
-        new Link(EMessages.get("links.managequestions.listsubmitted"), "/questionsubmits")
+        "links.managequestions.title",
+        new Link("links.managequestions.list", "/questions"),
+        new Link("links.managequestions.listsubmitted", "/questionsubmits")
     );
     public static Role MANAGESERVERS = new Role(
-            EMessages.get("links.manageserver.title"),
-        new Link(EMessages.get("links.manageserver.list"), "/servers"),
-        new Link(EMessages.get("links.manageserver.create"), "/server/new")
+        "links.manageserver.title",
+        new Link("links.manageserver.list", "/servers"),
+        new Link("links.manageserver.create", "/server/new")
     );
 
     // Author
     public static Role QUESTIONEDITOR = new Role(
-            EMessages.get("links.questioneditor.title"),
-        new Link(EMessages.get("links.questioneditor.open"), "/questioneditor")
+        "links.questioneditor.title",
+        new Link("links.questioneditor.open", "/questioneditor")
     );
 
     //ADMIN
     public static Role MANAGEFAQ = new Role(
-        EMessages.get("faq.managefaq"),
-        new Link(EMessages.get("faq.title"), "/faq"),
-        new Link(EMessages.get("faq.managefaq"), "/manageFAQ"),
-        new Link(EMessages.get("faq.addfaq"), "/manageFAQ/new")
+        "faq.managefaq",
+        new Link("faq.title", "/faq"),
+        new Link("faq.managefaq", "/manageFAQ"),
+        new Link("faq.addfaq", "/manageFAQ/new")
     );
     
     public static Role DATAMANAGER = new Role(
@@ -68,13 +68,13 @@ public class Role {
     
     //TEACHER
     public static Role MANAGESCHOOLS = new Role(
-        EMessages.get("schools.title"),
-	    new Link(EMessages.get("schools.title"),"/schools")
+        "schools.title",
+	    new Link("schools.title", "/schools")
     );
 
     public static Role MANAGECLASSES = new Role(
-	    EMessages.get("classes.list"),
-	    new Link(EMessages.get("classes.list"),"/classes"
+	    "classes.list",
+	    new Link("classes.list", "/classes")
     );
 
 
