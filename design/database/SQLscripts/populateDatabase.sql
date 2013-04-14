@@ -21,21 +21,18 @@
 \* -------------------------------------------------------------------------- */
 
 -- Home Page Links
-INSERT INTO links (title, url) VALUES (
-    ("Main site", "http://www.bebras.be"),
-);
+INSERT INTO links (title, url) VALUES
+    ('Main site', 'http://www.bebras.be');
 
 -- Pupil Grades
-INSERT INTO grades (name, lowerbound, upperbound) VALUES (
-    ("Ewok",    10, 12),
-    ("Wookie",  12, 14),
-    ("Padawan", 14, 16),
-    ("Jedi",    16, 18)
-);
+INSERT INTO grades (name, lowerbound, upperbound) VALUES
+    ('Ewok',    10, 12),
+    ('Wookie',  12, 14),
+    ('Padawan', 14, 16),
+    ('Jedi',    16, 18);
 
 -- Difficulty levels
-INSERT INTO difficulties (name, rank) VALUES (
-    ("Easy",   1),
-    ("Medium", 2),
-    ("Hard",   3)
-);
+INSERT INTO difficulties (name, rank) VALUES
+    ('Easy',   1),
+    ('Medium', 2),
+    ('Hard',   3);
