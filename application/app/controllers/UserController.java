@@ -38,6 +38,11 @@ import com.avaje.ebean.Ebean;
  */
 public class UserController extends EController{
 
+	private static final String EMAIL_PATTERN = 
+			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+					+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+
 	/**
 	 * This methode gets requested when the user clicks on "signup".
 	 * @return Result page.
@@ -77,7 +82,7 @@ public class UserController extends EController{
 		try{
 			Date birtyDay    = new SimpleDateFormat("yyyy/mm/dd").parse(registerForm.get().bday);
 			Date currentDate = new Date();
-			
+
 			if(birtyDay.after(currentDate)){
 				flash("error", EMessages.get(EMessages.get("error.wrong_date_time")));
 				return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
@@ -108,7 +113,7 @@ public class UserController extends EController{
 		// Compile new pattern to check for invalid email symbols. 
 		// These are all the symbols that are allow in email addresses.
 		// Alle symbols are containd in character classes, so no need for escaping.
-		pattern = Pattern.compile("[^a-z._+@0-9!#$%&'*+-/=?^_`{|}~]");
+		pattern = Pattern.compile("[^A-Za-z._+@0-9!#$%&'*+-/=?^_`{|}~]");
 		matcher = pattern.matcher(registerForm.get().email);
 
 		if(matcher.find()){
