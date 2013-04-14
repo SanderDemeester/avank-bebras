@@ -35,20 +35,20 @@ public class Role {
 
     // Organiser
     public static Role MANAGEQUESTIONS = new Role(
-        "Manage the Questions",
-        new Link("View questions", "/questions"),
-        new Link("New question", "/question/new")
+        EMessages.get("links.managequestions.title"),
+        new Link(EMessages.get("links.managequestions.list"), "/questions"),
+        new Link(EMessages.get("links.managequestions.listsubmitted"), "/questionsubmits")
     );
     public static Role MANAGESERVERS = new Role(
-        "Manage the Question servers",
-        new Link("View servers", "/servers"),
-        new Link("New server", "/server/new")
+            EMessages.get("links.manageserver.title"),
+        new Link(EMessages.get("links.manageserver.list"), "/servers"),
+        new Link(EMessages.get("links.manageserver.create"), "/server/new")
     );
 
     // Author
     public static Role QUESTIONEDITOR = new Role(
-        "Create and modify Questions",
-        new Link("Question Editor", "/questioneditor")
+            EMessages.get("links.questioneditor.title"),
+        new Link(EMessages.get("links.questioneditor.open"), "/questioneditor")
     );
 
     //ADMIN
@@ -59,10 +59,10 @@ public class Role {
         new Link("Create a new frequently asked question", "/manageFAQ/new")
     );
     public static Role DATAMANAGER = new Role(
-        "Manipulate the database",
-        new Link("Manage navigation bar links", "/manage/links/show"),
-        new Link("Manage the difficulty levels", "/manage/difficulties/show"),
-        new Link("Manage the student grades", "/manage/grades/show")
+        "links.datamanager.title",
+        new Link("links.datamanager.links", "/manage/links/show"),
+        new Link("links.datamanager.diffs", "/manage/difficulties/show"),
+        new Link("links.datamanager.grades", "/manage/grades/show")
     );
 
     // Contest management

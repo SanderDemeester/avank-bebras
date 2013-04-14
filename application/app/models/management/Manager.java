@@ -11,6 +11,7 @@ import java.util.Map;
 import play.db.ebean.Model.Finder;
 import play.mvc.Call;
 
+import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.Page;
 
 /**
@@ -142,12 +143,19 @@ public abstract class Manager<T extends ManageableModel> {
      * @return the requested page
      */
     public Page<T> page(int page) {
-        return finder
-            .where()
+        return getDataSet()
             .ilike(filterBy, "%" + filter + "%")
             .orderBy(orderBy + " " + order)
             .findPagingList(pageSize)
             .getPage(page);
+    }
+    
+    /**
+     * 
+     * @return The Dataset the Manager is working
+     */
+    protected ExpressionList<T> getDataSet(){
+    	return getFinder().where();
     }
 
     /**

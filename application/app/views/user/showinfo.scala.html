@@ -3,55 +3,37 @@
 @import models.EMessages
 @import helper._
 @import models.user.AuthenticationManager
+@import controllers.user.PersonalPageController
 
-@main("Welcome", breadcrumbs) {
+@main(EMessages.get("user.pip.welcome"), breadcrumbs) {
 
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span2">
-        <h3>@EMessages.get("Welcome!")</h3>
+        <h3>@EMessages.get("user.pip.welcome")</h3>
           <div class="bs-docs-example">
             <ul class="nav nav-pills nav-stacked">
-              <li class="active"><a href="#">Personal information</a></li>
-              <li><a href="personaledit">Edit information</a></li>
-              <li><a href="passwedit">Edit password</a></li>
+              <li class="active"><a href="#">@EMessages.get("user.pip.personalinfo")</a></li>
+              <li><a href="editpersonal">@EMessages.get("user.pip.editinfo")</a></li>
+              <li><a href="passwedit">@EMessages.get("user.pip.editpassw")</a></li>
             </ul>
           </div>
     </div>
     <div class="span10">
-           <legend>About me</legend>
-           Information about you which is stored in our database.<br><br>
-
-          <strong>@EMessages.get("Full name:")</strong><br>
-         <div class="input-prepend">
-              <span class="add-on"><i class="icon-user"></i></span>
-              <span class="input-xlarge uneditable-input">@models.user.AuthenticationManager.getInstance().getUser().data.name</span>
-        </div><br><br>
-
-           <strong>@EMessages.get("register.email")</strong><br>
-         <div class="input-prepend">
-              <span class="add-on"><i class="icon-envelope"></i></span>
-              <span class="input-xlarge uneditable-input">@models.user.AuthenticationManager.getInstance().getUser().data.email</span>
-        </div><br><br>
-
-           <strong>@EMessages.get("register.bday")</strong><br>
-         <div class="input-prepend">
-              <span class="add-on"><i class="icon-calendar"></i></span>
-            <span class="input-xlarge uneditable-input">@models.user.AuthenticationManager.getInstance().getUser().data.birthdate</span>
-        </div><br><br>
-
-           <strong>@EMessages.get("register.gender")</strong><br>
-         <div class="input-prepend">
-              <span class="add-on"><i class="icon-user"></i></span>
-             <span class="input-xlarge uneditable-input">@models.user.AuthenticationManager.getInstance().getUser().data.gender</span>
-        </div><br><br>
-
-
-        <strong>@EMessages.get("register.preflan")</strong><br>
-         <div class="input-prepend">
-              <span class="add-on"><i class="icon-globe"></i></span>
-            <span class="input-xlarge uneditable-input">@models.user.AuthenticationManager.getInstance().getUser().data.preflanguage</span>
-        </div><br><br>
+           <legend>@EMessages.get("user.pip.aboutme")</legend>
+           @EMessages.get("user.pip.intro")<br><br>
+		   <address>
+  				<strong>@EMessages.get("user.pip.fulln")</strong><br>
+  				@models.user.AuthenticationManager.getInstance().getUser().data.name<br>
+  				<strong>@EMessages.get("user.pip.gender")</strong><br>
+  				@models.user.AuthenticationManager.getInstance().getUser().data.gender<br>
+  				<strong>@EMessages.get("user.pip.birth")</strong><br>
+  				@models.user.AuthenticationManager.getInstance().getUser().data.birthdate<br>
+  				<strong>@EMessages.get("user.pip.preflan")</strong><br>
+  				@models.user.AuthenticationManager.getInstance().getUser().data.preflanguage<br>
+  				<strong>@EMessages.get("user.pip.email")</strong><br>
+  				<a href="mailto:#">@models.user.AuthenticationManager.getInstance().getUser().data.email</a>
+			</address>
     </div>
   </div>
 </div>

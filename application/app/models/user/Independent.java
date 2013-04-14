@@ -82,6 +82,17 @@ public class Independent extends Authenticated{
 		
 		return res;
 	}
+	
+	/**
+	 * Returns if the user is active in the class, assuming the class is active. This does not check whether 
+	 * the class is active.
+	 * @param classID the class to be checked
+	 * @return whether or not the user is active in that class, assuming the class is active
+	 */
+	public boolean isActiveInClass(int classID){
+		if(data.classgroup == null) return false;
+		else return data.classgroup.equals(classID);
+	}
 
 
 }

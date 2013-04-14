@@ -217,7 +217,7 @@ public class AuthenticationManager {
             passwordHEX = new String(Hex.encodeHex(passwordByteString));
             birtyDay = new SimpleDateFormat("yyyy/mm/dd").parse(registerForm.get().bday);
         }catch(Exception e){
-            throw new Exception(EMessages.get("error.date"));
+            throw new Exception(EMessages.get("error.text"));
         }
 
         // TODO: Add support for names with only one character

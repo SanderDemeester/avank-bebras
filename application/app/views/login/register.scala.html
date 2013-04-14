@@ -3,19 +3,23 @@
 @import models.EMessages.get
 @import helper._
 @import helper.twitterBootstrap._
-
+@import views.html.commons.showflash
 @main(EMessages.get("register.title"), breadcrumbs) {
 
 @helper.form(routes.UserController.register, 'id -> "signup"){
 <legend>Sign Up</legend>
+@showflash()	     
+
 <!--FIRST BLOCK -->
 <div class="control-group row-fluid">
     <label class="control-label span2">@EMessages.get("register.name")</label>
     <div class="controls span10">
         <div class="input-prepend inline span12">
-            <span class="add-on"><i class="icon-user"></i> </span> <input
+            <span class="add-on"><i class="icon-user"></i> </span> 
+            	<input
                 type="text" class="input-xlarge span11" id="name" name="name"
-                placeholder="@EMessages.get("register.name")">
+                placeholder="@EMessages.get("register.name")" 
+                value="@sform("name").value">
         </div>
     </div>
 </div>
@@ -27,7 +31,8 @@
         <div class="input-prepend span12">
             <span class="add-on"><i class="icon-envelope"></i> </span> <input
                 type="text" class="input-xlarge span11" id="email" name="email"
-                placeholder="@EMessages.get("register.email")">
+                placeholder="@EMessages.get("register.email")"
+                value="@sform("email").value">
         </div>
     </div>
 </div>
@@ -40,7 +45,8 @@
         <div class="input-prepend span12">
             <span class="add-on"><i class="icon-user"></i> </span> <input
                 type="text" class="input-xlarge span11" id="bday" name="bday"
-                placeholder="@EMessages.get("register.bday")">
+                placeholder="@EMessages.get("register.bday")"
+                value="@sform("bday").value">
         </div>
     </div>
 </div>
