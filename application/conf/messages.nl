@@ -131,7 +131,7 @@ forgot_pwd.forgot_pwd = Wachtwoord vergeten
 forgot_pwd.id = Bebras-ID
 forgot_pwd.email = E-mail
 forgot_pwd.submit = Verzoek reset wachtwoord
-forgot_pwd.success = Ok.
+forgot_pwd.success = Wachtwoord succesvol gereset.
 forgot_pwd.mail = Er werd een e-mail gestuurd naar het opgegeven adres.
 
 # Edit pwd

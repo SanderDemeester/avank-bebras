@@ -135,6 +135,7 @@ public class PersonalPageController extends EController {
                 AuthenticationManager.getInstance().getUser().data.password = editPass.get("new_password");
                 Ebean.save(userModel);
                 flash("success", EMessages.get("edit_pwd.success"));
+                return Results.redirect(controllers.user.routes.PersonalPageController.show());
             }
         }
         else {

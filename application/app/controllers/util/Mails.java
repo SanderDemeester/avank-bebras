@@ -2,6 +2,7 @@ package controllers.util;
 
 import com.typesafe.plugin.MailerAPI;
 import com.typesafe.plugin.MailerPlugin;
+import models.EMessages;
 import play.mvc.Result;
 import views.html.index;
 
@@ -14,6 +15,6 @@ public class Mails {
         mail.setSubject("Password reset");
         mail.addRecipient(recipient);
         mail.addFrom("Avank Bebras <avank@bebras.be>");
-        mail.send("Text","<html><body><p>You're password is reset.</p></body></html>");
+        mail.send(EMessages.get("forgot_pwd.success"));
     }
 }

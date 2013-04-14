@@ -243,6 +243,10 @@ public class UserController extends EController{
     }
 
     public static Result forgotPwdSendMail() {
+        List<Link> breadcrumbs = new ArrayList<Link>();
+        breadcrumbs.add(new Link("Home", "/"));
+        breadcrumbs.add(new Link(EMessages.get("forgot_pwd.forgot_pwd"), "/forgotPwd"));
+
         Form<ForgotPwd> form = form(ForgotPwd.class).bindFromRequest();
         //Check email address
         if (!form.get().email.isEmpty()) {
@@ -254,12 +258,14 @@ public class UserController extends EController{
                 userModel.password = "reset";
                 Ebean.save(userModel);
                 flash("success", EMessages.get("forgot_pwd.success") + "\n" + EMessages.get("forgot_pwd.mail"));
+                return Results.redirect("/");
             } else {
                 return badRequest(views.html.commons.error.render(new ArrayList<Link>(), "Error", "This email address is not valid"));
             }
         }
-        if (form.hasErrors()) {
-            return badRequest(views.html.commons.error.render(new ArrayList<Link>(), "Error", "Invalid request"));
+        if(form.hasErrors()){
+            flash("error", EMessages.get(EMessages.get("forms.error")));
+            return badRequest(forgotPwd.render((EMessages.get("forgot_pwd.forgot_pwd")), breadcrumbs, form));
         }
         return Results.redirect("/");
     }
