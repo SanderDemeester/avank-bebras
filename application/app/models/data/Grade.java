@@ -15,8 +15,8 @@ import models.data.manager.DataElement;
 public class Grade implements DataElement {
 
     @Id public String name;
-    @Column(name="startage") public int lowerbound;
-    @Column(name="endage") public int upperbound;
+    public int lowerbound;
+    public int upperbound;
 
     /**
      * Creates a new Grade based on the provided name, loweround and upperbound.

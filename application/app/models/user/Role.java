@@ -28,41 +28,55 @@ public class Role {
 
     // Authenticated
     public static Role LANDINGPAGE = new Role();
-    public static Role CHANGEPASSWORD = new Role(
-        "Change your password",
-        new Link("Change password", "/passwedit")
-    );
+    public static Role SETTINGS = new Role();
+    // TODO readd after demo.
+    //    "links.settings.title",
+    //        new Link(EMessages.get("links.settings.editinfo"), "/editpersonal"),
+    //        new Link(EMessages.get("links.settings.changepassword"), "/passwedit")
+    //);
 
     // Organiser
     public static Role MANAGEQUESTIONS = new Role(
-        EMessages.get("links.managequestions.title"),
-        new Link(EMessages.get("links.managequestions.list"), "/questions"),
-        new Link(EMessages.get("links.managequestions.listsubmitted"), "/questionsubmits")
+        "links.managequestions.title",
+        new Link("links.managequestions.list", "/questions"),
+        new Link("links.managequestions.listsubmitted", "/questionsubmits")
     );
     public static Role MANAGESERVERS = new Role(
-            EMessages.get("links.manageserver.title"),
-        new Link(EMessages.get("links.manageserver.list"), "/servers"),
-        new Link(EMessages.get("links.manageserver.create"), "/server/new")
+        "links.manageserver.title",
+        new Link("links.manageserver.list", "/servers"),
+        new Link("links.manageserver.create", "/server/new")
     );
 
     // Author
     public static Role QUESTIONEDITOR = new Role(
-            EMessages.get("links.questioneditor.title"),
-        new Link(EMessages.get("links.questioneditor.open"), "/questioneditor")
+        "links.questioneditor.title",
+        new Link("links.questioneditor.open", "/questioneditor")
     );
 
     //ADMIN
     public static Role MANAGEFAQ = new Role(
-        "Manage Frequently Asked Questions",
-        new Link("View the frequently asked questions", "/faq"),
-        new Link("Manage the frequently asked questions", "/manageFAQ"),
-        new Link("Create a new frequently asked question", "/manageFAQ/new")
+        "faq.managefaq",
+        new Link("faq.title", "/faq"),
+        new Link("faq.managefaq", "/manageFAQ"),
+        new Link("faq.addfaq", "/manageFAQ/new")
     );
+    
     public static Role DATAMANAGER = new Role(
         "links.datamanager.title",
         new Link("links.datamanager.links", "/manage/links/show"),
         new Link("links.datamanager.diffs", "/manage/difficulties/show"),
         new Link("links.datamanager.grades", "/manage/grades/show")
+    );
+    
+    //TEACHER
+    public static Role MANAGESCHOOLS = new Role(
+        "schools.title",
+	    new Link("schools.title", "/schools")
+    );
+
+    public static Role MANAGECLASSES = new Role(
+	    "classes.list",
+	    new Link("classes.list", "/classes")
     );
 
 

@@ -15,12 +15,14 @@
                 <li class="divider-vertical"></li>
                 @if(models.user.AuthenticationManager.getInstance().isLoggedIn()) {
                     <li class="dropdown"><a class="dropdown-toggle" href="#"
-                    data-toggle="dropdown">Signed in as <i>@models.user.AuthenticationManager.getInstance().getUser().getID()</i> <strong class="icon-cog"></strong><strong class="caret"></strong>
+                    data-toggle="dropdown">@EMessages.get("app.signed.in.as") <i>@models.user.AuthenticationManager.getInstance().getUser().getID()</i> <strong class="icon-cog"></strong><strong class="caret"></strong>
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
                         <li><a tabindex="-1" href="@routes.UserController.landingPage">Home</a></li>
                         <li class="divider"></li>
+                          <!-- TODO unhide
                           <li><a tabindex="-1" href="@controllers.user.routes.PersonalPageController.show">Settings</a></li>
+                          -->
                           <li><a tabindex="-1" href="@routes.UserController.logout">Sign out</a></li>
                     </ul>
                 } else {
