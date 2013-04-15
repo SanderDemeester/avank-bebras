@@ -32,12 +32,12 @@ public abstract class ContextTest {
      * Set up the application.
      */
     @BeforeClass public static void setupApplication() {
-	    Map<String, String> settings = new HashMap<String, String>();
-		settings.put("db.default.driver", "org.h2.Driver");
-	    settings.put("db.default.user", "sa");
-	    settings.put("db.default.password", "");
-	    settings.put("db.default.url", "jdbc:h2:mem:play");
-	    settings.put("evolutionplugin","enabled");
+        Map<String, String> settings = new HashMap<String, String>();
+        settings.put("db.default.driver", "org.h2.Driver");
+        settings.put("db.default.user", "sa");
+        settings.put("db.default.password", "");
+        settings.put("db.default.url", "jdbc:h2:mem:play");
+        settings.put("evolutionplugin","enabled");
         app = Helpers.fakeApplication(settings);
         Helpers.start(app);
     }
@@ -108,7 +108,9 @@ public abstract class ContextTest {
         }
 
         @Override public List<Lang> acceptLanguages() {
-            throw new UnsupportedOperationException();
+            List<Lang> l = new ArrayList<Lang>();
+            l.add(Lang.forCode("en-US"));
+            return l;
         }
 
         @Override public boolean accepts(String mediaType) {
@@ -116,7 +118,11 @@ public abstract class ContextTest {
         }
 
         @Override public Http.Cookies cookies() {
-            throw new UnsupportedOperationException();
+            return new Http.Cookies() {
+                @Override public Http.Cookie get(String name) {
+                    return null;
+                }
+            };
         }
 
         @Override public Map<String,String[]> headers() {

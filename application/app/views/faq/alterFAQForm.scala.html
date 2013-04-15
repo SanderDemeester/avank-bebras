@@ -16,13 +16,13 @@
         'rows -> 10, 'cols -> 170, 'class->"input-xxlarge")
         @select(field = faqForm("language"), options = options(langValues)
         ,'_label -> EMessages.get("faq.alter.language"))
-      
+
 
 
     </fieldset>
 
     <div class="actions">
-        <input type="submit" value="Save" class="btn primary"> or
+        <input type="submit" value="Save" class="btn btn-primary"> or
         <a href="@controllers.faq.routes.FAQController.list()" class="btn">Cancel</a>
     </div>
 

@@ -2,28 +2,29 @@ package controllers;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import models.data.Link;
-import models.dbentities.UserModel;
-import models.user.AuthenticationManager;
-import models.user.User;
-import models.user.UserType;
-import play.Play;
 import play.api.libs.Crypto;
-import play.api.templates.Html;
-import play.api.templates.Template2;
+import play.data.validation.ValidationError;
 import play.data.Form;
 import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
 import play.mvc.Result;
 import play.mvc.Results;
-import views.html.landingPages.AdminLandingPage;
-import views.html.landingPages.IndependentPupilLandingPage;
-import views.html.landingPages.OrganizerLandingPage;
-import views.html.landingPages.PupilLandingPage;
+
+import models.EMessages;
+import models.data.Link;
+import models.dbentities.UserModel;
+import models.user.AuthenticationManager;
+import models.user.UserType;
+
+import views.html.landing_page;
 import views.html.login.error;
 import views.html.login.register;
 import views.html.login.registerLandingPage;
@@ -37,30 +38,20 @@ import com.avaje.ebean.Ebean;
  */
 public class UserController extends EController{
 
-	/**
-	 * This hashmap embodies the mapping from a Type to a view.
-	 * Each view is responsible for getting all information from the DataModel and make a
-	 * beautiful view for the user :)
-	 */
-	private static HashMap<UserType, Class<?>> LANDINGPAGES = new HashMap<UserType, Class<?>>();
-	static {
-		LANDINGPAGES.put(UserType.ADMINISTRATOR, AdminLandingPage.class);
-		LANDINGPAGES.put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
-		LANDINGPAGES.put(UserType.INDEPENDENT, IndependentPupilLandingPage.class);
-		LANDINGPAGES.put(UserType.ORGANIZER, OrganizerLandingPage.class);
-		LANDINGPAGES.put(UserType.PUPIL,PupilLandingPage.class);
-	};
+	private static final String EMAIL_PATTERN = 
+			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+					+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
 
 	/**
 	 * This methode gets requested when the user clicks on "signup".
-	 * @author Sander Demeester
 	 * @return Result page.
 	 */
 	public static Result signup(){
 		List<Link> breadcrumbs = new ArrayList<Link>();
 		breadcrumbs.add(new Link("Home", "/"));
 		breadcrumbs.add(new Link("Sign Up", "/signup"));
-		return ok(register.render("Registration", 
+		return ok(register.render(EMessages.get("register.title"),
 				breadcrumbs,
 				form(Register.class)
 				));
@@ -68,27 +59,77 @@ public class UserController extends EController{
 
 	/**
 	 * this methode is called when the user submits his/here register information.
-	 * @author Sander Demeester
 	 * @return Result page
 	 */
 	public static Result register(){
 		// Bind play form request.
 		Form<Register> registerForm = form(Register.class).bindFromRequest();
-		
+		List<Link> breadcrumbs = new ArrayList<Link>();
+		breadcrumbs.add(new Link("Home", "/"));
+		breadcrumbs.add(new Link("Sign Up", "/signup"));
+
+		// If the form contains error's (specified by "@"-annotation in the class "Register" then this will be true.
+		if(registerForm.hasErrors()){
+			flash("error", EMessages.get(EMessages.get("error.no_password")));
+			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
+		}
+
+		Pattern pattern = Pattern.compile("[^a-z ]", Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(registerForm.get().name);
+
+
+		// check if date is lower then current date
+		try{
+			Date birtyDay    = new SimpleDateFormat("yyyy/mm/dd").parse(registerForm.get().bday);
+			Date currentDate = new Date();
+
+			if(birtyDay.after(currentDate)){
+				flash("error", EMessages.get(EMessages.get("error.wrong_date_time")));
+				return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
+			}
+		}catch(Exception e){
+			flash("error", EMessages.get(EMessages.get("error.date")));
+			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
+		}
 		// Check if the email adres is uniqe.
 		if(!registerForm.get().email.isEmpty()){
 
 			if(Ebean.find(UserModel.class).where().eq(
 					"email",registerForm.get().email).findUnique() != null){
-				return badRequest(error.render("Error",new ArrayList<Link>(),form(Register.class),"There is already a user with the selected email address"));
+
+				flash("error", EMessages.get(EMessages.get("register.same_email")));
+				return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
 			}
 		}
 
-		// If the form contains error's (specified by "@"-annotation in the class "Register" then this will be true.
-		if(registerForm.hasErrors()){ 
-			return badRequest(error.render("Error", new ArrayList<Link>(), form(Register.class), "Invalid request"));
+
+
+		// Check if full name contains invalid symbols.
+		if(matcher.find()){
+			flash("error", EMessages.get(EMessages.get("error.invalid_symbols")));
+			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
 		}
-		
+
+		// Compile new pattern to check for invalid email symbols. 
+		// These are all the symbols that are allow in email addresses.
+		// Alle symbols are containd in character classes, so no need for escaping.
+		pattern = Pattern.compile("[^A-Za-z._+@0-9!#$%&'*+-/=?^_`{|}~]");
+		matcher = pattern.matcher(registerForm.get().email);
+
+		if(matcher.find()){
+			flash("error", EMessages.get(EMessages.get("error.invalid_email")));
+			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
+		}
+
+		// Try to validate email, this check happens on the client side, but date can be send without using the form.
+		// If the check fails the user is presented with a error page.
+		try{
+			new SimpleDateFormat("yyyy/mm/dd").parse(registerForm.get().bday);
+		}catch(Exception e){
+			flash("error", EMessages.get(EMessages.get("error.invalid_date")));
+			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
+		}
+
 		// Delegate create user to Authentication Manager.
 		String bebrasID = null;
 		try {
@@ -96,40 +137,41 @@ public class UserController extends EController{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return ok(registerLandingPage.render("Succes", new ArrayList<Link>(), bebrasID));
+
+		// Return a register succes page.
+		return ok(registerLandingPage.render(EMessages.get("info.success"), new ArrayList<Link>(), bebrasID));
 	}
 
 	/**
 	 * This methode is called when the users clicks on "login".
-	 * @author Sander Demeester, Ruben Taelman
 	 * @return returns the users cookie.
 	 */
 	public static Result validate_login(String id, String password) throws Exception{
+		String cookie = "";
+		try {
+			//generate random id to auth user.
+			cookie = Integer.toString(Math.abs(SecureRandom.getInstance("SHA1PRNG").nextInt(100)));
+
+			//set the cookie. There really is no need for Crypto.sign because a cookie should be random value that has no meaning
+			cookie = Crypto.sign(cookie);
+			//response().setCookie(AuthenticationManager.COOKIENAME, cookie);
+
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+
 		// We do the same check here, if the input forms are empty return a error message.
 		if(id == "" || password == "") {
-			return badRequest("Please enter an ID and password.");
-		} else if(AuthenticationManager.getInstance().validate_credentials(id, password)){ 
-			String cookie = "";
-			try {
-				//generate random id to auth user.
-				cookie = Integer.toString(Math.abs(SecureRandom.getInstance("SHA1PRNG").nextInt(100)));
-
-				//set the cookie. There really is no need for Crypto.sign because a cookie should be random value that has no meaning
-				cookie = Crypto.sign(cookie);
-				response().setCookie(AuthenticationManager.COOKIENAME, cookie);
-
-			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
-			}
+			return badRequest(EMessages.get("register.giveinfo"));
+		} else if(AuthenticationManager.getInstance().validate_credentials(id, password, cookie)){
 			return ok(cookie);
 		} else {
-			return badRequest("Invalid ID and password.");
+			return badRequest(EMessages.get("error.login"));
 		}
 	}
 
 	/**
 	 * Logout current user
-	 * @author Sander Demeester
 	 * @return Result
 	 */
 	public static Result logout(){
@@ -138,34 +180,30 @@ public class UserController extends EController{
 	}
 
 	/**
-	 * @author Sander Demeester
 	 * @return Returns a scala template based on the type of user that is requesting the page.
 	 **/
 	@SuppressWarnings("unchecked")
 	public static Result landingPage() throws Exception{
 		List<Link> breadcrumbs = new ArrayList<Link>();
 		breadcrumbs.add(new Link("Home", "/"));
-		breadcrumbs.add(new Link("Dashboard", "/home"));
 
 		UserType type = AuthenticationManager.getInstance().getUser().getType();
-		if(type.equals(UserType.ANON)) {
+		if(UserType.ANON.equals(type)) {
 			return Results.redirect(routes.Application.index());
 		} else {
-			Class<?> object = Play.application().classloader().loadClass("views.html.landingPages." + LANDINGPAGES.get(type).getSimpleName() + "$");
-			Template2<User,List<Link>, Html> viewTemplate = (Template2<User,List<Link>, Html>)object.getField("MODULE$").get(null);
-			return ok(viewTemplate.render(AuthenticationManager.getInstance().getUser(), breadcrumbs));
+			return ok(views.html.landing_page.render(
+					AuthenticationManager.getInstance().getUser(),
+					breadcrumbs
+					));
 		}
 	}
 
 	/**
-	 * Inline class that contains public fields for play forms. 
-	 * @author Sander Demeester
+	 * Inline class that contains public fields for play forms.
 	 */
 	public static class Register{
 		@Required
-		public String fname;
-		@Required
-		public String lname;
+		public String name;
 		public String email;
 		@Required
 		@Formats.DateTime(pattern = "yyyy/dd/mm")
@@ -181,11 +219,9 @@ public class UserController extends EController{
 	}
 	/**
 	 * Inline class that contains public fields for play forms.
-	 * @author Sander Demeester
 	 */
 	public static class Login{
 		public String id;
 		public String password;
 	}
-
 }

@@ -13,13 +13,13 @@ public enum FieldType {
     TEXT,
     CHECKBOX,
     LIST;
-    
+
     private static final Map<Class<?>, FieldType> TYPES = new HashMap<Class<?>, FieldType>();
     static {
         TYPES.put(boolean.class, CHECKBOX);
         TYPES.put(Listable.class, LIST);
     }
-    
+
     /**
      * Get the FieldType for a certain class
      * @param cls class to get the FieldType for
@@ -29,11 +29,11 @@ public enum FieldType {
         // Make sure we have the highest possible class type
         if(Listable.class.isAssignableFrom(cls))
             cls = Listable.class;
-        
+
         // Determine the type
         FieldType type = TYPES.get(cls);
         if(type == null) type = TEXT;
-        
+
         return type;
     }
 }

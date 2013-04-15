@@ -25,7 +25,7 @@ import test.ContextTest;
  */
 public class ExampleTest extends ContextTest {
 
-    @Test 
+    @Test
     public void testTemplate() {
         // Index is the name of our scala template.
         // The scala source file takes one string argument thet the
@@ -33,23 +33,12 @@ public class ExampleTest extends ContextTest {
         List<Link> links = new ArrayList<Link>();
         links.add(new Link("Bebras", "http://www.bebras.be"));
         Content htmlContent = index.render("Test-string", links);
-        
+
         // Test the content Type
         assertThat(contentType(htmlContent)).isEqualTo("text/html");
         // Test that the html Content contains a string
         assertThat(contentAsString(htmlContent)).contains(
             "Test-string");
-    }
-
-    @Override 
-    protected Http.Request makeRequest() {
-        return new StubRequest() {
-            @Override public List<Lang> acceptLanguages() {
-                List<Lang> l = new ArrayList<Lang>();
-                l.add(Lang.forCode("en-US"));
-                return l;
-            }
-        };
     }
 
 }

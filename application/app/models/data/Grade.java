@@ -1,15 +1,22 @@
-
 package models.data;
+
+import javax.persistence.Id;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Column;
+
+import models.data.manager.DataElement;
 
 /**
  * Represents a Grade or Age category of a Indepent/User.
  * @author Felix Van der Jeugt
  */
-public class Grade {
+@Entity @Table(name="Grades")
+public class Grade implements DataElement {
 
-    private String name;
-    private int lowerbound;
-    private int upperbound;
+    @Id public String name;
+    public int lowerbound;
+    public int upperbound;
 
     /**
      * Creates a new Grade based on the provided name, loweround and upperbound.
@@ -47,6 +54,18 @@ public class Grade {
      */
     public int getUpperBound() {
         return upperbound;
+    }
+
+    @Override public String[] strings() {
+        return new String[]{
+            name,
+            Integer.toString(lowerbound),
+            Integer.toString(upperbound)
+        };
+    }
+
+    @Override public String id() {
+        return name;
     }
 
 }

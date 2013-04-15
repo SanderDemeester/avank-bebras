@@ -4,6 +4,12 @@
 @import helper.twitterBootstrap._
 @import models.EMessages
 @import models.management.FieldType
+@import views.html.commons.showflash
+
+@***************************************
+* Flash messages *
+***************************************@
+@showflash()
 
 	@if(!manager.isIgnoreErrors() && modelForm.hasErrors()) {
 		<div class="alert alert-error">
@@ -18,44 +24,44 @@
 
     <fieldset>
 
-		@for(field <- manager.getFieldNames()) {
-			@if(!field.charAt(0).equals('_')) { @* don't show hidden fields *@
-				@if(!manager.isFieldDisabled(field)) {
-					@defining(manager.getFields().get(field)) { fType =>
-						@fType match {
-							case FieldType.TEXT => {
-								@inputText(
-									modelForm(field),
-									'_label -> (EMessages.get(manager.getMessagesPrefix() + ".form." + field)+":"),
-									'_class -> "defaultFormElement",
-									'_showConstraints -> false
-								)
-							}
-							case FieldType.CHECKBOX => {
-								@checkbox(
-									modelForm(field),
-									'_label -> (EMessages.get(manager.getMessagesPrefix() + ".form." + field)+":"),
-									'_class -> "defaultFormElement",
-									'_showConstraints -> false
-								)
-							}
-							case FieldType.LIST => {
-								@select(
-									modelForm(field+".id"),
-									options(manager.getDummyField(field).asInstanceOf[models.management.Listable].options()),
-									'_id -> field,
-									'_label -> (EMessages.get(manager.getMessagesPrefix() + ".form." + field)+":"),
-									'_class -> "defaultFormElement",
-									'_showConstraints -> false
-								)
-							}
-						}
-					}
-				} else {
-					<input type="hidden" name="@modelForm(field).name" value="@modelForm(field).value" />
-				}
-			}
-		}
+        @for(field <- manager.getFieldNames()) {
+            @if(!field.charAt(0).equals('_')) { @* don't show hidden fields *@
+                @if(!manager.isFieldDisabled(field)) {
+                    @defining(manager.getFields().get(field)) { fType =>
+                        @fType match {
+                            case FieldType.TEXT => {
+                                @inputText(
+                                    modelForm(field),
+                                    '_label -> (EMessages.get(manager.getMessagesPrefix() + ".form." + field)+":"),
+                                    '_class -> "defaultFormElement",
+                                    '_showConstraints -> false
+                                )
+                            }
+                            case FieldType.CHECKBOX => {
+                                @checkbox(
+                                    modelForm(field),
+                                    '_label -> (EMessages.get(manager.getMessagesPrefix() + ".form." + field)+":"),
+                                    '_class -> "defaultFormElement",
+                                    '_showConstraints -> false
+                                )
+                            }
+                            case FieldType.LIST => {
+                                @select(
+                                    modelForm(field+".id"),
+                                    options(manager.getDummyField(field).asInstanceOf[models.management.Listable].options()),
+                                    '_id -> field,
+                                    '_label -> (EMessages.get(manager.getMessagesPrefix() + ".form." + field)+":"),
+                                    '_class -> "defaultFormElement",
+                                    '_showConstraints -> false
+                                )
+                            }
+                        }
+                    }
+                } else {
+                    <input type="hidden" name="@modelForm(field).name" value="@modelForm(field).value" />
+                }
+            }
+        }
 
 
     </fieldset>

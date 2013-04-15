@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package controllers.faq;
 
@@ -18,29 +18,23 @@ public class FAQManager extends Manager<FAQModel> {
 	public static final int PAGESIZE = 15;
 	
 	public FAQManager(ModelState state) {
-		super(FAQModel.class, state, "id", "id");
+		super(FAQModel.class,state, "id", "language");
 	}
 
-	@Override
-	public String[] getColumnHeaders() {
-		String[] res = {"id",EMessages.get("faq.language"),EMessages.get("faq.name")};
-		return res;
-	}
+    @Override
+    public Call getAddRoute() {
+        return routes.FAQController.create();
+    }
 
-	@Override
-	public Call getAddRoute() {
-		return routes.FAQController.create();
-	}
+    @Override
+    public Call getEditRoute(String id) {
+        return routes.FAQController.edit(id);
+    }
 
-	@Override
-	public Call getEditRoute(String id) {
-		return routes.FAQController.edit(id);
-	}
-
-	@Override
-	public Call getRemoveRoute(String id) {
-		return routes.FAQController.remove(id);
-	}
+    @Override
+    public Call getRemoveRoute(String id) {
+        return routes.FAQController.remove(id);
+    }
 
     @Override
     public Call getListRoute(int page, String filter) {
@@ -49,20 +43,23 @@ public class FAQManager extends Manager<FAQModel> {
 
     @Override
     public play.api.mvc.Call getSaveRoute() {
-        // TODO Auto-generated method stub
+    	//Using non-default form, so not necessary
         return null;
     }
 
     @Override
     public play.api.mvc.Call getUpdateRoute() {
-        // TODO Auto-generated method stub
+        //Using non-default form, so not necessary
         return null;
     }
 
     @Override
     public String getMessagesPrefix() {
-        // TODO Auto-generated method stub
-        return null;
+        return "faq";
     }
+   
+    
+    
+    
 
 }

@@ -36,7 +36,7 @@ public class CompetitionModel extends Model {
 
     @Constraints.Required
     public Date endtime;
-    
+
     @Constraints.Required
     public String creator;
 

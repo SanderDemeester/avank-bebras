@@ -1,0 +1,25 @@
+@(breadcrumbs : List[models.data.Link],  inf : models.util.OperationResultInfo , 
+schools : List[models.dbentities.SchoolModel])
+
+@main(EMessages.get("schools.title"),breadcrumbs){
+	@commons.info(inf)
+	@if(flash.containsKey("success")) {
+        <div class="alert alert-info">
+            @EMessages.get("schools.add.success") @flash.get("success")
+        </div>
+    } 
+	@EMessages.get("schools.listtext")<br><br>
+	<a class="btn btn-primary" href="/schools/new"> @EMessages.get("schools.add") </a><br><br>
+	<table  class="table">
+	<tr>
+		<th>@EMessages.get("schools.table.id")</th>
+		<th>@EMessages.get("schools.table.name")</th>
+		<th>@EMessages.get("schools.table.address")</th>
+	</tr>
+	@for(sch <- schools){
+		<tr>
+			<td>@sch.id</td><td>@sch.name</td><td>@sch.address</td>
+		</tr>
+	}
+	</table>
+}

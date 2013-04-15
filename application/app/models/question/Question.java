@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import models.data.Language;
-import models.question.server.Server;
 import models.user.User;
 
 /**
@@ -111,7 +110,7 @@ public abstract class Question {
     public List<Language> getLanguages() {
         return languages;
     }
-    
+
     /**
      * Returns a list of all languages that are not available in this question
      * @return list of languages

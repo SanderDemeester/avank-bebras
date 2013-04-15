@@ -2,9 +2,7 @@
 package models.user;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import models.dbentities.ClassGroup;
@@ -15,7 +13,6 @@ import com.avaje.ebean.Ebean;
 
 import play.mvc.Content;
 import play.mvc.Result;
-import views.html.landingPages.PupilLandingPage;
 
 /**
  * @author Sander Demeester
@@ -30,7 +27,7 @@ public class Independent extends Authenticated{
         super(data, type); //abstract class constructor could init some values
         previousClassList = new ArrayList<String>();
     }
-    
+
     public Independent(UserModel data) {
         this(data, UserType.INDEPENDENT);
     }
@@ -52,6 +49,7 @@ public class Independent extends Authenticated{
     }
 
     public ClassGroup getCurrentClass(){
+    	//TODO safety
         return Ebean.find(ClassGroup.class).where().eq("id", this.data.classgroup).findUnique();
     }
 
@@ -73,6 +71,7 @@ public class Independent extends Authenticated{
 	 * @return list of previous classes 
 	 */
 	public Collection<ClassGroup> getPreviousClasses(){
+		//TODO safety
 		ArrayList<ClassGroup> res = new ArrayList<ClassGroup>();
 		
 		List<ClassPupil> cp = Ebean.find(ClassPupil.class).where().eq("indid", this.data.id).findList();
@@ -83,5 +82,17 @@ public class Independent extends Authenticated{
 		
 		return res;
 	}
+	
+	/**
+	 * Returns if the user is active in the class, assuming the class is active. This does not check whether 
+	 * the class is active.
+	 * @param classID the class to be checked
+	 * @return whether or not the user is active in that class, assuming the class is active
+	 */
+	public boolean isActiveInClass(int classID){
+		if(data.classgroup == null) return false;
+		else return data.classgroup.equals(classID);
+	}
+
 
 }

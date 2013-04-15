@@ -10,13 +10,10 @@ import models.dbentities.UserModel;
 
 public abstract class SuperUser extends Authenticated{
 
-    static {
+    public SuperUser(UserModel data, UserType type) {
+        super(data, type);
         ROLES.add(Role.QUESTIONEDITOR);
     }
-
-    public SuperUser(UserModel data, UserType type) {
-		super(data, type);
-	}
 
     /**
      * reset password for user.

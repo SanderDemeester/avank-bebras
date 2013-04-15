@@ -20,21 +20,21 @@ public abstract class QuestionFactory<T extends Question> {
 
     // NodeActions that will be called when calling processCommonElements
     protected Map<String, NodeAction> nodeActions = new HashMap<String, NodeAction>();
-    
+
     private static final Map<QuestionType, QuestionFactory<? extends Question>>
         FACTORIES = new HashMap<QuestionType, QuestionFactory<? extends Question>>();
     static {
         FACTORIES.put(QuestionType.MULTIPLE_CHOICE, new MultipleChoiceQuestionFactory());
         FACTORIES.put(QuestionType.REGEX, new RegexQuestionFactory());
     }
-    
+
     /**
      * A question will be generated based on a NodeList
-     * @param nodeList a NodeList that contains the structure of questions
+     * @param node a Node that contains the structure of questions
      * @return a new question based on contents of the NodeList
      */
     public abstract Question newQuestion(Node node) throws QuestionBuilderException;
-    
+
     /**
      * A blank question will be generated based on a type
      * @param type the required question type
@@ -43,13 +43,13 @@ public abstract class QuestionFactory<T extends Question> {
     public static Question newQuestion(QuestionType type) {
         return FACTORIES.get(type).newQuestion();
     }
-    
+
     /**
      * A blank question will be generated
      * @return a new blank question
      */
     public abstract Question newQuestion();
-    
+
     /**
      * Creates a new QuestionFactory
      */
@@ -62,7 +62,7 @@ public abstract class QuestionFactory<T extends Question> {
     /**
      * Helper method to solve the issue that JUnit has another definition of Node value
      * @param node
-     * @return
+     * @return the string content of a node
      */
     public static String getNodeValue(Node node) {
         StringBuffer buf = new StringBuffer();
@@ -78,7 +78,7 @@ public abstract class QuestionFactory<T extends Question> {
     /**
      * Processes common elements of the question structure
      * @param question question to alter
-     * @param nodeList starting nodeList
+     * @param rootNode starting node
      * @throws QuestionBuilderException An exception has occurred
      */
     public void processCommonElements(T question, Node rootNode) throws QuestionBuilderException {
