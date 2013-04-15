@@ -91,7 +91,7 @@ public class PersonalPageController extends EController {
           // bday
           if(!editInfo.get("bday").equals("")){
               try {
-                  bd = new SimpleDateFormat("yyyy/mm/dd").parse(editInfo.get("bday"));
+                  bd = new SimpleDateFormat("yyyy/MM/dd").parse(editInfo.get("bday"));
                   Date currentDate = new Date();
                   if(bd.after(currentDate)){
                       flash("error", EMessages.get(EMessages.get("error.wrong_date_time")));
@@ -113,6 +113,8 @@ public class PersonalPageController extends EController {
           Gender gen = Gender.Female;
           if(editInfo.get("gender").equals("Male")){
               gen = Gender.Male;
+          }else if(editInfo.get("gender").equals("Other")){
+        	  gen = Gender.Other;
           }
           AuthenticationManager.getInstance().getUser().data.gender = gen;
           
@@ -151,7 +153,7 @@ public class PersonalPageController extends EController {
             @Required
             public String email;
             @Required
-            @Formats.DateTime(pattern = "yyyy/mm/dd")
+            @Formats.DateTime(pattern = "yyyy/MM/dd")
             public String bday;
             @Required
             public String password;
