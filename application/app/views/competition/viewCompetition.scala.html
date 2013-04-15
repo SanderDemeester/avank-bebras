@@ -12,6 +12,7 @@ modelForm: Form[_ <: models.management.ManageableModel], Cmanager: models.manage
 @import views.html.management.list
 @import helper._
 @import helper.twitterBootstrap._
+@import views.html.commons.showflash
 
 @main(EMessages.get("competition.edit"), breadcrumbs) {
 
@@ -24,6 +25,12 @@ modelForm: Form[_ <: models.management.ManageableModel], Cmanager: models.manage
             </div>
 
             <div>
+                @if(flash.containsKey("competition-error")) {
+                    <div class="alert alert-error">
+                        <strong>Error!</strong> @flash.get("competition-error")
+                    </div>
+                }
+
                 @form(Cmanager.getUpdateRoute()) {
 
                     @inputText(modelForm("name"), '_label -> EMessages.get("competition.create.name"), '_showConstraints -> false)

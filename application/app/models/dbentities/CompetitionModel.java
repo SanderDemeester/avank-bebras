@@ -2,6 +2,7 @@ package models.dbentities;
 
 import models.competition.CompetitionType;
 import models.management.ManageableModel;
+import play.data.format.Formats;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;

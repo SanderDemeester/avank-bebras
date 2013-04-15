@@ -1,5 +1,6 @@
 package controllers.question;
 
+import com.avaje.ebean.Ebean;
 import com.avaje.ebean.annotation.Transactional;
 import controllers.EController;
 import models.EMessages;
