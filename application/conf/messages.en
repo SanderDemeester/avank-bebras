@@ -4,7 +4,10 @@ app.startTitle = Avank Bebras
 app.home = Home
 app.error = Error
 app.Page = Page
-app.signed.in.as = Signed in as
+app.signedInAs = Signed in as
+app.changeLanguage = Change Language
+app.signUp = Sign Up
+app.signIn = Sign In
 
 # Error
 notFound.title = Oops!

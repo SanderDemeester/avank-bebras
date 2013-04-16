@@ -7,6 +7,7 @@
 GET     /                           controllers.UserController.landingPage()
 GET		/logout						controllers.UserController.logout()
 GET		/info						controllers.Application.index()
+GET		/changeUrl/:code			controllers.Application.changeLanguage(code)
 
 # Registration/signup
 GET		/signup						controllers.UserController.signup()
