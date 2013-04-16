@@ -302,15 +302,20 @@ classes.helpteacher.error = Something went wrong during the retrieval. Try again
 classes.helpteacher.delete.error = Something went wrong during the deleting. Try again (later).
 classes.helpteacher.delete.success = Removal was successful.
 classes.helpteacher.add = Add a new help teacher
-# classes.help.add.explanation
-# classes.helpteacher.add.incomplete
-# classes.helpteacher.add.error
-# classes.helpteacher.add.usernotexist
-# classes.helpteacher.add.usernotteacher
-# classes.helpteacher.add.useralreadyhelp
-# classes.helpteacher.add.useralreadyteacher
-# classes.pupil.add.explanation
-# classes.pupil.add
+classes.help.add.explanation = Here you can add extra teachers to the class. 
+classes.helpteacher.add.incomplete = Please fill in all required fields.
+classes.helpteacher.add.error = Something went wrong. Please try again (later).
+classes.helpteacher.add.usernotexist = There is no user with that ID.
+classes.helpteacher.add.usernotteacher = The user corresponding with that ID is not a Teacher account.
+classes.helpteacher.add.useralreadyhelp = That teacher is already registered to the class.
+classes.helpteacher.add.useralreadyteacher = That teacher is already registered to the class.
+classes.pupil.add.explanation = Here you can add existing pupils to the class. If the pupil is already active in another class they will be made unactive.
+classes.pupil.add = Add an existing pupil.
+classes.pupil.add.incomplete = Please fill in all required fields.
+classes.pupil.add.error = Something went wrong. Please try again (later).
+classes.pupil.add.usernotexist = There is no user with that ID.
+classes.pupil.add.usernotpupil = The user corresponding with that ID is not a Pupil account.
+classes.pupil.add.useralreadyinclass = That user is already registered with the class
 classes.pupil.delete.success = Removal was successful.
 classes.pupil.delete.error = Something went wrong during the deleting. Try again (later).
 
