@@ -1,6 +1,7 @@
 \documentclass[]{article}
 \usepackage[a4paper]{geometry}
 \usepackage[dutch]{babel}
+\usepackage{listings}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{14pt}
@@ -56,8 +57,20 @@ Voorts heeft men ook nog de mogelijkheid om de opgestelde vraag in de verschille
 Bij het maken van een open vraag, kan men dezelfde procedure volgen als bij het maken van een meerkeuzevraag. Het enige verschil is dat men onder 'Antwoord' geen 4 keuzemogelijkheden ingeeft, maar 1 correct antwoord.
 
 \subsubsection{Importeren}
-Om een vraag te uploaden, klik je op 'Importeer van .ZIP'. Er zal een dialoogvenster verschijnen waar men het gewenste bestand kan zoeken en uploaden. Dit ZIP-bestand moet aan bepaalde eisen voldoen.
+Om een vraag te uploaden, klik je op 'Importeer van .ZIP'. Er zal een dialoogvenster verschijnen waar men het gewenste bestand kan zoeken en uploaden. Dit ZIP-bestand moet aan bepaalde eisen voldoen. Zo zal er per taal een indexpagina en een pagina voor feedback aanwezig moeten zijn. Daarenboven moet er zich ook een XML-gebaseerd configuratiebestand in het ZIP-bestand bevinden. 
 
+Dit XML-bestand bevat
+\begin{itemize}
+\item de beschikbare talen
+\item de startpagina van de vraag per taal
+\item de titel van de vraag voor alle beschikbare talen
+\end{itemize}
+
+Voorts wordt er onderscheid gemaakt tussen meerkeuzevragen en open vragen.
+
+Voorbeelden:
+\lstinputlisting[language=XML, frame=single]{xml/MCQ.xml}
+\lstinputlisting[language=XML, frame=single]{xml/open_question.xml} 
 
 \section{Administrator}
 
