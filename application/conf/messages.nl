@@ -165,6 +165,7 @@ info.info = Info
 info.warning = Waarschuwing
 info.error = Error
 info.success = Succes
+info.successedit = Uw informatie is aangepast!
 
 # management
 management.filter.input = Filter waarde
@@ -312,13 +313,13 @@ classes.pupil.delete.error = Er liep iets mis tijdens het verwijderen. Probeer o
 
 # User
 user.pip.welcome = Welkom!
-user.pip.personalinfo = Persoonlijke informatie
+user.pip.personalinfo = Persoonlijke informatie instellingen
 user.pip.editinfo = Bewerk informatie
 user.pip.editpassw = Verander wachtwoord
 user.pip.aboutme = Over mijzelf
 user.pip.intro = Hieronder uw informatie die is opgeslaan in de databank.
 user.pip.fulln = Volledige naam
-user.pip.birth = Geboortedatum
+user.pip.birth = Geboortedatum (maand/dag/jaar)
 user.pip.gender = Geslacht
 user.pip.preflan = Taal
 user.pip.email = E-mail
@@ -330,3 +331,6 @@ user.pie.editpassw = Verander wachtwoord
 user.pie.editintro = Bewerk mijn informatie 
 user.pie.intro = Hieronder kan u uw persoonlijke informatie veranderen.
 user.error.no_login = Uw persoonlijke informatie is niet beschikbaar! U moet zich eerst aanmelden!
+user.Male = Man
+user.Female = Vrouw
+user.Other = Anders
