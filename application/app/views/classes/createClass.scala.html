@@ -1,0 +1,30 @@
+@(classForm: Form[models.dbentities.ClassGroup], breadcrumbs : List[models.data.Link],inf : models.util.OperationResultInfo)
+
+@import helper._
+@import helper.twitterBootstrap._
+@import models.EMessages
+
+@main(EMessages.get("classes.add"),breadcrumbs){
+	@commons.info(inf)
+	
+	@form(controllers.classgroups.routes.ClassGroupController.save()) {
+
+    <fieldset>
+
+        @inputText(classForm("name"), '_label -> EMessages.get("class.new.name"))
+        @inputText(classForm("schoolid"), '_label -> EMessages.get("class.new.school"))
+        @inputText(classForm("level"), '_label -> EMessages.get("class.new.level"))
+        @inputText(classForm("expdate"), '_label -> EMessages.get("class.new.expdate"))
+        
+
+    </fieldset>
+
+    <div class="actions">
+        <input type="submit" value="Save" class="btn primary"> or
+        <a href="@controllers.classgroups.routes.ClassGroupController.viewClasses()" class="btn">Cancel</a>
+    </div>
+    }
+	
+	
+	
+}

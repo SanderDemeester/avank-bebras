@@ -24,8 +24,10 @@ import models.user.Teacher;
 import models.user.UserType;
 import models.util.OperationResultInfo;
 
+import play.data.Form;
 import play.mvc.Result;
 import views.html.classes.classManagement;
+import views.html.classes.createClass;
 import views.html.commons.noaccess;
 import controllers.EController;
 
@@ -73,29 +75,15 @@ public class ClassGroupController extends EController {
 	@SuppressWarnings("deprecation")
 	public static Result create(){
 		//TODO actually implement
-		if(!isAuthorized()){
-			System.out.println("Not authorized");
-			return redirect(routes.ClassGroupController.viewClasses(0, "name", "asc", ""));
-		}
-		ClassGroup cg = new ClassGroup();
-		cg.level="LVL";
-		cg.expdate=new Date(2015,3,14);
-		Random r = new Random();
-		cg.name = Integer.toString(r.nextInt());
-		List<SchoolModel> sm = Ebean.find(SchoolModel.class).findList();
-		if(sm.isEmpty()){
-			System.out.println("no schools");
-			return redirect(routes.ClassGroupController.viewClasses(0, "name", "asc", ""));
-		}
-		cg.schoolid = sm.get(0).id;
-		cg.teacherid = getTeacher().data.id;
-		try{
-			cg.save();
-		}catch(PersistenceException pe){
-			pe.printStackTrace();
-			return redirect(routes.ClassGroupController.viewClasses(0, "name", "asc", ""));
-		}
-		return redirect(routes.ClassGroupController.viewClasses(0, "name", "asc", ""));
+		Form<ClassGroup> f = new Form<ClassGroup>(ClassGroup.class);
+		List<Link> bc = getBreadcrumbs();
+		OperationResultInfo ori = new OperationResultInfo();
+		return ok(createClass.render(f, bc, ori));
+	}
+	
+	public static Result save(){
+		//TODO
+		return TODO;
 	}
 	
 	/**
@@ -104,11 +92,7 @@ public class ClassGroupController extends EController {
 	 */
 	private static boolean isAuthorized(){
 		//TODO actually implement
-		try{
-			getTeacher();
-		}catch(Exception e){
-			return false;
-		}
+		
 		return true;
 	}
 	
