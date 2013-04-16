@@ -102,8 +102,7 @@ public class QuestionSetQuestionManager extends Manager<QuestionSetQuestion> {
      */
     @Override
     public Call getRemoveRoute(String id) {
-        return null;
-        //return routes.QuestionSetController.removeQuestion(qsid, id);
+        return routes.QuestionSetController.removeQuestion(qsid, id);
     }
 
     /**

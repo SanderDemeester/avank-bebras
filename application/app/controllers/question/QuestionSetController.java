@@ -148,6 +148,15 @@ public class QuestionSetController extends EController {
             flash("error", "The question with id = " + questionId + " does not exist.");
             return badRequest(views.html.question.questionset.addQuestion.render(form, questionSetId, breadcrumbs));
         }
+        QuestionSetQuestionManager questionSetQuestionManager = new QuestionSetQuestionManager(ModelState.CREATE, questionSetId);
+        if (!questionSetQuestionManager.getFinder().where().ieq("qsid", questionSetId).eq("qid", questionId).findList().isEmpty()){
+            // question already in this question set
+            List<Link> breadcrumbs = defaultBreadcrumbs();
+            breadcrumbs.add(new Link(EMessages.get("question.questionset.overview"), "/questionset/questions"));
+            breadcrumbs.add(new Link(EMessages.get("question.questionset.addquestion.brcr"), "/questionset/questions/add"));
+            flash("error", "The question with id = " + questionId + " is already in this set.");
+            return badRequest(views.html.question.questionset.addQuestion.render(form, questionSetId, breadcrumbs));
+        }
         questionSetQuestion.save();
         return redirect(routes.QuestionSetController.list(questionSetId, 0, "", "", ""));
     }
@@ -161,7 +170,7 @@ public class QuestionSetController extends EController {
      */
     public static Result update(String questionSetId){
         if (!isAuthorized()) return redirect(controllers.routes.Application.index());
-        QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.UPDATE, "", questionSetId);
+        QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.UPDATE, "level", questionSetId);
         Form<QuestionSetModel> form = form(QuestionSetModel.class).fill(questionSetManager.getFinder().byId(questionSetId)).bindFromRequest();
         if (form.hasErrors()) {
             List<Link> breadcrumbs = defaultBreadcrumbs();
@@ -170,11 +179,14 @@ public class QuestionSetController extends EController {
             qsqm.setOrder("asc");
             qsqm.setOrderBy("qid");
             qsqm.setFilter("");
+            flash("questionset-error", EMessages.get("forms.error"));
             return badRequest(views.html.question.questionset.overview.render(
                 breadcrumbs, questionSetId, qsqm.page(0), qsqm, "qid", "asc", "", form, questionSetManager
             ));
         }
-        form.get().update();
+        QuestionSetModel questionSetModel = form.get();
+        questionSetModel.id = questionSetId;
+        questionSetModel.update();
         return redirect(routes.QuestionSetController.list(questionSetId, 0, "qid", "asc", ""));
     }
 
