@@ -1,3 +1,6 @@
+# Commons
+example = Voorbeeld
+
 # App
 app.title = Avank Bebras - {0}
 app.startTitle = Avank Bebras
@@ -314,6 +317,17 @@ classes.pupil.add.usernotpupil = De gebruiker horende bij dat ID is geen Leerlin
 classes.pupil.add.useralreadyinclass = Deze leelring zit al in de klas.
 classes.pupil.delete.success = Verwijderen was successvol.
 classes.pupil.delete.error = Er liep iets mis tijdens het verwijderen. Probeer opnieuw later.
+
+classes.add = Voeg een nieuwe klas toe
+class.new.name = Naam van de nieuwe klas
+class.new.school = School van de nieuwe klas
+class.new.level = Level van de nieuwe klas
+class.new.expdate.format = Datum formaat
+class.new.expdate = Vervallingsdatum van de nieuwe klas
+classes.add.notcomplete = Gelieve alle verplichte velden in te vullen.
+classes.add.noschool = Er is geen school met dat ID
+classes.add.nograde = Er is geen level met die naam.
+classes.add.error = Er is iets misgelopen met de databank. Probeer opnieuw (later).
 
 # User
 user.pip.welcome = Welkom!
