@@ -59,6 +59,7 @@ POST    /question/                  		 controllers.question.QuestionController.s
 GET     /questions/:name              		 controllers.question.QuestionController.edit(name)
 POST    /questions/:name              		 controllers.question.QuestionController.update(name)
 GET     /question/remove/:name      		 controllers.question.QuestionController.remove(name)
+GET     /questionfile/:id/:file      		 controllers.question.QuestionController.showQuestionFile(id, file)
 
 # FAQ
 GET		/faq						controllers.faq.FAQController.getFAQ()
