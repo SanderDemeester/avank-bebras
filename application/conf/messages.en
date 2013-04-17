@@ -68,6 +68,7 @@ forms.update = Update
 forms.open = Open
 forms.unknownError = An error occured.
 forms.add = Add
+forms.error.dates = Please pick a end time that is after the chosen start time.
 
 # Question
 question.editor.name = Question Editor

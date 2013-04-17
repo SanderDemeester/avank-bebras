@@ -115,7 +115,13 @@ public class CompetitionController extends EController {
         CompetitionModel competitionModel = form.get();
         competitionModel.id = UUID.randomUUID().toString();
         competitionModel.creator = AuthenticationManager.getInstance().getUser().getID();
-        // TODO check startdate < enddate
+        if (competitionModel.starttime.after(competitionModel.endtime)){
+            // starttime is after endtime
+            List<Link> breadcrumbs = defaultBreadcrumbs();
+            breadcrumbs.add(new Link(EMessages.get("competition.create.breadcrumb"), "/contests/create"));
+            flash("competition-error", EMessages.get("forms.error.dates"));
+            return badRequest(views.html.competition.create.render(form, breadcrumbs, true));
+        }
         competitionModel.save();
         return redirect(controllers.question.routes.QuestionSetController.create(competitionModel.id));
     }
@@ -136,6 +142,15 @@ public class CompetitionController extends EController {
             List<Link> breadcrumbs = defaultBreadcrumbs();
             breadcrumbs.add(new Link(EMessages.get("competition.edit.breadcrumb"), "/contest/:" + contestid));
             flash("competition-error", EMessages.get("forms.error"));
+            return badRequest(views.html.competition.viewCompetition.render(breadcrumbs, questionSetManager.page(0),
+                    questionSetManager, "difficulty", "", "", form, competitionManager));
+        }
+        CompetitionModel competitionModel = form.get();
+        if (competitionModel.starttime.after(competitionModel.endtime)){
+            // starttime is after endtime
+            List<Link> breadcrumbs = defaultBreadcrumbs();
+            breadcrumbs.add(new Link(EMessages.get("competition.edit.breadcrumb"), "/contests/:" + contestid));
+            flash("competition-error", EMessages.get("forms.error.dates"));
             return badRequest(views.html.competition.viewCompetition.render(breadcrumbs, questionSetManager.page(0),
                     questionSetManager, "difficulty", "", "", form, competitionManager));
         }

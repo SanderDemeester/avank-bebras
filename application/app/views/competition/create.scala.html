@@ -26,9 +26,9 @@
 
                 <legend> @EMessages.get("competition.create.step1") </legend>
 
-                @if(contestForm.hasErrors() && showErrors) {
+                @if(flash.containsKey("competition-error")) {
                     <div class="alert alert-error">
-                        <p>@EMessages.get("forms.error")</p>
+                        <strong>Error!</strong> @flash.get("competition-error")
                     </div>
                 }
 

@@ -67,6 +67,7 @@ forms.error = Gelieve alle fouten te verbeteren.
 forms.open = Open
 forms.unknownError = Er is een interne fout opgetreden.
 forms.add = Voeg toe
+forms.error.dates = Gelieve een eindtijdstip te kiezen dat na het gekozen starttijdstip valt.
 
 # Question
 question.editor.name = Vraagstukontwerper
