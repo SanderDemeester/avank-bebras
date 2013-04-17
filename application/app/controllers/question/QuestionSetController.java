@@ -200,8 +200,11 @@ public class QuestionSetController extends EController {
      */
     public static Result removeQuestion(String questionSetId, String questionId){
         if (!isAuthorized()) return redirect(controllers.routes.Application.index());
-        QuestionSetQuestionManager qsqm = new QuestionSetQuestionManager(ModelState.DELETE, questionId);
-        qsqm.getFinder().byId(questionId).delete();
+        QuestionSetQuestionManager qsqm = new QuestionSetQuestionManager(ModelState.DELETE, questionSetId);
+        List<QuestionSetQuestion> questions = qsqm.getFinder().where().ieq("qsid", questionSetId).eq("qid", new Integer(questionId)).findList();
+        if (!questions.isEmpty()){
+            questions.get(0).delete();
+        }
         return redirect(routes.QuestionSetController.list(questionSetId, 0, "qid", "asc", ""));
     }
 

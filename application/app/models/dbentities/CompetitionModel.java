@@ -35,9 +35,11 @@ public class CompetitionModel extends ManageableModel {
     @Constraints.Required
     public boolean active;
 
+    @Formats.DateTime(pattern = "dd/MM/yyyy HH:mm:ss")
     @Constraints.Required
     public Date starttime;
 
+    @Formats.DateTime(pattern = "dd/MM/yyyy HH:mm:ss")
     @Constraints.Required
     public Date endtime;
 

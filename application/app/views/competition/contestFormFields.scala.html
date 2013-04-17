@@ -1,0 +1,56 @@
+@*******************************************
+* Template for contest info form           *
+*                                          *
+* author: Kevin Stobbelaar                 *
+*******************************************@
+
+@(contestForm: Form[_ <: models.management.ManageableModel])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import models.EMessages
+
+@inputText(contestForm("name"), '_label -> EMessages.get("competition.create.name"), '_showConstraints -> false)
+
+@select(
+    contestForm("type"),
+    options = options(models.competition.CompetitionType.values().toList.map(_.toString)),
+    '_label -> EMessages.get("competition.create.type"),
+    '_showConstraints -> false
+)
+
+@checkbox(contestForm("active"), '_label -> None, '_text -> EMessages.get("competition.create.active"), '_showConstraints -> false)
+
+<div id="starttimepicker" class="input-append date">
+    <label>@EMessages.get("competition.create.start")</label>
+    <input data-format="dd/MM/yyyy hh:mm:ss" type="text" id="starttime" name="starttime" value='@contestForm("starttime").value'></input>
+            <span class="add-on">
+                <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                </i>
+            </span>
+</div>
+<script type="text/javascript">
+    $(function() {
+        $('#starttimepicker').datetimepicker({
+            language: 'fr',
+            pickSeconds: false
+        });
+    });
+</script>
+
+<div id="endtimepicker" class="input-append date">
+    <label>@EMessages.get("competition.create.end")</label>
+    <input data-format="dd/MM/yyyy hh:mm:ss" type="text" id="endtime" name="endtime" value='@contestForm("endtime").value'></input>
+            <span class="add-on">
+                <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                </i>
+            </span>
+</div>
+<script type="text/javascript">
+    $(function() {
+        $('#endtimepicker').datetimepicker({
+            language: 'fr',
+            pickSeconds: false
+        });
+    });
+</script>

@@ -47,7 +47,7 @@ public class QuestionSetQuestion extends ManageableModel {
      */
     @Override
     public String getID() {
-        return qsid;
+        return "" + qid;
     }
 
     public class QuestionSetQuestionPK {

@@ -13,6 +13,7 @@ modelForm: Form[_ <: models.management.ManageableModel], Cmanager: models.manage
 @import helper._
 @import helper.twitterBootstrap._
 @import views.html.commons.showflash
+@import views.html.competition.contestFormFields
 
 @main(EMessages.get("competition.edit"), breadcrumbs) {
 
@@ -33,20 +34,7 @@ modelForm: Form[_ <: models.management.ManageableModel], Cmanager: models.manage
 
                 @form(Cmanager.getUpdateRoute()) {
 
-                    @inputText(modelForm("name"), '_label -> EMessages.get("competition.create.name"), '_showConstraints -> false)
-
-                    @select(
-                        modelForm("type"),
-                        options = options(models.competition.CompetitionType.values().toList.map(_.toString)),
-                        '_label -> EMessages.get("competition.create.type"),
-                        '_showConstraints -> false
-                    )
-
-                    @checkbox(modelForm("active"), '_label -> None, '_text -> EMessages.get("competition.create.active"), '_showConstraints -> false)
-
-                    @inputDate(modelForm("starttime"), '_label -> EMessages.get("competition.create.start"), '_showConstraints -> false)
-
-                    @inputDate(modelForm("endtime"), '_label -> EMessages.get("competition.create.end"), '_showConstraints -> false)
+                    @contestFormFields(modelForm)
 
                     <div class="actions">
                         <input type="submit" value="@EMessages.get("forms.update")" class="btn btn-primary">

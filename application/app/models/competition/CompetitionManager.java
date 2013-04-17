@@ -116,7 +116,7 @@ public class CompetitionManager extends Manager<CompetitionModel> {
      */
     @Override
     public play.api.mvc.Call getSaveRoute() {
-        return null;
+        return routes.CompetitionController.save();
     }
 
     /**
