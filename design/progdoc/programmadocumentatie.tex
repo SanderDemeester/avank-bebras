@@ -57,9 +57,9 @@ Voorts heeft men ook nog de mogelijkheid om de opgestelde vraag in de verschille
 Bij het maken van een open vraag, kan men dezelfde procedure volgen als bij het maken van een meerkeuzevraag. Het enige verschil is dat men onder 'Antwoord' geen 4 keuzemogelijkheden ingeeft, maar 1 correct antwoord.
 
 \subsubsection{Importeren}
-Om een vraag te uploaden, klik je op 'Importeer van .ZIP'. Er zal een dialoogvenster verschijnen waar men het gewenste bestand kan zoeken en uploaden. Dit ZIP-bestand moet aan bepaalde eisen voldoen. Zo zal er per taal een indexpagina en een pagina voor feedback aanwezig moeten zijn. Daarenboven moet er zich ook een XML-gebaseerd configuratiebestand in het ZIP-bestand bevinden. 
+Om een vraag te uploaden, klik je op 'Importeer van .ZIP'. Er zal een dialoogvenster verschijnen waar men het gewenste bestand kan zoeken en uploaden. Dit ZIP-bestand moet aan bepaalde eisen voldoen. Zo zal er per taal een indexpagina en een pagina voor feedback aanwezig moeten zijn. Vanuit deze HTML-bestanden kan verwezen worden naar andere bestanden, zoals afbeeldingen, die in het ZIP-bestand kunnen meegeleverd worden. Daarenboven moet er zich ook een XML-gebaseerd configuratiebestand in het ZIP-bestand bevinden. 
 
-Dit XML-bestand bevat
+Dit XML-bestand, dat altijd de naam "`question.xml"' moet hebben, bevat
 \begin{itemize}
 \item de beschikbare talen
 \item de startpagina van de vraag per taal
@@ -67,6 +67,16 @@ Dit XML-bestand bevat
 \end{itemize}
 
 Voorts wordt er onderscheid gemaakt tussen meerkeuzevragen en open vragen.
+
+\textbf{Structuur:}
+
+Het XML-bestand bestaat uit een wortelknoop \verb+<root xmlns="bebras:Question">+ 
+die op zijn beurt de soort vraag herbergt: \verb+<multiple-choice-question>+ of \verb+<regex-question>+.
+Het 'vraag'-element bevat per beschikbare taal (\verb+<language code="xx">+) 
+de start- en feedbackpagina (\verb+<index>index_xx.html</index>+ en \verb+<feedback>feedback_xx.html</feedback>+), 
+de titel van de vraag tussen \verb+<title>+ tags 
+en het antwoord (\verb+<input regex=""/>+) / de mogelijke antwoorden (\verb+<answers><answer></answer></answers>+)
+met een indicatie bij het correcte antwoord door de optie \verb+correct="true"+ mee te geven.
 
 Voorbeelden:
 \lstinputlisting[language=XML, frame=single]{xml/MCQ.xml}
