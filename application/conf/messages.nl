@@ -8,6 +8,7 @@ app.signedInAs = Ingelogd als
 app.changeLanguage = Verander taal
 app.signUp = Registreer
 app.signIn = Log in
+app.signOut = Log uit
 
 # Error
 notFound.title = Oeps!
@@ -314,6 +315,7 @@ classes.pupil.delete.success = Verwijderen was successvol.
 classes.pupil.delete.error = Er liep iets mis tijdens het verwijderen. Probeer opnieuw later.
 
 # User
+user.pip.settings = Instellingen
 user.pip.welcome = Welkom!
 user.pip.personalinfo = Persoonlijke informatie
 user.pip.editinfo = Bewerk informatie

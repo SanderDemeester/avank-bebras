@@ -8,6 +8,7 @@ app.signedInAs = Signed in as
 app.changeLanguage = Change Language
 app.signUp = Sign Up
 app.signIn = Sign In
+app.signOut = Sign Out
 
 # Error
 notFound.title = Oops!
@@ -318,6 +319,7 @@ classes.pupil.delete.success = Removal was successful.
 classes.pupil.delete.error = Something went wrong during the deleting. Try again (later).
 
 # User
+user.pip.settings = Settings
 user.pip.welcome = Welcome!
 user.pip.personalinfo = Personal information
 user.pip.editinfo = Edit information
