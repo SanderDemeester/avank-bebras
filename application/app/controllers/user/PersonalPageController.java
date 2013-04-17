@@ -12,6 +12,7 @@ import play.data.validation.Constraints.Required;
 import play.mvc.Content;
 import play.mvc.Result;
 import play.mvc.Results;
+import views.html.forgotPwd;
 import views.html.user.editinfo;
 import views.html.user.editpass;
 import views.html.user.errorinfo;
@@ -128,6 +129,9 @@ public class PersonalPageController extends EController {
       }
 
     public static Result checkValid() {
+        ArrayList<Link> breadcrumbs = new ArrayList<Link>();
+        breadcrumbs.add(new Link("Home", "/"));
+        breadcrumbs.add(new Link(EMessages.get("edit_pwd.edit_pwd"), "/passwedit"));
         UserModel userModel = Ebean.find(UserModel.class).where().eq(
                 "id", AuthenticationManager.getInstance().getUser().getID()).findUnique();
         DynamicForm editPass = form().bindFromRequest();
@@ -141,10 +145,12 @@ public class PersonalPageController extends EController {
             }
         }
         else {
-            return badRequest(views.html.commons.error.render(new ArrayList<Link>(), "Error", "This email address is not valid"));
+            flash("error", EMessages.get(EMessages.get("forms.error")));
+            return badRequest(editpass.render((EMessages.get("edit_pwd.edit_pwd")), breadcrumbs));
         }
         if (editPass.hasErrors()) {
-            return badRequest(views.html.commons.error.render(new ArrayList<Link>(), "Error", "Invalid request"));
+            flash("error", EMessages.get(EMessages.get("forms.error")));
+            return badRequest(editpass.render((EMessages.get("edit_pwd.edit_pwd")), breadcrumbs));
         }
         return Results.redirect(controllers.user.routes.PersonalPageController.show());
     }

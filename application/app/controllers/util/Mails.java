@@ -10,11 +10,11 @@ import static play.mvc.Results.ok;
 
 public class Mails {
 
-    public void sendMail(String recipient){
+    public void sendMail(String recipient, String id){
         MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
         mail.setSubject("Password reset");
         mail.addRecipient(recipient);
         mail.addFrom("Avank Bebras <avank@bebras.be>");
-        mail.send(EMessages.get("forgot_pwd.mail"));
+        mail.send(EMessages.get("forgot_pwd.mail_sent", id));
     }
 }

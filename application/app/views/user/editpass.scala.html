@@ -10,18 +10,7 @@
 @helper.form(action=controllers.user.routes.PersonalPageController.checkValid) {
 
 <div class="container-fluid">
-  <div class="row-fluid">
-    <div class="span2">
-        <h3>Welcome!</h3>
-          <div class="bs-docs-example">
-            <ul class="nav nav-pills nav-stacked">
-              <li><a href="personal">@EMessages.get("pers_info.pers_info")</a></li>
-              <li><a href="personaledit">@EMessages.get("pers_info.edit")</a></li>
-              <li class="active"><a href="#">@EMessages.get("edit_pwd.edit_pwd")</a></li>
-            </ul>
-          </div>
-    </div>
-    <div class="span10">
+  <div class="span10">
            <legend>@EMessages.get("edit_pwd.edit_pwd")</legend>
         @showflash()
         <div class="control-group row-fluid">

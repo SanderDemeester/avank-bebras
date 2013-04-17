@@ -18,6 +18,7 @@ error.date = Kon datum niet verwerken.
 error.login = Ongeldige login poging.
 error.invalid_symbols = Input bevat foutieve tekens.
 error.invalid_email = Geen geldig email addres.
+error.invalid_id = Geen geldig id.
 error.wrong_date_time = Tijd reizer?
 error.invalid_date = Geen geldig datum formaat, gebruik (yyyy/mm/dd).
 error.no_password = Geen password.
@@ -140,7 +141,9 @@ forgot_pwd.id = Bebras-ID
 forgot_pwd.email = E-mail
 forgot_pwd.submit = Verzoek reset wachtwoord
 forgot_pwd.success = Wachtwoord succesvol gereset.
-forgot_pwd.mail = Er werd een nieuw wachtwoord aangevraagd voor Avank-Bebras. Tijdelijk wachtwoord = "reset".
+forgot_pwd.mail = Er werd een e-mail verzonden naar het opgegeven adres.
+forgot_pwd.mail_sent = Iemand heeft een nieuw wachtwoord aangevraagd voor Avank-Bebras. Er werd een tijdelijk wachtwoord voor gebruiker {0} gemaakt. Dit tijdelijke wachtwoord is "reset". Indien dit je bedoeling was, kan je nu inloggen met dit tijdelijk wachtwoord en een nieuw wachtwoord instellen. Indien iemand anders dit verzoek maakte en jij de verantwoordelijke voor hem/haar bent, gelieve dan deze gebruiker hierover te informeren.
+
 
 # Edit pwd
 edit_pwd.edit_pwd = Wachtwoord veranderen

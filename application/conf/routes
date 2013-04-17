@@ -92,7 +92,7 @@ GET		/personal					controllers.user.PersonalPageController.show()
 GET		/editpersonal				controllers.user.PersonalPageController.edit()
 POST	/editpersonal/submit		controllers.user.PersonalPageController.changeInformation()
 GET		/passwedit					controllers.user.PersonalPageController.changePassword()
-POST	/passwedit/apply			controllers.user.PersonalPageController.checkValid()
+POST	/passwedit      			controllers.user.PersonalPageController.checkValid()
 
 # Classes
 
