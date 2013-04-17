@@ -24,7 +24,7 @@ import views.html.commons.noaccess;
 
 /**
  * @author Jens N. Rammant
- * TODO write emessages, confirmation screen
+ * TODO confirmation screen
  */
 public class HelpTeacherController extends ClassPupilController {
 
@@ -222,7 +222,7 @@ public class HelpTeacherController extends ClassPupilController {
 	 * @return the page to be returned when the id isn't valid
 	 */
 	private static Result noValidID(List<Link> bc,OperationResultInfo ori){
-		ori.add(EMessages.get("classes.pupil.novalidclassid"),OperationResultInfo.Type.ERROR);
+		ori.add(EMessages.get("classes.novalidclassid"),OperationResultInfo.Type.ERROR);
 		return ok(
 				helpteacherManagement.render(null,null,"id","asc","",bc,ori)
 				);

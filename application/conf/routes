@@ -97,6 +97,7 @@ POST	/passwedit/apply			controllers.user.PersonalPageController.checkValid()
 
 GET		/classes					controllers.classgroups.ClassGroupController.viewClasses(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 GET 		/classes/add					controllers.classgroups.ClassGroupController.create()
+POST		/classes/					controllers.classgroups.ClassGroupController.save()
 GET		/classes/view/:id				controllers.classgroups.ClassPupilController.viewClass(id, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
 
