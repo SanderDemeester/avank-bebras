@@ -15,6 +15,6 @@ public class Mails {
         mail.setSubject("Password reset");
         mail.addRecipient(recipient);
         mail.addFrom("Avank Bebras <avank@bebras.be>");
-        mail.send(EMessages.get("forgot_pwd.success"));
+        mail.send(EMessages.get("forgot_pwd.mail"));
     }
 }

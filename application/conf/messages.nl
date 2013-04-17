@@ -140,7 +140,7 @@ forgot_pwd.id = Bebras-ID
 forgot_pwd.email = E-mail
 forgot_pwd.submit = Verzoek reset wachtwoord
 forgot_pwd.success = Wachtwoord succesvol gereset.
-forgot_pwd.mail = Er werd een e-mail gestuurd naar het opgegeven adres.
+forgot_pwd.mail = Er werd een nieuw wachtwoord aangevraagd voor Avank-Bebras. Tijdelijk wachtwoord = "reset".
 
 # Edit pwd
 edit_pwd.edit_pwd = Wachtwoord veranderen

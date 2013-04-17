@@ -141,7 +141,7 @@ forgot_pwd.id = Bebras-ID
 forgot_pwd.email = Email
 forgot_pwd.submit = Reset password
 forgot_pwd.success = Password successfully reset.
-forgot_pwd.mail = A mail was sent to the provided address.
+forgot_pwd.mail = A new password was requested for Avank-Bebras. A temporary password has been created and was set to "reset".
 
 # Edit pwd
 edit_pwd.edit_pwd = Edit password
