@@ -7,6 +7,7 @@
 GET     /                           controllers.UserController.landingPage()
 GET		/logout						controllers.UserController.logout()
 GET		/info						controllers.Application.index()
+GET		/changeUrl/:code			controllers.Application.changeLanguage(code)
 
 # Registration/signup
 GET		/signup						controllers.UserController.signup()
@@ -93,11 +94,14 @@ GET		/editpersonal				controllers.user.PersonalPageController.edit()
 POST	/editpersonal/submit		controllers.user.PersonalPageController.changeInformation()
 GET		/passwedit					controllers.user.PersonalPageController.changePassword()
 POST	/passwedit      			controllers.user.PersonalPageController.checkValid()
+GET			/personalsettings			controllers.user.PersonalPageController.show()
+POST		/personalsettings/submit			controllers.user.PersonalPageController.changeInformation()
 
 # Classes
 
 GET		/classes					controllers.classgroups.ClassGroupController.viewClasses(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 GET 		/classes/add					controllers.classgroups.ClassGroupController.create()
+POST		/classes/					controllers.classgroups.ClassGroupController.save()
 GET		/classes/view/:id				controllers.classgroups.ClassPupilController.viewClass(id, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
 

@@ -1,10 +1,17 @@
+# Commons
+example = Voorbeeld
+
 # App
 app.title = Avank Bebras - {0}
 app.startTitle = Avank Bebras
 app.home = Start
 app.error = Fout
 app.Page = Pagina
-app.signed.in.as = Ingelogd als
+app.signedInAs = Ingelogd als
+app.changeLanguage = Verander taal
+app.signUp = Registreer
+app.signIn = Log in
+app.signOut = Log uit
 
 # Error
 notFound.title = Oeps!
@@ -195,6 +202,7 @@ info.info = Info
 info.warning = Waarschuwing
 info.error = Error
 info.success = Succes
+info.successedit = Uw informatie is aangepast!
 
 # management
 management.filter.input = Filter waarde
@@ -328,27 +336,44 @@ classes.helpteacher.error = Er is iets misgelopen tijdens het ophalen van de lij
 classes.helpteacher.delete.error = Er liep iets mis tijdens het verwijderen. Probeer opnieuw later.
 classes.helpteacher.delete.success = Verwijderen was successvol.
 classes.helpteacher.add = Voeg een nieuwe hulp leraar toe
-# classes.help.add.explanation
-# classes.helpteacher.add.incomplete
-# classes.helpteacher.add.error
-# classes.helpteacher.add.usernotexist
-# classes.helpteacher.add.usernotteacher
-# classes.helpteacher.add.useralreadyhelp
-# classes.helpteacher.add.useralreadyteacher
-# classes.pupil.add.explanation
-# classes.pupil.add
+classes.help.add.explanation = Hier kunt u extra leerkrachten toevoegen aan de klas.
+classes.helpteacher.add.incomplete = Gelieve alle verplichte velden in te vullen.
+classes.helpteacher.add.error = Er is iets misgelopen. Probeer opnieuw later.
+classes.helpteacher.add.usernotexist = Er bestaat geen gebruiker met dat ID.
+classes.helpteacher.add.usernotteacher = De gebruiker horende bij dat ID is geen Leraar account.
+classes.helpteacher.add.useralreadyhelp = Deze leraar is al verbonden aan de klas.
+classes.helpteacher.add.useralreadyteacher = Deze leraar is al verbonden aan de klas.
+classes.pupil.add.explanation = Hier kunt u bestaande Leerlingen toevoegen aan een klas. Als de leerling momenteel actief is in een andere klas, dan zal hij daar inactief gemaakt worden.
+classes.pupil.add = Voeg een bestaande leerling toe.
+classes.pupil.add.incomplete = Gelieve alle verplichte velden in te vullen.
+classes.pupil.add.error = Er is iets misgelopen. Probeer opnieuw (later).
+classes.pupil.add.usernotexist = Er bestaat geen gebruiker met dat ID.
+classes.pupil.add.usernotpupil = De gebruiker horende bij dat ID is geen Leerling account.
+classes.pupil.add.useralreadyinclass = Deze leelring zit al in de klas.
 classes.pupil.delete.success = Verwijderen was successvol.
 classes.pupil.delete.error = Er liep iets mis tijdens het verwijderen. Probeer opnieuw later.
 
+classes.add = Voeg een nieuwe klas toe
+class.new.name = Naam van de nieuwe klas
+class.new.school = School van de nieuwe klas
+class.new.level = Level van de nieuwe klas
+class.new.expdate.format = Datum formaat
+class.new.expdate = Vervallingsdatum van de nieuwe klas
+classes.add.notcomplete = Gelieve alle verplichte velden in te vullen.
+classes.add.noschool = Er is geen school met dat ID
+classes.add.nograde = Er is geen level met die naam.
+classes.add.error = Er is iets misgelopen met de databank. Probeer opnieuw (later).
+
 # User
+user.pip.settings = Instellingen
 user.pip.welcome = Welkom!
-user.pip.personalinfo = Persoonlijke informatie
+user.pip.personalinfo = Persoonlijke informatie instellingen
 user.pip.editinfo = Bewerk informatie
 user.pip.editpassw = Verander wachtwoord
 user.pip.aboutme = Over mijzelf
 user.pip.intro = Hieronder uw informatie die is opgeslaan in de databank.
 user.pip.fulln = Volledige naam
-user.pip.birth = Geboortedatum
+user.pip.birth = Geboortedatum (maand/dag/jaar)
 user.pip.gender = Geslacht
 user.pip.preflan = Taal
 user.pip.email = E-mail
@@ -360,3 +385,6 @@ user.pie.editpassw = Verander wachtwoord
 user.pie.editintro = Bewerk mijn informatie 
 user.pie.intro = Hieronder kan u uw persoonlijke informatie veranderen.
 user.error.no_login = Uw persoonlijke informatie is niet beschikbaar! U moet zich eerst aanmelden!
+user.Male = Man
+user.Female = Vrouw
+user.Other = Anders
