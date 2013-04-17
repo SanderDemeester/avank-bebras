@@ -27,8 +27,6 @@ public class QuestionSetQuestion extends ManageableModel {
 
     public String difficulty;
 
-    // TODO rekening houden met combined id
-
     /**
      * Returns those values that have to be represented in a table.
      *

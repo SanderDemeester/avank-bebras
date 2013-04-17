@@ -29,14 +29,6 @@
                 </i>
             </span>
 </div>
-<script type="text/javascript">
-    $(function() {
-        $('#starttimepicker').datetimepicker({
-            language: 'fr',
-            pickSeconds: false
-        });
-    });
-</script>
 
 <div id="endtimepicker" class="input-append date">
     <label>@EMessages.get("competition.create.end")</label>
@@ -46,11 +38,5 @@
                 </i>
             </span>
 </div>
-<script type="text/javascript">
-    $(function() {
-        $('#endtimepicker').datetimepicker({
-            language: 'fr',
-            pickSeconds: false
-        });
-    });
-</script>
+
+<script src="@routes.Assets.at("javascripts/contest/timepicker.js")" type="text/javascript"></script>

@@ -116,7 +116,6 @@ public class CompetitionController extends EController {
         competitionModel.id = UUID.randomUUID().toString();
         competitionModel.creator = AuthenticationManager.getInstance().getUser().getID();
         // TODO check startdate < enddate
-        // TODO datums zijn voorlopig nog zonder tijdstip !
         competitionModel.save();
         return redirect(controllers.question.routes.QuestionSetController.create(competitionModel.id));
     }
