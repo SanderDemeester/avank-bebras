@@ -334,15 +334,16 @@ classes.pupil.delete.success = Removal was successful.
 classes.pupil.delete.error = Something went wrong during the deleting. Try again (later).
 
 classes.add = Add a new class
-class.new.name = New class''s name
-class.new.school = New class''s school
-class.new.level = New class''s level
-class.new.expdate.format = Date format
-class.new.expdate = New class''s expiration date
+class.name = Class''s name
+class.school = Class''s school
+class.level = Class''s level
+class.expdate.format = Date format
+class.expdate = Class''s expiration date
 classes.add.notcomplete = Please fill in all required fields.
 classes.add.noschool = There is no school with that ID.
 classes.add.nograde = There is no level with that name. 
 classes.add.error = Something went wrong with the database. Try again later.
+classes.edit = Edit a class.
 
 # User
 user.pip.settings = Settings
