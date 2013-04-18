@@ -98,15 +98,6 @@ public class ClassPupilController extends EController {
 	}
 
 	/**
-	 * 
-	 * @param id id of the class
-	 * @return an edit page for the class
-	 */
-	public static Result editClass(String id){
-		//TODO
-		return null;
-	}
-	/**
 	 * Returns the page of students that used to be in this class
 	 * @param id id of the class
 	 * @param page page of students to show
@@ -309,12 +300,12 @@ public class ClassPupilController extends EController {
 		ArrayList<Link> res = new ArrayList<Link>();
 		res.add(new Link("Home","/"));
 		res.add(new Link(EMessages.get("classes.list"),"/classes"));
-		res.add(new Link(EMessages.get("classes.pupil.title"),"/classes/"+id));
+		res.add(new Link(EMessages.get("classes.pupil.title"),"/classes/view/"+id));
 		return res;
 	}
 	
 	/**
-	 * Does the removing of an  active student from a class
+	 * Does the removing of an  active student from a class. Should be used in a transaction
 	 * @param classID id of the class
 	 * @param userID id of the student
 	 */
@@ -336,7 +327,7 @@ public class ClassPupilController extends EController {
 	}
 	
 	/**
-	 * Adds the user to the class
+	 * Adds the user to the class. Should be used in a transaction
 	 * @param classID id of the class
 	 * @param userID id of the user
 	 */
