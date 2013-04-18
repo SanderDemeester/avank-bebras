@@ -12,6 +12,7 @@ import javax.persistence.PersistenceException;
 import models.EMessages;
 import models.data.Link;
 import models.dbentities.SchoolModel;
+import models.management.ModelState;
 import models.user.AuthenticationManager;
 import models.user.Teacher;
 import models.user.UserType;
@@ -34,7 +35,7 @@ public class SchoolController extends EController {
 	 * @return a page of all the schools the teacher is somehow associated with.
 	 *         No Access page if user is not teacher.
 	 */
-	public static Result viewSchools() {
+	public static Result viewSchools(int page, String orderBy, String order, String filter) {
 		// TODO: possible improvement: use DMTV (or at least make it look
 		// similar)
 
@@ -44,20 +45,11 @@ public class SchoolController extends EController {
 			return ok(noaccess.render(breadcrumbs));
 		OperationResultInfo ori = new OperationResultInfo();
 
-		// Retrieve list of schools
-		ArrayList<SchoolModel> list = new ArrayList<SchoolModel>();
-		Teacher t = getTeacher();
-		try {
-			list.addAll(t.getSchools());
-		} catch (PersistenceException pe) {
-			// Could not retrieve list of schools, add error
-			list.clear();
-			ori.add(EMessages.get("schools.list.error"),
-					OperationResultInfo.Type.ERROR);
-		}
-		// Sort the list of schools
-		Collections.sort(list);
-		return ok(schools.render(breadcrumbs, ori, list));
+		SchoolManager sm = new SchoolManager(ModelState.READ, getTeacher().getID());
+		sm.setFilter(filter);
+		sm.setOrder(order);
+		sm.setOrderBy(orderBy);
+		return ok(schools.render(sm.page(page), sm, orderBy, order,filter, breadcrumbs, ori));
 	}
 
 	/**
@@ -118,7 +110,7 @@ public class SchoolController extends EController {
 		flash("success", Integer.toString(m.id)); // Show id of newly created
 													// school in message
 		return Results.redirect(controllers.schools.routes.SchoolController
-				.viewSchools());
+				.viewSchools(0,"name","asc",""));
 
 	}
 
@@ -139,6 +131,7 @@ public class SchoolController extends EController {
 	 */
 	private static boolean isAuthorized() {
 		// user is authorized if they're a teacher
+		//TODO use roles
 		return AuthenticationManager.getInstance().getUser().data.type == UserType.TEACHER;
 	}
 
@@ -149,6 +142,7 @@ public class SchoolController extends EController {
 	 *         isAuthorized)
 	 */
 	private static Teacher getTeacher() {
+		//TODO make safer
 		return (Teacher) AuthenticationManager.getInstance().getUser();
 
 	}

@@ -196,9 +196,9 @@ competition.create.active = Vink aan om de competitie actief te maken.
 # schools
 schools.title = Lijst van Scholen
 schools.listtext = Dit is de lijst van scholen die u ofwel aangemaakt hebt of aan verbonden bent/was via een klas.
-schools.table.id = id
-schools.table.name = Naam
-schools.table.address = Adres
+schools.form.id = id
+schools.form.name = Naam
+schools.form.address = Adres
 schools.add = Voeg een nieuwe school toe.
 schools.error.notcomplete = Gelieve alle verplichte velden in te vullen.
 schools.error.savefail = De school kon niet opgeslaan worden. Probeer opniew (later).

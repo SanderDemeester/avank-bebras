@@ -73,7 +73,7 @@ POST    /manageFAQ/edit/:name              controllers.faq.FAQController.update(
 GET    /manageFAQ/remove/:name        controllers.faq.FAQController.remove(name)
 
 # Schools
-GET		/schools						controllers.schools.SchoolController.viewSchools()
+GET		/schools						controllers.schools.SchoolController.viewSchools(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 GET		/schools/new					controllers.schools.SchoolController.create()
 POST	/schools/						controllers.schools.SchoolController.save()
 

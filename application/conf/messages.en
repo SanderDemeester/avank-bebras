@@ -198,9 +198,9 @@ competition.create.active = Check this box to make the contest active.
 # schools
 schools.title = List of Schools
 schools.listtext = This is the list of schools you either created or are/were associated with via a class.
-schools.table.id = id
-schools.table.name = Name
-schools.table.address = Address
+schools.form.id = id
+schools.form.name = Name
+schools.form.address = Address
 schools.add = Add a new school
 schools.error.notcomplete = Please fill in all required fields
 schools.error.savefail = Could not save the new school. Please try again (later).
