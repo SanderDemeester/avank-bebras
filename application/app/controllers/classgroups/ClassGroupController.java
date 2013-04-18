@@ -99,32 +99,20 @@ public class ClassGroupController extends EController {
 		if(!isAuthorized())return ok(noaccess.render(bc));
 		//Get form from request
 		Form<ClassGroup> f = form(ClassGroup.class).bindFromRequest();
-		//Check if form has errors
-		if(f.hasErrors()){
-			ori.add(EMessages.get("classes.add.notcomplete"),OperationResultInfo.Type.WARNING);
-			return badRequest(createClass.render(f, bc, ori));
-		}
-		ClassGroup cg = f.get();
+		
 		try{
-			//Check if the school exists
-			SchoolModel sm = Ebean.find(SchoolModel.class,cg.schoolid);
-			if(sm==null){
-				ori.add(EMessages.get("classes.add.noschool"),OperationResultInfo.Type.WARNING);
-				return badRequest(createClass.render(f, bc, ori));
-			}
-			//Check if the grade exists		
-			Grade grade = Ebean.find(Grade.class,cg.level);
-			if(grade==null){
-				ori.add(EMessages.get("classes.add.nograde"),OperationResultInfo.Type.WARNING);
-				return badRequest(createClass.render(f, bc, ori));
-			}
+			//Check if form is valid
+			OperationResultInfo check = checkForm(f);
+			if(check!=null) return badRequest(createClass.render(f, bc, check));
+			//Get classgroup and add teacher data
+			ClassGroup cg = f.get();
 			cg.teacherid = getTeacher().data.id;
 			cg.save();
 			flash("success",Integer.toString(cg.id));
 			
 		}catch(PersistenceException pe){
 			//Database error
-			ori.add(EMessages.get("classes.add.error"),OperationResultInfo.Type.WARNING);
+			ori.add(EMessages.get("classes.add.error"),OperationResultInfo.Type.ERROR);
 			return badRequest(createClass.render(f, bc, ori));
 		}
 		//Return to list page
@@ -163,6 +151,35 @@ public class ClassGroupController extends EController {
 		res.add(new Link("Home","/"));
 		res.add(new Link(EMessages.get("classes.list"),"/classes"));
 		return res;
+	}
+	
+	/**
+	 * Checks if a ClassGroup form is valid
+	 * @param f Form to be checked
+	 * @return null is form is okay, otherwise an ORI with a message to be shown
+	 * @throws PersistenceException if something goes wrong with the db.
+	 */
+	private static OperationResultInfo checkForm(Form<ClassGroup> f) throws PersistenceException{
+		OperationResultInfo ori = new OperationResultInfo();
+		//Check if form has errors, like required fields empty etc...
+		if(f.hasErrors()){
+			ori.add(EMessages.get("classes.add.notcomplete"),OperationResultInfo.Type.WARNING);
+			return ori;
+		}
+		ClassGroup cg = f.get();
+		SchoolModel sm = Ebean.find(SchoolModel.class,cg.schoolid);
+		if(sm==null){
+			ori.add(EMessages.get("classes.add.noschool"),OperationResultInfo.Type.WARNING);
+			return ori;
+		}
+		//Check if the grade exists		
+		Grade grade = Ebean.find(Grade.class,cg.level);
+		if(grade==null){
+			ori.add(EMessages.get("classes.add.nograde"),OperationResultInfo.Type.WARNING);
+			return ori;
+		}
+		
+		return null;
 	}
 	
 }

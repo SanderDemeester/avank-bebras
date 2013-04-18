@@ -319,15 +319,16 @@ classes.pupil.delete.success = Verwijderen was successvol.
 classes.pupil.delete.error = Er liep iets mis tijdens het verwijderen. Probeer opnieuw later.
 
 classes.add = Voeg een nieuwe klas toe
-class.new.name = Naam van de nieuwe klas
-class.new.school = School van de nieuwe klas
-class.new.level = Level van de nieuwe klas
-class.new.expdate.format = Datum formaat
-class.new.expdate = Vervallingsdatum van de nieuwe klas
+class.name = Naam van de klas
+class.school = School van de klas
+class.level = Level van de klas
+class.expdate.format = Datum formaat
+class.expdate = Vervallingsdatum van de klas
 classes.add.notcomplete = Gelieve alle verplichte velden in te vullen.
 classes.add.noschool = Er is geen school met dat ID
 classes.add.nograde = Er is geen level met die naam.
 classes.add.error = Er is iets misgelopen met de databank. Probeer opnieuw (later).
+classes.edit = Pas een klas aan.
 
 # User
 user.pip.welcome = Welkom!
