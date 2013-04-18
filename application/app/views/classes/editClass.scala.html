@@ -7,14 +7,16 @@
 @main(EMessages.get("classes.edit"),breadcrumbs){
 	@commons.info(inf)
 	
-	@form(controllers.classgroups.routes.ClassGroupController.update(id)) {
+	@if(classForm!=null){
+		@form(controllers.classgroups.routes.ClassGroupController.update(id)) {
 
-    	@classgroupForm(classForm)
+    		@classgroupForm(classForm)
 
-    <div class="actions">
-        <input type="submit" value="Save" class="btn primary"> or
-        <a href="@controllers.classgroups.routes.ClassGroupController.viewClasses()" class="btn">Cancel</a>
-    </div>
+    	<div class="actions">
+        	<input type="submit" value="Save" class="btn primary"> or
+        	<a href="@controllers.classgroups.routes.ClassGroupController.viewClasses()" class="btn">Cancel</a>
+    	</div>
+   		}
     }
 	
 	

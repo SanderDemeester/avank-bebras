@@ -4,10 +4,7 @@
 package controllers.classgroups;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
-
 import javax.persistence.PersistenceException;
 
 import com.avaje.ebean.Ebean;
@@ -17,12 +14,9 @@ import models.data.Grade;
 import models.data.Link;
 import models.dbentities.ClassGroup;
 import models.dbentities.SchoolModel;
-import models.dbentities.UserModel;
 import models.management.ModelState;
 import models.user.AuthenticationManager;
-import models.user.Gender;
 import models.user.Teacher;
-import models.user.UserType;
 import models.util.OperationResultInfo;
 
 import play.data.Form;
@@ -126,18 +120,23 @@ public class ClassGroupController extends EController {
 	 * @return an edit page for the class
 	 */
 	public static Result editClass(String id){
+		OperationResultInfo ori = new OperationResultInfo();
+		List<Link> bc = getBreadcrumbs();
+		bc.add(new Link(EMessages.get("classes.pupil.title"),"/classes/view/"+id));
+		bc.add(new Link(EMessages.get("classes.edit"),"/classes/view/"+id+"/edit"));
+		
 		//Check if valid id
 		int classID = -1;
 		try{
 			classID  = Integer.parseInt(id);
 		}catch(NumberFormatException nfe){
-			//TODO
-			return TODO;
+			ori.add(EMessages.get("classes.novalidclassid"),OperationResultInfo.Type.ERROR);
+			return ok(
+					views.html.classes.editClass.render(null, bc, ori,id)
+					);
 		}
-		List<Link> bc = getBreadcrumbs();
-		bc.add(new Link(EMessages.get("classes.pupil.title"),"/classes/view/"+id));
-		bc.add(new Link(EMessages.get("classes.edit"),"/classes/view/"+id+"/edit"));
-		OperationResultInfo ori = new OperationResultInfo();
+		
+		
 		//Check if authorized
 		if(!isAuthorized(classID))return ok(noaccess.render(bc));
 		//Get class and fill form
@@ -146,8 +145,10 @@ public class ClassGroupController extends EController {
 			cg = Ebean.find(ClassGroup.class,classID);
 			int temp = cg.id; //will throw exception if null
 		}catch(Exception e){
-			//TODO
-			return TODO;
+			ori.add(EMessages.get("classes.add.error"),OperationResultInfo.Type.ERROR);
+			return ok(
+					views.html.classes.editClass.render(null, bc, ori,id)
+					);
 		}
 		Form<ClassGroup> f = form(ClassGroup.class).bindFromRequest().fill(cg);
 		return ok(views.html.classes.editClass.render(f, bc, ori,id));
@@ -158,31 +159,41 @@ public class ClassGroupController extends EController {
 	 * @return the class page
 	 */
 	public static Result update(String id){
-		//TODO check permissions
+		List<Link> bc = getBreadcrumbs();
+		bc.add(new Link(EMessages.get("classes.pupil.title"),"/classes/view/"+id));
+		bc.add(new Link(EMessages.get("classes.edit"),"/classes/view/"+id+"/edit"));		
+		OperationResultInfo ori = new OperationResultInfo();
+		//Check if valid class id
 		int classID = -1;
 		try{
 			classID = Integer.parseInt(id);
 		}catch(NumberFormatException nfe){
-			//TODO
-			return TODO;
+			ori.add(EMessages.get("classes.novalidclassid"),OperationResultInfo.Type.ERROR);
+			return ok(
+					views.html.classes.editClass.render(null, bc, ori,id)
+					);
 		}
-		List<Link> bc = getBreadcrumbs();
-		bc.add(new Link(EMessages.get("classes.pupil.title"),"/classes/view/"+id));
-		bc.add(new Link(EMessages.get("classes.edit"),"/classes/view/"+id+"/edit"));
+		//Check if authorized
+		if(!isAuthorized(classID))return ok(noaccess.render(bc));
+		
 		Form<ClassGroup> f = form(ClassGroup.class).bindFromRequest();
 		//Check if form is valid
 		OperationResultInfo check = checkForm(f);
 		if(check!=null)return badRequest(views.html.classes.editClass.render(f, bc, check,id));
+		//Retrieve ClassGroup from form and set id to the correct id
 		ClassGroup cg = f.get();
 		cg.id = classID;
 		try{
 			ClassGroup prevVersion = Ebean.find(ClassGroup.class, classID);
 			int temp = prevVersion.id; //will throw exception if null
+			//Set teacherid to the old teacher id
 			cg.teacherid = prevVersion.teacherid;
 			cg.update();
 		}catch(Exception e){
-			//TODO
-			return TODO;
+			ori.add(EMessages.get("classes.add.error"),OperationResultInfo.Type.ERROR);
+			return ok(
+					views.html.classes.editClass.render(f, bc, ori,id)
+					);
 		}
 		return redirect(routes.ClassPupilController.viewClass(id, 0, "name", "asc", ""));
 	}
@@ -206,8 +217,8 @@ public class ClassGroupController extends EController {
 	 * @return whether the user is authorized to edit the class
 	 */
 	private static boolean isAuthorized(int id){
-		//TODO
-		return true;
+		//TODO actually implement
+		return isAuthorized();
 	}
 	
 	/**
@@ -215,7 +226,7 @@ public class ClassGroupController extends EController {
 	 * @return the Teacher that is currently logged in. 
 	 */
 	private static Teacher getTeacher(){
-		//TODO
+		//TODO make it safer
 		return (Teacher)AuthenticationManager.getInstance().getUser();
 		
 	}
