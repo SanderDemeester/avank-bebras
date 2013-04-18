@@ -47,8 +47,7 @@ public class SchoolManager extends Manager<SchoolModel> {
 
 	@Override
 	public Call getEditRoute(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return routes.SchoolController.edit(id);
 	}
 
 	@Override

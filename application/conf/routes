@@ -76,6 +76,8 @@ GET    /manageFAQ/remove/:name        controllers.faq.FAQController.remove(name)
 GET		/schools						controllers.schools.SchoolController.viewSchools(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 GET		/schools/new					controllers.schools.SchoolController.create()
 POST	/schools/						controllers.schools.SchoolController.save()
+GET		/schools/:id					controllers.schools.SchoolController.edit(id)
+POST		/schools/:id/					controllers.schools.SchoolController.update(id)
 
 # Data Management
 GET		/manage/:dataType/show		controllers.data.DataController.show(dataType)

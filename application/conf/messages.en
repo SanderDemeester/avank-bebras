@@ -206,9 +206,10 @@ schools.error.notcomplete = Please fill in all required fields
 schools.error.savefail = Could not save the new school. Please try again (later).
 schools.list.error = Could not retrieve the list of schools. Please try again (later).
 schools.add.info = This is supposed to be used for adding schools that are NOT in the system yet. If the school is already in the system, ask a someone at the school for the ID. Do NOT add duplicate schools. The school will show up in the list if you are associated with a class from that school (in the system).
-school.new.name = New school''s name
-school.new.address = New school''s address
+school.name = School''s name
+school.address = School''s address
 schools.add.success = School succesfully saved. ID: 
+schools.edit = Edit a school.
 
 
 

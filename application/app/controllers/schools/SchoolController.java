@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
+import com.avaje.ebean.Ebean;
+
 import models.EMessages;
 import models.data.Link;
 import models.dbentities.SchoolModel;
@@ -22,6 +24,7 @@ import play.mvc.Result;
 import play.mvc.Results;
 import views.html.commons.noaccess;
 import views.html.schools.addschool;
+import views.html.schools.editSchool;
 import views.html.schools.schools;
 import controllers.EController;
 
@@ -49,7 +52,12 @@ public class SchoolController extends EController {
 		sm.setFilter(filter);
 		sm.setOrder(order);
 		sm.setOrderBy(orderBy);
-		return ok(schools.render(sm.page(page), sm, orderBy, order,filter, breadcrumbs, ori));
+		try{
+			return ok(schools.render(sm.page(page), sm, orderBy, order,filter, breadcrumbs, ori));
+		}catch(PersistenceException pe){
+			ori.add(EMessages.get("schools.list.error"),OperationResultInfo.Type.ERROR);
+			return ok(schools.render(null, sm, orderBy, order,filter, breadcrumbs, ori));
+		}
 	}
 
 	/**
@@ -119,8 +127,30 @@ public class SchoolController extends EController {
 	 * @return edit page for the school
 	 */
 	public static Result edit(String id){
-		//TODO
-		return TODO;
+		OperationResultInfo ori = new OperationResultInfo();
+		List<Link> bc = getBreadcrumbs();
+		bc.add(new Link(EMessages.get("schools.edit"), "/schools/"+id));
+		//TODO comments
+		int schoolID = -1;
+		try{
+			schoolID = Integer.parseInt(id);
+		}catch(NumberFormatException nfe){
+			//TODO
+			return TODO;
+		}
+		
+		if(!isAuthorized(schoolID))return TODO; //TODO
+		
+		try{
+			SchoolModel sm = Ebean.find(SchoolModel.class, schoolID);
+			int temp = sm.id; //will throw exception if null
+			Form<SchoolModel> f = form(SchoolModel.class).bindFromRequest().fill(sm);
+			return ok(editSchool.render(id, f, bc, ori));
+		}catch(Exception e){
+			//TODO
+			return TODO;
+		}
+		
 	}
 	/**
 	 * saves the updated school
@@ -128,8 +158,35 @@ public class SchoolController extends EController {
 	 * @return	list of schools page
 	 */
 	public static Result update(String id){
-		//TODO
-		return TODO;
+		OperationResultInfo ori = new OperationResultInfo();
+		List<Link> bc = getBreadcrumbs();
+		bc.add(new Link(EMessages.get("schools.edit"), "/schools/"+id));
+		//TODO comments
+		int schoolID = -1;
+		try{
+			schoolID = Integer.parseInt(id);
+		}catch(NumberFormatException nfe){
+			//TODO
+			return TODO;
+		}		
+		if(!isAuthorized(schoolID))return TODO; //TODO
+		
+		Form<SchoolModel> f = form(SchoolModel.class).bindFromRequest();
+		if(f.hasErrors())return TODO; //TODO
+		
+		try{
+			SchoolModel old = Ebean.find(SchoolModel.class, schoolID);
+			SchoolModel neww = f.get();
+			neww.id = schoolID;
+			neww.orig = old.orig;
+			neww.update();
+			return redirect(routes.SchoolController.viewSchools(0,"name","asc",""));
+		}catch(Exception e){
+			//TODO
+			return TODO;
+		}
+		
+		
 	}
 
 	/**
@@ -151,6 +208,11 @@ public class SchoolController extends EController {
 		// user is authorized if they're a teacher
 		//TODO use roles
 		return AuthenticationManager.getInstance().getUser().data.type == UserType.TEACHER;
+	}
+	
+	private static boolean isAuthorized(int id){
+		//TODO actually implement
+		return isAuthorized();
 	}
 
 	/**
