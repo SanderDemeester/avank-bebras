@@ -113,6 +113,24 @@ public class SchoolController extends EController {
 				.viewSchools(0,"name","asc",""));
 
 	}
+	/**
+	 * 
+	 * @param id of the school
+	 * @return edit page for the school
+	 */
+	public static Result edit(String id){
+		//TODO
+		return TODO;
+	}
+	/**
+	 * saves the updated school
+	 * @param id of the school
+	 * @return	list of schools page
+	 */
+	public static Result update(String id){
+		//TODO
+		return TODO;
+	}
 
 	/**
 	 * 
