@@ -1,10 +1,17 @@
+#Commons
+example = Example
+
 # App
 app.title = Avank Bebras - {0}
 app.startTitle = Avank Bebras
 app.home = Home
 app.error = Error
 app.Page = Page
-app.signed.in.as = Signed in as
+app.signedInAs = Signed in as
+app.changeLanguage = Change Language
+app.signUp = Sign Up
+app.signIn = Sign In
+app.signOut = Sign Out
 
 # Error
 notFound.title = Oops!
@@ -192,6 +199,7 @@ info.info = Info
 info.warning = Warning
 info.error = Error
 info.success = Success
+info.successedit = Your information has been modified!
 
 # management
 management.filter.input = Filter value
@@ -306,12 +314,15 @@ classes.main.form.teacherid = Teacher ID
 classes.main.form.expdate = Expiration date
 classes.main.listerror = Something went wrong during the retrieval of the main classes. Please try again (later)
 classes.list = List of Classes
+
 classes.pupil.error.classfetch = Something went wrong during the retrieval of the info. Please try again (later)
 classes.pupil.classinfo = Info about the class
 classes.pupil.schoolinfo = Info about the school
 classes.pupil.teacherinfo = Info about the teacher
+
 classes.teacher.id = id
 classes.teacher.name = Name
+
 classes.pupil.notactiveinfo = The class is currently not active. This page shows all the students that at one point were in it. 
 classes.pupil.activeinfo  = The class is currently active. This page shows all the students that currently have it as main class.
 classes.pupil.list = List of pupils
@@ -322,6 +333,7 @@ classes.pupil.form.gender = Gender
 classes.pupil.form.birthdate 	= Birthdate
 classes.pupil.form.preflanguage = Preferred language
 classes.pupil.form.active = Is the user not-blocked?
+
 classes.novalidclassid = This is not a valid class ID.
 classes.pupil.editclassinfo = Edit the class info
 classes.pupil.oldpupils = View the old pupils
@@ -329,6 +341,7 @@ classes.pupil.viewhelp = View the help teachers
 classes.oldpupil.list = List of old pupils
 classes.oldpupil.info = This is the list of pupils that were once in the class, but no longer have it as their main class
 classes.pupil.oldpupillist = List of old pupils
+
 classes.helpteacher.form.id = id
 classes.helpteacher.form.name = Name
 classes.helpteacher.form.gender = Gender
@@ -340,27 +353,45 @@ classes.helpteacher.error = Something went wrong during the retrieval. Try again
 classes.helpteacher.delete.error = Something went wrong during the deleting. Try again (later).
 classes.helpteacher.delete.success = Removal was successful.
 classes.helpteacher.add = Add a new help teacher
-# classes.help.add.explanation
-# classes.helpteacher.add.incomplete
-# classes.helpteacher.add.error
-# classes.helpteacher.add.usernotexist
-# classes.helpteacher.add.usernotteacher
-# classes.helpteacher.add.useralreadyhelp
-# classes.helpteacher.add.useralreadyteacher
-# classes.pupil.add.explanation
-# classes.pupil.add
+classes.help.add.explanation = Here you can add extra teachers to the class. 
+classes.helpteacher.add.incomplete = Please fill in all required fields.
+classes.helpteacher.add.error = Something went wrong. Please try again (later).
+classes.helpteacher.add.usernotexist = There is no user with that ID.
+classes.helpteacher.add.usernotteacher = The user corresponding with that ID is not a Teacher account.
+classes.helpteacher.add.useralreadyhelp = That teacher is already registered to the class.
+classes.helpteacher.add.useralreadyteacher = That teacher is already registered to the class.
+
+classes.pupil.add.explanation = Here you can add existing pupils to the class. If the pupil is already active in another class they will be made unactive.
+classes.pupil.add = Add an existing pupil.
+classes.pupil.add.incomplete = Please fill in all required fields.
+classes.pupil.add.error = Something went wrong. Please try again (later).
+classes.pupil.add.usernotexist = There is no user with that ID.
+classes.pupil.add.usernotpupil = The user corresponding with that ID is not a Pupil account.
+classes.pupil.add.useralreadyinclass = That user is already registered with the class
 classes.pupil.delete.success = Removal was successful.
 classes.pupil.delete.error = Something went wrong during the deleting. Try again (later).
 
+classes.add = Add a new class
+class.new.name = New class''s name
+class.new.school = New class''s school
+class.new.level = New class''s level
+class.new.expdate.format = Date format
+class.new.expdate = New class''s expiration date
+classes.add.notcomplete = Please fill in all required fields.
+classes.add.noschool = There is no school with that ID.
+classes.add.nograde = There is no level with that name. 
+classes.add.error = Something went wrong with the database. Try again later.
+
 # User
+user.pip.settings = Settings
 user.pip.welcome = Welcome!
-user.pip.personalinfo = Personal information
+user.pip.personalinfo = Personal information settings
 user.pip.editinfo = Edit information
 user.pip.editpassw = Edit password
 user.pip.aboutme = About me
 user.pip.intro = Information about you which is stored in our database.
 user.pip.fulln = Full name
-user.pip.birth = Birthdate
+user.pip.birth = Birthdate (month/day/year)
 user.pip.gender = Gender
 user.pip.preflan = Language
 user.pip.email = E-mail
@@ -372,3 +403,6 @@ user.pie.editpassw = Edit password
 user.pie.editintro = Edit my information 
 user.pie.intro = Below you can edit your personal information.
 user.error.no_login = Your personal information is not available! Please make sure you are logged in.
+user.Male = Male
+user.Female = Female
+user.Other = Other
