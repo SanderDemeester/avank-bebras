@@ -14,29 +14,60 @@
 
 \maketitle
 
-\section{Registreren}
-Om te registreren en een Bebras account aan te maken klik je op 'Sign up'. Hierdoor kom je op de pagina om een account aan te maken. [TODO: screenshot sign-up page] Hier vul je de gevraagde velden in zoals daar zijn: naam, e-mailadres en geboortedatum. Je duidt je geslacht aan en kiest de taal die je voorkeur wegdraagt. Onderaan vul je een zelfgekozen wachtwoord in. Dit herhaal je in het veld eronder. Klik dan op 'Maak account'. Je krijgt een Bebras-ID toebedeeld en kan hiermee inloggen.
+\section{Niet-ingelogde gebruiker}
+
+\subsection{Registreren}
+Om te registreren en een Bebras account aan te maken klik je op 'Registreer'. Hierdoor kom je op de pagina om een account aan te maken. [TODO: screenshot sign-up page] Hier vul je de gevraagde velden in zoals daar zijn: naam, e-mailadres en geboortedatum. Je duidt je geslacht aan en kiest de taal die je voorkeur wegdraagt. Onderaan vul je een zelfgekozen wachtwoord in. Dit herhaal je in het veld eronder. Klik dan op 'Maak account'. Je krijgt een Bebras-ID toebedeeld en kan hiermee inloggen.
 
 Indien een verplicht veld niet is ingevuld, zal je hier een melding van krijgen. 
 
-\section{Inloggen}
-Nu je een Bebras account hebt aangemaakt, kun je ook inloggen. Hiervoor klik je op de startpagina op 'Sign in'. [TODO: screenshot startpagina] Vul je Bebras-ID en wachtwoord in, klik op 'login' en je bent ingelogd! Als alles goed gaat, zie je nu jouw persoonlijke pagina. In het geval dat je een foute gebruikersnaam of wachtwoord hebt ingevuld, zal je hiervan een melding krijgen.
+\subsection{Inloggen}
+Nu je een Bebras account hebt aangemaakt, kun je ook inloggen. Hiervoor klik je op de startpagina op 'Log in'. [TODO: screenshot startpagina] Vul je Bebras-ID en wachtwoord in, klik op 'Log in' en je bent ingelogd! Als alles goed gaat, zie je nu jouw persoonlijke pagina. In het geval dat je een foute gebruikersnaam of wachtwoord hebt ingevuld, zal je hiervan een melding krijgen.
 
-\section{Wachtwoord vergeten}
+\subsection{Wachtwoord vergeten}
 In het geval dat je je wachtwoord niet meer weet, kan je klikken op 'Wachtwoord vergeten' dat zich op het aanmeldvenster bevindt naast de loginknop. Hier vul je jouw Bebras-ID in en het e-mailadres waar een nieuw wachtwoord naar gestuurd zal worden. Indien je zelf geen e-mailadres zou hebben, vul je hier het e-mailadres van jouw leerkracht in.
+
+\subsection{Links}
+Linksbovenaan staan een aantal links. Zo kun je op elk moment terugkeren naar de startpagina of de FAQ bekijken. [TODO: screenshot FAQ + links] Ook is er een link naar de offici"ele website waar men meer info kan vinden over de organisatie.
+
+\subsection{Verander taal}
+Hier kan je de taal van de website aanpassen. [TODO: screenshot talen] Je hebt de keuze uit Nederlands, Frans en Duits.
 
 \section{Independent}
 
 Nu je aangemeld bent, beschik je over een aantal standaardfuncties.
 
 \subsection{Profiel bewerken}
-Om je profiel te bewerken, klik je rechtsboven op je Bebras-ID zodat er een menu wordt geopend. [TODO: screenshot account-dropdown] In dit menu kies je voor 'Instellingen'. [TODO: screenshot personaledit] Hier kan je de verschillende gegevens die op jouw profiel verschijnen aanpassen. Om de aanpassingen op te slaan, klik je op 'Opslaan'.
+Om je profiel te bewerken, klik je rechtsboven op je Bebras-ID zodat er een menu wordt geopend. [TODO: screenshot account-dropdown] In dit menu kies je voor 'Instellingen'. [TODO: screenshot personaledit] Hier kan je de verschillende gegevens die op jouw profiel verschijnen aanpassen. Om de aanpassingen op te slaan, klik je op 'Verzend'.
 
 \subsection{Wachtwoord veranderen}
 Om je wachtwoord te veranderen, vul je jouw huidig wachtwoord in. Geef dan je nieuwe wachtwoord in en bevestig dit in het veld eronder. Klik op 'Ok' om je wachtwoord te wijzigen.
 
 \subsection{Uitloggen}
 Om de webapplicatie te verlaten, klik je rechtsbovenaan op je gebruikersnaam. Er zal een menu verschijnen waar je onderaan voor 'Sign out' kunt kiezen.
+
+\section{Teacher}
+
+Als leerkracht beschik je over volgende extra functies.
+
+\subsection{Lijst van scholen}
+
+[TODO: screenshot schooloverzicht]
+Hier vindt de leerkracht de lijst van scholen waaraan hij/zij les heeft gegeven.
+
+Om een nieuwe school aan het systeem toe te voegen, klik je op 'Voeg een nieuwe school toe'. Vul de naam en het adres van de school in en klik op 'Save'. De nieuwe school zal dan verschijnen in het overzicht als er een verbintenis met de school is.
+
+\subsection{Lijst van klassen}
+
+[TODO: screenshot klasoverzicht]
+Op deze pagina kan een leerkracht een overzicht krijgen van alle klassen met vermelding van de school, verantwoordelijke leraar en de leeftijdscategorie. Daarnaast staat ook de geldigheidsdatum vermeld en of de klas momenteel actief is.
+Men kan in de lijst zoeken naar klassen van een bepaalde leerkracht door te filteren op zijn/haar Bebras-ID.
+
+[TODO: screenshot nieuwe klas]
+Om een nieuwe klas aan te maken, klik je rechtsboven op 'Nieuw'. Daar geef je de naam van de nieuwe klas, de school, leeftijdscategorie en geldigheidsdatum in en klik je op 'Save'.
+
+[TODO: screenshot klasinfo]
+Een klas aanpassen kan door in de lijst op de 'Bewerk'-knop te klikken bij de betreffende klas. Hier vindt men meer info over de klas, school en leraar. Daarenboven is hier ook de lijst van studenten uit deze klas te vinden, alsook de hulpleerkrachten en de oud-studenten. Deze kunnen toegevoegd worden aan de hand van hun Bebras-ID.
 
 \subsection{Vrageneditor}
 
@@ -82,18 +113,9 @@ Voorbeelden:
 \lstinputlisting[language=XML, frame=single]{xml/MCQ.xml}
 \lstinputlisting[language=XML, frame=single]{xml/open_question.xml} 
 
-\section{Administrator}
+\section{Organizer}
 
-\subsection{Beheer Veelgestelde vragen}
-
-\subsubsection{Bekijk veelgestelde vragen}
-Deze pagina geeft een overzicht van alle veelgestelde vragen.
-
-\subsubsection{Bewerk veelgestelde vragen}
-Op deze pagina zie je de lijst van alle veelgestelde vragen. Door op een kolomnaam te klikken, wordt de tabel automatisch op deze kolom gesorteerd. Om de volgorde om te draaien, klik je nogmaals op diezelfde kolomnaam. Door een taal in tegen, kan men de lijst filteren en enkel de vragen in die taal over houden. Onderaan de tabel kan men bladeren doorheen de lijst in het geval er meerdere pagina's met vragen zijn. Om een vraag te bewerken, klik je op de 'Bewerk'-knop. Een vraag verwijderen uit de lijst kan door op het kruisje te klikken.
-
-\subsubsection{Maak een nieuwe veelgestelde vraag aan}
-Om een nieuwe veelgestelde vraag toe te voegen, klik je op 'Voeg nieuwe FAQ toe'. [TODO: screenshot newFAQ] Op deze pagina vul je de vraag en antwoord in in de daarvoor bestemde (en vereiste) velden. Daarna kies je de taal waarin de vraag is opgesteld en klik je op 'Save' om de vraag op te slaan. Je hebt ook de mogelijkheid om de vraag niet op te slaan en de actie te annuleren.
+Als leerkracht beschik je over volgende extra functies.
 
 \subsection{Serverbeheer}
 
@@ -110,5 +132,29 @@ Deze pagina geeft een overzicht van de servers die momenteel gebruikt worden. Bo
 
 \subsubsection{Goedkeuren van vragen}
 Hier krijg je een overzicht van alle ingediende vragen met vermelding van de auteur en de indiendatum. [TODO: screenshot ingediende vragen] Hier kan de administrator een vraag goedkeuren of afkeuren door op de desbetreffende knoppen te klikken. Bij het goedkeuren van een vraag, kent de administrator een officieel ID toe aan de vraag zodat deze later kan teruggevonden worden. Ook kiest hij een server waarop de vraag geplaatst wordt en bepaalt hij of de vraag momenteel actief is. Eens de vraag goedgekeurd is, wordt ze verwijderd uit de voorlopige lijst en toegevoegd aan de officiële lijst van vragen.
+
+\section{Administrator}
+
+\subsection{Beheer Veelgestelde vragen}
+
+\subsubsection{Bekijk veelgestelde vragen}
+Deze pagina geeft een overzicht van alle veelgestelde vragen.
+
+\subsubsection{Bewerk veelgestelde vragen}
+Op deze pagina zie je de lijst van alle veelgestelde vragen. Door op een kolomnaam te klikken, wordt de tabel automatisch op deze kolom gesorteerd. Om de volgorde om te draaien, klik je nogmaals op diezelfde kolomnaam. Door een taal in tegen, kan men de lijst filteren en enkel de vragen in die taal over houden. Onderaan de tabel kan men bladeren doorheen de lijst in het geval er meerdere pagina's met vragen zijn. Om een vraag te bewerken, klik je op de 'Bewerk'-knop. Een vraag verwijderen uit de lijst kan door op het kruisje te klikken.
+
+\subsubsection{Maak een nieuwe veelgestelde vraag aan}
+Om een nieuwe veelgestelde vraag toe te voegen, klik je op 'Voeg nieuwe FAQ toe'. [TODO: screenshot newFAQ] Op deze pagina vul je de vraag en antwoord in in de daarvoor bestemde (en vereiste) velden. Daarna kies je de taal waarin de vraag is opgesteld en klik je op 'Save' om de vraag op te slaan. Je hebt ook de mogelijkheid om de vraag niet op te slaan en de actie te annuleren.
+
+\subsection{Pas de databank aan}
+
+\subsubsection{Wijzig de navigatiebalk}
+Hier kan de administrator de links wijzigen die de gebruikers linksbovenaan te zien krijgen. Om een nieuwe link toe te voegen, moet men de naam en de URL van de website in kwestie opgeven en vervolgens op de plus-knop klikken. Een site verwijderen uit de lijst kan door op de min-knop te klikken.
+
+\subsubsection{Wijzig de leeftijdscategorieën}
+Hier kan de administrator de leeftijdscategorieën wijzigen. Om een nieuwe leeftijdscategorie toe te voegen, moet men de minimum- en maximumleeftijd opgeven en vervolgens op de plus-knop klikken. Een categorie verwijderen uit de lijst kan door op de min-knop te klikken.
+
+\subsubsection{Wijzig de moeilijkheidsgraden}
+Hier kan de administrator de moeilijkheidsgraden wijzigen. Om een nieuwe moeilijkheidsgraad toe te voegen, moet men de naam en de rang meegeven die de moeilijkheid voorstelt en vervolgens op de plus-knop klikken. Een graad verwijderen uit de lijst kan door op de min-knop te klikken.
 
 \end{document}
