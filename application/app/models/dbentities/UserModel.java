@@ -30,6 +30,7 @@ import models.EMessages;
 @Entity
 @Table(name="users")
 public class UserModel extends ManageableModel implements Listable{
+
     private static final long serialVersionUID = 1L;
 
     @Id
