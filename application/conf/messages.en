@@ -129,10 +129,10 @@ login.bebras_ID = Bebras ID
 
 # Register
 register.name = Full name
-register.email = Email;
-register.bday = Birthday:
-register.gender = Gender:
-register.preflan = Preferred language:
+register.email = Email
+register.bday = Birthday
+register.gender = Gender
+register.preflan = Preferred language
 register.password = Password:
 register.confirm_password = Confirm Password
 register.create_account = Create Account

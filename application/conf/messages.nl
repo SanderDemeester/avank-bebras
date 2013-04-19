@@ -128,11 +128,11 @@ login.bebras_ID = Bebras ID
 
 # Register
 register.name = Volledige naam 
-register.email = Email:
-register.bday = Geboortedag:
-register.gender = Geslacht:
-register.preflan = Gewenste taal:
-register.password = Wachtwoord:
+register.email = Email
+register.bday = Geboortedag
+register.gender = Geslacht
+register.preflan = Gewenste taal
+register.password = Wachtwoord
 register.confirm_password = Bevestig password
 register.create_account = Maak account
 register.bebras_id_message = Uw Bebras ID is: 
