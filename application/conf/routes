@@ -67,10 +67,10 @@ GET		/manageFAQ					controllers.faq.FAQController.list(p:Int ?= 0, s ?= "languag
 GET     /manageFAQ/new                controllers.faq.FAQController.create()
 POST    /manageFAQ/                   controllers.faq.FAQController.save()
 
-GET     /manageFAQ/edit/:name              controllers.faq.FAQController.edit(name)
-POST    /manageFAQ/edit/:name              controllers.faq.FAQController.update(name)
+GET     /manageFAQ/edit/:name              controllers.faq.FAQController.edit(name:Int)
+POST    /manageFAQ/edit/:name              controllers.faq.FAQController.update(name:Int)
 
-GET    /manageFAQ/remove/:name        controllers.faq.FAQController.remove(name)
+GET    /manageFAQ/remove/:name        controllers.faq.FAQController.remove(name:Int)
 
 # Schools
 GET		/schools						controllers.schools.SchoolController.viewSchools(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
