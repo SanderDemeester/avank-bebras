@@ -196,17 +196,18 @@ competition.create.active = Vink aan om de competitie actief te maken.
 # schools
 schools.title = Lijst van Scholen
 schools.listtext = Dit is de lijst van scholen die u ofwel aangemaakt hebt of aan verbonden bent/was via een klas.
-schools.table.id = id
-schools.table.name = Naam
-schools.table.address = Adres
+schools.form.id = id
+schools.form.name = Naam
+schools.form.address = Adres
 schools.add = Voeg een nieuwe school toe.
 schools.error.notcomplete = Gelieve alle verplichte velden in te vullen.
 schools.error.savefail = De school kon niet opgeslaan worden. Probeer opniew (later).
 schools.list.error = De lijst van scholen kon niet opgevraagd worden. Probeer opnieuw (later).
 schools.add.info = Dit is bedoeld om scholen toe te voegen die nog NIET in het systeem zitten. Als de school al in het systeem zit, gelieve iemand op de school om het ID te vragen. Voeg GEEN dubbele scholen toe. De school zal verschijnen in uw lijst als u (in het systeem) verbonden bent met een klas op die school.
-school.new.name = Naam van de nieuwe school
-school.new.address = Adres van de nieuwe school
+school.name = Naam van de school
+school.address = Adres van de school
 schools.add.success = Opslaan van school was succesvol. ID: 
+schools.edit = Bewerk een school.
 
 # server management
 servers.form.id = Server naam
@@ -324,15 +325,16 @@ classes.pupil.delete.success = Verwijderen was successvol.
 classes.pupil.delete.error = Er liep iets mis tijdens het verwijderen. Probeer opnieuw later.
 
 classes.add = Voeg een nieuwe klas toe
-class.new.name = Naam van de nieuwe klas
-class.new.school = School van de nieuwe klas
-class.new.level = Level van de nieuwe klas
-class.new.expdate.format = Datum formaat
-class.new.expdate = Vervallingsdatum van de nieuwe klas
+class.name = Naam van de klas
+class.school = School van de klas
+class.level = Level van de klas
+class.expdate.format = Datum formaat
+class.expdate = Vervallingsdatum van de klas
 classes.add.notcomplete = Gelieve alle verplichte velden in te vullen.
 classes.add.noschool = Er is geen school met dat ID
 classes.add.nograde = Er is geen level met die naam.
 classes.add.error = Er is iets misgelopen met de databank. Probeer opnieuw (later).
+classes.edit = Pas een klas aan.
 
 # User
 user.pip.settings = Instellingen

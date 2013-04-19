@@ -198,17 +198,18 @@ competition.create.active = Check this box to make the contest active.
 # schools
 schools.title = List of Schools
 schools.listtext = This is the list of schools you either created or are/were associated with via a class.
-schools.table.id = id
-schools.table.name = Name
-schools.table.address = Address
+schools.form.id = id
+schools.form.name = Name
+schools.form.address = Address
 schools.add = Add a new school
 schools.error.notcomplete = Please fill in all required fields
-schools.error.savefail = Could not save the new school. Please try again (later).
+schools.error.savefail = Could not save the school. Please try again (later).
 schools.list.error = Could not retrieve the list of schools. Please try again (later).
 schools.add.info = This is supposed to be used for adding schools that are NOT in the system yet. If the school is already in the system, ask a someone at the school for the ID. Do NOT add duplicate schools. The school will show up in the list if you are associated with a class from that school (in the system).
-school.new.name = New school''s name
-school.new.address = New school''s address
+school.name = School''s name
+school.address = School''s address
 schools.add.success = School succesfully saved. ID: 
+schools.edit = Edit a school.
 
 
 
@@ -334,15 +335,16 @@ classes.pupil.delete.success = Removal was successful.
 classes.pupil.delete.error = Something went wrong during the deleting. Try again (later).
 
 classes.add = Add a new class
-class.new.name = New class''s name
-class.new.school = New class''s school
-class.new.level = New class''s level
-class.new.expdate.format = Date format
-class.new.expdate = New class''s expiration date
+class.name = Class''s name
+class.school = Class''s school
+class.level = Class''s level
+class.expdate.format = Date format
+class.expdate = Class''s expiration date
 classes.add.notcomplete = Please fill in all required fields.
 classes.add.noschool = There is no school with that ID.
 classes.add.nograde = There is no level with that name. 
 classes.add.error = Something went wrong with the database. Try again later.
+classes.edit = Edit a class.
 
 # User
 user.pip.settings = Settings

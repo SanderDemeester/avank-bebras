@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import models.management.ManageableModel;
 import play.data.validation.Constraints.Required;
 
 import play.db.ebean.Model;
@@ -18,7 +20,7 @@ import play.db.ebean.Model;
  */
 @Entity
 @Table(name="Schools")
-public class SchoolModel extends Model implements Comparable<SchoolModel>{
+public class SchoolModel extends ManageableModel implements Comparable<SchoolModel>{
 
 	/**
 	 * 
@@ -103,6 +105,21 @@ public class SchoolModel extends Model implements Comparable<SchoolModel>{
 		res = this.address.toLowerCase().compareTo(o.address.toLowerCase());
 		if(res!=0) return res;
 		return Integer.compare(this.id, o.id);
+	}
+
+	@Override
+	public String[] getFieldValues() {
+		String[] res = {
+				getID(),
+				name,
+				address
+		};
+		return res;
+	}
+
+	@Override
+	public String getID() {
+		return Integer.toString(id);
 	}
 
 	

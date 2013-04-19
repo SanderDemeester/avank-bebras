@@ -118,6 +118,9 @@ public class AuthenticationManager {
         } else if(current.canMimic(user)) { // If the current user can mimic the other user.
             stack.add(user);
         }
+        
+        EMessages.setLang(userModel.preflanguage);
+        
         if(stack.size() == 0)
             return user;
         else

@@ -67,15 +67,17 @@ GET		/manageFAQ					controllers.faq.FAQController.list(p:Int ?= 0, s ?= "languag
 GET     /manageFAQ/new                controllers.faq.FAQController.create()
 POST    /manageFAQ/                   controllers.faq.FAQController.save()
 
-GET     /manageFAQ/edit/:name              controllers.faq.FAQController.edit(name)
-POST    /manageFAQ/edit/:name              controllers.faq.FAQController.update(name)
+GET     /manageFAQ/edit/:name              controllers.faq.FAQController.edit(name:Int)
+POST    /manageFAQ/edit/:name              controllers.faq.FAQController.update(name:Int)
 
-GET    /manageFAQ/remove/:name        controllers.faq.FAQController.remove(name)
+GET    /manageFAQ/remove/:name        controllers.faq.FAQController.remove(name:Int)
 
 # Schools
-GET		/schools						controllers.schools.SchoolController.viewSchools()
+GET		/schools						controllers.schools.SchoolController.viewSchools(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 GET		/schools/new					controllers.schools.SchoolController.create()
 POST	/schools/						controllers.schools.SchoolController.save()
+GET		/schools/:id					controllers.schools.SchoolController.edit(id:Int)
+POST		/schools/:id/					controllers.schools.SchoolController.update(id:Int)
 
 # Data Management
 GET		/manage/:dataType/show		controllers.data.DataController.show(dataType)
@@ -95,18 +97,19 @@ POST		/personalsettings/submit			controllers.user.PersonalPageController.changeI
 GET		/classes					controllers.classgroups.ClassGroupController.viewClasses(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 GET 		/classes/add					controllers.classgroups.ClassGroupController.create()
 POST		/classes/					controllers.classgroups.ClassGroupController.save()
-GET		/classes/view/:id				controllers.classgroups.ClassPupilController.viewClass(id, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET		/classes/view/:id				controllers.classgroups.ClassPupilController.viewClass(id:Int, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
 
-GET		/classes/view/:id/:studid/remove		controllers.classgroups.ClassPupilController.removeStudent(id,studid)
-GET		/classes/view/:id/add			controllers.classgroups.ClassPupilController.addExistingStudent(id)
-POST		/classes/view/:id/				controllers.classgroups.ClassPupilController.saveExisting(id)
+GET		/classes/view/:id/:studid/remove		controllers.classgroups.ClassPupilController.removeStudent(id:Int,studid)
+GET		/classes/view/:id/add			controllers.classgroups.ClassPupilController.addExistingStudent(id:Int)
+POST		/classes/view/:id/				controllers.classgroups.ClassPupilController.saveExisting(id:Int)
 
-GET		/classes/view/:id/edit			controllers.classgroups.ClassPupilController.editClass(id)
+GET		/classes/view/:id/edit			controllers.classgroups.ClassGroupController.editClass(id:Int)
+POST		/classes/view/:id/edit/			controllers.classgroups.ClassGroupController.update(id:Int)
 
-GET		/classes/view/:id/help			controllers.classgroups.HelpTeacherController.viewHelp(id,p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
-GET		/classes/view/:id/help/:teachid/remove	controllers.classgroups.HelpTeacherController.removeHelp(id,teachid)
-GET		/classes/view/:id/help/add			controllers.classgroups.HelpTeacherController.create(id)
-POST		/classes/view/:id/help/			controllers.classgroups.HelpTeacherController.save(id)
+GET		/classes/view/:id/help			controllers.classgroups.HelpTeacherController.viewHelp(id:Int,p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET		/classes/view/:id/help/:teachid/remove	controllers.classgroups.HelpTeacherController.removeHelp(id:Int,teachid)
+GET		/classes/view/:id/help/add			controllers.classgroups.HelpTeacherController.create(id:Int)
+POST		/classes/view/:id/help/			controllers.classgroups.HelpTeacherController.save(id:Int)
 
-GET		/classes/:id/old			controllers.classgroups.ClassPupilController.viewOldPupils(id,p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET		/classes/:id/old			controllers.classgroups.ClassPupilController.viewOldPupils(id:Int,p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")

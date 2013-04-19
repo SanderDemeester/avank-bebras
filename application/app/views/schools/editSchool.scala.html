@@ -1,16 +1,13 @@
-@(schoolForm: Form[models.dbentities.SchoolModel], breadcrumbs : List[models.data.Link],inf : models.util.OperationResultInfo)
+@(id : Int, schoolForm: Form[models.dbentities.SchoolModel], breadcrumbs : List[models.data.Link],inf : models.util.OperationResultInfo)
 
 @import helper._
 @import helper.twitterBootstrap._
 @import models.EMessages
 
-@main(EMessages.get("schools.add"),breadcrumbs){
+@main(EMessages.get("schools.edit"),breadcrumbs){
 	@commons.info(inf)
-	<div class="well">
-	@EMessages.get("schools.add.info") 
-	</div>
 	
-	@form(controllers.schools.routes.SchoolController.save()) {
+	@form(controllers.schools.routes.SchoolController.update(id)) {
 
     @formSchool(schoolForm)
 
