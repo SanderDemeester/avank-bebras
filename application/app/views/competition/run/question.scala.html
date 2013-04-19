@@ -1,0 +1,35 @@
+@(question: models.question.Question, breadcrumbs : List[models.data.Link], language : models.data.Language)
+
+@import helper._
+@import helper.twitterBootstrap._
+@import models.EMessages
+
+@main(EMessages.get("TMP"), breadcrumbs){
+    <div class="well">
+    	<h1>@question.getTitle(language)</h1>
+    	<iframe id="questionframe" src="@question.getIndexLink(language)"></iframe>
+    	
+    	TODO: add input possibilities for the two types
+    	
+    </div>
+    
+    <script type="text/javascript">
+    // Apply our stylesheets to the iframe source
+    $("#questionframe").load(function() {
+    	var $head = $("#questionframe").contents().find("html");
+
+		var links = [
+						"@routes.Assets.at("stylesheets/bootstrap.min.css")",
+						"@routes.Assets.at("stylesheets/main.css")",
+						"@routes.Assets.at("stylesheets/bootstrap-responsive.min.css")",
+						"@routes.Assets.at("stylesheets/wysiwyg/bootstrap-wysihtml5.css")"
+					];
+		
+		for (var i = 0; i < links.length; i++) {
+			$head.append($("<link/>", 
+        	{ rel: "stylesheet", href: links[i], type: "text/css" }));
+		}
+    });
+    </script>
+
+}

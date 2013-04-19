@@ -100,3 +100,8 @@ body{
   border-top: 4px solid transparent;
   border-bottom: 4px solid transparent;
 }
+
+#questionframe {
+	border: none;
+	width: 100%;
+}

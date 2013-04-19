@@ -111,6 +111,7 @@ question.factory.error.noCorrectAnswers = Er is geen correct antwoord aangeduid 
 question.factory.error.moreThanOneCorrectAnswers = Voor de vraag in het {0} zijn er meerdere correcte antwoorden aangeduid.
 question.factory.error.invalidRegex = De vraag bevat een foutieve reguliere expressie in het {0}.
 question.factory.error.invalidUpload = Uw bestand is ongeldig
+question.factory.error.invalidID = Ongeldig ID
 
 # Languages
 languages.language = Taal

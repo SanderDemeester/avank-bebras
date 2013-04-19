@@ -1,7 +1,6 @@
 package controllers.question;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
@@ -9,10 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.EMessages;
+import models.data.Language;
 import models.data.Link;
+import models.data.UnavailableLanguageException;
+import models.data.UnknownLanguageCodeException;
 import models.dbentities.QuestionModel;
 import models.dbentities.UserModel;
 import models.management.ModelState;
+import models.question.Question;
+import models.question.QuestionBuilderException;
 import models.question.QuestionIO;
 import models.question.QuestionPack;
 import models.question.Server;
@@ -22,13 +26,13 @@ import play.Play;
 import play.cache.Cache;
 import play.data.Form;
 import play.mvc.Result;
-import views.html.commons.error;
 import views.html.commons.noaccess;
 import views.html.question.approveQuestionForm;
 import views.html.question.editQuestionForm;
 import views.html.question.newQuestionForm;
 import views.html.question.questionManagement;
 import views.html.question.submitsManagement;
+import views.html.competition.run.question;
 
 import com.avaje.ebean.annotation.Transactional;
 
@@ -352,9 +356,9 @@ public class QuestionController extends EController{
         errorBreadcrumbs.add(new Link("Error",""));
         
         // Deny access to the xml file
-        if(QuestionPack.QUESTIONXMLFILE.equals(fileName)) {
+        /*if(QuestionPack.QUESTIONXMLFILE.equals(fileName)) {
             return forbidden(views.html.commons.error.render(errorBreadcrumbs, EMessages.get("error.title"), EMessages.get("error.text")));
-        }
+        }*/
         
         // Get the cachetime from the config file
         int cacheTime = Integer.parseInt(Play.application().configuration().getString("question.proxy.cache"));
@@ -391,5 +395,25 @@ public class QuestionController extends EController{
         // Return the file with the correct header
         response().setHeader(CONTENT_TYPE, contentType);
         return ok(result);
+    }
+    
+    //TODO: delete
+    public static Result test() {
+        String id = "474";
+        try {
+            // TODO: cache
+            //if (true) return ok(routes.QuestionController.showQuestionFile(id, QuestionPack.QUESTIONXMLFILE).absoluteURL(request()));
+            Question q = Question.fetch(id);
+            try {
+                return ok(question.render(q, new ArrayList<Link>(), Language.getLanguage(EMessages.getLang())));
+            } catch (Exception e) {
+                return ok("woeps!");
+            }
+            //return ok(q.getIndexLink(Language.getLanguage(EMessages.getLang())).absoluteURL(request()));
+        } catch (QuestionBuilderException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return ok(e.getMessage());
+        }
     }
 }
