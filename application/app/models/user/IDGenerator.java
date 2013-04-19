@@ -5,11 +5,18 @@ import java.text.Normalizer;
 import java.lang.Character;
 import java.lang.CharSequence;
 import java.lang.StringBuilder;
+import java.lang.UnsupportedOperationException;
 
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Date;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+import com.avaje.ebean.Ebean;
+
+import models.dbentities.UserModel;
 
 /**
  * This class generates Bebras User Identifiers based on the provided user data.
@@ -35,6 +42,12 @@ public class IDGenerator {
      */
     public static String generate(String name, Date birthday) {
         name = cleanName(name);
+        UserName generator = new UserName(name);
+        String id;
+        do id = generator.next(); while(taken(id) && generator.hasNext());
+        if(! generator.hasNext()) {
+            throw new Exception("Out of usernames, damn."); // TODO with date
+        }
         return name;
     }
 
@@ -49,6 +62,56 @@ public class IDGenerator {
             if(seperators.contains(comp.charAt(i))) builder.append(' ');
         }
         return builder.toString().toLowerCase();
+    }
+
+    private static boolean taken(String id) {
+        UserModel model = null;
+        try {
+            model = Ebean.find(UserModel.class, id);
+        } catch(Exception e) {}
+        return model == null;
+    }
+
+    private static class UserName implements Iterator<String> {
+        private String[] parts;
+        private int[] lengths;
+        public UserName(String cleanName) {
+            parts = cleanName.split(" ");
+            lengths = new int[parts.length - 1];
+            for(int i = 0; i < lengths.length; i++) lengths[i] = 1;
+        }
+        @Override public boolean hasNext() {
+            boolean allFull = true;
+            for(int i = 0; i < lengths.length; i++) {
+                allFull = allFull && (lengths[i] == parts[i].length());
+            }
+            return ! allFull;
+        }
+        @Override public void remove() {
+            throw new UnsupportedOperationException();
+        }
+        @Override public String next() {
+            int i = 0;
+            while(i < lengths.length) {
+                if(lengths[i] < parts[i].length()) {
+                    lengths[i]++;
+                    return makeName();
+                }
+                i++;
+            }
+            throw new NoSuchElementException("I ran out of names.");
+        }
+        private String makeName() {
+            String name = "";
+            int i;
+            for(i = 0; i < lengths.length; i++) {
+                name = name + parts[i].substring(0, lengths[i]);
+            }
+            if(8 - name.length() > 0) {
+                name = name + parts[i].substring(0, 8 - name.length());
+            }
+            return name;
+        }
     }
 
 }

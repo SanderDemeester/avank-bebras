@@ -18,4 +18,8 @@ public class IDGeneratorTest {
         Assert.assertEquals("",           IDGenerator.cleanName("2#$!)))"));
     }
 
+    @Test public void testGenerator() {
+        // TODO
+    }
+
 }
