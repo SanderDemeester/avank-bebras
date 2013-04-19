@@ -252,7 +252,7 @@ public class AuthenticationManager {
                 new Date(),
                 passwordHEX,
                 saltHEX, registerForm.get().email,
-                Gender.Male, registerForm.get().prefLanguage).save();
+                Gender.valueOf(registerForm.get().gender), registerForm.get().prefLanguage).save();
 
         return bebrasID;
     }

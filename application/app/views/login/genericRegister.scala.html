@@ -1,6 +1,6 @@
 @(title: String, breadcrumbs : List[models.data.Link], sform: Form[UserController.Register], legend_title : String,
 name : String, email : String, bday : String, gender_name : String, preflan : String, password_name : String,
-confirm_password_name : String)
+confirm_password_name : String, formAction : play.api.mvc.Call)
 
 @import commons._
 @import models.EMessages.get
@@ -8,7 +8,7 @@ confirm_password_name : String)
 @import helper.twitterBootstrap._
 @import views.html.commons.showflash
 
-@helper.form(routes.UserController.register, 'id -> "signup"){
+@helper.form(action =  formAction, 'id -> "signup"){
 <legend>@legend_title</legend>
 @showflash()	     
 

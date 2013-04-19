@@ -1,5 +1,5 @@
 @(title: String, breadcrumbs : List[models.data.Link], sform: Form[UserController.Register])
 @main(EMessages.get(title), breadcrumbs) {
 	@genericRegister(title, breadcrumbs, sform,"Sign Up","register.name", "register.email","register.bday",
-	"register.gender", "register.preflan","register.password","register.confirm_password")
+	"register.gender", "register.preflan","register.password","register.confirm_password", routes.UserController.register)
 }
