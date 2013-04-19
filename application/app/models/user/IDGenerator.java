@@ -6,10 +6,11 @@ import java.lang.Character;
 import java.lang.CharSequence;
 import java.lang.StringBuilder;
 import java.lang.UnsupportedOperationException;
+import java.lang.RuntimeException;
 
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -27,7 +28,7 @@ import models.dbentities.UserModel;
 public class IDGenerator {
 
     /** The size of the generated usernames. Eight should be plenty. */
-    public static final int SIZE = 8;
+    public static final int SIZE = 10;
 
     /* The characters that can seperate two names. */
     private static Set<Character> seperators = new TreeSet<Character>(
@@ -40,15 +41,39 @@ public class IDGenerator {
      * @param birthday The user's day of birth
      * @return The user's new and unique Bebras ID.
      */
-    public static String generate(String name, Date birthday) {
+    public static String generate(String name, Calendar birthday) {
         name = cleanName(name);
-        UserName generator = new UserName(name);
+        UserName generator;
         String id;
-        do id = generator.next(); while(taken(id) && generator.hasNext());
-        if(! generator.hasNext()) {
-            throw new Exception("Out of usernames, damn."); // TODO with date
+
+        generator = new UserName(name);
+        do id = generator.next();
+            while(taken(id) && generator.hasNext());
+        if(! taken(id)) return id;
+
+        generator = new UserName(name);
+        do id = generator.next() + (birthday.get(Calendar.YEAR) % 100);
+            while(taken(id) && generator.hasNext());
+        if(! taken(id)) return id;
+
+        generator = new UserName(name);
+        do id = generator.next() + (birthday.get(Calendar.DATE));
+            while(taken(id) && generator.hasNext());
+        if(! taken(id)) return id;
+
+        generator = new UserName(name);
+        do id = generator.next() + (birthday.get(Calendar.MONTH) + 1);
+            while(taken(id) && generator.hasNext());
+        if(! taken(id)) return id;
+
+        generator = new UserName(name);
+        int i = 0;
+        while(true) {
+            do id = generator.next() + i;
+                while(taken(id) && generator.hasNext());
+            if(! taken(id)) return id;
+            i++;
         }
-        return name;
     }
 
     public static String cleanName(String name) {
@@ -69,28 +94,35 @@ public class IDGenerator {
         try {
             model = Ebean.find(UserModel.class, id);
         } catch(Exception e) {}
-        return model == null;
+        return model != null;
     }
 
     private static class UserName implements Iterator<String> {
         private String[] parts;
         private int[] lengths;
+        private boolean nextReady;
+        private String next;
         public UserName(String cleanName) {
             parts = cleanName.split(" ");
             lengths = new int[parts.length - 1];
             for(int i = 0; i < lengths.length; i++) lengths[i] = 1;
+            next = makeName();
+            nextReady = true;
         }
         @Override public boolean hasNext() {
-            boolean allFull = true;
-            for(int i = 0; i < lengths.length; i++) {
-                allFull = allFull && (lengths[i] == parts[i].length());
-            }
-            return ! allFull;
+            if(nextReady) return true;
+            int sum = 0;
+            for(int i = 0; i < lengths.length; i++) sum += lengths[i];
+            return sum < SIZE - 1;
         }
         @Override public void remove() {
             throw new UnsupportedOperationException();
         }
         @Override public String next() {
+            if(nextReady) {
+                nextReady = false;
+                return next;
+            }
             int i = 0;
             while(i < lengths.length) {
                 if(lengths[i] < parts[i].length()) {
@@ -107,8 +139,12 @@ public class IDGenerator {
             for(i = 0; i < lengths.length; i++) {
                 name = name + parts[i].substring(0, lengths[i]);
             }
-            if(8 - name.length() > 0) {
-                name = name + parts[i].substring(0, 8 - name.length());
+            if(SIZE - name.length() > 0) {
+                if(parts[i].length() > SIZE - name.length()) {
+                    name = name + parts[i].substring(0, SIZE - name.length());
+                } else {
+                    name = name + parts[i];
+                }
             }
             return name;
         }
