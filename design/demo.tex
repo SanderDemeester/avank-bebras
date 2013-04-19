@@ -1,0 +1,77 @@
+\documentclass[]{article}
+\usepackage[a4paper]{geometry}
+\usepackage[dutch]{babel}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{14pt}
+
+\title{
+    Demo
+}
+
+\begin{document}
+
+\maketitle
+
+\section{Registreren}
+Om te registreren en een Bebras account aan te maken klik je op 'Sign up'. Hierdoor kom je op de pagina om een account aan te maken. Hier vul je de gevraagde velden in zoals daar zijn: naam, e-mailadres en geboortedatum. Je duidt je geslacht aan en kiest de taal die je voorkeur wegdraagt. Onderaan vul je een zelfgekozen wachtwoord in. Dit herhaal je in het veld eronder. Klik dan op 'Maak account'. Je krijgt een Bebras-ID toebedeeld en kan hiermee inloggen.
+Wanneer iemand registreert via dit formulier wordt deze user automatisch ingesteld als independent user.
+Indien een verplicht veld niet is ingevuld, zal je hier een melding van krijgen. 
+
+\section{Inloggen}
+Nu je een Bebras account hebt aangemaakt, kun je ook inloggen. Hiervoor klik je op de startpagina op 'Sign in'. Vul je Bebras-ID en wachtwoord in, klik op 'login' en je bent ingelogd! Als alles goed gaat, zie je nu jouw persoonlijke pagina. In het geval dat je een foute gebruikersnaam of wachtwoord hebt ingevuld, zal je hiervan een melding krijgen.
+
+Om de verschillende types gebruikers te testen, werd de databank handmatig bevolkt met enkele dummy's.
+
+Bebras-ID - Wachtwoord:
+\begin{itemize}
+\item admin - admin
+\item organizer - organizer
+\item teacher - teacher
+\item author - author
+\item pupil - pupil
+\item independent - independent
+\end{itemize}
+
+Anonieme gebruikers kunnen we testen door niet in te loggen.
+
+\section{Uitloggen}
+Om de webapplicatie te verlaten, klik je rechtsbovenaan op je gebruikersnaam. Er zal een menu verschijnen waar je onderaan voor 'Sign out' kunt kiezen.
+
+\section{Vrageneditor}
+
+Deze optie is enkel beschikbaar voor gebruikers die ingelogd zijn als Organizer of hoger (+author).
+
+Om een eigen vraag toe te voegen ga je naar de 'Vraagstukontwerper'. Bij het maken van een vraag, heb je verschillende keuzes. Of je maakt een meerkeuzevraag, of een open vraag. Voor meer ervaren gebruikers is er ook de mogelijkheid een vraag te uploaden in de vorm van een ZIP-bestand.
+
+Wanneer de vraag klaar is kan deze gedownload worden naar een zip file om later weer te kunnen importeren. De vraag kan ook
+gesubmit worden waardoor de organisers deze vraag kunnnen goedkeuren.
+
+\section{Serverbeheer}
+
+Deze pagina geeft een overzicht van de servers die momenteel gebruikt worden om vragen op te slaan.
+Ook kan er een nieuwe server toegevoegd worden.
+
+\section{Vragenbeheer}
+
+\subsection{Goedkeuren van vragen}
+Hier krijg je een overzicht van alle ingediende vragen met vermelding van de auteur en de indiendatum.
+Bij het goedkeuren van een vraag, moet er een officieel ID aan de vraag toegekend worden zodat deze later kan teruggevonden worden.
+Ook kiest men een server waarop de vraag geplaatst wordt en of de vraag momenteel actief is. Eens de vraag goedgekeurd is, wordt
+ze verwijderd uit de voorlopige lijst en toegevoegd aan de officiële lijst van vragen.
+
+\section{Beheer Veelgestelde vragen}
+
+Deze optie is enkel beschikbaar voor admin.
+
+Hier vindt men een overzicht van alle veelgestelde vragen. Admins kunnen de bestaande veelgestelde vragen bewerken en nieuwe vragen toevoegen.
+
+\section{Pas de databank aan}
+Hier kan de admin de links in de hoofding bijwerken. Ook de leeftijdscategorieën en de moeilijkheidsgraden kunnen hier aangepast worden.
+
+\section{Scholen en klassen}
+Een teacher heeft de mogelijkheid om de lijst van scholen en de lijst van klassen te bekijken. Merk op dat er nog een aantal knoppen zijn die niks doen. Deze 
+zullen later nog ge\"implementeerd worden. Ook is het nog niet mogelijk om nieuwe klassen aan te maken. Voor demo
+doeleinden hebben we er echter voor gezorgd dat er gerandomiseerde klassen aangemaakt kunnen worden. 
+
+\end{document}
