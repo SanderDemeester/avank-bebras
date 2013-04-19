@@ -1,0 +1,7 @@
+ALTER TABLE servers ADD COLUMN is_http_secured boolean;
+ALTER TABLE servers ADD COLUMN http_username text;
+ALTER TABLE servers ADD COLUMN http_password text;
+
+ALTER TABLE classes ADD FOREIGN KEY (level) REFERENCES grades;
+
+ALTER TABLE users ADD COLUMN reset_token text;
