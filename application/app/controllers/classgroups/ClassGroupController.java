@@ -119,30 +119,18 @@ public class ClassGroupController extends EController {
 	 * @param id id of the class
 	 * @return an edit page for the class
 	 */
-	public static Result editClass(String id){
+	public static Result editClass(int id){
 		OperationResultInfo ori = new OperationResultInfo();
 		List<Link> bc = getBreadcrumbs();
 		bc.add(new Link(EMessages.get("classes.pupil.title"),"/classes/view/"+id));
 		bc.add(new Link(EMessages.get("classes.edit"),"/classes/view/"+id+"/edit"));
 		
-		//Check if valid id
-		int classID = -1;
-		try{
-			classID  = Integer.parseInt(id);
-		}catch(NumberFormatException nfe){
-			ori.add(EMessages.get("classes.novalidclassid"),OperationResultInfo.Type.ERROR);
-			return ok(
-					views.html.classes.editClass.render(null, bc, ori,id)
-					);
-		}
-		
-		
 		//Check if authorized
-		if(!isAuthorized(classID))return ok(noaccess.render(bc));
+		if(!isAuthorized(id))return ok(noaccess.render(bc));
 		//Get class and fill form
 		ClassGroup cg = null;
 		try{
-			cg = Ebean.find(ClassGroup.class,classID);
+			cg = Ebean.find(ClassGroup.class,id);
 			int temp = cg.id; //will throw exception if null
 		}catch(Exception e){
 			ori.add(EMessages.get("classes.add.error"),OperationResultInfo.Type.ERROR);
@@ -158,23 +146,13 @@ public class ClassGroupController extends EController {
 	 * Saves the updated classgroup
 	 * @return the class page
 	 */
-	public static Result update(String id){
+	public static Result update(int id){
 		List<Link> bc = getBreadcrumbs();
 		bc.add(new Link(EMessages.get("classes.pupil.title"),"/classes/view/"+id));
 		bc.add(new Link(EMessages.get("classes.edit"),"/classes/view/"+id+"/edit"));		
 		OperationResultInfo ori = new OperationResultInfo();
-		//Check if valid class id
-		int classID = -1;
-		try{
-			classID = Integer.parseInt(id);
-		}catch(NumberFormatException nfe){
-			ori.add(EMessages.get("classes.novalidclassid"),OperationResultInfo.Type.ERROR);
-			return ok(
-					views.html.classes.editClass.render(null, bc, ori,id)
-					);
-		}
 		//Check if authorized
-		if(!isAuthorized(classID))return ok(noaccess.render(bc));
+		if(!isAuthorized(id))return ok(noaccess.render(bc));
 		
 		Form<ClassGroup> f = form(ClassGroup.class).bindFromRequest();
 		//Check if form is valid
@@ -182,9 +160,9 @@ public class ClassGroupController extends EController {
 		if(check!=null)return badRequest(views.html.classes.editClass.render(f, bc, check,id));
 		//Retrieve ClassGroup from form and set id to the correct id
 		ClassGroup cg = f.get();
-		cg.id = classID;
+		cg.id = id;
 		try{
-			ClassGroup prevVersion = Ebean.find(ClassGroup.class, classID);
+			ClassGroup prevVersion = Ebean.find(ClassGroup.class, id);
 			int temp = prevVersion.id; //will throw exception if null
 			//Set teacherid to the old teacher id
 			cg.teacherid = prevVersion.teacherid;

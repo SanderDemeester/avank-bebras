@@ -56,7 +56,7 @@ public class MainClassesManager extends Manager<ClassGroup> {
 
 	@Override
 	public Call getEditRoute(String id) {
-		return routes.ClassPupilController.viewClass(id, 0, "name", "asc", "");
+		return routes.ClassPupilController.viewClass(Integer.parseInt(id), 0, "name", "asc", "");
 	}
 
 	@Override

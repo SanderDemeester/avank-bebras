@@ -43,29 +43,18 @@ public class ClassPupilController extends EController {
 	 * @param filter what to filter on
 	 * @return page with info and students
 	 */
-	public static Result viewClass(String id,int page, String orderBy, String order, String filter){
+	public static Result viewClass(int id,int page, String orderBy, String order, String filter){
 		//Setting up template arguments
 		List<Link> breadcrumbs = getBreadCrumbs(id);
 		OperationResultInfo ori = new OperationResultInfo();
 		
-		//Parse ID to int
-		int idInt = -1;
-		try{
-			idInt = Integer.parseInt(id);
-		}catch(NumberFormatException nfe){
-			//Return empty page with error
-			ori.add(EMessages.get("classes.novalidclassid"),OperationResultInfo.Type.ERROR);
-			return ok(
-					classpupilManagement.render(null,null,orderBy,order,filter,breadcrumbs,ori,null)
-					);
-		}
 		//Check if authorized
-		if(!isAuthorized(idInt))return ok(noaccess.render(breadcrumbs));
+		if(!isAuthorized(id))return ok(noaccess.render(breadcrumbs));
 		
 		//Fetch the class
 		ClassGroup cg = null;
 		try{
-			cg = Ebean.find(ClassGroup.class).where().eq("id", idInt).findUnique();
+			cg = Ebean.find(ClassGroup.class).where().eq("id", id).findUnique();
 		}catch(PersistenceException pe) {
 			cg = null;
 		}
@@ -73,8 +62,7 @@ public class ClassPupilController extends EController {
 		DataSet ds = ClassPupilManager.DataSet.ALL;
 		if(cg!=null && cg.isActive())ds=ClassPupilManager.DataSet.ACTIVE;
 		//Configure the manager
-		ClassPupilManager cpm = new ClassPupilManager(idInt, ds,
-				ModelState.READ);
+		ClassPupilManager cpm = new ClassPupilManager(id, ds, ModelState.READ);
 		cpm.setFilter(filter);
 		cpm.setOrder(order);
 		cpm.setOrderBy(orderBy);
@@ -106,27 +94,16 @@ public class ClassPupilController extends EController {
 	 * @param filter what to filer on
 	 * @return page with old pupils
 	 */
-	public static Result viewOldPupils(String id,int page, String orderBy, String order, String filter){
+	public static Result viewOldPupils(int id,int page, String orderBy, String order, String filter){
 		//Setting up template arguments
 		List<Link> breadcrumbs = getBreadCrumbs(id);
 		breadcrumbs.add(new Link(EMessages.get("classes.pupil.oldpupillist"),"/classes/"+id+"/old"));
 		OperationResultInfo ori = new OperationResultInfo();
-			
-		//Parse ID to int
-		int idInt = -1;
-		try{
-			idInt = Integer.parseInt(id);
-		}catch(NumberFormatException nfe){
-			//Show empty page with error
-			ori.add(EMessages.get("classes.novalidclassid"),OperationResultInfo.Type.ERROR);
-			return ok(
-					oldClassPupilManagement.render(null,null,orderBy,order,filter,breadcrumbs,ori)
-					);
-		}
+		
 		//Check if authorized
-		if(!isAuthorized(idInt))return ok(noaccess.render(breadcrumbs));
+		if(!isAuthorized(id))return ok(noaccess.render(breadcrumbs));
 		//Configure manager
-		ClassPupilManager cpm = new ClassPupilManager(idInt, ClassPupilManager.DataSet.NOTACTIVE,
+		ClassPupilManager cpm = new ClassPupilManager(id, ClassPupilManager.DataSet.NOTACTIVE,
 				ModelState.READ);
 		cpm.setFilter(filter);
 		cpm.setOrder(order);
@@ -145,29 +122,18 @@ public class ClassPupilController extends EController {
 		}
 	}
 	
-	public static Result removeStudent(String classID,String pupilID){		
+	public static Result removeStudent(int classID,String pupilID){		
 		//Setting up template arguments
 		List<Link> breadcrumbs = getBreadCrumbs(classID);
 		OperationResultInfo ori = new OperationResultInfo();
 		
-		//Parse ID to int
-		int idInt = -1;
-		try{
-			idInt = Integer.parseInt(classID);
-		}catch(NumberFormatException nfe){
-			//Return empty page with error
-			ori.add(EMessages.get("classes.novalidclassid"),OperationResultInfo.Type.ERROR);
-			return ok(
-					classpupilManagement.render(null,null,"id","asc","",breadcrumbs,ori,null)
-					);
-		}
 		//Check if authorized
-		if(!isAuthorized(idInt))return ok(noaccess.render(breadcrumbs));
+		if(!isAuthorized(classID))return ok(noaccess.render(breadcrumbs));
 		
 		//Do the actual deleting from the class. Needs to be in a transaction
 		Ebean.beginTransaction();
 		try{
-			remove(idInt,pupilID);
+			remove(classID,pupilID);
 			flash("deletesuccess","");
 			Ebean.commitTransaction();
 		}catch(PersistenceException pe){
@@ -185,11 +151,11 @@ public class ClassPupilController extends EController {
 	 * @param id of the classgroup
 	 * @return a form to add an existing student to the classgroup
 	 */
-	public static Result addExistingStudent(String id){
+	public static Result addExistingStudent(int id){
 		List<Link> bc = getBreadCrumbs(id);
 		bc.add(new Link(EMessages.get("classes.pupil.add"),"/classes/"+id+"/add"));
 		OperationResultInfo ori = new OperationResultInfo();
-		//TODO check id and authorized
+		//TODO  authorized
 		Form<IDWrapper> f = new Form<IDWrapper>(IDWrapper.class);
 		return ok(
 				addExistingPupil.render(f, bc, ori, id));
@@ -202,24 +168,13 @@ public class ClassPupilController extends EController {
 	 *            of the classgroup
 	 * @return the page with the list og students
 	 */
-	public static Result saveExisting(String id) {
+	public static Result saveExisting(int id) {
 		// Initialize template arguments
 		List<Link> bc = getBreadCrumbs(id);
 		OperationResultInfo ori = new OperationResultInfo();
-		// Check if valid id
-		int classID = -1;
-		try {
-			classID = Integer.parseInt(id);
-		} catch (NumberFormatException nfe) {
-			//Return empty page with error
-			ori.add(EMessages.get("classes.novalidclassid"),OperationResultInfo.Type.ERROR);
-			return ok(
-					classpupilManagement.render(null,null,"id","asc","",bc,ori,null)
-					);
-		}
-
+		
 		// Check if authorized
-		if (!isAuthorized(classID))
+		if (!isAuthorized(id))
 			return ok(noaccess.render(bc));
 
 		// Retrieve form
@@ -255,7 +210,7 @@ public class ClassPupilController extends EController {
 			return badRequest(addExistingPupil.render(f, bc, ori, id));
 		}
 		// Check if pupil is already in the class
-		if ( um.classgroup!=null && um.classgroup == classID) {
+		if ( um.classgroup!=null && um.classgroup == id) {
 			ori.add(EMessages
 				.get("classes.pupil.add.useralreadyinclass"),
 				OperationResultInfo.Type.WARNING);
@@ -264,10 +219,8 @@ public class ClassPupilController extends EController {
 		//Actually save the linking
 		Ebean.beginTransaction();
 		try {
-			add(classID, um.id);
-			Ebean.commitTransaction();
-			
-			
+			add(id, um.id);
+			Ebean.commitTransaction();			
 		} catch (PersistenceException pe) {
 			// Saving/retrieval failed, show error
 			Ebean.rollbackTransaction();
@@ -296,7 +249,7 @@ public class ClassPupilController extends EController {
 	 * @param id id of the class
 	 * @return the basic breadcrumbs
 	 */
-	protected static List<Link> getBreadCrumbs(String id){
+	protected static List<Link> getBreadCrumbs(int id){
 		ArrayList<Link> res = new ArrayList<Link>();
 		res.add(new Link("Home","/"));
 		res.add(new Link(EMessages.get("classes.list"),"/classes"));
