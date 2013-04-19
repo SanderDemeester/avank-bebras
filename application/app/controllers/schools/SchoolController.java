@@ -4,7 +4,6 @@
 package controllers.schools;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
@@ -40,9 +39,6 @@ public class SchoolController extends EController {
 	 *         No Access page if user is not teacher.
 	 */
 	public static Result viewSchools(int page, String orderBy, String order, String filter) {
-		// TODO: possible improvement: use DMTV (or at least make it look
-		// similar)
-
 		// Generate breadcrumbs & template arguments
 		ArrayList<Link> breadcrumbs = getBreadcrumbs();
 		if (!isAuthorized())
@@ -133,10 +129,11 @@ public class SchoolController extends EController {
 		bc.add(new Link(EMessages.get("schools.edit"), "/schools/"+id));
 		//TODO comments
 				
-		if(!isAuthorized(id))return TODO; //TODO
+		if(!isAuthorized(id))return ok(noaccess.render(bc));
 		
 		try{
 			SchoolModel sm = Ebean.find(SchoolModel.class, id);
+			@SuppressWarnings("unused")
 			int temp = sm.id; //will throw exception if null
 			Form<SchoolModel> f = form(SchoolModel.class).bindFromRequest().fill(sm);
 			return ok(editSchool.render(id, f, bc, ori));
@@ -157,11 +154,13 @@ public class SchoolController extends EController {
 		bc.add(new Link(EMessages.get("schools.edit"), "/schools/"+id));
 		//TODO comments
 			
-		if(!isAuthorized(id))return TODO; //TODO
+		if(!isAuthorized(id))return ok(noaccess.render(bc));
 		
 		Form<SchoolModel> f = form(SchoolModel.class).bindFromRequest();
-		if(f.hasErrors())return TODO; //TODO
-		
+		if(f.hasErrors()){
+			ori.add(EMessages.get("schools.error.notcomplete"), OperationResultInfo.Type.WARNING);
+			return badRequest(editSchool.render(id, f, bc, ori));
+		}		
 		try{
 			SchoolModel old = Ebean.find(SchoolModel.class, id);
 			SchoolModel neww = f.get();
@@ -170,11 +169,9 @@ public class SchoolController extends EController {
 			neww.update();
 			return redirect(routes.SchoolController.viewSchools(0,"name","asc",""));
 		}catch(Exception e){
-			//TODO
-			return TODO;
-		}
-		
-		
+			ori.add(EMessages.get("schools.error.savefail"), OperationResultInfo.Type.ERROR);
+			return badRequest(editSchool.render(id, f, bc, ori));
+		}		
 	}
 
 	/**
