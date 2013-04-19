@@ -1,0 +1,49 @@
+@**************************************************************
+* Template for creating a adding a question to a question set *
+*                                                             *
+* author: Kevin Stobbelaar                                    *
+**************************************************************@
+
+@(qsqForm: Form[models.dbentities.QuestionSetQuestion], qsid: String, breadcrumbs : List[models.data.Link])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import models.EMessages
+@import views.html.commons.showflash
+
+@main(EMessages.get("question.questionset.addquestion.title"), breadcrumbs){
+
+<div class="row">
+
+    <div class="span4">
+
+    </div>
+
+    <div class="span8">
+        <h3> @EMessages.get("question.questionset.addquestion.title") </h3>
+
+        @form(controllers.question.routes.QuestionSetController.updateQuestions(qsid)) {
+
+            @showflash()
+
+            <fieldset>
+
+                @inputText(qsqForm("qid"), '_label -> EMessages.get("question.questionset.addquestion.id"), '_showConstraints -> false)
+
+                @select(
+                    qsqForm("difficulty"),
+                    options = options(models.data.DataHandler.getDifficulties().toList.map(_.id)),
+                    '_label -> EMessages.get("question.questionset.form.difficulty"),
+                    '_showConstraints -> false
+                )
+
+            </fieldset>
+
+            <div class="actions">
+                <input type="submit" value="@EMessages.get("forms.submit")" class="btn primary">
+                <a href="@controllers.question.routes.QuestionSetController.list(qsid, 0, "", "", "")" class="btn"> @EMessages.get("forms.cancel")</a>
+            </div>
+        }
+
+    </div>
+}

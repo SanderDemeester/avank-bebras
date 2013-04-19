@@ -122,11 +122,4 @@ public class SchoolModel extends ManageableModel implements Comparable<SchoolMod
 		return Integer.toString(id);
 	}
 
-	
-	
-	
-	
-	
-	
-
 }
