@@ -47,7 +47,7 @@ public class SchoolManager extends Manager<SchoolModel> {
 
 	@Override
 	public Call getEditRoute(String id) {
-		return routes.SchoolController.edit(id);
+		return routes.SchoolController.edit(Integer.parseInt(id));
 	}
 
 	@Override

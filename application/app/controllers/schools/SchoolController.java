@@ -30,6 +30,7 @@ import controllers.EController;
 
 /**
  * @author Jens N. Rammant
+ * TODO try to shorten class some more
  */
 public class SchoolController extends EController {
 
@@ -126,23 +127,16 @@ public class SchoolController extends EController {
 	 * @param id of the school
 	 * @return edit page for the school
 	 */
-	public static Result edit(String id){
+	public static Result edit(int id){
 		OperationResultInfo ori = new OperationResultInfo();
 		List<Link> bc = getBreadcrumbs();
 		bc.add(new Link(EMessages.get("schools.edit"), "/schools/"+id));
 		//TODO comments
-		int schoolID = -1;
-		try{
-			schoolID = Integer.parseInt(id);
-		}catch(NumberFormatException nfe){
-			//TODO
-			return TODO;
-		}
-		
-		if(!isAuthorized(schoolID))return TODO; //TODO
+				
+		if(!isAuthorized(id))return TODO; //TODO
 		
 		try{
-			SchoolModel sm = Ebean.find(SchoolModel.class, schoolID);
+			SchoolModel sm = Ebean.find(SchoolModel.class, id);
 			int temp = sm.id; //will throw exception if null
 			Form<SchoolModel> f = form(SchoolModel.class).bindFromRequest().fill(sm);
 			return ok(editSchool.render(id, f, bc, ori));
@@ -157,27 +151,21 @@ public class SchoolController extends EController {
 	 * @param id of the school
 	 * @return	list of schools page
 	 */
-	public static Result update(String id){
+	public static Result update(int id){
 		OperationResultInfo ori = new OperationResultInfo();
 		List<Link> bc = getBreadcrumbs();
 		bc.add(new Link(EMessages.get("schools.edit"), "/schools/"+id));
 		//TODO comments
-		int schoolID = -1;
-		try{
-			schoolID = Integer.parseInt(id);
-		}catch(NumberFormatException nfe){
-			//TODO
-			return TODO;
-		}		
-		if(!isAuthorized(schoolID))return TODO; //TODO
+			
+		if(!isAuthorized(id))return TODO; //TODO
 		
 		Form<SchoolModel> f = form(SchoolModel.class).bindFromRequest();
 		if(f.hasErrors())return TODO; //TODO
 		
 		try{
-			SchoolModel old = Ebean.find(SchoolModel.class, schoolID);
+			SchoolModel old = Ebean.find(SchoolModel.class, id);
 			SchoolModel neww = f.get();
-			neww.id = schoolID;
+			neww.id = id;
 			neww.orig = old.orig;
 			neww.update();
 			return redirect(routes.SchoolController.viewSchools(0,"name","asc",""));
