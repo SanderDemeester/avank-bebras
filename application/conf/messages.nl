@@ -196,7 +196,6 @@ faq.list.error = Er is iets misgelopen tijdens het ophalen van de lijst.
 info.info = Info
 info.warning = Waarschuwing
 info.error = Error
-info.success = Success
 info.success = Succes
 info.successedit = Uw informatie is aangepast!
 

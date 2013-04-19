@@ -71,7 +71,6 @@ forms.update = Update
 forms.uploadFile = Upload file
 forms.title = Title
 forms.error = Please fix all errors.
-forms.update = Update
 forms.open = Open
 forms.unknownError = An error occured.
 forms.add = Add
