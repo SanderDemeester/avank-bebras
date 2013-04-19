@@ -22,6 +22,7 @@ import models.EMessages;
 import models.data.Link;
 import models.dbentities.UserModel;
 import models.user.AuthenticationManager;
+import models.user.Gender;
 import models.user.UserType;
 
 import views.html.landing_page;
