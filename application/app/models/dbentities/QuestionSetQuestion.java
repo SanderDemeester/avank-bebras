@@ -1,11 +1,11 @@
 package models.dbentities;
 
+import com.avaje.ebean.validation.NotNull;
+import models.management.Editable;
 import models.management.ManageableModel;
+import models.question.Server;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Database entity for question set questions.
@@ -19,8 +19,10 @@ public class QuestionSetQuestion extends ManageableModel {
 
     private static final long serialVersionUID = 2L;
 
-    @Id
-    public String qsid;
+    @ManyToOne
+    @NotNull
+    @JoinColumn(name="qsid")
+    public QuestionSetModel questionSet;
 
     @Id
     public int qid;
@@ -34,7 +36,7 @@ public class QuestionSetQuestion extends ManageableModel {
      */
     @Override
     public String[] getFieldValues() {
-        String[] result = {"" + qid, qsid, difficulty};
+        String[] result = {"" + qid, questionSet.name, difficulty};
         return result;
     }
 

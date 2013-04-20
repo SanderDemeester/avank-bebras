@@ -1,8 +1,10 @@
 package controllers.question;
 
+import com.avaje.ebean.Ebean;
 import controllers.EController;
 import models.EMessages;
 import models.data.Link;
+import models.dbentities.CompetitionModel;
 import models.dbentities.QuestionSetModel;
 import models.dbentities.QuestionSetQuestion;
 import models.management.ModelState;
@@ -76,7 +78,7 @@ public class QuestionSetController extends EController {
         questionSetModel.id = questionSetId;
         // TODO check of deze question set actief gezet mag worden !
         // TODO opvangen dat wanneer er op Cancel wordt gedrukt, de contest terug verwijderd wordt uit de database!
-        questionSetModel.contid = contestid;
+        questionSetModel.contest = Ebean.find(CompetitionModel.class).where().ieq("id", contestid).findUnique();
         questionSetModel.save();
         return redirect(controllers.question.routes.QuestionSetController.list(questionSetId, 0, "", "", ""));
     }
@@ -135,7 +137,7 @@ public class QuestionSetController extends EController {
             return badRequest(views.html.question.questionset.addQuestion.render(form, questionSetId, breadcrumbs));
         }
         QuestionSetQuestion questionSetQuestion = form.get();
-        questionSetQuestion.qsid = questionSetId;
+        questionSetQuestion.questionSet = Ebean.find(QuestionSetModel.class).where().ieq("id", questionSetId).findUnique();
         int questionId = questionSetQuestion.qid;
         QuestionManager questionManager = new QuestionManager(ModelState.READ);
         if (questionManager.getFinder().byId("" + questionId) == null){
