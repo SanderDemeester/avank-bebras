@@ -1,5 +1,7 @@
-@(breadcrumbs : List[models.data.Link],  inf : models.util.OperationResultInfo , 
-schools : List[models.dbentities.SchoolModel])
+@(currentPage: Page[models.dbentities.SchoolModel], manager: models.management.Manager[_], currentOrderBy: String,
+    currentOrder: String, currentFilter: String , breadcrumbs : List[models.data.Link],  inf : models.util.OperationResultInfo)
+
+@import views.html.management.list
 
 @main(EMessages.get("schools.title"),breadcrumbs){
 	@commons.info(inf)
@@ -9,17 +11,11 @@ schools : List[models.dbentities.SchoolModel])
         </div>
     } 
 	@EMessages.get("schools.listtext")<br><br>
-	<a class="btn btn-primary" href="/schools/new"> @EMessages.get("schools.add") </a><br><br>
-	<table  class="table">
-	<tr>
-		<th>@EMessages.get("schools.table.id")</th>
-		<th>@EMessages.get("schools.table.name")</th>
-		<th>@EMessages.get("schools.table.address")</th>
-	</tr>
-	@for(sch <- schools){
-		<tr>
-			<td>@sch.id</td><td>@sch.name</td><td>@sch.address</td>
-		</tr>
-	}
-	</table>
+	
+	@* If currentPage is null, do not display the list *@
+
+    @if(currentPage!=null){
+       	@list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
+    }
+	
 }

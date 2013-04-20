@@ -23,7 +23,9 @@ import com.avaje.ebean.Ebean;
 public class Teacher extends SuperUser{
 
     public Teacher(UserModel data) {
-        super(data, UserType.TEACHER);        
+        super(data, UserType.TEACHER);
+        ROLES.add(Role.MANAGECONTESTS);
+
         ROLES.add(Role.MANAGESCHOOLS);
         ROLES.add(Role.MANAGECLASSES);
     }
@@ -45,6 +47,7 @@ public class Teacher extends SuperUser{
      * @return A view to manageCompetitions.
      */
     public Result manageCompetitions(){
+    	//TODO
         return null;
     }
     /*

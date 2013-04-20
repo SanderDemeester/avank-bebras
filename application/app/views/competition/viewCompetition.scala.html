@@ -1,0 +1,59 @@
+@*******************************************
+* View contest page                        *
+*                                          *
+* author: Kevin Stobbelaar                 *
+*******************************************@
+
+@(breadcrumbs : List[models.data.Link], currentPage: Page[_ <: models.management.ManageableModel],
+QSmanager: models.management.Manager[_], currentOrderBy: String, currentOrder: String, currentFilter: String,
+modelForm: Form[_ <: models.management.ManageableModel], Cmanager: models.management.Manager[_])
+
+@import models.EMessages
+@import views.html.management.list
+@import helper._
+@import helper.twitterBootstrap._
+@import views.html.commons.showflash
+@import views.html.competition.contestFormFields
+
+@main(EMessages.get("competition.edit"), breadcrumbs) {
+
+    <div class="row-fluid">
+
+        <div class="span4">
+
+            <div class="well">
+                <h4> @EMessages.get("competition.view.edit") </h4>
+            </div>
+
+            <div>
+                @if(flash.containsKey("competition-error")) {
+                    <div class="alert alert-error">
+                        <strong>Error!</strong> @flash.get("competition-error")
+                    </div>
+                }
+
+                @form(Cmanager.getUpdateRoute()) {
+
+                    @contestFormFields(modelForm)
+
+                    <div class="actions">
+                        <input type="submit" value="@EMessages.get("forms.update")" class="btn btn-primary">
+                    </div>
+                }
+            </div>
+
+        </div>
+
+        <div class="span8">
+            <div class="well">
+                <h4> @EMessages.get("competition.view.qs") </h4>
+            </div>
+
+            <div>
+                @list(currentPage, QSmanager, currentOrderBy, currentOrder, currentFilter)
+            </div>
+        </div>
+
+    </div>
+
+}

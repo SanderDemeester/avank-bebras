@@ -18,6 +18,7 @@ public class Organizer extends SuperUser{
         super(data, type);
         ROLES.add(Role.MANAGEQUESTIONS);
         ROLES.add(Role.MANAGESERVERS);
+        ROLES.add(Role.MANAGECONTESTS);
     }
 
     public Organizer(UserModel data) {

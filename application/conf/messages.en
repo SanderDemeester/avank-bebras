@@ -50,6 +50,8 @@ links.datamanager.title = Manipulate the database
 links.datamanager.links = Manage navigation bar links
 links.datamanager.diffs = Manage the difficulty levels
 links.datamanager.grades = Manage the student grades
+links.contestmanager.title = Contest management
+links.contestmanager.overview = Contest overview
 
 # Forms
 forms.cancel = Cancel
@@ -73,6 +75,7 @@ forms.error = Please fix all errors.
 forms.open = Open
 forms.unknownError = An error occured.
 forms.add = Add
+forms.error.dates = Please pick a end time that is after the chosen start time.
 
 # Question
 question.editor.name = Question Editor
@@ -118,6 +121,28 @@ question.factory.error.moreThanOneCorrectAnswers = The answers for language {0} 
 question.factory.error.invalidRegex = Invalid regular expression found in language {0}
 question.factory.error.invalidUpload = Your upload was invalid
 
+question.questionset.name = Question sets
+question.questionset.create.breadcrumb = New question set
+question.questionset.create = Create new question set!
+question.questionset.create.title = Create question set.
+question.questionset.create.step2 = Step 2: Question Set Information
+question.questionset.create.name = Name of new question set:
+question.questionset.create.level = Level of new question set:
+question.questionset.create.active = Check this box to make the question set active.
+question.questionset.overview = Question set overview
+question.questionset.addquestion = Add question to set
+question.questionset.form.difficulty = Difficulty
+question.questionset.addquestion.title = Add new question to the question set.
+question.questionset.addquestion.id = Id of the question:
+question.questionset.addquestion.brcr = Add
+question.questionset.manager.form.level = Level
+question.questionset.manager.form.name = Name
+question.questionset.manager.form.active = Active
+question.questionset.overview.questions = This question set contains the following questions:
+question.questionset.overview.basic = Edit question set information.
+question.questionset.form.qid = Question id
+question.questionset.form.qsid = Question set id
+
 # Languages
 languages.language = Language
 languages.languages = Languages
@@ -130,11 +155,11 @@ login.bebras_ID = Bebras ID
 
 # Register
 register.name = Full name
-register.email = Email;
-register.bday = Birthday:
-register.gender = Gender:
-register.preflan = Preferred language:
-register.password = Password:
+register.email = Email
+register.bday = Birthday
+register.gender = Gender
+register.preflan = Preferred language
+register.password = Password
 register.confirm_password = Confirm Password
 register.create_account = Create Account
 register.bebras_id_message = Your Bebras ID is: 
@@ -142,6 +167,10 @@ register.inlog_message = You may login with your ID and password.
 register.title = Register
 register.same_email = There is already a user with the selected email address.
 register.giveinfo = Please enter an ID and password.
+register.password_mismatch = Password did not match.
+register.Male = Male
+register.Female = Female
+register.Other = Other
 
 # Forgot pwd
 forgot_pwd.forgot_pwd = Forgot password
@@ -222,22 +251,39 @@ competition.create.type = Type of new contest:
 competition.create.end = End time of new contest:
 competition.create.start = Start time of new contest:
 competition.create.active = Check this box to make the contest active.
+competition.manager.form.name = Name
+competition.manager.form.type = Type
+competition.manager.form.active = Active
+competition.manager.form.starttime = Start time
+competition.manager.form.endtime = End time
+competition.manager.form.creator = Creator
+competition.view.edit = Edit contest information.
+competition.view.qs = Question sets for this contest:
+competition.edit = Edit contest
+competition.edit.breadcrumb = Edit
+competition.overview = Contest overview.
+competition.overview.info = On this page, you can view contest which are open for you. You can create new contests or edit an existing contest.
 
 
 # schools
 schools.title = List of Schools
 schools.listtext = This is the list of schools you either created or are/were associated with via a class.
-schools.table.id = id
-schools.table.name = Name
-schools.table.address = Address
+schools.form.id = id
+schools.form.name = Name
+schools.form.address = Address
 schools.add = Add a new school
 schools.error.notcomplete = Please fill in all required fields
-schools.error.savefail = Could not save the new school. Please try again (later).
+schools.error.savefail = Could not save the school. Please try again (later).
 schools.list.error = Could not retrieve the list of schools. Please try again (later).
 schools.add.info = This is supposed to be used for adding schools that are NOT in the system yet. If the school is already in the system, ask a someone at the school for the ID. Do NOT add duplicate schools. The school will show up in the list if you are associated with a class from that school (in the system).
-school.new.name = New school''s name
-school.new.address = New school''s address
+school.name = School''s name
+school.address = School''s address
 schools.add.success = School succesfully saved. ID: 
+schools.edit = Edit a school.
+schools.table.id = id
+schools.table.name = Name
+schools.table.name = Address
+schools.error = Something went wrong. Try again (later).
 
 
 
@@ -363,15 +409,16 @@ classes.pupil.delete.success = Removal was successful.
 classes.pupil.delete.error = Something went wrong during the deleting. Try again (later).
 
 classes.add = Add a new class
-class.new.name = New class''s name
-class.new.school = New class''s school
-class.new.level = New class''s level
-class.new.expdate.format = Date format
-class.new.expdate = New class''s expiration date
+class.name = Class''s name
+class.school = Class''s school
+class.level = Class''s level
+class.expdate.format = Date format
+class.expdate = Class''s expiration date
 classes.add.notcomplete = Please fill in all required fields.
 classes.add.noschool = There is no school with that ID.
 classes.add.nograde = There is no level with that name. 
 classes.add.error = Something went wrong with the database. Try again later.
+classes.edit = Edit a class.
 
 # User
 user.pip.settings = Settings

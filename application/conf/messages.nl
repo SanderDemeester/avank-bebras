@@ -50,6 +50,8 @@ links.datamanager.title = Pas de databank aan
 links.datamanager.links = Wijzig de navigatiebalk
 links.datamanager.diffs = Wijzig de moeilijkheidsgraden
 links.datamanager.grades = Wijzig de graden voor studenten
+links.contestmanager.title = Competitie beheer
+links.contestmanager.overview = Competitie overzicht
 
 # Forms
 forms.cancel = Annuleer
@@ -73,6 +75,7 @@ forms.error = Gelieve alle fouten te verbeteren.
 forms.open = Open
 forms.unknownError = Er is een interne fout opgetreden.
 forms.add = Voeg toe
+forms.error.dates = Gelieve een eindtijdstip te kiezen dat na het gekozen starttijdstip valt.
 
 # Question
 question.editor.name = Vraagstukontwerper
@@ -117,6 +120,28 @@ question.factory.error.moreThanOneCorrectAnswers = Voor de vraag in het {0} zijn
 question.factory.error.invalidRegex = De vraag bevat een foutieve reguliere expressie in het {0}.
 question.factory.error.invalidUpload = Uw bestand is ongeldig
 
+question.questionset.name = Vragenbundels.
+question.questionset.create.breadcrumb = Niewe vragenbundel
+question.questionset.create = Maak een nieuwe vragenbundel aan!
+question.questionset.create.title = Maak een nieuwe vragenbundel aan.
+question.questionset.create.step2 = Stap 2: Vragenbundel informatie.
+question.questionset.create.name = Naam van de vragenbundel:
+question.questionset.create.level = Niveau van de vragenbundel:
+question.questionset.create.active = Vink aan om deze vragenbundel actief te maken.
+question.questionset.overview = Vragenbundel overzicht.
+question.questionset.addquestion = Voeg een vraag toe aan de bundel.
+question.questionset.form.difficulty = Moeilijkheidsgraad
+question.questionset.addquestion.title = Voeg een nieuwe vraag toe aan de bundel.
+question.questionset.addquestion.id = Id van de vraag:
+question.questionset.addquestion.brcr = Voeg toe
+question.questionset.manager.form.level = Niveau
+question.questionset.manager.form.name = Naam
+question.questionset.manager.form.active = Actief
+question.questionset.overview.questions = Deze vragenbundel bevat de volgende vragen:
+question.questionset.overview.basic = Bewerk vragenbundel:
+question.questionset.form.qid = Vraag id
+question.questionset.form.qsid = Vragenbundel id
+
 # Languages
 languages.language = Taal
 languages.languages = Talen
@@ -129,11 +154,11 @@ login.bebras_ID = Bebras ID
 
 # Register
 register.name = Volledige naam 
-register.email = Email:
-register.bday = Geboortedag:
-register.gender = Geslacht:
-register.preflan = Gewenste taal:
-register.password = Wachtwoord:
+register.email = Email
+register.bday = Geboortedag
+register.gender = Geslacht
+register.preflan = Gewenste taal
+register.password = Wachtwoord
 register.confirm_password = Bevestig password
 register.create_account = Maak account
 register.bebras_id_message = Uw Bebras ID is: 
@@ -141,6 +166,10 @@ register.inlog_message = U kan inloggen me uw ID en wachtwoord.
 register.title = Registreer
 register.same_email = Er is al een gebruiker met het zelfde email addres.
 register.giveinfo = Geef uw Bebras ID en wachtwoord in.
+register.password_mismatch = Wachtwoorden zijn niet aan elkaar gelijk.
+register.Male = Man
+register.Female = Vrouw
+register.Other = Andere
 
 # Forgot pwd
 forgot_pwd.forgot_pwd = Wachtwoord vergeten
@@ -213,30 +242,47 @@ management.confirmDelete = Ben je zeker dat je deze record wilt verwijderen?
 
 # competition
 competition.name = Competities
-competition.create.breadcrumb = Niewe competitie
-competition.create = Maak een nieuwe competitie aan!
-competition.create.title = Creëer competitie.
-competition.create.step1 = Step 1: Competitie info.
-competition.create.name = Naam van de nieuwe competitie:
-competition.create.type = Type van de nieuwe competitie:
-competition.create.end = Eind tijdstip van de nieuwe competitie:
-competition.create.start = Start tijdstip van de nieuwe competitie:
-competition.create.active = Vink aan om de competitie actief te maken.
+competition.create.breadcrumb = Nieuwe competitie
+competition.create = Maak een nieuwe competitie aan.
+competition.create.title = Maak een nieuwe competitie aan.
+competition.create.step1 = Stap 1: Competitie informatie:
+competition.create.name = Naam van de competitie:
+competition.create.type = Type van de competitie:
+competition.create.end = Eindtijdstip van de competitie:
+competition.create.start = Starttijdstip van de competitie:
+competition.create.active = Vink aan om deze competitie actief te maken.
+competition.manager.form.name = Naam
+competition.manager.form.type = Type
+competition.manager.form.active = Actief
+competition.manager.form.starttime = Starttijdstip
+competition.manager.form.endtime = Eindtijdstip
+competition.manager.form.creator = Auteur
+competition.view.edit = Bewerk de competitie:
+competition.view.qs = Vragenbundels voor deze competitie:
+competition.edit = Bewerk competitie
+competition.edit.breadcrumb = Bewerk
+competition.overview = Competitie overzicht
+competition.overview.info = Op deze pagina, kan je de voor jouw zichtbare competities bekijken. Je kan nieuwe competities aanmaken of een al bestaande competitie aanpassen.
 
 # schools
 schools.title = Lijst van Scholen
 schools.listtext = Dit is de lijst van scholen die u ofwel aangemaakt hebt of aan verbonden bent/was via een klas.
-schools.table.id = id
-schools.table.name = Naam
-schools.table.address = Adres
+schools.form.id = id
+schools.form.name = Naam
+schools.form.address = Adres
 schools.add = Voeg een nieuwe school toe.
 schools.error.notcomplete = Gelieve alle verplichte velden in te vullen.
 schools.error.savefail = De school kon niet opgeslaan worden. Probeer opniew (later).
 schools.list.error = De lijst van scholen kon niet opgevraagd worden. Probeer opnieuw (later).
 schools.add.info = Dit is bedoeld om scholen toe te voegen die nog NIET in het systeem zitten. Als de school al in het systeem zit, gelieve iemand op de school om het ID te vragen. Voeg GEEN dubbele scholen toe. De school zal verschijnen in uw lijst als u (in het systeem) verbonden bent met een klas op die school.
-school.new.name = Naam van de nieuwe school
-school.new.address = Adres van de nieuwe school
+school.name = Naam van de school
+school.address = Adres van de school
 schools.add.success = Opslaan van school was succesvol. ID: 
+schools.edit = Bewerk een school.
+schools.table.id = id
+schools.table.name = Naam
+schools.table.name = Adres
+schools.error = Er is een fout opgetreden. Probeer opnieuw (later).
 
 # server management
 servers.form.id = Server naam
@@ -256,7 +302,6 @@ servers.success.added = Server {0} is aangemaakt
 servers.success.edited = Server {0} is aangepast
 servers.success.removed = Server {0} is verwijderd
 
-# question management
 questions.form.author = Auteur
 questions.form.officialid = Officieel ID
 questions.form.path = ??Padnaam??
@@ -354,15 +399,16 @@ classes.pupil.delete.success = Verwijderen was successvol.
 classes.pupil.delete.error = Er liep iets mis tijdens het verwijderen. Probeer opnieuw later.
 
 classes.add = Voeg een nieuwe klas toe
-class.new.name = Naam van de nieuwe klas
-class.new.school = School van de nieuwe klas
-class.new.level = Level van de nieuwe klas
-class.new.expdate.format = Datum formaat
-class.new.expdate = Vervallingsdatum van de nieuwe klas
+class.name = Naam van de klas
+class.school = School van de klas
+class.level = Level van de klas
+class.expdate.format = Datum formaat
+class.expdate = Vervallingsdatum van de klas
 classes.add.notcomplete = Gelieve alle verplichte velden in te vullen.
 classes.add.noschool = Er is geen school met dat ID
 classes.add.nograde = Er is geen level met die naam.
 classes.add.error = Er is iets misgelopen met de databank. Probeer opnieuw (later).
+classes.edit = Pas een klas aan.
 
 # User
 user.pip.settings = Instellingen
