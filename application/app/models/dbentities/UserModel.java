@@ -25,7 +25,7 @@ import models.EMessages;
 
 /**
  * @author Jens N. Rammant
- *
+ * TODO check the date formats
  */
 @Entity
 @Table(name="users")

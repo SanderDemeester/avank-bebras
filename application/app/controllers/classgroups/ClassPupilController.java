@@ -30,7 +30,7 @@ import controllers.classgroups.ClassPupilManager.DataSet;
 
 /**
  * @author Jens N. Rammant
- * TODO split in multiple classes, confirmation screen, emessages
+ * TODO split in multiple classes, confirmation screen
  */
 public class ClassPupilController extends EController {
 	
@@ -127,7 +127,7 @@ public class ClassPupilController extends EController {
 			idInt = Integer.parseInt(id);
 		}catch(NumberFormatException nfe){
 			//Show empty page with error
-			ori.add(EMessages.get("classes.pupil.novalidclassid"),OperationResultInfo.Type.ERROR);
+			ori.add(EMessages.get("classes.novalidclassid"),OperationResultInfo.Type.ERROR);
 			return ok(
 					oldClassPupilManagement.render(null,null,orderBy,order,filter,breadcrumbs,ori)
 					);
