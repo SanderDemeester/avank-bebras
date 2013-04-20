@@ -4,14 +4,16 @@
 package controllers.schools;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
 
+import com.avaje.ebean.Ebean;
+
 import models.EMessages;
 import models.data.Link;
 import models.dbentities.SchoolModel;
+import models.management.ModelState;
 import models.user.AuthenticationManager;
 import models.user.Teacher;
 import models.user.UserType;
@@ -21,11 +23,13 @@ import play.mvc.Result;
 import play.mvc.Results;
 import views.html.commons.noaccess;
 import views.html.schools.addschool;
+import views.html.schools.editSchool;
 import views.html.schools.schools;
 import controllers.EController;
 
 /**
  * @author Jens N. Rammant
+ * TODO try to shorten class some more
  */
 public class SchoolController extends EController {
 
@@ -34,30 +38,23 @@ public class SchoolController extends EController {
 	 * @return a page of all the schools the teacher is somehow associated with.
 	 *         No Access page if user is not teacher.
 	 */
-	public static Result viewSchools() {
-		// TODO: possible improvement: use DMTV (or at least make it look
-		// similar)
-
+	public static Result viewSchools(int page, String orderBy, String order, String filter) {
 		// Generate breadcrumbs & template arguments
 		ArrayList<Link> breadcrumbs = getBreadcrumbs();
 		if (!isAuthorized())
 			return ok(noaccess.render(breadcrumbs));
 		OperationResultInfo ori = new OperationResultInfo();
 
-		// Retrieve list of schools
-		ArrayList<SchoolModel> list = new ArrayList<SchoolModel>();
-		Teacher t = getTeacher();
-		try {
-			list.addAll(t.getSchools());
-		} catch (PersistenceException pe) {
-			// Could not retrieve list of schools, add error
-			list.clear();
-			ori.add(EMessages.get("schools.list.error"),
-					OperationResultInfo.Type.ERROR);
+		SchoolManager sm = new SchoolManager(ModelState.READ, getTeacher().getID());
+		sm.setFilter(filter);
+		sm.setOrder(order);
+		sm.setOrderBy(orderBy);
+		try{
+			return ok(schools.render(sm.page(page), sm, orderBy, order,filter, breadcrumbs, ori));
+		}catch(PersistenceException pe){
+			ori.add(EMessages.get("schools.list.error"),OperationResultInfo.Type.ERROR);
+			return ok(schools.render(null, sm, orderBy, order,filter, breadcrumbs, ori));
 		}
-		// Sort the list of schools
-		Collections.sort(list);
-		return ok(schools.render(breadcrumbs, ori, list));
 	}
 
 	/**
@@ -118,8 +115,63 @@ public class SchoolController extends EController {
 		flash("success", Integer.toString(m.id)); // Show id of newly created
 													// school in message
 		return Results.redirect(controllers.schools.routes.SchoolController
-				.viewSchools());
+				.viewSchools(0,"name","asc",""));
 
+	}
+	/**
+	 * 
+	 * @param id of the school
+	 * @return edit page for the school
+	 */
+	public static Result edit(int id){
+		OperationResultInfo ori = new OperationResultInfo();
+		List<Link> bc = getBreadcrumbs();
+		bc.add(new Link(EMessages.get("schools.edit"), "/schools/"+id));
+		//TODO comments
+				
+		if(!isAuthorized(id))return ok(noaccess.render(bc));
+		
+		try{
+			SchoolModel sm = Ebean.find(SchoolModel.class, id);
+			@SuppressWarnings("unused")
+			int temp = sm.id; //will throw exception if null
+			Form<SchoolModel> f = form(SchoolModel.class).bindFromRequest().fill(sm);
+			return ok(editSchool.render(id, f, bc, ori));
+		}catch(Exception e){
+			//TODO
+			return TODO;
+		}
+		
+	}
+	/**
+	 * saves the updated school
+	 * @param id of the school
+	 * @return	list of schools page
+	 */
+	public static Result update(int id){
+		OperationResultInfo ori = new OperationResultInfo();
+		List<Link> bc = getBreadcrumbs();
+		bc.add(new Link(EMessages.get("schools.edit"), "/schools/"+id));
+		//TODO comments
+			
+		if(!isAuthorized(id))return ok(noaccess.render(bc));
+		
+		Form<SchoolModel> f = form(SchoolModel.class).bindFromRequest();
+		if(f.hasErrors()){
+			ori.add(EMessages.get("schools.error.notcomplete"), OperationResultInfo.Type.WARNING);
+			return badRequest(editSchool.render(id, f, bc, ori));
+		}		
+		try{
+			SchoolModel old = Ebean.find(SchoolModel.class, id);
+			SchoolModel neww = f.get();
+			neww.id = id;
+			neww.orig = old.orig;
+			neww.update();
+			return redirect(routes.SchoolController.viewSchools(0,"name","asc",""));
+		}catch(Exception e){
+			ori.add(EMessages.get("schools.error.savefail"), OperationResultInfo.Type.ERROR);
+			return badRequest(editSchool.render(id, f, bc, ori));
+		}		
 	}
 
 	/**
@@ -139,7 +191,13 @@ public class SchoolController extends EController {
 	 */
 	private static boolean isAuthorized() {
 		// user is authorized if they're a teacher
+		//TODO use roles
 		return AuthenticationManager.getInstance().getUser().data.type == UserType.TEACHER;
+	}
+	
+	private static boolean isAuthorized(int id){
+		//TODO actually implement
+		return isAuthorized();
 	}
 
 	/**
@@ -149,6 +207,7 @@ public class SchoolController extends EController {
 	 *         isAuthorized)
 	 */
 	private static Teacher getTeacher() {
+		//TODO make safer
 		return (Teacher) AuthenticationManager.getInstance().getUser();
 
 	}

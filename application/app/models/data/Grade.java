@@ -15,6 +15,7 @@ import models.data.manager.DataElement;
 public class Grade implements DataElement {
 
     @Id public String name;
+
     public int lowerbound;
     public int upperbound;
 

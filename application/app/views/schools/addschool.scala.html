@@ -12,12 +12,7 @@
 	
 	@form(controllers.schools.routes.SchoolController.save()) {
 
-    <fieldset>
-
-        @inputText(schoolForm("name"), '_label -> EMessages.get("school.new.name"))
-        @inputText(schoolForm("address"), '_label -> EMessages.get("school.new.address"))
-
-    </fieldset>
+    @formSchool(schoolForm)
 
     <div class="actions">
         <input type="submit" value="Save" class="btn primary"> or
