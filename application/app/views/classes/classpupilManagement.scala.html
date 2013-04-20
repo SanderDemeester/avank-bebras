@@ -75,6 +75,7 @@
         	@if(cg.isActive()){
         		<a href="@controllers.classgroups.routes.ClassPupilController.viewOldPupils(cg.id)" class="btn">@EMessages.get("classes.pupil.oldpupils")</a>
         	}
+        	<a href="@controllers.classgroups.routes.ClassPupilController.downloadClass(cg.id)" class="btn">@EMessages.get("classes.pupil.download")</a>
     	</div>
   	}
     <h2>@EMessages.get("classes.pupil.list")</h2>

@@ -2,8 +2,11 @@ package models.dbentities;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +16,9 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Table;
 
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Expr;
+import com.avaje.ebean.Expression;
+
 import models.management.ManageableModel;
 import models.user.Teacher;
 import models.user.UserType;
@@ -128,6 +134,35 @@ public class ClassGroup extends ManageableModel{
 	 */
 	public SchoolModel getSchool() throws PersistenceException{
 		return Ebean.find(SchoolModel.class).where().eq("id",schoolid).findUnique();
+	}
+	
+	/**
+	 * 
+	 * @param ps which set of the pupils that should be returned
+	 * @return a list of all the pupils that are or were in this class
+	 * @throws PersistenceException
+	 */
+	public List<UserModel> getPupils(PupilSet ps) throws PersistenceException{
+		//Retrieve all the ClassPupil objects that are linked to this class & extract ids
+		Collection<String> pupIDs = new ArrayList<String>();
+		Collection<ClassPupil> cp = Ebean.find(ClassPupil.class).where().eq("classid", this.id).findList();
+		for(ClassPupil c : cp)pupIDs.add(c.indid);
+				
+		Expression active = Expr.eq("classgroup", this.id); //Find all active students
+		Expression nonActive = Expr.in("id", pupIDs); //Find all non-active students
+		if(ps == PupilSet.ACTIVE)
+			return Ebean.find(UserModel.class).where().add(active).findList();
+		if(ps == PupilSet.NONACTIVE)
+			return Ebean.find(UserModel.class).where().add(nonActive).findList();	
+		if(ps == PupilSet.ALL)
+			return Ebean.find(UserModel.class).where().or(active, nonActive).findList(); //Find all
+		return null;
+	}
+	
+	public enum PupilSet{
+		ALL,
+		ACTIVE,
+		NONACTIVE
 	}
 
 }
