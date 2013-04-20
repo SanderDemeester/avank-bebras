@@ -80,10 +80,6 @@ public class UserController extends EController{
 			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
 		}
 
-		Pattern pattern = Pattern.compile("[^a-z ]", Pattern.CASE_INSENSITIVE);
-		Matcher matcher = pattern.matcher(registerForm.get().name);
-
-
 		// check if date is lower then current date
 		try{
 			Date birtyDay    = new SimpleDateFormat("yyyy/MM/dd").parse(registerForm.get().bday);
@@ -108,8 +104,9 @@ public class UserController extends EController{
 			}
 		}
 
-
-
+		Pattern pattern = Pattern.compile("[^a-z-]", Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(registerForm.get().name);
+		
 		// Check if full name contains invalid symbols.
 		if(matcher.find()){
 			flash("error", EMessages.get(EMessages.get("error.invalid_symbols")));

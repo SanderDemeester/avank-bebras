@@ -104,7 +104,7 @@ public class UserRegistrationTest extends ContextTest{
 		assertThat(contentAsString(result)).contains("Could not parse date.");
 
 		Map<String, String> map5 = new HashMap<String,String>();
-		map5.put("name", "Rosa Parks");
+		map5.put("name", "Rosa-Parks");
 		map5.put("email","Rosa_Parks@localhost.com");
 		map5.put("bday","1993-02-07");
 		map5.put("gender","Female");
