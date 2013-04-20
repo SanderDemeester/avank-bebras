@@ -49,6 +49,8 @@ links.datamanager.title = Manipulate the database
 links.datamanager.links = Manage navigation bar links
 links.datamanager.diffs = Manage the difficulty levels
 links.datamanager.grades = Manage the student grades
+links.contestmanager.title = Contest management
+links.contestmanager.overview = Contest overview
 
 # Forms
 forms.cancel = Cancel
@@ -72,6 +74,7 @@ forms.error = Please fix all errors.
 forms.open = Open
 forms.unknownError = An error occured.
 forms.add = Add
+forms.error.dates = Please pick a end time that is after the chosen start time.
 
 # Question
 question.editor.name = Question Editor
@@ -116,6 +119,28 @@ question.factory.error.noCorrectAnswers = The answers for language {0} contain n
 question.factory.error.moreThanOneCorrectAnswers = The answers for language {0} contain more than one correct answers.
 question.factory.error.invalidRegex = Invalid regular expression found in language {0}
 question.factory.error.invalidUpload = Your upload was invalid
+
+question.questionset.name = Question sets
+question.questionset.create.breadcrumb = New question set
+question.questionset.create = Create new question set!
+question.questionset.create.title = Create question set.
+question.questionset.create.step2 = Step 2: Question Set Information
+question.questionset.create.name = Name of new question set:
+question.questionset.create.level = Level of new question set:
+question.questionset.create.active = Check this box to make the question set active.
+question.questionset.overview = Question set overview
+question.questionset.addquestion = Add question to set
+question.questionset.form.difficulty = Difficulty
+question.questionset.addquestion.title = Add new question to the question set.
+question.questionset.addquestion.id = Id of the question:
+question.questionset.addquestion.brcr = Add
+question.questionset.manager.form.level = Level
+question.questionset.manager.form.name = Name
+question.questionset.manager.form.active = Active
+question.questionset.overview.questions = This question set contains the following questions:
+question.questionset.overview.basic = Edit question set information.
+question.questionset.form.qid = Question id
+question.questionset.form.qsid = Question set id
 
 # Languages
 languages.language = Language
@@ -193,6 +218,18 @@ competition.create.type = Type of new contest:
 competition.create.end = End time of new contest:
 competition.create.start = Start time of new contest:
 competition.create.active = Check this box to make the contest active.
+competition.manager.form.name = Name
+competition.manager.form.type = Type
+competition.manager.form.active = Active
+competition.manager.form.starttime = Start time
+competition.manager.form.endtime = End time
+competition.manager.form.creator = Creator
+competition.view.edit = Edit contest information.
+competition.view.qs = Question sets for this contest:
+competition.edit = Edit contest
+competition.edit.breadcrumb = Edit
+competition.overview = Contest overview.
+competition.overview.info = On this page, you can view contest which are open for you. You can create new contests or edit an existing contest.
 
 
 # schools

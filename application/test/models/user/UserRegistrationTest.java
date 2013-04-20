@@ -41,7 +41,7 @@ public class UserRegistrationTest extends ContextTest{
                 );
 
         assertThat(status(result)).isEqualTo(200);
-        assertThat(contentAsString(result)).contains("Your Bebras ID is: jimjones.");
+        assertThat(contentAsString(result)).contains("Your Bebras ID is: jjones.");
         assertThat(contentAsString(result)).contains("You may login with your ID and password.");
 
         result = callAction(
@@ -50,7 +50,7 @@ public class UserRegistrationTest extends ContextTest{
 
         assertThat(contentAsString(result)).contains("There is already a user with the selected email address");
 
-        assertNotNull(Ebean.find(UserModel.class).where().eq("id","jimjones").where().eq("type", UserType.INDEPENDENT.toString()).findUnique());
+        assertNotNull(Ebean.find(UserModel.class).where().eq("id","jjones").where().eq("type", UserType.INDEPENDENT.toString()).findUnique());
         
         
         // ok.. He is not dutch.. 
@@ -100,9 +100,6 @@ public class UserRegistrationTest extends ContextTest{
         		);
         assertThat(status(result)).isEqualTo(400);
         assertThat(contentAsString(result)).contains("Could not parse date.");
-        
-        
-        
         
     }
 }

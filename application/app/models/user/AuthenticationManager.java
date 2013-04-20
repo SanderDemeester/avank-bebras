@@ -9,6 +9,7 @@ import java.security.spec.KeySpec;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,8 @@ import play.mvc.Http.Cookie;
 import com.avaje.ebean.Ebean;
 
 import controllers.UserController.Register;
+
+import models.user.IDGenerator;
 
 /**
  * Class to handle UserAuthentication.
@@ -245,7 +248,9 @@ public class AuthenticationManager {
         // Generate bebrasID.
         
         String name = registerForm.get().name;
-        bebrasID = registerForm.get().name.toLowerCase().replaceAll(" ", "");
+        Calendar birthday = Calendar.getInstance();
+        birthday.setTime(birtyDay);
+        bebrasID = IDGenerator.generate(registerForm.get().name, birthday);
         new UserModel(bebrasID, UserType.INDEPENDENT,
         		name,
                 birtyDay,
