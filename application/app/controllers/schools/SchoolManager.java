@@ -52,19 +52,19 @@ public class SchoolManager extends Manager<SchoolModel> {
 
 	@Override
 	public Call getRemoveRoute(String id) {
-		// TODO Auto-generated method stub
+		// not used
 		return null;
 	}
 
 	@Override
 	public play.api.mvc.Call getSaveRoute() {
-		// TODO Auto-generated method stub
+		// not used
 		return null;
 	}
 
 	@Override
 	public play.api.mvc.Call getUpdateRoute() {
-		// TODO Auto-generated method stub
+		// not used
 		return null;
 	}
 
@@ -75,7 +75,6 @@ public class SchoolManager extends Manager<SchoolModel> {
 	
 	@Override
 	protected ExpressionList<SchoolModel> getDataSet(){
-		//TODO
 		UserModel um = Ebean.find(UserModel.class,teacherID);
 		if(um==null)throw new PersistenceException("Could not find Teacher");
 		Teacher t = new Teacher(um);
