@@ -1,8 +1,8 @@
 package models.question;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import models.competition.Competition;
 import models.data.Difficulty;
@@ -15,7 +15,7 @@ import models.data.Language;
  *
  */
 public class QuestionSet{
-    private Set<Question> questions;
+    private List<Question> questions = new LinkedList<Question>();
     private boolean active;
     private Competition competition;
     private Grade grade;
@@ -59,6 +59,14 @@ public class QuestionSet{
 
     public void setDifficulty(Difficulty difficulty) {
 
+    }
+    
+    public List<Question> getQuestions() {
+        return this.questions;
+    }
+    
+    public void addQuestion(Question question) {
+        this.questions.add(question);
     }
 
 }

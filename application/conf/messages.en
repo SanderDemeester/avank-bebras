@@ -98,6 +98,8 @@ question.editor.answerOptionsInfo = Add possible answer solutions to the questio
 question.editor.addAnswerOption = Add answer option
 question.editor.regexInfo = Enter the exact answer of the question. Java-accepted regular expressions are also allowed.
 question.editor.submitted = Your question was successfully submitted.
+question.editor.possibleAnswer = A possible answer
+question.editor.regex = Regular expression
 
 question.editor.tabs.general = General
 question.editor.tabs.answers = Answers
@@ -411,3 +413,7 @@ user.error.no_login = Your personal information is not available! Please make su
 user.Male = Male
 user.Female = Female
 user.Other = Other
+
+# Competitions
+competition.overview = Start
+competition.input.regex = Your answer

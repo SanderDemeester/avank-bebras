@@ -101,7 +101,7 @@ body{
   border-bottom: 4px solid transparent;
 }
 
-#questionframe {
+.questionframe {
 	border: none;
 	width: 100%;
 }

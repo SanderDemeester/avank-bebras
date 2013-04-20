@@ -8,17 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.EMessages;
-import models.data.Language;
 import models.data.Link;
-import models.data.UnavailableLanguageException;
-import models.data.UnknownLanguageCodeException;
 import models.dbentities.QuestionModel;
 import models.dbentities.UserModel;
 import models.management.ModelState;
 import models.question.Question;
 import models.question.QuestionBuilderException;
 import models.question.QuestionIO;
-import models.question.QuestionPack;
+import models.question.QuestionSet;
 import models.question.Server;
 import models.question.submits.Submit;
 import models.question.submits.SubmitsPage;
@@ -32,7 +29,7 @@ import views.html.question.editQuestionForm;
 import views.html.question.newQuestionForm;
 import views.html.question.questionManagement;
 import views.html.question.submitsManagement;
-import views.html.competition.run.question;
+import views.html.competition.run.questionSet;
 
 import com.avaje.ebean.annotation.Transactional;
 
@@ -359,8 +356,8 @@ public class QuestionController extends EController{
         int cacheTime = Integer.parseInt(Play.application().configuration().getString("question.proxy.cache"));
         
         // Try to get the file from our cache
-        String contentCacheKey = "question.file."+fileName+".content";
-        String typeCacheKey = "question.file."+fileName+".type";
+        String contentCacheKey = "question.file."+fileName+".content."+id;
+        String typeCacheKey = "question.file."+fileName+".type."+id;
         byte[] result = (byte[]) Cache.get(contentCacheKey);
         String contentType = (String) Cache.get(typeCacheKey);
         
@@ -398,15 +395,16 @@ public class QuestionController extends EController{
     //TODO: delete
     public static Result test() {
         String id = "474";
+        String id2 = "454";
         try {
             // TODO: cache
             //if (true) return ok(routes.QuestionController.showQuestionFile(id, QuestionPack.QUESTIONXMLFILE).absoluteURL(request()));
             Question q = Question.fetch(id);
-            try {
-                return ok(question.render(q, new ArrayList<Link>(), Language.getLanguage(EMessages.getLang())));
-            } catch (Exception e) {
-                return ok("woeps!");
-            }
+            Question q2 = Question.fetch(id2);
+            QuestionSet set = new QuestionSet();
+            set.addQuestion(q);
+            set.addQuestion(q2);
+            return ok(questionSet.render(set, new ArrayList<Link>()));
             //return ok(q.getIndexLink(Language.getLanguage(EMessages.getLang())).absoluteURL(request()));
         } catch (QuestionBuilderException e) {
             // TODO Auto-generated catch block

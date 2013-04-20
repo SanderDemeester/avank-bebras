@@ -1,0 +1,45 @@
+@(questionSet: models.question.QuestionSet, breadcrumbs : List[models.data.Link])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import models.EMessages
+
+@main(EMessages.get("TMP"), breadcrumbs){
+	<div class="pagination text-center">
+		<ul>
+			<li><a class="pageClick" href="#-1">@EMessages.get("competition.overview")<span class="id hide">-1</span></a></li>
+		@for((q, i) <- questionSet.getQuestions().view.zipWithIndex) {
+			<li><a class="pageClick" href="#@q.getID()">@(i+1)<span class="id hide">@q.getID()</span></a></li>
+		}
+		</ul>
+	</div>
+	
+	<div class="well well-small text-center">
+		COUNTDOWN
+	</div>
+	
+	<div id="-1" class="question well hero">
+		TODO: <ul>
+				<li>set qset or comp title</li>
+				<li>countdown</li>
+				<li>object (cookie sync!) to store all data in (update on input changes)</li>
+				<li>send data to server (ajax+json) and check answers</li>
+				<li>lose connection cookie thingie</li>
+			  </ul>
+	</div>
+	@for(q <- questionSet.getQuestions()) {
+		@question(q, models.data.Language.getLanguage(EMessages.getLang()))
+	}
+	<div class="well text-center">
+		<button class="btn btn-large btn-primary">Indienen</button>
+	</div>
+	<script type="text/javascript">
+	var links = [
+					"@routes.Assets.at("stylesheets/bootstrap.min.css")",
+					"@routes.Assets.at("stylesheets/main.css")",
+					"@routes.Assets.at("stylesheets/bootstrap-responsive.min.css")",
+					"@routes.Assets.at("stylesheets/wysiwyg/bootstrap-wysihtml5.css")"
+				];
+	</script>
+	<script src="@routes.Assets.at("javascripts/competition/run.js")" type="text/javascript"></script>
+}

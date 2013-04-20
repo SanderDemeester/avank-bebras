@@ -97,6 +97,8 @@ question.editor.answerOptionsInfo = Voeg de mogelijke antwoorden toe aan de vraa
 question.editor.addAnswerOption = Voeg antwoordmogelijkheid toe
 question.editor.regexInfo = Voeg het exacte antwoord toe. Javagestileerde reguliere expresies zijn ook toegestaan.
 question.editor.submitted = Uw vraag werd succesvol ingediend.
+question.editor.possibleAnswer = Een mogelijk antwoord
+question.editor.regex = Input
 
 question.editor.tabs.general = Algemeen
 question.editor.tabs.answers = Antwoorden
@@ -400,3 +402,7 @@ user.error.no_login = Uw persoonlijke informatie is niet beschikbaar! U moet zic
 user.Male = Man
 user.Female = Vrouw
 user.Other = Anders
+
+# Competitions
+competition.overview = Start
+competition.input.regex = Uw antwoord

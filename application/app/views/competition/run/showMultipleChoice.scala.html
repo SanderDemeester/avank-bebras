@@ -1,0 +1,22 @@
+@(question: models.question.MultipleChoiceQuestion, language : models.data.Language)
+
+@import models.EMessages
+@import helper._
+@import helper.twitterBootstrap._
+
+@element(aElement : models.question.MultipleChoiceElement) = {
+    <li>
+    	<input type="radio" name="answer_@question.getID()" value="">
+        @aElement.getContent()
+    </li>
+}
+
+    <div class="answers">
+	    <ul class="unstyled">
+	    @if(language != null) {
+	        @for(aElement <- question.getElements(language)) {
+	            @element(aElement)
+	        }
+	    }
+	    </ul>
+    </div>
