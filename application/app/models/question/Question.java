@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import play.Play;
 import play.mvc.Call;
 
 import controllers.EController;
@@ -63,16 +64,24 @@ public abstract class Question {
      * @throws QuestionBuilderException if something went wrong
      */
     public static Question fetch(String id) throws QuestionBuilderException {
-        // Check if the id is valid
-        QuestionModel model = null;
-        try {
-            model = new QuestionManager(ModelState.DELETE).getFinder().byId(id);
-        } catch (Exception e) {
-            throw new QuestionBuilderException(EMessages.get("question.factory.error.invalidID"));
-        }
+        // We'll first poll the questioncache before remaking the question
+        Question question = QuestionCache.getQuestion(id);
         
-        Question question = QuestionIO.getFromXml(routes.QuestionController.showQuestionFile(id, QuestionPack.QUESTIONXMLFILE).absoluteURL(EController.request()));
-        question.setModel(model);
+        if(question == null) {
+            // Check if the id is valid
+            QuestionModel model = null;
+            try {
+                model = new QuestionManager(ModelState.DELETE).getFinder().byId(id);
+            } catch (Exception e) {
+                throw new QuestionBuilderException(EMessages.get("question.factory.error.invalidID"));
+            }
+            
+            question = QuestionIO.getFromXml(routes.QuestionController.showQuestionFile(id, QuestionPack.QUESTIONXMLFILE).absoluteURL(EController.request()));
+            question.setModel(model);
+            
+            // Add this to the cache
+            QuestionCache.putQuestion(id, question);
+        }
         return question;
     }
 
