@@ -13,6 +13,7 @@ import javax.persistence.PersistenceException;
 import com.avaje.ebean.Ebean;
 
 import models.EMessages;
+import models.data.Grade;
 import models.data.Link;
 import models.dbentities.ClassGroup;
 import models.dbentities.SchoolModel;
@@ -24,8 +25,10 @@ import models.user.Teacher;
 import models.user.UserType;
 import models.util.OperationResultInfo;
 
+import play.data.Form;
 import play.mvc.Result;
 import views.html.classes.classManagement;
+import views.html.classes.createClass;
 import views.html.commons.noaccess;
 import controllers.EController;
 
@@ -70,31 +73,61 @@ public class ClassGroupController extends EController {
 	 * 
 	 * @return a creation page for a new class
 	 */
-	@SuppressWarnings("deprecation")
 	public static Result create(){
-		//TODO actually implement
-		if(!isAuthorized()){
-			System.out.println("Not authorized");
-			return redirect(routes.ClassGroupController.viewClasses(0, "name", "asc", ""));
+		//Initialize template arguments
+		List<Link> bc = getBreadcrumbs();
+		bc.add(new Link(EMessages.get("classes.add"),"/classes/add" ));
+		OperationResultInfo ori = new OperationResultInfo();
+		Form<ClassGroup> f = new Form<ClassGroup>(ClassGroup.class);
+		//Check if authorized
+		if(!isAuthorized())return ok(noaccess.render(bc));
+		//Show form		
+		return ok(createClass.render(f, bc, ori));
+	}
+	
+	/**
+	 * Saves the form and then return the list of classes page (if possible to save form, otherwise redirected
+	 * to the form
+	 * @return the page with the list of classes
+	 */
+	public static Result save(){
+		//Initialize template arguments
+		List<Link> bc = getBreadcrumbs();
+		bc.add(new Link(EMessages.get("classes.add"),"/classes/add" ));
+		OperationResultInfo ori = new OperationResultInfo();
+		//Check if authorized
+		if(!isAuthorized())return ok(noaccess.render(bc));
+		//Get form from request
+		Form<ClassGroup> f = form(ClassGroup.class).bindFromRequest();
+		//Check if form has errors
+		if(f.hasErrors()){
+			ori.add(EMessages.get("classes.add.notcomplete"),OperationResultInfo.Type.WARNING);
+			return badRequest(createClass.render(f, bc, ori));
 		}
-		ClassGroup cg = new ClassGroup();
-		cg.level="LVL";
-		cg.expdate=new Date(2015,3,14);
-		Random r = new Random();
-		cg.name = Integer.toString(r.nextInt());
-		List<SchoolModel> sm = Ebean.find(SchoolModel.class).findList();
-		if(sm.isEmpty()){
-			System.out.println("no schools");
-			return redirect(routes.ClassGroupController.viewClasses(0, "name", "asc", ""));
-		}
-		cg.schoolid = sm.get(0).id;
-		cg.teacherid = getTeacher().data.id;
+		ClassGroup cg = f.get();
 		try{
+			//Check if the school exists
+			SchoolModel sm = Ebean.find(SchoolModel.class,cg.schoolid);
+			if(sm==null){
+				ori.add(EMessages.get("classes.add.noschool"),OperationResultInfo.Type.WARNING);
+				return badRequest(createClass.render(f, bc, ori));
+			}
+			//Check if the grade exists		
+			Grade grade = Ebean.find(Grade.class,cg.level);
+			if(grade==null){
+				ori.add(EMessages.get("classes.add.nograde"),OperationResultInfo.Type.WARNING);
+				return badRequest(createClass.render(f, bc, ori));
+			}
+			cg.teacherid = getTeacher().data.id;
 			cg.save();
+			flash("success",Integer.toString(cg.id));
+			
 		}catch(PersistenceException pe){
-			pe.printStackTrace();
-			return redirect(routes.ClassGroupController.viewClasses(0, "name", "asc", ""));
+			//Database error
+			ori.add(EMessages.get("classes.add.error"),OperationResultInfo.Type.WARNING);
+			return badRequest(createClass.render(f, bc, ori));
 		}
+		//Return to list page
 		return redirect(routes.ClassGroupController.viewClasses(0, "name", "asc", ""));
 	}
 	

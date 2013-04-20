@@ -1,10 +1,12 @@
+@import play.api.Play
 @import models.EMessages
 @import helper._
 @import controllers.UserController.Register
+
 <div id="navigation" class="navbar">
     <div class="navbar-inner">
         <div class="container">
-            <a class="brand" href='@routes.Application.index'>Bebras</a>
+            <a class="brand" href='@routes.Application.index'>@Play.current.configuration.getString("application.name")</a>
             <ul class="nav">
             	<li class="divider-vertical"></li>
                 @for(link <- models.data.DataHandler.getLinks()) {
@@ -19,12 +21,10 @@
                     data-toggle="dropdown">@EMessages.get("app.signedInAs") <i>@models.user.AuthenticationManager.getInstance().getUser().getID()</i> <strong class="icon-cog"></strong><strong class="caret"></strong>
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                        <li><a tabindex="-1" href="@routes.UserController.landingPage">Home</a></li>
+                        <li><a tabindex="-1" href="@routes.UserController.landingPage">@EMessages.get("app.home")</a></li>
                         <li class="divider"></li>
-                          <!-- TODO unhide
-                          <li><a tabindex="0" href="@controllers.user.routes.PersonalPageController.show">Settings</a></li>
-                          -->
-                          <li><a tabindex="1" href="@routes.UserController.logout">Sign out</a></li>
+                          <li><a tabindex="0" href="@controllers.user.routes.PersonalPageController.show">@EMessages.get("user.pip.settings")</a></li>
+                          <li><a tabindex="1" href="@routes.UserController.logout">@EMessages.get("app.signOut")</a></li>
                     </ul>
                 } else {
                 <li class="dropdown"><a class="dropdown-toggle" href="#"
@@ -70,7 +70,7 @@
 	                                <label class="control-label"></label>
 	                                <div class="controls">
 	                                    <button type="submit" class="btn btn-primary" name="btn"
-	                                        id="login_btn">Login</button>
+	                                        id="login_btn">@EMessages.get("app.signIn")</button>
 	                                </div>
 	                            </div>
                             </form>
