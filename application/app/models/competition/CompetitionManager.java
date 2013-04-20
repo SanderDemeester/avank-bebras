@@ -64,6 +64,7 @@ public class CompetitionManager extends Manager<CompetitionModel> {
         columnHeaders.add("starttime");
         columnHeaders.add("endtime");
         columnHeaders.add("creator");
+        columnHeaders.add("duration");
         return columnHeaders;
     }
 
