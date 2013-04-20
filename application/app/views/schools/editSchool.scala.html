@@ -6,14 +6,15 @@
 
 @main(EMessages.get("schools.edit"),breadcrumbs){
 	@commons.info(inf)
-	
-	@form(controllers.schools.routes.SchoolController.update(id)) {
+	@if(schoolForm!=null){
+		@form(controllers.schools.routes.SchoolController.update(id)) {
 
-    @formSchool(schoolForm)
+    	@formSchool(schoolForm)
 
-    <div class="actions">
-        <input type="submit" value="Save" class="btn primary"> or
-        <a href="@controllers.schools.routes.SchoolController.viewSchools()" class="btn">Cancel</a>
-    </div>
+    	<div class="actions">
+        	<input type="submit" value="Save" class="btn primary"> or
+        	<a href="@controllers.schools.routes.SchoolController.viewSchools()" class="btn">Cancel</a>
+    	</div>
+    	}
     }
 }

@@ -245,6 +245,10 @@ school.name = Naam van de school
 school.address = Adres van de school
 schools.add.success = Opslaan van school was succesvol. ID: 
 schools.edit = Bewerk een school.
+schools.table.id = id
+schools.table.name = Naam
+schools.table.name = Adres
+schools.error = Er is een fout opgetreden. Probeer opnieuw (later).
 
 # server management
 servers.form.id = Server naam

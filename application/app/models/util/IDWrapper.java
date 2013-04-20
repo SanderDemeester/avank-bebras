@@ -7,7 +7,7 @@ import play.data.validation.Constraints;
 
 /**
  * @author Jens N. Rammant
- * TODO comments
+ * A class to be used for forms which only have 1 field: id
  */
 public class IDWrapper{
 	@Constraints.Required

@@ -19,7 +19,7 @@ import models.management.ModelState;
 
 /**
  * @author Jens N. Rammant
- * TODO comments
+ * 
  */
 public class MainClassesManager extends Manager<ClassGroup> {
 	
@@ -37,7 +37,9 @@ public class MainClassesManager extends Manager<ClassGroup> {
 		for(HelpTeacher h : ht){
     		helpIDs.add(h.classid);
     	}
+		//All classes the teacher is main teacher of
 		Expression ex1 = Expr.eq("teacherid", teacherID);
+		//All classes the teacher is help teacher of
 		Expression ex2 = Expr.in("id", helpIDs);
 		ExpressionList<ClassGroup> l = super.getDataSet();
 		return l.or(ex1, ex2);
