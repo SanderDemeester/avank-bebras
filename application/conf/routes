@@ -113,15 +113,16 @@ POST		/classes/					controllers.classgroups.ClassGroupController.save()
 GET		/classes/view/:id				controllers.classgroups.ClassPupilController.viewClass(id:Int, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
 
-GET		/classes/view/:id/:studid/remove		controllers.classgroups.ClassPupilController.removeStudent(id:Int,studid)
+GET		/classes/view/:id/remove/:studid	controllers.classgroups.ClassPupilController.removeStudent(id:Int,studid)
 GET		/classes/view/:id/add			controllers.classgroups.ClassPupilController.addExistingStudent(id:Int)
 POST		/classes/view/:id/				controllers.classgroups.ClassPupilController.saveExisting(id:Int)
+GET		/classes/view/:id/download			controllers.classgroups.ClassPupilController.downloadClass(id:Int)
 
 GET		/classes/view/:id/edit			controllers.classgroups.ClassGroupController.editClass(id:Int)
 POST		/classes/view/:id/edit/			controllers.classgroups.ClassGroupController.update(id:Int)
 
 GET		/classes/view/:id/help			controllers.classgroups.HelpTeacherController.viewHelp(id:Int,p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
-GET		/classes/view/:id/help/:teachid/remove	controllers.classgroups.HelpTeacherController.removeHelp(id:Int,teachid)
+GET		/classes/view/:id/help/remove/:teachid	controllers.classgroups.HelpTeacherController.removeHelp(id:Int,teachid)
 GET		/classes/view/:id/help/add			controllers.classgroups.HelpTeacherController.create(id:Int)
 POST		/classes/view/:id/help/			controllers.classgroups.HelpTeacherController.save(id:Int)
 
