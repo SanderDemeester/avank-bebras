@@ -220,7 +220,7 @@ public abstract class Question {
      */
     public Call getIndexLink(Language language) {
         return routes.QuestionController.showQuestionFile(
-                Integer.toString(this.getID()), this.getFeedback(language)
+                Integer.toString(this.getID()), this.getIndex(language)
                );
     }
 

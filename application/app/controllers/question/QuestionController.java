@@ -355,11 +355,6 @@ public class QuestionController extends EController{
         errorBreadcrumbs.add(new Link("Home", "/"));
         errorBreadcrumbs.add(new Link("Error",""));
         
-        // Deny access to the xml file
-        /*if(QuestionPack.QUESTIONXMLFILE.equals(fileName)) {
-            return forbidden(views.html.commons.error.render(errorBreadcrumbs, EMessages.get("error.title"), EMessages.get("error.text")));
-        }*/
-        
         // Get the cachetime from the config file
         int cacheTime = Integer.parseInt(Play.application().configuration().getString("question.proxy.cache"));
         
@@ -373,6 +368,9 @@ public class QuestionController extends EController{
         if(result == null || contentType == null) {
             try {
                 QuestionModel question = new QuestionManager(ModelState.DELETE).getFinder().byId(id);
+                
+                // Very important step, authenticate via HTTP
+                question.server.setAuthentication();
                 
                 // Copy the url content
                 URL url = new URL(question.server.path + question.officialid + "/" + fileName);
