@@ -9,14 +9,15 @@
 	<div class="well">
 	@EMessages.get("schools.add.info") 
 	</div>
-	
-	@form(controllers.schools.routes.SchoolController.save()) {
+	@if(schoolForm!=null){
+		@form(controllers.schools.routes.SchoolController.save()) {
 
-    @formSchool(schoolForm)
+    	@formSchool(schoolForm)
 
-    <div class="actions">
-        <input type="submit" value="Save" class="btn primary"> or
-        <a href="@controllers.schools.routes.SchoolController.viewSchools()" class="btn">Cancel</a>
-    </div>
+    	<div class="actions">
+        	<input type="submit" value="Save" class="btn primary"> or
+        	<a href="@controllers.schools.routes.SchoolController.viewSchools()" class="btn">Cancel</a>
+    	</div>
+    	}
     }
 }

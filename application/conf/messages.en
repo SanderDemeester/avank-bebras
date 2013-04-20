@@ -213,6 +213,7 @@ schools.edit = Edit a school.
 schools.table.id = id
 schools.table.name = Name
 schools.table.name = Address
+schools.error = Something went wrong. Try again (later).
 
 
 
