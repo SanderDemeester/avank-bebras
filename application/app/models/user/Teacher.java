@@ -45,6 +45,7 @@ public class Teacher extends SuperUser{
      * @return A view to manageCompetitions.
      */
     public Result manageCompetitions(){
+    	//TODO
         return null;
     }
     /*

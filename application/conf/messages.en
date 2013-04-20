@@ -210,6 +210,9 @@ school.name = School''s name
 school.address = School''s address
 schools.add.success = School succesfully saved. ID: 
 schools.edit = Edit a school.
+schools.table.id = id
+schools.table.name = Name
+schools.table.name = Address
 
 
 
