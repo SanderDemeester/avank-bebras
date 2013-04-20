@@ -166,6 +166,9 @@ register.title = Registreer
 register.same_email = Er is al een gebruiker met het zelfde email addres.
 register.giveinfo = Geef uw Bebras ID en wachtwoord in.
 register.password_mismatch = Wachtwoorden zijn niet aan elkaar gelijk.
+register.Male = Man
+register.Female = Vrouw
+register.Other = Andere
 
 #faq
 faq.title = Veel Gestelde Vragen

@@ -59,7 +59,7 @@ formAction : play.api.mvc.Call)
     <i class="icon-user"></i>
         <select name="gender" id="gender" class="span11"> @for(gender <- models.user.Gender.values().toList) {
 
-            <option value="@gender.toString()">
+            <option value="@Emessages.get(@gender.toString())">
 
             @gender.toString()
             </option>

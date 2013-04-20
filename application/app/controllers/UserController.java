@@ -50,8 +50,8 @@ public class UserController extends EController{
 	 */
 	public static Result signup(){
 		List<Link> breadcrumbs = new ArrayList<Link>();
-		breadcrumbs.add(new Link("Home", "/"));
-		breadcrumbs.add(new Link("Sign Up", "/signup"));
+		breadcrumbs.add(new Link(EMessages.get("app.home"), "/"));
+		breadcrumbs.add(new Link(EMessages.get("app.signUp"), "/signup"));
 		return ok(register.render(EMessages.get("register.title"),
 				breadcrumbs,
 				form(Register.class)
@@ -66,8 +66,8 @@ public class UserController extends EController{
 		// Bind play form request.
 		Form<Register> registerForm = form(Register.class).bindFromRequest();
 		List<Link> breadcrumbs = new ArrayList<Link>();
-		breadcrumbs.add(new Link("Home", "/"));
-		breadcrumbs.add(new Link("Sign Up", "/signup"));
+		breadcrumbs.add(new Link(EMessages.get("app.home"), "/"));
+		breadcrumbs.add(new Link(EMessages.get("app.signUp"), "/signup"));
 
 		// If the form contains error's (specified by "@"-annotation in the class "Register" then this will be true.
 		if(registerForm.hasErrors()){
@@ -188,7 +188,7 @@ public class UserController extends EController{
 	@SuppressWarnings("unchecked")
 	public static Result landingPage() throws Exception{
 		List<Link> breadcrumbs = new ArrayList<Link>();
-		breadcrumbs.add(new Link("Home", "/"));
+		breadcrumbs.add(new Link(EMessages.get("app.home"), "/"));
 
 		UserType type = AuthenticationManager.getInstance().getUser().getType();
 		if(UserType.ANON.equals(type)) {
