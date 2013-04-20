@@ -104,7 +104,7 @@ public class UserController extends EController{
 			}
 		}
 
-		Pattern pattern = Pattern.compile("[^a-z-]", Pattern.CASE_INSENSITIVE);
+		Pattern pattern = Pattern.compile("[^a-z -]", Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(registerForm.get().name);
 		
 		// Check if full name contains invalid symbols.
