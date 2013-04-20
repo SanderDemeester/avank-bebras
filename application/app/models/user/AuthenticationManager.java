@@ -1,6 +1,7 @@
 
 package models.user;
 
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -167,6 +168,22 @@ public class AuthenticationManager {
     public boolean isLoggedIn() {
         return !this.getUser().getType().equals(UserType.ANON);
     }
+    
+    /**
+     * @param Password string.
+     * @return The strengthed password as preformed by javascript code on client machine.
+     * @throws NoSuchAlgorithmException 
+     * @throws InvalidKeySpecException 
+     */
+    public String simulateClientsidePasswordStrengthening(String password) throws NoSuchAlgorithmException, InvalidKeySpecException{
+		MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
+		byte[] salt = sha256.digest(password.getBytes());
+		 // Get the key for PBKDF2.
+        KeySpec PBKDF2 = new PBEKeySpec(password.toCharArray(), salt, 10, 128);
+        SecretKeyFactory secretFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        String k = new String(Hex.encodeHex(secretFactory.generateSecret(PBKDF2).getEncoded()));
+    	return k;
+    }
 
     /**
      * Create user.
@@ -240,7 +257,7 @@ public class AuthenticationManager {
                 new Date(),
                 passwordHEX,
                 saltHEX, registerForm.get().email,
-                Gender.Male, registerForm.get().prefLanguage).save();
+                Gender.valueOf(registerForm.get().gender), registerForm.get().prefLanguage).save();
 
         return bebrasID;
     }

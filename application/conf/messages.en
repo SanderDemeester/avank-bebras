@@ -154,11 +154,11 @@ login.bebras_ID = Bebras ID
 
 # Register
 register.name = Full name
-register.email = Email;
-register.bday = Birthday:
-register.gender = Gender:
-register.preflan = Preferred language:
-register.password = Password:
+register.email = Email
+register.bday = Birthday
+register.gender = Gender
+register.preflan = Preferred language
+register.password = Password
 register.confirm_password = Confirm Password
 register.create_account = Create Account
 register.bebras_id_message = Your Bebras ID is: 
@@ -166,6 +166,10 @@ register.inlog_message = You may login with your ID and password.
 register.title = Register
 register.same_email = There is already a user with the selected email address.
 register.giveinfo = Please enter an ID and password.
+register.password_mismatch = Password did not match.
+register.Male = Male
+register.Female = Female
+register.Other = Other
 
 #faq
 faq.title = Frequently Asked Questions

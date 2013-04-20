@@ -153,11 +153,11 @@ login.bebras_ID = Bebras ID
 
 # Register
 register.name = Volledige naam 
-register.email = Email:
-register.bday = Geboortedag:
-register.gender = Geslacht:
-register.preflan = Gewenste taal:
-register.password = Wachtwoord:
+register.email = Email
+register.bday = Geboortedag
+register.gender = Geslacht
+register.preflan = Gewenste taal
+register.password = Wachtwoord
 register.confirm_password = Bevestig password
 register.create_account = Maak account
 register.bebras_id_message = Uw Bebras ID is: 
@@ -165,6 +165,10 @@ register.inlog_message = U kan inloggen me uw ID en wachtwoord.
 register.title = Registreer
 register.same_email = Er is al een gebruiker met het zelfde email addres.
 register.giveinfo = Geef uw Bebras ID en wachtwoord in.
+register.password_mismatch = Wachtwoorden zijn niet aan elkaar gelijk.
+register.Male = Man
+register.Female = Vrouw
+register.Other = Andere
 
 #faq
 faq.title = Veel Gestelde Vragen

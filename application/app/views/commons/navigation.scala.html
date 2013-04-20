@@ -85,6 +85,13 @@
 <script type="text/javascript">
 $("#login_btn").live("click",function(){
     $("#login_btn").attr("disabled", "disabled");
+    var password = $("#login_password").val();
+    //alert(password);
+	var salt = CryptoJS.SHA256(password); // eventueel kunnen hier later ook al onze bebras id bepalen en als salt gebruiken voor de hash.
+	var PBKDF2_password = CryptoJS.PBKDF2(password,salt,{ keySize: 4, iterations: 10});
+	//alert(PBKDF2_password);
+	
+	$("#login_password").val(PBKDF2_password);
 
     var request = $.ajax({
         type: "GET",
