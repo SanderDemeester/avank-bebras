@@ -74,6 +74,11 @@ public class UserController extends EController{
 			flash("error", EMessages.get(EMessages.get("error.no_password")));
 			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
 		}
+		
+		if(!registerForm.get().password.equals(registerForm.get().controle_passwd)){
+			flash("error",EMessages.get(EMessages.get("register.password_mismatch")));
+			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
+		}
 
 		Pattern pattern = Pattern.compile("[^a-z ]", Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(registerForm.get().name);

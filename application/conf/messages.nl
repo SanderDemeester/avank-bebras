@@ -165,6 +165,7 @@ register.inlog_message = U kan inloggen me uw ID en wachtwoord.
 register.title = Registreer
 register.same_email = Er is al een gebruiker met het zelfde email addres.
 register.giveinfo = Geef uw Bebras ID en wachtwoord in.
+register.password_mismatch = Wachtwoorden zijn niet aan elkaar gelijk.
 
 #faq
 faq.title = Veel Gestelde Vragen
