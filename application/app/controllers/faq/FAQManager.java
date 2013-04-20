@@ -28,12 +28,12 @@ public class FAQManager extends Manager<FAQModel> {
 
     @Override
     public Call getEditRoute(String id) {
-        return routes.FAQController.edit(id);
+        return routes.FAQController.edit(Integer.parseInt(id));
     }
 
     @Override
     public Call getRemoveRoute(String id) {
-        return routes.FAQController.remove(id);
+        return routes.FAQController.remove(Integer.parseInt(id));
     }
 
     @Override

@@ -37,30 +37,21 @@ public class HelpTeacherController extends ClassPupilController {
 	 * @param filter what to filter on
 	 * @return a page with the help teachers
 	 */
-	public static Result viewHelp(String id,int page, String orderBy, String order, String filter){		
+	public static Result viewHelp(int id,int page, String orderBy, String order, String filter){		
 		//Initialize template arguments
 		List<Link> breadcrumbs = getBreadCrumbs(id);
 		OperationResultInfo ori = new OperationResultInfo();
 		
-		//check if valid id
-		int idInt = -1;
-		try{
-			idInt = Integer.parseInt(id);
-		}catch(NumberFormatException nfe){
-			return noValidID(breadcrumbs,ori);
-		}
-		
-		//Check if authorized
-		if(!isAuthorized(idInt))return ok(noaccess.render(breadcrumbs));
-		
 		//Configuring manager
-		HelpTeacherManager htm = new HelpTeacherManager(idInt, ModelState.READ);
+		HelpTeacherManager htm = new HelpTeacherManager(id, ModelState.READ);
 		htm.setFilter(filter);
 		htm.setOrder(order);
 		htm.setOrderBy(orderBy);
 		
 		//Try to render the list
 		try{
+			//Check if authorized
+			if(!isAuthorized(id))return ok(noaccess.render(breadcrumbs));
 			return ok(
 				helpteacherManagement.render(htm.page(page), htm, orderBy, order, filter, breadcrumbs, ori));
 		}catch(PersistenceException pe){
@@ -78,25 +69,16 @@ public class HelpTeacherController extends ClassPupilController {
 	 * @param helpID helpteacher to be removed
 	 * @return a page with the list of help teachers
 	 */
-	public static Result removeHelp(String id,String helpID){
+	public static Result removeHelp(int id,String helpID){
 		//Initialize template parameters
 		List<Link> breadcrumbs = getBreadCrumbs(id);
-		OperationResultInfo ori = new OperationResultInfo();
-		//Check if valid id
-		int classID = -1;
-		try{
-			classID = Integer.parseInt(id);
-		}catch(NumberFormatException nfe){
-			//Show empty page with error
-			return noValidID(breadcrumbs,ori);
-		}
 		
-		//Check if authorized
-		if(!isAuthorized(classID))return ok(noaccess.render(breadcrumbs));
 		//Try to delete the teacher (from helping)
 		try{
+			//Check if authorized
+			if(!isAuthorized(id))return ok(noaccess.render(breadcrumbs));
 			HelpTeacher ht =
-				Ebean.find(HelpTeacher.class).where().eq("teacherid", helpID).where().eq("classid", classID).findUnique();
+				Ebean.find(HelpTeacher.class).where().eq("teacherid", helpID).where().eq("classid", id).findUnique();
 			ht.delete();
 			flash("deletesuccess","");
 		}catch(Exception e){
@@ -111,20 +93,19 @@ public class HelpTeacherController extends ClassPupilController {
 	 * @param id of the class
 	 * @return a form to link a teacher
 	 */
-	public static Result create(String id){
+	public static Result create(int id){
 		//Initialize template parameters
 		List<Link> bc = getBreadCrumbs(id);
 		bc.add(new Link(EMessages.get("classes.helpteacher.add"),"/classes/"+id+"/help/add"));
 		OperationResultInfo ori = new OperationResultInfo();
-		//Check if valid id
-		int classID = -1;
-		try{
-			classID = Integer.parseInt(id);
-		}catch(NumberFormatException nfe){
-			return noValidID(bc,ori);
-		}
+		
 		//Check if authorized
-		if(!isAuthorized(classID))return ok(noaccess.render(bc));
+		try{
+			if(!isAuthorized(id))return ok(noaccess.render(bc));
+		}catch(PersistenceException pe){
+			ori.add(EMessages.get("classes.helpteacher.add.error"),OperationResultInfo.Type.ERROR);
+			return ok(addHelpTeacher.render(null, bc, ori, id));
+		}
 		//Create and render form
 		Form<IDWrapper> f = new Form<IDWrapper>(IDWrapper.class);
 		return ok(addHelpTeacher.render(f, bc, ori, id));
@@ -135,34 +116,27 @@ public class HelpTeacherController extends ClassPupilController {
 	 * @param id class id
 	 * @return page with list of HelpTeachers
 	 */
-	public static Result save(String id){
+	public static Result save(int id){
 		//Initialize template arguments
 		List<Link> bc = getBreadCrumbs(id);
-		OperationResultInfo ori = new OperationResultInfo();
-		//Check if valid id
-		int classID = -1;
-		try{
-			classID = Integer.parseInt(id);
-		}catch(NumberFormatException nfe){
-			//Show empty page with error
-			return noValidID(bc,ori);
-		}
+		OperationResultInfo ori = new OperationResultInfo();			
 		
-		//Check if authorized
-		if(!isAuthorized(classID))return ok(noaccess.render(bc));
-		
-		//Retrieve form
-		Form<IDWrapper> f = form(IDWrapper.class).bindFromRequest();
-		if(f.hasErrors()){
-			//If incomplete, show form with warning
-			ori.add(EMessages.get("classes.helpteacher.add.incomplete"),OperationResultInfo.Type.WARNING);
-			return badRequest(addHelpTeacher.render(f, bc, ori, id));
-		}
-		//Retrieve id
-		IDWrapper i = f.get();
 		UserModel um = null;
+		Form<IDWrapper> f = form(IDWrapper.class).bindFromRequest();
 		//Retrieve usermodel of to be linked teacher
 		try{
+			//Check if authorized
+			if(!isAuthorized(id))return ok(noaccess.render(bc));
+			
+			//Retrieve form
+			
+			if(f.hasErrors()){
+				//If incomplete, show form with warning
+				ori.add(EMessages.get("classes.helpteacher.add.incomplete"),OperationResultInfo.Type.WARNING);
+				return badRequest(addHelpTeacher.render(f, bc, ori, id));
+			}
+			//Retrieve id
+			IDWrapper i = f.get();
 			um = Ebean.find(UserModel.class, i.id);
 		}catch(PersistenceException pe){
 			//Retrieval failed, Show form with error
@@ -181,20 +155,20 @@ public class HelpTeacherController extends ClassPupilController {
 		}
 		try{
 			//Check if teacher is already linked to class as main teacher
-			ClassGroup cg = Ebean.find(ClassGroup.class, classID);
+			ClassGroup cg = Ebean.find(ClassGroup.class, id);
 			if(cg != null && cg.teacherid.equals(um.id)){
 				ori.add(EMessages.get("classes.helpteacher.add.useralreadyteacher"),OperationResultInfo.Type.WARNING);
 				return badRequest(addHelpTeacher.render(f, bc, ori, id));
 			}
 			//Check if teacher is already linked to class as help teacher
-			HelpTeacher toSave = Ebean.find(HelpTeacher.class).where().eq("classid",classID).where().eq("teacherid",um.id).findUnique();
+			HelpTeacher toSave = Ebean.find(HelpTeacher.class).where().eq("classid",id).where().eq("teacherid",um.id).findUnique();
 			if(toSave!=null){
 				ori.add(EMessages.get("classes.helpteacher.add.useralreadyhelp"),OperationResultInfo.Type.WARNING);
 				return badRequest(addHelpTeacher.render(f, bc, ori, id));
 			}
 			//Save new linking
 			toSave = new HelpTeacher();
-			toSave.classid=classID;
+			toSave.classid=id;
 			toSave.teacherid=um.id;
 			toSave.save();
 		}catch(PersistenceException pe){
@@ -210,22 +184,11 @@ public class HelpTeacherController extends ClassPupilController {
 	 * @param id of the class
 	 * @return basic breadcrumbs
 	 */
-	protected static List<Link> getBreadCrumbs(String id){
+	protected static List<Link> getBreadCrumbs(int id){
 		List<Link> res = ClassPupilController.getBreadCrumbs(id);
 		res.add(new Link(EMessages.get("classes.helpteacher.list"),"/classes/"+id+"/help"));
 		return res;
 	}
-	/**
-	 * 
-	 * @param bc breadcrumbs
-	 * @param ori operationresultinfo
-	 * @return the page to be returned when the id isn't valid
-	 */
-	private static Result noValidID(List<Link> bc,OperationResultInfo ori){
-		ori.add(EMessages.get("classes.novalidclassid"),OperationResultInfo.Type.ERROR);
-		return ok(
-				helpteacherManagement.render(null,null,"id","asc","",bc,ori)
-				);
-	}
+	
 	
 }

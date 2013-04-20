@@ -1,4 +1,4 @@
-@(currentPage: Page[models.management.ManageableModel], manager: models.management.Manager[_], currentOrderBy: String,
+@(currentPage: Page[_ <: models.management.ManageableModel], manager: models.management.Manager[_], currentOrderBy: String,
     currentOrder: String, currentFilter: String, breadcrumbs : List[models.data.Link],
     ori : models.util.OperationResultInfo,
     cg : models.dbentities.ClassGroup)
@@ -70,10 +70,10 @@
   			@EMessages.get("classes.pupil.notactiveinfo")
   		}
   		<div class="actions">
-        	<a href="@controllers.classgroups.routes.ClassPupilController.editClass(cg.getID())" class="btn">@EMessages.get("classes.pupil.editclassinfo")</a>
-        	<a href="@controllers.classgroups.routes.HelpTeacherController.viewHelp(cg.getID())" class="btn">@EMessages.get("classes.pupil.viewhelp")</a>
+        	<a href="@controllers.classgroups.routes.ClassGroupController.editClass(cg.id)" class="btn">@EMessages.get("classes.pupil.editclassinfo")</a>
+        	<a href="@controllers.classgroups.routes.HelpTeacherController.viewHelp(cg.id)" class="btn">@EMessages.get("classes.pupil.viewhelp")</a>
         	@if(cg.isActive()){
-        		<a href="@controllers.classgroups.routes.ClassPupilController.viewOldPupils(cg.getID())" class="btn">@EMessages.get("classes.pupil.oldpupils")</a>
+        		<a href="@controllers.classgroups.routes.ClassPupilController.viewOldPupils(cg.id)" class="btn">@EMessages.get("classes.pupil.oldpupils")</a>
         	}
     	</div>
   	}

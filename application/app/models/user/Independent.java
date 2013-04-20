@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.PersistenceException;
+
 import models.dbentities.ClassGroup;
 import models.dbentities.ClassPupil;
 import models.dbentities.UserModel;
@@ -48,8 +50,7 @@ public class Independent extends Authenticated{
 
     }
 
-    public ClassGroup getCurrentClass(){
-    	//TODO safety
+    public ClassGroup getCurrentClass() throws PersistenceException{
         return Ebean.find(ClassGroup.class).where().eq("id", this.data.classgroup).findUnique();
     }
 
@@ -69,9 +70,9 @@ public class Independent extends Authenticated{
 	/**
 	 * Queries the database for all previous classes the user is associated with
 	 * @return list of previous classes 
+	 * @throws PersistenceException
 	 */
-	public Collection<ClassGroup> getPreviousClasses(){
-		//TODO safety
+	public Collection<ClassGroup> getPreviousClasses() throws PersistenceException{
 		ArrayList<ClassGroup> res = new ArrayList<ClassGroup>();
 		
 		List<ClassPupil> cp = Ebean.find(ClassPupil.class).where().eq("indid", this.data.id).findList();
