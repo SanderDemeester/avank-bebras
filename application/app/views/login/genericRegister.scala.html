@@ -59,9 +59,8 @@ formAction : play.api.mvc.Call)
     <i class="icon-user"></i>
         <select name="gender" id="gender" class="span11"> @for(gender <- models.user.Gender.values().toList) {
 
-            <option value="@Emessages.get(@gender.toString())">
-
-            @gender.toString()
+            <option value="@gender.toString()">
+            @EMessages.get("register."+gender.toString())
             </option>
             }
         </select>
@@ -76,7 +75,7 @@ formAction : play.api.mvc.Call)
         <select name="prefLanguage" id="prefLanguage" class="span11">
             @for(language <- models.data.Language.listLanguages().toList) {
             <option value="@language.getCode()">
-            @language.getName()
+            @EMessages.get(language.getName())
             </option>
             }
         </select>
