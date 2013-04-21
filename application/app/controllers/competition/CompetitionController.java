@@ -137,7 +137,7 @@ public class CompetitionController extends EController {
     public static Result updateCompetition(String contestid){
         if (!isAuthorized()) return redirect(controllers.routes.Application.index());
         CompetitionManager competitionManager = new CompetitionManager(ModelState.UPDATE, "name", contestid);
-        QuestionSetManager questionSetManager = getQuestionSetManager(ModelState.READ, "level", "", "", contestid);
+        QuestionSetManager questionSetManager = getQuestionSetManager(ModelState.READ, "grade", "", "", contestid);
         Form<CompetitionModel> form = form(CompetitionModel.class).fill(competitionManager.getFinder().byId(contestid)).bindFromRequest();
         if(form.hasErrors()) {
             List<Link> breadcrumbs = defaultBreadcrumbs();
@@ -218,7 +218,7 @@ public class CompetitionController extends EController {
         // remove the question set
         QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.DELETE, contestid, "");
         questionSetManager.getFinder().byId(qsid).delete();
-        return redirect(routes.CompetitionController.viewCompetition(contestid, 0, "level", "asc", ""));
+        return redirect(routes.CompetitionController.viewCompetition(contestid, 0, "grade", "asc", ""));
     }
 
 

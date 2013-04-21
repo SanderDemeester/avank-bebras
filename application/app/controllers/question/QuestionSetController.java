@@ -170,7 +170,7 @@ public class QuestionSetController extends EController {
      */
     public static Result update(String questionSetId){
         if (!isAuthorized()) return redirect(controllers.routes.Application.index());
-        QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.UPDATE, "level", questionSetId);
+        QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.UPDATE, "grade", questionSetId);
         Form<QuestionSetModel> form = form(QuestionSetModel.class).fill(questionSetManager.getFinder().byId(questionSetId)).bindFromRequest();
         if (form.hasErrors()) {
             List<Link> breadcrumbs = defaultBreadcrumbs();

@@ -26,7 +26,7 @@ public class QuestionSetManager extends Manager<QuestionSetModel> {
      * @param state      model state
      */
     public QuestionSetManager(ModelState state, String contestid, String questionsetid) {
-        super(QuestionSetModel.class, state, "level", "level");
+        super(QuestionSetModel.class, state, "grade", "grade");
         this.contestid = contestid;
         this.questionsetid = questionsetid;
     }
@@ -59,7 +59,7 @@ public class QuestionSetManager extends Manager<QuestionSetModel> {
     public List<String> getColumnHeaders() {
         ArrayList<String> columnHeaders = new ArrayList<String>();
         columnHeaders.add("name");
-        columnHeaders.add("level");
+        columnHeaders.add("grade");
         columnHeaders.add("active");
         return columnHeaders;
     }

@@ -37,9 +37,9 @@ qsForm: Form[_ <: models.management.ManageableModel], qsmanager: models.manageme
                     @inputText(qsForm("name"), '_label -> EMessages.get("question.questionset.create.name"), '_showConstraints -> false)
 
                     @select(
-                        qsForm("level"),
+                        qsForm("grade"),
                         options = options(models.data.DataHandler.getGrades().toList.map(_.getName)),
-                        '_label -> EMessages.get("question.questionset.create.level"),
+                        '_label -> EMessages.get("question.questionset.create.grade"),
                         '_showConstraints -> false
                     )
 
