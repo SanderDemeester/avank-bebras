@@ -391,6 +391,10 @@ classes.add.nograde = There is no level with that name.
 classes.add.error = Something went wrong with the database. Try again later.
 classes.edit = Edit a class.
 
+# classes.import.classnotexist
+# classes.import.classrecordwhileaddingtoexisting
+# classes.import.usernotexist
+
 # User
 user.pip.settings = Settings
 user.pip.welcome = Welcome!

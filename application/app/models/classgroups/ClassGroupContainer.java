@@ -6,6 +6,8 @@ package models.classgroups;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.PersistenceException;
+
 import models.dbentities.ClassGroup;
 import models.dbentities.UserModel;
 
@@ -15,9 +17,10 @@ import models.dbentities.UserModel;
  */
 public class ClassGroupContainer {
 
-	private ClassGroup classGroup;
-	private boolean isCGValid;
-	private String cgMessage;
+	private ClassGroup classGroup=null;
+	private boolean isCGValid=false;
+	private String cgMessage="";
+	private boolean isCGNew=true;
 	
 	private List<PupilRecordTriplet> newPupils;
 	private List<PupilRecordTriplet> existingPupils;
@@ -29,10 +32,15 @@ public class ClassGroupContainer {
 		this.existingPupils = new ArrayList<PupilRecordTriplet>();
 	}
 	
-	public void setClassGroup(ClassGroup cg, boolean isValid, String message){
+	public void setClassGroup(ClassGroup cg, boolean isValid, String message,boolean isNew){
 		this.classGroup = cg;
 		this.isCGValid = isValid;
 		this.cgMessage = message;
+		this.isCGNew = isNew;
+	}
+	
+	public void appendCGMessage(String st){
+		this.cgMessage = this.cgMessage +"\n"+st;
 	}
 	
 	public void addNewPupil(PupilRecordTriplet prt){
@@ -55,6 +63,13 @@ public class ClassGroupContainer {
 	 */
 	public boolean isCGValid() {
 		return isCGValid;
+	}
+
+	/**
+	 * @return the isCGNew
+	 */
+	public boolean isCGNew() {
+		return isCGNew;
 	}
 
 	/**
@@ -81,6 +96,15 @@ public class ClassGroupContainer {
 		res.addAll(existingPupils);
 		return res;
 	}
+	
+	/**
+	 * For all the valid records in the class, check if they will be able to be saved. If not, set isValid to false
+	 * and add a message.
+	 * @throws PersistenceException when something goes wrong with the db
+	 */
+	public void validify() throws PersistenceException{
+		//TODO
+	}
 
 	/**
 	 * Saves all the contents
@@ -97,7 +121,7 @@ public class ClassGroupContainer {
 	 *	Links a usermodel with a boolean that says if it's valid and a message (that's already been localized)
 	 * that can be shown to users
 	 */
-	public class PupilRecordTriplet{
+	public static class PupilRecordTriplet{
 		public UserModel user;
 		public boolean isValid;
 		public String message;

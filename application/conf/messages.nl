@@ -380,6 +380,11 @@ classes.add.nograde = Er is geen level met die naam.
 classes.add.error = Er is iets misgelopen met de databank. Probeer opnieuw (later).
 classes.edit = Pas een klas aan.
 
+# classes.import.classnotexist
+# classes.import.classrecordwhileaddingtoexisting
+# classes.import.usernotexist
+
+
 # User
 user.pip.settings = Instellingen
 user.pip.welcome = Welkom!

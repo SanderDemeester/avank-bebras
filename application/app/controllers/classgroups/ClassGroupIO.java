@@ -10,6 +10,7 @@ import javax.persistence.PersistenceException;
 
 import models.EMessages;
 import models.classgroups.ClassGroupContainer;
+import models.classgroups.ClassGroupContainer.PupilRecordTriplet;
 import models.dbentities.ClassGroup;
 import models.dbentities.UserModel;
 
@@ -76,12 +77,56 @@ public class ClassGroupIO {
 	/**
 	 * Converts a list (from XLSX Importer) to a saveable format
 	 * @param list list to be converted
-	 * @param existingClassId an existing class to which the pupils have to be added. If null, ignore
-	 * @return ClassGroups & pupils
+	 * @param existingClassId an existing class to which the pupils have to be added.
+	 * @return ClassGroup & pupils, null if something goes wrong with the db
 	 */
-	public static List<ClassGroupContainer> listToClassGroup(List<List<String>> list, Integer existingClassId){
-		//TODO
-		return null;
+	public static ClassGroupContainer listToClassGroup(List<List<String>> list, int existingClassId){
+		try{
+			//Try to add the existing class to the container
+			ClassGroupContainer res = new ClassGroupContainer();
+			ClassGroup cg = Ebean.find(ClassGroup.class,existingClassId);
+			String message = cg!=null?"":EMessages.get("classes.import.classnotexist");
+			res.setClassGroup(cg, cg!=null, message, false);
+			//Iterate over all the records
+			for(int i=0;i<list.size();i++){
+				List<String> record = list.get(i);
+				//CLASS records are not read, but an error is added
+				if(record.get(0).equalsIgnoreCase("CLASS")){
+					res.appendCGMessage(EMessages.get("classes.import.classrecordwhileaddingtoexisting"));
+				}
+				else if(record.get(0).equalsIgnoreCase("PUPIL")){
+					//Parse the pupil record
+					UserModel parsed = parseUserModel(record);
+					PupilRecordTriplet prt = new PupilRecordTriplet();
+					prt.user=parsed;
+					prt.message="";
+					prt.isValid=true;
+					//If an id is mentioned, try to add the existing userdata
+					if(parsed.id!=null){
+						UserModel existing = Ebean.find(UserModel.class, parsed.id);
+						//If the userdata doesn't exist, add error message
+						if(existing==null){
+							prt.isValid=false;
+							prt.message=EMessages.get("classes.import.usernotexist");
+						}
+						else{
+							prt.user=existing;
+						}
+						//Add to the existing Pupil list (even if it doesn't exist, but isValid
+						//is false then, so it won't be saved.
+						res.addExistingPupil(prt);
+					}
+					//If no id is mentioned, add to the new pupil list
+					else res.addNewPupil(prt);
+				}
+			}
+			//Check some other constraints
+			res.validify();
+			return res;
+		//If something goes wrong, return null	
+		}catch(PersistenceException pe){
+			return null;
+		}
 	}
 	
 	/**
@@ -90,7 +135,8 @@ public class ClassGroupIO {
 	 * @return ClassGroups & pupils
 	 */
 	public static List<ClassGroupContainer> listToClassGroup(List<List<String>> list){
-		return listToClassGroup(list, null);
+		//TODO
+		return null;
 	}
 	
 	
@@ -125,6 +171,16 @@ public class ClassGroupIO {
 		res.add("");
 		res.add(um.email);		
 		return res;
+	}
+	
+	/**
+	 * 
+	 * @param toParse List to parse into UserModel
+	 * @return a UserModel filled with the data in the list
+	 */
+	private static UserModel parseUserModel(List<String> toParse){
+		//TODO
+		return null;
 	}
 	
 }
