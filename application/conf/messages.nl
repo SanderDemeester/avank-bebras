@@ -401,6 +401,7 @@ user.pie.editpassw = Verander wachtwoord
 user.pie.editintro = Bewerk mijn informatie 
 user.pie.intro = Hieronder kan u uw persoonlijke informatie veranderen.
 user.error.no_login = Uw persoonlijke informatie is niet beschikbaar! U moet zich eerst aanmelden!
+user.error.wrong_email = Het E-Mail adres is niet correct!
 user.Male = Man
 user.Female = Vrouw
 user.Other = Anders

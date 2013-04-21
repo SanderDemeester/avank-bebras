@@ -412,6 +412,7 @@ user.pie.editpassw = Edit password
 user.pie.editintro = Edit my information 
 user.pie.intro = Below you can edit your personal information.
 user.error.no_login = Your personal information is not available! Please make sure you are logged in.
+user.error.wrong_email = Given E-Mail is not correct!
 user.Male = Male
 user.Female = Female
 user.Other = Other

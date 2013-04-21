@@ -4,6 +4,7 @@
 @import helper.twitterBootstrap._
 @import views.html.commons.showflash
 
+@showflash()
 @helper.form(action=controllers.user.routes.PersonalPageController.changeInformation) {
     <legend>@EMessages.get("user.pie.editintro")</legend>
     @EMessages.get("user.pie.intro")<br><br>
@@ -16,7 +17,7 @@
     <strong>@EMessages.get("user.pip.email")</strong><br>
     <div class="input-prepend">
         <span class="add-on"><i class="icon-envelope"></i></span>
-        <input class="span12" type="email" id="email" name="email" value="@models.user.AuthenticationManager.getInstance().getUser().data.email" required>
+        <input class="span12" type="text" id="email" name="email" value="@models.user.AuthenticationManager.getInstance().getUser().data.email">
     </div><br><br>
 
     <strong>@EMessages.get("user.pip.birth")</strong><br>
@@ -65,7 +66,7 @@
     <div class="control-group row-fluid">
 	    <p class="text-right">
   		    <button type="submit" class="btn btn-primary" name="btn" id="btn">@EMessages.get("forms.submit")</button>
-  			<a href="personal">
+  			<a href="settings">
   			    <button type="button" class="btn">@EMessages.get("forms.cancel")</button>
   			</a>
 		</p>
