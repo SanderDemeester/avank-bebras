@@ -79,7 +79,11 @@ public class UserModel extends ManageableModel implements Listable{
         EMessages.setLang(preflanguage);
     }
 
-    /**
+    public UserModel() {
+		//empty constructor
+	}
+
+	/**
      * A finder for User.
      * We will use this finder to execute specific sql query's.
      */

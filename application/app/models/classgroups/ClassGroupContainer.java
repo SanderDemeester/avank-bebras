@@ -4,12 +4,16 @@
 package models.classgroups;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
 
+import com.avaje.ebean.Ebean;
+
 import models.dbentities.ClassGroup;
 import models.dbentities.UserModel;
+import models.user.AuthenticationManager;
 
 /**
  * @author Jens N. Rammant
@@ -107,12 +111,60 @@ public class ClassGroupContainer {
 	}
 
 	/**
-	 * Saves all the contents
+	 * Saves all the containers in a transaction
 	 * @return true if saving was successful
 	 */
-	public boolean save(){
+	public static boolean save(Collection<ClassGroupContainer> coll){
+		//TODO comments
+		boolean res = true;
+		Ebean.beginTransaction();
+		try{
+			for(ClassGroupContainer cgc : coll){
+				if(cgc.isCGValid()){
+					if(cgc.isCGNew){
+						UserModel u = AuthenticationManager.getInstance().getUser().data;
+						cgc.classGroup.teacherid=u.id;
+						cgc.classGroup.save();
+					}
+					for(PupilRecordTriplet prt : cgc.getNewPupils()){
+						if(prt.isValid){
+							prepareNewPupil(prt.user,cgc.getClassGroup());
+							//prt.user.save();
+						}
+					}
+					for(PupilRecordTriplet prt : cgc.getExistingPupils()){
+						if(prt.isValid){
+							updateExistingPupil(prt.user, cgc.getClassGroup());
+						}
+					}
+				}
+			}
+			Ebean.commitTransaction();
+		}catch(PersistenceException pe){
+			pe.printStackTrace();
+			Ebean.rollbackTransaction();
+			res=false;
+		}finally{
+			Ebean.endTransaction();
+		}
+		return res;
+	}
+	/**
+	 * Hashes the password, generates username, sets registrationdate, sets class
+	 * @param model
+	 */
+	private static void prepareNewPupil(UserModel model,ClassGroup cg){
 		//TODO
-		return false;
+	}
+	
+	/**
+	 * Updates the existing pupil to link to a new class, but makes
+	 * sure to remember the old linking in a ClassPupil relationship
+	 * @param model UserModel to save
+	 * @param cg ClassGroup to link
+	 */
+	private static void updateExistingPupil(UserModel model, ClassGroup cg){
+		//TODO
 	}
 	
 	/**

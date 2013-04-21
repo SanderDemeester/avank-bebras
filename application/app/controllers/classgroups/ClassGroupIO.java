@@ -17,6 +17,7 @@ import models.dbentities.UserModel;
 import com.avaje.ebean.Ebean;
 
 import controllers.util.DateFormatter;
+import controllers.util.GenderParser;
 
 /**
  * @author Jens N. Rammant
@@ -90,15 +91,16 @@ public class ClassGroupIO {
 			//Iterate over all the records
 			for(int i=0;i<list.size();i++){
 				List<String> record = list.get(i);
+				if(record.isEmpty())continue;
 				//CLASS records are not read, but an error is added
-				if(record.get(0).equalsIgnoreCase("CLASS")){
+				if("CLASS".equalsIgnoreCase(record.get(0))){					
 					res.appendCGMessage(EMessages.get("classes.import.classrecordwhileaddingtoexisting"));
 				}
-				else if(record.get(0).equalsIgnoreCase("PUPIL")){
+				else if("PUPIL".equalsIgnoreCase(record.get(0))){
 					//Parse the pupil record
-					UserModel parsed = parseUserModel(record);
+					UserModel parsed = parseToUserModel(record);
 					PupilRecordTriplet prt = parsedUserModelToTriplet(parsed);
-					if(parsed.id!=null){
+					if(parsed.id!=null&&!parsed.id.isEmpty()){
 						//If id is mentioned, 
 						//add to the existing Pupil list (even if it doesn't exist, but isValid
 						//is false then, so it won't be saved.
@@ -123,8 +125,38 @@ public class ClassGroupIO {
 	 * @return ClassGroups & pupils
 	 */
 	public static List<ClassGroupContainer> listToClassGroup(List<List<String>> list){
-		//TODO
-		return null;
+		List<ClassGroupContainer> res = new ArrayList<ClassGroupContainer>();
+		ClassGroupContainer current = null;
+		//Iterate over all lines
+		for(int i=0;i<list.size();i++){
+			List<String> record = list.get(i);
+			//If record is empty, go to next record
+			if(record.isEmpty())continue;
+			//If record is a class
+			if("CLASS".equalsIgnoreCase(record.get(0))){
+				//If there is already a classgroupcontainer, add it to the list
+				if(current!=null)res.add(current);
+				current=new ClassGroupContainer();
+				current.setClassGroup(parseToClassModel(record), true, "", true);
+			//If record is a pupil
+			}else if("PUPIL".equalsIgnoreCase(record.get(0))){
+				if(current==null)current=new ClassGroupContainer();
+				UserModel um = parseToUserModel(record);
+				PupilRecordTriplet prt = parsedUserModelToTriplet(um);
+				//determine whether it's an existing pupil or a new pupil
+				if(um.id==null||um.id.isEmpty()){
+					current.addNewPupil(prt);
+				}else{
+					current.addExistingPupil(prt);
+				}
+			}
+		}
+		if(current!=null)res.add(current);
+		//Check some other constraints
+		for(ClassGroupContainer cgp : res){
+			cgp.validify();
+		}
+		return res;
 	}
 	
 	
@@ -166,9 +198,37 @@ public class ClassGroupIO {
 	 * @param toParse List to parse into UserModel
 	 * @return a UserModel filled with the data in the list
 	 */
-	private static UserModel parseUserModel(List<String> toParse){
-		//TODO
-		return null;
+	private static UserModel parseToUserModel(List<String> toParse){
+		UserModel res = new UserModel();
+		try{
+			res.id=toParse.get(1);
+			res.name=toParse.get(2);
+			res.birthdate = DateFormatter.parseString(toParse.get(3));
+			res.gender=GenderParser.parseString(toParse.get(4));
+			res.password=toParse.get(5);
+			res.preflanguage=toParse.get(6);
+		}catch(IndexOutOfBoundsException e){}
+		return res;
+	}
+	
+	/**
+	 * 
+	 * @param toParse List to be parsed into ClassGroup
+	 * @return a ClassGroup filled with the data in the list
+	 */
+	private static ClassGroup parseToClassModel(List<String> toParse){
+		ClassGroup res = new ClassGroup();
+		try{
+			res.name=toParse.get(1);
+			res.expdate=DateFormatter.parseString(toParse.get(2));
+			res.level=toParse.get(3);
+			try{
+				res.schoolid = (int)Double.parseDouble(toParse.get(4));
+			}catch(NumberFormatException nfe){
+				res.schoolid = -1;
+			}
+		}catch(IndexOutOfBoundsException e){}
+		return res;
 	}
 	
 	/**

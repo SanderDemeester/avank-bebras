@@ -1,0 +1,18 @@
+@(breadcrumbs : List[models.data.Link])
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("test", breadcrumbs){
+
+@form(action = controllers.classgroups.routes.ClassGroupIOController.post, 'enctype -> "multipart/form-data") {
+    
+    <input type="file" name="xlsx">
+    
+    <p>
+        <input type="submit">
+    </p>
+    
+}
+
+}
