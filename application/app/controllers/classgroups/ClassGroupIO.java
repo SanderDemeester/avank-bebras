@@ -8,8 +8,8 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
-import models.ClassGroupContainer;
 import models.EMessages;
+import models.classgroups.ClassGroupContainer;
 import models.dbentities.ClassGroup;
 import models.dbentities.UserModel;
 
