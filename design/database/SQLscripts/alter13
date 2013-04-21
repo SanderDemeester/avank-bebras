@@ -3,3 +3,43 @@ ALTER TABLE servers ALTER COLUMN is_http_secured SET NOT NULL;
 ALTER TABLE contests ADD COLUMN duration integer;
 ALTER TABLE contests ALTER COLUMN duration SET NOT NULL;
 
+DROP TABLE anonanswer;
+DROP TABLE pupilanswers;
+DROP TABLE questionsetquestions;
+DROP TABLE questionsets;
+
+CREATE TABLE questionsets(
+id SERIAL,
+level text NOT NULL,
+contid text NOT NULL REFERENCES contests,
+active boolean NOT NULL,
+name text NOT NULL,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE questionsetquestions(
+qid integer NOT NULL REFERENCES questions,
+qsid integer NOT NULL REFERENCES questionsets,
+difficulty text NOT NULL,
+PRIMARY KEY (qid,qsid)
+);
+
+CREATE TABLE anonanswer(
+id SERIAL,
+questionid integer NOT NULL REFERENCES questions,
+answer text NOT NULL,
+correct boolean NOT NULL,
+language text NOT NULL,
+questionsetid integer NOT NULL REFERENCES questionsets,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE pupilanswers(
+indid text NOT NULL REFERENCES users,
+qid integer NOT NULL REFERENCES questions,
+questionsetid integer NOT NULL REFERENCES questionsets,
+answer text NOT NULL,
+correct boolean NOT NULL,
+language text NOT NULL,
+PRIMARY KEY (indid,qid,questionsetid)
+);
