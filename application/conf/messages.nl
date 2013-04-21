@@ -97,6 +97,8 @@ question.editor.answerOptionsInfo = Voeg de mogelijke antwoorden toe aan de vraa
 question.editor.addAnswerOption = Voeg antwoordmogelijkheid toe
 question.editor.regexInfo = Voeg het exacte antwoord toe. Javagestileerde reguliere expresies zijn ook toegestaan.
 question.editor.submitted = Uw vraag werd succesvol ingediend.
+question.editor.possibleAnswer = Een mogelijk antwoord
+question.editor.regex = Input
 
 question.editor.tabs.general = Algemeen
 question.editor.tabs.answers = Antwoorden
@@ -118,6 +120,7 @@ question.factory.error.noCorrectAnswers = Er is geen correct antwoord aangeduid 
 question.factory.error.moreThanOneCorrectAnswers = Voor de vraag in het {0} zijn er meerdere correcte antwoorden aangeduid.
 question.factory.error.invalidRegex = De vraag bevat een foutieve reguliere expressie in het {0}.
 question.factory.error.invalidUpload = Uw bestand is ongeldig
+question.factory.error.invalidID = Ongeldig ID
 
 question.questionset.name = Vragenbundels.
 question.questionset.create.breadcrumb = Niewe vragenbundel
@@ -264,6 +267,9 @@ servers.form.ftpport = FTP poort
 servers.form.ftpuser = FTP gebruikersnaam
 servers.form.ftppass = FTP paswoord
 servers.form.ftppath = FTP pad
+servers.form.is_http_secured = HTTP beveiligd
+servers.form.http_username = HTTP gebruikersnaam
+servers.form.http_password = HTTP wachtwoord
 servermanagement.servers.name = Servers
 servermanagement.servers.new = Nieuwe Server
 servermanagement.servers.server = Server
@@ -406,3 +412,7 @@ user.error.no_login = Uw persoonlijke informatie is niet beschikbaar! U moet zic
 user.Male = Man
 user.Female = Vrouw
 user.Other = Anders
+
+# Competitions
+competition.overview = Start
+competition.input.regex = Uw antwoord

@@ -1,13 +1,15 @@
 package models.question;
 
 import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import com.avaje.ebean.Ebean;
 import models.competition.Competition;
 import models.data.Difficulty;
 import models.data.Grade;
 import models.data.Language;
-import models.dbentities.QuestionModel;
 import models.dbentities.QuestionSetModel;
 import models.dbentities.QuestionSetQuestion;
 
@@ -20,7 +22,7 @@ import models.dbentities.QuestionSetQuestion;
  */
 public class QuestionSet{
 
-    private Set<Question> questions;
+    private List<Question> questions = new LinkedList<Question>();
     private boolean active;
     private Competition competition;
     private Grade grade;
@@ -38,11 +40,13 @@ public class QuestionSet{
 
         // setting the questions for this question set
         List<QuestionSetQuestion> questionSetQuestions = Ebean.find(QuestionSetQuestion.class).where().ieq("qsid", data.id).findList();
-        questions = new TreeSet();
         for (QuestionSetQuestion questionSetQuestion : questionSetQuestions){
-            QuestionModel questionModel = (Ebean.find(QuestionModel.class).where().eq("id", questionSetQuestion.qid).findUnique());
-            Question question = new Question();
-            questions.add(question);
+            try {
+                Question question = Question.fetch("" + questionSetQuestion.qid);
+                questions.add(question);
+            } catch (QuestionBuilderException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -94,6 +98,10 @@ public class QuestionSet{
 
     public void setGrade(Grade grade) {
         this.grade = grade;
+    }
+    
+    public List<Question> getQuestions() {
+        return this.questions;
     }
 
 }

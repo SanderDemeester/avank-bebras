@@ -12,10 +12,7 @@ import models.question.QuestionFeedback;
 import models.question.QuestionSet;
 import models.user.User;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Class that contains all logic implementation about competitions.
@@ -26,7 +23,7 @@ import java.util.TreeSet;
 public class Competition {
 
     private CompetitionModel data;
-    private Set<QuestionSet> questionSets;
+    private List<QuestionSet> questionSets;
 
     /**
      * Default constructor
@@ -34,7 +31,12 @@ public class Competition {
      */
     public Competition(CompetitionModel data){
         this.data = data;
-        this.questionSets = Ebean.find(QuestionSetModel.class).find
+
+        // setting the question sets for this contest
+        List<QuestionSetModel> questionSetModels = Ebean.find(QuestionSetModel.class).where().ieq("contid", data.id).findList();
+        for (QuestionSetModel questionSetModel : questionSetModels){
+            questionSets.add(new QuestionSet(questionSetModel));
+        }
     }
 
     /**
@@ -81,7 +83,14 @@ public class Competition {
      * @return available languages
      */
     public List<Language> getAvailableLanguages(){
-        throw new UnsupportedOperationException();
+        List<Language> languages = new ArrayList<Language>();
+        for (QuestionSet questionSet : questionSets){
+            for (Language l : questionSet.getLanguages())
+            if (!languages.contains(l)){
+                languages.add(l);
+            }
+        }
+        return languages;
     }
 
     /**

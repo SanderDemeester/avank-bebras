@@ -1,0 +1,22 @@
+@(question: models.question.Question, language : models.data.Language)
+
+@import helper._
+@import helper.twitterBootstrap._
+@import models.EMessages
+
+<div id="@question.getID()" class="question well hide">
+	<h1>@question.getTitle(language)</h1>
+	<iframe class="questionframe" src="@question.getIndexLink(language)"></iframe>
+	
+	@defining(question.getType().name()) { qType =>
+        @qType match {
+            case "MULTIPLE_CHOICE" => {
+                @showMultipleChoice(question.asInstanceOf[models.question.MultipleChoiceQuestion], language)
+            }
+            case "REGEX" => {
+                @showRegex(question.asInstanceOf[models.question.RegexQuestion], language)
+            }
+        }
+    }
+	
+</div>

@@ -1,5 +1,9 @@
 package controllers.question;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,22 +12,28 @@ import models.data.Link;
 import models.dbentities.QuestionModel;
 import models.dbentities.UserModel;
 import models.management.ModelState;
+import models.question.Question;
+import models.question.QuestionBuilderException;
+import models.question.QuestionIO;
+import models.question.QuestionSet;
 import models.question.Server;
 import models.question.submits.Submit;
 import models.question.submits.SubmitsPage;
+import play.Play;
+import play.cache.Cache;
 import play.data.Form;
 import play.mvc.Result;
 import views.html.commons.noaccess;
 import views.html.question.approveQuestionForm;
-import views.html.question.newQuestionForm;
 import views.html.question.editQuestionForm;
+import views.html.question.newQuestionForm;
 import views.html.question.questionManagement;
 import views.html.question.submitsManagement;
+import views.html.competition.run.questionSet;
 
 import com.avaje.ebean.annotation.Transactional;
 
 import controllers.EController;
-import controllers.question.routes;
 
 /**
  * Actions for controlling the CRUD actions for questions (including approval)
@@ -327,5 +337,79 @@ public class QuestionController extends EController{
         // Result
         flash("success", EMessages.get("question.success.removed", question.officialid));
         return LIST;
+    }
+    
+    /**
+     * This will show a file from a certain question pack
+     *
+     * @param name name of the question
+     * @param fileName name of the file to show
+     * @return question list page
+     */
+    public static Result showQuestionFile(String id, String fileName){
+        // Make some error breadcrumbs for when an error occurs
+        List<Link> errorBreadcrumbs = new ArrayList<Link>();
+        errorBreadcrumbs.add(new Link("Home", "/"));
+        errorBreadcrumbs.add(new Link("Error",""));
+        
+        // Get the cachetime from the config file
+        int cacheTime = Integer.parseInt(Play.application().configuration().getString("question.proxy.cache"));
+        
+        // Try to get the file from our cache
+        String contentCacheKey = "question.file."+fileName+".content."+id;
+        String typeCacheKey = "question.file."+fileName+".type."+id;
+        byte[] result = (byte[]) Cache.get(contentCacheKey);
+        String contentType = (String) Cache.get(typeCacheKey);
+        
+        // If this file is not in our cache, we go and get the content ourselves
+        if(result == null || contentType == null) {
+            try {
+                QuestionModel question = new QuestionManager(ModelState.DELETE).getFinder().byId(id);
+                
+                // Very important step, authenticate via HTTP
+                question.server.setAuthentication();
+                
+                // Copy the url content
+                URL url = new URL(question.server.path + question.officialid + "/" + fileName);
+                URLConnection connection = url.openConnection();
+                InputStream is = connection.getInputStream();
+                ByteArrayOutputStream os = new ByteArrayOutputStream();
+                QuestionIO.copyStream(is, os);
+                
+                result = os.toByteArray();
+                contentType = connection.getContentType();
+                
+                // Add new data to the cache
+                Cache.set(contentCacheKey, result, cacheTime);
+                Cache.set(typeCacheKey, contentType, cacheTime);
+            } catch (Exception e) {
+                return internalServerError(views.html.commons.error.render(errorBreadcrumbs, EMessages.get("error.title"), EMessages.get("error.text")));
+            }
+        }
+        
+        // Return the file with the correct header
+        response().setHeader(CONTENT_TYPE, contentType);
+        return ok(result);
+    }
+    
+    //TODO: delete
+    public static Result test() {
+        String id = "474";
+        String id2 = "454";
+        try {
+            // TODO: cache
+            //if (true) return ok(routes.QuestionController.showQuestionFile(id, QuestionPack.QUESTIONXMLFILE).absoluteURL(request()));
+            Question q = Question.fetch(id);
+            Question q2 = Question.fetch(id2);
+            QuestionSet set = new QuestionSet();
+            set.addQuestion(q);
+            set.addQuestion(q2);
+            return ok(questionSet.render(set, new ArrayList<Link>()));
+            //return ok(q.getIndexLink(Language.getLanguage(EMessages.getLang())).absoluteURL(request()));
+        } catch (QuestionBuilderException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return ok(e.getMessage());
+        }
     }
 }

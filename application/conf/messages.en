@@ -98,6 +98,8 @@ question.editor.answerOptionsInfo = Add possible answer solutions to the questio
 question.editor.addAnswerOption = Add answer option
 question.editor.regexInfo = Enter the exact answer of the question. Java-accepted regular expressions are also allowed.
 question.editor.submitted = Your question was successfully submitted.
+question.editor.possibleAnswer = A possible answer
+question.editor.regex = Regular expression
 
 question.editor.tabs.general = General
 question.editor.tabs.answers = Answers
@@ -119,6 +121,7 @@ question.factory.error.noCorrectAnswers = The answers for language {0} contain n
 question.factory.error.moreThanOneCorrectAnswers = The answers for language {0} contain more than one correct answers.
 question.factory.error.invalidRegex = Invalid regular expression found in language {0}
 question.factory.error.invalidUpload = Your upload was invalid
+question.factory.error.invalidID = Invalid ID
 
 question.questionset.name = Question sets
 question.questionset.create.breadcrumb = New question set
@@ -268,6 +271,9 @@ servers.form.ftpport = FTP port
 servers.form.ftpuser = FTP username
 servers.form.ftppass = FTP password
 servers.form.ftppath = FTP path
+servers.form.is_http_secured = HTTP secured
+servers.form.http_username = HTTP username
+servers.form.http_password = HTTP password
 servermanagement.servers.name = Servers
 servermanagement.servers.new = New Server
 servermanagement.servers.server = Server
@@ -417,3 +423,7 @@ user.error.no_login = Your personal information is not available! Please make su
 user.Male = Male
 user.Female = Female
 user.Other = Other
+
+# Competitions
+competition.overview = Start
+competition.input.regex = Your answer
