@@ -101,7 +101,14 @@ body{
   border-bottom: 4px solid transparent;
 }
 
+/* Start of competition styles */
 .questionframe {
 	border: none;
 	width: 100%;
 }
+
+#countdown {
+	font-size: 40px;
+}
+
+/* End of competition styles */

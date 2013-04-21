@@ -6,8 +6,8 @@
 
 @element(aElement : models.question.MultipleChoiceElement) = {
     <li>
-    	<input type="radio" name="answer_@question.getID()" value="">
-        @aElement.getContent()
+    	<input type="radio" class="multiple_choice" name="@question.getID()" value="" />
+        <span class="content">@aElement.getContent()</span>
     </li>
 }
 

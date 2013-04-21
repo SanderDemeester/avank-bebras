@@ -396,14 +396,17 @@ public class QuestionController extends EController{
     public static Result test() {
         String id = "474";
         String id2 = "454";
+        String id3 = "494";
         try {
             // TODO: cache
             //if (true) return ok(routes.QuestionController.showQuestionFile(id, QuestionPack.QUESTIONXMLFILE).absoluteURL(request()));
             Question q = Question.fetch(id);
             Question q2 = Question.fetch(id2);
+            Question q3 = Question.fetch(id3);
             QuestionSet set = new QuestionSet();
             set.addQuestion(q);
-            set.addQuestion(q2);
+            //set.addQuestion(q2);
+            set.addQuestion(q3);
             return ok(questionSet.render(set, new ArrayList<Link>()));
             //return ok(q.getIndexLink(Language.getLanguage(EMessages.getLang())).absoluteURL(request()));
         } catch (QuestionBuilderException e) {
