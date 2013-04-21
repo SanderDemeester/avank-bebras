@@ -1,0 +1,5 @@
+ALTER TABLE servers ALTER COLUMN is_http_secured SET NOT NULL;
+
+ALTER TABLE contests ADD COLUMN duration integer;
+ALTER TABLE contests ALTER COLUMN duration SET NOT NULL;
+
