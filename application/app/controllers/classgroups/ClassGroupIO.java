@@ -97,22 +97,10 @@ public class ClassGroupIO {
 				else if(record.get(0).equalsIgnoreCase("PUPIL")){
 					//Parse the pupil record
 					UserModel parsed = parseUserModel(record);
-					PupilRecordTriplet prt = new PupilRecordTriplet();
-					prt.user=parsed;
-					prt.message="";
-					prt.isValid=true;
-					//If an id is mentioned, try to add the existing userdata
+					PupilRecordTriplet prt = parsedUserModelToTriplet(parsed);
 					if(parsed.id!=null){
-						UserModel existing = Ebean.find(UserModel.class, parsed.id);
-						//If the userdata doesn't exist, add error message
-						if(existing==null){
-							prt.isValid=false;
-							prt.message=EMessages.get("classes.import.usernotexist");
-						}
-						else{
-							prt.user=existing;
-						}
-						//Add to the existing Pupil list (even if it doesn't exist, but isValid
+						//If id is mentioned, 
+						//add to the existing Pupil list (even if it doesn't exist, but isValid
 						//is false then, so it won't be saved.
 						res.addExistingPupil(prt);
 					}
@@ -181,6 +169,32 @@ public class ClassGroupIO {
 	private static UserModel parseUserModel(List<String> toParse){
 		//TODO
 		return null;
+	}
+	
+	/**
+	 * 
+	 * @param parsed UserModel to put in the record
+	 * @return a PupilRecordTriplet that fits the parsed data
+	 */
+	private static PupilRecordTriplet parsedUserModelToTriplet(UserModel parsed){
+		PupilRecordTriplet prt = new PupilRecordTriplet();
+		prt.user=parsed;
+		prt.message="";
+		prt.isValid=true;
+		//If an id is mentioned, try to add the existing userdata
+		if(parsed.id!=null){
+			UserModel existing = Ebean.find(UserModel.class, parsed.id);
+			//If the userdata doesn't exist, add error message and show the parsed record
+			if(existing==null){
+				prt.isValid=false;
+				prt.message=EMessages.get("classes.import.usernotexist");
+			}
+			//Else add the existing userdata
+			else{
+				prt.user=existing;
+			}
+		}
+		return prt;
 	}
 	
 }
