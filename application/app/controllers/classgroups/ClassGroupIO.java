@@ -93,7 +93,7 @@ public class ClassGroupIO {
 				List<String> record = list.get(i);
 				if(record.isEmpty())continue;
 				//CLASS records are not read, but an error is added
-				if("CLASS".equalsIgnoreCase(record.get(0))){					
+				if("CLASS".equalsIgnoreCase(record.get(0))){
 					res.appendCGMessage(EMessages.get("classes.import.classrecordwhileaddingtoexisting"));
 				}
 				else if("PUPIL".equalsIgnoreCase(record.get(0))){
@@ -107,7 +107,9 @@ public class ClassGroupIO {
 						res.addExistingPupil(prt);
 					}
 					//If no id is mentioned, add to the new pupil list
-					else res.addNewPupil(prt);
+					else {
+						res.addNewPupil(prt);
+					}
 				}
 			}
 			//Check some other constraints
@@ -242,7 +244,7 @@ public class ClassGroupIO {
 		prt.message="";
 		prt.isValid=true;
 		//If an id is mentioned, try to add the existing userdata
-		if(parsed.id!=null){
+		if(parsed.id!=null&&!parsed.id.isEmpty()){
 			UserModel existing = Ebean.find(UserModel.class, parsed.id);
 			//If the userdata doesn't exist, add error message and show the parsed record
 			if(existing==null){

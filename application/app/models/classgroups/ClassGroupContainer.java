@@ -4,16 +4,22 @@
 package models.classgroups;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Random;
 
 import javax.persistence.PersistenceException;
 
 import com.avaje.ebean.Ebean;
 
 import models.dbentities.ClassGroup;
+import models.dbentities.ClassPupil;
 import models.dbentities.UserModel;
 import models.user.AuthenticationManager;
+import models.user.IDGenerator;
+import models.user.UserType;
 
 /**
  * @author Jens N. Rammant
@@ -115,23 +121,27 @@ public class ClassGroupContainer {
 	 * @return true if saving was successful
 	 */
 	public static boolean save(Collection<ClassGroupContainer> coll){
-		//TODO comments
 		boolean res = true;
 		Ebean.beginTransaction();
 		try{
+			//Iterate over the list
 			for(ClassGroupContainer cgc : coll){
+				//Only save the valid ones that are new
 				if(cgc.isCGValid()){
 					if(cgc.isCGNew){
+						//Add teacherID
 						UserModel u = AuthenticationManager.getInstance().getUser().data;
 						cgc.classGroup.teacherid=u.id;
 						cgc.classGroup.save();
 					}
+					//Add the valid new pupils
 					for(PupilRecordTriplet prt : cgc.getNewPupils()){
 						if(prt.isValid){
 							prepareNewPupil(prt.user,cgc.getClassGroup());
-							//prt.user.save();
+							prt.user.save();
 						}
 					}
+					//Link the valid existing users
 					for(PupilRecordTriplet prt : cgc.getExistingPupils()){
 						if(prt.isValid){
 							updateExistingPupil(prt.user, cgc.getClassGroup());
@@ -154,7 +164,16 @@ public class ClassGroupContainer {
 	 * @param model
 	 */
 	private static void prepareNewPupil(UserModel model,ClassGroup cg){
-		//TODO
+		Calendar birthdate = Calendar.getInstance();
+		birthdate.setTime(model.birthdate);
+		
+		model.id=IDGenerator.generate(model.name,birthdate );
+		model.classgroup = cg.id;
+		model.registrationdate = Calendar.getInstance().getTime();		
+		//TODO set password & hash
+		model.hash = "hash";
+		model.type = UserType.PUPIL;
+		model.active=true;
 	}
 	
 	/**
@@ -164,7 +183,20 @@ public class ClassGroupContainer {
 	 * @param cg ClassGroup to link
 	 */
 	private static void updateExistingPupil(UserModel model, ClassGroup cg){
-		//TODO
+		//TODO move this functionality to a more fitting class possibly (UserModel maybe?)
+		if(model.classgroup!=null){
+			ClassPupil existing = Ebean.find(ClassPupil.class)
+					.where().eq("indid", model.id)
+					.where().eq("classid", model.classgroup).findUnique();
+			if(existing==null){
+				ClassPupil cp = new ClassPupil();
+				cp.indid=model.id;
+				cp.classid=model.classgroup;
+				cp.save();
+			}			
+		}
+		model.classgroup=cg.id;
+		model.update();
 	}
 	
 	/**
