@@ -22,9 +22,11 @@ public class QuestionSetModel extends ManageableModel {
     private static final long serialVersionUID = 4L;
 
     @Id
-    public String id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "questionsets_id_seq")
+    public int id;
 
     @Required
+    @Column(name="level")
     public String grade;
 
     @Required
@@ -54,7 +56,7 @@ public class QuestionSetModel extends ManageableModel {
      * @return id
      */
     public String getID() {
-        return id;
+        return Integer.toString(id);
     }
 
 }

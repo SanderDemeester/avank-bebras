@@ -18,14 +18,14 @@ import java.util.List;
 public class QuestionSetManager extends Manager<QuestionSetModel> {
 
     private String contestid;
-    private String questionsetid;
+    private int questionsetid;
 
     /**
      * Constructor for manager class.
      *
      * @param state      model state
      */
-    public QuestionSetManager(ModelState state, String contestid, String questionsetid) {
+    public QuestionSetManager(ModelState state, String contestid, int questionsetid) {
         super(QuestionSetModel.class, state, "grade", "grade");
         this.contestid = contestid;
         this.questionsetid = questionsetid;
@@ -93,7 +93,7 @@ public class QuestionSetManager extends Manager<QuestionSetModel> {
      */
     @Override
     public Call getEditRoute(String id) {
-        return routes.QuestionSetController.list(id, 0, "qid", "asc", "");
+        return routes.QuestionSetController.list(Integer.parseInt(id), 0, "qid", "asc", "");
     }
 
     /**
@@ -103,7 +103,7 @@ public class QuestionSetManager extends Manager<QuestionSetModel> {
      */
     @Override
     public Call getRemoveRoute(String id) {
-        return controllers.competition.routes.CompetitionController.removeQuestionSet(id, contestid);
+        return controllers.competition.routes.CompetitionController.removeQuestionSet(Integer.parseInt(id), contestid);
     }
 
     /**

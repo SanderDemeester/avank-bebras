@@ -74,13 +74,11 @@ public class QuestionSetController extends EController {
             return badRequest(views.html.question.questionset.create.render(form, contestid, breadcrumbs, true));
         }
         QuestionSetModel questionSetModel = form.get();
-        String questionSetId = UUID.randomUUID().toString();
-        questionSetModel.id = questionSetId;
         // TODO check of deze question set actief gezet mag worden !
         // TODO opvangen dat wanneer er op Cancel wordt gedrukt, de contest terug verwijderd wordt uit de database!
         questionSetModel.contest = Ebean.find(CompetitionModel.class).where().ieq("id", contestid).findUnique();
         questionSetModel.save();
-        return redirect(controllers.question.routes.QuestionSetController.list(questionSetId, 0, "", "", ""));
+        return redirect(controllers.question.routes.QuestionSetController.list(questionSetModel.id, 0, "", "", ""));
     }
 
     /**
@@ -89,7 +87,7 @@ public class QuestionSetController extends EController {
      * @param questionSetId id of the question set
      * @return overview page for a question set
      */
-    public static Result list(String questionSetId, int page, String orderBy, String order, String filter){
+    public static Result list(int questionSetId, int page, String orderBy, String order, String filter){
         if (!isAuthorized()) return redirect(controllers.routes.Application.index());
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questionset.overview"), "/questionset/questions"));
@@ -98,7 +96,7 @@ public class QuestionSetController extends EController {
         qsqm.setOrderBy(orderBy);
         qsqm.setFilter(filter);
         QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.UPDATE, "", questionSetId);
-        Form<QuestionSetModel> form = form(QuestionSetModel.class).bindFromRequest().fill(questionSetManager.getFinder().byId(questionSetId));
+        Form<QuestionSetModel> form = form(QuestionSetModel.class).bindFromRequest().fill(questionSetManager.getFinder().byId(Integer.toString(questionSetId)));
         return ok(
                 views.html.question.questionset.overview.render(breadcrumbs, questionSetId,
                         qsqm.page(page), qsqm, orderBy, order, filter, form, questionSetManager
@@ -111,7 +109,7 @@ public class QuestionSetController extends EController {
      * @param questionSetId question set id
      * @return add question to set page
      */
-    public static Result addQuestion(String questionSetId){
+    public static Result addQuestion(int questionSetId){
         if (!isAuthorized()) return redirect(controllers.routes.Application.index());
         Form<QuestionSetQuestion> form = form(QuestionSetQuestion.class).bindFromRequest();
         List<Link> breadcrumbs = defaultBreadcrumbs();
@@ -127,7 +125,7 @@ public class QuestionSetController extends EController {
      * @param questionSetId question set id
      * @return overview page
      */
-    public static Result updateQuestions(String questionSetId){
+    public static Result updateQuestions(int questionSetId){
         if (!isAuthorized()) return redirect(controllers.routes.Application.index());
         Form<QuestionSetQuestion> form = form(QuestionSetQuestion.class).bindFromRequest();
         if(form.hasErrors()) {
@@ -137,7 +135,7 @@ public class QuestionSetController extends EController {
             return badRequest(views.html.question.questionset.addQuestion.render(form, questionSetId, breadcrumbs));
         }
         QuestionSetQuestion questionSetQuestion = form.get();
-        questionSetQuestion.questionSet = Ebean.find(QuestionSetModel.class).where().ieq("id", questionSetId).findUnique();
+        questionSetQuestion.questionSet = Ebean.find(QuestionSetModel.class).where().eq("id", questionSetId).findUnique();
         int questionId = questionSetQuestion.qid;
         QuestionManager questionManager = new QuestionManager(ModelState.READ);
         if (questionManager.getFinder().byId("" + questionId) == null){
@@ -149,7 +147,7 @@ public class QuestionSetController extends EController {
             return badRequest(views.html.question.questionset.addQuestion.render(form, questionSetId, breadcrumbs));
         }
         QuestionSetQuestionManager questionSetQuestionManager = new QuestionSetQuestionManager(ModelState.CREATE, questionSetId);
-        if (!questionSetQuestionManager.getFinder().where().ieq("qsid", questionSetId).eq("qid", questionId).findList().isEmpty()){
+        if (!questionSetQuestionManager.getFinder().where().eq("qsid", questionSetId).eq("qid", questionId).findList().isEmpty()){
             // question already in this question set
             List<Link> breadcrumbs = defaultBreadcrumbs();
             breadcrumbs.add(new Link(EMessages.get("question.questionset.overview"), "/questionset/questions"));
@@ -168,10 +166,10 @@ public class QuestionSetController extends EController {
      * @param questionSetId question set id
      * @return redirect to question set overview page.
      */
-    public static Result update(String questionSetId){
+    public static Result update(int questionSetId){
         if (!isAuthorized()) return redirect(controllers.routes.Application.index());
         QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.UPDATE, "grade", questionSetId);
-        Form<QuestionSetModel> form = form(QuestionSetModel.class).fill(questionSetManager.getFinder().byId(questionSetId)).bindFromRequest();
+        Form<QuestionSetModel> form = form(QuestionSetModel.class).fill(Ebean.find(QuestionSetModel.class, questionSetId)).bindFromRequest();
         if (form.hasErrors()) {
             List<Link> breadcrumbs = defaultBreadcrumbs();
             breadcrumbs.add(new Link(EMessages.get("question.questionset.overview"), "/questionset/questions"));
@@ -198,10 +196,10 @@ public class QuestionSetController extends EController {
      * @param questionId question id
      * @return redirect to question set overview page
      */
-    public static Result removeQuestion(String questionSetId, String questionId){
+    public static Result removeQuestion(int questionSetId, String questionId){
         if (!isAuthorized()) return redirect(controllers.routes.Application.index());
         QuestionSetQuestionManager qsqm = new QuestionSetQuestionManager(ModelState.DELETE, questionSetId);
-        List<QuestionSetQuestion> questions = qsqm.getFinder().where().ieq("qsid", questionSetId).eq("qid", new Integer(questionId)).findList();
+        List<QuestionSetQuestion> questions = qsqm.getFinder().where().eq("qsid", questionSetId).eq("qid", new Integer(questionId)).findList();
         if (!questions.isEmpty()){
             questions.get(0).delete();
         }

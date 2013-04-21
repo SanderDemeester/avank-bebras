@@ -60,7 +60,7 @@ public class CompetitionController extends EController {
      */
     private static QuestionSetManager getQuestionSetManager(ModelState modelState, String orderBy, String order,
                                                             String filter, String contid){
-        QuestionSetManager questionSetManager = new QuestionSetManager(modelState, contid, "");
+        QuestionSetManager questionSetManager = new QuestionSetManager(modelState, contid, 0);
         questionSetManager.setOrderBy(orderBy);
         questionSetManager.setOrder(order);
         questionSetManager.setFilter(filter);
@@ -189,7 +189,7 @@ public class CompetitionController extends EController {
     public static Result removeCompetition(String contestid){
         if (!isAuthorized()) return redirect(controllers.routes.Application.index());
         // remove all question sets in this contest from questionsets table
-        QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.DELETE, contestid, "");
+        QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.DELETE, contestid, 0);
         List<QuestionSetModel> questionSetModels = questionSetManager.getFinder().where().ieq("contid", contestid).findList();
         for (QuestionSetModel questionSetModel : questionSetModels){
             questionSetModel.delete();
@@ -207,17 +207,17 @@ public class CompetitionController extends EController {
      * @param contestid contest id
      * @return redirect to the contest overview page
      */
-    public static Result removeQuestionSet(String qsid, String contestid){
+    public static Result removeQuestionSet(int qsid, String contestid){
         if (!isAuthorized()) return redirect(controllers.routes.Application.index());
         // remove all questions in this question set from questionsetquestions table
         QuestionSetQuestionManager questionSetQuestionManager = new QuestionSetQuestionManager(ModelState.DELETE, qsid);
-        List<QuestionSetQuestion> questions = questionSetQuestionManager.getFinder().where().ieq("qsid", qsid).findList();
+        List<QuestionSetQuestion> questions = questionSetQuestionManager.getFinder().where().eq("qsid", qsid).findList();
         for (QuestionSetQuestion questionSetQuestion : questions){
             questionSetQuestion.delete();
         }
         // remove the question set
-        QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.DELETE, contestid, "");
-        questionSetManager.getFinder().byId(qsid).delete();
+        QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.DELETE, contestid, 0);
+        questionSetManager.getFinder().byId(Integer.toString(qsid)).delete();
         return redirect(routes.CompetitionController.viewCompetition(contestid, 0, "grade", "asc", ""));
     }
 

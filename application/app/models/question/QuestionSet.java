@@ -39,7 +39,7 @@ public class QuestionSet{
         this.active = data.active;
 
         // setting the questions for this question set
-        List<QuestionSetQuestion> questionSetQuestions = Ebean.find(QuestionSetQuestion.class).where().ieq("qsid", data.id).findList();
+        List<QuestionSetQuestion> questionSetQuestions = Ebean.find(QuestionSetQuestion.class).where().eq("qsid", data.id).findList();
         for (QuestionSetQuestion questionSetQuestion : questionSetQuestions){
             try {
                 Question question = Question.fetch("" + questionSetQuestion.qid);
