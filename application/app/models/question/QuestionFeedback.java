@@ -12,7 +12,7 @@ public class QuestionFeedback {
     private int score;
 
     public QuestionFeedback(Map<Question, Answer> answers) {
-
+        
     }
 
     public Map<Question, FeedbackElement> getFeedbackElements() {

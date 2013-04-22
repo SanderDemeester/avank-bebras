@@ -25,9 +25,16 @@ $("#submit").live("click", function() {
 	if(confirm("Are you sure you want to submit your answers and finish the competition?")) submit();
 });
 
+// Retry submitting if lost connection
+$("#retry").live("click", function() {
+	$("#lostConnection").modal("hide").on('hidden', function () {
+		submit();
+	})
+});
+
 // Submit the answers to the server
 function submit() {
-	// Try to send to server with modal
+	// Show modal
 	$("#submitting").modal({
 		keyboard: false,
 		backdrop: "static",
@@ -35,20 +42,49 @@ function submit() {
 	var spinner = new Spinner(spinner_opts).spin();
 	$(".icon-spinner").append(spinner.el);
 	
-	// If timeout -> show modal with cookie data & info
-	
-	// If error (invalid countdown)
-	lostConnection();
+	$("#submitting").on("shown", function() {
+		// Try to send to server
+		var request = $.ajax({
+			type: "GET",
+			url: "../submit",
+			data: { json: JSON.stringify(answers) }
+		})
+		
+		request.done(function(msg) {
+			// If ok -> redirect to finished page
+			
+			success();
+			// If error (invalid countdown)
+		});	
+		
+		// If timeout -> show modal with cookie data & info
+		request.fail(function(jqXHR, textStatus) {
+			lostConnection();
+		});
+		
+		request.always(function(jqXHR, textStatus, errorThrown) {
+			$("#submitting").modal("hide");
+		});	
+	});
+}
+
+// When the submission of answers went without errors
+function success() {
+	alert("ok");
 }
 
 // When the user has lost internetconnection on submitting
 function lostConnection() {
+	// Destroy countdown
+	$("#countdown").countdown('destroy');
+	
+	// Show modal
 	$("#submitting").modal("hide");
 	$("#lostConnection").modal({
 		keyboard: false,
 		backdrop: "static",
 	});
-	$("#answerscode").text(JSON.stringify(answers));
+	$("#answerscode").text($.base64.encode(JSON.stringify(answers)));
 }
 
 $("#answerscode").live("focus", function(){	
@@ -76,7 +112,7 @@ function expired() {
 
 // Update timeleft in answers object
 function updateTimeleft(periods) {
-	answers.timeleft = periods[0]*60*60 + periods[1]*60 + periods[2];
+	answers.timeleft = periods[4]*60*60 + periods[5]*60 + periods[6];
 }
 
 // On page loaded

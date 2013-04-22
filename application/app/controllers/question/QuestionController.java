@@ -7,6 +7,8 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.codehaus.jackson.JsonNode;
+
 import models.EMessages;
 import models.data.Link;
 import models.dbentities.QuestionModel;
@@ -22,6 +24,7 @@ import models.question.submits.SubmitsPage;
 import play.Play;
 import play.cache.Cache;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Result;
 import views.html.commons.noaccess;
 import views.html.question.approveQuestionForm;
@@ -414,5 +417,10 @@ public class QuestionController extends EController{
             e.printStackTrace();
             return ok(e.getMessage());
         }
+    }
+    
+    // TODO: move to competitioncontroller
+    public static Result submit(String json) {
+        JsonNode input = Json.parse(json);
     }
 }
