@@ -36,7 +36,7 @@ public class SchoolManager extends Manager<SchoolModel> {
 	}
 
 	@Override
-	public Call getListRoute(int page, String filter) {
+	public Call getListRoute(int page, String orderBy, String order, String filter) {
 		return routes.SchoolController.viewSchools(page,orderBy,order,filter);
 	}
 
