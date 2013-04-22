@@ -262,10 +262,10 @@ public class UserController extends EController{
                 UserModel userModel = Ebean.find(UserModel.class).where().eq(
                         "id", form.get().id).findUnique();
                 if (userModel != null) {
-                    Mails mail = new Mails();
-                    mail.sendMail(form.get().email, form.get().id);
                     userModel.password = AuthenticationManager.getInstance().simulateClientsidePasswordStrengthening("reset");
                     Ebean.save(userModel);
+                    Mails mail = new Mails();
+                    mail.sendMail(form.get().email, form.get().id, userModel.password);
                     flash("success", EMessages.get("forgot_pwd.success") + "\n" + EMessages.get("forgot_pwd.mail"));
                     return Results.redirect("/");
                 } else {

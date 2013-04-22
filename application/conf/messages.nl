@@ -178,7 +178,7 @@ forgot_pwd.email = E-mail
 forgot_pwd.submit = Verzoek reset wachtwoord
 forgot_pwd.success = Wachtwoord succesvol gereset.
 forgot_pwd.mail = Er werd een e-mail verzonden naar het opgegeven adres.
-forgot_pwd.mail_sent = Iemand heeft een nieuw wachtwoord aangevraagd voor Avank-Bebras. Er werd een tijdelijk wachtwoord voor gebruiker {0} gemaakt. Dit tijdelijke wachtwoord is "reset". Indien dit je bedoeling was, kan je nu inloggen met dit tijdelijk wachtwoord en een nieuw wachtwoord instellen. Indien iemand anders dit verzoek maakte en jij de verantwoordelijke voor hem/haar bent, gelieve dan deze gebruiker hierover te informeren.
+forgot_pwd.mail_sent = Iemand heeft een nieuw wachtwoord aangevraagd voor Avank-Bebras. Er werd een tijdelijk wachtwoord voor gebruiker {0} gemaakt. Dit tijdelijke wachtwoord is {1}. Indien dit je bedoeling was, kan je nu inloggen met dit tijdelijk wachtwoord en een nieuw wachtwoord instellen. Indien iemand anders dit verzoek maakte en jij de verantwoordelijke voor hem/haar bent, gelieve dan deze gebruiker hierover te informeren.
 
 
 # Edit pwd

@@ -153,11 +153,11 @@ public class PersonalPageController extends EController {
         }
         else {
             flash("error", EMessages.get(EMessages.get("forms.error")));
-            return badRequest(editpass.render((EMessages.get("edit_pwd.edit_pwd")), breadcrumbs));
+            return Results.redirect(controllers.user.routes.PersonalPageController.show());
         }
         if (editPass.hasErrors()) {
             flash("error", EMessages.get(EMessages.get("forms.error")));
-            return badRequest(editpass.render((EMessages.get("edit_pwd.edit_pwd")), breadcrumbs));
+            return Results.redirect(controllers.user.routes.PersonalPageController.show());
         }
         return Results.redirect(controllers.user.routes.PersonalPageController.show());
     }
@@ -168,9 +168,9 @@ public class PersonalPageController extends EController {
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link(EMessages.get("edit_pwd.edit_pwd"), "/passwedit"));
         if (AuthenticationManager.getInstance().isLoggedIn()) {
-            showpage = editpass.render(EMessages.get("edit_pwd.edit_pwd"), breadcrumbs);
+            showpage = settings.render(EMessages.get("edit_pwd.edit_pwd"), breadcrumbs);
         } else {
-            showpage = errorinfo.render("Information is not available", breadcrumbs);
+            showpage = settings.render("Information is not available", breadcrumbs);
         }
         return ok(showpage);
     }
