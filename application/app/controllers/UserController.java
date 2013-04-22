@@ -30,6 +30,7 @@ import views.html.login.registerLandingPage;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -143,7 +144,7 @@ public class UserController extends EController{
 		String bebrasID = null;
 		try {
 			bebrasID = AuthenticationManager.getInstance().createUser(registerForm);
-		} catch (Exception e) {
+        } catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -249,7 +250,7 @@ public class UserController extends EController{
         ));
     }
 
-    public static Result forgotPwdSendMail() {
+    public static Result forgotPwdSendMail() throws InvalidKeySpecException, NoSuchAlgorithmException {
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link(EMessages.get("forgot_pwd.forgot_pwd"), "/forgotPwd"));
@@ -263,7 +264,7 @@ public class UserController extends EController{
                 if (userModel != null) {
                     Mails mail = new Mails();
                     mail.sendMail(form.get().email, form.get().id);
-                    userModel.password = "reset";
+                    userModel.password = AuthenticationManager.getInstance().simulateClientsidePasswordStrengthening("reset");
                     Ebean.save(userModel);
                     flash("success", EMessages.get("forgot_pwd.success") + "\n" + EMessages.get("forgot_pwd.mail"));
                     return Results.redirect("/");
