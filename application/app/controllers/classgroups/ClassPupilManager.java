@@ -38,7 +38,7 @@ public class ClassPupilManager extends Manager<UserModel> {
 	}
 
 	@Override
-	public Call getListRoute(int page, String filter) {
+	public Call getListRoute(int page, String orderBy, String order, String filter) {
 		return routes.ClassPupilController.viewClass(classID, page, orderBy, order, filter);
 	}
 
