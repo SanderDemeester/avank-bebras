@@ -1,4 +1,5 @@
-@(breadcrumbs : List[models.data.Link], uploaded :  Collection[models.classgroups.ClassGroupContainer])
+@(breadcrumbs : List[models.data.Link], uploaded :  Collection[models.classgroups.ClassGroupContainer],id : String,
+classID : Integer)
 
 @import helper._
 @import helper.twitterBootstrap._
@@ -11,14 +12,27 @@
 	}
 }
 
-@form(action = controllers.classgroups.routes.ClassGroupIOController.post, 'enctype -> "multipart/form-data") {
-    
-    <input type="file" name="xlsx">
-    
-    <p>
-        <input type="submit">
-    </p>
-    
-}
+
+	@if(classID!=null){
+		@form(action = controllers.classgroups.routes.ClassGroupIOController.postExisting(classID), 'enctype -> "multipart/form-data") {    
+    		<input type="file" name="xlsx">    
+    		<p>
+    			<input type="submit">
+    		</p>    
+		}
+			@if(id!=null){
+				<a href="@controllers.classgroups.routes.ClassGroupIOController.saveExisting(classID,id)" class="btn">Save</a>
+			}
+	}else{		
+		@form(action = controllers.classgroups.routes.ClassGroupIOController.post(), 'enctype -> "multipart/form-data") {    
+    		<input type="file" name="xlsx">    
+    		<p>
+        		<input type="submit">
+    		</p>    
+		}
+		@if(id!=null){
+			<a href="@controllers.classgroups.routes.ClassGroupIOController.save(id)" class="btn">Save</a>
+		}
+	}
 
 }
