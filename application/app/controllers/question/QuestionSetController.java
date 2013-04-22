@@ -3,6 +3,7 @@ package controllers.question;
 import com.avaje.ebean.Ebean;
 import controllers.EController;
 import models.EMessages;
+import models.data.Grade;
 import models.data.Link;
 import models.dbentities.CompetitionModel;
 import models.dbentities.QuestionSetModel;
@@ -74,6 +75,7 @@ public class QuestionSetController extends EController {
             return badRequest(views.html.question.questionset.create.render(form, contestid, breadcrumbs, true));
         }
         QuestionSetModel questionSetModel = form.get();
+        questionSetModel.grade = Ebean.find(Grade.class).where().ieq("name", form.field("gradetext").value()).findUnique();
         // TODO check of deze question set actief gezet mag worden !
         // TODO opvangen dat wanneer er op Cancel wordt gedrukt, de contest terug verwijderd wordt uit de database!
         questionSetModel.contest = Ebean.find(CompetitionModel.class).where().ieq("id", contestid).findUnique();
@@ -183,6 +185,7 @@ public class QuestionSetController extends EController {
             ));
         }
         QuestionSetModel questionSetModel = form.get();
+        questionSetModel.grade = Ebean.find(Grade.class).where().ieq("name", form.field("gradetext").value()).findUnique();
         questionSetModel.id = questionSetId;
         questionSetModel.update();
         return redirect(routes.QuestionSetController.list(questionSetId, 0, "qid", "asc", ""));

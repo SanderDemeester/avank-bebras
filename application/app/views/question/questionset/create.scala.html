@@ -34,7 +34,7 @@
             @inputText(qsForm("name"), '_label -> EMessages.get("question.questionset.create.name"), '_showConstraints -> false)
 
             @select(
-                qsForm("grade"),
+                qsForm("gradetext"),
                 options = options(models.data.DataHandler.getGrades().toList.map(_.getName)),
                 '_label -> EMessages.get("question.questionset.create.grade"),
                 '_showConstraints -> false

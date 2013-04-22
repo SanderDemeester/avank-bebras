@@ -26,9 +26,10 @@ public class QuestionSetModel extends ManageableModel {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "questionsets_id_seq")
     public int id;
 
-    @Required
     @Column(name="level")
-    public String grade;
+    @ManyToOne
+    @JoinColumn(name="level")
+    public Grade grade;
 
     @Required
     public boolean active;
@@ -46,7 +47,7 @@ public class QuestionSetModel extends ManageableModel {
      * @return array with the current values of the fields to be represented in the table
      */
     public String[] getFieldValues() {
-        String[] result = {name, grade, Boolean.toString(active)};
+        String[] result = {name, grade.getName(), Boolean.toString(active)};
         return result;
     }
 
