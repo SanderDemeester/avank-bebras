@@ -26,7 +26,7 @@ public class ClassGroupIOController extends EController {
 
 	public static Result upload(){
 		//TODO
-		return ok(uploadclass.render(new ArrayList<Link>()));
+		return ok(uploadclass.render(new ArrayList<Link>(),null));
 	}
 	
 	public static Result post(){
@@ -35,10 +35,9 @@ public class ClassGroupIOController extends EController {
 		  try {
 			List<List<String>> list = XLSXImporter.read(xlsx.getFile());
 			List<ClassGroupContainer> cg = ClassGroupIO.listToClassGroup(list);
-			System.out.println(ClassGroupContainer.save(cg));
+			return ok(uploadclass.render(new ArrayList<Link>(),cg));
 		} catch (IOException e) {
-			return null;
+			return TODO;
 		}
-		  return TODO;
 	}
 }

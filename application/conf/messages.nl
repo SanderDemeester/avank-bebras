@@ -389,6 +389,12 @@ classes.edit = Pas een klas aan.
 # classes.import.newclass.incomplete
 # classes.import.newclass.nosuchschool
 # classes.import.newclass.nosuchgrade
+# classes.import.info.new
+# classes.import.info.old
+# classes.import.info.classinvalid
+# classes.import.info.classstart
+# classes.import.info.existstudent
+# classes.import.info.newstudent
 
 
 # User

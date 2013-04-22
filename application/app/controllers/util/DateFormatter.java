@@ -17,6 +17,7 @@ public class DateFormatter {
 	public static final String FORMAT = "dd/MM/yyyy";
 
 	public static String formatDate(Date d){
+		if(d==null)return null;
 		Format formatter = new SimpleDateFormat(FORMAT);
 		return formatter.format(d);
 	}

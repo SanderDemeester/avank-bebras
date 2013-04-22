@@ -14,6 +14,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import controllers.util.DateFormatter;
+
 import models.management.Listable;
 import models.management.ManageableModel;
 import models.user.AuthenticationManager;
@@ -117,8 +119,11 @@ public class UserModel extends ManageableModel implements Listable{
 		return id;
 	}
 	
+	public String getBirthDate(){
+		return convertDate(this.birthdate);
+	}
+	
 	private String convertDate(Date d){
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-		return df.format(d);
+		return DateFormatter.formatDate(d);
 	}
 }

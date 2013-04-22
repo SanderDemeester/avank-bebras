@@ -1,9 +1,15 @@
-@(breadcrumbs : List[models.data.Link])
+@(breadcrumbs : List[models.data.Link], uploaded :  Collection[models.classgroups.ClassGroupContainer])
 
 @import helper._
 @import helper.twitterBootstrap._
 
 @main("test", breadcrumbs){
+
+@if(uploaded!=null){
+	@for(cgc <-uploaded){
+		@ClassGroupContainer(cgc)
+	}
+}
 
 @form(action = controllers.classgroups.routes.ClassGroupIOController.post, 'enctype -> "multipart/form-data") {
     

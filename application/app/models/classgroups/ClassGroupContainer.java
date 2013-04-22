@@ -118,7 +118,7 @@ public class ClassGroupContainer {
 	 * and add a message.
 	 * @throws PersistenceException when something goes wrong with the db
 	 */
-	public void validate() throws PersistenceException{
+	public void validate() throws PersistenceException{		
 		//For new students, check if fields are all filled in & correct
 		for(PupilRecordTriplet prt : newPupils){
 			if(prt.isValid){
@@ -126,7 +126,7 @@ public class ClassGroupContainer {
 				if(um.name==null||um.name.isEmpty())prt.isValid=false;
 				if(um.birthdate==null)prt.isValid=false; //TODO check if before today
 				if(um.gender==null)prt.isValid=false;
-				if(um.preflanguage==null)prt.isValid=false;
+				if(um.preflanguage==null||um.preflanguage.isEmpty())prt.isValid=false;
 				if(um.password==null||um.password.isEmpty())prt.isValid=false;
 				//TODO check if possible emailadres is valid
 				if(!prt.isValid)prt.message=EMessages.get("classes.import.newpupil.incomplete");
@@ -151,19 +151,19 @@ public class ClassGroupContainer {
 					||classGroup.expdate==null
 					||classGroup.level==null || classGroup.level.isEmpty()){
 				this.isCGValid=false;
-				appendCGMessage(EMessages.get("classes.import.newclass.incomplete"));
-				
-				SchoolModel sm = Ebean.find(SchoolModel.class,this.classGroup.schoolid);
-				if(sm==null){
-					this.isCGValid=false;
-					appendCGMessage(EMessages.get("classes.import.newclass.nosuchschool"));
-				}
-				
-				Grade grade = Ebean.find(Grade.class,this.classGroup.level);
-				if(grade==null){
-					this.isCGValid=false;
-					appendCGMessage(EMessages.get("classes.import.newclass.nosuchgrade"));
-				}
+				appendCGMessage(EMessages.get("classes.import.newclass.incomplete"));				
+			}
+			
+			SchoolModel sm = Ebean.find(SchoolModel.class,this.classGroup.schoolid);
+			if(sm==null){
+				this.isCGValid=false;
+				appendCGMessage(EMessages.get("classes.import.newclass.nosuchschool"));
+			}
+			
+			Grade grade = Ebean.find(Grade.class,this.classGroup.level);
+			if(grade==null){
+				this.isCGValid=false;
+				appendCGMessage(EMessages.get("classes.import.newclass.nosuchgrade"));
 			}
 		}
 	}
