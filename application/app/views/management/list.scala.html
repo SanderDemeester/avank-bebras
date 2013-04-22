@@ -65,10 +65,13 @@
         <div class="span8">
             @(EMessages.get(manager.getMessagesPrefix() + ".form." + manager.getFilterBy())+":") <input type="text" class="input-large search-query filter-input" name="f" value="@currentFilter" placeholder="@EMessages.get("management.filter.input")">
         </div>
-        <div class="span4 text-right">
-            <input type="submit" id="searchsubmit" value="@EMessages.get("management.filter.button")" class="btn">
-            <a class="btn btn-primary" href="@manager.getAddRoute()"> @EMessages.get("management.add") </a>
-        </div>
+
+        @if(manager.getAddRoute() != null){
+            <div class="span4 text-right">
+                <input type="submit" id="searchsubmit" value="@EMessages.get("management.filter.button")" class="btn">
+                <a class="btn btn-primary" href="@manager.getAddRoute()"> @EMessages.get("management.add") </a>
+            </div>
+        }
     </form>
 
 </div>
