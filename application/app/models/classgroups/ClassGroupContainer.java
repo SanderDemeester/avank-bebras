@@ -14,8 +14,14 @@ import javax.persistence.PersistenceException;
 
 import com.avaje.ebean.Ebean;
 
+import controllers.util.PasswordHasher;
+import controllers.util.PasswordHasher.HashAndPassword;
+
+import models.EMessages;
+import models.data.Grade;
 import models.dbentities.ClassGroup;
 import models.dbentities.ClassPupil;
+import models.dbentities.SchoolModel;
 import models.dbentities.UserModel;
 import models.user.AuthenticationManager;
 import models.user.IDGenerator;
@@ -112,8 +118,54 @@ public class ClassGroupContainer {
 	 * and add a message.
 	 * @throws PersistenceException when something goes wrong with the db
 	 */
-	public void validify() throws PersistenceException{
-		//TODO
+	public void validate() throws PersistenceException{
+		//For new students, check if fields are all filled in & correct
+		for(PupilRecordTriplet prt : newPupils){
+			if(prt.isValid){
+				UserModel um = prt.user;
+				if(um.name==null||um.name.isEmpty())prt.isValid=false;
+				if(um.birthdate==null)prt.isValid=false; //TODO check if before today
+				if(um.gender==null)prt.isValid=false;
+				if(um.preflanguage==null)prt.isValid=false;
+				if(um.password==null||um.password.isEmpty())prt.isValid=false;
+				//TODO check if possible emailadres is valid
+				if(!prt.isValid)prt.message=EMessages.get("classes.import.newpupil.incomplete");
+			}
+		}		
+		//For existing students, check if they exist & if they're a student
+		for(PupilRecordTriplet prt : existingPupils){
+			if(prt.isValid){
+				UserModel model = Ebean.find(UserModel.class, prt.user.id);
+				if(model==null){
+					prt.isValid=false;
+					prt.message=EMessages.get("classes.import.existingpupil.notexisting");
+				}else if(model.type!=UserType.PUPIL&&model.type!=UserType.INDEPENDENT){
+					prt.isValid=false;
+					prt.message=EMessages.get("classes.import.existingpupil.nopupil");
+				}
+			}
+		}
+		//For new classgroup, check if school & level exist, and other fields are valid
+		if(this.isCGNew&&this.isCGValid){
+			if(classGroup.name==null||classGroup.name.isEmpty()
+					||classGroup.expdate==null
+					||classGroup.level==null || classGroup.level.isEmpty()){
+				this.isCGValid=false;
+				appendCGMessage(EMessages.get("classes.import.newclass.incomplete"));
+				
+				SchoolModel sm = Ebean.find(SchoolModel.class,this.classGroup.schoolid);
+				if(sm==null){
+					this.isCGValid=false;
+					appendCGMessage(EMessages.get("classes.import.newclass.nosuchschool"));
+				}
+				
+				Grade grade = Ebean.find(Grade.class,this.classGroup.level);
+				if(grade==null){
+					this.isCGValid=false;
+					appendCGMessage(EMessages.get("classes.import.newclass.nosuchgrade"));
+				}
+			}
+		}
 	}
 
 	/**
@@ -170,8 +222,9 @@ public class ClassGroupContainer {
 		model.id=IDGenerator.generate(model.name,birthdate );
 		model.classgroup = cg.id;
 		model.registrationdate = Calendar.getInstance().getTime();		
-		//TODO set password & hash
-		model.hash = "hash";
+		HashAndPassword hap = PasswordHasher.hashPassword(model.password);
+		model.password=hap.password;
+		model.hash = hap.hash;
 		model.type = UserType.PUPIL;
 		model.active=true;
 	}
@@ -182,8 +235,11 @@ public class ClassGroupContainer {
 	 * @param model UserModel to save
 	 * @param cg ClassGroup to link
 	 */
-	private static void updateExistingPupil(UserModel model, ClassGroup cg){
+	private static void updateExistingPupil(UserModel modell, ClassGroup cg){
 		//TODO move this functionality to a more fitting class possibly (UserModel maybe?)
+		//Make sure you're using the most up-to-date version of the model
+		UserModel model = Ebean.find(UserModel.class, modell.id);
+		if(model==null)throw new PersistenceException();
 		if(model.classgroup!=null){
 			ClassPupil existing = Ebean.find(ClassPupil.class)
 					.where().eq("indid", model.id)

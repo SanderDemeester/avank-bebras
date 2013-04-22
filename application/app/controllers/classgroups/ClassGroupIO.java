@@ -113,7 +113,7 @@ public class ClassGroupIO {
 				}
 			}
 			//Check some other constraints
-			res.validify();
+			res.validate();
 			return res;
 		//If something goes wrong, return null	
 		}catch(PersistenceException pe){
@@ -156,7 +156,7 @@ public class ClassGroupIO {
 		if(current!=null)res.add(current);
 		//Check some other constraints
 		for(ClassGroupContainer cgp : res){
-			cgp.validify();
+			cgp.validate();
 		}
 		return res;
 	}
@@ -207,8 +207,9 @@ public class ClassGroupIO {
 			res.name=toParse.get(2);
 			res.birthdate = DateFormatter.parseString(toParse.get(3));
 			res.gender=GenderParser.parseString(toParse.get(4));
-			res.password=toParse.get(5);
-			res.preflanguage=toParse.get(6);
+			res.preflanguage=toParse.get(5); //TODO: controller parsing (making sure only valid languages are allowed)
+			res.password=toParse.get(6);
+			res.email=toParse.get(7);
 		}catch(IndexOutOfBoundsException e){}
 		return res;
 	}

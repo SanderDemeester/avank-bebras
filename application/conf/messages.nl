@@ -383,6 +383,12 @@ classes.edit = Pas een klas aan.
 # classes.import.classnotexist
 # classes.import.classrecordwhileaddingtoexisting
 # classes.import.usernotexist
+# classes.import.newpupil.incomplete
+# classes.import.existingpupil.notexisting
+# classes.import.existingpupil.nopupil
+# classes.import.newclass.incomplete
+# classes.import.newclass.nosuchschool
+# classes.import.newclass.nosuchgrade
 
 
 # User
