@@ -5,7 +5,7 @@
 *                                                          *
 ***********************************************************@
 
-@(currentPage: Page[models.management.ManageableModel], manager: models.management.Manager[_], currentOrderBy: String,
+@(currentPage: Page[_ <: models.management.ManageableModel], manager: models.management.Manager[_], currentOrderBy: String,
     currentOrder: String, currentFilter: String)
 
 @import models.EMessages
@@ -62,10 +62,10 @@
     * Filtering & Add new item
     ***********************@
     <form action="@link(0,"name")" method="GET" class="row-fluid">
-        <div class="span9">
+        <div class="span8">
             @(EMessages.get(manager.getMessagesPrefix() + ".form." + manager.getFilterBy())+":") <input type="text" class="input-large search-query filter-input" name="f" value="@currentFilter" placeholder="@EMessages.get("management.filter.input")">
         </div>
-        <div class="span3 text-right">
+        <div class="span4 text-right">
             <input type="submit" id="searchsubmit" value="@EMessages.get("management.filter.button")" class="btn">
             <a class="btn btn-primary" href="@manager.getAddRoute()"> @EMessages.get("management.add") </a>
         </div>
@@ -103,12 +103,16 @@
                     </td>
                 }
                 	<td>
-                		<a class="btn" id="edit" href="@manager.getEditRoute(item.getID())">
-                            <i class="icon-edit"></i>
-                        </a>
-                        <a class="btn" id="remove" href="@manager.getRemoveRoute(item.getID())">
-                            <i class="icon-remove"></i>
-                        </a>
+                        @if(manager.getEditRoute(item.getID()) != null){
+                            <a class="btn" id="edit" href="@manager.getEditRoute(item.getID())">
+                                <i class="icon-edit"></i>
+                            </a>
+                        }
+                        @if(manager.getRemoveRoute(item.getID()) != null){
+                            <a class="btn" id="remove" href="@manager.getRemoveRoute(item.getID())">
+                                <i class="icon-remove"></i>
+                            </a>
+                        }
                 	</td>
                 </tr>
             }

@@ -34,6 +34,7 @@ import controllers.EController;
 
 /**
  * @author Jens N. Rammant
+ * TODO try to clean class some more
  */
 public class FAQController extends EController {
 
@@ -155,7 +156,7 @@ public class FAQController extends EController {
      * @param id of the to be altered FAQModel
      * @return FAQ alter page
      */
-    public static Result edit(String id){
+    public static Result edit(int id){
         //Generate breadcrumbs
         List<Link> breadcrumbs = manageBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("faq.alter"),"/manageFAQ/"+id));
@@ -163,16 +164,9 @@ public class FAQController extends EController {
         
         OperationResultInfo inf = new OperationResultInfo();
 		
-		//Check if the id is a valid int
+        //Try to render form		
         try{
-        	Integer.parseInt(id);
-        }catch(NumberFormatException ne){
-        	inf.add(EMessages.get("faq.error"), OperationResultInfo.Type.ERROR);
-        	return list(0, "name", "asc", "",inf);
-        }
-        //Try to render form
-		Form<FAQModel> form = form(FAQModel.class).bindFromRequest().fill(new FAQManager(ModelState.UPDATE).getFinder().ref(id));
-        try{
+        	Form<FAQModel> form = form(FAQModel.class).bindFromRequest().fill(Ebean.find(FAQModel.class, id));
             Result r =
                 ok(alterFAQForm.render(form, breadcrumbs,listOfLanguages(),id, new OperationResultInfo()));
             return r;
@@ -191,7 +185,7 @@ public class FAQController extends EController {
      * @param id id of the FAQ to be updated
      * @return FAQ list page
      */
-    public static Result update(String id){
+    public static Result update(int id){
         //Generate breadcrumbs
         List<Link> breadcrumbs = manageBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("faq.alter"),"/manageFAQ/"+id));
@@ -199,7 +193,7 @@ public class FAQController extends EController {
         //Try to update the FAQModel from the form
         Form<FAQModel> form = null;
         try{
-             form = form(FAQModel.class).fill(new FAQManager(ModelState.UPDATE).getFinder().byId(id)).bindFromRequest();
+             form = form(FAQModel.class).fill(Ebean.find(FAQModel.class, id)).bindFromRequest();
         }catch(Exception e){
             //Something went wrong with the filling of the FAQModel (e.g. no database connection)
             //Redirect back to the list of FAQ with an error message
@@ -215,10 +209,9 @@ public class FAQController extends EController {
             return badRequest(alterFAQForm.render(form, breadcrumbs,listOfLanguages(),id, ori));
         }
         //Try to save the updated FAQModel
-        FAQModel updated = form.get();
-        
+        FAQModel updated = form.get();        
         try{
-        	updated.id = Integer.parseInt(id);
+        	updated.id = id;
         	updated.update();
         }catch(Exception p){        	
         	//Something went wrong in the saving. Redirect back to the create page with an error alert
@@ -235,11 +228,11 @@ public class FAQController extends EController {
      * @param id The ID of the FAQ to be deleted
      * @return FAQ list page
      */
-    public static Result remove(String id){
+    public static Result remove(int id){
         if(!isAuthorized())return ok(noaccess.render(manageBreadcrumbs())); //Check if authorized
         //Try to remove the FAQModel
         try{
-            FAQModel fm = new FAQManager(ModelState.DELETE).getFinder().byId(id);
+            FAQModel fm = Ebean.find(FAQModel.class,id);
             fm.delete();
         }catch(Exception e){
             //Deleting unsuccessful, return the list with an error

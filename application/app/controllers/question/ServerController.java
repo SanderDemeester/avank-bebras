@@ -125,11 +125,20 @@ public class ServerController extends EController {
         // Test connection
         try {
             form.get().testConnection();
-        } catch (IllegalStateException | IOException
-                | FTPIllegalReplyException | FTPException e) {
+        } catch (IllegalStateException e) {
             flash("error", EMessages.get("servers.error.testConnection", e.getMessage()));
             return badRequest(newServerForm.render(form, manager, breadcrumbs));
+        } catch (IOException ie) {
+            flash("error", EMessages.get("servers.error.testConnection", ie.getMessage()));
+            return badRequest(newServerForm.render(form, manager, breadcrumbs));
+        } catch (FTPIllegalReplyException fie) {
+            flash("error", EMessages.get("servers.error.testConnection", fie.getMessage()));
+            return badRequest(newServerForm.render(form, manager, breadcrumbs));
+        } catch (FTPException fe) {
+            flash("error", EMessages.get("servers.error.testConnection", fe.getMessage()));
+            return badRequest(newServerForm.render(form, manager, breadcrumbs));
         }
+
         
         // Save
         try {
@@ -186,14 +195,22 @@ public class ServerController extends EController {
         if(form.hasErrors()) {
             return badRequest(editServerForm.render(form, manager, breadcrumbs));
         }
-        
+
         // Test connection
         try {
             form.get().testConnection();
-        } catch (IllegalStateException | IOException
-                | FTPIllegalReplyException | FTPException e) {
+        } catch (IllegalStateException e) {
             flash("error", EMessages.get("servers.error.testConnection", e.getMessage()));
-            return badRequest(editServerForm.render(form, manager, breadcrumbs));
+            return badRequest(newServerForm.render(form, manager, breadcrumbs));
+        } catch (IOException ie) {
+            flash("error", EMessages.get("servers.error.testConnection", ie.getMessage()));
+            return badRequest(newServerForm.render(form, manager, breadcrumbs));
+        } catch (FTPIllegalReplyException fie) {
+            flash("error", EMessages.get("servers.error.testConnection", fie.getMessage()));
+            return badRequest(newServerForm.render(form, manager, breadcrumbs));
+        } catch (FTPException fe) {
+            flash("error", EMessages.get("servers.error.testConnection", fe.getMessage()));
+            return badRequest(newServerForm.render(form, manager, breadcrumbs));
         }
         
         // Update

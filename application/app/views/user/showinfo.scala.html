@@ -1,40 +1,24 @@
-@(title: String, breadcrumbs : List[models.data.Link])
 @import commons._
-@import models.EMessages
+@import models.EMessages.get
 @import helper._
-@import models.user.AuthenticationManager
-@import controllers.user.PersonalPageController
+@import helper.twitterBootstrap._
 
-@main(EMessages.get("user.pip.welcome"), breadcrumbs) {
-
-<div class="container-fluid">
-  <div class="row-fluid">
-    <div class="span2">
-        <h3>@EMessages.get("user.pip.welcome")</h3>
-          <div class="bs-docs-example">
-            <ul class="nav nav-pills nav-stacked">
-              <li class="active"><a href="#">@EMessages.get("user.pip.personalinfo")</a></li>
-              <li><a href="editpersonal">@EMessages.get("user.pip.editinfo")</a></li>
-              <li><a href="passwedit">@EMessages.get("user.pip.editpassw")</a></li>
-            </ul>
-          </div>
-    </div>
-    <div class="span10">
-           <legend>@EMessages.get("user.pip.aboutme")</legend>
-           @EMessages.get("user.pip.intro")<br><br>
-		   <address>
-  				<strong>@EMessages.get("user.pip.fulln")</strong><br>
-  				@models.user.AuthenticationManager.getInstance().getUser().data.name<br>
-  				<strong>@EMessages.get("user.pip.gender")</strong><br>
-  				@models.user.AuthenticationManager.getInstance().getUser().data.gender<br>
-  				<strong>@EMessages.get("user.pip.birth")</strong><br>
-  				@models.user.AuthenticationManager.getInstance().getUser().data.birthdate<br>
-  				<strong>@EMessages.get("user.pip.preflan")</strong><br>
-  				@models.user.AuthenticationManager.getInstance().getUser().data.preflanguage<br>
-  				<strong>@EMessages.get("user.pip.email")</strong><br>
-  				<a href="mailto:#">@models.user.AuthenticationManager.getInstance().getUser().data.email</a>
-			</address>
-    </div>
-  </div>
-</div>
-}
+@showflash()
+<legend>@EMessages.get("user.pip.aboutme")</legend>
+@EMessages.get("user.pip.intro")<br><br>
+<address>
+  	<strong>@EMessages.get("user.pip.fulln")</strong><br>
+  	@models.user.AuthenticationManager.getInstance().getUser().data.name<br>
+  							
+  	<strong>@EMessages.get("user.pip.gender")</strong><br>
+  	@EMessages.get("user." + models.user.AuthenticationManager.getInstance().getUser().data.gender)<br>
+  				
+  	<strong>@EMessages.get("user.pip.birth")</strong><br>
+  	@controllers.user.PersonalPageController.dateToString(models.user.AuthenticationManager.getInstance().getUser().data.birthdate)<br>
+  				
+  	<strong>@EMessages.get("user.pip.preflan")</strong><br>
+  	@models.data.Language.getLanguage(models.user.AuthenticationManager.getInstance().getUser().data.preflanguage).getName()<br>
+  				
+  	<strong>@EMessages.get("user.pip.email")</strong><br>
+  	<a href="mailto:#">@models.user.AuthenticationManager.getInstance().getUser().data.email</a>
+</address>

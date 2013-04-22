@@ -16,18 +16,21 @@ import javax.persistence.Table;
 
 import models.management.Listable;
 import models.management.ManageableModel;
+import models.user.AuthenticationManager;
 import models.user.Gender;
 import models.user.UserType;
 import play.data.format.Formats;
 import play.db.ebean.Model;
+import models.EMessages;
 
 /**
  * @author Jens N. Rammant
- *
+ * TODO check the date formats
  */
 @Entity
 @Table(name="users")
 public class UserModel extends ManageableModel implements Listable{
+
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -73,7 +76,7 @@ public class UserModel extends ManageableModel implements Listable{
         this.gender = gender;
         this.preflanguage = preflanguage;
         active = true;
-
+        EMessages.setLang(preflanguage);
     }
 
     /**
