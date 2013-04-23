@@ -14,8 +14,11 @@ import models.data.Link;
 import models.dbentities.QuestionModel;
 import models.dbentities.UserModel;
 import models.management.ModelState;
+import models.question.AnswerGeneratorException;
 import models.question.Question;
 import models.question.QuestionBuilderException;
+import models.question.QuestionFeedback;
+import models.question.QuestionFeedbackGenerator;
 import models.question.QuestionIO;
 import models.question.QuestionSet;
 import models.question.Server;
@@ -422,5 +425,11 @@ public class QuestionController extends EController{
     // TODO: move to competitioncontroller
     public static Result submit(String json) {
         JsonNode input = Json.parse(json);
+        try {
+            QuestionFeedback feedback = QuestionFeedbackGenerator.generateFromJson(input);
+        } catch (AnswerGeneratorException e) {
+            return badRequest(e.getMessage());
+        }
+        return ok("Submission was successful!");
     }
 }

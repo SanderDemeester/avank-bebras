@@ -257,5 +257,13 @@ public abstract class Question {
                 Integer.toString(this.getID()), this.getFeedback(language)
                );
     }
+    
+    /**
+     * Generate an answer object for this question based on a certain input
+     * @param input input for the answer
+     * @param language language in which the answer is answered
+     * @return the answer object for this question answer
+     */
+    public abstract Answer getAnswerByInput(String input, Language language) throws AnswerGeneratorException;
 
 }

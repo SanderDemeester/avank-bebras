@@ -46,8 +46,8 @@ function submit() {
 		// Try to send to server
 		var request = $.ajax({
 			type: "GET",
-			url: "../submit",
-			data: { json: JSON.stringify(answers) }
+			url: "./submit",
+			data: { json: JSON.stringify(answers) },
 		})
 		
 		request.done(function(msg) {
@@ -59,7 +59,8 @@ function submit() {
 		
 		// If timeout -> show modal with cookie data & info
 		request.fail(function(jqXHR, textStatus) {
-			lostConnection();
+			if(textStatus == "timeout" || textStatus == "abort") lostConnection();
+			else showError(jqXHR.responseText);
 		});
 		
 		request.always(function(jqXHR, textStatus, errorThrown) {
@@ -71,10 +72,25 @@ function submit() {
 // When the submission of answers went without errors
 function success() {
 	alert("ok");
+	lostConnection();
 }
 
 // When the user has lost internetconnection on submitting
 function lostConnection() {
+	showError("You don't have an active internet connection!");
+	
+	// Show specific lost connection content
+	$("#lostConnectionContent").show();
+	$("#answerscode").text($.base64.encode(JSON.stringify(answers)));
+}
+
+function showError(error) {
+	// Try to hide lost connection content
+	$("#lostConnectionContent").hide();
+	
+	// Set error message
+	$("#modalError").text(error);
+	
 	// Destroy countdown
 	$("#countdown").countdown('destroy');
 	
@@ -84,7 +100,6 @@ function lostConnection() {
 		keyboard: false,
 		backdrop: "static",
 	});
-	$("#answerscode").text($.base64.encode(JSON.stringify(answers)));
 }
 
 $("#answerscode").live("focus", function(){	
