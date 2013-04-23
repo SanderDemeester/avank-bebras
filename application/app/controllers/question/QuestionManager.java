@@ -28,7 +28,7 @@ public class QuestionManager extends Manager<QuestionModel>{
     }
 
     @Override
-    public Call getListRoute(int page, String filter) {
+    public Call getListRoute(int page, String orderBy, String order, String filter) {
         return routes.QuestionController.list(page, orderBy, order, filter);
     }
 

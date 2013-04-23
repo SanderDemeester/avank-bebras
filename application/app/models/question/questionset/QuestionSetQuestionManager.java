@@ -67,11 +67,13 @@ public class QuestionSetQuestionManager extends Manager<QuestionSetQuestion> {
      * Returns the route that must be followed to refresh the list.
      *
      * @param page   current page number
+     * @param orderBy current order by
+     * @param order   current order
      * @param filter filter on the items
      * @return Call Route that must be followed
      */
     @Override
-    public Call getListRoute(int page, String filter) {
+    public Call getListRoute(int page, String orderBy, String order, String filter) {
         return routes.QuestionSetController.list(qsid, page, orderBy, order, filter);
     }
 

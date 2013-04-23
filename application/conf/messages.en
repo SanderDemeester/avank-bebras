@@ -391,6 +391,24 @@ classes.add.nograde = There is no level with that name.
 classes.add.error = Something went wrong with the database. Try again later.
 classes.edit = Edit a class.
 
+classes.import.classnotexist = There is no class with that ID.
+classes.import.classrecordwhileaddingtoexisting = You are adding pupils to an existing class. CLASS records will be ignored.
+classes.import.usernotexist = There is no user with that ID.
+classes.import.newpupil.incomplete = Please fill in all required fields correctly.
+classes.import.existingpupil.notexisting = There is no user with that ID.
+classes.import.existingpupil.nopupil = The user with this ID is not a pupil.
+classes.import.newclass.incomplete = Please fill in all fields correctly.
+classes.import.newclass.nosuchschool = There is no school with this ID.
+classes.import.newclass.nosuchgrade = There is no grade with this name.
+classes.import.info.new = Adding a new class.
+classes.import.info.old = Adding to an existing class.
+classes.import.info.classinvalid = There is no class with this ID.
+classes.import.info.classstart = New class record:
+classes.import.info.existstudent = Existing students:
+classes.import.info.newstudent = New students:
+classes.import.error.savefail = Something went wrong with the saving. Maybe you waited too long? The unsafed data gets removed after a couple of hours.
+classes.import.error.postfail = Something went wrong with the parsing of the XLSX file. Are you sure it's a valid file? Check the documentation.
+
 # User
 user.pip.settings = Settings
 user.pip.welcome = Welcome!
