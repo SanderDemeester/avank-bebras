@@ -53,6 +53,7 @@ public class Competition {
      */
     public void setType(CompetitionType type){
         data.type = type;
+        Ebean.update(data);
     }
 
     /**
@@ -65,7 +66,7 @@ public class Competition {
 
     /**
      * Gets the duration for this competition.
-     * @return
+     * @return duration in minutes
      */
     public int getDuration(){
         return data.duration;
@@ -73,9 +74,12 @@ public class Competition {
 
     /**
      * Sets the duration for this competition.
+     * @param duration duration in minutes
      */
     public void setDuration(int duration){
         data.duration = duration;
+        Ebean.update(data);
+
     }
 
     /**
@@ -83,22 +87,23 @@ public class Competition {
      * @return available languages
      */
     public List<Language> getAvailableLanguages(){
-        List<Language> languages = new ArrayList<Language>();
+        List<Language> languages = Language.listLanguages();
         for (QuestionSet questionSet : questionSets){
-            for (Language l : questionSet.getLanguages())
-            if (!languages.contains(l)){
-                languages.add(l);
-            }
+            languages.retainAll(questionSet.getLanguages());
         }
         return languages;
     }
 
     /**
      * Returns the available grades for this competition.
-     * @return
+     * @return the supported grades for this competition
      */
     public List<Grade> getAvailableGrades(){
-        throw new UnsupportedOperationException();
+        Set<Grade> grades = new TreeSet<Grade>();
+        for (QuestionSet questionSet : questionSets){
+            grades.add(questionSet.getGrade());
+        }
+        return new ArrayList<Grade>(grades);
     }
 
     /**

@@ -5,7 +5,6 @@ import models.competition.Competition;
 import models.data.Difficulty;
 import models.data.Grade;
 import models.data.Language;
-import models.dbentities.QuestionModel;
 import models.dbentities.QuestionSetModel;
 import models.dbentities.QuestionSetQuestion;
 import models.question.Question;
@@ -48,7 +47,11 @@ public class QuestionSet {
      * @return supported languages
      */
     public List<Language> getLanguages(){
-        throw new UnsupportedOperationException();
+        List<Language> languages = Language.listLanguages();
+        for (int i = 0; i < questions.size(); i++){
+            languages.retainAll(questions.get(i).getLanguages());
+        }
+        return languages;
     }
 
     /**
@@ -115,7 +118,12 @@ public class QuestionSet {
      * @return difficulty of the given question
      */
     public Difficulty getDifficulty(Question question){
-        throw new UnsupportedOperationException();
+        QuestionSetQuestion questionSetQuestion = Ebean.find(QuestionSetQuestion.class).where()
+                .eq("qid", question.getID())
+                .eq("qsid", data)
+                .findUnique();
+        if (questionSetQuestion == null) return null;
+        return questionSetQuestion.difficulty;
     }
 
     /**
@@ -125,7 +133,14 @@ public class QuestionSet {
      * @param difficulty the new difficulty for the given question
      */
     public void setDifficulty(Question question, Difficulty difficulty){
-        throw new UnsupportedOperationException();
+        QuestionSetQuestion questionSetQuestion = Ebean.find(QuestionSetQuestion.class).where()
+                .eq("qid", question.getID())
+                .eq("qsid", data)
+                .findUnique();
+        if (questionSetQuestion != null){
+            questionSetQuestion.difficulty = difficulty;
+            Ebean.update(questionSetQuestion);
+        }
     }
 
     public boolean canActivate(){
