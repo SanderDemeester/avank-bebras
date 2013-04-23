@@ -72,7 +72,6 @@ function submit() {
 // When the submission of answers went without errors
 function success() {
 	alert("ok");
-	lostConnection();
 }
 
 // When the user has lost internetconnection on submitting
