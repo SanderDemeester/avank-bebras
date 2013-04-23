@@ -1,0 +1,22 @@
+@(classForm: Form[models.dbentities.ClassGroup], breadcrumbs : List[models.data.Link],inf : models.util.OperationResultInfo)
+
+@import helper._
+@import helper.twitterBootstrap._
+@import models.EMessages
+
+@main(EMessages.get("classes.add"),breadcrumbs){
+	@commons.info(inf)
+	
+	@form(controllers.classgroups.routes.ClassGroupController.save()) {
+
+    	@classgroupForm(classForm)
+
+    <div class="actions">
+        <input type="submit" value="Save" class="btn primary"> or
+        <a href="@controllers.classgroups.routes.ClassGroupController.viewClasses()" class="btn">Cancel</a>
+    </div>
+    }
+	
+	
+	
+}

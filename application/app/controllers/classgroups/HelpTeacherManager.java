@@ -51,13 +51,13 @@ public class HelpTeacherManager extends Manager<UserModel> {
 	}
 	
 	@Override
-	public Call getListRoute(int page, String filter) {
-		return routes.HelpTeacherController.viewHelp(Integer.toString(classID), page, orderBy, order,filter);
+	public Call getListRoute(int page, String orderBy, String order, String filter) {
+		return routes.HelpTeacherController.viewHelp(classID, page, orderBy, order,filter);
 
 	}
 	@Override
 	public Call getAddRoute() {
-		return routes.HelpTeacherController.create(Integer.toString(classID));
+		return routes.HelpTeacherController.create(classID);
 	}
 	@Override
 	public Call getEditRoute(String id) {
@@ -66,7 +66,7 @@ public class HelpTeacherManager extends Manager<UserModel> {
 	}
 	@Override
 	public Call getRemoveRoute(String id) {
-		return routes.HelpTeacherController.removeHelp(Integer.toString(classID),id);
+		return routes.HelpTeacherController.removeHelp(classID,id);
 	}
 	@Override
 	public play.api.mvc.Call getSaveRoute() {

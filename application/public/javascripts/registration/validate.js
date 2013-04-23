@@ -15,7 +15,7 @@ $(document).ready(function(){
 				required:true,
 				email: true
 			},
-			passwd:{
+			login_passwd:{
 				required:true,
 				minlength: 8
 			},

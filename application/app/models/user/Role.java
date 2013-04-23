@@ -79,6 +79,12 @@ public class Role {
 	    new Link("classes.list", "/classes")
     );
 
+    // Contest management
+    public static Role MANAGECONTESTS = new Role(
+        EMessages.get("links.contestmanager.title"),
+        new Link(EMessages.get("links.contestmanager.overview"), "/contests")
+    );
+
 
 
     /* ====================================================================== *\

@@ -13,10 +13,11 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Table;
 
 import com.avaje.ebean.Ebean;
-
 import models.management.ManageableModel;
 import models.user.Teacher;
 import models.user.UserType;
+import play.data.validation.Constraints;
+import play.data.format.Formats;
 
 /**
  * This class contains information that models a group of pupils
@@ -30,10 +31,15 @@ public class ClassGroup extends ManageableModel{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "classes_id_seq")
     public int id;
+    @Constraints.Required
     public String name;
+    @Constraints.Required
+    @Formats.DateTime(pattern = "dd/MM/yyyy")
     public Date expdate;
+    @Constraints.Required
     public int schoolid;
     public String teacherid;
+    @Constraints.Required
     public String level;
 
     /**

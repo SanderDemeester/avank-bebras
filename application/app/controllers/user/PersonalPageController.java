@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import com.avaje.ebean.Ebean;
 
@@ -24,6 +26,7 @@ import views.html.user.showinfo;
 import views.html.user.editinfo;
 import views.html.user.errorinfo;
 import views.html.user.editpass;
+import views.html.user.settings;
 import controllers.EController;
 import controllers.routes;
 import controllers.UserController.Register;
@@ -40,29 +43,17 @@ public class PersonalPageController extends EController {
     	  	  ArrayList<Link> breadcrumbs = new ArrayList<Link>();
               Content showpage;
               breadcrumbs.add(new Link(EMessages.get("app.home"),"/"));
-              breadcrumbs.add(new Link(EMessages.get("user.pip.personalinfo"),"/personal"));
+              breadcrumbs.add(new Link(EMessages.get("user.pip.personalinfo"),"/personalsettings"));
               if(AuthenticationManager.getInstance().isLoggedIn()){
-                  showpage = showinfo.render(EMessages.get("user.pip.personalinfo"), breadcrumbs);
+                  showpage = settings.render(EMessages.get("user.pip.personalinfo"), breadcrumbs);
               }else{
                   showpage = errorinfo.render(EMessages.get("error.no_info"),breadcrumbs);
               }
             return ok(showpage);
       }
 
-      public static Result edit() {
-    	  ArrayList<Link> breadcrumbs = new ArrayList<Link>();
-          Content showpage;
-          breadcrumbs.add(new Link(EMessages.get("app.home"),"/"));
-          breadcrumbs.add(new Link(EMessages.get("user.pie.editinfo"),"/editpersonal"));
-          if(AuthenticationManager.getInstance().isLoggedIn()){
-              showpage = editinfo.render(EMessages.get("user.pie.editinfo"),breadcrumbs);
-          }else{
-              showpage = errorinfo.render(EMessages.get("error.no_info"),breadcrumbs);
-          }
-          return ok(showpage);
-      }
-
-      public static Result changeInformation(){          
+      public static Result changeInformation(){
+    	  boolean error = false;    	  
           Date bd = new Date();
           UserModel userModel = Ebean.find(UserModel.class).where().eq(
                   "id",AuthenticationManager.getInstance().getUser().getID()).findUnique();
@@ -76,7 +67,7 @@ public class PersonalPageController extends EController {
               AuthenticationManager.getInstance().getUser().data.name = editInfo.get("fname");
           }else{     	  
         	  flash("error", EMessages.get(EMessages.get("error.no_input_fname")));
-        	  return Results.redirect(controllers.user.routes.PersonalPageController.edit());         	  
+        	  return Results.redirect(controllers.user.routes.PersonalPageController.show()); 
           } 
           
           // email
@@ -85,27 +76,26 @@ public class PersonalPageController extends EController {
               AuthenticationManager.getInstance().getUser().data.email = editInfo.get("email");
           }else{
         	  flash("error", EMessages.get(EMessages.get("error.no_input_email")));
-        	  return Results.redirect(controllers.user.routes.PersonalPageController.edit());   
+        	  return Results.redirect(controllers.user.routes.PersonalPageController.show());
           }
-          
           // bday
           if(!editInfo.get("bday").equals("")){
               try {
-                  bd = new SimpleDateFormat("yyyy/mm/dd").parse(editInfo.get("bday"));
+                  bd = new SimpleDateFormat("MM/dd/yyyy").parse(editInfo.get("bday"));
                   Date currentDate = new Date();
                   if(bd.after(currentDate)){
                       flash("error", EMessages.get(EMessages.get("error.wrong_date_time")));
-                      return Results.redirect(controllers.user.routes.PersonalPageController.edit()); 
+                      return Results.redirect(controllers.user.routes.PersonalPageController.show());
                   }
               } catch (ParseException e) {
             	  flash("error", EMessages.get(EMessages.get("error.date")));
-            	  return Results.redirect(controllers.user.routes.PersonalPageController.edit()); 
+            	  return Results.redirect(controllers.user.routes.PersonalPageController.show());
               }
               userModel.birthdate = bd;
               AuthenticationManager.getInstance().getUser().data.birthdate = bd;
           }else{
         	  flash("error", EMessages.get(EMessages.get("error.date")));
-        	  return Results.redirect(controllers.user.routes.PersonalPageController.edit());       	  
+        	  return Results.redirect(controllers.user.routes.PersonalPageController.show());
           }
           
           // gender
@@ -113,6 +103,8 @@ public class PersonalPageController extends EController {
           Gender gen = Gender.Female;
           if(editInfo.get("gender").equals("Male")){
               gen = Gender.Male;
+          }else if(editInfo.get("gender").equals("Other")){
+        	  gen = Gender.Other;
           }
           AuthenticationManager.getInstance().getUser().data.gender = gen;
           
@@ -124,8 +116,19 @@ public class PersonalPageController extends EController {
           // save new information in db
           Ebean.save(userModel);
 
-          // redirect information page
+          // success
+          flash("success",EMessages.get(EMessages.get("info.successedit")));
           return Results.redirect(controllers.user.routes.PersonalPageController.show());
+      }
+      
+      // returns a date in a better readable string
+      public static String dateToString(Date dt){
+          Calendar cal = new GregorianCalendar();
+    	  String newdate = new String();
+          cal.setTime(dt);
+    	  newdate = newdate + Integer.toString(cal.get(Calendar.MONTH)+1) + "/" + Integer.toString(cal.get(Calendar.DATE))
+    	   + "/" + Integer.toString(cal.get(Calendar.YEAR));
+          return newdate;
       }
 
       public static Result checkValid(){
@@ -133,16 +136,7 @@ public class PersonalPageController extends EController {
       }
 
       public static Result changePassword(){
-              ArrayList<Link> breadcrumbs = new ArrayList<Link>();
-              Content showpage;
-              breadcrumbs.add(new Link("Home","/"));
-              breadcrumbs.add(new Link("Edit password","/passwedit"));
-              if(AuthenticationManager.getInstance().isLoggedIn()){
-                  showpage = editpass.render("Edit password", breadcrumbs);
-              }else{
-                  showpage = errorinfo.render("Information is not available",breadcrumbs);
-              }
-            return ok(showpage);
+    	  return ok();
       }
       
       public static class Edit{
@@ -151,7 +145,7 @@ public class PersonalPageController extends EController {
             @Required
             public String email;
             @Required
-            @Formats.DateTime(pattern = "yyyy/mm/dd")
+            @Formats.DateTime(pattern = "yyyy/MM/dd")
             public String bday;
             @Required
             public String password;

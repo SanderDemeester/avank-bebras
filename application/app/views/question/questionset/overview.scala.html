@@ -1,0 +1,67 @@
+@*******************************************
+* Overview page for question sets          *
+*                                          *
+* author: Kevin Stobbelaar                 *
+*******************************************@
+
+@(breadcrumbs : List[models.data.Link], qsid: String, currentPage: Page[_ <: models.management.ManageableModel],
+qsqmanager: models.management.Manager[_], currentOrderBy: String, currentOrder: String, currentFilter: String,
+qsForm: Form[_ <: models.management.ManageableModel], qsmanager: models.management.Manager[_])
+
+@import models.EMessages
+@import views.html.management.list
+@import helper._
+@import helper.twitterBootstrap._
+@import views.html.commons.showflash
+
+@main(EMessages.get("question.questionset.overview"), breadcrumbs) {
+
+    <div class="row-fluid">
+
+        <div class="span4">
+
+            <div class="well">
+                <h4> @EMessages.get("question.questionset.overview.basic") </h4>
+            </div>
+
+            <div>
+
+                @if(flash.containsKey("questionset-error")) {
+                <div class="alert alert-error">
+                    <strong>Error!</strong> @flash.get("questionset-error")
+                </div>
+                }
+
+                @form(qsmanager.getUpdateRoute()) {
+
+                    @inputText(qsForm("name"), '_label -> EMessages.get("question.questionset.create.name"), '_showConstraints -> false)
+
+                    @select(
+                        qsForm("level"),
+                        options = options(models.data.DataHandler.getGrades().toList.map(_.getName)),
+                        '_label -> EMessages.get("question.questionset.create.level"),
+                        '_showConstraints -> false
+                    )
+
+                    @checkbox(qsForm("active"), '_label -> None, '_text -> EMessages.get("question.questionset.create.active"), '_showConstraints -> false)
+
+                <div class="actions">
+                    <input type="submit" value="@EMessages.get("forms.update")" class="btn btn-primary">
+                </div>
+                }
+            </div>
+
+        </div>
+
+        <div class="span8">
+            <div class="well">
+                <h4> @EMessages.get("question.questionset.overview.questions") </h4>
+            </div>
+
+            @list(currentPage, qsqmanager, currentOrderBy, currentOrder, currentFilter)
+
+        </div>
+
+    </div>
+
+}

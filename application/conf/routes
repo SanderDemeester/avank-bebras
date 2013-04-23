@@ -7,6 +7,7 @@
 GET     /                           controllers.UserController.landingPage()
 GET		/logout						controllers.UserController.logout()
 GET		/info						controllers.Application.index()
+GET		/changeUrl/:code			controllers.Application.changeLanguage(code)
 
 # Registration/signup
 GET		/signup						controllers.UserController.signup()
@@ -43,10 +44,23 @@ GET     /servers/:name              controllers.question.ServerController.edit(n
 POST    /servers/:name              controllers.question.ServerController.update(name)
 GET     /server/remove/:name        controllers.question.ServerController.remove(name)
 
+# Question set management
+GET     /questionset/new                        controllers.question.QuestionSetController.create(c)
+POST    /questionset                            controllers.question.QuestionSetController.save(c)
+GET     /questionset/:qs/questions              controllers.question.QuestionSetController.list(qs, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /questionset/:qs/questions/add          controllers.question.QuestionSetController.addQuestion(qs)
+POST    /questionset/:qs/questions              controllers.question.QuestionSetController.updateQuestions(qs)
+POST    /questionset/edit                       controllers.question.QuestionSetController.update(qs)
+GET     /questionset/:qs/questions/remove:id    controllers.question.QuestionSetController.removeQuestion(qs, id)
+
 # Contests module
-GET     /contests                   controllers.competition.CompetitionController.index()
-GET     /contest/new               controllers.competition.CompetitionController.create()
+GET     /contests                   controllers.competition.CompetitionController.index(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /contests/new/contest       controllers.competition.CompetitionController.create()
 POST    /contests                   controllers.competition.CompetitionController.save()
+GET     /contests/:id/overview      controllers.competition.CompetitionController.viewCompetition(id, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+POST    /contests/                  controllers.competition.CompetitionController.updateCompetition(id)
+GET     /contests/remove/:id        controllers.competition.CompetitionController.removeCompetition(id)
+GET     /contests/qs/remove/:qsid   controllers.competition.CompetitionController.removeQuestionSet(qsid, contestid)
 
 # Question Management
 GET     /questions                  		 controllers.question.QuestionController.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")
@@ -66,15 +80,17 @@ GET		/manageFAQ					controllers.faq.FAQController.list(p:Int ?= 0, s ?= "languag
 GET     /manageFAQ/new                controllers.faq.FAQController.create()
 POST    /manageFAQ/                   controllers.faq.FAQController.save()
 
-GET     /manageFAQ/edit/:name              controllers.faq.FAQController.edit(name)
-POST    /manageFAQ/edit/:name              controllers.faq.FAQController.update(name)
+GET     /manageFAQ/edit/:name              controllers.faq.FAQController.edit(name:Int)
+POST    /manageFAQ/edit/:name              controllers.faq.FAQController.update(name:Int)
 
-GET    /manageFAQ/remove/:name        controllers.faq.FAQController.remove(name)
+GET    /manageFAQ/remove/:name        controllers.faq.FAQController.remove(name:Int)
 
 # Schools
-GET		/schools						controllers.schools.SchoolController.viewSchools()
+GET		/schools						controllers.schools.SchoolController.viewSchools(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 GET		/schools/new					controllers.schools.SchoolController.create()
 POST	/schools/						controllers.schools.SchoolController.save()
+GET		/schools/:id					controllers.schools.SchoolController.edit(id:Int)
+POST		/schools/:id/					controllers.schools.SchoolController.update(id:Int)
 
 # Data Management
 GET		/manage/:dataType/show		controllers.data.DataController.show(dataType)
@@ -86,28 +102,27 @@ GET     /assets/img/glyphicons-halflings-white.png      controllers.Assets.at(pa
 GET     /assets/img/glyphicons-halflings.png            controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings.png")
 
 # Settings
-GET		/personal					controllers.user.PersonalPageController.show()
-GET		/editpersonal				controllers.user.PersonalPageController.edit()
-POST	/editpersonal/submit		controllers.user.PersonalPageController.changeInformation()
-GET		/passwedit					controllers.user.PersonalPageController.changePassword()
-POST	/passwedit/apply			controllers.user.PersonalPageController.checkValid()
+GET			/personalsettings			controllers.user.PersonalPageController.show()
+POST		/personalsettings/submit			controllers.user.PersonalPageController.changeInformation()
 
 # Classes
 
 GET		/classes					controllers.classgroups.ClassGroupController.viewClasses(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 GET 		/classes/add					controllers.classgroups.ClassGroupController.create()
-GET		/classes/view/:id				controllers.classgroups.ClassPupilController.viewClass(id, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+POST		/classes/					controllers.classgroups.ClassGroupController.save()
+GET		/classes/view/:id				controllers.classgroups.ClassPupilController.viewClass(id:Int, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
 
-GET		/classes/view/:id/:studid/remove		controllers.classgroups.ClassPupilController.removeStudent(id,studid)
-GET		/classes/view/:id/add			controllers.classgroups.ClassPupilController.addExistingStudent(id)
-POST		/classes/view/:id/				controllers.classgroups.ClassPupilController.saveExisting(id)
+GET		/classes/view/:id/:studid/remove		controllers.classgroups.ClassPupilController.removeStudent(id:Int,studid)
+GET		/classes/view/:id/add			controllers.classgroups.ClassPupilController.addExistingStudent(id:Int)
+POST		/classes/view/:id/				controllers.classgroups.ClassPupilController.saveExisting(id:Int)
 
-GET		/classes/view/:id/edit			controllers.classgroups.ClassPupilController.editClass(id)
+GET		/classes/view/:id/edit			controllers.classgroups.ClassGroupController.editClass(id:Int)
+POST		/classes/view/:id/edit/			controllers.classgroups.ClassGroupController.update(id:Int)
 
-GET		/classes/view/:id/help			controllers.classgroups.HelpTeacherController.viewHelp(id,p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
-GET		/classes/view/:id/help/:teachid/remove	controllers.classgroups.HelpTeacherController.removeHelp(id,teachid)
-GET		/classes/view/:id/help/add			controllers.classgroups.HelpTeacherController.create(id)
-POST		/classes/view/:id/help/			controllers.classgroups.HelpTeacherController.save(id)
+GET		/classes/view/:id/help			controllers.classgroups.HelpTeacherController.viewHelp(id:Int,p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET		/classes/view/:id/help/:teachid/remove	controllers.classgroups.HelpTeacherController.removeHelp(id:Int,teachid)
+GET		/classes/view/:id/help/add			controllers.classgroups.HelpTeacherController.create(id:Int)
+POST		/classes/view/:id/help/			controllers.classgroups.HelpTeacherController.save(id:Int)
 
-GET		/classes/:id/old			controllers.classgroups.ClassPupilController.viewOldPupils(id,p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET		/classes/:id/old			controllers.classgroups.ClassPupilController.viewOldPupils(id:Int,p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
