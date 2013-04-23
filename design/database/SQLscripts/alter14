@@ -1,0 +1,2 @@
+ALTER TABLE questionsets ADD CONSTRAINT qs_lvl_forkey FOREIGN KEY (level) REFERENCES grades;
+ALTER TABLE questionsetquestions ADD CONSTRAINT qsq_diff_forkey FOREIGN KEY (difficulty) REFERENCES difficulties;
