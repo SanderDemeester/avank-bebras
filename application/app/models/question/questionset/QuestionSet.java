@@ -1,12 +1,17 @@
 package models.question.questionset;
 
+import com.avaje.ebean.Ebean;
 import models.competition.Competition;
 import models.data.Difficulty;
 import models.data.Grade;
 import models.data.Language;
+import models.dbentities.QuestionModel;
 import models.dbentities.QuestionSetModel;
+import models.dbentities.QuestionSetQuestion;
 import models.question.Question;
+import models.question.QuestionBuilderException;
 
+import java.util.ArrayList;
 import java.util.List;
 /**
  * Class that contains all logic implementation about question sets.
@@ -16,14 +21,25 @@ import java.util.List;
 public class QuestionSet {
 
     private QuestionSetModel data;
+    private List<Question> questions;
 
     /**
      * Default constructor that sets the data model for this question set.
      *
      * @param data question set data model
      */
-    public QuestionSet(QuestionSetModel data){
+    public QuestionSet(QuestionSetModel data) {
         this.data = data;
+
+        this.questions = new ArrayList<Question>();
+        List<QuestionSetQuestion> questionSetQuestions = Ebean.find(QuestionSetQuestion.class).where().eq("qsid", data.id).findList();
+        for (QuestionSetQuestion questionModel : questionSetQuestions){
+            try {
+                questions.add(Question.fetch(questionModel.getID()));
+            } catch (QuestionBuilderException e) {
+                System.err.println("Something went wrong when fetching question " + questionModel.getID());
+            }
+        }
     }
 
     /**
@@ -51,6 +67,7 @@ public class QuestionSet {
      */
     public void setActive(boolean active){
         data.active = active;
+        Ebean.update(data);
     }
 
     /**
@@ -59,7 +76,7 @@ public class QuestionSet {
      * @return the competition for this question set
      */
     public Competition getCompetition(){
-        throw new UnsupportedOperationException();
+        return new Competition(data.contest);
     }
 
     /**
@@ -68,7 +85,8 @@ public class QuestionSet {
      * @param competition competition for this question set
      */
     public void setCompetition(Competition competition){
-        throw new UnsupportedOperationException();
+        data.contest = competition.getCompetitionModel();
+        Ebean.update(data);
     }
 
     /**
@@ -77,7 +95,7 @@ public class QuestionSet {
      * @return the grade of this question set
      */
     public Grade getGrade(){
-        throw new UnsupportedOperationException();
+        return data.grade;
     }
 
     /**
@@ -86,7 +104,8 @@ public class QuestionSet {
      * @param grade new grade for this question set
      */
     public void setGrade(Grade grade){
-        throw new UnsupportedOperationException();
+        data.grade = grade;
+        Ebean.update(data);
     }
 
     /**

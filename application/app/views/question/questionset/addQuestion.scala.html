@@ -31,7 +31,7 @@
                 @inputText(qsqForm("qid"), '_label -> EMessages.get("question.questionset.addquestion.id"), '_showConstraints -> false)
 
                 @select(
-                    qsqForm("difficulty"),
+                    qsqForm("diftext"),
                     options = options(models.data.DataHandler.getDifficulties().toList.map(_.id)),
                     '_label -> EMessages.get("question.questionset.form.difficulty"),
                     '_showConstraints -> false

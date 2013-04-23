@@ -1,6 +1,7 @@
 package models.dbentities;
 
 import com.avaje.ebean.validation.NotNull;
+import models.data.Difficulty;
 import models.management.Editable;
 import models.management.ManageableModel;
 import models.question.Server;
@@ -20,14 +21,17 @@ public class QuestionSetQuestion extends ManageableModel {
     private static final long serialVersionUID = 2L;
 
     @ManyToOne
-    @NotNull
     @JoinColumn(name="qsid")
     public QuestionSetModel questionSet;
 
     @Id
+    @ManyToOne
+    @JoinColumn(name="qid")
     public int qid;
 
-    public String difficulty;
+    @ManyToOne
+    @JoinColumn(name="difficulty")
+    public Difficulty difficulty;
 
     /**
      * Returns those values that have to be represented in a table.
@@ -36,7 +40,7 @@ public class QuestionSetQuestion extends ManageableModel {
      */
     @Override
     public String[] getFieldValues() {
-        String[] result = {"" + qid, questionSet.name, difficulty};
+        String[] result = {"" + qid, questionSet.name, difficulty.name};
         return result;
     }
 
@@ -47,7 +51,7 @@ public class QuestionSetQuestion extends ManageableModel {
      */
     @Override
     public String getID() {
-        return "" + qid;
+        return Integer.toString(qid);
     }
 
     public class QuestionSetQuestionPK {

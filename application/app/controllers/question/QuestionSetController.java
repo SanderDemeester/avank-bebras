@@ -3,6 +3,7 @@ package controllers.question;
 import com.avaje.ebean.Ebean;
 import controllers.EController;
 import models.EMessages;
+import models.data.Difficulty;
 import models.data.Grade;
 import models.data.Link;
 import models.dbentities.CompetitionModel;
@@ -139,6 +140,7 @@ public class QuestionSetController extends EController {
         QuestionSetQuestion questionSetQuestion = form.get();
         questionSetQuestion.questionSet = Ebean.find(QuestionSetModel.class).where().eq("id", questionSetId).findUnique();
         int questionId = questionSetQuestion.qid;
+        questionSetQuestion.difficulty = Ebean.find(Difficulty.class).where().ieq("name", form.field("diftext").value()).findUnique();
         QuestionManager questionManager = new QuestionManager(ModelState.READ);
         if (questionManager.getFinder().byId("" + questionId) == null){
             // question does not exist
