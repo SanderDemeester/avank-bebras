@@ -3,19 +3,17 @@
  */
 package controllers.classgroups;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import javax.persistence.PersistenceException;
-
+import models.EMessages;
 import models.classgroups.ClassGroupContainer;
-import models.classgroups.ClassGroupContainer.PupilRecordTriplet;
 import models.data.Link;
 import models.user.AuthenticationManager;
 
 import play.cache.Cache;
+import play.cache.Cached;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
@@ -46,72 +44,106 @@ public class ClassGroupIOController extends EController {
 		return postExisting(null);
 	}
 	
-	@SuppressWarnings("unchecked")
+	/**
+	 * Saves the data
+	 * @param id of the class
+	 * @return page showing the classes or class (dependent on whether there's a class ID)
+	 */
 	public static Result save(String id){
 		return saveExisting(null,id);
 	}
 	
+	/**
+	 * 
+	 * @param id of the Class. Null if it should not be added to existing classes
+	 * @return upload page
+	 */
 	public static Result uploadExisting(Integer id){
-		System.out.println("got here");//TODO
 		List<Link> bc = ClassGroupController.getBreadcrumbs();
 		bc.add(new Link("Upload","/classes/upload"));
 		if(!ClassGroupController.isAuthorized())return ok(noaccess.render(bc));		
 		return ok(uploadclass.render(bc,null,null,id));
 	}
 	
-	public static Result postExisting(Integer classID){
+	/**
+	 * 
+	 * @param classID
+	 *            id of the Class. Null if it should not be added to existing
+	 *            classes
+	 * @return a page showing the parsed data
+	 */
+	public static Result postExisting(Integer classID) {
 		List<Link> bc = ClassGroupController.getBreadcrumbs();
-		bc.add(new Link("Upload","/classes/upload"));
-		
-		if(!ClassGroupController.isAuthorized())return ok(noaccess.render(bc));		
-		
-		  MultipartFormData body = request().body().asMultipartFormData();
-		  FilePart xlsx = body.getFile("xlsx");
-		  try {
+		bc.add(new Link("Upload", "/classes/upload"));
+		// Check if authorized
+		if (!ClassGroupController.isAuthorized())
+			return ok(noaccess.render(bc));
+
+		// retrieve the posted file
+		MultipartFormData body = request().body().asMultipartFormData();
+		FilePart xlsx = body.getFile("xlsx");
+		try {
+			//Parse the excel data to a list
 			List<List<String>> list = XLSXImporter.read(xlsx.getFile());
 			List<ClassGroupContainer> cg;
-			if(classID==null){
+			//parse data to ClassGroupContainer
+			if (classID == null) {
 				cg = ClassGroupIO.listToClassGroup(list);
-			}else{
-				ClassGroupContainer cgc = ClassGroupIO.listToClassGroup(list, classID);
+			} else {
+				ClassGroupContainer cgc = ClassGroupIO.listToClassGroup(list,
+						classID);
 				cg = new ArrayList<ClassGroupContainer>();
 				cg.add(cgc);
 			}
-			String id = AuthenticationManager.getInstance().getUser().getID() +"-";
+			//Create a key to save the parsed data in the cache
+			String id = AuthenticationManager.getInstance().getUser().getID()
+					+ "-";
 			Random r = new Random();
 			id = id + Integer.toString(r.nextInt(10000));
-			Cache.set(id, cg);			
-			return ok(uploadclass.render(bc,cg,id,classID));
+			//Save in the cache, expire after 3 hours
+			Cache.set(id, cg,10800);
+			//Return the parsed data on a page
+			return ok(uploadclass.render(bc, cg, id, classID));
 		} catch (Exception e) {
-			return TODO;
+			//Something went wrong with the parsing, show page with error
+			flash("error", EMessages.get("classes.import.error.postfail"));
+			if (classID == null) {
+				return redirect(controllers.classgroups.routes.ClassGroupController
+						.viewClasses(0, "name", "asc", ""));
+			} else {
+				return redirect(controllers.classgroups.routes.ClassPupilController
+						.viewClass(classID, 0, "name", "asc", ""));
+			}
 		}
 	}
 	
+	/**
+	 * Save the posted data
+	 * @param id of the class. Null if it should not be added to existing class
+	 * @param dataid id under which the data is saved in the cache
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public static Result saveExisting(Integer id, String dataid){
 		List<Link> bc = ClassGroupController.getBreadcrumbs();
-		bc.add(new Link("Upload","/classes/upload"));		
-		if(!ClassGroupController.isAuthorized())return ok(noaccess.render(bc));	
-		
+		bc.add(new Link("Upload","/classes/upload"));	
+		//Check if authorized
+		if(!ClassGroupController.isAuthorized())return ok(noaccess.render(bc));			
 		List<ClassGroupContainer> cgc = null;
-		
+		//Try retrieving the data from the cache
 		try{
 			cgc = (List<ClassGroupContainer>) Cache.get(dataid);
 			cgc.getClass(); //Throws exception when null;
 		}catch(Exception e){
-			//TODO
-			return TODO;
+			//Something went wrong with the retrieval of the data. Could be because it expired
+			flash("error", EMessages.get("classes.import.error.savefail"));
 		}
-		try{
-			ClassGroupContainer.save(cgc);
-			if(id==null){
-				return redirect(controllers.classgroups.routes.ClassGroupController.viewClasses(0, "name", "asc", ""));
-			}else{
-				return redirect(controllers.classgroups.routes.ClassPupilController.viewClass(id, 0, "name", "asc", ""));
-			}
-		}catch(PersistenceException pe){
-			//TODO
-			return TODO;
+		ClassGroupContainer.save(cgc);
+		
+		if(id==null){
+			return redirect(controllers.classgroups.routes.ClassGroupController.viewClasses(0, "name", "asc", ""));
+		}else{
+			return redirect(controllers.classgroups.routes.ClassPupilController.viewClass(id, 0, "name", "asc", ""));
 		}
 	}
 }
