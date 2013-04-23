@@ -9,7 +9,7 @@
         <ul>
             @if(currentPage.hasPrev) {
             <li class="prev">
-                <a href="@manager.getListRoute(currentPage.getPageIndex - 1, currentFilter)">&larr;</a>
+                <a href="@manager.getListRoute(currentPage.getPageIndex - 1, orderBy, order, currentFilter)">&larr;</a>
             </li>
             } else {
             <li class="prev disabled">
@@ -21,7 +21,7 @@
             </li>
             @if(currentPage.hasNext) {
             <li class="next">
-                <a href="@manager.getListRoute(currentPage.getPageIndex + 1, currentFilter)">&rarr;</a>
+                <a href="@manager.getListRoute(currentPage.getPageIndex + 1, orderBy, order, currentFilter)">&rarr;</a>
             </li>
             } else {
             <li class="next disabled">

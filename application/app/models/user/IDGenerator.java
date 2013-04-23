@@ -113,7 +113,7 @@ public class IDGenerator {
             if(nextReady) return true;
             int sum = 0;
             for(int i = 0; i < lengths.length; i++) sum += lengths[i];
-            return sum < SIZE - 1;
+            return 0 < sum && sum < SIZE - 1;
         }
         @Override public void remove() {
             throw new UnsupportedOperationException();

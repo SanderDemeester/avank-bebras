@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -68,9 +69,8 @@ public class XLSXImporter {
                 //Add empty strings for empty cells
                 for(int i=colNr;i<c.getColumnIndex();i++)list.add("");
                 colNr=c.getColumnIndex()+1;
-
-                //Retrieve content of cell as string
                 String st;
+                //Retrieve content of cell as string
                 if(c.getCellType() != XSSFCell.CELL_TYPE_FORMULA)st=cellToString(c,c.getCellType());
                 else st=cellToString(c, c.getCachedFormulaResultType());
                 list.add(st);
@@ -120,6 +120,9 @@ public class XLSXImporter {
             return Boolean.toString(c.getBooleanCellValue());
         }
         if(cellType == XSSFCell.CELL_TYPE_NUMERIC){
+        	if(DateUtil.isCellDateFormatted(c)){
+        		return DateFormatter.formatDate(c.getDateCellValue());
+        	}
             return Double.toString(c.getNumericCellValue());
         }
         if(cellType == XSSFCell.CELL_TYPE_STRING){

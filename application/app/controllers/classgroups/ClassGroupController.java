@@ -189,7 +189,7 @@ public class ClassGroupController extends EController {
 	 * 
 	 * @return whether the user is authorized to view Classes
 	 */
-	private static boolean isAuthorized(){
+	public static boolean isAuthorized(){
 		return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGECLASSES);
 	}
 	/**
