@@ -1,8 +1,9 @@
 package models.dbentities;
 
 import models.competition.CompetitionType;
+import models.management.ManageableModel;
+import play.data.format.Formats;
 import play.data.validation.Constraints;
-import play.db.ebean.Model;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,8 +16,11 @@ import java.util.Date;
  */
 @Entity
 @Table(name="contests")
-public class CompetitionModel extends Model {
-    private static final long serialVersionUID = 2L;
+public class CompetitionModel extends ManageableModel {
+
+    private static final long serialVersionUID = 4L;
+
+    public String creator;
 
     @Id
     public String id;
@@ -31,13 +35,33 @@ public class CompetitionModel extends Model {
     @Constraints.Required
     public boolean active;
 
+    @Formats.DateTime(pattern = "dd/MM/yyyy HH:mm:ss")
     @Constraints.Required
     public Date starttime;
 
+    @Formats.DateTime(pattern = "dd/MM/yyyy HH:mm:ss")
     @Constraints.Required
     public Date endtime;
 
-    @Constraints.Required
-    public String creator;
+    /**
+     * Returns those values that have to be represented in a table.
+     *
+     * @return array with the current values of the fields to be represented in the table
+     */
+    @Override
+    public String[] getFieldValues() {
+        String[] fieldValues = {name, type.name(), Boolean.toString(active), starttime.toString(), endtime.toString(), creator};
+        return fieldValues;
+    }
+
+    /**
+     * Returns the id of the object.
+     *
+     * @return id
+     */
+    @Override
+    public String getID() {
+        return id;
+    }
 
 }

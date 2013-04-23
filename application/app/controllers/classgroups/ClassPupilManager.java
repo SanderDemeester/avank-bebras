@@ -38,13 +38,13 @@ public class ClassPupilManager extends Manager<UserModel> {
 	}
 
 	@Override
-	public Call getListRoute(int page, String filter) {
-		return routes.ClassPupilController.viewClass(Integer.toString(classID), page, orderBy, order, filter);
+	public Call getListRoute(int page, String orderBy, String order, String filter) {
+		return routes.ClassPupilController.viewClass(classID, page, orderBy, order, filter);
 	}
 
 	@Override
 	public Call getAddRoute() {
-		return routes.ClassPupilController.addExistingStudent(Integer.toString(classID));
+		return routes.ClassPupilController.addExistingStudent(classID);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class ClassPupilManager extends Manager<UserModel> {
 	@Override
 	public Call getRemoveRoute(String id) {
 		if(canRemove){
-			return routes.ClassPupilController.removeStudent(Integer.toString(classID),id);
+			return routes.ClassPupilController.removeStudent(classID,id);
 		}
 		return null;
 	}

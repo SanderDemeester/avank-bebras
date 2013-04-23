@@ -1,0 +1,60 @@
+@(title: String, breadcrumbs : List[models.data.Link])
+@import commons._
+@import models.EMessages.get
+@import helper._
+@import helper.twitterBootstrap._
+@import controllers.user.PersonalPageController
+@import models.data.Language
+@import models.user.AuthenticationManager
+
+
+@main(EMessages.get("user.pip.welcome"), breadcrumbs) {
+
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="tabbable">
+            <div class="span2">
+                <h3>@EMessages.get("user.pip.welcome")</h3>
+                <div class="bs-docs-example">
+                    <ul class="nav nav-pills nav-stacked">
+            	        <li class="active"><a href="#pi" data-toggle="tab">@EMessages.get("user.pie.personalinfo")</a></li>
+            	        <li><a href="#pie" data-toggle="tab">@EMessages.get("user.pie.editinfo")</a></li>
+            	        <li><a href="#passw" data-toggle="tab">@EMessages.get("user.pie.editpassw")</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="span10">
+                <div class="tab-content">
+                
+                	<!-- START Personal information -->
+                    <div id="pi" class="tab-pane active">
+						@showinfo()
+                    </div>
+                    <!-- END Personal information -->
+                    
+                    <!-- START Personal information editor -->
+                    <div id="pie" class="tab-pane">
+                        @editinfo()
+                    </div>
+                    <!-- END Personal information editor -->
+                    
+                    <!-- START Password editor -->
+                    <div id="passw" class="tab-pane">
+                    	<div class="alert alert-error">
+							<strong>
+								TODO EDDY: WACHTWOORD VERANDEREN
+ 							</strong>
+						</div>
+                    </div>
+                    <!-- END Password editor -->
+                </div>
+            </div>
+      </div> 
+  </div>
+</div>
+
+<script src="@routes.Assets.at("javascripts/registration/datepicker.js")" type="text/javascript"></script>
+<script src="js/jquery.js"></script>
+}

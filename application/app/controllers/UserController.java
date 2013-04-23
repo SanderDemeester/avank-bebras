@@ -22,6 +22,7 @@ import models.EMessages;
 import models.data.Link;
 import models.dbentities.UserModel;
 import models.user.AuthenticationManager;
+import models.user.Gender;
 import models.user.UserType;
 
 import views.html.landing_page;
@@ -49,8 +50,8 @@ public class UserController extends EController{
 	 */
 	public static Result signup(){
 		List<Link> breadcrumbs = new ArrayList<Link>();
-		breadcrumbs.add(new Link("Home", "/"));
-		breadcrumbs.add(new Link("Sign Up", "/signup"));
+		breadcrumbs.add(new Link(EMessages.get("app.home"), "/"));
+		breadcrumbs.add(new Link(EMessages.get("app.signUp"), "/signup"));
 		return ok(register.render(EMessages.get("register.title"),
 				breadcrumbs,
 				form(Register.class)
@@ -65,18 +66,19 @@ public class UserController extends EController{
 		// Bind play form request.
 		Form<Register> registerForm = form(Register.class).bindFromRequest();
 		List<Link> breadcrumbs = new ArrayList<Link>();
-		breadcrumbs.add(new Link("Home", "/"));
-		breadcrumbs.add(new Link("Sign Up", "/signup"));
+		breadcrumbs.add(new Link(EMessages.get("app.home"), "/"));
+		breadcrumbs.add(new Link(EMessages.get("app.signUp"), "/signup"));
 
 		// If the form contains error's (specified by "@"-annotation in the class "Register" then this will be true.
 		if(registerForm.hasErrors()){
 			flash("error", EMessages.get(EMessages.get("error.no_password")));
 			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
 		}
-
-		Pattern pattern = Pattern.compile("[^a-z ]", Pattern.CASE_INSENSITIVE);
-		Matcher matcher = pattern.matcher(registerForm.get().name);
-
+		
+		if(!registerForm.get().password.equals(registerForm.get().controle_passwd)){
+			flash("error",EMessages.get(EMessages.get("register.password_mismatch")));
+			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
+		}
 
 		// check if date is lower then current date
 		try{
@@ -102,8 +104,9 @@ public class UserController extends EController{
 			}
 		}
 
-
-
+		Pattern pattern = Pattern.compile("[^a-z -]", Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(registerForm.get().name);
+		
 		// Check if full name contains invalid symbols.
 		if(matcher.find()){
 			flash("error", EMessages.get(EMessages.get("error.invalid_symbols")));
@@ -185,7 +188,7 @@ public class UserController extends EController{
 	@SuppressWarnings("unchecked")
 	public static Result landingPage() throws Exception{
 		List<Link> breadcrumbs = new ArrayList<Link>();
-		breadcrumbs.add(new Link("Home", "/"));
+		breadcrumbs.add(new Link(EMessages.get("app.home"), "/"));
 
 		UserType type = AuthenticationManager.getInstance().getUser().getType();
 		if(UserType.ANON.equals(type)) {

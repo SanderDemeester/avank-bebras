@@ -1,0 +1,12 @@
+@(schoolForm: Form[models.dbentities.SchoolModel])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import models.EMessages
+
+<fieldset>
+
+        @inputText(schoolForm("name"), '_label -> EMessages.get("school.name"))
+        @inputText(schoolForm("address"), '_label -> EMessages.get("school.address"))
+
+</fieldset>

@@ -64,6 +64,7 @@ public abstract class Manager<T extends ManageableModel> {
             if(field.isAnnotationPresent(Editable.class)) {
                 fields.put(field.getName(), FieldType.getType(field.getType()));
                 fieldTypes.put(field.getName(), field.getType());
+
                 if(field.getAnnotation(Editable.class).uponCreation()
                         || field.getAnnotation(Editable.class).alwaysHidden()
                   )
@@ -74,10 +75,6 @@ public abstract class Manager<T extends ManageableModel> {
         }
     }
 
-    /**
-     * Enable or disable the display of errors in a form view
-     * @param ignoreErrors if the errors should be ignored
-     */
     public void setIgnoreErrors(boolean ignoreErrors) {
         this.ignoreErrors = ignoreErrors;
     }
@@ -103,6 +100,7 @@ public abstract class Manager<T extends ManageableModel> {
      * @param orderBy order field
      */
     public void setOrderBy(String orderBy) {
+        System.out.println(orderBy);
         this.orderBy = orderBy;
     }
 
@@ -145,12 +143,10 @@ public abstract class Manager<T extends ManageableModel> {
      * @param page     page number
      * @return the requested page
      */
-    @SuppressWarnings("unchecked")
-	public Page<ManageableModel> page(int page) {
-        return (Page<ManageableModel>) getDataSet()
-                 .ilike(filterBy, "%" + filter + "%")
+    public Page<T> page(int page) {
+        return getDataSet()
+            .ilike(filterBy, "%" + filter + "%")
             .orderBy(orderBy + " " + order)
-                // .fetch("path")
             .findPagingList(pageSize)
             .getPage(page);
     }
@@ -198,17 +194,19 @@ public abstract class Manager<T extends ManageableModel> {
      * Returns the route that must be followed to refresh the list.
      *
      * @param page     current page number
+     * @param orderBy  current order by
+     * @param order    current order
      * @param filter   filter on the items
      * @return Call Route that must be followed
      */
-    public abstract Call getListRoute(int page, String filter);
+    public abstract Call getListRoute(int page, String orderBy, String order, String filter);
 
     /**
      * Returns the route that must be followed to refresh the list with default parameters
      * @return Call Route that must be followed
      */
     public Call getListRoute() {
-        return getListRoute(0, "");
+        return getListRoute(0, orderBy, DEFAULTORDER, "");
     }
 
     /**
@@ -308,7 +306,11 @@ public abstract class Manager<T extends ManageableModel> {
     public Object getDummyField(String field) {
         try {
             return fieldTypes.get(field).newInstance();
-        } catch (InstantiationException | IllegalAccessException | NullPointerException e) {
+        } catch (InstantiationException ie) {
+            return null;
+        } catch (IllegalAccessException ile) {
+            return null;
+        } catch (NullPointerException e) {
             return null;
         }
     }

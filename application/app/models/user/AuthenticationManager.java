@@ -1,6 +1,7 @@
 
 package models.user;
 
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -8,6 +9,7 @@ import java.security.spec.KeySpec;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +38,8 @@ import play.mvc.Http.Cookie;
 import com.avaje.ebean.Ebean;
 
 import controllers.UserController.Register;
+
+import models.user.IDGenerator;
 
 /**
  * Class to handle UserAuthentication.
@@ -117,6 +121,9 @@ public class AuthenticationManager {
         } else if(current.canMimic(user)) { // If the current user can mimic the other user.
             stack.add(user);
         }
+        
+        EMessages.setLang(userModel.preflanguage);
+        
         if(stack.size() == 0)
             return user;
         else
@@ -160,6 +167,22 @@ public class AuthenticationManager {
 
     public boolean isLoggedIn() {
         return !this.getUser().getType().equals(UserType.ANON);
+    }
+    
+    /**
+     * @param Password string.
+     * @return The strengthed password as preformed by javascript code on client machine.
+     * @throws NoSuchAlgorithmException 
+     * @throws InvalidKeySpecException 
+     */
+    public String simulateClientsidePasswordStrengthening(String password) throws NoSuchAlgorithmException, InvalidKeySpecException{
+		MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
+		byte[] salt = sha256.digest(password.getBytes());
+		 // Get the key for PBKDF2.
+        KeySpec PBKDF2 = new PBEKeySpec(password.toCharArray(), salt, 10, 128);
+        SecretKeyFactory secretFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        String k = new String(Hex.encodeHex(secretFactory.generateSecret(PBKDF2).getEncoded()));
+    	return k;
     }
 
     /**
@@ -225,14 +248,16 @@ public class AuthenticationManager {
         // Generate bebrasID.
         
         String name = registerForm.get().name;
-        bebrasID = registerForm.get().name.toLowerCase().replaceAll(" ", "");
+        Calendar birthday = Calendar.getInstance();
+        birthday.setTime(birtyDay);
+        bebrasID = IDGenerator.generate(registerForm.get().name, birthday);
         new UserModel(bebrasID, UserType.INDEPENDENT,
         		name,
                 birtyDay,
                 new Date(),
                 passwordHEX,
                 saltHEX, registerForm.get().email,
-                Gender.Male, registerForm.get().prefLanguage).save();
+                Gender.valueOf(registerForm.get().gender), registerForm.get().prefLanguage).save();
 
         return bebrasID;
     }
