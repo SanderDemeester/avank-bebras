@@ -36,18 +36,14 @@ import controllers.EController;
 import controllers.routes;
 import controllers.UserController.Register;
 import models.EMessages;
-
+import controllers.util.*;
 
 /**
  * Code for Bebras Application by AVANK
  * User: thomas
  */
 public class PersonalPageController extends EController {
-	
-	private static final String EMAIL_PATTERN = 
-		"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-	
+		
     public static boolean isAuthorized() {
         return AuthenticationManager.getInstance().getUser().hasRole(Role.SETTINGS);
     }
@@ -84,10 +80,7 @@ public class PersonalPageController extends EController {
         } 
           
         // email
-        Pattern pattern = Pattern.compile(EMAIL_PATTERN, Pattern.CASE_INSENSITIVE);
-		Matcher matcher = pattern.matcher(editInfo.get("email"));
-
-		if(!matcher.find()){
+		if(!InputChecker.getInstance().isCorrectEmail(editInfo.get("email"))){
 	        flash("error", EMessages.get(EMessages.get("user.error.wrong_email")));
         	return Results.redirect(controllers.user.routes.PersonalPageController.show(1));
 		}else{
