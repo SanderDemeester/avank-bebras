@@ -33,6 +33,7 @@ public class Competition {
         this.data = data;
 
         // setting the question sets for this contest
+        questionSets = new ArrayList<QuestionSet>();
         List<QuestionSetModel> questionSetModels = Ebean.find(QuestionSetModel.class).where().ieq("contid", data.id).findList();
         for (QuestionSetModel questionSetModel : questionSetModels){
             questionSets.add(new QuestionSet(questionSetModel));
@@ -99,9 +100,12 @@ public class Competition {
      * @return the supported grades for this competition
      */
     public List<Grade> getAvailableGrades(){
-        Set<Grade> grades = new TreeSet<Grade>();
+        ArrayList<Grade> grades = new ArrayList<Grade>();
         for (QuestionSet questionSet : questionSets){
-            grades.add(questionSet.getGrade());
+            Grade grade = questionSet.getGrade();
+            if (!grades.contains(grade)){
+                grades.add(grade);
+            }
         }
         return new ArrayList<Grade>(grades);
     }

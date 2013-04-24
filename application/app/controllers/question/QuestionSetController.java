@@ -19,8 +19,6 @@ import play.mvc.Result;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-
 /**
  * Controller for question sets.
  *
@@ -99,10 +97,11 @@ public class QuestionSetController extends EController {
         qsqm.setOrderBy(orderBy);
         qsqm.setFilter(filter);
         QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.UPDATE, "", questionSetId);
-        Form<QuestionSetModel> form = form(QuestionSetModel.class).bindFromRequest().fill(questionSetManager.getFinder().byId(Integer.toString(questionSetId)));
+        QuestionSetModel questionSetModel = questionSetManager.getFinder().byId(Integer.toString(questionSetId));
+        Form<QuestionSetModel> form = form(QuestionSetModel.class).bindFromRequest().fill(questionSetModel);
         return ok(
                 views.html.question.questionset.overview.render(breadcrumbs, questionSetId,
-                        qsqm.page(page), qsqm, orderBy, order, filter, form, questionSetManager
+                        qsqm.page(page), qsqm, orderBy, order, filter, form, questionSetManager, questionSetModel.grade.getName()
                 ));
     }
 
@@ -183,7 +182,7 @@ public class QuestionSetController extends EController {
             qsqm.setFilter("");
             flash("questionset-error", EMessages.get("forms.error"));
             return badRequest(views.html.question.questionset.overview.render(
-                breadcrumbs, questionSetId, qsqm.page(0), qsqm, "qid", "asc", "", form, questionSetManager
+                breadcrumbs, questionSetId, qsqm.page(0), qsqm, "qid", "asc", "", form, questionSetManager, form.get().grade.getName()
             ));
         }
         QuestionSetModel questionSetModel = form.get();

@@ -1,9 +1,11 @@
 package controllers.competition;
 
+import com.avaje.ebean.Ebean;
 import com.avaje.ebean.ExpressionList;
 import controllers.EController;
 import controllers.question.QuestionSetController;
 import models.EMessages;
+import models.competition.Competition;
 import models.competition.CompetitionManager;
 import models.data.Link;
 import models.dbentities.CompetitionModel;
@@ -139,12 +141,13 @@ public class CompetitionController extends EController {
         CompetitionManager competitionManager = new CompetitionManager(ModelState.UPDATE, "name", contestid);
         QuestionSetManager questionSetManager = getQuestionSetManager(ModelState.READ, "grade", "", "", contestid);
         Form<CompetitionModel> form = form(CompetitionModel.class).fill(competitionManager.getFinder().byId(contestid)).bindFromRequest();
+        Competition contest = new Competition(Ebean.find(CompetitionModel.class).where().ieq("id", contestid).findUnique());
         if(form.hasErrors()) {
             List<Link> breadcrumbs = defaultBreadcrumbs();
             breadcrumbs.add(new Link(EMessages.get("competition.edit.breadcrumb"), "/contest/:" + contestid));
             flash("competition-error", EMessages.get("forms.error"));
             return badRequest(views.html.competition.viewCompetition.render(breadcrumbs, questionSetManager.page(0),
-                    questionSetManager, "difficulty", "", "", form, competitionManager));
+                    questionSetManager, "difficulty", "", "", form, competitionManager, contest));
         }
         CompetitionModel competitionModel = form.get();
         if (competitionModel.starttime.after(competitionModel.endtime)){
@@ -153,7 +156,7 @@ public class CompetitionController extends EController {
             breadcrumbs.add(new Link(EMessages.get("competition.edit.breadcrumb"), "/contests/:" + contestid));
             flash("competition-error", EMessages.get("forms.error.dates"));
             return badRequest(views.html.competition.viewCompetition.render(breadcrumbs, questionSetManager.page(0),
-                    questionSetManager, "difficulty", "", "", form, competitionManager));
+                    questionSetManager, "difficulty", "", "", form, competitionManager, contest));
         }
         form.get().update();
         return redirect(routes.CompetitionController.viewCompetition(contestid, 0, "", "", ""));
@@ -175,8 +178,9 @@ public class CompetitionController extends EController {
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("competition.edit.breadcrumb"), "/contest/:" + contestid));
         QuestionSetManager questionSetManager = getQuestionSetManager(ModelState.READ, orderBy, order, filter, contestid);
+        Competition contest = new Competition(Ebean.find(CompetitionModel.class).where().ieq("id", contestid).findUnique());
         return ok(views.html.competition.viewCompetition.render(breadcrumbs, questionSetManager.page(page),
-                questionSetManager, orderBy, order, filter, form, competitionManager));
+                questionSetManager, orderBy, order, filter, form, competitionManager, contest));
     }
 
     /**

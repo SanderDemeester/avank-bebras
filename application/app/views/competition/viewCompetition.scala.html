@@ -6,7 +6,8 @@
 
 @(breadcrumbs : List[models.data.Link], currentPage: Page[_ <: models.management.ManageableModel],
 QSmanager: models.management.Manager[_], currentOrderBy: String, currentOrder: String, currentFilter: String,
-modelForm: Form[_ <: models.management.ManageableModel], Cmanager: models.management.Manager[_])
+modelForm: Form[_ <: models.management.ManageableModel], Cmanager: models.management.Manager[_],
+contest: models.competition.Competition)
 
 @import models.EMessages
 @import views.html.management.list
@@ -52,6 +53,17 @@ modelForm: Form[_ <: models.management.ManageableModel], Cmanager: models.manage
             <div>
                 @list(currentPage, QSmanager, currentOrderBy, currentOrder, currentFilter)
             </div>
+
+            <div class="hero-unit">
+                <p> Voor deze contest zijn op dit moment de volgende niveaus beschikbaar: </p>
+                <ul>
+                    @for(grade <- contest.getAvailableGrades()){
+                        <li>@grade.getName()</li>
+                    }
+                </ul>
+
+            </div>
+
         </div>
 
     </div>

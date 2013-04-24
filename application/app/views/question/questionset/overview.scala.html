@@ -6,7 +6,7 @@
 
 @(breadcrumbs : List[models.data.Link], qsid: Int, currentPage: Page[_ <: models.management.ManageableModel],
 qsqmanager: models.management.Manager[_], currentOrderBy: String, currentOrder: String, currentFilter: String,
-qsForm: Form[_ <: models.management.ManageableModel], qsmanager: models.management.Manager[_])
+qsForm: Form[_ <: models.management.ManageableModel], qsmanager: models.management.Manager[_], grade: String)
 
 @import models.EMessages
 @import views.html.management.list
@@ -40,6 +40,7 @@ qsForm: Form[_ <: models.management.ManageableModel], qsmanager: models.manageme
                         qsForm("gradetext"),
                         options = options(models.data.DataHandler.getGrades().toList.map(_.getName)),
                         '_label -> EMessages.get("question.questionset.create.grade"),
+                        '_default -> grade,
                         '_showConstraints -> false
                     )
 
