@@ -121,9 +121,9 @@ GET		/classes/view/:id/remove/:studid	controllers.classgroups.ClassPupilControll
 GET		/classes/view/:id/add			controllers.classgroups.ClassPupilController.addExistingStudent(id:Int)
 POST		/classes/view/:id/				controllers.classgroups.ClassPupilController.saveExisting(id:Int)
 GET		/classes/view/:id/download			controllers.classgroups.ClassPupilController.downloadClass(id:Int)
-GET		/classes/view/:id/upload			controllers.classgroups.ClassGroupIOController.uploadExisting(id:Integer)
-POST		/classes/view/:id/upload/				controllers.classgroups.ClassGroupIOController.postExisting(id:Integer)
-GET		/classes/view/:id/upload/:dataid				controllers.classgroups.ClassGroupIOController.saveExisting(id:Integer,dataid)
+GET		/classes/view/:id/upload			controllers.classgroups.ClassGroupIOController.uploadExisting(id:Int)
+POST		/classes/view/:id/upload/				controllers.classgroups.ClassGroupIOController.postExisting(id:Int)
+GET		/classes/view/:id/upload/:dataid				controllers.classgroups.ClassGroupIOController.saveExisting(id:Int,dataid)
 
 GET		/classes/view/:id/edit			controllers.classgroups.ClassGroupController.editClass(id:Int)
 POST		/classes/view/:id/edit/			controllers.classgroups.ClassGroupController.update(id:Int)
