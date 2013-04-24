@@ -262,7 +262,8 @@ public class AuthenticationManager {
             // TODO: waarom niet de secret van Play zelf?
             secretFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
         }catch(Exception e){
-            throw new Exception(EMessages.get("error.text"));
+//            throw new Exception(EMessages.get("error.text"));
+        	throw new Exception("ssmldkjfmsqldfjk");
         }
 
         try {

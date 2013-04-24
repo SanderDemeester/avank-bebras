@@ -15,12 +15,13 @@ $(document).ready(function(){
 				required:true,
 				email: true
 			},
-			login_passwd:{
+			register_password:{
 				required:true,
 				minlength: 8
 			},
 			controle_passwd:{
 				required:true
+				equalTo : "#register_password"
 			},
 			bday:{
 				required:true,
