@@ -20,14 +20,31 @@ public class Difficulty implements DataElement {
 
     @Id public String name;
     public int rank;
+    public int cpoints;
+    public int wpoints;
+    public int npoints;
 
-    public Difficulty(String name, int rank) {
+    /**
+     * Creates a new difficulty level with the given name and rank. The higher
+     * the rank, the harder this difficulty level.
+     * @param name The name of the level.
+     * @param rank The difficultie of this level.
+     * @param cpoints The points received when answered correct.
+     * @param wpoints The points lost when answered incorrect.
+     * @param npoints The points received when answered correct.
+     */
+    public Difficulty(String name, int rank, int cpoints, int wpoints, int npoints) {
         this.name = name;
         this.rank = rank;
+        this.cpoints = cpoints;
+        this.wpoints = wpoints;
+        this.npoints = npoints;
     }
 
     @Override public String[] strings() {
-        return new String[] { name, Integer.toString(rank) };
+        return new String[] { name, Integer.toString(rank),
+            Integer.toString(cpoints), Integer.toString(wpoints),
+            Integer.toString(npoints) };
     }
 
     @Override public String id() {
