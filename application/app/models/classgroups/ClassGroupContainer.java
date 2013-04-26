@@ -15,7 +15,7 @@ import javax.persistence.PersistenceException;
 import com.avaje.ebean.Ebean;
 
 import controllers.util.PasswordHasher;
-import controllers.util.PasswordHasher.HashAndPassword;
+import controllers.util.PasswordHasher.SaltAndPassword;
 
 import models.EMessages;
 import models.data.Grade;
@@ -216,17 +216,21 @@ public class ClassGroupContainer {
 	 * @param model
 	 */
 	private static void prepareNewPupil(UserModel model,ClassGroup cg){
+	    try{
 		Calendar birthdate = Calendar.getInstance();
 		birthdate.setTime(model.birthdate);
 		
 		model.id=IDGenerator.generate(model.name,birthdate );
 		model.classgroup = cg.id;
 		model.registrationdate = Calendar.getInstance().getTime();		
-		HashAndPassword hap = PasswordHasher.hashPassword(model.password);
+		SaltAndPassword hap = PasswordHasher.generateSP(model.password.toCharArray());
 		model.password=hap.password;
-		model.hash = hap.hash;
+		model.hash = hap.salt;
 		model.type = UserType.PUPIL;
 		model.active=true;
+	    }catch(Exception e){
+		//TODO: Jens, eventueel zelf kijken om verder fouten af te handelen in uw code.
+	    }
 	}
 	
 	/**
