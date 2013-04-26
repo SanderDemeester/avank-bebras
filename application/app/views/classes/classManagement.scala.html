@@ -9,6 +9,7 @@
     
     @commons.info(ori)
     <h2>@EMessages.get("classes.list")</h2>
+    <a href="@controllers.classgroups.routes.ClassGroupIOController.upload()" class="btn">Upload</a>
     @if(currentPage!=null){
     @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
     }

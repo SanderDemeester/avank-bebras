@@ -100,6 +100,7 @@ public abstract class Manager<T extends ManageableModel> {
      * @param orderBy order field
      */
     public void setOrderBy(String orderBy) {
+        System.out.println(orderBy);
         this.orderBy = orderBy;
     }
 
@@ -193,17 +194,19 @@ public abstract class Manager<T extends ManageableModel> {
      * Returns the route that must be followed to refresh the list.
      *
      * @param page     current page number
+     * @param orderBy  current order by
+     * @param order    current order
      * @param filter   filter on the items
      * @return Call Route that must be followed
      */
-    public abstract Call getListRoute(int page, String filter);
+    public abstract Call getListRoute(int page, String orderBy, String order, String filter);
 
     /**
      * Returns the route that must be followed to refresh the list with default parameters
      * @return Call Route that must be followed
      */
     public Call getListRoute() {
-        return getListRoute(0, "");
+        return getListRoute(0, orderBy, DEFAULTORDER, "");
     }
 
     /**

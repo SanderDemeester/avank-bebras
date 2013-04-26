@@ -1,0 +1,60 @@
+@(cgc : models.classgroups.ClassGroupContainer)
+
+@EMessages.get("classes.import.info.classstart") <br />
+
+@if(cgc.isCGNew()){
+	@EMessages.get("classes.import.info.new") <br />
+}
+<table class="table">
+<tr>
+<td>@cgc.getClassGroup.id</td>
+<td>@cgc.getClassGroup.name</td>
+<td>@cgc.getClassGroup.getExpDate()</td>
+<td>@cgc.getClassGroup.level</td>
+<td>@cgc.getClassGroup.schoolid</td>
+
+<tr>
+</table>
+
+@if(!cgc.isCGValid()){
+	<span style="color:#ff0000">@EMessages.get("classes.import.info.classinvalid") <br />
+	@cgc.getCgMessage()</span>
+}
+<br />
+@EMessages.get("classes.import.info.existstudent")<br />
+<table class="table">
+@for(prt <- cgc.getExistingPupils()){	
+	<tr>
+	<td>@prt.user.id</td>
+	<td>@prt.user.name</td>
+	<td>@prt.user.getBirthDate()</td>
+	<td>@prt.user.gender</td>
+	<td>@prt.user.preflanguage</td>	
+	@if(!prt.isValid){
+		<td><span style="color:#ff0000">
+			@prt.message
+		</span></td>
+	
+	}
+	</tr>
+}
+</table>
+
+@EMessages.get("classes.import.info.newstudent") <br />
+<table class="table">
+@for(prt <- cgc.getNewPupils()){
+	<tr>
+	<td>@prt.user.id</td>
+	<td>@prt.user.name</td>
+	<td>@prt.user.getBirthDate()</td>
+	<td>@prt.user.gender</td>
+	<td>@prt.user.preflanguage</td>	
+	@if(!prt.isValid){
+		<td><span style="color:#ff0000">
+			@prt.message
+		</span></td>
+	
+	}
+	</tr>
+}
+</table>
