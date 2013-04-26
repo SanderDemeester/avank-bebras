@@ -417,6 +417,19 @@ user.Female = Female
 user.Other = Other
 
 # Competitions
+competition.name = Competition
+competition.submit = Submit
+competition.intro = The contest has begun! Don't lose too much time reading this.
+competition.confirmSubmit = Are you sure you want to submit your answers and finish the competition?
+competition.noInternet = You don't have an active internet connection!
+competition.timesUp = Time's up!
 competition.overview = Start
 competition.input.regex = Your answer
 competition.feedback = Feedback
+competition.modal.submitting = Submitting
+competition.modal.ready = You're ready!
+competition.modal.sendingAnswers = Sending anwers...
+competition.modal.error = Oops! Something went wrong
+competition.modal.error.code = Give the following code to a nearby teacher to submit your answers for you.
+competition.modal.error.orYouCan = Or you can
+competition.modal.error.retry = Retry

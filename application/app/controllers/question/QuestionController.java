@@ -10,7 +10,10 @@ import java.util.List;
 import org.codehaus.jackson.JsonNode;
 
 import models.EMessages;
+import models.data.Language;
 import models.data.Link;
+import models.data.UnavailableLanguageException;
+import models.data.UnknownLanguageCodeException;
 import models.dbentities.QuestionModel;
 import models.dbentities.UserModel;
 import models.management.ModelState;
@@ -431,7 +434,13 @@ public class QuestionController extends EController{
             QuestionFeedback feedback;
             try {
                 JsonNode input = Json.parse("{\"competition\":\"TODO\",\"questionset\":\"TODO\",\"timeleft\":0,\"questions\":{\"474\":\"qsdqsd\",\"494\":\"blablabla\"}}");
-                feedback = QuestionFeedbackGenerator.generateFromJson(input);
+                try {
+                    feedback = QuestionFeedbackGenerator.generateFromJson(input, Language.getLanguage(EMessages.getLang()));
+                } catch (UnavailableLanguageException
+                        | UnknownLanguageCodeException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             } catch (AnswerGeneratorException e) {
                 return badRequest(e.getMessage());
             }
@@ -445,11 +454,22 @@ public class QuestionController extends EController{
         }
     }
     
+    /**
+     * Submit competition answers
+     * @param json answers in json format
+     * @return message with the submission result
+     */
     // TODO: move to competitioncontroller
     public static Result submit(String json) {
         JsonNode input = Json.parse(json);
         try {
-            QuestionFeedback feedback = QuestionFeedbackGenerator.generateFromJson(input);
+            try {
+                QuestionFeedback feedback = QuestionFeedbackGenerator.generateFromJson(input, Language.getLanguage(EMessages.getLang()));
+            } catch (UnavailableLanguageException
+                    | UnknownLanguageCodeException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         } catch (AnswerGeneratorException e) {
             return badRequest(e.getMessage());
         }

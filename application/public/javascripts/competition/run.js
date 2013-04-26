@@ -26,7 +26,7 @@ $(".pageClick").live("click", function(){
 
 // When the user initiates a submit
 $("#submit").live("click", function() {
-	if(!feedback && confirm("Are you sure you want to submit your answers and finish the competition?")) submit();
+	if(!feedback && confirm(messages.confirmSubmit))) submit();
 });
 
 // Retry submitting if lost connection
@@ -80,7 +80,7 @@ function success() {
 
 // When the user has lost internetconnection on submitting
 function lostConnection() {
-	showError("You don't have an active internet connection!");
+	showError(messages.noInternet);
 	
 	// Show specific lost connection content
 	$("#lostConnectionContent").show();
@@ -124,7 +124,7 @@ $("#answerscode").live("focus", function(){
 
 // When the counter reaches zero
 function expired() {
-	$("#finished-text").text("Time's up!");
+	$("#finished-text").text(messages.timesUp);
 	submit();// With time's up message
 }
 

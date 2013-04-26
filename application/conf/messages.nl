@@ -406,6 +406,19 @@ user.Female = Vrouw
 user.Other = Anders
 
 # Competitions
+competition.name = Competitie
+competition.submit = Indienen
+competition.intro = De competitie is begonnen! Verlies niet teveel tijd door deze tekst te lezen.
+competition.confirmSubmit = Ben je zeker dat je jouw antwoorden wilt doorsturen en de competitie beëindiggen?
+competition.noInternet = Je hebt geen actieve internetconnectie!
+competition.timesUp = Tijd is verstreken!
 competition.overview = Start
 competition.input.regex = Uw antwoord
 competition.feedback = Feedback
+competition.modal.submitting = Versturen
+competition.modal.ready = Je bent klaar!
+competition.modal.sendingAnswers = Bezig met versturen van antwoorden...
+competition.modal.error = Oeps! Er is iets misgelopen
+competition.modal.error.code = Geef onderstaande code aan een verantwoordelijke die dan jouw antwoorden zal doorsturen.
+competition.modal.error.orYouCan = Of
+competition.modal.error.retry = Probeer opnieuw
