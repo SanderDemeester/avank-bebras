@@ -17,7 +17,11 @@ $(".questionframe").load(function() {
 $(".pageClick").live("click", function(){
 	var id = $(this).find(".id").text();
 	$(".question").hide();
-	$("#"+id).show()
+	$(".pageClick").each(function() {
+		$(this).parent().removeClass("active");
+	});
+	$("#"+id).show();
+	$(this).parent().addClass("active");
 })
 
 // When the user initiates a submit
@@ -71,7 +75,7 @@ function submit() {
 
 // When the submission of answers went without errors
 function success() {
-	alert("ok");
+	alert("TODO: redirect to somewhere");
 }
 
 // When the user has lost internetconnection on submitting

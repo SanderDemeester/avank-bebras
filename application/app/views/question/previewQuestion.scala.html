@@ -1,0 +1,39 @@
+@(q: models.question.Question)
+
+@import helper._
+@import helper.twitterBootstrap._
+@import models.EMessages
+@import views.html.competition.run._
+
+<h2>@EMessages.get("questions.preview")</h2>
+
+@if(q == null) {
+	<div class="alert alert-error">@EMessages.get("questions.form.questionFileNotFound")</div>
+} else {
+	@for(language <- q.getLanguages()) {
+	<p class="muted">@language.getName():</p>
+	<div id="@q.getID()" class="question well">
+		<b>@q.getTitle(language)</b><br />
+		<p class="muted">@EMessages.get("question.editor.tabs.question"):</p>
+		<hr />
+		<iframe class="questionframe" src="@q.getIndexLink(language)"></iframe>
+		<hr />
+		<p class="muted">@EMessages.get("question.editor.tabs.feedback"):</p>
+		<iframe class="questionframe" src="@q.getFeedbackLink(language)"></iframe>
+		<hr />
+		<p class="muted">@EMessages.get("question.editor.tabs.answers"):</p>
+		@defining(q.getType().name()) { qType =>
+	        @qType match {
+	            case "MULTIPLE_CHOICE" => {
+	                @showMultipleChoice(q.asInstanceOf[models.question.MultipleChoiceQuestion], language)
+	            }
+	            case "REGEX" => {
+	                @showRegex(q.asInstanceOf[models.question.RegexQuestion], language)
+	            }
+	        }
+	    }
+		
+	</div>
+	
+	}
+}

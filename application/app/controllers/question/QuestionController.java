@@ -35,6 +35,7 @@ import views.html.question.editQuestionForm;
 import views.html.question.newQuestionForm;
 import views.html.question.questionManagement;
 import views.html.question.submitsManagement;
+import views.html.question.previewQuestion;
 import views.html.competition.run.questionSet;
 
 import com.avaje.ebean.annotation.Transactional;
@@ -280,10 +281,16 @@ public class QuestionController extends EController{
         if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
 
         QuestionManager manager = new QuestionManager(name, ModelState.UPDATE);
+        Question q;
+        try {
+            q = Question.fetch(name);
+        } catch (QuestionBuilderException e) {
+            q = null;
+        }
         manager.setIgnoreErrors(true);
 
         Form<QuestionModel> form = form(QuestionModel.class).bindFromRequest().fill(manager.getFinder().ref(name));
-        return ok(editQuestionForm.render(form, manager, breadcrumbs));
+        return ok(editQuestionForm.render(form, manager, breadcrumbs, q));
     }
 
     /**
@@ -301,11 +308,17 @@ public class QuestionController extends EController{
         if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
 
         QuestionManager manager = new QuestionManager(name, ModelState.UPDATE);
+        Question q;
+        try {
+            q = Question.fetch(name);
+        } catch (QuestionBuilderException e) {
+            q = null;
+        }
         
         // Validate form
         Form<QuestionModel> form = form(QuestionModel.class).fill(manager.getFinder().byId(name)).bindFromRequest();
         if(form.hasErrors()) {
-            return badRequest(editQuestionForm.render(form, manager, breadcrumbs));
+            return badRequest(editQuestionForm.render(form, manager, breadcrumbs, q));
         }
         
         // Update
@@ -313,7 +326,7 @@ public class QuestionController extends EController{
             form.get().update();
         } catch (Exception e) {
             flash("error", e.getMessage());
-            return badRequest(editQuestionForm.render(form, manager, breadcrumbs));
+            return badRequest(editQuestionForm.render(form, manager, breadcrumbs, q));
         }
         
         // Result

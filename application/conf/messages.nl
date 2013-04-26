@@ -270,11 +270,13 @@ servers.success.added = Server {0} is aangemaakt
 servers.success.edited = Server {0} is aangepast
 servers.success.removed = Server {0} is verwijderd
 
+questions.preview = Voorvertoning
 questions.form.author = Auteur
 questions.form.officialid = Officieel ID
 questions.form.path = ??Padnaam??
 questions.form.active = Actief
 questions.form.server = Server
+questions.form.questionFileNotFound = Deze vraag kon niet gevonden worden op de opgegeven server of is ongeldig.
 question.questions.name = Vragen
 question.questions.new = Nieuwe Vraag
 question.questions.list = Vragen

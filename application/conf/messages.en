@@ -275,11 +275,13 @@ servers.success.edited = Server {0} was successfully edited
 servers.success.removed = Server {0} was successfully removed
 
 # question management
+questions.preview = Preview
 questions.form.author = Author
 questions.form.officialid = Official ID
 questions.form.path = ??Path??
 questions.form.active = Active
 questions.form.server = Server
+questions.form.questionFileNotFound = This question could not be found on the provided server or is invalid.
 question.questions.name = Questions
 question.questions.new = New Question
 question.questions.list = Questions

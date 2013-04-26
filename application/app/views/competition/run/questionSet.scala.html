@@ -7,7 +7,7 @@
 @main(EMessages.get("TMP"), breadcrumbs){
 	<div class="pagination text-center">
 		<ul>
-			<li><a class="pageClick" href="#-1">@EMessages.get("competition.overview")<span class="id hide">-1</span></a></li>
+			<li class="active"><a class="pageClick" href="#-1">@EMessages.get("competition.overview")<span class="id hide">-1</span></a></li>
 		@for((q, i) <- questionSet.getQuestions().view.zipWithIndex) {
 			<li><a class="pageClick" href="#@q.getID()">@(i+1)<span class="id hide">@q.getID()</span></a></li>
 		}
