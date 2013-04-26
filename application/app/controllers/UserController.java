@@ -39,7 +39,10 @@ import com.avaje.ebean.Ebean;
  */
 public class UserController extends EController{
 
-	private static final String EMAIL_PATTERN = "^[\\w\\-]([\\.\\w])+[\\w]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+	private static final String EMAIL_PATTERN = 
+			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+					+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
 
 	/**
 	 * This methode gets requested when the user clicks on "signup".
@@ -113,7 +116,7 @@ public class UserController extends EController{
 		// Compile new pattern to check for invalid email symbols. 
 		// These are all the symbols that are allow in email addresses.
 		// Alle symbols are containd in character classes, so no need for escaping.
-		pattern = Pattern.compile(EMAIL_PATTERN);
+		pattern = Pattern.compile("[^A-Za-z._+@0-9!#$%&'*+-/=?^_`{|}~]");
 		matcher = pattern.matcher(registerForm.get().email);
 
 		if(matcher.find()){
