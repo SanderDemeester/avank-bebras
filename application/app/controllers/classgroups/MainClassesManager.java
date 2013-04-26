@@ -93,7 +93,6 @@ public class MainClassesManager extends Manager<ClassGroup> {
 		res.add("teacherid");
 		res.add("level");
 		res.add("expdate");
-		res.add("isactive");
 		return res;
 	}
 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
  * 
  */
@@ -93,5 +94,4 @@ public class PasswordHasher {
 		public String password;
 		
 	}
-		
 }
