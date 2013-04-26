@@ -408,3 +408,4 @@ user.Other = Anders
 # Competitions
 competition.overview = Start
 competition.input.regex = Uw antwoord
+competition.feedback = Feedback

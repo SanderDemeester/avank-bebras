@@ -426,7 +426,17 @@ public class QuestionController extends EController{
             set.addQuestion(q);
             //set.addQuestion(q2);
             set.addQuestion(q3);
-            return ok(questionSet.render(set, new ArrayList<Link>()));
+            
+            // TMP
+            QuestionFeedback feedback;
+            try {
+                JsonNode input = Json.parse("{\"competition\":\"TODO\",\"questionset\":\"TODO\",\"timeleft\":0,\"questions\":{\"474\":\"qsdqsd\",\"494\":\"blablabla\"}}");
+                feedback = QuestionFeedbackGenerator.generateFromJson(input);
+            } catch (AnswerGeneratorException e) {
+                return badRequest(e.getMessage());
+            }
+            
+            return ok(questionSet.render(set, null, new ArrayList<Link>()));
             //return ok(q.getIndexLink(Language.getLanguage(EMessages.getLang())).absoluteURL(request()));
         } catch (QuestionBuilderException e) {
             // TODO Auto-generated catch block

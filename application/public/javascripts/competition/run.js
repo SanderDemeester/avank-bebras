@@ -26,7 +26,7 @@ $(".pageClick").live("click", function(){
 
 // When the user initiates a submit
 $("#submit").live("click", function() {
-	if(confirm("Are you sure you want to submit your answers and finish the competition?")) submit();
+	if(!feedback && confirm("Are you sure you want to submit your answers and finish the competition?")) submit();
 });
 
 // Retry submitting if lost connection
@@ -137,14 +137,17 @@ function updateTimeleft(periods) {
 $(document).ready(function() {
 	
 	// Set countdown
-	deaddate = new Date(deadline);
-	$('#countdown').countdown({
-		until: deaddate,
-		format: 'HMS',
-		layout: '{hn} : {mn} : {sn}',
-		onExpiry: expired,
-		onTick: updateTimeleft,
-	});
+	if(!feedback) {
+		deaddate = new Date(deadline);
+		$('#countdown').countdown({
+			until: deaddate,
+			format: 'HMS',
+			layout: '{hn} : {mn} : {sn}',
+			onExpiry: expired,
+			onTick: updateTimeleft,
+		}).parent().show("fast");
+		$("#submit").parent().show("fast");
+	}
 	
 });
 

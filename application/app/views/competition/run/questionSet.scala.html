@@ -1,4 +1,4 @@
-@(questionSet: models.question.QuestionSet, breadcrumbs : List[models.data.Link])
+@(questionSet : models.question.QuestionSet, feedback : models.question.QuestionFeedback, breadcrumbs : List[models.data.Link])
 
 @import helper._
 @import helper.twitterBootstrap._
@@ -7,14 +7,14 @@
 @main(EMessages.get("TMP"), breadcrumbs){
 	<div class="pagination text-center">
 		<ul>
-			<li class="active"><a class="pageClick" href="#-1">@EMessages.get("competition.overview")<span class="id hide">-1</span></a></li>
+			<li class="active"><a class="pageClick" href="#">@EMessages.get("competition.overview")<span class="id hide">-1</span></a></li>
 		@for((q, i) <- questionSet.getQuestions().view.zipWithIndex) {
-			<li><a class="pageClick" href="#@q.getID()">@(i+1)<span class="id hide">@q.getID()</span></a></li>
+			<li><a class="pageClick" href="#">@(i+1)<span class="id hide">@q.getID()</span></a></li>
 		}
 		</ul>
 	</div>
 	
-	<div class="well text-center">
+	<div class="well text-center hide">
 		<div id="countdown"></div>
 	</div>
 	
@@ -27,10 +27,10 @@
 			  </ul>
 	</div>
 	@for(q <- questionSet.getQuestions()) {
-		@question(q, models.data.Language.getLanguage(EMessages.getLang()))
+		@question(q, models.data.Language.getLanguage(EMessages.getLang()), feedback)
 	}
-	<div class="well text-center">
-		<button id="submit" class="btn btn-large btn-primary">Indienen</button>
+	<div class="well text-center hide">
+		<button id="submit" class="btn btn-large btn-primary @if(feedback!=null){disabled}">Indienen</button>
 	</div>
 	
 	<!-- Hidden modal -->
@@ -67,6 +67,7 @@
     </div>
 	
 	<script type="text/javascript">
+	var feedback = @{feedback!=null};
 	// TMP
 	var deadline = @{new Date().getTime()+10000};
 	

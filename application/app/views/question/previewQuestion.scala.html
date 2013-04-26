@@ -25,10 +25,10 @@
 		@defining(q.getType().name()) { qType =>
 	        @qType match {
 	            case "MULTIPLE_CHOICE" => {
-	                @showMultipleChoice(q.asInstanceOf[models.question.MultipleChoiceQuestion], language)
+	                @showMultipleChoice(q.asInstanceOf[models.question.MultipleChoiceQuestion], language, null)
 	            }
 	            case "REGEX" => {
-	                @showRegex(q.asInstanceOf[models.question.RegexQuestion], language)
+	                @showRegex(q.asInstanceOf[models.question.RegexQuestion], language, null)
 	            }
 	        }
 	    }

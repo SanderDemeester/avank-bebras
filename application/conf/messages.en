@@ -419,3 +419,4 @@ user.Other = Other
 # Competitions
 competition.overview = Start
 competition.input.regex = Your answer
+competition.feedback = Feedback

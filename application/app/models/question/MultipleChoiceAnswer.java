@@ -21,4 +21,8 @@ public class MultipleChoiceAnswer extends Answer{
     public boolean isCorrect() {
         return element != null && question.getCorrectElement(language).equals(element);
     }
+    
+    public MultipleChoiceElement getElement() {
+        return element;
+    }
 }
