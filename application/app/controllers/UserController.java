@@ -82,7 +82,7 @@ public class UserController extends EController{
 
 		// check if date is lower then current date
 		try{
-			Date birtyDay    = new SimpleDateFormat("yyyy/MM/dd").parse(registerForm.get().bday);
+			Date birtyDay    = new SimpleDateFormat("dd/MM/yyyy").parse(registerForm.get().bday);
 			Date currentDate = new Date();
 
 			if(birtyDay.after(currentDate)){
@@ -209,7 +209,7 @@ public class UserController extends EController{
 		public String name;
 		public String email;
 		@Required
-		@Formats.DateTime(pattern = "yyyy/MM/dd")
+		@Formats.DateTime(pattern = "dd/MM/yyyy")
 		public String bday;
 		@Required
 		public String password;

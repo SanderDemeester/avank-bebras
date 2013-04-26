@@ -205,7 +205,7 @@ public class AuthenticationManager {
 
         // The first 2 letters of fname and the 7 letters from lname make the bebrasID.
         String bebrasID = null;
-        birtyDay = new SimpleDateFormat("yyyy/MM/dd").parse(registerForm.get().bday);
+        birtyDay = new SimpleDateFormat("dd/MM/yyyy").parse(registerForm.get().bday);
         
         
         String name = registerForm.get().name;

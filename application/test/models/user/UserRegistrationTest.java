@@ -32,7 +32,7 @@ public class UserRegistrationTest extends ContextTest{
 		Map<String, String> map = new HashMap<String,String>();
 		map.put("name", "Jim Jones");
 		map.put("email","jimjones@localhost.com");
-		map.put("bday","1931/05/13");
+		map.put("bday","13/05/1931");
 		map.put("gender","Male");
 		map.put("prefLanguage","en");
 		map.put("password","kaituma");
@@ -59,7 +59,7 @@ public class UserRegistrationTest extends ContextTest{
 		Map<String, String> map2 = new HashMap<String,String>();
 		map2.put("name", "Wang\\ Xiaoyun");
 		map2.put("email","wangxiaoyn@localhost.com");
-		map2.put("bday","1966/02/20");
+		map2.put("bday","20/02/1966");
 		map2.put("gender","Male");
 		map2.put("prefLanguage","nl");
 		map2.put("password","genealogy");
@@ -75,7 +75,7 @@ public class UserRegistrationTest extends ContextTest{
 		Map<String, String> map3 = new HashMap<String,String>();
 		map3.put("name", "Robert Wilhelm");
 		map3.put("email","rober\\wilhelm@localhost.com");
-		map3.put("bday","1811/03/31");
+		map3.put("bday","31/03/1811");
 		map3.put("gender","Male");
 		map3.put("prefLanguage","nl");
 		map3.put("password","hydrojet");
@@ -106,7 +106,7 @@ public class UserRegistrationTest extends ContextTest{
 		Map<String, String> map5 = new HashMap<String,String>();
 		map5.put("name", "Rosa-Parks");
 		map5.put("email","Rosa_Parks@localhost.com");
-		map5.put("bday","1993-02-07");
+		map5.put("bday","07/02/1993");
 		map5.put("gender","Female");
 		map5.put("prefLanguage","en");
 		map5.put("password","Montgomery");
