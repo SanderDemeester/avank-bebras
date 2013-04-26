@@ -7,6 +7,7 @@ import models.data.Difficulty;
 import models.data.Grade;
 import models.data.Link;
 import models.dbentities.CompetitionModel;
+import models.dbentities.QuestionModel;
 import models.dbentities.QuestionSetModel;
 import models.dbentities.QuestionSetQuestion;
 import models.management.ModelState;
@@ -14,7 +15,10 @@ import models.question.questionset.QuestionSetManager;
 import models.question.questionset.QuestionSetQuestionManager;
 import models.user.AuthenticationManager;
 import models.user.Role;
+import org.codehaus.jackson.node.ObjectNode;
 import play.data.Form;
+import play.libs.Json;
+import play.mvc.BodyParser;
 import play.mvc.Result;
 
 import java.util.ArrayList;
@@ -209,5 +213,20 @@ public class QuestionSetController extends EController {
         }
         return redirect(routes.QuestionSetController.list(questionSetId, 0, "qid", "asc", ""));
     }
+
+    /**
+     * Returns the data source for the type ahead input field
+     * @return data source
+     */
+    public static Result typeAhead(){
+        List<QuestionModel> questionModels = Ebean.find(QuestionModel.class).findList();
+        String[] result = new String[questionModels.size()];
+        for (int i = 0; i < questionModels.size(); i++){
+            // todo aanpassen naar de naam van de vraag
+            result[i] ="kevin" + i;
+        }
+        return ok(Json.toJson(result));
+    }
+
 
 }
