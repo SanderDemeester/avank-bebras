@@ -88,6 +88,8 @@ public class UserController extends EController{
 		if(userModel == null){
 			return ok(noaccess.render(breadcrumbs));
 		}
+		
+		AuthenticationManager.getInstance().getUser().setMimickStatus(true);
 		return ok("ok");
 
 	}

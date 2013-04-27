@@ -131,6 +131,10 @@ public abstract class User{
     public boolean isMimicking(){
     	return isMimicking;
     }
+    
+    public void setMimickStatus(boolean isMimicking){
+    	isMimicking = true;
+    }
 
     /*
      * Returns the statistics page
