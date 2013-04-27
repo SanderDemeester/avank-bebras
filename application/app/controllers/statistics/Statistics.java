@@ -1,9 +1,12 @@
 package controllers.statistics;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import play.mvc.Result;
 
 import controllers.EController;
-
+import models.data.Link;
 import views.html.statistics.statistics;
 
 /**
@@ -12,8 +15,16 @@ import views.html.statistics.statistics;
  */
 public class Statistics extends EController {
 
-    public static Result statistics() {
-        return ok(statistics.render());
+    /* Our lovely breadcrumbs. */
+    private static List<Link> breadcrumbs = new ArrayList<Link>();
+    static {
+        breadcrumbs.add(new Link("app.home", "/"));
+        breadcrumbs.add(new Link("statistics.title", "/statistics"));
+    }
+
+    /** Display the main statistics page. */
+    public static Result show() {
+        return ok(statistics.render(null, breadcrumbs));
     }
 
 }

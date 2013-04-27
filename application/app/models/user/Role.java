@@ -87,8 +87,8 @@ public class Role {
 
     /* Statistic Roles */
     public static Role VIEWSTATS = new Role(
-        "statistics.roletitle",
-        new Link("links.statistics", "/statictics")
+        "statistics.title",
+        new Link("links.statistics", "/statistics")
     );
     public static Role CLASSSTATS = new Role();
     public static Role PERSONALSTATS = new Role();

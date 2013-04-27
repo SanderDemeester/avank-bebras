@@ -1,1 +1,8 @@
+@(
+    user:           models.user.User,
+    breadcrumbs:    List[models.data.Link]
+)
 
+@main(EMessages.get("statistics.title"), breadcrumbs) {
+Hello. Statistics.
+}

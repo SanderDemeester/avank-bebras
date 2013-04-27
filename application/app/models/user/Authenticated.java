@@ -8,6 +8,7 @@ public abstract class Authenticated extends User{
         super(data, type);
         ROLES.add(Role.SETTINGS);
         ROLES.add(Role.LANDINGPAGE);
+        ROLES.add(Role.VIEWSTATS);
     }
 
 }
