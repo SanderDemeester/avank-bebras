@@ -12,7 +12,7 @@ app.changeLanguage = Change Language
 app.signUp = Sign Up
 app.signIn = Sign In
 app.signOut = Sign Out
-app.mimic = Mimic
+app.mimic = mimic
 
 # Error
 notFound.title = Oops!

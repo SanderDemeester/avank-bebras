@@ -93,6 +93,7 @@ public class UserController extends EController{
 		AuthenticationManager.getInstance().getUser().setMimickStatus(true);
 		AuthenticationManager.getInstance().login(userModel, Context.current().request().cookies().get(
 				AuthenticationManager.COOKIENAME).value());
+		
 		return ok(Context.current().request().cookies().get(
 				AuthenticationManager.COOKIENAME).value());
 

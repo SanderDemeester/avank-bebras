@@ -12,7 +12,7 @@ app.changeLanguage = Verander taal
 app.signUp = Registreer
 app.signIn = Log in
 app.signOut = Log uit
-app.mimic = Nabootsen
+app.mimic = nabootsen
 
 # Error
 notFound.title = Oeps!

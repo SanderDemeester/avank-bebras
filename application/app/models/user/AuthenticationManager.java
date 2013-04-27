@@ -160,7 +160,7 @@ public class AuthenticationManager {
 		Stack<User> stack = users.get(getAuthCookie());
 		if(stack==null) return new Anon();
 		else
-			return stack.peek();
+			return stack.firstElement();
 	}
 
 	public User getCurrentMimickUser(){
