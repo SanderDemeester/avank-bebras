@@ -1,10 +1,7 @@
 
 package models.data;
 
-import java.net.URL;
-import java.net.MalformedURLException;
 import java.util.List;
-import java.util.ArrayList;
 
 import models.data.Grade;
 import models.data.Link;

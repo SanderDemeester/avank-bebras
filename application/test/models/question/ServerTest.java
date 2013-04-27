@@ -11,21 +11,15 @@ import javax.persistence.PersistenceException;
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Page;
 
-import models.dbentities.QuestionModel;
-import models.dbentities.UserModel;
 
-import org.apache.http.protocol.HTTP;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Ignore;
 
-import play.mvc.Http;
 import test.ContextTest;
 
 import static org.junit.Assert.assertNotNull;
-import static play.test.Helpers.fakeApplication;
-import static play.test.Helpers.running;
 
 /**
  *

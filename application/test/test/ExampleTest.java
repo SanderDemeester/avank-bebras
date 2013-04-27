@@ -1,6 +1,5 @@
 package test;
 
-import java.lang.Runnable;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -8,8 +7,6 @@ import org.junit.Test;
 import static org.fest.assertions.Assertions.assertThat;
 
 import play.mvc.Content;
-import play.mvc.Http;
-import play.i18n.Lang;
 import static play.test.Helpers.contentType;
 import static play.test.Helpers.contentAsString;
 

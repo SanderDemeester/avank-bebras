@@ -1,6 +1,5 @@
 package models.data.links;
 
-import models.EMessages;
 import models.data.Link;
 import models.data.manager.DataManager;
 

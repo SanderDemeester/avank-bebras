@@ -22,14 +22,10 @@ import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
 import play.mvc.Result;
 import views.html.commons.error;
-import views.html.user.showinfo;
-import views.html.user.editinfo;
 import views.html.user.errorinfo;
-import views.html.user.editpass;
 import views.html.user.settings;
 import controllers.EController;
 import controllers.routes;
-import controllers.UserController.Register;
 import models.EMessages;
 
 

@@ -6,10 +6,13 @@ import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
 
+<<<<<<< HEAD
 import org.h2.constant.SysProperties;
 
 import play.mvc.Content;
 import play.mvc.Result;
+=======
+>>>>>>> upstream/test
 
 import models.dbentities.UserModel;
 
@@ -51,9 +54,6 @@ public abstract class User{
      * Returns info about this user as a String.
      * @return Userinfo.
      */
-
-
-
     public String getUserInfo() {
         return null;
     }
@@ -71,7 +71,7 @@ public abstract class User{
      * AuthenticationManager.
      */
     public void resetPassword(){
-
+        // TODO I suppose this needs to be not empty - Felix
     }
 
     /**
@@ -80,12 +80,6 @@ public abstract class User{
     public void logout(){
         AuthenticationManager.getInstance().logout();
     }
-
-    /*
-     * Returns the landing page. Is to be implemented by the child classes
-     *@return Landing Page
-     */
-    public abstract Content getLandingPage();
 
     /*
      * Returns the userID
@@ -138,20 +132,6 @@ public abstract class User{
     
     public void setMimickStatus(boolean isMimicking){
     	this.isMimicking = isMimicking;
-    }
-
-    /*
-     * Returns the statistics page
-     * @return Statistics Page
-     */
-    public abstract Result showStatistics();
-
-    /*
-     * Returns the personal info page
-     * @return Personal Info Page
-     */
-    public Result showPersonalInformation(){
-        return null;
     }
 
 }
