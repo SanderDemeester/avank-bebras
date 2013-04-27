@@ -46,9 +46,6 @@ public abstract class User{
      * Returns info about this user as a String.
      * @return Userinfo.
      */
-
-
-
     public String getUserInfo() {
         return null;
     }
@@ -66,7 +63,7 @@ public abstract class User{
      * AuthenticationManager.
      */
     public void resetPassword(){
-
+        // TODO I suppose this needs to be not empty - Felix
     }
 
     /**
@@ -75,12 +72,6 @@ public abstract class User{
     public void logout(){
         AuthenticationManager.getInstance().logout();
     }
-
-    /*
-     * Returns the landing page. Is to be implemented by the child classes
-     *@return Landing Page
-     */
-    public abstract Content getLandingPage();
 
     /*
      * Returns the userID
@@ -123,20 +114,6 @@ public abstract class User{
     public boolean canMimic(User user) {
         return this.getType().ordinal() > user.getType().ordinal()
                 && this.hasRole(Role.MIMIC);
-    }
-
-    /*
-     * Returns the statistics page
-     * @return Statistics Page
-     */
-    public abstract Result showStatistics();
-
-    /*
-     * Returns the personal info page
-     * @return Personal Info Page
-     */
-    public Result showPersonalInformation(){
-        return null;
     }
 
 }
