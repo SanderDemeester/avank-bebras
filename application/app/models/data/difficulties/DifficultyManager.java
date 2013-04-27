@@ -29,7 +29,7 @@ public class DifficultyManager extends DataManager<Difficulty> {
 
     @Override public Difficulty createFromStrings(String... strings)
             throws CreationException {
-        if(strings.length != 2) throw new CreationException(
+        if(strings.length != 5) throw new CreationException(
                 "Incorrect strings length.",
                 "manager.error.fieldno"
         );
@@ -40,7 +40,7 @@ public class DifficultyManager extends DataManager<Difficulty> {
         );
         int[] ints = new int[strings.length - 1];
         try {
-            for(int i = 0; i < strings.length; i++) {
+            for(int i = 1; i < strings.length; i++) {
                 ints[i - 1] = Integer.parseInt(strings[i]);
             }
         } catch(NumberFormatException e) {

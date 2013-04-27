@@ -30,7 +30,7 @@ public class Difficulty implements DataElement {
      * @param name The name of the level.
      * @param rank The difficultie of this level.
      * @param cpoints The points received when answered correct.
-     * @param wpoints The points lost when answered incorrect.
+     * @param wpoints The points received when answered incorrect.
      * @param npoints The points received when answered correct.
      */
     public Difficulty(String name, int rank, int cpoints, int wpoints, int npoints) {
