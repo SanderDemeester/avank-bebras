@@ -205,7 +205,7 @@ public class SchoolController extends EController {
 	 * @return whether the user is authorized to edit the class
 	 * @throws PersistenceException
 	 */
-	private static boolean isAuthorized(int id) throws PersistenceException{
+	public static boolean isAuthorized(int id) throws PersistenceException{
 		if(!isAuthorized())return false;
 		if(AuthenticationManager.getInstance().getUser().getType()==UserType.TEACHER){
 			SchoolModel sm = Ebean.find(SchoolModel.class,id);

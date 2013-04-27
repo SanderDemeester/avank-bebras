@@ -12,6 +12,7 @@ app.changeLanguage = Verander taal
 app.signUp = Registreer
 app.signIn = Log in
 app.signOut = Log uit
+app.mimic = nabootsen
 
 # Error
 notFound.title = Oeps!
@@ -29,9 +30,12 @@ error.wrong_date_time = Tijd reizer?
 error.invalid_date = Geen geldig datum formaat, gebruik (yyyy/mm/dd).
 error.no_password = Geen password.
 error.no_input = Lege invoer.
+error.invalid_id = Ongeldig ID
 error.no_input_fname = Lege naam!
 error.no_input_email = Lege E-Mail!
 error.no_info = Informatie is niet beschikbaar!
+error.mimic = Kan gebruiker niet nabootsen
+error.mimic.cant_find_user = Kan de opgegeven gebruiker niet vinden
 
 # Links from roles
 links.settings.title = Instellingen
@@ -51,6 +55,7 @@ links.datamanager.diffs = Wijzig de moeilijkheidsgraden
 links.datamanager.grades = Wijzig de graden voor studenten
 links.contestmanager.title = Competitie beheer
 links.contestmanager.overview = Competitie overzicht
+links.mimic = Gebruiker nabootsen
 
 # Forms
 forms.cancel = Annuleer

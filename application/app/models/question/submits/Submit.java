@@ -9,7 +9,6 @@ import java.util.List;
 import models.dbentities.UserModel;
 import models.user.Author;
 import models.user.User;
-import play.Logger;
 import play.Play;
 
 /**

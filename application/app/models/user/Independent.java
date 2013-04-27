@@ -13,8 +13,6 @@ import models.dbentities.UserModel;
 
 import com.avaje.ebean.Ebean;
 
-import play.mvc.Content;
-import play.mvc.Result;
 
 /**
  * @author Sander Demeester
@@ -53,19 +51,6 @@ public class Independent extends Authenticated{
     public ClassGroup getCurrentClass() throws PersistenceException{
         return Ebean.find(ClassGroup.class).where().eq("id", this.data.classgroup).findUnique();
     }
-
-	@Override
-	public Content getLandingPage() {
-		
-		//TODO
-		return null;
-	}
-
-	@Override
-	public Result showStatistics() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	/**
 	 * Queries the database for all previous classes the user is associated with

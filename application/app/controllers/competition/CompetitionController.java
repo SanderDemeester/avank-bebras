@@ -1,6 +1,5 @@
 package controllers.competition;
 
-import com.avaje.ebean.ExpressionList;
 import controllers.EController;
 import controllers.question.QuestionSetController;
 import models.EMessages;

@@ -19,6 +19,7 @@ public class Pupil extends Independent{
      * @return returns if adding competition was succesfull.
      */
     public boolean addCompetition(Competition competition){
+        // TODO Looking pretty stubby to me - Felix
         return false;
     }
 }
