@@ -38,6 +38,8 @@ import play.mvc.Http.Cookie;
 import com.avaje.ebean.Ebean;
 
 import controllers.UserController.Register;
+import controllers.util.PasswordHasher;
+import controllers.util.PasswordHasher.SaltAndPassword;
 
 import models.user.IDGenerator;
 
@@ -192,60 +194,19 @@ public class AuthenticationManager {
      * @throws Exception
      */
     public String createUser(Form<Register> registerForm) throws Exception{
-        // Setup a secure PRNG
-        SecureRandom random = null;
-
-        // Init keyFactory to generate a random string using PBKDF2 with SHA1.
-        SecretKeyFactory secretFactory = null;
-
-        // Resulting password will be in a byte[] array.
-        byte[] passwordByteString = null;
-
-        // We will save the password in HEX-format in the database;
-        String passwordHEX = "";
-
-        // Same for salt
-        String saltHEX = "";
+       
         Date birtyDay = new Date();
+        
+        
+        
+        SaltAndPassword sp = PasswordHasher.generateSP(registerForm.get().password.toCharArray());
+        String passwordHEX = sp.password;
+        String saltHEX = sp.salt;
 
         // The first 2 letters of fname and the 7 letters from lname make the bebrasID.
         String bebrasID = null;
-
-        // Get instance of secureRandom.
-        try {
-            random = SecureRandom.getInstance("SHA1PRNG");
-        } catch (NoSuchAlgorithmException e) {}
-
-        byte[] salt = new byte[16]; //RSA PKCS5
-
-        // Get salt
-        random.nextBytes(salt);
-
-        // Get the key for PBKDF2.
-        KeySpec PBKDF2 = new PBEKeySpec(registerForm.get().password.toCharArray(), salt, 1000, 160);
-
-        // init keyFactory.
-        try{
-            secretFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        }catch(Exception e){
-            throw new Exception(EMessages.get("error.text"));
-        }
-
-        // Generate password from PBKDF2.
-        try {
-            passwordByteString = secretFactory.generateSecret(PBKDF2).getEncoded();
-        } catch (InvalidKeySpecException e) {}
-        try{ // Encocde our byte arrays to HEX dumps (to save in the database).
-            saltHEX = new String(Hex.encodeHex(salt));
-            passwordHEX = new String(Hex.encodeHex(passwordByteString));
-            birtyDay = new SimpleDateFormat("yyyy/MM/dd").parse(registerForm.get().bday);
-        }catch(Exception e){
-            throw new Exception(EMessages.get("error.text"));
-        }
-
-        // TODO: Add support for names with only one character
-        // TODO: create some logic when user exist with same username.
-        // Generate bebrasID.
+        birtyDay = new SimpleDateFormat("dd/MM/yyyy").parse(registerForm.get().bday);
+        
         
         String name = registerForm.get().name;
         Calendar birthday = Calendar.getInstance();
@@ -301,7 +262,8 @@ public class AuthenticationManager {
             // TODO: waarom niet de secret van Play zelf?
             secretFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
         }catch(Exception e){
-            throw new Exception(EMessages.get("error.text"));
+//            throw new Exception(EMessages.get("error.text"));
+        	throw new Exception("ssmldkjfmsqldfjk");
         }
 
         try {
