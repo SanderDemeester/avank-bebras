@@ -1,0 +1,4 @@
+ALTER TABLE difficulties ADD COLUMN cpoints int NOT NULL;
+ALTER TABLE difficulties ADD COLUMN wpoints int NOT NULL;
+ALTER TABLE difficulties ADD COLUMN npoints int NOT NULL;
+
