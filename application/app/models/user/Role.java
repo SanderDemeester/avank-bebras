@@ -20,7 +20,9 @@ public class Role {
     \* ====================================================================== */
 
     // Mimicing
-    public static Role MIMIC = new Role("Mimick users.", new Link[0]);
+    public static Role MIMIC = new Role("Mimick users.",
+    		new Link("links.mimic","/mimic")
+    );
 
     // Anon
     public static Role LOGIN = new Role();
