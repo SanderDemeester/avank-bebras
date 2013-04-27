@@ -6,14 +6,6 @@ import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
 
-<<<<<<< HEAD
-import org.h2.constant.SysProperties;
-
-import play.mvc.Content;
-import play.mvc.Result;
-=======
->>>>>>> upstream/test
-
 import models.dbentities.UserModel;
 
 /**

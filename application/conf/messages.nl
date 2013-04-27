@@ -30,6 +30,7 @@ error.wrong_date_time = Tijd reizer?
 error.invalid_date = Geen geldig datum formaat, gebruik (yyyy/mm/dd).
 error.no_password = Geen password.
 error.no_input = Lege invoer.
+error.invalid_id = Ongeldig ID
 error.no_input_fname = Lege naam!
 error.no_input_email = Lege E-Mail!
 error.no_info = Informatie is niet beschikbaar!
