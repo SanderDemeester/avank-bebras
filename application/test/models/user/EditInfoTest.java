@@ -2,16 +2,8 @@ package models.user;
 
 import models.dbentities.UserModel;
 
-import org.junit.*;
-import java.util.*;
-import play.mvc.*;
 import play.templates.Hash;
-import play.test.*;
-import play.libs.F.*;
 
-import static play.test.Helpers.*;
-import static org.fest.assertions.Assertions.*;
-import static org.junit.Assert.*;
 
 
 import org.junit.Test;
@@ -19,8 +11,6 @@ import org.junit.Test;
 import com.avaje.ebean.Ebean;
 
 import test.ContextTest;
-import play.mvc.*;
-import static play.test.Helpers.*;
 public class EditInfoTest extends ContextTest{
 
 
