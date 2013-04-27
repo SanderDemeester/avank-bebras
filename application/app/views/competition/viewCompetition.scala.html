@@ -55,7 +55,7 @@ contest: models.competition.Competition)
             </div>
 
             <div class="hero-unit">
-                <p> Voor deze contest zijn op dit moment de volgende niveaus beschikbaar: </p>
+                <p> @EMessages.get("competition.info.grades") </p>
                 <ul>
                     @for(grade <- contest.getAvailableGrades()){
                         <li>@grade.getName()</li>

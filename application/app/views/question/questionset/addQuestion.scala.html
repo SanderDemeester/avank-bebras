@@ -38,13 +38,7 @@
                     '_showConstraints -> false
                 )
 
-                <input type="text" id="test">
-
-                <script type="text/javascript">
-                    var colors = ["red", "blue", "green", "yellow", "brown", "black"];
-
-                    $('#search').typeahead({source: colors});
-                </script>
+                <input type="text" id="test" data-provide="typeahead" data-source='"@QuestionSetController.typeAhead()"'>
 
             </fieldset>
 

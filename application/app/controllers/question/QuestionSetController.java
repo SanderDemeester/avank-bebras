@@ -15,6 +15,7 @@ import models.question.questionset.QuestionSetManager;
 import models.question.questionset.QuestionSetQuestionManager;
 import models.user.AuthenticationManager;
 import models.user.Role;
+import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
 import play.data.Form;
 import play.libs.Json;
@@ -219,13 +220,14 @@ public class QuestionSetController extends EController {
      * @return data source
      */
     public static Result typeAhead(){
+        ObjectNode objectNode = Json.newObject();
+        ArrayNode arrayNode = objectNode.putArray("array");
         List<QuestionModel> questionModels = Ebean.find(QuestionModel.class).findList();
-        String[] result = new String[questionModels.size()];
         for (int i = 0; i < questionModels.size(); i++){
             // todo aanpassen naar de naam van de vraag
-            result[i] ="kevin" + i;
+            arrayNode.add("test" + i);
         }
-        return ok(Json.toJson(result));
+        return ok(objectNode);
     }
 
 

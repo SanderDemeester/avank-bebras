@@ -238,6 +238,8 @@ competition.edit = Bewerk competitie
 competition.edit.breadcrumb = Bewerk
 competition.overview = Competitie overzicht
 competition.overview.info = Op deze pagina, kan je de voor jouw zichtbare competities bekijken. Je kan nieuwe competities aanmaken of een al bestaande competitie aanpassen.
+competition.info.grades = Voor deze contest zijn op dit moment de volgende niveaus beschikbaar:
+
 
 # schools
 schools.title = Lijst van Scholen
