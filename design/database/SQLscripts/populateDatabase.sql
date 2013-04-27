@@ -23,6 +23,10 @@
 -- Home Page Links
 INSERT INTO links (title, url) VALUES
     ('Main site', 'http://www.bebras.be');
+INSERT INTO links (title,url) VALUES
+	('FAQ', '/faq');
+INSERT INTO links (title,url) VALUES
+	('Contact','/contact');
 
 -- Pupil Grades
 INSERT INTO grades (name, lowerbound, upperbound) VALUES
