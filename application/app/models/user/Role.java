@@ -34,6 +34,7 @@ public class Role {
     //        new Link(EMessages.get("links.settings.editinfo"), "/editpersonal"),
     //        new Link(EMessages.get("links.settings.changepassword"), "/passwedit")
     //);
+    
 
     // Organiser
     public static Role MANAGEQUESTIONS = new Role(

@@ -15,6 +15,7 @@ public class Administrator extends Organizer{
         ROLES.add(Role.MANAGEFAQ); //Give admin the ability to manage FAQ
         ROLES.add(Role.MANAGECONTESTS);
         ROLES.add(Role.DATAMANAGER);
+        ROLES.add(Role.MIMIC);
     }
 
     /*
