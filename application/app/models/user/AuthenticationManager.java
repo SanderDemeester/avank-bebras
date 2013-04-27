@@ -159,9 +159,8 @@ public class AuthenticationManager {
 	public User getUser() {
 		Stack<User> stack = users.get(getAuthCookie());
 		if(stack==null) return new Anon();
-		else{
+		else
 			return stack.peek();
-		}
 	}
 
 	public User getCurrentMimickUser(){

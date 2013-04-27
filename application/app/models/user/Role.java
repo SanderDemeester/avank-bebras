@@ -20,7 +20,7 @@ public class Role {
     \* ====================================================================== */
 
     // Mimicing
-    public static Role MIMIC = new Role("Mimick users.",
+    public static Role MIMIC = new Role("Mimick user",
     		new Link(EMessages.get("links.mimic"),"/mimic")
     );
 
