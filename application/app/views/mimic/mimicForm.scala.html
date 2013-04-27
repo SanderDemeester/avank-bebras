@@ -1,4 +1,4 @@
-@(title: String, breadcrumbs : List[models.data.Link], mimicForm : Form[controllers.UserController.MimicForm]);
+@(title: String, breadcrumbs : List[models.data.Link], mimicForm : Form[controllers.UserController.MimicForm])
 @import helper._
 @import helper.twitterBootstrap._
 @import models.EMessages
@@ -24,6 +24,7 @@ $("#mimic").live("click",function(){
 	
 	request.done(function(jqXHR, data){
 		$("#mimic_alert").show('fast').attr("class","alert-succes").text(jqXHR.responseText);
+		document.location = "/info";
 		});
 	
 	request.fail(function(jqXHR, data){

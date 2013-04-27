@@ -176,7 +176,7 @@ public class AuthenticationManager {
      * @return return true is the current user is mimicking an other user.
      */
     public boolean mimicking(){
-    	return true;
+    	return getUser().isMimicking();
     }
     
     /**

@@ -26,7 +26,7 @@ public abstract class User{
     private UserType type;
     
     // Field to check if the users is mimicking some other user;
-    private boolean isMimicking = false;
+    private boolean isMimicking = false;;
 
     /**
      * @param data
@@ -133,7 +133,7 @@ public abstract class User{
     }
     
     public void setMimickStatus(boolean isMimicking){
-    	isMimicking = true;
+    	this.isMimicking = isMimicking;
     }
 
     /*

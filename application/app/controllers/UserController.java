@@ -86,10 +86,21 @@ public class UserController extends EController{
 		String id = parameters.get("id")[0];
 		UserModel userModel = Ebean.find(UserModel.class).where().eq("id",id).findUnique();
 		if(userModel == null){
-			return badRequest(mimicForm.render(EMessages.get("app.mimic"),breadcrumbs, form(MimicForm.class)));
+			return badRequest(EMessages.get("error.mimic"));
 		}
 		
+		//generate random id to auth user.
+		String cookie = "";
+		try {
+			cookie = Integer.toString(Math.abs(SecureRandom.getInstance("SHA1PRNG").nextInt(100)));
+		} catch (NoSuchAlgorithmException e) {
+			return badRequest(EMessages.get("app.error"));
+		}
+		//set the cookie. There really is no need for Crypto.sign because a cookie should be random value that has no meaning
+		cookie = Crypto.sign(cookie);
+		
 		AuthenticationManager.getInstance().getUser().setMimickStatus(true);
+		AuthenticationManager.getInstance().login(userModel, cookie);
 		return ok("ok");
 
 	}
@@ -193,7 +204,6 @@ public class UserController extends EController{
 
 			//set the cookie. There really is no need for Crypto.sign because a cookie should be random value that has no meaning
 			cookie = Crypto.sign(cookie);
-			//response().setCookie(AuthenticationManager.COOKIENAME, cookie);
 
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
