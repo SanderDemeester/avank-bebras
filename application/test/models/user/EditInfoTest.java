@@ -26,7 +26,7 @@ public class EditInfoTest extends ContextTest{
 
     public void createAndEdit(){
     	
-        create dummy user (thanks to Sander)
+        //create dummy user (thanks to Sander)
         Map<String, String> map = new HashMap<String,String>();
         map.put("name", "Jim Jones");
         map.put("email","jimjones@localhost.com");
