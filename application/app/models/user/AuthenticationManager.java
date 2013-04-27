@@ -117,11 +117,14 @@ public class AuthenticationManager {
         User user = create(userModel);
         Stack<User> stack = users.get(cookie);
         if(stack == null) { // The user is not yet logged in (would be the case if the stack is empty)
+        	System.out.println("hier");
             stack = new Stack<User>();
             stack.push(user);
             users.put(cookie, stack);
         } else if(current.canMimic(user)) { // If the current user can mimic the other user.
-            stack.add(user);
+        	stack.push(user);
+        }else{
+        	System.out.println("hier2");
         }
         
         EMessages.setLang(userModel.preflanguage);
@@ -142,6 +145,7 @@ public class AuthenticationManager {
             users.put(getAuthCookie(), null);
             return null;
         } else {
+        	stack.peek().setMimickStatus(false);
             return stack.peek();
         }
     }
@@ -157,7 +161,14 @@ public class AuthenticationManager {
     public User getUser() {
         Stack<User> stack = users.get(getAuthCookie());
         if(stack==null) return new Anon();
-        else            return stack.firstElement();
+        else{
+        	return stack.firstElement();
+        }
+    }
+    
+    public User getCurrentMimickUser(){
+        Stack<User> stack = users.get(getAuthCookie());
+    	return stack.peek();
     }
 
     private String getAuthCookie() {

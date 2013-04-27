@@ -6,6 +6,8 @@ import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
 
+import org.h2.constant.SysProperties;
+
 import play.mvc.Content;
 import play.mvc.Result;
 
@@ -124,7 +126,9 @@ public abstract class User{
      * @return
      */
     public boolean canMimic(User user) {
-        return this.getType().ordinal() > user.getType().ordinal()
+    	System.out.println(user.getType().ordinal());
+    	System.out.println(this.getType().ordinal());
+        return this.getType().ordinal() < user.getType().ordinal()
                 && this.hasRole(Role.MIMIC);
     }
     

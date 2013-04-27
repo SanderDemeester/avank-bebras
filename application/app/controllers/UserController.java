@@ -89,7 +89,7 @@ public class UserController extends EController{
 		if(userModel == null){
 			return badRequest(EMessages.get("error.mimic"));
 		}
-		
+		System.out.println(userModel.type);
 		AuthenticationManager.getInstance().getUser().setMimickStatus(true);
 		AuthenticationManager.getInstance().login(userModel, Context.current().request().cookies().get(
 				AuthenticationManager.COOKIENAME).value());
