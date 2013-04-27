@@ -108,15 +108,6 @@ GET			/settings/editinfo			controllers.user.PersonalPageController.show(tab:Int 
 GET			/settings/passwedit			controllers.user.PersonalPageController.show(tab:Int ?= 2)
 GET			/settings/:id			controllers.user.PersonalPageController.show(id:Int)
 
-
-# User management
-GET 		/manage/others		controllers.user.UserManagerController.showOthers(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
-GET			/manage/org			controllers.user.UserManagerController.showOrganizers(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
-GET			/manage/users/create		controllers.user.UserManagerController.createUser()
-GET			/manage/users/update		controllers.user.UserManagerController.updateUser()
-GET			/manage/users/save		controllers.user.UserManagerController.saveUser()
-GET			/manage/users/:id/edit		controllers.user.UserManagerController.editUser(id)
-
 # Classes
 
 GET		/classes					controllers.classgroups.ClassGroupController.viewClasses(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
