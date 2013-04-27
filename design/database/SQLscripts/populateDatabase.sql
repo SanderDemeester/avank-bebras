@@ -36,7 +36,7 @@ INSERT INTO grades (name, lowerbound, upperbound) VALUES
     ('Jedi',    16, 18);
 
 -- Difficulty levels
-INSERT INTO difficulties (name, rank) VALUES
-    ('Easy',   1),
-    ('Medium', 2),
-    ('Hard',   3);
+INSERT INTO difficulties (name, rank, cpoints, wpoints, npoints) VALUES
+    ('Easy',   1, 5, -3, -1),
+    ('Medium', 2, 7, -1,  0),
+    ('Hard',   3, 10, 0,  1);
