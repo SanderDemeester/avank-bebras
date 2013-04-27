@@ -1,0 +1,33 @@
+@(title: String, breadcrumbs : List[models.data.Link], mimicForm : Form[controllers.UserController.MimicForm]);
+@import helper._
+@import helper.twitterBootstrap._
+@import models.EMessages
+@import views.html.commons.showflash
+
+@main(title, breadcrumbs){
+<div id="mimic_alert" class="alert hide"></div>
+<fieldset>
+	@inputText(mimicForm("bebrasID"), '_label -> "bebras ID")
+</fieldset>
+<div class="actions">
+	<input type="submit" value="Mimic" class="btn-primary" id="mimic">
+</div>
+}
+
+<script type="text/javascript">
+$("#mimic").live("click",function(){
+	var request = $.ajax({
+		type: 'POST',
+		url: '/mimic',
+		data: {"id": $("#bebrasID").val()}
+	});
+	
+	request.done(function(jqXHR, data){
+		$("#mimic_alert").show('fast').attr("class","alert-succes").text(jqXHR.responseText);
+		});
+	
+	request.fail(function(jqXHR, data){
+		$("#mimic_alert").show('fast').attr("class","alert-error").text(jqXHR.responseText);
+	});
+});
+</script>

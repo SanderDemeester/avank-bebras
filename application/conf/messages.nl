@@ -12,6 +12,7 @@ app.changeLanguage = Verander taal
 app.signUp = Registreer
 app.signIn = Log in
 app.signOut = Log uit
+app.mimic = Nabootsen
 
 # Error
 notFound.title = Oeps!
@@ -32,6 +33,7 @@ error.no_input = Lege invoer.
 error.no_input_fname = Lege naam!
 error.no_input_email = Lege E-Mail!
 error.no_info = Informatie is niet beschikbaar!
+error.mimic = Kan gebruiker niet nabootsen
 
 # Links from roles
 links.settings.title = Instellingen

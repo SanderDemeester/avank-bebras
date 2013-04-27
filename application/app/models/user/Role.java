@@ -21,7 +21,7 @@ public class Role {
 
     // Mimicing
     public static Role MIMIC = new Role("Mimick users.",
-    		new Link("links.mimic","/mimic")
+    		new Link(EMessages.get("links.mimic"),"/mimic")
     );
 
     // Anon
