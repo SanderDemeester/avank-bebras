@@ -19,6 +19,7 @@ import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
 import play.mvc.Result;
 import play.mvc.Results;
+import play.mvc.Http.Context;
 
 import models.EMessages;
 import models.data.Link;
@@ -89,18 +90,9 @@ public class UserController extends EController{
 			return badRequest(EMessages.get("error.mimic"));
 		}
 		
-		//generate random id to auth user.
-		String cookie = "";
-		try {
-			cookie = Integer.toString(Math.abs(SecureRandom.getInstance("SHA1PRNG").nextInt(100)));
-		} catch (NoSuchAlgorithmException e) {
-			return badRequest(EMessages.get("app.error"));
-		}
-		//set the cookie. There really is no need for Crypto.sign because a cookie should be random value that has no meaning
-		cookie = Crypto.sign(cookie);
-		
 		AuthenticationManager.getInstance().getUser().setMimickStatus(true);
-		AuthenticationManager.getInstance().login(userModel, cookie);
+		AuthenticationManager.getInstance().login(userModel, Context.current().request().cookies().get(
+				AuthenticationManager.COOKIENAME).value());
 		return ok("ok");
 
 	}
