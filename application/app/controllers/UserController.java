@@ -4,14 +4,12 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import play.api.libs.Crypto;
-import play.data.validation.ValidationError;
 import play.data.Form;
 import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
@@ -22,7 +20,6 @@ import models.EMessages;
 import models.data.Link;
 import models.dbentities.UserModel;
 import models.user.AuthenticationManager;
-import models.user.Gender;
 import models.user.UserType;
 
 import views.html.landing_page;

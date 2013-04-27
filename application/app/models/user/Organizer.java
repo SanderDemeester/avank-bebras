@@ -5,8 +5,6 @@ import java.util.Set;
 
 import models.dbentities.UserModel;
 
-import play.mvc.Content;
-import play.mvc.Result;
 
 /**
  * @author Sander Demeester

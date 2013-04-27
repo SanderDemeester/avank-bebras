@@ -3,7 +3,6 @@ package models.user;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.text.SimpleDateFormat;
@@ -30,7 +29,6 @@ import models.user.factory.UserFactory;
 
 import org.apache.commons.codec.binary.Hex;
 
-import play.Logger;
 import play.data.Form;
 import play.mvc.Http.Context;
 import play.mvc.Http.Cookie;

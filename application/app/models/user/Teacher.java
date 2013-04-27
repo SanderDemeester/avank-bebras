@@ -11,8 +11,6 @@ import models.dbentities.ClassGroup;
 import models.dbentities.HelpTeacher;
 import models.dbentities.SchoolModel;
 import models.dbentities.UserModel;
-import play.mvc.Result;
-import play.mvc.Content;
 import com.avaje.ebean.Ebean;
 
 /**

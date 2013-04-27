@@ -6,8 +6,6 @@ import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
 
-import play.mvc.Content;
-import play.mvc.Result;
 
 import models.dbentities.UserModel;
 

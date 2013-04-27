@@ -13,8 +13,6 @@ import models.dbentities.UserModel;
 
 import com.avaje.ebean.Ebean;
 
-import play.mvc.Content;
-import play.mvc.Result;
 
 /**
  * @author Sander Demeester
