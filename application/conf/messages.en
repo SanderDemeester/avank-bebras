@@ -433,3 +433,9 @@ user.error.no_login = Your personal information is not available! Please make su
 user.Male = Male
 user.Female = Female
 user.Other = Other
+
+# contact form
+# contact.formtitle
+# contact.email
+# contact.question
+# contact.form.incomplete
