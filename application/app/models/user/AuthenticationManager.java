@@ -117,14 +117,12 @@ public class AuthenticationManager {
         User user = create(userModel);
         Stack<User> stack = users.get(cookie);
         if(stack == null) { // The user is not yet logged in (would be the case if the stack is empty)
-        	System.out.println("hier");
             stack = new Stack<User>();
             stack.push(user);
             users.put(cookie, stack);
         } else if(current.canMimic(user)) { // If the current user can mimic the other user.
         	stack.push(user);
         }else{
-        	System.out.println("hier2");
         }
         
         EMessages.setLang(userModel.preflanguage);

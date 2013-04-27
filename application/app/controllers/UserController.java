@@ -87,13 +87,15 @@ public class UserController extends EController{
 		String id = parameters.get("id")[0];
 		UserModel userModel = Ebean.find(UserModel.class).where().eq("id",id).findUnique();
 		if(userModel == null){
-			return badRequest(EMessages.get("error.mimic"));
+			return badRequest(EMessages.get("error.mimic.cant_find_user"));
 		}
 		System.out.println(userModel.type);
 		AuthenticationManager.getInstance().getUser().setMimickStatus(true);
 		AuthenticationManager.getInstance().login(userModel, Context.current().request().cookies().get(
 				AuthenticationManager.COOKIENAME).value());
-		return ok("ok");
+		
+		return ok(Context.current().request().cookies().get(
+				AuthenticationManager.COOKIENAME).value());
 
 	}
 

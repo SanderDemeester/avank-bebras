@@ -34,6 +34,7 @@ error.no_input_fname = Lege naam!
 error.no_input_email = Lege E-Mail!
 error.no_info = Informatie is niet beschikbaar!
 error.mimic = Kan gebruiker niet nabootsen
+error.mimic.cant_find_user = Kan de opgegeven gebruiker niet vinden
 
 # Links from roles
 links.settings.title = Instellingen

@@ -5,9 +5,10 @@
 @import views.html.commons.showflash
 
 @main(title, breadcrumbs){
-<div id="mimic_alert" class="alert hide"></div>
+<div id="mimic_alert" class="alert hide">
+</div>
 <fieldset>
-	@inputText(mimicForm("bebrasID"), '_label -> "bebras ID")
+	@inputText(mimicForm("bebrasID"), '_label -> "bebras ID:")
 </fieldset>
 <div class="actions">
 	<input type="submit" value="Mimic" class="btn-primary" id="mimic">
@@ -22,13 +23,13 @@ $("#mimic").live("click",function(){
 		data: {"id": $("#bebrasID").val()}
 	});
 	
-	request.done(function(jqXHR, data){
-		$("#mimic_alert").show('fast').attr("class","alert-succes").text(jqXHR.responseText);
-		document.location = "/info";
+	request.done(function(data){
+		document.cookie="@models.user.AuthenticationManager.COOKIENAME" + "=" + data + ";expires=1000";
+        window.location = "/";
 		});
 	
 	request.fail(function(jqXHR, data){
-		$("#mimic_alert").show('fast').attr("class","alert-error").text(jqXHR.responseText);
+		$("#mimic_alert").show('fast').attr("class","alert-error").text(jqXHR.responseText + ".");
 	});
 });
 </script>

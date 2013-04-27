@@ -35,6 +35,7 @@ error.no_input_fname = Empty name!
 error.no_input_email = Empty E-Mail!
 error.no_info = Information is not available!
 error.mimic = Cant mimic user
+error.mimic.cant_find_user = Can not find user
 
 # Links from roles
 links.settings.title = Settings
