@@ -4,7 +4,6 @@ package models;
 import play.i18n.Lang;
 import play.i18n.Messages;
 import play.mvc.Http.Context;
-import play.mvc.Http.Cookies;
 
 /**
  * An extension of the default Messages to override default language.

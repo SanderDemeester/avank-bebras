@@ -6,9 +6,7 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.PersistenceException;
 
-import com.avaje.ebean.Ebean;
 
 import models.dbentities.ClassGroup;
 import models.dbentities.UserModel;

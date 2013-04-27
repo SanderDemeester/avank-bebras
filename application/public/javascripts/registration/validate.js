@@ -2,9 +2,16 @@ $(document).ready(function(){
 	$.validator.addMethod(
 			"date_check",
 			function(value, element){
-	            return value.match(/^\d{4}[\/\](0?[1-9]|1[012])[\/\](0?[1-9]|[12][0-9]|3[01])$/);
+			     return value.match(/^\d\d?\/\d\d?\/\d\d\d\d$/);
 			},
 			"dd/mm/yyyy"
+			);
+	$.validator.addMethod(
+			"email_check",
+			function(value, element){
+				return value.match(/^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/);
+			},
+			"email"
 			);
 	$("#signup").validate({
 		rules:{
@@ -12,19 +19,19 @@ $(document).ready(function(){
 			name:"required",
 			prefLanguage:"required",
 			email:{
-				required:true,
-				email: true
+				email_check: true
 			},
-			login_passwd:{
+			register_password:{
 				required:true,
 				minlength: 8
 			},
 			controle_passwd:{
-				required:true
+				required:true,
+				equalTo : "#register_password"
 			},
 			bday:{
 				required:true,
-				date_check:true
+				date_check: true
 			}
 
 		},

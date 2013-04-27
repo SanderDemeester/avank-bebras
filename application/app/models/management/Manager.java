@@ -100,7 +100,6 @@ public abstract class Manager<T extends ManageableModel> {
      * @param orderBy order field
      */
     public void setOrderBy(String orderBy) {
-        System.out.println(orderBy);
         this.orderBy = orderBy;
     }
 

@@ -9,7 +9,7 @@ formAction : play.api.mvc.Call)
 
 @helper.form(action =  formAction, 'id -> "signup"){
 <legend>@legend_title</legend>
-@showflash()	     
+@showflash()
 
 <!--FIRST BLOCK -->
 <div class="control-group row-fluid">
@@ -115,6 +115,7 @@ formAction : play.api.mvc.Call)
     <div class="span8">&nbsp;</div>
 </div>
 <script src="@routes.Assets.at("javascripts/registration/bday_datepicker.js")" type="text/javascript"></script>
+<script src="@routes.Assets.at("javascripts/registration/validate.js")" type="text/javascript"></script>
 
 }
 

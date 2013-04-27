@@ -4,31 +4,39 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import play.api.libs.Crypto;
 import play.data.validation.ValidationError;
+import play.data.DynamicForm;
+
 import play.data.Form;
 import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
 import play.mvc.Result;
 import play.mvc.Results;
+import play.mvc.Http.Context;
 
 import models.EMessages;
 import models.data.Link;
 import models.dbentities.UserModel;
 import models.user.AuthenticationManager;
+
 import models.user.Gender;
+import models.user.Role;
+
 import models.user.UserType;
 
 import views.html.landing_page;
+import views.html.commons.noaccess;
 import views.html.login.error;
 import views.html.login.register;
 import views.html.login.registerLandingPage;
+import views.html.mimic.mimicForm;
 
 import com.avaje.ebean.Ebean;
 
@@ -58,6 +66,41 @@ public class UserController extends EController{
 				));
 	}
 
+	public static Result mimic(){
+		List<Link> breadcrumbs = new ArrayList<Link>();
+		breadcrumbs.add(new Link("Home", "/"));
+		breadcrumbs.add(new Link(EMessages.get("app.mimic"), "/mimic"));
+		
+		if(!AuthenticationManager.getInstance().getUser().hasRole(Role.MIMIC))
+			return ok(noaccess.render(breadcrumbs));
+		
+		return ok(mimicForm.render(EMessages.get("app.mimic"),breadcrumbs, form(MimicForm.class)));
+	}
+
+	public static Result mimicExecute(){
+		List<Link> breadcrumbs = new ArrayList<Link>();
+		breadcrumbs.add(new Link("Home", "/"));
+		breadcrumbs.add(new Link(EMessages.get("app.mimic"), "/mimic"));
+		
+		if(!AuthenticationManager.getInstance().getUser().hasRole(Role.MIMIC)) 
+			return ok(noaccess.render(breadcrumbs));
+
+		Map<String,String[]> parameters = request().body().asFormUrlEncoded();
+		String id = parameters.get("id")[0];
+		UserModel userModel = Ebean.find(UserModel.class).where().eq("id",id).findUnique();
+		if(userModel == null){
+			return badRequest(EMessages.get("error.mimic.cant_find_user"));
+		}
+		System.out.println(userModel.type);
+		AuthenticationManager.getInstance().getUser().setMimickStatus(true);
+		AuthenticationManager.getInstance().login(userModel, Context.current().request().cookies().get(
+				AuthenticationManager.COOKIENAME).value());
+		
+		return ok(Context.current().request().cookies().get(
+				AuthenticationManager.COOKIENAME).value());
+
+	}
+
 	/**
 	 * this methode is called when the user submits his/here register information.
 	 * @return Result page
@@ -74,7 +117,7 @@ public class UserController extends EController{
 			flash("error", EMessages.get(EMessages.get("error.no_password")));
 			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
 		}
-		
+
 		if(!registerForm.get().password.equals(registerForm.get().controle_passwd)){
 			flash("error",EMessages.get(EMessages.get("register.password_mismatch")));
 			return badRequest(register.render((EMessages.get("register.title")), breadcrumbs, registerForm));
@@ -82,7 +125,7 @@ public class UserController extends EController{
 
 		// check if date is lower then current date
 		try{
-			Date birtyDay    = new SimpleDateFormat("yyyy/MM/dd").parse(registerForm.get().bday);
+			Date birtyDay    = new SimpleDateFormat("dd/MM/yyyy").parse(registerForm.get().bday);
 			Date currentDate = new Date();
 
 			if(birtyDay.after(currentDate)){
@@ -106,7 +149,7 @@ public class UserController extends EController{
 
 		Pattern pattern = Pattern.compile("[^a-z -]", Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(registerForm.get().name);
-		
+
 		// Check if full name contains invalid symbols.
 		if(matcher.find()){
 			flash("error", EMessages.get(EMessages.get("error.invalid_symbols")));
@@ -157,7 +200,6 @@ public class UserController extends EController{
 
 			//set the cookie. There really is no need for Crypto.sign because a cookie should be random value that has no meaning
 			cookie = Crypto.sign(cookie);
-			//response().setCookie(AuthenticationManager.COOKIENAME, cookie);
 
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
@@ -209,7 +251,7 @@ public class UserController extends EController{
 		public String name;
 		public String email;
 		@Required
-		@Formats.DateTime(pattern = "yyyy/MM/dd")
+		@Formats.DateTime(pattern = "dd/MM/yyyy")
 		public String bday;
 		@Required
 		public String password;
@@ -226,5 +268,9 @@ public class UserController extends EController{
 	public static class Login{
 		public String id;
 		public String password;
+	}
+
+	public static class MimicForm{
+		public String bebrasID;
 	}
 }
