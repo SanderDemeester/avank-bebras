@@ -24,6 +24,9 @@ public abstract class User{
     // The roles this user has or can have
     protected Set<Role> ROLES = new HashSet<Role>();// Can be made non-static if roles have to be altered on runtime
     private UserType type;
+    
+    // Field to check if the users is mimicking some other user;
+    private boolean isMimicking = false;
 
     /**
      * @param data
@@ -123,6 +126,10 @@ public abstract class User{
     public boolean canMimic(User user) {
         return this.getType().ordinal() > user.getType().ordinal()
                 && this.hasRole(Role.MIMIC);
+    }
+    
+    public boolean isMimicking(){
+    	return isMimicking;
     }
 
     /*

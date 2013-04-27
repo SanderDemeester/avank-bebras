@@ -172,6 +172,14 @@ public class AuthenticationManager {
     }
     
     /**
+     * Check if this current users is mimicking somebody.
+     * @return return true is the current user is mimicking an other user.
+     */
+    public boolean mimicking(){
+    	return true;
+    }
+    
+    /**
      * @param Password string.
      * @return The strengthed password as preformed by javascript code on client machine.
      * @throws NoSuchAlgorithmException 
