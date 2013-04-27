@@ -23,7 +23,7 @@
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
                         <li><a tabindex="-1" href="@routes.UserController.landingPage">@EMessages.get("app.home")</a></li>
                         <li class="divider"></li>
-                          <li><a tabindex="0" href="@controllers.user.routes.PersonalPageController.show">@EMessages.get("user.pip.settings")</a></li>
+                          <li><a tabindex="0" href="@controllers.user.routes.PersonalPageController.show(0)">@EMessages.get("user.pip.settings")</a></li>
                           <li><a tabindex="1" href="@routes.UserController.logout">@EMessages.get("app.signOut")</a></li>
                     </ul>
                 } else {
