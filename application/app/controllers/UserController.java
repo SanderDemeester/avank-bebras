@@ -75,18 +75,18 @@ public class UserController extends EController{
 	}
 
 	public static Result mimicExecute(){
-		if(!AuthenticationManager.getInstance().getUser().hasRole(Role.MIMIC)) 
-			return redirect(controllers.routes.Application.index());
-		Map<String,String[]> parameters = request().body().asFormUrlEncoded();
-		
 		List<Link> breadcrumbs = new ArrayList<Link>();
 		breadcrumbs.add(new Link("Home", "/"));
 		breadcrumbs.add(new Link(EMessages.get("app.mimic"), "/mimic"));
+		
+		if(!AuthenticationManager.getInstance().getUser().hasRole(Role.MIMIC)) 
+			return ok(noaccess.render(breadcrumbs));
 
+		Map<String,String[]> parameters = request().body().asFormUrlEncoded();
 		String id = parameters.get("id")[0];
 		UserModel userModel = Ebean.find(UserModel.class).where().eq("id",id).findUnique();
 		if(userModel == null){
-			return ok(noaccess.render(breadcrumbs));
+			return badRequest(mimicForm.render(EMessages.get("app.mimic"),breadcrumbs, form(MimicForm.class)));
 		}
 		
 		AuthenticationManager.getInstance().getUser().setMimickStatus(true);
