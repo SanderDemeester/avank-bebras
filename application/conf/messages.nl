@@ -51,6 +51,7 @@ links.datamanager.diffs = Wijzig de moeilijkheidsgraden
 links.datamanager.grades = Wijzig de graden voor studenten
 links.contestmanager.title = Competitie beheer
 links.contestmanager.overview = Competitie overzicht
+links.statictics = Bekijk je statistieken
 
 # Forms
 forms.cancel = Annuleer

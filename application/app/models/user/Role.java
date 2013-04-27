@@ -85,6 +85,13 @@ public class Role {
         new Link(EMessages.get("links.contestmanager.overview"), "/contests")
     );
 
+    /* Statistic Roles */
+    public static Role VIEWSTATS = new Role(
+        "statistics.roletitle",
+        new Link("links.statistics", "/statictics")
+    );
+    public static Role CLASSSTATS = new Role();
+    public static Role PERSONALSTATS = new Role();
 
 
     /* ====================================================================== *\

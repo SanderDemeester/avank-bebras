@@ -51,6 +51,7 @@ links.datamanager.diffs = Manage the difficulty levels
 links.datamanager.grades = Manage the student grades
 links.contestmanager.title = Contest management
 links.contestmanager.overview = Contest overview
+links.statistics = View your stats
 
 # Forms
 forms.cancel = Cancel
