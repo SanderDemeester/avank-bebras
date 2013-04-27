@@ -21,7 +21,7 @@
                     data-toggle="dropdown">@EMessages.get("app.signedInAs") <i>@models.user.AuthenticationManager.getInstance().getUser().getID()</i> <strong class="icon-cog"></strong><strong class="caret"></strong>
                     </a>
                     
-                    @if(models.user.AuthenticationManager.getInstance().isMimicking()){
+                    @if(models.user.AuthenticationManager.getInstance().getUser.isMimicking()){
                     <li class="dropdown"><a class="dropdown-toggle" href="#"
                     data-toggle="dropdown">@EMessages.get("app.signedInAs") <i>@models.user.AuthenticationManager.getInstance().getUser().getID() : Mimick </i> <strong class="icon-cog"></strong><strong class="caret"></strong>
                     </a>
