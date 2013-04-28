@@ -108,8 +108,11 @@ GET     /assets/img/glyphicons-halflings-white.png      controllers.Assets.at(pa
 GET     /assets/img/glyphicons-halflings.png            controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings.png")
 
 # Settings
-GET			/personalsettings			controllers.user.PersonalPageController.show()
-POST		/personalsettings/submit			controllers.user.PersonalPageController.changeInformation()
+GET			/settings			controllers.user.PersonalPageController.show(tab:Int ?= 0)
+POST		/settings/submit			controllers.user.PersonalPageController.changeInformation()
+GET			/settings/editinfo			controllers.user.PersonalPageController.show(tab:Int ?= 1)
+GET			/settings/passwedit			controllers.user.PersonalPageController.show(tab:Int ?= 2)
+GET			/settings/:id			controllers.user.PersonalPageController.show(id:Int)
 
 # Classes
 
