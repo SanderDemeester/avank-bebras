@@ -118,12 +118,12 @@ public class AuthenticationManager {
 	 * In the context of mimicking. Then it means that policy does not allow to mimic this user.
 	 */
 	public User login(UserModel userModel, String cookie) {
-		// TODO: kick users when they are logged in from somewhere else, unless a superuser is mimicking them
-
 		// Check if the current user can mimic that user and login (add to stack) if that's the case
 		User current = getUser();
 		User user = create(userModel);
 		Stack<User> stack = users.get(cookie);
+		
+		System.out.println(loggedInUserID.contains(user.getID()));
 		
 		if(loggedInUserID.contains(user.getID()) && !current.isMimicking()) return null;
 		loggedInUserID.add(user.getID());

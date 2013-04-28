@@ -96,11 +96,11 @@ public class UserController extends EController{
 		// The user that we are trying to mimic is logged into the system.	
 			return badRequest(EMessages.get("error.mimic.policy_deny"));
 		}
-		AuthenticationManager.getInstance().getUser().setMimickStatus(true);
 		if(AuthenticationManager.getInstance().login(userModel, Context.current().request().cookies().get(
 				AuthenticationManager.COOKIENAME).value()) == null){
-			return badRequest(EMessages.get("error.mimic.policy_deny"));
+			return badRequest(EMessages.get("error.mimic.user_logged_in"));
 		}
+		AuthenticationManager.getInstance().getUser().setMimickStatus(true);
 
 		return ok(Context.current().request().cookies().get(
 				AuthenticationManager.COOKIENAME).value());
