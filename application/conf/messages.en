@@ -319,6 +319,9 @@ grades.lowerbound = Lowest Age
 grades.upperbound = Highest Age (exclusief)
 difficulties.title = Difficulty Levels
 difficulties.numerical = Numerical Difficulty Representation (Ascending difficulty)
+difficulties.correct = Score for a correct answer
+difficulties.wrong = Score for a wrong answer
+difficulties.open = Score when left open
 
 # Classes
 classes.main.form.id = id

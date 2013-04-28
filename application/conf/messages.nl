@@ -316,6 +316,9 @@ grades.lowerbound = Minimale leeftijd
 grades.upperbound = Maximale leeftijd (exclusief)
 difficulties.title = Moeilijkheidsgraden
 difficulties.numerical = Getalsvoorstelling van de moeilijkheid (hoe hoger, hoe moeilijker)
+difficulties.correct = Score voor een juist antwoord
+difficulties.wrong = Score voor een foutief antwoord
+difficulties.open = Score voor een ledig antwoord
 
 # Classes
 classes.main.form.id = id
