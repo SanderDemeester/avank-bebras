@@ -5,12 +5,29 @@ package models.mail;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.mail.Address;
+import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.SendFailedException;
+import javax.mail.Session;
+import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMessage.RecipientType;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.internet.MimePart;
+
+import play.Play;
 
 /**
  * @author Jens N. Rammant
@@ -18,18 +35,35 @@ import javax.mail.internet.InternetAddress;
  */
 public class EMail {
 	
+	private static Session session;
+	private static String smtpUrl;
+	private static int smtpPort;
+	private static String smtpUser;
+	private static String smtpPass;
+	
+	static{
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        session = Session.getInstance(props);
+        smtpUrl = Play.application().configuration().getString("smtp.url");
+        smtpPort = Integer.parseInt(Play.application().configuration().getString("smtp.port"));
+        smtpUser = Play.application().configuration().getString("smtp.user");
+        smtpPass = Play.application().configuration().getString("smtp.pass");
+	}
+	
 	private String message="";
 	private String subject="";
 	private List<InternetAddress> to;
 	private List<InternetAddress> cc;
 	private List<InternetAddress> replyTo;
-	private List<File> attachments;
+	private Map<File,String> attachments;
 	
 	public EMail(){
 		this.to = new ArrayList<InternetAddress>();
 		this.cc = new ArrayList<InternetAddress>();
 		this.replyTo = new ArrayList<InternetAddress>();
-		this.attachments = new ArrayList<File>();
+		this.attachments = new HashMap<File,String>();
 	}
 	
 	public void setMessage(String message){
@@ -77,37 +111,41 @@ public class EMail {
 		}
 	}
 	
-	public void addAttachment(File attachment){
-		this.attachments.add(attachment);
+	public void addAttachment(File attachment,String filename){
+		this.attachments.put(attachment,filename);
 	}
 	
 	public void send() throws MessagingException{
-		//TODO actually implement
-		System.out.println("To:");
-		for(InternetAddress ia : this.to){
-			System.out.println(ia.getAddress());
+		Message message = new MimeMessage(session);
+		if(!this.to.isEmpty()){
+			message.setRecipients(RecipientType.TO,this.to.toArray(new Address[1]));	
 		}
-		System.out.println("-----");
-		System.out.println("CC:");
-		for(InternetAddress ia : this.cc){
-			System.out.println(ia.getAddress());
+		if(!this.cc.isEmpty()){
+			message.setRecipients(RecipientType.CC, this.cc.toArray(new Address[1]));
 		}
-		System.out.println("-----");
-		System.out.println("Reply To:");
-		for(InternetAddress ia : this.replyTo){
-			System.out.println(ia.getAddress());
+		if(!this.replyTo.isEmpty()){
+			message.setReplyTo(replyTo.toArray(new Address[1]));
+		}		
+		message.setSubject(subject);
+		Multipart mp = new MimeMultipart();
+		if(this.message!=null){
+			MimeBodyPart text = new MimeBodyPart();
+			text.setText(this.message);
+			mp.addBodyPart(text);
 		}
-		System.out.println("-----");
-		System.out.println("Subject:");
-		System.out.println(this.subject);
-		System.out.println("-----");
-		System.out.println("Message:");
-		System.out.println(this.message);
-		System.out.println("------");
-		System.out.println("Attachments:");
-		for(File f : this.attachments){
-			System.out.println(f.getName());
+		for(File f : this.attachments.keySet()){
+			MimeBodyPart attach = new MimeBodyPart();
+			attach.setDataHandler(new DataHandler(new FileDataSource(f)));
+			attach.setFileName(this.attachments.get(f));
+			mp.addBodyPart(attach);
 		}
+		message.setContent(mp);
+		Transport transport = session.getTransport("smtp");
+        transport.connect(smtpUrl, smtpPort, smtpUser, smtpPass);
+        transport.sendMessage(message, message.getAllRecipients());
+        for(File f : this.attachments.keySet()){
+        	f.delete();
+        }
 	}
 	
 	
