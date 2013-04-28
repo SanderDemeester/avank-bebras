@@ -26,7 +26,7 @@ $(".pageClick").live("click", function(){
 
 // When the user initiates a submit
 $("#submit").live("click", function() {
-	if(!feedback && confirm(messages.confirmSubmit))) submit();
+	if(!feedback && confirm(messages.confirmSubmit)) submit();
 });
 
 // Retry submitting if lost connection
@@ -75,8 +75,25 @@ function submit() {
 
 // When the submission of answers went without errors
 function success() {
-	alert("TODO: redirect to somewhere");
+	// Destroy countdown
+	$("#countdown").countdown('destroy');
+	
+	$("#finished").modal({
+		keyboard: false,
+		backdrop: "static",
+	});
+	// TODO: depending on the competition type
+	//$("#showFeedback").hide();
 }
+
+$("#ready").live("click", function(){
+	window.location.href = "/";
+});
+
+$("#showFeedback").live("click", function(){
+	alert("TODO");
+	//window.location.href = "feedback/"+JSON.stringify(answers);
+});
 
 // When the user has lost internetconnection on submitting
 function lostConnection() {
@@ -147,6 +164,8 @@ $(document).ready(function() {
 			onTick: updateTimeleft,
 		}).parent().show("fast");
 		$("#submit").parent().show("fast");
+	} else {
+		$("#competitionScore").parent().show("fast");
 	}
 	
 });

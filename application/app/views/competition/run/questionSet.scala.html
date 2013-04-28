@@ -18,6 +18,12 @@
 		<div id="countdown"></div>
 	</div>
 	
+	<div class="well text-center hide">
+		<div id="competitionScore">@if(feedback != null) {
+			Score: <b>@feedback.getScore()</b>
+		}</div>
+	</div>
+	
 	<div id="-1" class="question well hero-unit">
 		<h1>TODO: qset title</h1>
 		<p>@EMessages.get("competition.intro")</p>
@@ -60,6 +66,20 @@
 			</div>
         </div>
         <div class="modal-footer"></div>
+    </div>
+    
+    <!-- Hidden modal -->
+    <div id="finished" class="modal hide fade">
+        <div class="modal-header">
+        	<h3>@EMessages.get("competition.modal.finished")</h3>
+        </div>
+        <div class="modal-body">
+            <p>@EMessages.get("competition.modal.finished.text")</p>
+        </div>
+        <div class="modal-footer">
+        	<button id="ready" class="btn btn-primary">@EMessages.get("competition.modal.finished.return")</button>
+			<button id="showFeedback" class="btn">@EMessages.get("competition.modal.finished.showFeedback")</button>
+        </div>
     </div>
 	
 	<script type="text/javascript">

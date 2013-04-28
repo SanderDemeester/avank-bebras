@@ -433,3 +433,7 @@ competition.modal.error = Oops! Something went wrong
 competition.modal.error.code = Give the following code to a nearby teacher to submit your answers for you.
 competition.modal.error.orYouCan = Or you can
 competition.modal.error.retry = Retry
+competition.modal.finished = Finished
+competition.modal.finished.text = You've successfully finished this competition!
+competition.modal.finished.return = Return to start
+competition.modal.finished.showFeedback = Show feedback

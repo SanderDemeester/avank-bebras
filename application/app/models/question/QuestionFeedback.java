@@ -25,6 +25,7 @@ public class QuestionFeedback {
         makeFeedbackElements(answers);
         this.answers = answers;
         // TODO: calculate score
+        this.score = 9001;
     }
     
     private void makeFeedbackElements(Map<Question, Answer> answers) {

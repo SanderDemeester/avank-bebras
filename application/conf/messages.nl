@@ -422,3 +422,7 @@ competition.modal.error = Oeps! Er is iets misgelopen
 competition.modal.error.code = Geef onderstaande code aan een verantwoordelijke die dan jouw antwoorden zal doorsturen.
 competition.modal.error.orYouCan = Of
 competition.modal.error.retry = Probeer opnieuw
+competition.modal.finished = Competitie is klaar
+competition.modal.finished.text = Je hebt met succes de competitie beëindigd.
+competition.modal.finished.return = Keer terug naar start
+competition.modal.finished.showFeedback = Toon feedback
