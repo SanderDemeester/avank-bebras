@@ -97,16 +97,6 @@ public class TakeCompetitionManager extends Manager<CompetitionModel> {
     }
 
     /**
-     * Returns the path of the route that must be followed to create a new item.
-     *
-     * @return Call path of the route that must be followed
-     */
-    @Override
-    public Call getAddRoute() {
-        return null;
-    }
-
-    /**
      * Returns the path of the route that must be followed to edit the selected item.
      *
      * @return Call path of the route that must be followed
@@ -114,36 +104,6 @@ public class TakeCompetitionManager extends Manager<CompetitionModel> {
     @Override
     public Call getEditRoute(String id) {
         return routes.TakeCompetitionController.takeCompetition(id);
-    }
-
-    /**
-     * Returns the path of the route that must be followed to remove the selected item.
-     *
-     * @return Call path of the route that must be followed
-     */
-    @Override
-    public Call getRemoveRoute(String id) {
-        return null;
-    }
-
-    /**
-     * Returns the path of the route that must be followed to save the current item.
-     *
-     * @return Call path of the route that must be followed
-     */
-    @Override
-    public play.api.mvc.Call getSaveRoute() {
-        return null;
-    }
-
-    /**
-     * Returns the path of the route that must be followed to update(save) the current item.
-     *
-     * @return Call path of the route that must be followed
-     */
-    @Override
-    public play.api.mvc.Call getUpdateRoute() {
-        return null;
     }
 
     /**

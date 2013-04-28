@@ -89,7 +89,9 @@
                 @for(headerField <- manager.getColumnHeaders){
                     @header(headerField, EMessages.get(manager.getMessagesPrefix() + ".form." + headerField))
                 }
-                <th></th>
+                @if(manager.hasActions()){
+                    <th></th>
+                }
             </tr>
         </thead>
 
@@ -103,18 +105,20 @@
                         
                     </td>
                 }
-                	<td>
-                        @if(manager.getEditRoute(item.getID()) != null){
-                            <a class="btn" id="edit" href="@manager.getEditRoute(item.getID())">
-                                <i class="icon-edit"></i>
-                            </a>
-                        }
-                        @if(manager.getRemoveRoute(item.getID()) != null){
-                            <a class="btn" id="remove" href="@manager.getRemoveRoute(item.getID())">
-                                <i class="icon-remove"></i>
-                            </a>
-                        }
-                	</td>
+                    @if(manager.hasActions()){
+                        <td>
+                            @if(manager.getEditRoute(item.getID()) != null){
+                                <a class="btn" id="edit" href="@manager.getEditRoute(item.getID())">
+                                    <i class="icon-edit"></i>
+                                </a>
+                            }
+                            @if(manager.getRemoveRoute(item.getID()) != null){
+                                <a class="btn" id="remove" href="@manager.getRemoveRoute(item.getID())">
+                                    <i class="icon-remove"></i>
+                                </a>
+                            }
+                        </td>
+                    }
                 </tr>
             }
 

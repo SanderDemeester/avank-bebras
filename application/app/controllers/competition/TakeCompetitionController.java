@@ -75,14 +75,14 @@ public class TakeCompetitionController extends EController {
             Page<CompetitionModel> managerPage = competitionManager.page(page);
             return ok(views.html.competition.contests.render(defaultBreadcrumbs(), managerPage, competitionManager, order, orderBy, filter));
         }
-
         return TODO;
     }
 
     public static Result takeCompetition(String id){
         CompetitionModel competitionModel = Ebean.find(CompetitionModel.class).where().idEq(id).findUnique();
         Competition competition = new Competition(competitionModel);
-        QuestionSet questionSet = competition.getQuestionSet(new Grade("Jedi", 0,0));
+        // TODO juiste question set kiezen !
+        QuestionSet questionSet = competition.getQuestionSet(competition.getAvailableGrades().get(0));
         return ok(views.html.competition.run.questionSet.render(questionSet, null, defaultBreadcrumbs()));
     }
 

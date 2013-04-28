@@ -33,9 +33,14 @@ error.no_input = Lege invoer.
 error.invalid_id = Ongeldig ID
 error.no_input_fname = Lege naam!
 error.no_input_email = Lege E-Mail!
+error.duplicated_login = Dubbele login
 error.no_info = Informatie is niet beschikbaar!
 error.mimic = Kan gebruiker niet nabootsen
 error.mimic.cant_find_user = Kan de opgegeven gebruiker niet vinden
+error.mimic.policy_deny = Systeem beleid verhinderd u van de gebruiker na te bootsen
+error.mimic.user_logged_in = De gebruiker die u probeerd na te bootsen is ingelogd in het systeem
+
+
 
 # Links from roles
 links.settings.title = Instellingen
@@ -469,3 +474,17 @@ competition.modal.finished = Competitie is klaar
 competition.modal.finished.text = Je hebt met succes de competitie beëindigd.
 competition.modal.finished.return = Keer terug naar start
 competition.modal.finished.showFeedback = Toon feedback
+
+# Contact form
+contact.formtitle = Contact formulier
+contact.email = Uw email-adres
+contact.question = Uw vraag of opmerking
+contact.form.incomplete = Gelieve alle velden correct in te vullen
+contact.form.couldnotsend = Zender mislukt. Probeer opnieuw later.
+contact.form.sendsuccess = Succesvol verzonden.
+contact.mail.subject = [NL] Contact
+contact.upgraderequest = Upgrade verzoek
+contact.requestupgrade.noemail = Er is geen email-adres verbonden met uw account. Dit is vereist.
+contact.upgraderequest.subject = [NL] Upgrade request
+contact.requestupgrade.notimage = Het opgeladen bestand is geen afbeelding.
+contact.requestupgrade.explanation = Hier kunt u een aanvraag indienen om uw account up te graden naar een leraar account. Gelieve een scan van uw lerarenkaart up te loaden. Misbruik van dit formulier zal leiden tot het blokkeren van uw account.
