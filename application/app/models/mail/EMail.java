@@ -81,7 +81,7 @@ public class EMail {
 		this.attachments.add(attachment);
 	}
 	
-	public void send() throws SendFailedException,MessagingException{
+	public void send() throws MessagingException{
 		//TODO actually implement
 		System.out.println("To:");
 		for(InternetAddress ia : this.to){
