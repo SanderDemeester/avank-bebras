@@ -441,4 +441,5 @@ contact.mail.subject = [NL] Contact
 contact.upgraderequest = Upgrade verzoek
 contact.requestupgrade.noemail = Er is geen email-adres verbonden met uw account. Dit is vereist.
 contact.upgraderequest.subject = [NL] Upgrade request
+contact.requestupgrade.notimage = Het opgeladen bestand is geen afbeelding.
 contact.requestupgrade.explanation = Hier kunt u een aanvraag indienen om uw account up te graden naar een leraar account. Gelieve een scan van uw lerarenkaart up te loaden. Misbruik van dit formulier zal leiden tot het blokkeren van uw account.
