@@ -429,3 +429,16 @@ user.error.wrong_email = Het E-Mail adres is niet correct!
 user.Male = Man
 user.Female = Vrouw
 user.Other = Anders
+
+# Contact form
+contact.formtitle = Contact formulier
+contact.email = Uw email-adres
+contact.question = Uw vraag of opmerking
+contact.form.incomplete = Gelieve alle velden correct in te vullen
+contact.form.couldnotsend = Zender mislukt. Probeer opnieuw later.
+contact.form.sendsuccess = Succesvol verzonden.
+contact.mail.subject = [NL] Contact
+contact.upgraderequest = Upgrade verzoek
+contact.requestupgrade.noemail = Er is geen email-adres verbonden met uw account. Dit is vereist.
+contact.upgraderequest.subject = [NL] Upgrade request
+contact.requestupgrade.explanation = Hier kunt u een aanvraag indienen om uw account up te graden naar een leraar account. Gelieve een scan van uw lerarenkaart up te loaden. Misbruik van dit formulier zal leiden tot het blokkeren van uw account.
