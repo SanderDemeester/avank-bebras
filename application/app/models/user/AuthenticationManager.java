@@ -57,6 +57,8 @@ public class AuthenticationManager {
 	// String: value of the COOKIENAME cookie
 	private Map<String, Stack<User>> users;
 	
+	private Map<String,String> idToCookie;
+	
 	private HashSet<String> loggedInUserID;
 	public static final String COOKIENAME = "avank.auth";
 	private static final Map<UserType, UserFactory> FACTORIES = new HashMap<UserType, UserFactory>();
@@ -79,6 +81,7 @@ public class AuthenticationManager {
 	 */
 	private AuthenticationManager(){
 		users = new HashMap<String, Stack<User>>();
+		idToCookie = new HashMap<String,String>();
 		loggedInUserID = new HashSet<String>();
 	}
 
@@ -127,13 +130,25 @@ public class AuthenticationManager {
 		
 		// If the user that is trying to login is being the target of a mimic proces. Then deny login.
 		if(loggedInUserID.contains(user.getID()) && user.isMimicTarget()) return null;
-		if(loggedInUserID.contains(user.getID()) && !current.isMimicking()) return null;
+		if(loggedInUserID.contains(user.getID()) && !current.isMimicking()){
+			String cookieToKick = idToCookie.get(user.getID());
+			
+			Stack<User> stackToKick = users.get(cookieToKick);
+			loggedInUserID.remove(stackToKick.peek().getID());
+			stackToKick.pop();
+			if(stackToKick.isEmpty()) {
+				users.put(cookieToKick, null);
+			} else {
+				stackToKick.peek().setMimickStatus(false);
+			}
+		}
 		loggedInUserID.add(user.getID());
 		
 		if(stack == null) { // The user is not yet logged in (would be the case if the stack is empty)
 			stack = new Stack<User>();
 			stack.push(user);
 			users.put(cookie, stack);
+			idToCookie.put(user.getID(), cookie);
 		} else if(current.canMimic(user)) { // If the current user can mimic the other user.
 			stack.push(user);
 		}else{
