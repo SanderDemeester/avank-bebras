@@ -449,3 +449,5 @@ user.Other = Other
 # contact.form.sendsuccess
 # contact.upgraderequest
 # contact.requestupgrade.noemail
+# contact.upgraderequest.subject
+# contact.requestupgrade.notimage

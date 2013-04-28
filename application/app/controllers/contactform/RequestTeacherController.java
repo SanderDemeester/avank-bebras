@@ -7,10 +7,15 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.activation.MimetypesFileTypeMap;
+import javax.mail.MessagingException;
+
 import models.EMessages;
 import models.data.Link;
+import models.mail.UpgradeRequestMail;
 import models.user.AuthenticationManager;
 import models.user.User;
+import models.user.UserType;
 
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
@@ -41,15 +46,28 @@ public class RequestTeacherController extends EController {
 		List<Link> breadcrumbs = getBreadcrumbs();
 		if(!isAuthorized())return ok(noaccess.render(breadcrumbs));
 		
+		User current = AuthenticationManager.getInstance().getUser();
+		if(current==null||current.data==null||current.data.email==null){
+			flash("warning",EMessages.get("contact.requestupgrade.noemail"));
+			return redirect(routes.RequestTeacherController.showForm());
+		}
+		
 		MultipartFormData data = request().body().asMultipartFormData();
 		FilePart card = data.getFile("card");
 		File file = card.getFile();
 		
 		if(!isImage(file)){
-			//TODO
+			flash("warning",EMessages.get("contact.requestupgrade.notimage"));
+			return redirect(routes.RequestTeacherController.showForm());
 		}
-		//TODO
-		return TODO;
+		UpgradeRequestMail urm = new UpgradeRequestMail(file);
+		try {
+			urm.send();
+			flash("success",EMessages.get("contact.form.sendsuccess"));
+		} catch (MessagingException e) {
+			flash("error",EMessages.get("contact.form.couldnotsend"));
+		}
+		return redirect(routes.RequestTeacherController.showForm());
 	}
 	
 	private static List<Link> getBreadcrumbs(){
@@ -60,12 +78,12 @@ public class RequestTeacherController extends EController {
 	}
 	
 	private static boolean isAuthorized(){
-		//TODO
-		return true;
+		User current = AuthenticationManager.getInstance().getUser();
+		return current.getType()==UserType.INDEPENDENT||current.getType()==UserType.PUPIL;
 	}
 	
 	private static boolean isImage(File file){
-		//TODO
+		//TODO might be useful, but is rather difficult
 		return true;
 	}
 }
