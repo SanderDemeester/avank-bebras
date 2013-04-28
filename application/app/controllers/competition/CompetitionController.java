@@ -1,9 +1,7 @@
 package controllers.competition;
 
 import com.avaje.ebean.Ebean;
-import com.avaje.ebean.ExpressionList;
 import controllers.EController;
-import controllers.question.QuestionSetController;
 import models.EMessages;
 import models.competition.Competition;
 import models.competition.CompetitionManager;

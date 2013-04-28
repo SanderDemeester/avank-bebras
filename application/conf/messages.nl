@@ -247,6 +247,10 @@ competition.info.grades = Voor deze contest zijn op dit moment de volgende nivea
 competition.view.title = Competitie
 competition.view.status = Status
 
+competitions.breadcrumb = Beschikbare competities.
+competitions.title = Beschikbare competities.
+competitions.totake = Beschikbare competities waaraan je op dit moment kan deelnemen.
+competitions.taken = Competities die je in het verleden hebt afgelegd.
 
 # schools
 schools.title = Lijst van Scholen

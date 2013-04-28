@@ -248,6 +248,11 @@ competition.info.grades = This contests currently supports the following grades:
 competition.view.title = Contest
 competition.view.status = Status
 
+competitions.breadcrumb = Available contests.
+competitions.title = Available contests.
+competitions.totake = Available contests that you can take at this moment.
+competitions.taken = Contests you've taken in the past.
+
 # schools
 schools.title = List of Schools
 schools.listtext = This is the list of schools you either created or are/were associated with via a class.

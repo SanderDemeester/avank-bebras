@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Manager for the competition entity.
+ * Manager for avaiable competitions for each type of user.
  *
- * @author Kevin Stobbelaar
+ * @author Kevin Stobbelaar.
  */
-public class CompetitionManager extends Manager<CompetitionModel> {
+public class TakeCompetitionManager extends Manager<CompetitionModel> {
 
     private String contestid;
     private ExpressionList<CompetitionModel> expressionList;
@@ -28,11 +28,29 @@ public class CompetitionManager extends Manager<CompetitionModel> {
      * @param state      model state
      * @param orderBy    column to be ordered on
      */
-    public CompetitionManager(ModelState state, String orderBy, String contestid) {
+    public TakeCompetitionManager(ModelState state, String orderBy, String contestid) {
         super(CompetitionModel.class, state, orderBy, "name");
         this.contestid = contestid;
         setPageSize(5);
         this.expressionList = getFinder().where();
+    }
+
+    /**
+     * Returns the column headers for the objects of type T.
+     *
+     * @return column headers
+     */
+    @Override
+    public List<String> getColumnHeaders() {
+        ArrayList<String> columnHeaders = new ArrayList<String>();
+        columnHeaders.add("name");
+        columnHeaders.add("type");
+        columnHeaders.add("active");
+        columnHeaders.add("starttime");
+        columnHeaders.add("endtime");
+        columnHeaders.add("creator");
+        columnHeaders.add("duration");
+        return columnHeaders;
     }
 
     /**
@@ -65,35 +83,17 @@ public class CompetitionManager extends Manager<CompetitionModel> {
     }
 
     /**
-     * Returns the column headers for the objects of type T.
-     *
-     * @return column headers
-     */
-    @Override
-    public List<String> getColumnHeaders() {
-        ArrayList<String> columnHeaders = new ArrayList<String>();
-        columnHeaders.add("name");
-        columnHeaders.add("type");
-        columnHeaders.add("active");
-        columnHeaders.add("starttime");
-        columnHeaders.add("endtime");
-        columnHeaders.add("creator");
-        columnHeaders.add("duration");
-        return columnHeaders;
-    }
-
-    /**
      * Returns the route that must be followed to refresh the list.
      *
-     * @param page   current page number
+     * @param page    current page number
      * @param orderBy current order by
      * @param order   current order
-     * @param filter filter on the items
+     * @param filter  filter on the items
      * @return Call Route that must be followed
      */
     @Override
     public Call getListRoute(int page, String orderBy, String order, String filter) {
-        return routes.CompetitionController.index(page, orderBy, order, filter);
+        return routes.TakeCompetitionController.list(page, orderBy, order, filter);
     }
 
     /**
@@ -103,7 +103,7 @@ public class CompetitionManager extends Manager<CompetitionModel> {
      */
     @Override
     public Call getAddRoute() {
-        return routes.CompetitionController.create();
+        return null;
     }
 
     /**
@@ -113,17 +113,17 @@ public class CompetitionManager extends Manager<CompetitionModel> {
      */
     @Override
     public Call getEditRoute(String id) {
-        return routes.CompetitionController.viewCompetition(id, 0, "", "", "");
+        return null;
     }
 
     /**
      * Returns the path of the route that must be followed to remove the selected item.
      *
-     * @result Call path of the route that must be followed
+     * @return Call path of the route that must be followed
      */
     @Override
     public Call getRemoveRoute(String id) {
-        return routes.CompetitionController.removeCompetition(id);
+        return null;
     }
 
     /**
@@ -133,7 +133,7 @@ public class CompetitionManager extends Manager<CompetitionModel> {
      */
     @Override
     public play.api.mvc.Call getSaveRoute() {
-        return routes.CompetitionController.save();
+        return null;
     }
 
     /**
@@ -143,7 +143,7 @@ public class CompetitionManager extends Manager<CompetitionModel> {
      */
     @Override
     public play.api.mvc.Call getUpdateRoute() {
-        return routes.CompetitionController.updateCompetition(contestid);
+        return null;
     }
 
     /**

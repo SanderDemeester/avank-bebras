@@ -57,7 +57,7 @@ POST    /questionset/:qs/questions              controllers.question.QuestionSet
 POST    /questionset/edit                       controllers.question.QuestionSetController.update(qs:Int)
 GET     /questionset/:qs/questions/remove:id    controllers.question.QuestionSetController.removeQuestion(qs:Int, id)
 
-# Contests module
+# Contest management module
 GET     /contests                   controllers.competition.CompetitionController.index(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 GET     /contests/new/contest       controllers.competition.CompetitionController.create()
 POST    /contests                   controllers.competition.CompetitionController.save()
@@ -65,6 +65,9 @@ GET     /contests/:id/overview      controllers.competition.CompetitionControlle
 POST    /contests/                  controllers.competition.CompetitionController.updateCompetition(id)
 GET     /contests/remove/:id        controllers.competition.CompetitionController.removeCompetition(id)
 GET     /contests/qs/remove/:qsid   controllers.competition.CompetitionController.removeQuestionSet(qsid:Int, contestid)
+
+# Contest taking module
+GET     /available-contests         controllers.competition.TakeCompetitionController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
 # Question Management
 GET     /questions                  		 controllers.question.QuestionController.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")
