@@ -32,10 +32,13 @@ error.no_password = Geen password.
 error.no_input = Lege invoer.
 error.invalid_id = Ongeldig ID
 error.no_input_fname = Lege naam!
+error.duplicated_login = Dubbele login
 error.no_input_email = Lege E-Mail!
 error.no_info = Informatie is niet beschikbaar!
 error.mimic = Kan gebruiker niet nabootsen
 error.mimic.cant_find_user = Kan de opgegeven gebruiker niet vinden
+error.mimic.policy_deny = Can not mimic user by policy
+
 
 # Links from roles
 links.settings.title = Instellingen

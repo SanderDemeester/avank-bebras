@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 
 import javax.crypto.SecretKeyFactory;
@@ -32,6 +33,7 @@ import org.apache.commons.codec.binary.Hex;
 import play.data.Form;
 import play.mvc.Http.Context;
 import play.mvc.Http.Cookie;
+import scala.collection.mutable.HashSet;
 
 import com.avaje.ebean.Ebean;
 
@@ -54,8 +56,14 @@ public class AuthenticationManager {
 
 	// String: value of the COOKIENAME cookie
 	private Map<String, Stack<User>> users;
+	
+	private HashSet<String> loggedInUserID;
 	public static final String COOKIENAME = "avank.auth";
 	private static final Map<UserType, UserFactory> FACTORIES = new HashMap<UserType, UserFactory>();
+	
+	public static final int INVALID_LOGIN = 0;
+	public static final int VALID_LOGING = 1;
+	public static final int DUPLICATED_LOGIN = 2;
 
 	static {
 		FACTORIES.put(UserType.ADMINISTRATOR, new AdministratorUserFactory());
@@ -71,6 +79,7 @@ public class AuthenticationManager {
 	 */
 	private AuthenticationManager(){
 		users = new HashMap<String, Stack<User>>();
+		loggedInUserID = new HashSet<String>();
 	}
 
 	public static AuthenticationManager getInstance() {
@@ -105,7 +114,8 @@ public class AuthenticationManager {
 	/**
 	 * Login or mimic with a new usermodel
 	 * @param userModel
-	 * @return The logged in user.
+	 * @return The logged in user. This methode can also return null. If the context is logging in, then null means that there is a duplicated login.
+	 * In the context of mimicking. Then it means that policy does not allow to mimic this user.
 	 */
 	public User login(UserModel userModel, String cookie) {
 		// TODO: kick users when they are logged in from somewhere else, unless a superuser is mimicking them
@@ -114,6 +124,9 @@ public class AuthenticationManager {
 		User current = getUser();
 		User user = create(userModel);
 		Stack<User> stack = users.get(cookie);
+		
+		if(loggedInUserID.contains(user.getID()) && !current.isMimicking()) return null;
+		loggedInUserID.add(user.getID());
 		if(stack == null) { // The user is not yet logged in (would be the case if the stack is empty)
 			stack = new Stack<User>();
 			stack.push(user);
@@ -121,6 +134,8 @@ public class AuthenticationManager {
 		} else if(current.canMimic(user)) { // If the current user can mimic the other user.
 			stack.push(user);
 		}else{
+			System.out.println("will return null");
+			return null;
 		}
 
 		EMessages.setLang(userModel.preflanguage);
@@ -136,6 +151,7 @@ public class AuthenticationManager {
 	 */
 	public User logout() {
 		Stack<User> stack = users.get(getAuthCookie());
+		loggedInUserID.remove(stack.peek().getID());
 		stack.pop();
 		if(stack.isEmpty()) {
 			users.put(getAuthCookie(), null);
@@ -244,7 +260,7 @@ public class AuthenticationManager {
 	 * @return true if credentials are ok else false.
 	 * @throws Exception
 	 */
-	public boolean validate_credentials(String id, String pw, String cookie) throws Exception{
+	public int validate_credentials(String id, String pw, String cookie) throws Exception{
 		// For storing the users salt form the database.
 		byte[] salt = null;
 
@@ -262,7 +278,7 @@ public class AuthenticationManager {
 				"id",id).findUnique();
 
 		if(userModel == null){
-			return false;
+			return INVALID_LOGIN;
 		}
 		passwordDB = userModel.password;
 		SecretKeyFactory secretFactory = null;
@@ -294,9 +310,12 @@ public class AuthenticationManager {
 		if(passwordHEX.equals(passwordDB)){
 			// authenticate user.
 			User user = login(userModel, cookie);
-			return true;
+			
+			// Duplicated login.
+			if(user == null) return DUPLICATED_LOGIN;
+			return VALID_LOGING;
 		}else{
-			return false;
+			return INVALID_LOGIN;
 		}
 
 	}

@@ -70,10 +70,10 @@ public class UserController extends EController{
 		List<Link> breadcrumbs = new ArrayList<Link>();
 		breadcrumbs.add(new Link("Home", "/"));
 		breadcrumbs.add(new Link(EMessages.get("app.mimic"), "/mimic"));
-		
+
 		if(!AuthenticationManager.getInstance().getUser().hasRole(Role.MIMIC))
 			return ok(noaccess.render(breadcrumbs));
-		
+
 		return ok(mimicForm.render(EMessages.get("app.mimic"),breadcrumbs, form(MimicForm.class)));
 	}
 
@@ -81,7 +81,7 @@ public class UserController extends EController{
 		List<Link> breadcrumbs = new ArrayList<Link>();
 		breadcrumbs.add(new Link("Home", "/"));
 		breadcrumbs.add(new Link(EMessages.get("app.mimic"), "/mimic"));
-		
+
 		if(!AuthenticationManager.getInstance().getUser().hasRole(Role.MIMIC)) 
 			return ok(noaccess.render(breadcrumbs));
 
@@ -91,11 +91,12 @@ public class UserController extends EController{
 		if(userModel == null){
 			return badRequest(EMessages.get("error.mimic.cant_find_user"));
 		}
-		System.out.println(userModel.type);
 		AuthenticationManager.getInstance().getUser().setMimickStatus(true);
-		AuthenticationManager.getInstance().login(userModel, Context.current().request().cookies().get(
-				AuthenticationManager.COOKIENAME).value());
-		
+		if(AuthenticationManager.getInstance().login(userModel, Context.current().request().cookies().get(
+				AuthenticationManager.COOKIENAME).value()) == null){
+			return badRequest(EMessages.get("error.mimic.policy_deny"));
+		}
+
 		return ok(Context.current().request().cookies().get(
 				AuthenticationManager.COOKIENAME).value());
 
@@ -208,12 +209,26 @@ public class UserController extends EController{
 		// We do the same check here, if the input forms are empty return a error message.
 		if(id == "" || password == "") {
 			return badRequest(EMessages.get("register.giveinfo"));
-		} else if(AuthenticationManager.getInstance().validate_credentials(id, password, cookie)){
-			return ok(cookie);
-		} else {
-			return badRequest(EMessages.get("error.login"));
+		}else{
+			int return_code = AuthenticationManager.getInstance().validate_credentials(id, password, cookie);
+			switch(return_code){
+			case AuthenticationManager.VALID_LOGING: {
+				return ok(cookie);
+			}
+			case AuthenticationManager.INVALID_LOGIN: {
+				return badRequest(EMessages.get("error.login"));
+			}
+			case AuthenticationManager.DUPLICATED_LOGIN: {
+				return badRequest(EMessages.get("error.duplicated_login"));
+			}
+			default: {
+				return badRequest(EMessages.get("error.login"));
+
+			}
+			}
 		}
 	}
+
 
 	/**
 	 * Logout current user
