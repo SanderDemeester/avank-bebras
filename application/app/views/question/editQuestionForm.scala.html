@@ -1,6 +1,9 @@
-@(questionForm: Form[models.dbentities.QuestionModel], manager: models.management.Manager[_], breadcrumbs : List[models.data.Link])
+@(questionForm: Form[models.dbentities.QuestionModel], manager: models.management.Manager[_], breadcrumbs: List[models.data.Link], q: models.question.Question)
 
-@import views.html.management.defaultEdit
+@import views.html.management.defaultEditExtended
 
-@defaultEdit(questionForm, manager, breadcrumbs)
+@defaultEditExtended(questionForm, manager, breadcrumbs) {
+	<hr />
+	@previewQuestion(q)
+}
 

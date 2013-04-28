@@ -7,13 +7,21 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.codehaus.jackson.JsonNode;
+
 import models.EMessages;
+import models.data.Language;
 import models.data.Link;
+import models.data.UnavailableLanguageException;
+import models.data.UnknownLanguageCodeException;
 import models.dbentities.QuestionModel;
 import models.dbentities.UserModel;
 import models.management.ModelState;
+import models.question.AnswerGeneratorException;
 import models.question.Question;
 import models.question.QuestionBuilderException;
+import models.question.QuestionFeedback;
+import models.question.QuestionFeedbackGenerator;
 import models.question.QuestionIO;
 import models.question.QuestionSet;
 import models.question.Server;
@@ -22,6 +30,7 @@ import models.question.submits.SubmitsPage;
 import play.Play;
 import play.cache.Cache;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Result;
 import views.html.commons.noaccess;
 import views.html.question.approveQuestionForm;
@@ -29,6 +38,7 @@ import views.html.question.editQuestionForm;
 import views.html.question.newQuestionForm;
 import views.html.question.questionManagement;
 import views.html.question.submitsManagement;
+import views.html.question.previewQuestion;
 import views.html.competition.run.questionSet;
 
 import com.avaje.ebean.annotation.Transactional;
@@ -274,10 +284,16 @@ public class QuestionController extends EController{
         if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
 
         QuestionManager manager = new QuestionManager(name, ModelState.UPDATE);
+        Question q;
+        try {
+            q = Question.fetch(name);
+        } catch (QuestionBuilderException e) {
+            q = null;
+        }
         manager.setIgnoreErrors(true);
 
         Form<QuestionModel> form = form(QuestionModel.class).bindFromRequest().fill(manager.getFinder().ref(name));
-        return ok(editQuestionForm.render(form, manager, breadcrumbs));
+        return ok(editQuestionForm.render(form, manager, breadcrumbs, q));
     }
 
     /**
@@ -295,11 +311,17 @@ public class QuestionController extends EController{
         if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
 
         QuestionManager manager = new QuestionManager(name, ModelState.UPDATE);
+        Question q;
+        try {
+            q = Question.fetch(name);
+        } catch (QuestionBuilderException e) {
+            q = null;
+        }
         
         // Validate form
         Form<QuestionModel> form = form(QuestionModel.class).fill(manager.getFinder().byId(name)).bindFromRequest();
         if(form.hasErrors()) {
-            return badRequest(editQuestionForm.render(form, manager, breadcrumbs));
+            return badRequest(editQuestionForm.render(form, manager, breadcrumbs, q));
         }
         
         // Update
@@ -307,7 +329,7 @@ public class QuestionController extends EController{
             form.get().update();
         } catch (Exception e) {
             flash("error", e.getMessage());
-            return badRequest(editQuestionForm.render(form, manager, breadcrumbs));
+            return badRequest(editQuestionForm.render(form, manager, breadcrumbs, q));
         }
         
         // Result
@@ -396,20 +418,76 @@ public class QuestionController extends EController{
     public static Result test() {
         String id = "474";
         String id2 = "454";
+        String id3 = "494";
         try {
             // TODO: cache
             //if (true) return ok(routes.QuestionController.showQuestionFile(id, QuestionPack.QUESTIONXMLFILE).absoluteURL(request()));
             Question q = Question.fetch(id);
             Question q2 = Question.fetch(id2);
             QuestionSet set = new QuestionSet(null);
+            Question q3 = Question.fetch(id3);
             set.addQuestion(q);
-            set.addQuestion(q2);
-            return ok(questionSet.render(set, new ArrayList<Link>()));
+            //set.addQuestion(q2);
+            set.addQuestion(q3);
+            
+            // TMP
+            QuestionFeedback feedback = null;
+            try {
+                JsonNode input = Json.parse("{\"competition\":\"TODO\",\"questionset\":\"TODO\",\"timeleft\":0,\"questions\":{\"474\":\"qsdqsd\",\"494\":\"blablabla\"}}");
+                try {
+                    feedback = QuestionFeedbackGenerator.generateFromJson(input, Language.getLanguage(EMessages.getLang()));
+                } catch (UnavailableLanguageException
+                        | UnknownLanguageCodeException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            } catch (AnswerGeneratorException e) {
+                return badRequest(e.getMessage());
+            }
+            
+            return ok(questionSet.render(set, null, new ArrayList<Link>()));
             //return ok(q.getIndexLink(Language.getLanguage(EMessages.getLang())).absoluteURL(request()));
         } catch (QuestionBuilderException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
             return ok(e.getMessage());
         }
+    }
+    
+    /**
+     * Submit competition answers
+     * @param json answers in json format
+     * @return message with the submission result
+     */
+    // TODO: move to competitioncontroller
+    public static Result submit(String json) {
+        JsonNode input = Json.parse(json);
+        try {
+            QuestionFeedback feedback = QuestionFeedbackGenerator.generateFromJson(input, Language.getLanguage(EMessages.getLang()));
+        } catch (UnavailableLanguageException
+                | UnknownLanguageCodeException
+                | AnswerGeneratorException e) {
+            return badRequest(e.getMessage());
+        }
+        return ok("Submission was successful!");
+    }
+    
+    /**
+     * Submit competition answers and show feedback
+     * @param json answers in json format
+     * @return message with the submission result
+     */
+    // TODO: move to competitioncontroller
+    public static Result submitAndFeedback(String json) {
+        JsonNode input = Json.parse(json);
+        try {
+            QuestionFeedback feedback = QuestionFeedbackGenerator.generateFromJson(input, Language.getLanguage(EMessages.getLang()));
+            // TODO: make something to get the qset from the feedback and render it.
+        } catch (UnavailableLanguageException
+                | UnknownLanguageCodeException
+                | AnswerGeneratorException e) {
+            return badRequest(e.getMessage());
+        }
+        return ok("Submission was successful!");
     }
 }

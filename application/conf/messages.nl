@@ -289,11 +289,13 @@ servers.success.added = Server {0} is aangemaakt
 servers.success.edited = Server {0} is aangepast
 servers.success.removed = Server {0} is verwijderd
 
+questions.preview = Voorvertoning
 questions.form.author = Auteur
 questions.form.officialid = Officieel ID
 questions.form.path = ??Padnaam??
 questions.form.active = Actief
 questions.form.server = Server
+questions.form.questionFileNotFound = Deze vraag kon niet gevonden worden op de opgegeven server of is ongeldig.
 question.questions.name = Vragen
 question.questions.new = Nieuwe Vraag
 question.questions.list = Vragen
@@ -443,5 +445,23 @@ user.Female = Vrouw
 user.Other = Anders
 
 # Competitions
+competition.name = Competitie
+competition.submit = Indienen
+competition.intro = De competitie is begonnen! Verlies niet teveel tijd door deze tekst te lezen.
+competition.confirmSubmit = Ben je zeker dat je jouw antwoorden wilt doorsturen en de competitie beëindiggen?
+competition.noInternet = Je hebt geen actieve internetconnectie!
+competition.timesUp = Tijd is verstreken!
 competition.overview = Start
 competition.input.regex = Uw antwoord
+competition.feedback = Feedback
+competition.modal.submitting = Versturen
+competition.modal.ready = Je bent klaar!
+competition.modal.sendingAnswers = Bezig met versturen van antwoorden...
+competition.modal.error = Oeps! Er is iets misgelopen
+competition.modal.error.code = Geef onderstaande code aan een verantwoordelijke die dan jouw antwoorden zal doorsturen.
+competition.modal.error.orYouCan = Of
+competition.modal.error.retry = Probeer opnieuw
+competition.modal.finished = Competitie is klaar
+competition.modal.finished.text = Je hebt met succes de competitie beëindigd.
+competition.modal.finished.return = Keer terug naar start
+competition.modal.finished.showFeedback = Toon feedback

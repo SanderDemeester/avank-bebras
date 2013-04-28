@@ -4,17 +4,6 @@
 @import helper.twitterBootstrap._
 @import models.EMessages
 
-@main(EMessages.get(manager.getMessagesPrefix() + ".title.edit"), breadcrumbs) {
-
-    @form(manager.getUpdateRoute()) {
-
-        @defaultForm(modelForm, manager)
-
-        <div class="actions">
-            <input type="submit" value="@EMessages.get("forms.update")" class="btn btn-primary">
-            <a href="@manager.getListRoute()" class="btn">@EMessages.get("forms.cancel")</a>
-        </div>
-
-    }
+@defaultEditExtended(modelForm, manager, breadcrumbs) {
 
 }
