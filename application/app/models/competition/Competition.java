@@ -23,7 +23,7 @@ import java.util.*;
 public class Competition {
 
     private CompetitionModel data;
-    private List<QuestionSet> questionSets;
+    private Map<Grade, QuestionSet> questionSets;
 
     /**
      * Default constructor
@@ -33,10 +33,10 @@ public class Competition {
         this.data = data;
 
         // setting the question sets for this contest
-        questionSets = new ArrayList<QuestionSet>();
+        questionSets = new HashMap<Grade, QuestionSet>();
         List<QuestionSetModel> questionSetModels = Ebean.find(QuestionSetModel.class).where().ieq("contid", data.id).findList();
         for (QuestionSetModel questionSetModel : questionSetModels){
-            questionSets.add(new QuestionSet(questionSetModel));
+            questionSets.put(questionSetModel.grade, new QuestionSet(questionSetModel));
         }
     }
 
@@ -89,7 +89,7 @@ public class Competition {
      */
     public List<Language> getAvailableLanguages(){
         List<Language> languages = Language.listLanguages();
-        for (QuestionSet questionSet : questionSets){
+        for (QuestionSet questionSet : questionSets.values()){
             languages.retainAll(questionSet.getLanguages());
         }
         return languages;
@@ -101,8 +101,7 @@ public class Competition {
      */
     public List<Grade> getAvailableGrades(){
         ArrayList<Grade> grades = new ArrayList<Grade>();
-        for (QuestionSet questionSet : questionSets){
-            Grade grade = questionSet.getGrade();
+        for (Grade grade : questionSets.keySet()){
             if (!grades.contains(grade)){
                 grades.add(grade);
             }
@@ -168,6 +167,16 @@ public class Competition {
     public QuestionSet getQuestionSet(User pupil){
         throw new UnsupportedOperationException();
     }
+
+    /**
+     * Returns the question set for the given grade.
+     * @param grade given grade
+     * @return question set
+     */
+    public QuestionSet getQuestionSet(Grade grade){
+        return questionSets.get(grade);
+    }
+
 
     /**
      * Finishes the competition for the pupil.
