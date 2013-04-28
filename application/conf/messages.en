@@ -245,6 +245,8 @@ competition.edit.breadcrumb = Edit
 competition.overview = Contest overview.
 competition.overview.info = On this page, you can view contest which are open for you. You can create new contests or edit an existing contest.
 competition.info.grades = This contests currently supports the following grades:
+competition.view.title = Contest
+competition.view.status = Status
 
 # schools
 schools.title = List of Schools
