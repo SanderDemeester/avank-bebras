@@ -146,3 +146,5 @@ GET		/classes/:id/old			controllers.classgroups.ClassPupilController.viewOldPupi
 
 GET		/contact			controllers.contactform.ContactFormController.showContactForm()
 POST		/contact/			controllers.contactform.ContactFormController.saveContactForm()
+GET		/upgrade			controllers.contactform.RequestTeacherController.showForm()
+POST		/upgrade			controllers.contactform.RequestTeacherController.upload()

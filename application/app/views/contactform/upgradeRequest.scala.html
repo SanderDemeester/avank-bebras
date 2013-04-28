@@ -1,0 +1,19 @@
+@(breadcrumbs : List[models.data.Link])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import models.EMessages
+
+@main(EMessages.get("contact.upgraderequest"), breadcrumbs){
+@commons.showflash()
+
+
+
+		@form(action = controllers.contactform.routes.RequestTeacherController.upload(), 'enctype -> "multipart/form-data") {    
+    		<input type="file" name="card">    
+    		<p>
+    			<input type="submit">
+    		</p>    
+		}
+
+}

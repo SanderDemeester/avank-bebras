@@ -447,3 +447,5 @@ user.Other = Other
 # contact.form.incomplete
 # contact.form.couldnotsend
 # contact.form.sendsuccess
+# contact.upgraderequest
+# contact.requestupgrade.noemail
