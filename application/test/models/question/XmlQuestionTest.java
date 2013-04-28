@@ -15,8 +15,6 @@ import models.data.UnknownLanguageCodeException;
 
 import play.mvc.Http;
 import play.i18n.Lang;
-import static play.test.Helpers.fakeApplication;
-import static play.test.Helpers.running;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;

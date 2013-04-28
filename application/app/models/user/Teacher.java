@@ -11,8 +11,6 @@ import models.dbentities.ClassGroup;
 import models.dbentities.HelpTeacher;
 import models.dbentities.SchoolModel;
 import models.dbentities.UserModel;
-import play.mvc.Result;
-import play.mvc.Content;
 import com.avaje.ebean.Ebean;
 
 /**
@@ -25,9 +23,9 @@ public class Teacher extends SuperUser{
     public Teacher(UserModel data) {
         super(data, UserType.TEACHER);
         ROLES.add(Role.MANAGECONTESTS);
-
         ROLES.add(Role.MANAGESCHOOLS);
         ROLES.add(Role.MANAGECLASSES);
+        ROLES.add(Role.MIMIC);
     }
 
 
@@ -126,21 +124,5 @@ public class Teacher extends SuperUser{
     			(user.data.type!=UserType.PUPIL && user.data.type!=UserType.INDEPENDENT))return false;
     	return isPupilsTeacher(user);
     }
-
-
-	@Override
-	public Content getLandingPage() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Result showStatistics() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
 
 }

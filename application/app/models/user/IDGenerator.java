@@ -6,7 +6,6 @@ import java.lang.Character;
 import java.lang.CharSequence;
 import java.lang.StringBuilder;
 import java.lang.UnsupportedOperationException;
-import java.lang.RuntimeException;
 
 import java.util.Set;
 import java.util.TreeSet;

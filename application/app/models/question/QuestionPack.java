@@ -25,7 +25,6 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 
-import scala.actors.threadpool.Arrays;
 /**
  * A wrapper class for the questions before they will be downloaded
  * @author Ruben Taelman

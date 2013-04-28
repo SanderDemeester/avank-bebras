@@ -12,6 +12,7 @@ app.changeLanguage = Change Language
 app.signUp = Sign Up
 app.signIn = Sign In
 app.signOut = Sign Out
+app.mimic = mimic
 
 # Error
 notFound.title = Oops!
@@ -29,9 +30,12 @@ error.wrong_date_time = Time traveler?
 error.invalid_date = Invalid date format, please use (yyyy/mm/dd).
 error.no_password = No password.
 error.no_input = Empty string.
+error.invalid_id = Invalid ID
 error.no_input_fname = Empty name!
 error.no_input_email = Empty E-Mail!
 error.no_info = Information is not available!
+error.mimic = Cant mimic user
+error.mimic.cant_find_user = Can not find user
 
 # Links from roles
 links.settings.title = Settings
@@ -51,6 +55,7 @@ links.datamanager.diffs = Manage the difficulty levels
 links.datamanager.grades = Manage the student grades
 links.contestmanager.title = Contest management
 links.contestmanager.overview = Contest overview
+links.mimic = Mimic user
 
 # Forms
 forms.cancel = Cancel
@@ -430,6 +435,7 @@ user.pie.editpassw = Edit password
 user.pie.editintro = Edit my information 
 user.pie.intro = Below you can edit your personal information.
 user.error.no_login = Your personal information is not available! Please make sure you are logged in.
+user.error.wrong_email = Given E-Mail is not correct!
 user.Male = Male
 user.Female = Female
 user.Other = Other

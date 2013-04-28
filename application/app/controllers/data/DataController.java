@@ -14,7 +14,6 @@ import controllers.EController;
 import models.user.Role;
 import models.user.AuthenticationManager;
 import models.data.Link;
-import models.data.manager.DataElement;
 import models.data.manager.DataManager;
 import models.data.links.LinkManager;
 import models.data.grades.GradeManager;

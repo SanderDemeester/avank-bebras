@@ -6,7 +6,6 @@ import java.util.Map;
 import models.data.Language;
 import models.data.LanguageCreationException;
 
-import org.w3c.dom.DOMException;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

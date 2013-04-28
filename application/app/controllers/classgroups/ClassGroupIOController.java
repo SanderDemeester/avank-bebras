@@ -13,7 +13,6 @@ import models.data.Link;
 import models.user.AuthenticationManager;
 
 import play.cache.Cache;
-import play.cache.Cached;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
