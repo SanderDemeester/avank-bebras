@@ -194,6 +194,15 @@ public class AuthenticationManager {
 	}
 
 	/**
+	 * 
+	 * @param bebrasID.
+	 * @return true is there is a user logged in with provided id.
+	 */
+	public boolean isUserLoggedIn(String id){
+		return loggedInUserID.contains(id);
+	}
+
+	/**
 	 * Check if this current users is mimicking somebody.
 	 * @return return true is the current user is mimicking an other user.
 	 */

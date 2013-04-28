@@ -91,6 +91,11 @@ public class UserController extends EController{
 		if(userModel == null){
 			return badRequest(EMessages.get("error.mimic.cant_find_user"));
 		}
+		
+		if(AuthenticationManager.getInstance().isUserLoggedIn(userModel.getID())){
+		// The user that we are trying to mimic is logged into the system.	
+			return badRequest(EMessages.get("error.mimic.policy_deny"));
+		}
 		AuthenticationManager.getInstance().getUser().setMimickStatus(true);
 		if(AuthenticationManager.getInstance().login(userModel, Context.current().request().cookies().get(
 				AuthenticationManager.COOKIENAME).value()) == null){

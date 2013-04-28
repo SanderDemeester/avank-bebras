@@ -37,7 +37,9 @@ error.no_input_email = Lege E-Mail!
 error.no_info = Informatie is niet beschikbaar!
 error.mimic = Kan gebruiker niet nabootsen
 error.mimic.cant_find_user = Kan de opgegeven gebruiker niet vinden
-error.mimic.policy_deny = Can not mimic user by policy
+error.mimic.policy_deny = Systeem beleid verhinderd u van de gebruiker na te bootsen
+error.mimic.user_logged_in = De gebruiker die u probeerd na te bootsen is ingelogd in het systeem
+
 
 
 # Links from roles

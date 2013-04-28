@@ -38,6 +38,7 @@ error.no_info = Information is not available!
 error.mimic = Cant mimic user
 error.mimic.cant_find_user = Can not find user
 error.mimic.policy_deny = Can not mimic user by policy
+error.mimic.user_logged_in = The user that you are trying to mimic is logged into the system
 
 # Links from roles
 links.settings.title = Settings
