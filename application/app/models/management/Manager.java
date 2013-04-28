@@ -42,6 +42,7 @@ public abstract class Manager<T extends ManageableModel> {
 
     private boolean ignoreErrors = false;
     private ModelState state;
+    private boolean hasActions = true;
 
     /**
      * Constructor for manager.
@@ -256,7 +257,15 @@ public abstract class Manager<T extends ManageableModel> {
      * @return true if this manager has implemented action routes.
      */
     public boolean hasActions(){
-        return true;
+        return hasActions;
+    }
+
+    /**
+     * Sets the hasActions field.
+     * @param hasActions hasActions
+     */
+    public void setHasActions(boolean hasActions){
+        this.hasActions = hasActions;
     }
 
     /**
