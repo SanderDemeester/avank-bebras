@@ -125,8 +125,11 @@ public class AuthenticationManager {
 		
 		System.out.println(loggedInUserID.contains(user.getID()));
 		
+		// If the user that is trying to login is being the target of a mimic proces. Then deny login.
+		if(loggedInUserID.contains(user.getID()) && user.isMimicTarget()) return null;
 		if(loggedInUserID.contains(user.getID()) && !current.isMimicking()) return null;
 		loggedInUserID.add(user.getID());
+		
 		if(stack == null) { // The user is not yet logged in (would be the case if the stack is empty)
 			stack = new Stack<User>();
 			stack.push(user);
@@ -134,7 +137,6 @@ public class AuthenticationManager {
 		} else if(current.canMimic(user)) { // If the current user can mimic the other user.
 			stack.push(user);
 		}else{
-			System.out.println("will return null");
 			return null;
 		}
 

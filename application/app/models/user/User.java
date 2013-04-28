@@ -23,7 +23,9 @@ public abstract class User{
     private UserType type;
     
     // Field to check if the users is mimicking some other user;
-    private boolean isMimicking = false;;
+    private boolean isMimicking = false;
+    
+    private boolean isMimicTarget = false;
 
     /**
      * @param data
@@ -112,15 +114,22 @@ public abstract class User{
      * @return
      */
     public boolean canMimic(User user) {
-    	System.out.println("smdkfjsmdkfjsmdkfjmdf");
-    	System.out.println(user.getType().ordinal());
     	System.out.println(this.getType().ordinal());
+    	System.out.println(user.getType().ordinal());
         return this.getType().ordinal() < user.getType().ordinal()
                 && this.hasRole(Role.MIMIC);
     }
     
     public boolean isMimicking(){
     	return isMimicking;
+    }
+    
+    public boolean isMimicTarget(){
+    	return isMimicTarget;
+    }
+    
+    public void setMimicTarget(boolean isMimicTarget){
+    	this.isMimicking = isMimicTarget;
     }
     
     public void setMimickStatus(boolean isMimicking){
