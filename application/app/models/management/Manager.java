@@ -213,33 +213,51 @@ public abstract class Manager<T extends ManageableModel> {
      *
      * @return Call path of the route that must be followed
      */
-    public abstract Call getAddRoute();
+    public Call getAddRoute(){
+        return null;
+    }
 
     /**
      * Returns the path of the route that must be followed to edit the selected item.
      *
      * @return Call path of the route that must be followed
      */
-    public abstract Call getEditRoute(String id);
+    public Call getEditRoute(String id){
+        return null;
+    }
 
     /**
      * Returns the path of the route that must be followed to remove the selected item.
      *
      * @return Call path of the route that must be followed
      */
-    public abstract Call getRemoveRoute(String id);
+    public Call getRemoveRoute(String id){
+        return null;
+    }
 
     /**
      * Returns the path of the route that must be followed to save the current item.
      * @return Call path of the route that must be followed
      */
-    public abstract play.api.mvc.Call getSaveRoute();
+    public play.api.mvc.Call getSaveRoute(){
+        return null;
+    }
 
     /**
      * Returns the path of the route that must be followed to update(save) the current item.
      * @return Call path of the route that must be followed
      */
-    public abstract play.api.mvc.Call getUpdateRoute();
+    public play.api.mvc.Call getUpdateRoute(){
+        return null;
+    }
+
+    /**
+     * Returns true is this manager has implemented action routes.
+     * @return true if this manager has implemented action routes.
+     */
+    public boolean hasActions(){
+        return true;
+    }
 
     /**
      * The field names this manager will show
