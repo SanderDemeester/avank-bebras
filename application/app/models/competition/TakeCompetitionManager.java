@@ -113,7 +113,7 @@ public class TakeCompetitionManager extends Manager<CompetitionModel> {
      */
     @Override
     public Call getEditRoute(String id) {
-        return null;
+        return routes.TakeCompetitionController.takeCompetition(id);
     }
 
     /**

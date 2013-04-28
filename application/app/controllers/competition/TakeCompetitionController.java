@@ -1,14 +1,19 @@
 package controllers.competition;
 
+import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Page;
 import controllers.EController;
 import models.EMessages;
+import models.competition.Competition;
 import models.competition.CompetitionManager;
 import models.competition.CompetitionType;
 import models.competition.TakeCompetitionManager;
+import models.data.Grade;
 import models.data.Link;
 import models.dbentities.CompetitionModel;
+import models.dbentities.QuestionSetModel;
 import models.management.ModelState;
+import models.question.QuestionSet;
 import models.user.AuthenticationManager;
 import models.user.Role;
 import models.user.UserType;
@@ -72,6 +77,13 @@ public class TakeCompetitionController extends EController {
         }
 
         return TODO;
+    }
+
+    public static Result takeCompetition(String id){
+        CompetitionModel competitionModel = Ebean.find(CompetitionModel.class).where().idEq(id).findUnique();
+        Competition competition = new Competition(competitionModel);
+        QuestionSet questionSet = competition.getQuestionSet(new Grade("Jedi", 0,0));
+        return ok(views.html.competition.run.questionSet.render(questionSet, null, defaultBreadcrumbs()));
     }
 
 }

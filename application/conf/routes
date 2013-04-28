@@ -67,7 +67,8 @@ GET     /contests/remove/:id        controllers.competition.CompetitionControlle
 GET     /contests/qs/remove/:qsid   controllers.competition.CompetitionController.removeQuestionSet(qsid:Int, contestid)
 
 # Contest taking module
-GET     /available-contests         controllers.competition.TakeCompetitionController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /available-contests             controllers.competition.TakeCompetitionController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /available-contests/:id/take    controllers.competition.TakeCompetitionController.takeCompetition(id)
 
 # Question Management
 GET     /questions                  		 controllers.question.QuestionController.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")
