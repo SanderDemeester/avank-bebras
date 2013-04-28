@@ -5,8 +5,11 @@ package controllers.contactform;
 
 import java.util.ArrayList;
 
+import javax.mail.MessagingException;
+
 import models.EMessages;
 import models.data.Link;
+import models.mail.ContactMail;
 import models.user.AuthenticationManager;
 import models.user.User;
 
@@ -33,6 +36,7 @@ public class ContactFormController extends EController {
 		bc.add(new Link("Home","/"));
 		bc.add(new Link(EMessages.get("contact.formtitle"),"/contact"));			
 		
+		//Generate form
 		Form<ContactForm> f = form(ContactForm.class);	
 		User current = AuthenticationManager.getInstance().getUser();
 		//Fill in the logged in user's emailaddress (if there is one)
@@ -41,6 +45,7 @@ public class ContactFormController extends EController {
 			cf.email = current.data.email;
 			f=f.fill(cf);
 		}
+		//Return page
 		return ok(contact.render(f,bc));
 		
 	}
@@ -54,13 +59,23 @@ public class ContactFormController extends EController {
 		ArrayList<Link> bc = new ArrayList<Link>();
 		bc.add(new Link("Home","/"));
 		bc.add(new Link(EMessages.get("contact.formtitle"),"/contact"));
-		
+		//Retrieve form
 		Form<ContactForm> f = form(ContactForm.class).bindFromRequest();
+		//Check if form is valid
 		if(f.hasErrors()){
 			flash("warning",EMessages.get("contact.form.incomplete"));
 			return badRequest(contact.render(f, bc));
 		}
-		//TODO actual sending
+		//Create a mail and send it
+		ContactForm cf = f.get();
+		ContactMail cm = new ContactMail(cf.question, cf.email);
+		try {
+			cm.send();
+			flash("success",EMessages.get("contact.form.sendsuccess"));
+		} catch (MessagingException e) {
+			flash("error",EMessages.get("contact.form.couldnotsend"));
+		}
+		//Return to form page
 		return redirect(routes.ContactFormController.showContactForm());
 	}
 	

@@ -445,3 +445,5 @@ user.Other = Other
 # contact.email
 # contact.question
 # contact.form.incomplete
+# contact.form.couldnotsend
+# contact.form.sendsuccess
