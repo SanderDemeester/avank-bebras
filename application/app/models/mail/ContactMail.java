@@ -19,5 +19,6 @@ public class ContactMail extends EMail {
 		this.appendMessage(senderMail);
 		this.setSubject(EMessages.get("contact.mail.subject"));
 		this.addToAddress(Play.application().configuration().getString("email.contactemail"));
+		this.addReplyTo(senderMail);
 	}
 }
