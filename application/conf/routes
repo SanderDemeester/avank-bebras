@@ -141,3 +141,10 @@ GET		/classes/view/:id/help/add			controllers.classgroups.HelpTeacherController.
 POST		/classes/view/:id/help/			controllers.classgroups.HelpTeacherController.save(id:Int)
 
 GET		/classes/:id/old			controllers.classgroups.ClassPupilController.viewOldPupils(id:Int,p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+
+# Contact form
+
+GET		/contact			controllers.contactform.ContactFormController.showContactForm()
+POST		/contact/			controllers.contactform.ContactFormController.saveContactForm()
+GET		/upgrade			controllers.contactform.RequestTeacherController.showForm()
+POST		/upgrade			controllers.contactform.RequestTeacherController.upload()
