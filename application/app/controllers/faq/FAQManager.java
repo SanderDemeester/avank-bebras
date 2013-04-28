@@ -3,7 +3,6 @@
  */
 package controllers.faq;
 
-import models.EMessages;
 import models.dbentities.FAQModel;
 import models.management.Manager;
 import models.management.ModelState;

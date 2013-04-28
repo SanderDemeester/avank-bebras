@@ -1,28 +1,25 @@
 package models.user;
 
-import models.dbentities.UserModel;
-
-import org.junit.*;
-import java.util.*;
-
-import junit.framework.Assert;
-import play.mvc.*;
-import play.templates.Hash;
-import play.test.*;
-import play.libs.F.*;
-
-import static play.test.Helpers.*;
-import static org.fest.assertions.Assertions.*;
-import static org.junit.Assert.*;
-
+import java.util.Map;
+import java.util.HashMap;
 
 import org.junit.Test;
+import org.junit.Assert;
+import static org.junit.Assert.assertNotNull;
+import static org.fest.assertions.Assertions.assertThat;
+
+import play.templates.Hash;
+import play.mvc.Result;
+import static play.test.Helpers.fakeRequest;
+import static play.test.Helpers.callAction;
+import static play.test.Helpers.contentAsString;
+import static play.test.Helpers.status;
 
 import com.avaje.ebean.Ebean;
 
+import models.dbentities.UserModel;
 import test.ContextTest;
-import play.mvc.*;
-import static play.test.Helpers.*;
+
 public class UserRegistrationTest extends ContextTest{
 
 

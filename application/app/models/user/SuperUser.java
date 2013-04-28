@@ -20,6 +20,6 @@ public abstract class SuperUser extends Authenticated{
      * @param user
      */
     public void resetPassword(User user){
-
+        // TODO I suppose this is not to remain empty? - Felix
     }
 }

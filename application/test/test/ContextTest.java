@@ -14,7 +14,6 @@ import org.junit.Before;
 import play.test.FakeApplication;
 import play.test.Helpers;
 
-import play.mvc.Content;
 import play.mvc.Http;
 
 import play.i18n.Lang;

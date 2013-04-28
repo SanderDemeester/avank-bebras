@@ -1,7 +1,6 @@
 package models.dbentities;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -18,7 +17,6 @@ import controllers.util.DateFormatter;
 
 import models.management.Listable;
 import models.management.ManageableModel;
-import models.user.AuthenticationManager;
 import models.user.Gender;
 import models.user.UserType;
 import play.data.format.Formats;

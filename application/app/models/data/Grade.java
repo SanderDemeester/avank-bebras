@@ -3,7 +3,6 @@ package models.data;
 import javax.persistence.Id;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.Column;
 
 import models.data.manager.DataElement;
 
