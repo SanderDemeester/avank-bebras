@@ -152,6 +152,7 @@ question.questionset.overview.questions = This question set contains the followi
 question.questionset.overview.basic = Edit question set information.
 question.questionset.form.qid = Question id
 question.questionset.form.qsid = Question set id
+question.questionset.doublegrade = The contest already contains a question set with the selected grade.
 
 # Languages
 languages.language = Language

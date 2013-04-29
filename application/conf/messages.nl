@@ -153,6 +153,7 @@ question.questionset.overview.questions = Deze vragenbundel bevat de volgende vr
 question.questionset.overview.basic = Bewerk vragenbundel:
 question.questionset.form.qid = Vraag id
 question.questionset.form.qsid = Vragenbundel id
+question.questionset.doublegrade = De competitie heeft al een vragenbundel met het geselecteerde niveau!
 
 # Languages
 languages.language = Taal

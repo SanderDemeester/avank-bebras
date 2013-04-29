@@ -1,6 +1,7 @@
 package controllers.competition;
 
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Expr;
 import com.avaje.ebean.Page;
 import controllers.EController;
 import models.EMessages;
@@ -10,8 +11,10 @@ import models.competition.CompetitionType;
 import models.competition.TakeCompetitionManager;
 import models.data.Grade;
 import models.data.Link;
+import models.dbentities.ClassGroup;
 import models.dbentities.CompetitionModel;
 import models.dbentities.QuestionSetModel;
+import models.dbentities.UserModel;
 import models.management.ModelState;
 import models.question.QuestionSet;
 import models.user.AuthenticationManager;
@@ -68,12 +71,40 @@ public class TakeCompetitionController extends EController {
      * @return  available competitions list page
      */
     public static Result list(int page, String orderBy, String order, String filter){
+        TakeCompetitionManager competitionManager = getManager();
         if (userType(UserType.ANON)){
-            // anonymous user
-            TakeCompetitionManager competitionManager = getManager();
+            // anonymous user can only see "running" anonymous competitions
             competitionManager.setExpressionList(competitionManager.getFinder()
                     .where()
                     .eq("type", CompetitionType.ANONYMOUS)
+                    .eq("active", true)
+                    .lt("starttime", new Date())
+                    .gt("endtime", new Date())
+            );
+            Page<CompetitionModel> managerPage = competitionManager.page(page);
+            return ok(views.html.competition.contests.render(defaultBreadcrumbs(), managerPage, competitionManager, order, orderBy, filter));
+        }
+        if (userType(UserType.INDEPENDENT)){
+            // independent user can only see "running" anonymous and unrestricted competitions
+            competitionManager.setExpressionList(competitionManager.getFinder()
+                    .where()
+                    .or(Expr.eq("type", CompetitionType.ANONYMOUS), Expr.eq("type", CompetitionType.UNRESTRICTED))
+                    .eq("active", true)
+                    .lt("starttime", new Date())
+                    .gt("endtime", new Date())
+            );
+            Page<CompetitionModel> managerPage = competitionManager.page(page);
+            return ok(views.html.competition.contests.render(defaultBreadcrumbs(), managerPage, competitionManager, order, orderBy, filter));
+        }
+        if (userType(UserType.PUPIL)){
+            // pupils can see "running" anonymous and unrestricted competitions + restricted competitions if their class is registered
+            UserModel user = AuthenticationManager.getInstance().getUser().getData();
+            competitionManager.setExpressionList(competitionManager.getFinder()
+                    .where()
+                    // TODO ook restricted contests if class is registrered!
+                    .or(
+                            Expr.eq("type", CompetitionType.ANONYMOUS),
+                            Expr.eq("type", CompetitionType.UNRESTRICTED))
                     .eq("active", true)
                     .lt("starttime", new Date())
                     .gt("endtime", new Date())
