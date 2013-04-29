@@ -11,6 +11,11 @@ import models.dbentities.UserModel;
 public interface Population {
 
     /**
+     * Gets the id for this population as a string.
+     */
+    public String id();
+
+    /**
      * Describes this population as a user readabl string. For instance: "Class
      * A of the Royal Institution".
      */

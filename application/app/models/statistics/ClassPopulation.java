@@ -26,11 +26,15 @@ public class ClassPopulation implements Population {
         this.classGroup = classGroup;
     }
 
-    public String describe() {
+    @Override public String id() {
+        return "" + classGroup.id;
+    }
+
+    @Override public String describe() {
         return classGroup.name + " of the " + classGroup.schoolid;
     }
 
-    public List<UserModel> getUsers() {
+    @Override public List<UserModel> getUsers() {
         List<UserModel> list = Ebean.find(UserModel.class).where()
                 .eq("classid", classGroup.id).findList();
         if(list != null && list.size() > 0) return list;

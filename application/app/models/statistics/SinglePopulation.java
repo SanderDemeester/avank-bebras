@@ -20,11 +20,15 @@ public class SinglePopulation implements Population {
         this.user = user;
     }
 
-    public String describe() {
+    @Override public String id() {
+        return user.id;
+    }
+
+    @Override public String describe() {
         return user.name + "(" + user.id + ")";
     }
 
-    public List<UserModel> getUsers() {
+    @Override public List<UserModel> getUsers() {
         List<UserModel> list = new ArrayList<UserModel>();
         list.add(user);
         return list;
