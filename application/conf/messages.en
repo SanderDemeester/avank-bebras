@@ -179,7 +179,7 @@ forgot_pwd.email = Email
 forgot_pwd.submit = Reset password
 forgot_pwd.success = Password successfully reset.
 forgot_pwd.mail = An email was sent to the provided address.
-forgot_pwd.mail_sent = Someone requested a new password for Avank-Bebras. A temporary password for user {0} has been created and was set to "reset". If this was your intent, you will need to log in and choose a new password now. If someone else made this request and you're responsible for this user, please inform him/her.
+forgot_pwd.mail_sent = Someone requested a new password for Avank-Bebras. A temporary password for user {0} has been created and was set to {1}. If this was your intent, you will need to log in and choose a new password now. If someone else made this request and you're responsible for this user, please inform him/her.
 
 # Edit pwd
 edit_pwd.edit_pwd = Edit password
