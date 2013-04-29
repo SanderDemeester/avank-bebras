@@ -155,35 +155,31 @@ public class PersonalPageController extends EController {
         DynamicForm editPass = form().bindFromRequest();
         if (editPass.get("new_password").equals(editPass.get("controle_password"))) {
             if (!editPass.get("new_password").equals("")) {
-                userModel.password = editPass.get("new_password");
-                AuthenticationManager.getInstance().getUser().data.password = editPass.get("new_password");
+                PasswordHasher.SaltAndPassword hap = null;
+                try {
+                    hap = PasswordHasher.generateSP(editPass.get("new_password").toCharArray());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                userModel.password = hap.password;
+                userModel.hash = hap.salt;
+                Ebean.save(userModel);
+                AuthenticationManager.getInstance().getUser().data.password = hap.password;
+                AuthenticationManager.getInstance().getUser().data.hash = hap.salt;
                 Ebean.save(userModel);
                 flash("success", EMessages.get("edit_pwd.success"));
-                return Results.redirect(controllers.user.routes.PersonalPageController.show());
+                return Results.redirect(controllers.user.routes.PersonalPageController.show(2));
             }
         }
         else {
             flash("error", EMessages.get(EMessages.get("forms.error")));
-            return Results.redirect(controllers.user.routes.PersonalPageController.show());
+            return Results.redirect(controllers.user.routes.PersonalPageController.show(2));
         }
         if (editPass.hasErrors()) {
             flash("error", EMessages.get(EMessages.get("forms.error")));
-            return Results.redirect(controllers.user.routes.PersonalPageController.show());
+            return Results.redirect(controllers.user.routes.PersonalPageController.show(2));
         }
-        return Results.redirect(controllers.user.routes.PersonalPageController.show());
-    }
-
-    public static Result changePassword() {
-        ArrayList<Link> breadcrumbs = new ArrayList<Link>();
-        Content showpage;
-        breadcrumbs.add(new Link("Home", "/"));
-        breadcrumbs.add(new Link(EMessages.get("edit_pwd.edit_pwd"), "/passwedit"));
-        if (AuthenticationManager.getInstance().isLoggedIn()) {
-            showpage = settings.render(EMessages.get("edit_pwd.edit_pwd"), breadcrumbs);
-        } else {
-            showpage = settings.render("Information is not available", breadcrumbs);
-        }
-        return ok(showpage);
+        return Results.redirect(controllers.user.routes.PersonalPageController.show(2));
     }
 
     public static class Edit {
