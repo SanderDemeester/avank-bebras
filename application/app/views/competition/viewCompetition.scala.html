@@ -25,7 +25,7 @@ contest: models.competition.Competition)
         </div>
 
         <div class="span4 offset2">
-            <h4> @EMessages.get("competition.view.status"):</h4>
+            <h4> @EMessages.get("competition.view.status"): @contest.getCompetitionState()</h4>
         </div>
 
     </div>

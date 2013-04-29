@@ -24,6 +24,7 @@ public class Competition {
 
     private CompetitionModel data;
     private Map<Grade, QuestionSet> questionSets;
+    private CompetitionState competitionState;
 
     /**
      * Default constructor
@@ -31,6 +32,20 @@ public class Competition {
      */
     public Competition(CompetitionModel data){
         this.data = data;
+
+        // setting the competition state
+        if (data.active){
+            if (data.starttime.before(new Date())){
+                if (data.endtime.after(new Date())){
+                    competitionState = CompetitionState.RUNNING;
+                }
+                else competitionState = CompetitionState.FINISHED;
+            }
+            else {
+                competitionState = CompetitionState.ACTIVE;
+            }
+        }
+        else competitionState = CompetitionState.DRAFT;
 
         // setting the question sets for this contest
         questionSets = new HashMap<Grade, QuestionSet>();
@@ -81,6 +96,14 @@ public class Competition {
         data.duration = duration;
         Ebean.update(data);
 
+    }
+
+    /**
+     * Gets the competition state.
+     * @return competition state
+     */
+    public CompetitionState getCompetitionState(){
+        return competitionState;
     }
 
     /**
