@@ -1,8 +1,40 @@
 @(
-    user:           models.user.User,
-    breadcrumbs:    List[models.data.Link]
+    populationGroups:   List[models.statistics.PopulationGroup],
+    breadcrumbs:        List[models.data.Link]
 )
 
 @main(EMessages.get("statistics.title"), breadcrumbs) {
-Hello. Statistics.
+<style type="text/css">
+    .cbox {
+        width: 5px;
+        height: 5px;
+        display: inline;
+    }
+</style>
+<form method="POST" action="/statistics">
+    <div class="population-groups">
+        @for(i <- 0 to populationGroups.size() - 1) { <!>
+        <div class="population-group"
+            style="background-color: @populationGroups(i).colour.getHtml()">
+            <input type="hidden"
+                id="colours[@i]"
+                value="@populationGroups(i).colour.getName()">
+            </input>
+            @for(j <- 0 to populationGroups(i).populations.size() - 1) { <!>
+            <div class="population">
+                <input type="hidden"
+                    id="ids[@i][@j]"
+                    value="@populationGroups(i).populations(j).id()">
+                </input>
+                <input type="hidden"
+                    id="types[@i][@j]"
+                    value="@populationGroups(i).populations(j).stringtype()">
+                </input>
+                <p>@populationGroups(i).populations(j).describe()</p>
+            </div>
+            }
+        </div>
+        }
+    </div>
+</form>
 }

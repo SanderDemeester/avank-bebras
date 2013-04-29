@@ -24,7 +24,9 @@ public class PopulationGroup {
     @Valid public List<Population> populations;
 
     /** Create a new empty PopulationGroup. */
-    public PopulationGroup() {}
+    public PopulationGroup() {
+        this.populations = new ArrayList<Population>();
+    }
 
     /**
      * Create a new PopulationGroup with the given Colour including the

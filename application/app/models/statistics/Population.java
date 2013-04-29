@@ -10,9 +10,10 @@ import models.dbentities.UserModel;
  */
 public interface Population {
 
-    /**
-     * Gets the id for this population as a string.
-     */
+    /** Returns the Stringwise type of this population. */
+    public String stringtype();
+
+    /** Gets the id for this population as a string. */
     public String id();
 
     /**

@@ -3,6 +3,8 @@ package models.statistics;
 import java.util.Map;
 import java.util.HashMap;
 
+import com.avaje.ebean.Ebean;
+
 import models.dbentities.UserModel;
 import models.dbentities.ClassGroup;
 
@@ -29,7 +31,8 @@ public class PopulationFactory {
      * @param identifier The type-unique identifier.
      * @return A new population.
      */
-    public Population create(PopulationType type, String identifier) {
+    public Population create(PopulationType type, String identifier)
+            throws PopulationFactoryException {
         return factories.get(type).create(identifier);
     }
 
@@ -40,7 +43,8 @@ public class PopulationFactory {
      * @param identifier The type-unique identifier.
      * @return A new population.
      */
-    public Population create(String type, String identifier) {
+    public Population create(String type, String identifier)
+            throws PopulationFactoryException {
         return create(types.get(type), identifier);
     }
 
@@ -50,8 +54,8 @@ public class PopulationFactory {
     private PopulationFactory() {
 
         factories = new HashMap<PopulationType, TypePopulationFactory>();
-        factories.put(PopulationType.INDIVIDUAL, SinglePopulationFactory);
-        factories.put(PopulationType.CLASS,      ClassPopulationFactory);
+        factories.put(PopulationType.INDIVIDUAL, new SinglePopulationFactory());
+        factories.put(PopulationType.CLASS,      new ClassPopulationFactory());
         /* insert new populations here */
 
         types = new HashMap<String, PopulationType>();
@@ -70,7 +74,8 @@ public class PopulationFactory {
          * @param identifier The type-unique identifier.
          * @return A new population.
          */
-        public Population create(String identifier);
+        public Population create(String identifier)
+            throws PopulationFactoryException;
 
     }
 
@@ -81,7 +86,8 @@ public class PopulationFactory {
      */
     private static class ClassPopulationFactory
             implements TypePopulationFactory {
-        @Override public Population create(String identifier) {
+        @Override public Population create(String identifier)
+                throws PopulationFactoryException {
             try {
                 int id = Integer.parseInt(identifier);
                 ClassGroup cg = Ebean.find(ClassGroup.class, identifier);
@@ -97,8 +103,10 @@ public class PopulationFactory {
      * @see models.statistics.SinglePopulation
      * @see models.statistics.PopulationFactory
      */
-    private static class SinglePopulationFactory implements PopulationFactory {
-        @Override public Population create(String identifier) {
+    private static class SinglePopulationFactory
+            implements TypePopulationFactory {
+        @Override public Population create(String identifier)
+                throws PopulationFactoryException {
             try {
                 UserModel um = Ebean.find(UserModel.class, identifier);
                 return new SinglePopulation(um);

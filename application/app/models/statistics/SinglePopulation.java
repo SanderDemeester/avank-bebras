@@ -20,6 +20,10 @@ public class SinglePopulation implements Population {
         this.user = user;
     }
 
+    @Override public String stringtype() {
+        return "INDIVIDUAL";
+    }
+
     @Override public String id() {
         return user.id;
     }

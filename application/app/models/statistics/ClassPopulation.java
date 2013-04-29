@@ -26,11 +26,16 @@ public class ClassPopulation implements Population {
         this.classGroup = classGroup;
     }
 
+    @Override public String stringtype() {
+        return "CLASS";
+    }
+
     @Override public String id() {
         return "" + classGroup.id;
     }
 
     @Override public String describe() {
+        // TODO make messages with parameters
         return classGroup.name + " of the " + classGroup.schoolid;
     }
 

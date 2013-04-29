@@ -6,6 +6,7 @@ package models.statistics;
  * @author Felix Van der Jeugt
  */
 public class PopulationFactoryException extends Exception {
+    private static final long serialVersionUID = 1L;
 
     public PopulationFactoryException(Exception e) {
         super(e);
