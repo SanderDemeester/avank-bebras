@@ -20,6 +20,7 @@ import models.user.UserType;
 import play.mvc.Result;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -69,9 +70,14 @@ public class TakeCompetitionController extends EController {
     public static Result list(int page, String orderBy, String order, String filter){
         if (userType(UserType.ANON)){
             // anonymous user
-            // TODO alleen "running" competities mogen in de lijst verschijnen !
             TakeCompetitionManager competitionManager = getManager();
-            competitionManager.setExpressionList(competitionManager.getFinder().where().eq("type", CompetitionType.ANONYMOUS));
+            competitionManager.setExpressionList(competitionManager.getFinder()
+                    .where()
+                    .eq("type", CompetitionType.ANONYMOUS)
+                    .eq("active", true)
+                    .lt("starttime", new Date())
+                    .gt("endtime", new Date())
+            );
             Page<CompetitionModel> managerPage = competitionManager.page(page);
             return ok(views.html.competition.contests.render(defaultBreadcrumbs(), managerPage, competitionManager, order, orderBy, filter));
         }
