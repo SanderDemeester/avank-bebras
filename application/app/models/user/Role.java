@@ -20,7 +20,9 @@ public class Role {
     \* ====================================================================== */
 
     // Mimicing
-    public static Role MIMIC = new Role("Mimick users.", new Link[0]);
+    public static Role MIMIC = new Role("Mimick user",
+    		new Link(EMessages.get("links.mimic"),"/mimic")
+    );
 
     // Anon
     public static Role LOGIN = new Role();
@@ -28,12 +30,10 @@ public class Role {
 
     // Authenticated
     public static Role LANDINGPAGE = new Role();
-    public static Role SETTINGS = new Role();
-    // TODO readd after demo.
-    //    "links.settings.title",
-    //        new Link(EMessages.get("links.settings.editinfo"), "/editpersonal"),
-    //        new Link(EMessages.get("links.settings.changepassword"), "/passwedit")
-    //);
+    public static Role SETTINGS = new Role("links.settings.title",
+        new Link(EMessages.get("links.settings.editinfo"), "/settings/editinfo"),
+        new Link(EMessages.get("links.settings.changepassword"), "/settings/passwedit")
+    );
 
     // Organiser
     public static Role MANAGEQUESTIONS = new Role(

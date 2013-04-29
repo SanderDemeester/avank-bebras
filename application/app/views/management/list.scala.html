@@ -32,9 +32,7 @@
         }
     }
 
-    manager.setOrderBy(orderBy)
-    manager.setOrder(order)
-    manager.getListRoute(newPage, currentFilter)
+    manager.getListRoute(newPage, orderBy, order, currentFilter)
 }
 
 @***************************************
@@ -65,10 +63,13 @@
         <div class="span8">
             @(EMessages.get(manager.getMessagesPrefix() + ".form." + manager.getFilterBy())+":") <input type="text" class="input-large search-query filter-input" name="f" value="@currentFilter" placeholder="@EMessages.get("management.filter.input")">
         </div>
-        <div class="span4 text-right">
-            <input type="submit" id="searchsubmit" value="@EMessages.get("management.filter.button")" class="btn">
-            <a class="btn btn-primary" href="@manager.getAddRoute()"> @EMessages.get("management.add") </a>
-        </div>
+
+        @if(manager.getAddRoute() != null){
+            <div class="span4 text-right">
+                <input type="submit" id="searchsubmit" value="@EMessages.get("management.filter.button")" class="btn">
+                <a class="btn btn-primary" href="@manager.getAddRoute()"> @EMessages.get("management.add") </a>
+            </div>
+        }
     </form>
 
 </div>
@@ -88,7 +89,9 @@
                 @for(headerField <- manager.getColumnHeaders){
                     @header(headerField, EMessages.get(manager.getMessagesPrefix() + ".form." + headerField))
                 }
-                <th></th>
+                @if(manager.hasActions()){
+                    <th></th>
+                }
             </tr>
         </thead>
 
@@ -102,18 +105,20 @@
                         
                     </td>
                 }
-                	<td>
-                        @if(manager.getEditRoute(item.getID()) != null){
-                            <a class="btn" id="edit" href="@manager.getEditRoute(item.getID())">
-                                <i class="icon-edit"></i>
-                            </a>
-                        }
-                        @if(manager.getRemoveRoute(item.getID()) != null){
-                            <a class="btn" id="remove" href="@manager.getRemoveRoute(item.getID())">
-                                <i class="icon-remove"></i>
-                            </a>
-                        }
-                	</td>
+                    @if(manager.hasActions()){
+                        <td>
+                            @if(manager.getEditRoute(item.getID()) != null){
+                                <a class="btn" id="edit" href="@manager.getEditRoute(item.getID())">
+                                    <i class="icon-edit"></i>
+                                </a>
+                            }
+                            @if(manager.getRemoveRoute(item.getID()) != null){
+                                <a class="btn" id="remove" href="@manager.getRemoveRoute(item.getID())">
+                                    <i class="icon-remove"></i>
+                                </a>
+                            }
+                        </td>
+                    }
                 </tr>
             }
 

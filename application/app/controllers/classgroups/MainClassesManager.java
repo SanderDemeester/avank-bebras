@@ -47,7 +47,7 @@ public class MainClassesManager extends Manager<ClassGroup> {
 	}
 
 	@Override
-	public Call getListRoute(int page, String filter) {
+	public Call getListRoute(int page, String orderBy, String order, String filter) {
 		return routes.ClassGroupController.viewClasses(page, orderBy, order, filter);
 	}
 
@@ -93,7 +93,6 @@ public class MainClassesManager extends Manager<ClassGroup> {
 		res.add("teacherid");
 		res.add("level");
 		res.add("expdate");
-		res.add("isactive");
 		return res;
 	}
 

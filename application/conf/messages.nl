@@ -12,6 +12,7 @@ app.changeLanguage = Verander taal
 app.signUp = Registreer
 app.signIn = Log in
 app.signOut = Log uit
+app.mimic = nabootsen
 
 # Error
 notFound.title = Oeps!
@@ -30,9 +31,17 @@ error.wrong_date_time = Tijd reizer?
 error.invalid_date = Geen geldig datum formaat, gebruik (yyyy/mm/dd).
 error.no_password = Geen password.
 error.no_input = Lege invoer.
+error.invalid_id = Ongeldig ID
 error.no_input_fname = Lege naam!
 error.no_input_email = Lege E-Mail!
+error.duplicated_login = Dubbele login
 error.no_info = Informatie is niet beschikbaar!
+error.mimic = Kan gebruiker niet nabootsen
+error.mimic.cant_find_user = Kan de opgegeven gebruiker niet vinden
+error.mimic.policy_deny = Systeem beleid verhinderd u van de gebruiker na te bootsen
+error.mimic.user_logged_in = De gebruiker die u probeerd na te bootsen is ingelogd in het systeem
+
+
 
 # Links from roles
 links.settings.title = Instellingen
@@ -52,6 +61,7 @@ links.datamanager.diffs = Wijzig de moeilijkheidsgraden
 links.datamanager.grades = Wijzig de graden voor studenten
 links.contestmanager.title = Competitie beheer
 links.contestmanager.overview = Competitie overzicht
+links.mimic = Gebruiker nabootsen
 
 # Forms
 forms.cancel = Annuleer
@@ -336,6 +346,9 @@ grades.lowerbound = Minimale leeftijd
 grades.upperbound = Maximale leeftijd (exclusief)
 difficulties.title = Moeilijkheidsgraden
 difficulties.numerical = Getalsvoorstelling van de moeilijkheid (hoe hoger, hoe moeilijker)
+difficulties.correct = Score voor een juist antwoord
+difficulties.wrong = Score voor een foutief antwoord
+difficulties.open = Score voor een ledig antwoord
 
 # Classes
 classes.main.form.id = id
@@ -410,6 +423,25 @@ classes.add.nograde = Er is geen level met die naam.
 classes.add.error = Er is iets misgelopen met de databank. Probeer opnieuw (later).
 classes.edit = Pas een klas aan.
 
+classes.import.classnotexist = Er is geen klas met dit ID.
+classes.import.classrecordwhileaddingtoexisting = U bent studenten aan het toevoegen aan een bestaande klas. CLASS records zullen genegeerd worden.
+classes.import.usernotexist = Er is geen gebruiker met dit ID.
+classes.import.newpupil.incomplete = Gelieve alle verplichte velden correct in te vullen.
+classes.import.existingpupil.notexisting = Er is geen gebruiker met dit ID.
+classes.import.existingpupil.nopupil = De gebruiker horende bij dit ID is geen student.
+classes.import.newclass.incomplete = Gelieve alle verplichte velden correct in te vulllen.
+classes.import.newclass.nosuchschool = Er is geen school met dat ID.
+classes.import.newclass.nosuchgrade = Er is geen level met dat ID.
+classes.import.info.new = Een nieuwe klas zal toegevoegd worden.
+classes.import.info.old = Er zullen studenten aan een bestaande klas toegevoegd worden.
+classes.import.info.classinvalid = Er is geen klas met dat ID.
+classes.import.info.classstart = Begin klas record:
+classes.import.info.existstudent = Bestaande studenten:
+classes.import.info.newstudent = Nieuwe studenten:
+classes.import.error.savefail = Er is iets misgelopen met het opslaan. Misschien hebt u te lang gewacht? De data wordt verwijderd na een aantal uren. 
+classes.import.error.postfail = Er is iets misgelopen met het inlezen van het XLSX bestand. Bent u zeker dat het geldig was? Controleer de documentatie.
+
+
 # User
 user.pip.settings = Instellingen
 user.pip.welcome = Welkom!
@@ -431,6 +463,21 @@ user.pie.editpassw = Verander wachtwoord
 user.pie.editintro = Bewerk mijn informatie 
 user.pie.intro = Hieronder kan u uw persoonlijke informatie veranderen.
 user.error.no_login = Uw persoonlijke informatie is niet beschikbaar! U moet zich eerst aanmelden!
+user.error.wrong_email = Het E-Mail adres is niet correct!
 user.Male = Man
 user.Female = Vrouw
 user.Other = Anders
+
+# Contact form
+contact.formtitle = Contact formulier
+contact.email = Uw email-adres
+contact.question = Uw vraag of opmerking
+contact.form.incomplete = Gelieve alle velden correct in te vullen
+contact.form.couldnotsend = Zender mislukt. Probeer opnieuw later.
+contact.form.sendsuccess = Succesvol verzonden.
+contact.mail.subject = [NL] Contact
+contact.upgraderequest = Upgrade verzoek
+contact.requestupgrade.noemail = Er is geen email-adres verbonden met uw account. Dit is vereist.
+contact.upgraderequest.subject = [NL] Upgrade request
+contact.requestupgrade.notimage = Het opgeladen bestand is geen afbeelding.
+contact.requestupgrade.explanation = Hier kunt u een aanvraag indienen om uw account up te graden naar een leraar account. Gelieve een scan van uw lerarenkaart up te loaden. Misbruik van dit formulier zal leiden tot het blokkeren van uw account.

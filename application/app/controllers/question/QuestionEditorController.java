@@ -24,12 +24,10 @@ import play.libs.Json;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
-import play.mvc.Results;
 import views.html.commons.noaccess;
 import views.html.question.editor.create;
 import views.html.question.editor.index;
 import controllers.EController;
-import controllers.routes;
 
 /**
  * This is the editor for creating question files, NOT the questions that will be saved in the database

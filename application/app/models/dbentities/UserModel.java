@@ -1,7 +1,6 @@
 package models.dbentities;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -14,9 +13,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import controllers.util.DateFormatter;
+
 import models.management.Listable;
 import models.management.ManageableModel;
-import models.user.AuthenticationManager;
 import models.user.Gender;
 import models.user.UserType;
 import play.data.format.Formats;
@@ -79,7 +79,11 @@ public class UserModel extends ManageableModel implements Listable{
         EMessages.setLang(preflanguage);
     }
 
-    /**
+    public UserModel() {
+		//empty constructor
+	}
+
+	/**
      * A finder for User.
      * We will use this finder to execute specific sql query's.
      */
@@ -113,8 +117,11 @@ public class UserModel extends ManageableModel implements Listable{
 		return id;
 	}
 	
+	public String getBirthDate(){
+		return convertDate(this.birthdate);
+	}
+	
 	private String convertDate(Date d){
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-		return df.format(d);
+		return DateFormatter.formatDate(d);
 	}
 }
