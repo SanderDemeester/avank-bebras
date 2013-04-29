@@ -11,7 +11,8 @@ import models.data.manager.DataManager;
 public class DifficultyManager extends DataManager<Difficulty> {
 
     @Override public String[] columns() {
-        return new String[]{ "forms.name", "difficulties.numerical" };
+        return new String[]{ "forms.name", "difficulties.numerical",
+            "difficulties.correct", "difficulties.wrong", "difficulties.open" };
     }
 
     @Override public String url() {
@@ -28,7 +29,7 @@ public class DifficultyManager extends DataManager<Difficulty> {
 
     @Override public Difficulty createFromStrings(String... strings)
             throws CreationException {
-        if(strings.length != 2) throw new CreationException(
+        if(strings.length != 5) throw new CreationException(
                 "Incorrect strings length.",
                 "manager.error.fieldno"
         );
@@ -37,16 +38,18 @@ public class DifficultyManager extends DataManager<Difficulty> {
                 "Name field left empty.",
                 "manager.error.empty"
         );
-        int order = 0;
+        int[] ints = new int[strings.length - 1];
         try {
-            order = Integer.parseInt(strings[1]);
+            for(int i = 1; i < strings.length; i++) {
+                ints[i - 1] = Integer.parseInt(strings[i]);
+            }
         } catch(NumberFormatException e) {
             throw new CreationException(
-                    "Not a number as bound.",
+                    "Not a number.",
                     "manager.error.nan"
             );
         }
-        return new Difficulty(strings[0], order);
+        return new Difficulty(strings[0], ints[0], ints[1], ints[2], ints[3]);
     }
 
 }

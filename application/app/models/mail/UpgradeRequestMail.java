@@ -17,9 +17,9 @@ import models.user.User;
  */
 public class UpgradeRequestMail extends EMail {
 
-	public UpgradeRequestMail(File cardImage){
+	public UpgradeRequestMail(File cardImage,String fileName){
 		super();
-		this.addAttachment(cardImage);
+		this.addAttachment(cardImage,fileName);
 		
 		this.setSubject(EMessages.get("contact.upgraderequest.subject"));
 		User current = AuthenticationManager.getInstance().getUser();

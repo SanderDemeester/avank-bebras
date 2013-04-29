@@ -76,7 +76,7 @@ public class RequestTeacherController extends EController {
 				return redirect(routes.RequestTeacherController.showForm());
 			}
 			// Create and try to send mail
-			UpgradeRequestMail urm = new UpgradeRequestMail(file);
+			UpgradeRequestMail urm = new UpgradeRequestMail(file,card.getFilename());
 
 			urm.send();
 			flash("success", EMessages.get("contact.form.sendsuccess"));
