@@ -119,7 +119,7 @@ public class QuestionSet {
     public Difficulty getDifficulty(Question question){
         QuestionSetQuestion questionSetQuestion = Ebean.find(QuestionSetQuestion.class).where()
                 .eq("qid", question.getID())
-                .eq("qsid", data)
+                .eq("qsid", Integer.parseInt(data.getID()))
                 .findUnique();
         if (questionSetQuestion == null) return null;
         return questionSetQuestion.difficulty;
@@ -134,7 +134,7 @@ public class QuestionSet {
     public void setDifficulty(Question question, Difficulty difficulty){
         QuestionSetQuestion questionSetQuestion = Ebean.find(QuestionSetQuestion.class).where()
                 .eq("qid", question.getID())
-                .eq("qsid", data)
+                .eq("qsid", Integer.parseInt(data.getID()))
                 .findUnique();
         if (questionSetQuestion != null){
             questionSetQuestion.difficulty = difficulty;
@@ -160,6 +160,10 @@ public class QuestionSet {
 
     public boolean canActivate(){
         return true;
+    }
+    
+    public String getID() {
+        return this.data.getID();
     }
 
 }

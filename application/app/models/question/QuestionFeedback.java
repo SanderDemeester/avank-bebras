@@ -4,6 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import models.data.Difficulty;
+import models.dbentities.QuestionSetModel;
+
+import com.avaje.ebean.Ebean;
+
 /**
  * This class can hold the feedback and answers for a complete questionset
  * @author Ruben Taelman
@@ -13,6 +18,9 @@ public class QuestionFeedback {
     private Map<Question, Boolean> feedbackElements;
     private Map<Question, Answer> answers;
     private int score;
+    
+    private String competitionID;
+    private int questionSetID;
 
     /**
      * Generate feedback from a given map of answers
@@ -24,8 +32,33 @@ public class QuestionFeedback {
     public QuestionFeedback(Map<Question, Answer> answers, String competitionID, String questionSetID, int timeLeft) {
         makeFeedbackElements(answers);
         this.answers = answers;
-        // TODO: calculate score
-        this.score = 9001;
+        
+        this.competitionID = competitionID;
+        this.questionSetID = Integer.parseInt(questionSetID);
+        
+        calculateScore();
+    }
+    
+    public String getCompetitionID() {
+        return this.competitionID;
+    }
+    
+    public int getQuestionSetID() {
+        return this.questionSetID;
+    }
+    
+    private void calculateScore() {
+        QuestionSetModel qsModel = Ebean.find(QuestionSetModel.class).where().idEq(this.questionSetID).findUnique();
+        QuestionSet questionSet = new QuestionSet(qsModel);
+        for(Entry<Question, Answer> e : answers.entrySet()) {
+            Difficulty diff = questionSet.getDifficulty(e.getKey());
+            if(e.getValue().isFilledIn()) {
+                if(e.getValue().isCorrect()) score += diff.cpoints;
+                else                         score += diff.wpoints;
+            } else {
+                score += diff.npoints;
+            }
+        }
     }
     
     private void makeFeedbackElements(Map<Question, Answer> answers) {

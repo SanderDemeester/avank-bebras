@@ -1,27 +1,36 @@
 package controllers.competition;
 
-import com.avaje.ebean.Ebean;
-import com.avaje.ebean.Page;
-import controllers.EController;
-import models.EMessages;
-import models.competition.Competition;
-import models.competition.CompetitionManager;
-import models.competition.CompetitionType;
-import models.competition.TakeCompetitionManager;
-import models.data.Grade;
-import models.data.Link;
-import models.dbentities.CompetitionModel;
-import models.dbentities.QuestionSetModel;
-import models.management.ModelState;
-import models.question.QuestionSet;
-import models.user.AuthenticationManager;
-import models.user.Role;
-import models.user.UserType;
-import play.mvc.Result;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import models.EMessages;
+import models.competition.Competition;
+import models.competition.CompetitionType;
+import models.competition.TakeCompetitionManager;
+import models.data.Language;
+import models.data.Link;
+import models.data.UnavailableLanguageException;
+import models.data.UnknownLanguageCodeException;
+import models.dbentities.CompetitionModel;
+import models.dbentities.QuestionSetModel;
+import models.management.ModelState;
+import models.question.AnswerGeneratorException;
+import models.question.QuestionFeedback;
+import models.question.QuestionFeedbackGenerator;
+import models.question.QuestionSet;
+import models.user.AuthenticationManager;
+import models.user.UserType;
+
+import org.codehaus.jackson.JsonNode;
+
+import play.libs.Json;
+import play.mvc.Result;
+
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Page;
+
+import controllers.EController;
 
 /**
  * Controller for taking competitions. Includes the listing of available
@@ -90,6 +99,46 @@ public class TakeCompetitionController extends EController {
         // TODO juiste question set kiezen !
         QuestionSet questionSet = competition.getQuestionSet(competition.getAvailableGrades().get(0));
         return ok(views.html.competition.run.questionSet.render(questionSet, null, defaultBreadcrumbs()));
+    }
+    
+    /**
+     * Submit competition answers
+     * @param json answers in json format
+     * @return message with the submission result
+     */
+    public static Result submit(String json) {
+        JsonNode input = Json.parse(json);
+        try {
+            QuestionFeedback feedback = QuestionFeedbackGenerator.generateFromJson(input, Language.getLanguage(EMessages.getLang()));
+            // TODO: save that shit!
+        } catch (UnavailableLanguageException
+                | UnknownLanguageCodeException
+                | AnswerGeneratorException e) {
+            return badRequest(e.getMessage());
+        }
+        return ok("Submission was successful!");
+    }
+    
+    /**
+     * Submit competition answers and show feedback
+     * @param json answers in json format
+     * @return message with the submission result
+     */
+    public static Result feedback(String json) {
+        // No saving is needed here, this is already done while submitting
+        JsonNode input = Json.parse(json);
+        QuestionFeedback feedback;
+        try {
+            feedback = QuestionFeedbackGenerator.generateFromJson(input, Language.getLanguage(EMessages.getLang()));
+        } catch (UnavailableLanguageException
+                | UnknownLanguageCodeException
+                | AnswerGeneratorException e) {
+            return badRequest(e.getMessage());
+        }
+        
+        QuestionSetModel qsModel = Ebean.find(QuestionSetModel.class).where().idEq(feedback.getQuestionSetID()).findUnique();
+        QuestionSet questionSet = new QuestionSet(qsModel);
+        return ok(views.html.competition.run.questionSet.render(questionSet, feedback, defaultBreadcrumbs()));
     }
 
 }
