@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Competition user state class.
+ * TODO: DEPRECATED, TO BE REMOVED
  *
  * @author Kevin Stobbelaar.
  */
