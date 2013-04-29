@@ -33,9 +33,12 @@ error.no_input = Empty string.
 error.invalid_id = Invalid ID
 error.no_input_fname = Empty name!
 error.no_input_email = Empty E-Mail!
+error.duplicated_login = Duplicate login
 error.no_info = Information is not available!
 error.mimic = Cant mimic user
 error.mimic.cant_find_user = Can not find user
+error.mimic.policy_deny = Can not mimic user by policy
+error.mimic.user_logged_in = The user that you are trying to mimic is logged into the system
 
 # Links from roles
 links.settings.title = Settings
@@ -316,6 +319,9 @@ grades.lowerbound = Lowest Age
 grades.upperbound = Highest Age (exclusief)
 difficulties.title = Difficulty Levels
 difficulties.numerical = Numerical Difficulty Representation (Ascending difficulty)
+difficulties.correct = Score for a correct answer
+difficulties.wrong = Score for a wrong answer
+difficulties.open = Score when left open
 
 # Classes
 classes.main.form.id = id
@@ -435,6 +441,21 @@ user.pie.editpassw = Edit password
 user.pie.editintro = Edit my information 
 user.pie.intro = Below you can edit your personal information.
 user.error.no_login = Your personal information is not available! Please make sure you are logged in.
+user.error.wrong_email = Given E-Mail is not correct!
 user.Male = Male
 user.Female = Female
 user.Other = Other
+
+# Contact form
+contact.formtitle = Contact form
+contact.email = Your email address
+contact.question = Your question or remark
+contact.form.incomplete = Please fill in all fields correctly
+contact.form.couldnotsend = Could not send. Try again later.
+contact.form.sendsuccess = Succesfully sent.
+contact.mail.subject = [EN] Contact
+contact.upgraderequest  = Upgrade to teacher request
+contact.requestupgrade.noemail = There is no email associated with your account. This is required.
+contact.upgraderequest.subject = [EN] Upgrade request
+contact.requestupgrade.notimage = The uploaded file is not an image.
+contact.requestupgrade.explanation = Here you can request an upgrade of your account to a teacher account. Please upload a link of a scan of your Teacher Card. Abuse of this form will lead to the suspension of your account.

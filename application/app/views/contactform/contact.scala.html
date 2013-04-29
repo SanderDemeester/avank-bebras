@@ -1,0 +1,29 @@
+@(contactForm: Form[controllers.contactform.ContactFormController.ContactForm],
+	 breadcrumbs : List[models.data.Link])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import models.EMessages
+
+@main(EMessages.get("contact.formtitle"), breadcrumbs) {
+@commons.showflash()
+@form(controllers.contactform.routes.ContactFormController.saveContactForm()) {
+
+    <fieldset>
+
+        @inputText(contactForm("email"), '_label -> EMessages.get("contact.email"))
+        @textarea(contactForm("question"), '_label -> EMessages.get("contact.question"),
+        'rows -> 10, 'cols -> 170, 'class->"input-xxlarge")
+
+
+
+    </fieldset>
+
+    <div class="actions">
+        <input type="submit" value="Save" class="btn btn-primary"> or
+        <a href="@controllers.routes.UserController.landingPage()" class="btn">Cancel</a>
+    </div>
+
+}
+
+}
