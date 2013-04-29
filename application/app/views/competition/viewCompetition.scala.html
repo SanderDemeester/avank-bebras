@@ -6,16 +6,29 @@
 
 @(breadcrumbs : List[models.data.Link], currentPage: Page[_ <: models.management.ManageableModel],
 QSmanager: models.management.Manager[_], currentOrderBy: String, currentOrder: String, currentFilter: String,
-modelForm: Form[_ <: models.management.ManageableModel], Cmanager: models.management.Manager[_])
+modelForm: Form[_ <: models.management.ManageableModel], Cmanager: models.management.Manager[_],
+contest: models.competition.Competition)
 
 @import models.EMessages
 @import views.html.management.list
 @import helper._
 @import helper.twitterBootstrap._
 @import views.html.commons.showflash
-@import views.html.competition.contestFormFields
+
 
 @main(EMessages.get("competition.edit"), breadcrumbs) {
+
+    <div class="row-fluid">
+
+        <div class="span6">
+            <h4> @EMessages.get("competition.view.title"): @contest.getCompetitionModel().name </h4>
+        </div>
+
+        <div class="span4 offset2">
+            <h4> @EMessages.get("competition.view.status"): @contest.getCompetitionState()</h4>
+        </div>
+
+    </div>
 
     <div class="row-fluid">
 
@@ -52,6 +65,17 @@ modelForm: Form[_ <: models.management.ManageableModel], Cmanager: models.manage
             <div>
                 @list(currentPage, QSmanager, currentOrderBy, currentOrder, currentFilter)
             </div>
+
+            <div class="hero-unit">
+                <p> @EMessages.get("competition.info.grades") </p>
+                <ul>
+                    @for(grade <- contest.getAvailableGrades()){
+                        <li>@grade.getName()</li>
+                    }
+                </ul>
+
+            </div>
+
         </div>
 
     </div>

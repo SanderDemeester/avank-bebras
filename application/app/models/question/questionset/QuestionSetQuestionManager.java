@@ -17,14 +17,14 @@ import java.util.List;
  */
 public class QuestionSetQuestionManager extends Manager<QuestionSetQuestion> {
 
-    private String qsid;
+    private int qsid;
 
     /**
      * Constructor for manager.
      *
      * @param qsid question set id
      */
-    public QuestionSetQuestionManager(ModelState modelState, String qsid) {
+    public QuestionSetQuestionManager(ModelState modelState, int qsid) {
         super(QuestionSetQuestion.class, modelState, "difficulty", "difficulty");
         this.qsid = qsid;
     }
@@ -40,7 +40,7 @@ public class QuestionSetQuestionManager extends Manager<QuestionSetQuestion> {
     public Page<QuestionSetQuestion> page(int page) {
         return  getFinder()
                 .where()
-                .ieq("qsid", qsid)
+                .eq("qsid", qsid)
                 .ilike(filterBy, "%" + filter + "%")
                 .orderBy(orderBy + " " + order)
                 .findPagingList(pageSize)

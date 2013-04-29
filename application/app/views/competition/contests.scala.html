@@ -1,0 +1,40 @@
+@*******************************************
+* Available contests page for pupils,      *
+* independent and anonymous users          *
+*                                          *
+* author: Kevin Stobbelaar                 *
+*******************************************@
+
+@(breadcrumbs : List[models.data.Link], currentPage: Page[_ <: models.management.ManageableModel],
+manager: models.management.Manager[_], currentOrderBy: String, currentOrder: String, currentFilter: String)
+
+@import views.html.management.list
+@import models.EMessages
+
+@main(EMessages.get("competitions.title"), breadcrumbs) {
+
+        <div>
+
+            <h4>
+                @EMessages.get("competitions.totake")
+            </h4>
+
+            <p>
+                @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
+            </p>
+
+        </div>
+
+        <div>
+
+            <h4>
+                @EMessages.get("competitions.taken")
+            </h4>
+
+            <p>
+                TODO!
+            </p>
+
+        </div>
+
+}

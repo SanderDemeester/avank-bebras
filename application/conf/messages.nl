@@ -138,7 +138,7 @@ question.questionset.create = Maak een nieuwe vragenbundel aan!
 question.questionset.create.title = Maak een nieuwe vragenbundel aan.
 question.questionset.create.step2 = Stap 2: Vragenbundel informatie.
 question.questionset.create.name = Naam van de vragenbundel:
-question.questionset.create.level = Niveau van de vragenbundel:
+question.questionset.create.grade = Niveau van de vragenbundel:
 question.questionset.create.active = Vink aan om deze vragenbundel actief te maken.
 question.questionset.overview = Vragenbundel overzicht.
 question.questionset.addquestion = Voeg een vraag toe aan de bundel.
@@ -146,7 +146,7 @@ question.questionset.form.difficulty = Moeilijkheidsgraad
 question.questionset.addquestion.title = Voeg een nieuwe vraag toe aan de bundel.
 question.questionset.addquestion.id = Id van de vraag:
 question.questionset.addquestion.brcr = Voeg toe
-question.questionset.manager.form.level = Niveau
+question.questionset.manager.form.grade = Niveau
 question.questionset.manager.form.name = Naam
 question.questionset.manager.form.active = Actief
 question.questionset.overview.questions = Deze vragenbundel bevat de volgende vragen:
@@ -234,18 +234,28 @@ competition.create.type = Type van de competitie:
 competition.create.end = Eindtijdstip van de competitie:
 competition.create.start = Starttijdstip van de competitie:
 competition.create.active = Vink aan om deze competitie actief te maken.
+competition.create.duration = Duur van de nieuwe competitie (in minuten):
 competition.manager.form.name = Naam
 competition.manager.form.type = Type
 competition.manager.form.active = Actief
 competition.manager.form.starttime = Starttijdstip
 competition.manager.form.endtime = Eindtijdstip
 competition.manager.form.creator = Auteur
+competition.manager.form.duration = Duur (minuten)
 competition.view.edit = Bewerk de competitie:
 competition.view.qs = Vragenbundels voor deze competitie:
 competition.edit = Bewerk competitie
 competition.edit.breadcrumb = Bewerk
 competition.overview = Competitie overzicht
 competition.overview.info = Op deze pagina, kan je de voor jouw zichtbare competities bekijken. Je kan nieuwe competities aanmaken of een al bestaande competitie aanpassen.
+competition.info.grades = Voor deze contest zijn op dit moment de volgende niveaus beschikbaar:
+competition.view.title = Competitie
+competition.view.status = Status
+
+competitions.breadcrumb = Beschikbare competities.
+competitions.title = Beschikbare competities.
+competitions.totake = Beschikbare competities waaraan je op dit moment kan deelnemen.
+competitions.taken = Competities die je in het verleden hebt afgelegd.
 
 # schools
 schools.title = Lijst van Scholen
@@ -446,7 +456,6 @@ user.Male = Man
 user.Female = Vrouw
 user.Other = Anders
 
-
 # Competitions
 competition.name = Competitie
 competition.submit = Indienen
@@ -482,4 +491,3 @@ contact.requestupgrade.noemail = Er is geen email-adres verbonden met uw account
 contact.upgraderequest.subject = [NL] Upgrade request
 contact.requestupgrade.notimage = Het opgeladen bestand is geen afbeelding.
 contact.requestupgrade.explanation = Hier kunt u een aanvraag indienen om uw account up te graden naar een leraar account. Gelieve een scan van uw lerarenkaart up te loaden. Misbruik van dit formulier zal leiden tot het blokkeren van uw account.
-

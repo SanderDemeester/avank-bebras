@@ -137,7 +137,7 @@ question.questionset.create = Create new question set!
 question.questionset.create.title = Create question set.
 question.questionset.create.step2 = Step 2: Question Set Information
 question.questionset.create.name = Name of new question set:
-question.questionset.create.level = Level of new question set:
+question.questionset.create.grade = Grade of new question set:
 question.questionset.create.active = Check this box to make the question set active.
 question.questionset.overview = Question set overview
 question.questionset.addquestion = Add question to set
@@ -145,7 +145,7 @@ question.questionset.form.difficulty = Difficulty
 question.questionset.addquestion.title = Add new question to the question set.
 question.questionset.addquestion.id = Id of the question:
 question.questionset.addquestion.brcr = Add
-question.questionset.manager.form.level = Level
+question.questionset.manager.form.grade = Grade
 question.questionset.manager.form.name = Name
 question.questionset.manager.form.active = Active
 question.questionset.overview.questions = This question set contains the following questions:
@@ -233,19 +233,28 @@ competition.create.type = Type of new contest:
 competition.create.end = End time of new contest:
 competition.create.start = Start time of new contest:
 competition.create.active = Check this box to make the contest active.
+competition.create.duration = Duration of new contest (in minutes):
 competition.manager.form.name = Name
 competition.manager.form.type = Type
 competition.manager.form.active = Active
 competition.manager.form.starttime = Start time
 competition.manager.form.endtime = End time
 competition.manager.form.creator = Creator
+competition.manager.form.duration = Duration (minuten)
 competition.view.edit = Edit contest information.
 competition.view.qs = Question sets for this contest:
 competition.edit = Edit contest
 competition.edit.breadcrumb = Edit
 competition.overview = Contest overview.
 competition.overview.info = On this page, you can view contest which are open for you. You can create new contests or edit an existing contest.
+competition.info.grades = This contests currently supports the following grades:
+competition.view.title = Contest
+competition.view.status = Status
 
+competitions.breadcrumb = Available contests.
+competitions.title = Available contests.
+competitions.totake = Available contests that you can take at this moment.
+competitions.taken = Contests you've taken in the past.
 
 # schools
 schools.title = List of Schools
@@ -454,7 +463,6 @@ user.Male = Male
 user.Female = Female
 user.Other = Other
 
-
 # Competitions
 competition.name = Competition
 competition.submit = Submit
@@ -490,4 +498,3 @@ contact.requestupgrade.noemail = There is no email associated with your account.
 contact.upgraderequest.subject = [EN] Upgrade request
 contact.requestupgrade.notimage = The uploaded file is not an image.
 contact.requestupgrade.explanation = Here you can request an upgrade of your account to a teacher account. Please upload a link of a scan of your Teacher Card. Abuse of this form will lead to the suspension of your account.
-

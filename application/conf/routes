@@ -51,20 +51,24 @@ GET     /server/remove/:name        controllers.question.ServerController.remove
 # Question set management
 GET     /questionset/new                        controllers.question.QuestionSetController.create(c)
 POST    /questionset                            controllers.question.QuestionSetController.save(c)
-GET     /questionset/:qs/questions              controllers.question.QuestionSetController.list(qs, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
-GET     /questionset/:qs/questions/add          controllers.question.QuestionSetController.addQuestion(qs)
-POST    /questionset/:qs/questions              controllers.question.QuestionSetController.updateQuestions(qs)
-POST    /questionset/edit                       controllers.question.QuestionSetController.update(qs)
-GET     /questionset/:qs/questions/remove:id    controllers.question.QuestionSetController.removeQuestion(qs, id)
+GET     /questionset/:qs/questions              controllers.question.QuestionSetController.list(qs:Int, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /questionset/:qs/questions/add          controllers.question.QuestionSetController.addQuestion(qs:Int)
+POST    /questionset/:qs/questions              controllers.question.QuestionSetController.updateQuestions(qs:Int)
+POST    /questionset/edit                       controllers.question.QuestionSetController.update(qs:Int)
+GET     /questionset/:qs/questions/remove:id    controllers.question.QuestionSetController.removeQuestion(qs:Int, id)
 
-# Contests module
+# Contest management module
 GET     /contests                   controllers.competition.CompetitionController.index(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 GET     /contests/new/contest       controllers.competition.CompetitionController.create()
 POST    /contests                   controllers.competition.CompetitionController.save()
 GET     /contests/:id/overview      controllers.competition.CompetitionController.viewCompetition(id, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 POST    /contests/                  controllers.competition.CompetitionController.updateCompetition(id)
 GET     /contests/remove/:id        controllers.competition.CompetitionController.removeCompetition(id)
-GET     /contests/qs/remove/:qsid   controllers.competition.CompetitionController.removeQuestionSet(qsid, contestid)
+GET     /contests/qs/remove/:qsid   controllers.competition.CompetitionController.removeQuestionSet(qsid:Int, contestid)
+
+# Contest taking module
+GET     /available-contests             controllers.competition.TakeCompetitionController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /available-contests/:id/take    controllers.competition.TakeCompetitionController.takeCompetition(id)
 
 # Question Management
 GET     /questions                  		 controllers.question.QuestionController.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")

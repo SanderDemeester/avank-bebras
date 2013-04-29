@@ -1,8 +1,13 @@
 package controllers.question;
 
+import com.avaje.ebean.Ebean;
 import controllers.EController;
 import models.EMessages;
+import models.data.Difficulty;
+import models.data.Grade;
 import models.data.Link;
+import models.dbentities.CompetitionModel;
+import models.dbentities.QuestionModel;
 import models.dbentities.QuestionSetModel;
 import models.dbentities.QuestionSetQuestion;
 import models.management.ModelState;
@@ -10,13 +15,15 @@ import models.question.questionset.QuestionSetManager;
 import models.question.questionset.QuestionSetQuestionManager;
 import models.user.AuthenticationManager;
 import models.user.Role;
+import org.codehaus.jackson.node.ArrayNode;
+import org.codehaus.jackson.node.ObjectNode;
 import play.data.Form;
+import play.libs.Json;
+import play.mvc.BodyParser;
 import play.mvc.Result;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-
 /**
  * Controller for question sets.
  *
@@ -72,13 +79,12 @@ public class QuestionSetController extends EController {
             return badRequest(views.html.question.questionset.create.render(form, contestid, breadcrumbs, true));
         }
         QuestionSetModel questionSetModel = form.get();
-        String questionSetId = UUID.randomUUID().toString();
-        questionSetModel.id = questionSetId;
+        questionSetModel.grade = Ebean.find(Grade.class).where().ieq("name", form.field("gradetext").value()).findUnique();
         // TODO check of deze question set actief gezet mag worden !
         // TODO opvangen dat wanneer er op Cancel wordt gedrukt, de contest terug verwijderd wordt uit de database!
-        questionSetModel.contid = contestid;
+        questionSetModel.contest = Ebean.find(CompetitionModel.class).where().ieq("id", contestid).findUnique();
         questionSetModel.save();
-        return redirect(controllers.question.routes.QuestionSetController.list(questionSetId, 0, "", "", ""));
+        return redirect(controllers.question.routes.QuestionSetController.list(questionSetModel.id, 0, "", "", ""));
     }
 
     /**
@@ -87,7 +93,7 @@ public class QuestionSetController extends EController {
      * @param questionSetId id of the question set
      * @return overview page for a question set
      */
-    public static Result list(String questionSetId, int page, String orderBy, String order, String filter){
+    public static Result list(int questionSetId, int page, String orderBy, String order, String filter){
         if (!isAuthorized()) return redirect(controllers.routes.Application.index());
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questionset.overview"), "/questionset/questions"));
@@ -96,10 +102,11 @@ public class QuestionSetController extends EController {
         qsqm.setOrderBy(orderBy);
         qsqm.setFilter(filter);
         QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.UPDATE, "", questionSetId);
-        Form<QuestionSetModel> form = form(QuestionSetModel.class).bindFromRequest().fill(questionSetManager.getFinder().byId(questionSetId));
+        QuestionSetModel questionSetModel = questionSetManager.getFinder().byId(Integer.toString(questionSetId));
+        Form<QuestionSetModel> form = form(QuestionSetModel.class).bindFromRequest().fill(questionSetModel);
         return ok(
                 views.html.question.questionset.overview.render(breadcrumbs, questionSetId,
-                        qsqm.page(page), qsqm, orderBy, order, filter, form, questionSetManager
+                        qsqm.page(page), qsqm, orderBy, order, filter, form, questionSetManager, questionSetModel.grade.getName()
                 ));
     }
 
@@ -109,7 +116,7 @@ public class QuestionSetController extends EController {
      * @param questionSetId question set id
      * @return add question to set page
      */
-    public static Result addQuestion(String questionSetId){
+    public static Result addQuestion(int questionSetId){
         if (!isAuthorized()) return redirect(controllers.routes.Application.index());
         Form<QuestionSetQuestion> form = form(QuestionSetQuestion.class).bindFromRequest();
         List<Link> breadcrumbs = defaultBreadcrumbs();
@@ -125,7 +132,7 @@ public class QuestionSetController extends EController {
      * @param questionSetId question set id
      * @return overview page
      */
-    public static Result updateQuestions(String questionSetId){
+    public static Result updateQuestions(int questionSetId){
         if (!isAuthorized()) return redirect(controllers.routes.Application.index());
         Form<QuestionSetQuestion> form = form(QuestionSetQuestion.class).bindFromRequest();
         if(form.hasErrors()) {
@@ -135,8 +142,9 @@ public class QuestionSetController extends EController {
             return badRequest(views.html.question.questionset.addQuestion.render(form, questionSetId, breadcrumbs));
         }
         QuestionSetQuestion questionSetQuestion = form.get();
-        questionSetQuestion.qsid = questionSetId;
+        questionSetQuestion.questionSet = Ebean.find(QuestionSetModel.class).where().eq("id", questionSetId).findUnique();
         int questionId = questionSetQuestion.qid;
+        questionSetQuestion.difficulty = Ebean.find(Difficulty.class).where().ieq("name", form.field("diftext").value()).findUnique();
         QuestionManager questionManager = new QuestionManager(ModelState.READ);
         if (questionManager.getFinder().byId("" + questionId) == null){
             // question does not exist
@@ -147,7 +155,7 @@ public class QuestionSetController extends EController {
             return badRequest(views.html.question.questionset.addQuestion.render(form, questionSetId, breadcrumbs));
         }
         QuestionSetQuestionManager questionSetQuestionManager = new QuestionSetQuestionManager(ModelState.CREATE, questionSetId);
-        if (!questionSetQuestionManager.getFinder().where().ieq("qsid", questionSetId).eq("qid", questionId).findList().isEmpty()){
+        if (!questionSetQuestionManager.getFinder().where().eq("qsid", questionSetId).eq("qid", questionId).findList().isEmpty()){
             // question already in this question set
             List<Link> breadcrumbs = defaultBreadcrumbs();
             breadcrumbs.add(new Link(EMessages.get("question.questionset.overview"), "/questionset/questions"));
@@ -166,10 +174,10 @@ public class QuestionSetController extends EController {
      * @param questionSetId question set id
      * @return redirect to question set overview page.
      */
-    public static Result update(String questionSetId){
+    public static Result update(int questionSetId){
         if (!isAuthorized()) return redirect(controllers.routes.Application.index());
-        QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.UPDATE, "level", questionSetId);
-        Form<QuestionSetModel> form = form(QuestionSetModel.class).fill(questionSetManager.getFinder().byId(questionSetId)).bindFromRequest();
+        QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.UPDATE, "grade", questionSetId);
+        Form<QuestionSetModel> form = form(QuestionSetModel.class).fill(Ebean.find(QuestionSetModel.class, questionSetId)).bindFromRequest();
         if (form.hasErrors()) {
             List<Link> breadcrumbs = defaultBreadcrumbs();
             breadcrumbs.add(new Link(EMessages.get("question.questionset.overview"), "/questionset/questions"));
@@ -179,10 +187,11 @@ public class QuestionSetController extends EController {
             qsqm.setFilter("");
             flash("questionset-error", EMessages.get("forms.error"));
             return badRequest(views.html.question.questionset.overview.render(
-                breadcrumbs, questionSetId, qsqm.page(0), qsqm, "qid", "asc", "", form, questionSetManager
+                breadcrumbs, questionSetId, qsqm.page(0), qsqm, "qid", "asc", "", form, questionSetManager, form.get().grade.getName()
             ));
         }
         QuestionSetModel questionSetModel = form.get();
+        questionSetModel.grade = Ebean.find(Grade.class).where().ieq("name", form.field("gradetext").value()).findUnique();
         questionSetModel.id = questionSetId;
         questionSetModel.update();
         return redirect(routes.QuestionSetController.list(questionSetId, 0, "qid", "asc", ""));
@@ -196,14 +205,30 @@ public class QuestionSetController extends EController {
      * @param questionId question id
      * @return redirect to question set overview page
      */
-    public static Result removeQuestion(String questionSetId, String questionId){
+    public static Result removeQuestion(int questionSetId, String questionId){
         if (!isAuthorized()) return redirect(controllers.routes.Application.index());
         QuestionSetQuestionManager qsqm = new QuestionSetQuestionManager(ModelState.DELETE, questionSetId);
-        List<QuestionSetQuestion> questions = qsqm.getFinder().where().ieq("qsid", questionSetId).eq("qid", new Integer(questionId)).findList();
+        List<QuestionSetQuestion> questions = qsqm.getFinder().where().eq("qsid", questionSetId).eq("qid", new Integer(questionId)).findList();
         if (!questions.isEmpty()){
             questions.get(0).delete();
         }
         return redirect(routes.QuestionSetController.list(questionSetId, 0, "qid", "asc", ""));
     }
+
+    /**
+     * Returns the data source for the type ahead input field
+     * @return data source
+     */
+    public static Result typeAhead(){
+        ObjectNode objectNode = Json.newObject();
+        ArrayNode arrayNode = objectNode.putArray("array");
+        List<QuestionModel> questionModels = Ebean.find(QuestionModel.class).findList();
+        for (int i = 0; i < questionModels.size(); i++){
+            // todo aanpassen naar de naam van de vraag
+            arrayNode.add("test" + i);
+        }
+        return ok(objectNode);
+    }
+
 
 }

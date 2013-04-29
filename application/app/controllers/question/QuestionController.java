@@ -424,8 +424,8 @@ public class QuestionController extends EController{
             //if (true) return ok(routes.QuestionController.showQuestionFile(id, QuestionPack.QUESTIONXMLFILE).absoluteURL(request()));
             Question q = Question.fetch(id);
             Question q2 = Question.fetch(id2);
+            QuestionSet set = new QuestionSet(null);
             Question q3 = Question.fetch(id3);
-            QuestionSet set = new QuestionSet();
             set.addQuestion(q);
             //set.addQuestion(q2);
             set.addQuestion(q3);
