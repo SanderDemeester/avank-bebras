@@ -6,9 +6,6 @@ import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
 
-import play.mvc.Content;
-import play.mvc.Result;
-
 import models.dbentities.UserModel;
 
 /**
@@ -24,6 +21,11 @@ public abstract class User{
     // The roles this user has or can have
     protected Set<Role> ROLES = new HashSet<Role>();// Can be made non-static if roles have to be altered on runtime
     private UserType type;
+    
+    // Field to check if the users is mimicking some other user;
+    private boolean isMimicking = false;
+    
+    private boolean isMimicTarget = false;
 
     /**
      * @param data
@@ -46,9 +48,6 @@ public abstract class User{
      * Returns info about this user as a String.
      * @return Userinfo.
      */
-
-
-
     public String getUserInfo() {
         return null;
     }
@@ -66,7 +65,7 @@ public abstract class User{
      * AuthenticationManager.
      */
     public void resetPassword(){
-
+        // TODO I suppose this needs to be not empty - Felix
     }
 
     /**
@@ -75,12 +74,6 @@ public abstract class User{
     public void logout(){
         AuthenticationManager.getInstance().logout();
     }
-
-    /*
-     * Returns the landing page. Is to be implemented by the child classes
-     *@return Landing Page
-     */
-    public abstract Content getLandingPage();
 
     /*
      * Returns the userID
@@ -121,22 +114,26 @@ public abstract class User{
      * @return
      */
     public boolean canMimic(User user) {
-        return this.getType().ordinal() > user.getType().ordinal()
+    	System.out.println(this.getType().ordinal());
+    	System.out.println(user.getType().ordinal());
+        return this.getType().ordinal() < user.getType().ordinal()
                 && this.hasRole(Role.MIMIC);
     }
-
-    /*
-     * Returns the statistics page
-     * @return Statistics Page
-     */
-    public abstract Result showStatistics();
-
-    /*
-     * Returns the personal info page
-     * @return Personal Info Page
-     */
-    public Result showPersonalInformation(){
-        return null;
+    
+    public boolean isMimicking(){
+    	return isMimicking;
+    }
+    
+    public boolean isMimicTarget(){
+    	return isMimicTarget;
+    }
+    
+    public void setMimicTarget(boolean isMimicTarget){
+    	this.isMimicking = isMimicTarget;
+    }
+    
+    public void setMimickStatus(boolean isMimicking){
+    	this.isMimicking = isMimicking;
     }
 
 }

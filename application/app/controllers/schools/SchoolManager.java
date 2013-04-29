@@ -36,7 +36,7 @@ public class SchoolManager extends Manager<SchoolModel> {
 	}
 
 	@Override
-	public Call getListRoute(int page, String filter) {
+	public Call getListRoute(int page, String orderBy, String order, String filter) {
 		return routes.SchoolController.viewSchools(page,orderBy,order,filter);
 	}
 
@@ -47,24 +47,30 @@ public class SchoolManager extends Manager<SchoolModel> {
 
 	@Override
 	public Call getEditRoute(String id) {
-		return routes.SchoolController.edit(Integer.parseInt(id));
+		int schoolID = -1;
+		try{
+			schoolID = Integer.parseInt(id);
+		}catch(NumberFormatException nfe){}
+		if(SchoolController.isAuthorized(schoolID)){
+			return routes.SchoolController.edit(Integer.parseInt(id));
+		}else return null;
 	}
 
 	@Override
 	public Call getRemoveRoute(String id) {
-		// TODO Auto-generated method stub
+		// not used
 		return null;
 	}
 
 	@Override
 	public play.api.mvc.Call getSaveRoute() {
-		// TODO Auto-generated method stub
+		// not used
 		return null;
 	}
 
 	@Override
 	public play.api.mvc.Call getUpdateRoute() {
-		// TODO Auto-generated method stub
+		// not used
 		return null;
 	}
 
@@ -75,7 +81,6 @@ public class SchoolManager extends Manager<SchoolModel> {
 	
 	@Override
 	protected ExpressionList<SchoolModel> getDataSet(){
-		//TODO
 		UserModel um = Ebean.find(UserModel.class,teacherID);
 		if(um==null)throw new PersistenceException("Could not find Teacher");
 		Teacher t = new Teacher(um);

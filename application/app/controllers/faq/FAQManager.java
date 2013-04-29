@@ -3,7 +3,6 @@
  */
 package controllers.faq;
 
-import models.EMessages;
 import models.dbentities.FAQModel;
 import models.management.Manager;
 import models.management.ModelState;
@@ -37,7 +36,7 @@ public class FAQManager extends Manager<FAQModel> {
     }
 
     @Override
-    public Call getListRoute(int page, String filter) {
+    public Call getListRoute(int page, String orderBy, String order, String filter) {
         return routes.FAQController.list(page, orderBy, order, filter);
     }
 

@@ -17,13 +17,18 @@
             <ul class="nav pull-right">
                 <li class="divider-vertical"></li>
                 @if(models.user.AuthenticationManager.getInstance().isLoggedIn()) {
-                    <li class="dropdown"><a class="dropdown-toggle" href="#"
+                <li class="dropdown"><a class="dropdown-toggle" href="#"
                     data-toggle="dropdown">@EMessages.get("app.signedInAs") <i>@models.user.AuthenticationManager.getInstance().getUser().getID()</i> <strong class="icon-cog"></strong><strong class="caret"></strong>
                     </a>
+                @if(models.user.AuthenticationManager.getInstance().getUser().isMimicking()){
+                    <li class="dropdown"><a class="dropdown-toggle" href="#"
+                    data-toggle="dropdown">@EMessages.get("app.mimic") <i>: @models.user.AuthenticationManager.getInstance().getCurrentMimickUser().getID() </i> <strong class="icon-cog"></strong><strong class="caret"></strong>
+                    </a>
+                    }
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
                         <li><a tabindex="-1" href="@routes.UserController.landingPage">@EMessages.get("app.home")</a></li>
                         <li class="divider"></li>
-                          <li><a tabindex="0" href="@controllers.user.routes.PersonalPageController.show">@EMessages.get("user.pip.settings")</a></li>
+                          <li><a tabindex="0" href="@controllers.user.routes.PersonalPageController.show(0)">@EMessages.get("user.pip.settings")</a></li>
                           <li><a tabindex="1" href="@routes.UserController.logout">@EMessages.get("app.signOut")</a></li>
                     </ul>
                 } else {
@@ -85,6 +90,13 @@
 <script type="text/javascript">
 $("#login_btn").live("click",function(){
     $("#login_btn").attr("disabled", "disabled");
+    var password = $("#login_password").val();
+    //alert(password);
+	var salt = CryptoJS.SHA256(password); // eventueel kunnen hier later ook al onze bebras id bepalen en als salt gebruiken voor de hash.
+	var PBKDF2_password = CryptoJS.PBKDF2(password,salt,{ keySize: 4, iterations: 10});
+	//alert(PBKDF2_password);
+	
+	$("#login_password").val(PBKDF2_password);
 
     var request = $.ajax({
         type: "GET",

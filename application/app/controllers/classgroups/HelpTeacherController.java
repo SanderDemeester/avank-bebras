@@ -41,9 +41,6 @@ public class HelpTeacherController extends ClassPupilController {
 		//Initialize template arguments
 		List<Link> breadcrumbs = getBreadCrumbs(id);
 		OperationResultInfo ori = new OperationResultInfo();
-				
-		//Check if authorized
-		if(!isAuthorized(id))return ok(noaccess.render(breadcrumbs));
 		
 		//Configuring manager
 		HelpTeacherManager htm = new HelpTeacherManager(id, ModelState.READ);
@@ -53,6 +50,8 @@ public class HelpTeacherController extends ClassPupilController {
 		
 		//Try to render the list
 		try{
+			//Check if authorized
+			if(!isAuthorized(id))return ok(noaccess.render(breadcrumbs));
 			return ok(
 				helpteacherManagement.render(htm.page(page), htm, orderBy, order, filter, breadcrumbs, ori));
 		}catch(PersistenceException pe){
@@ -73,12 +72,11 @@ public class HelpTeacherController extends ClassPupilController {
 	public static Result removeHelp(int id,String helpID){
 		//Initialize template parameters
 		List<Link> breadcrumbs = getBreadCrumbs(id);
-		OperationResultInfo ori = new OperationResultInfo();
 		
-		//Check if authorized
-		if(!isAuthorized(id))return ok(noaccess.render(breadcrumbs));
 		//Try to delete the teacher (from helping)
 		try{
+			//Check if authorized
+			if(!isAuthorized(id))return ok(noaccess.render(breadcrumbs));
 			HelpTeacher ht =
 				Ebean.find(HelpTeacher.class).where().eq("teacherid", helpID).where().eq("classid", id).findUnique();
 			ht.delete();
@@ -102,7 +100,12 @@ public class HelpTeacherController extends ClassPupilController {
 		OperationResultInfo ori = new OperationResultInfo();
 		
 		//Check if authorized
-		if(!isAuthorized(id))return ok(noaccess.render(bc));
+		try{
+			if(!isAuthorized(id))return ok(noaccess.render(bc));
+		}catch(PersistenceException pe){
+			ori.add(EMessages.get("classes.helpteacher.add.error"),OperationResultInfo.Type.ERROR);
+			return ok(addHelpTeacher.render(null, bc, ori, id));
+		}
 		//Create and render form
 		Form<IDWrapper> f = new Form<IDWrapper>(IDWrapper.class);
 		return ok(addHelpTeacher.render(f, bc, ori, id));
@@ -116,23 +119,24 @@ public class HelpTeacherController extends ClassPupilController {
 	public static Result save(int id){
 		//Initialize template arguments
 		List<Link> bc = getBreadCrumbs(id);
-		OperationResultInfo ori = new OperationResultInfo();
-				
-		//Check if authorized
-		if(!isAuthorized(id))return ok(noaccess.render(bc));
+		OperationResultInfo ori = new OperationResultInfo();			
 		
-		//Retrieve form
-		Form<IDWrapper> f = form(IDWrapper.class).bindFromRequest();
-		if(f.hasErrors()){
-			//If incomplete, show form with warning
-			ori.add(EMessages.get("classes.helpteacher.add.incomplete"),OperationResultInfo.Type.WARNING);
-			return badRequest(addHelpTeacher.render(f, bc, ori, id));
-		}
-		//Retrieve id
-		IDWrapper i = f.get();
 		UserModel um = null;
+		Form<IDWrapper> f = form(IDWrapper.class).bindFromRequest();
 		//Retrieve usermodel of to be linked teacher
 		try{
+			//Check if authorized
+			if(!isAuthorized(id))return ok(noaccess.render(bc));
+			
+			//Retrieve form
+			
+			if(f.hasErrors()){
+				//If incomplete, show form with warning
+				ori.add(EMessages.get("classes.helpteacher.add.incomplete"),OperationResultInfo.Type.WARNING);
+				return badRequest(addHelpTeacher.render(f, bc, ori, id));
+			}
+			//Retrieve id
+			IDWrapper i = f.get();
 			um = Ebean.find(UserModel.class, i.id);
 		}catch(PersistenceException pe){
 			//Retrieval failed, Show form with error

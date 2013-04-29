@@ -9,16 +9,19 @@
 @commons.info(inf)
 @EMessages.get("classes.help.add.explanation")
 
-@form(controllers.classgroups.routes.HelpTeacherController.save(id)){
-	<fieldset>
-		@inputText(helpForm("id"), '_label ->"id")
-	</fieldset>
+@if(helpForm!=null){
+	@form(controllers.classgroups.routes.HelpTeacherController.save(id)){
+	
+		<fieldset>
+			@inputText(helpForm("id"), '_label ->"id")
+		</fieldset>
 
-	<div class="actions">
-        <input type="submit" value="Save" class="btn btn-primary"> or
-        <a href="@controllers.classgroups.routes.HelpTeacherController.viewHelp(id)" class="btn">Cancel</a>
-    </div>
+		<div class="actions">
+     	   <input type="submit" value="Save" class="btn btn-primary"> or
+    	    <a href="@controllers.classgroups.routes.HelpTeacherController.viewHelp(id)" class="btn">Cancel</a>
+    	</div>
     
-    }
+    	}
+	}
     
-    }
+}

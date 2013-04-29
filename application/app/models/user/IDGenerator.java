@@ -6,7 +6,6 @@ import java.lang.Character;
 import java.lang.CharSequence;
 import java.lang.StringBuilder;
 import java.lang.UnsupportedOperationException;
-import java.lang.RuntimeException;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -113,7 +112,7 @@ public class IDGenerator {
             if(nextReady) return true;
             int sum = 0;
             for(int i = 0; i < lengths.length; i++) sum += lengths[i];
-            return sum < SIZE - 1;
+            return 0 < sum && sum < SIZE - 1;
         }
         @Override public void remove() {
             throw new UnsupportedOperationException();

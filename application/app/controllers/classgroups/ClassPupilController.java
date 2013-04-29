@@ -3,8 +3,13 @@
  */
 package controllers.classgroups;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 import javax.persistence.PersistenceException;
 
@@ -16,6 +21,10 @@ import models.dbentities.ClassGroup;
 import models.dbentities.ClassPupil;
 import models.dbentities.UserModel;
 import models.management.ModelState;
+import models.user.AuthenticationManager;
+import models.user.Role;
+import models.user.Teacher;
+import models.user.User;
 import models.user.UserType;
 import models.util.IDWrapper;
 import models.util.OperationResultInfo;
@@ -27,6 +36,7 @@ import views.html.classes.oldClassPupilManagement;
 import views.html.commons.noaccess;
 import controllers.EController;
 import controllers.classgroups.ClassPupilManager.DataSet;
+import controllers.util.XLSXImporter;
 
 /**
  * @author Jens N. Rammant
@@ -46,10 +56,7 @@ public class ClassPupilController extends EController {
 	public static Result viewClass(int id,int page, String orderBy, String order, String filter){
 		//Setting up template arguments
 		List<Link> breadcrumbs = getBreadCrumbs(id);
-		OperationResultInfo ori = new OperationResultInfo();
-		
-		//Check if authorized
-		if(!isAuthorized(id))return ok(noaccess.render(breadcrumbs));
+		OperationResultInfo ori = new OperationResultInfo();		
 		
 		//Fetch the class
 		ClassGroup cg = null;
@@ -70,6 +77,8 @@ public class ClassPupilController extends EController {
 		if(cg!=null && cg.isActive())cpm.setCanRemove(true);
 		//Try to render the list
 		try{
+			//Check if authorized
+			if(!isAuthorized(id))return ok(noaccess.render(breadcrumbs));
 			@SuppressWarnings("unused")
 			int temp = cg.id; //This will throw a NullPointerException if cg == null, and will then go to the catch
 			return ok(
@@ -98,10 +107,8 @@ public class ClassPupilController extends EController {
 		//Setting up template arguments
 		List<Link> breadcrumbs = getBreadCrumbs(id);
 		breadcrumbs.add(new Link(EMessages.get("classes.pupil.oldpupillist"),"/classes/"+id+"/old"));
-		OperationResultInfo ori = new OperationResultInfo();
+		OperationResultInfo ori = new OperationResultInfo();		
 		
-		//Check if authorized
-		if(!isAuthorized(id))return ok(noaccess.render(breadcrumbs));
 		//Configure manager
 		ClassPupilManager cpm = new ClassPupilManager(id, ClassPupilManager.DataSet.NOTACTIVE,
 				ModelState.READ);
@@ -110,6 +117,8 @@ public class ClassPupilController extends EController {
 		cpm.setOrderBy(orderBy);
 		//Try to render the list
 		try{
+			//Check if authorized
+			if(!isAuthorized(id))return ok(noaccess.render(breadcrumbs));
 			return ok(
 				oldClassPupilManagement.render(cpm.page(page),cpm,orderBy,order,filter,breadcrumbs,ori)
 				);
@@ -124,15 +133,13 @@ public class ClassPupilController extends EController {
 	
 	public static Result removeStudent(int classID,String pupilID){		
 		//Setting up template arguments
-		List<Link> breadcrumbs = getBreadCrumbs(classID);
-		OperationResultInfo ori = new OperationResultInfo();
-		
-		//Check if authorized
-		if(!isAuthorized(classID))return ok(noaccess.render(breadcrumbs));
+		List<Link> breadcrumbs = getBreadCrumbs(classID);	
 		
 		//Do the actual deleting from the class. Needs to be in a transaction
 		Ebean.beginTransaction();
 		try{
+			//Check if authorized
+			if(!isAuthorized(classID))return ok(noaccess.render(breadcrumbs));
 			remove(classID,pupilID);
 			flash("deletesuccess","");
 			Ebean.commitTransaction();
@@ -155,7 +162,12 @@ public class ClassPupilController extends EController {
 		List<Link> bc = getBreadCrumbs(id);
 		bc.add(new Link(EMessages.get("classes.pupil.add"),"/classes/"+id+"/add"));
 		OperationResultInfo ori = new OperationResultInfo();
-		//TODO  authorized
+		try{
+			if(!isAuthorized(id))return ok(noaccess.render(bc));
+		}catch(PersistenceException pe){
+			ori.add(EMessages.get("classes.pupil.error.classfetch"),OperationResultInfo.Type.ERROR);
+			return ok(addExistingPupil.render(null, bc, ori, id));
+		}
 		Form<IDWrapper> f = new Form<IDWrapper>(IDWrapper.class);
 		return ok(
 				addExistingPupil.render(f, bc, ori, id));
@@ -172,24 +184,23 @@ public class ClassPupilController extends EController {
 		// Initialize template arguments
 		List<Link> bc = getBreadCrumbs(id);
 		OperationResultInfo ori = new OperationResultInfo();
-		
-		// Check if authorized
-		if (!isAuthorized(id))
-			return ok(noaccess.render(bc));
-
+		UserModel um = null;
 		// Retrieve form
 		Form<IDWrapper> f = form(IDWrapper.class).bindFromRequest();
-		if (f.hasErrors()) {
-			// If incomplete, show form with warning
-			ori.add(EMessages.get("classes.pupil.add.incomplete"),
-					OperationResultInfo.Type.WARNING);
-			return badRequest(addExistingPupil.render(f, bc, ori, id));
-		}
-		// Retrieve id
-		IDWrapper i = f.get();
-		UserModel um = null;
-		// Retrieve usermodel of to be linked pupil
 		try {
+			// Check if authorized
+			if (!isAuthorized(id))
+				return ok(noaccess.render(bc));		
+			
+			if (f.hasErrors()) {
+				// If incomplete, show form with warning
+				ori.add(EMessages.get("classes.pupil.add.incomplete"),
+						OperationResultInfo.Type.WARNING);
+				return badRequest(addExistingPupil.render(f, bc, ori, id));
+			}
+			// Retrieve id
+			IDWrapper i = f.get();			
+			// Retrieve usermodel of to be linked pupil
 			um = Ebean.find(UserModel.class, i.id);
 		} catch (PersistenceException pe) {
 			// Retrieval failed, Show form with error
@@ -236,12 +247,71 @@ public class ClassPupilController extends EController {
 	
 	/**
 	 * 
+	 * @param id of the class
+	 * @return the class in a downloadable xlsx file
+	 */
+	public static Result downloadClass(int id) {
+		List<Link> bc = getBreadCrumbs(id);
+		OperationResultInfo ori = new OperationResultInfo();
+		try {
+			//Check if authorized
+			if (!isAuthorized(id))
+				return ok(noaccess.render(bc));
+			//Turn the classgroup in a format that's writeable by XLSXImporter
+			List<List<String>> toExcelify = ClassGroupIO
+					.fullClassgroupToList(id);
+			if (toExcelify == null) {
+				flash(EMessages.get("classes.error"));
+				return redirect(routes.ClassPupilController.viewClass(id, 0, "name", "asc", ""));
+			}
+			Random r = new Random();
+			String filename;
+			File file;
+			//Generate a random filename that doesn't exist
+			do {
+				filename = Long.toString(r.nextLong());
+				file = new File(filename + ".xlsx");
+			} while (!file.createNewFile());
+			//Write the data to the file
+			XLSXImporter.write(toExcelify, file);
+			//Turn it into a stream
+			FileInputStream fip = new FileInputStream(file);
+			//delete the file
+			file.delete();
+			response().setHeader(
+					"Content-Disposition",
+					"attachment; filename=class" + Integer.toString(id)
+							+ ".xlsx");
+			//return the file
+			return ok(fip);
+		} catch (PersistenceException e) {
+			flash(EMessages.get("classes.error"));
+			return redirect(routes.ClassPupilController.viewClass(id, 0, "name", "asc", ""));
+		} catch (IOException io) {
+			flash(EMessages.get("classes.error"));
+			return redirect(routes.ClassPupilController.viewClass(id, 0, "name", "asc", ""));
+		}
+	}
+	
+	/**
+	 * 
 	 * @param id the id of the class
 	 * @return whether the current user is authorized to view/edit this class
+	 * @throws PersistenceException when something goes wrong with the db
 	 */
-	protected static boolean isAuthorized(int id){
-		//TODO
-		return true;
+	protected static boolean isAuthorized(int id) throws PersistenceException{
+		if(!AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGECLASSES))return false;
+		User current = AuthenticationManager.getInstance().getUser();
+		//Teacher is allowed to edit the class if he's the main teacher or a help teacher
+		if(current.data.type == UserType.TEACHER){
+			Collection<ClassGroup> cgs = new ArrayList<ClassGroup>();
+			cgs.addAll(((Teacher)current).getClasses());
+			cgs.addAll(((Teacher)current).getHelpClasses());
+			for(ClassGroup c : cgs){
+				if(c.id==id)return true;
+			}
+		}
+		return false;
 	}
 	
 	/**

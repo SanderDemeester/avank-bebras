@@ -1,9 +1,7 @@
 package test;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
+import org.junit.*;
 import models.dbentities.UserModel;
 import models.user.Gender;
 import models.user.Independent;
@@ -12,8 +10,6 @@ import models.user.Pupil;
 import models.user.Teacher;
 import models.user.UserType;
 import models.user.User;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import com.avaje.ebean.Ebean;
 import java.security.SecureRandom;
@@ -50,6 +46,11 @@ public class UserDatabaseTest extends ContextTest {
             Assert.fail("Could not save the user");
         }
         Assert.assertNotNull(Ebean.find(UserModel.class).where().eq("id",user.data.id).where().eq("type", UserType.INDEPENDENT.toString()).findUnique());
+        UserModel userModel = Ebean.find(UserModel.class).where().eq("id", user.data.id).findUnique();
+        Assert.assertEquals(true, userModel.gender == Gender.Male);
+        Assert.assertEquals(true, userModel.preflanguage == "nl");
+        Assert.assertEquals(true, userModel.email =="mail@localhost");
+        Assert.assertEquals(true, userModel.password == "password");
         user.data.delete();
     }
 
@@ -88,9 +89,17 @@ public class UserDatabaseTest extends ContextTest {
                 "mail@localhost",
                 Gender.Female,"nl"));
         teacher.data.save();
+        
+       
 
         Assert.assertNotNull(Ebean.find(UserModel.class).where().eq("id",teacherID).findUnique());
         Assert.assertNotNull(Ebean.find(UserModel.class).where().eq("name", name).findUnique());
+        
+        UserModel userModel = Ebean.find(UserModel.class).where().eq("id", teacher.data.id).findUnique();
+        Assert.assertEquals(true, userModel.gender == Gender.Female);
+        Assert.assertEquals(true, userModel.preflanguage == "nl");
+        Assert.assertEquals(true, userModel.email =="mail@localhost");
+        Assert.assertEquals(true, userModel.password == "password");
 
         teacher.data.delete();
     }
@@ -111,7 +120,7 @@ public class UserDatabaseTest extends ContextTest {
                         "password",
                         "salt",
                         "mail@localhost",
-                        Gender.Female,"nl")).data.save();
+                        Gender.Female,"en")).data.save();
             }catch(PersistenceException e){Assert.fail("Could not save the user");}
         }
 
@@ -126,12 +135,17 @@ public class UserDatabaseTest extends ContextTest {
                 "password",
                 "salt",
                 "mail@localhost",
-                Gender.Female,"nl"));
-
+                Gender.Female,"en"));
         organizer.data.save();
 
         Assert.assertNotNull(Ebean.find(UserModel.class).where().eq("id",organizerID).findUnique());
         Assert.assertNotNull(Ebean.find(UserModel.class).where().eq("name", name).findUnique());
+        UserModel userModel = Ebean.find(UserModel.class).where().eq("id", organizer.data.id).findUnique();
+        
+        Assert.assertEquals(true, userModel.gender == Gender.Female);
+        Assert.assertEquals(true, userModel.preflanguage == "en");
+        Assert.assertEquals(true, userModel.email =="mail@localhost");
+        Assert.assertEquals(true, userModel.password == "password");
 
         organizer.data.delete();
 
