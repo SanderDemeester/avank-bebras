@@ -41,6 +41,14 @@ public class QuestionSet {
     }
 
     /**
+     * Returns the underlying database model for this question set.
+     * @return question set model
+     */
+    public QuestionSetModel getQuestionSetModel(){
+        return data;
+    }
+
+    /**
      * Returns the languages for this question set.
      *
      * @return supported languages

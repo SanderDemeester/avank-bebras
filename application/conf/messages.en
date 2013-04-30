@@ -256,6 +256,8 @@ competitions.breadcrumb = Available contests.
 competitions.title = Available contests.
 competitions.totake = Available contests that you can take at this moment.
 competitions.taken = Contests you've taken in the past.
+competitions.grade.title = Please choose a preferred grade.
+competitions.grade = Grade
 
 # schools
 schools.title = List of Schools
