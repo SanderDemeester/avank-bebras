@@ -218,5 +218,9 @@ public class Competition {
     public CompetitionState getCompetitionState(User pupil){
         throw new UnsupportedOperationException();
     }
+    
+    public String getID() {
+        return this.data.getID();
+    }
 
 }

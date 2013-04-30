@@ -35,4 +35,9 @@ public class MultipleChoiceAnswer extends Answer{
     public MultipleChoiceElement getElement() {
         return element;
     }
+
+    @Override
+    public boolean isFilledIn() {
+        return element != null;
+    }
 }

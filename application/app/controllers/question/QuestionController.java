@@ -453,41 +453,4 @@ public class QuestionController extends EController{
             return ok(e.getMessage());
         }
     }
-    
-    /**
-     * Submit competition answers
-     * @param json answers in json format
-     * @return message with the submission result
-     */
-    // TODO: move to competitioncontroller
-    public static Result submit(String json) {
-        JsonNode input = Json.parse(json);
-        try {
-            QuestionFeedback feedback = QuestionFeedbackGenerator.generateFromJson(input, Language.getLanguage(EMessages.getLang()));
-        } catch (UnavailableLanguageException
-                | UnknownLanguageCodeException
-                | AnswerGeneratorException e) {
-            return badRequest(e.getMessage());
-        }
-        return ok("Submission was successful!");
-    }
-    
-    /**
-     * Submit competition answers and show feedback
-     * @param json answers in json format
-     * @return message with the submission result
-     */
-    // TODO: move to competitioncontroller
-    public static Result submitAndFeedback(String json) {
-        JsonNode input = Json.parse(json);
-        try {
-            QuestionFeedback feedback = QuestionFeedbackGenerator.generateFromJson(input, Language.getLanguage(EMessages.getLang()));
-            // TODO: make something to get the qset from the feedback and render it.
-        } catch (UnavailableLanguageException
-                | UnknownLanguageCodeException
-                | AnswerGeneratorException e) {
-            return badRequest(e.getMessage());
-        }
-        return ok("Submission was successful!");
-    }
 }

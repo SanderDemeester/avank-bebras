@@ -25,4 +25,9 @@ public class RegexAnswer extends Answer{
     public String getInput() {
         return input;
     }
+    
+    @Override
+    public boolean isFilledIn() {
+        return input!=null && !input.equals("");
+    }
 }

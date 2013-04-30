@@ -84,8 +84,8 @@
 	
 	<script type="text/javascript">
 	var feedback = @{feedback!=null};
-	// TMP
-	var deadline = @{new Date().getTime()+10000};
+	var shouldRedirectFeedback = @{!questionSet.getCompetition().getType().equals(models.competition.CompetitionType.RESTRICTED)};
+	var deadline = @{new Date().getTime() + (questionSet.getCompetition().getDuration() * 60 * 1000)};
 	
 	// Stylesheets for the iframe
 	var links = [
@@ -97,8 +97,8 @@
 	
 	// Answer object
 	var answers = {
-						"competition": "TODO",
-						"questionset": "TODO",
+						"competition": "@questionSet.getCompetition().getID()",
+						"questionset": "@questionSet.getID()",
 						"timeleft": 0,
 						"questions": {
 									@for(q <- questionSet.getQuestions()) {

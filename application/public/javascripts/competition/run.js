@@ -50,7 +50,7 @@ function submit() {
 		// Try to send to server
 		var request = $.ajax({
 			type: "GET",
-			url: "./submit",
+			url: "../submit",
 			data: { json: JSON.stringify(answers) },
 		})
 		
@@ -82,8 +82,9 @@ function success() {
 		keyboard: false,
 		backdrop: "static",
 	});
-	// TODO: depending on the competition type
-	//$("#showFeedback").hide();
+	
+	// Hide feedback button if needed
+	if(!shouldRedirectFeedback) $("#showFeedback").hide();
 }
 
 $("#ready").live("click", function(){
@@ -91,8 +92,7 @@ $("#ready").live("click", function(){
 });
 
 $("#showFeedback").live("click", function(){
-	alert("TODO");
-	//window.location.href = "feedback/"+JSON.stringify(answers);
+	window.location.href = "../feedback/"+JSON.stringify(answers);
 });
 
 // When the user has lost internetconnection on submitting

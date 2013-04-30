@@ -10,7 +10,7 @@
     	@if(answer!=null) {
     		disabled="disabled"
     	}
-    	@if(answer!=null && answer.getElement().equals(aElement)) {
+    	@if(answer!=null && answer.getElement()!= null && answer.getElement().equals(aElement)) {
     		checked="checked"
     	}
     	/>

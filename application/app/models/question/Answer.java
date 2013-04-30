@@ -12,7 +12,13 @@ public abstract class Answer {
     
     /**
      * Returns if the answer was answered correctly
-     * @return if the answer if correct
+     * @return if the answer is correct
      */
     public abstract boolean isCorrect();
+    
+    /**
+     * Returns if the answer was filled in
+     * @return if the answer is filled in
+     */
+    public abstract boolean isFilledIn();
 }
