@@ -14,14 +14,13 @@ GET		/signup						controllers.UserController.signup()
 POST	/signup 					controllers.UserController.register()
 
 # Login
-GET		/login_validate				controllers.UserController.validate_login(id, password)
+GET		/login_validate		controllers.UserController.validate_login(id, password)
+GET     /forgotPwd          controllers.UserController.forgotPwd()
+POST    /forgotPwd          controllers.UserController.forgotPwdSendMail()
 
 # Mimic
 GET		/mimic						controllers.UserController.mimic()			
 POST	/mimic					controllers.UserController.mimicExecute()
-
-GET     /forgotPwd          controllers.UserController.forgotPwd()
-POST    /forgotPwd          controllers.UserController.forgotPwdSendMail()
 
 # Bootstrap resources
 GET     /assets/img/glyphicons-halflings-white.png       controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings-white.png")
