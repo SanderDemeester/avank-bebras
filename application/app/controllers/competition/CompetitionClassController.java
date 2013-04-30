@@ -10,8 +10,10 @@ import models.dbentities.CompetitionModel;
 import models.dbentities.ContestClass;
 import models.management.ModelState;
 import models.user.AuthenticationManager;
+import models.user.Role;
 import play.data.Form;
 import play.mvc.Result;
+import views.html.commons.noaccess;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -23,6 +25,14 @@ import java.util.List;
  * @author Kevin Stobbelaar.
  */
 public class CompetitionClassController extends EController {
+
+    /**
+     * Check if the current user is authorized for this editor
+     * @return is the user authorized
+     */
+    private static boolean isAuthorized() {
+        return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGECONTESTS);
+    }
 
     /**
      * Returns the default breadcrumbs for the contest pages.
@@ -60,6 +70,7 @@ public class CompetitionClassController extends EController {
      * @return page with the list of classes
      */
     public static Result list(String contestid, int page, String orderBy, String order, String filter){
+        if (!isAuthorized()) return ok(noaccess.render(defaultBreadcrumbs(contestid)));
         CompetitionClassManager competitionClassManager = getManager(contestid);
         return ok(views.html.competition.classes.render(
                 defaultBreadcrumbs(contestid),
@@ -76,12 +87,19 @@ public class CompetitionClassController extends EController {
      * @return register new class page
      */
     public static Result register(String contestid){
+        if (!isAuthorized()) return ok(noaccess.render(defaultBreadcrumbs(contestid)));
         Form<ClassGroup> form = form(ClassGroup.class).bindFromRequest();
         List<Link> breadcrumbs = defaultBreadcrumbs(contestid);
         breadcrumbs.add(new Link(EMessages.get("competition.class.register.breadcrumb"), "/contests/" + contestid + "/classes/register" ));
         return ok(views.html.competition.registerClass.render(breadcrumbs, form, contestid));
     }
 
+    /**
+     * Returns the options for a select in template.
+     * This is used to select a classgroup to register for a contest.
+     * This maps the id of the classgroup on the name of the classgroup + the name of the school.
+     * @return options map
+     */
     public static LinkedHashMap<String, String> options() {
         String teacherid = AuthenticationManager.getInstance().getUser().getID();
         List<ClassGroup> classGroups = Ebean.find(ClassGroup.class).where().eq("teacherid", teacherid).findList();
@@ -99,6 +117,7 @@ public class CompetitionClassController extends EController {
      * @return contest classes page
      */
     public static Result save(String contestid){
+        if (!isAuthorized()) return ok(noaccess.render(defaultBreadcrumbs(contestid)));
         Form<ClassGroup> form = form(ClassGroup.class).bindFromRequest();
         String classId = form.field("class").value();
         ContestClass contestClass = new ContestClass();
