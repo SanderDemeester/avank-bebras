@@ -225,7 +225,7 @@ management.add = Nieuw
 management.confirmDelete = Ben je zeker dat je deze record wilt verwijderen?
 
 # competition
-competition.name = Competities
+competition.breadcrumb = Competities
 competition.create.breadcrumb = Nieuwe competitie
 competition.create = Maak een nieuwe competitie aan.
 competition.create.title = Maak een nieuwe competitie aan.
@@ -250,8 +250,14 @@ competition.edit.breadcrumb = Bewerk
 competition.overview = Competitie overzicht
 competition.overview.info = Op deze pagina, kan je de voor jouw zichtbare competities bekijken. Je kan nieuwe competities aanmaken of een al bestaande competitie aanpassen.
 competition.info.grades = Voor deze contest zijn op dit moment de volgende niveaus beschikbaar:
+competition.info.languages = Voor deze contest zijn op dit moment de volgende talen beschikbaar:
 competition.view.title = Competitie
 competition.view.status = Status
+competition.class.info = Dit is een restricted competitie. Als je jouw leerlingen deze competitie wil laten afleggen, moet je hun klas registreren.
+competition.class.button = Bekijk geregistreerde klassen.
+competition.class.title = Competitie klassen
+competition.class.breadcrumb = Klassen
+competition.class.management.form.name = Naam van de klas
 
 competitions.breadcrumb = Beschikbare competities.
 competitions.title = Beschikbare competities.

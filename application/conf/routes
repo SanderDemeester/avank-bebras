@@ -65,11 +65,12 @@ GET     /contests/:id/overview      controllers.competition.CompetitionControlle
 POST    /contests/                  controllers.competition.CompetitionController.updateCompetition(id)
 GET     /contests/remove/:id        controllers.competition.CompetitionController.removeCompetition(id)
 GET     /contests/qs/remove/:qsid   controllers.competition.CompetitionController.removeQuestionSet(qsid:Int, contestid)
+GET     /contests/:id/classes       controllers.competition.CompetitionClassController.list(id, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
 # Contest taking module
-GET     /available-contests             controllers.competition.TakeCompetitionController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
-GET     /available-contests/take/:id    controllers.competition.TakeCompetitionController.takeCompetition(id)
-GET     /available-contests/submit		controllers.competition.TakeCompetitionController.submit(json)
+GET     /available-contests                 controllers.competition.TakeCompetitionController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /available-contests/take/:id        controllers.competition.TakeCompetitionController.takeCompetition(id)
+GET     /available-contests/submit		    controllers.competition.TakeCompetitionController.submit(json)
 GET     /available-contests/feedback/:json	controllers.competition.TakeCompetitionController.feedback(json)
 
 # Question Management

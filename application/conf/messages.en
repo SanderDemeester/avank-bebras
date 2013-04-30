@@ -224,7 +224,7 @@ management.add = Create
 management.confirmDelete = Are you certain you want to delete this record?
 
 # competition
-competition.name = Contests
+competition.breadcrumb = Contests
 competition.create.breadcrumb = New contest
 competition.create = Create new contest!
 competition.create.title = Create contest.
@@ -248,9 +248,15 @@ competition.edit = Edit contest
 competition.edit.breadcrumb = Edit
 competition.overview = Contest overview.
 competition.overview.info = On this page, you can view contest which are open for you. You can create new contests or edit an existing contest.
-competition.info.grades = This contests currently supports the following grades:
+competition.info.grades = This contest currently supports the following grades:
+competition.info.languages = This contests currently supports the following languages:
 competition.view.title = Contest
 competition.view.status = Status
+competition.class.info = This is a restricted contest. If you want to let your pupils take this contest you have to register their class.
+competition.class.button = View registered classes.
+competition.class.title = Contest classes
+competition.class.breadcrumb = Classes
+competition.class.management.form.name = Class name
 
 competitions.breadcrumb = Available contests.
 competitions.title = Available contests.

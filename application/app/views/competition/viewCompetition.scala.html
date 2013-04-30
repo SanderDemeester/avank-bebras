@@ -66,15 +66,38 @@ contest: models.competition.Competition)
                 @list(currentPage, QSmanager, currentOrderBy, currentOrder, currentFilter)
             </div>
 
-            <div class="hero-unit">
+        </div>
+
+        <div class="hero-unit span12">
+            <div>
                 <p> @EMessages.get("competition.info.grades") </p>
                 <ul>
                     @for(grade <- contest.getAvailableGrades()){
-                        <li>@grade.getName()</li>
+                    <li>@grade.getName()</li>
                     }
                 </ul>
+                <p> @EMessages.get("competition.info.languages") </p>
+                <ul>
+                    @for(language <- contest.getAvailableLanguages()){
+                    <li>@language.getName()</li>
+                    }
+                </ul>
+            </div>
+
+            @if(contest.getType() == models.competition.CompetitionType.RESTRICTED){
+            <div>
+                <p>
+                    @EMessages.get("competition.class.info")
+                </p>
+
+                <div class="actions">
+                    <a href="@controllers.competition.routes.CompetitionClassController.list(contest.getID())" class="btn btn-primary">
+                        @EMessages.get("competition.class.button")
+                    </a>
+                </div>
 
             </div>
+            }
 
         </div>
 
