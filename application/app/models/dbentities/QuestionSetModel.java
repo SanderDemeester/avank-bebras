@@ -1,6 +1,5 @@
 package models.dbentities;
 
-import models.management.Editable;
 import models.management.ManageableModel;
 import play.data.validation.Constraints.Required;
 

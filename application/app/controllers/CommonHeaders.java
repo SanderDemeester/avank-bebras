@@ -6,7 +6,6 @@ import play.mvc.Http;
 import play.mvc.Action;
 import play.mvc.Result;
 
-import controllers.EController;
 
 public class CommonHeaders extends Action.Simple {
 

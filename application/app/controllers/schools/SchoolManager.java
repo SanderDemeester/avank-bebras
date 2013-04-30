@@ -47,7 +47,13 @@ public class SchoolManager extends Manager<SchoolModel> {
 
 	@Override
 	public Call getEditRoute(String id) {
-		return routes.SchoolController.edit(Integer.parseInt(id));
+		int schoolID = -1;
+		try{
+			schoolID = Integer.parseInt(id);
+		}catch(NumberFormatException nfe){}
+		if(SchoolController.isAuthorized(schoolID)){
+			return routes.SchoolController.edit(Integer.parseInt(id));
+		}else return null;
 	}
 
 	@Override

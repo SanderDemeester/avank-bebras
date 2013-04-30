@@ -3,6 +3,7 @@
  */
 package models.user;
 
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -126,5 +127,38 @@ public class TeacherTest extends ContextTest {
         Assert.assertTrue("not orig",ids.contains(sm2.id));
         Assert.assertTrue("not class",ids.contains(sm3.id));
         
+    }
+    
+    @Test
+    public void testIsPupilsTeacher(){
+    	UserModel t = createTestUserModel(UserType.TEACHER);
+    	Teacher teacher = new Teacher(t);
+    	t.id="t";
+    	
+    	ClassGroup cg1 = new ClassGroup();
+    	cg1.id=1;
+    	cg1.teacherid=t.id;
+    	Calendar c = Calendar.getInstance();
+    	c.set(Calendar.YEAR, c.get(Calendar.YEAR)+1);
+    	cg1.expdate = c.getTime();
+    	
+    	UserModel pup1 = createTestUserModel(UserType.PUPIL);
+    	pup1.id="pup1";
+    	UserModel pup2 = createTestUserModel(UserType.PUPIL);
+    	pup2.id="pup2";
+    	pup1.classgroup=cg1.id;
+    	
+    	try{
+    		t.save();
+    		cg1.save();
+    		pup1.save();
+    		pup2.save();
+    	}catch(PersistenceException pe){
+    		Assert.fail("Something went wrong with the saving");
+    	}
+    	
+    	Assert.assertTrue("f1",teacher.isPupilsTeacher(pup1.id));
+    	Assert.assertFalse("f2",teacher.isPupilsTeacher(pup2.id));
+    	
     }
 }

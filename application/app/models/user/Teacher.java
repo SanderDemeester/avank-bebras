@@ -11,8 +11,6 @@ import models.dbentities.ClassGroup;
 import models.dbentities.HelpTeacher;
 import models.dbentities.SchoolModel;
 import models.dbentities.UserModel;
-import play.mvc.Result;
-import play.mvc.Content;
 import com.avaje.ebean.Ebean;
 
 /**
@@ -25,45 +23,11 @@ public class Teacher extends SuperUser{
     public Teacher(UserModel data) {
         super(data, UserType.TEACHER);
         ROLES.add(Role.MANAGECONTESTS);
-
         ROLES.add(Role.MANAGESCHOOLS);
         ROLES.add(Role.MANAGECLASSES);
+        ROLES.add(Role.MIMIC);
     }
 
-    public void scheduleUnrestrictedCompetition(){
-
-    }
-
-    /**
-     * @param regex A regex for filtering.
-     * Applys a seach filter for the teacher to Filter through all students in the System
-     */
-    public void searchStudents(String regex){
-        //TODO: Need to add some filtering system
-    }
-
-
-    /**
-     * @return A view to manageCompetitions.
-     */
-    public Result manageCompetitions(){
-    	//TODO
-        return null;
-    }
-    /*
-     * Creates the personalized landing page for this instance of Teacher.
-     * @return Personalized landing page for this instance of teacher
-     */
-    public Content getLandingPage(){
-        //TODO
-        return null;
-    }
-
-    @Override
-    public Result showStatistics() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     /**
      * Queries the database for all Classes that this Teacher is main teacher of
@@ -108,7 +72,7 @@ public class Teacher extends SuperUser{
      * @throws PersistenceException when something goes wrong with the db
      */
     public Collection<ClassGroup> getHelpClasses() throws PersistenceException{
-    	//TODO write jUnit, possibly remove (unused atm)
+    	//TODO write jUnit
     	ArrayList<ClassGroup> res = new ArrayList<ClassGroup>();
     	
     	Collection<HelpTeacher> ht = Ebean.find(HelpTeacher.class).where().eq("teacherid", this.data.id).findList();
@@ -118,6 +82,47 @@ public class Teacher extends SuperUser{
     		res.add(cg);
     	}
     	return res;
+    }
+    
+    /**
+     * Checks whether the teacher is the pupil's current main teacher.
+     * @param pupilID the id of the pupil to check
+     * @return whether the teacher is the pupil's main teacher
+     * @throws PersistenceException if something goes wrong with the db
+     */
+    public boolean isPupilsTeacher(User pupil) throws PersistenceException{
+    	if(pupil==null||pupil.data==null)return false;
+    	//Check if pupil has a classgroup
+    	if(pupil.data.classgroup==null)return false;
+    	//Retrieve all classes of the Teacher
+    	Collection<ClassGroup> classes = this.getClasses();
+    	classes.addAll(this.getHelpClasses());
+    	//Retrieve all IDs
+    	ArrayList<Integer> classIDs = new ArrayList<Integer>();
+    	for(ClassGroup cg : classes){
+    		classIDs.add(cg.id);
+    	}
+    	//Check if pupil's class is in the list
+    	if(!classIDs.contains(pupil.data.classgroup))return false;
+    	//Check if classgroup hasn't expired yet
+    	ClassGroup pupilClass = Ebean.find(ClassGroup.class, pupil.data.classgroup);
+    	if(pupilClass==null)return false; //Just to be sure. It is possible the class record got deleted.
+    	return pupilClass.isActive();
+    }
+    
+    public boolean isPupilsTeacher(String pupilID){
+    	//Retrieve the pupil record
+    	UserModel pupil = Ebean.find(UserModel.class, pupilID);
+    	return this.isPupilsTeacher(new Pupil(pupil));
+    }
+    
+    @Override 
+    public boolean canMimic(User user){
+    	//Teacher can mimic pupils that have one of their classes as main class
+    	//Check if pupil
+    	if(user==null||user.data==null||
+    			(user.data.type!=UserType.PUPIL && user.data.type!=UserType.INDEPENDENT))return false;
+    	return isPupilsTeacher(user);
     }
 
 }

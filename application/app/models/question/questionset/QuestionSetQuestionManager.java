@@ -3,7 +3,6 @@ package models.question.questionset;
 import com.avaje.ebean.Page;
 import controllers.question.routes;
 import models.dbentities.QuestionSetQuestion;
-import models.management.ManageableModel;
 import models.management.Manager;
 import models.management.ModelState;
 import play.mvc.Call;

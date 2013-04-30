@@ -3,6 +3,7 @@
  */
 package controllers.classgroups;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -13,7 +14,6 @@ import models.data.Link;
 import models.user.AuthenticationManager;
 
 import play.cache.Cache;
-import play.cache.Cached;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
@@ -82,9 +82,12 @@ public class ClassGroupIOController extends EController {
 		// retrieve the posted file
 		MultipartFormData body = request().body().asMultipartFormData();
 		FilePart xlsx = body.getFile("xlsx");
+		File file = null;
 		try {
 			//Parse the excel data to a list
-			List<List<String>> list = XLSXImporter.read(xlsx.getFile());
+			file = xlsx.getFile();
+			List<List<String>> list = XLSXImporter.read(file);
+			file.delete();
 			List<ClassGroupContainer> cg;
 			//parse data to ClassGroupContainer
 			if (classID == null) {
@@ -105,6 +108,10 @@ public class ClassGroupIOController extends EController {
 			//Return the parsed data on a page
 			return ok(uploadclass.render(bc, cg, id, classID));
 		} catch (Exception e) {
+			//Make sure the file is deleted
+			try{
+				file.delete();
+			}catch(Exception ee){}
 			//Something went wrong with the parsing, show page with error
 			flash("error", EMessages.get("classes.import.error.postfail"));
 			if (classID == null) {
