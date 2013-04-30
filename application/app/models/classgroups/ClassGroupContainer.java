@@ -221,7 +221,7 @@ public class ClassGroupContainer {
 		model.id=IDGenerator.generate(model.name,birthdate );
 		model.classgroup = cg.id;
 		model.registrationdate = Calendar.getInstance().getTime();		
-		SaltAndPassword hap = PasswordHasher.generateSP(model.password.toCharArray());
+		SaltAndPassword hap = PasswordHasher.fullyHash(model.password);
 		model.password=hap.password;
 		model.hash = hap.salt;
 		model.type = UserType.PUPIL;
