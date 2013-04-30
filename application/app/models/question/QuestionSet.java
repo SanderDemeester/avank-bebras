@@ -165,5 +165,9 @@ public class QuestionSet {
     public String getID() {
         return this.data.getID();
     }
+    
+    public QuestionSetModel getData() {
+        return this.data;
+    }
 
 }

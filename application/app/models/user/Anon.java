@@ -9,4 +9,9 @@ public class Anon extends User{
         ROLES.add(Role.LOGIN);
     }
 
+    @Override
+    public boolean isAnon() {
+        return true;
+    }
+
 }

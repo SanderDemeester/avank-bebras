@@ -21,4 +21,10 @@ public abstract class Answer {
      * @return if the answer is filled in
      */
     public abstract boolean isFilledIn();
+    
+    /**
+     * The textual value of the inputted answer
+     * @return the answer in text format
+     */
+    public abstract String getTextValue();
 }
