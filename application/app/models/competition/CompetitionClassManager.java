@@ -35,11 +35,10 @@ public class CompetitionClassManager extends Manager<ClassGroup> {
         this.contestid = contestid;
         this.teacherid = teacherid;
         setPageSize(5);
+        // TODO aanpassen zodat alleen de klassen geregistreerd voor deze contest hier komen te staan
         this.expressionList = getFinder()
-                .fetch("contestclasses.contestid")
                 .where()
-                .eq("teacherid", teacherid)
-                .eq("contestid", contestid);
+                .eq("teacherid", teacherid);
         setHasActions(false);
     }
 
@@ -89,6 +88,11 @@ public class CompetitionClassManager extends Manager<ClassGroup> {
     @Override
     public Call getListRoute(int page, String orderBy, String order, String filter) {
         return routes.CompetitionClassController.list(contestid, page, orderBy, order, filter);
+    }
+
+    @Override
+    public Call getAddRoute(){
+        return routes.CompetitionClassController.register(contestid);
     }
 
     /**

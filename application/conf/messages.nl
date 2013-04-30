@@ -258,6 +258,10 @@ competition.class.button = Bekijk geregistreerde klassen.
 competition.class.title = Competitie klassen
 competition.class.breadcrumb = Klassen
 competition.class.management.form.name = Naam van de klas
+competition.class.register.title = Registreer nieuwe klas
+competition.class.register.breadcrumb = Registreer nieuwe klas
+competition.class.register.pick = Kies een klas
+competition.class.register.error = De gekozen klas is al geregistreerd voor deze competitie.
 
 competitions.breadcrumb = Beschikbare competities.
 competitions.title = Beschikbare competities.

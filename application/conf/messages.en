@@ -257,6 +257,10 @@ competition.class.button = View registered classes.
 competition.class.title = Contest classes
 competition.class.breadcrumb = Classes
 competition.class.management.form.name = Class name
+competition.class.register.title = Register new class
+competition.class.register.breadcrumb = Register new class
+competition.class.register.pick = Pick a class
+competition.class.register.error = The selected class is already registered for this contest.
 
 competitions.breadcrumb = Available contests.
 competitions.title = Available contests.

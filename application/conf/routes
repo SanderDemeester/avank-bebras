@@ -58,14 +58,16 @@ POST    /questionset/edit                       controllers.question.QuestionSet
 GET     /questionset/:qs/questions/remove:id    controllers.question.QuestionSetController.removeQuestion(qs:Int, id)
 
 # Contest management module
-GET     /contests                   controllers.competition.CompetitionController.index(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
-GET     /contests/new/contest       controllers.competition.CompetitionController.create()
-POST    /contests                   controllers.competition.CompetitionController.save()
-GET     /contests/:id/overview      controllers.competition.CompetitionController.viewCompetition(id, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
-POST    /contests/                  controllers.competition.CompetitionController.updateCompetition(id)
-GET     /contests/remove/:id        controllers.competition.CompetitionController.removeCompetition(id)
-GET     /contests/qs/remove/:qsid   controllers.competition.CompetitionController.removeQuestionSet(qsid:Int, contestid)
-GET     /contests/:id/classes       controllers.competition.CompetitionClassController.list(id, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /contests                       controllers.competition.CompetitionController.index(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /contests/new/contest           controllers.competition.CompetitionController.create()
+POST    /contests                       controllers.competition.CompetitionController.save()
+GET     /contests/:id/overview          controllers.competition.CompetitionController.viewCompetition(id, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+POST    /contests/                      controllers.competition.CompetitionController.updateCompetition(id)
+GET     /contests/remove/:id            controllers.competition.CompetitionController.removeCompetition(id)
+GET     /contests/qs/remove/:qsid       controllers.competition.CompetitionController.removeQuestionSet(qsid:Int, contestid)
+GET     /contests/:id/classes           controllers.competition.CompetitionClassController.list(id, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /contests/:id/classes/register  controllers.competition.CompetitionClassController.register(id)
+POST    /contests/:id/classes/save      controllers.competition.CompetitionClassController.save(id)
 
 # Contest taking module
 GET     /available-contests                 controllers.competition.TakeCompetitionController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
