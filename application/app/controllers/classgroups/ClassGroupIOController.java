@@ -59,6 +59,7 @@ public class ClassGroupIOController extends EController {
 	 * @return upload page
 	 */
 	public static Result uploadExisting(Integer id){
+		System.out.println("also here");//TODO
 		List<Link> bc = ClassGroupController.getBreadcrumbs();
 		bc.add(new Link("Upload","/classes/upload"));
 		if(!ClassGroupController.isAuthorized())return ok(noaccess.render(bc));		
@@ -73,6 +74,7 @@ public class ClassGroupIOController extends EController {
 	 * @return a page showing the parsed data
 	 */
 	public static Result postExisting(Integer classID) {
+		System.out.println("got here");//TODO
 		List<Link> bc = ClassGroupController.getBreadcrumbs();
 		bc.add(new Link("Upload", "/classes/upload"));
 		// Check if authorized
@@ -132,6 +134,7 @@ public class ClassGroupIOController extends EController {
 	 */
 	@SuppressWarnings("unchecked")
 	public static Result saveExisting(Integer id, String dataid){
+		System.out.println("and now here"); //TODO
 		List<Link> bc = ClassGroupController.getBreadcrumbs();
 		bc.add(new Link("Upload","/classes/upload"));	
 		//Check if authorized

@@ -120,7 +120,6 @@ GET		/classes/upload					controllers.classgroups.ClassGroupIOController.upload()
 POST		/classes/upload/				controllers.classgroups.ClassGroupIOController.post()
 GET		/classes/upload/:id				controllers.classgroups.ClassGroupIOController.save(id)
 POST		/classes/					controllers.classgroups.ClassGroupController.save()
-POST		/classes/:id/					controllers.classgroups.ClassGroupIOController.save(id)
 GET		/classes/view/:id				controllers.classgroups.ClassPupilController.viewClass(id:Int, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
 
@@ -140,7 +139,7 @@ GET		/classes/view/:id/help/remove/:teachid	controllers.classgroups.HelpTeacherC
 GET		/classes/view/:id/help/add			controllers.classgroups.HelpTeacherController.create(id:Int)
 POST		/classes/view/:id/help/			controllers.classgroups.HelpTeacherController.save(id:Int)
 
-GET		/classes/:id/old			controllers.classgroups.ClassPupilController.viewOldPupils(id:Int,p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET		/classes/view/:id/old			controllers.classgroups.ClassPupilController.viewOldPupils(id:Int,p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
 # Contact form
 
