@@ -1,12 +1,10 @@
 package test;
 import java.util.Date;
 import java.util.List;
-import org.junit.*;
 import models.dbentities.UserModel;
 import models.user.Gender;
 import models.user.Independent;
 import models.user.Organizer;
-import models.user.Pupil;
 import models.user.Teacher;
 import models.user.UserType;
 import models.user.User;
@@ -16,7 +14,6 @@ import java.security.SecureRandom;
 import java.math.BigInteger;
 import javax.persistence.PersistenceException;
 import junit.framework.Assert;
-import static play.test.Helpers.*;
 
 public class UserDatabaseTest extends ContextTest {
 
@@ -30,7 +27,7 @@ public class UserDatabaseTest extends ContextTest {
         String id = "id";
         String name = "Bertrand Russell";
         User userFind = null;
-        UserModel mdl = new UserModel(id,UserType.INDEPENDENT,
+        UserModel mdl = new UserModel(id,UserType.PUPIL_OR_INDEP,
                 name,
                 new Date(),
                 new Date(),
@@ -45,7 +42,7 @@ public class UserDatabaseTest extends ContextTest {
         }catch(PersistenceException e){
             Assert.fail("Could not save the user");
         }
-        Assert.assertNotNull(Ebean.find(UserModel.class).where().eq("id",user.data.id).where().eq("type", UserType.INDEPENDENT.toString()).findUnique());
+        Assert.assertNotNull(Ebean.find(UserModel.class).where().eq("id",user.data.id).where().eq("type", UserType.PUPIL_OR_INDEP.toString()).findUnique());
         UserModel userModel = Ebean.find(UserModel.class).where().eq("id", user.data.id).findUnique();
         Assert.assertEquals(true, userModel.gender == Gender.Male);
         Assert.assertEquals(true, userModel.preflanguage == "nl");
@@ -167,7 +164,7 @@ public class UserDatabaseTest extends ContextTest {
         //generate random IndependentUser and save them.
         for(int i = 0; i < numberOfIndependentUser; i++){
             try{
-                Independent ip = new Independent(new UserModel(new BigInteger(130,random).toString(),UserType.INDEPENDENT,
+                Independent ip = new Independent(new UserModel(new BigInteger(130,random).toString(),UserType.PUPIL_OR_INDEP,
                         new BigInteger(130,random).toString(),
                         new Date(),
                         new Date(),
@@ -183,7 +180,7 @@ public class UserDatabaseTest extends ContextTest {
         //generate random Pupils.
         for(int i = 0; i < numberOfPupils; i++){
             try{
-                Pupil pu = new Pupil(new UserModel(new BigInteger(130,random).toString(),UserType.PUPIL,
+                Independent pu = new Independent(new UserModel(new BigInteger(130,random).toString(),UserType.PUPIL_OR_INDEP,
                         new BigInteger(130,random).toString(),
                         new Date(),
                         new Date(),
@@ -197,8 +194,8 @@ public class UserDatabaseTest extends ContextTest {
         }
 
         List<UserModel> allUsers = UserModel.find.all();
-        List<UserModel> allIndepententUser = UserModel.find.where().like("type", UserType.INDEPENDENT.toString()).findList();
-        List<UserModel> allPupils = UserModel.find.where().like("type",UserType.PUPIL.toString()).findList();
+        List<UserModel> allIndepententUser = UserModel.find.where().like("type", UserType.PUPIL_OR_INDEP.toString()).findList();
+        List<UserModel> allPupils = UserModel.find.where().like("type",UserType.PUPIL_OR_INDEP.toString()).findList();
         System.out.println(allIndepententUser.size());
         System.out.println(allPupils.size());
         Assert.assertTrue(Integer.toString(allUsers.size()),allUsers.size() == numberOfIndependentUser+numberOfPupils);

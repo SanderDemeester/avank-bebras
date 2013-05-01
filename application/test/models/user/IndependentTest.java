@@ -37,7 +37,7 @@ public class IndependentTest extends ContextTest {
 
     @Test
     public void testGetCurrentClass() {
-        UserModel data = createTestUserModel(UserType.INDEPENDENT);
+        UserModel data = createTestUserModel(UserType.PUPIL_OR_INDEP);
         ClassGroup cl1 = new ClassGroup();
         cl1.id = 1;
         ClassGroup cl2 = new ClassGroup();
@@ -74,7 +74,7 @@ public class IndependentTest extends ContextTest {
 
     @Test
     public void testGetPreviousClasses() {
-        UserModel data = createTestUserModel(UserType.INDEPENDENT);
+        UserModel data = createTestUserModel(UserType.PUPIL_OR_INDEP);
         ClassGroup cl1 = new ClassGroup();
         cl1.id = 1;
         ClassGroup cl2 = new ClassGroup();
@@ -120,7 +120,7 @@ public class IndependentTest extends ContextTest {
     	Independent i = new Independent(
     			new UserModel(
     					"a",
-    					UserType.INDEPENDENT,
+    					UserType.PUPIL_OR_INDEP,
     					"hh",
     					new Date(17),
     					new Date(17),

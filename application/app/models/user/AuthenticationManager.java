@@ -12,7 +12,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Stack;
 
 import javax.crypto.SecretKeyFactory;
@@ -24,7 +23,6 @@ import models.user.factory.AdministratorUserFactory;
 import models.user.factory.AuthorUserFactory;
 import models.user.factory.IndependentUserFactory;
 import models.user.factory.OrganizerUserFactory;
-import models.user.factory.PupilUserFactory;
 import models.user.factory.TeacherUserFactory;
 import models.user.factory.UserFactory;
 
@@ -70,9 +68,8 @@ public class AuthenticationManager {
 	static {
 		FACTORIES.put(UserType.ADMINISTRATOR, new AdministratorUserFactory());
 		FACTORIES.put(UserType.AUTHOR, new AuthorUserFactory());
-		FACTORIES.put(UserType.INDEPENDENT, new IndependentUserFactory());
+		FACTORIES.put(UserType.PUPIL_OR_INDEP, new IndependentUserFactory());
 		FACTORIES.put(UserType.ORGANIZER, new OrganizerUserFactory());
-		FACTORIES.put(UserType.PUPIL, new PupilUserFactory());
 		FACTORIES.put(UserType.TEACHER, new TeacherUserFactory());
 	}
 
@@ -270,7 +267,7 @@ public class AuthenticationManager {
 		Calendar birthday = Calendar.getInstance();
 		birthday.setTime(birtyDay);
 		bebrasID = IDGenerator.generate(registerForm.get().name, birthday);
-		new UserModel(bebrasID, UserType.INDEPENDENT,
+		new UserModel(bebrasID, UserType.PUPIL_OR_INDEP,
 				name,
 				birtyDay,
 				new Date(),

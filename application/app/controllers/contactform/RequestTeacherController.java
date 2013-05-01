@@ -7,8 +7,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.mail.MessagingException;
-
 import models.EMessages;
 import models.data.Link;
 import models.mail.UpgradeRequestMail;
@@ -104,7 +102,7 @@ public class RequestTeacherController extends EController {
 	 */
 	private static boolean isAuthorized(){
 		User current = AuthenticationManager.getInstance().getUser();
-		return current.getType()==UserType.INDEPENDENT||current.getType()==UserType.PUPIL;
+		return current.getType()==UserType.PUPIL_OR_INDEP;
 	}
 	
 	/**

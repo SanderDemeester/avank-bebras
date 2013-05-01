@@ -137,7 +137,7 @@ public class ClassGroupContainer {
 				if(model==null){
 					prt.isValid=false;
 					prt.message=EMessages.get("classes.import.existingpupil.notexisting");
-				}else if(model.type!=UserType.PUPIL&&model.type!=UserType.INDEPENDENT){
+				}else if(model.type!=UserType.PUPIL_OR_INDEP){
 					prt.isValid=false;
 					prt.message=EMessages.get("classes.import.existingpupil.nopupil");
 				}
@@ -224,7 +224,7 @@ public class ClassGroupContainer {
 		SaltAndPassword hap = PasswordHasher.fullyHash(model.password);
 		model.password=hap.password;
 		model.hash = hap.salt;
-		model.type = UserType.PUPIL;
+		model.type = UserType.PUPIL_OR_INDEP;
 		model.active=true;
 	    }catch(Exception e){
 		//TODO: Jens, eventueel zelf kijken om verder fouten af te handelen in uw code.

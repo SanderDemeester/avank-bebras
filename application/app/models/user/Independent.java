@@ -29,7 +29,7 @@ public class Independent extends Authenticated{
     }
 
     public Independent(UserModel data) {
-        this(data, UserType.INDEPENDENT);
+        this(data, UserType.PUPIL_OR_INDEP);
     }
 
     /**
