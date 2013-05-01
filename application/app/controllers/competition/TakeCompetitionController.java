@@ -10,7 +10,9 @@ import java.util.List;
 
 import models.EMessages;
 import models.competition.Competition;
+import models.competition.CompetitionNotStartedException;
 import models.competition.CompetitionType;
+import models.competition.CompetitionUserStateManager;
 import models.competition.TakeCompetitionManager;
 import models.data.Language;
 import models.data.Link;
@@ -131,6 +133,22 @@ public class TakeCompetitionController extends EController {
         Competition competition = new Competition(competitionModel);
         // TODO juiste question set kiezen !
         QuestionSet questionSet = competition.getQuestionSet(competition.getAvailableGrades().get(0));
+        
+        // TMP: start competition here
+        CompetitionUserStateManager.getInstance().startCompetition(competition);
+        
+        // Register the user in the competition
+        try {
+            CompetitionUserStateManager.getInstance().registerUser(
+                        competition.getID(),
+                        questionSet,
+                        AuthenticationManager.getInstance().getUser()
+                    );
+        } catch (CompetitionNotStartedException e) {
+            // TODO: prettify
+            return badRequest(e.getMessage());
+        }
+        
         return ok(views.html.competition.run.questionSet.render(questionSet, null, defaultBreadcrumbs()));
     }
     
@@ -142,13 +160,24 @@ public class TakeCompetitionController extends EController {
     public static Result submit(String json) {
         JsonNode input = Json.parse(json);
         try {
-            QuestionFeedback feedback = QuestionFeedbackGenerator.generateFromJson(input, Language.getLanguage(EMessages.getLang()));
-            // TODO: save that shit!
+            QuestionFeedback feedback = QuestionFeedbackGenerator.generateFromJson(
+                    input, Language.getLanguage(EMessages.getLang()));
+            
+            // Save the results
+            CompetitionUserStateManager.getInstance().getState(
+                        feedback.getCompetitionID(),
+                        AuthenticationManager.getInstance().getUser().getID()
+                    );
+            
+            // TMP: move this to the daemon and add a runnable when the competition is started
+            CompetitionUserStateManager.getInstance().finishCompetition(feedback.getCompetitionID());
         } catch (UnavailableLanguageException
                 | UnknownLanguageCodeException
-                | AnswerGeneratorException e) {
+                | AnswerGeneratorException
+                | CompetitionNotStartedException e) {
             return badRequest(e.getMessage());
         }
+        
         return ok("Submission was successful!");
     }
     

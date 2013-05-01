@@ -40,4 +40,9 @@ public class MultipleChoiceAnswer extends Answer{
     public boolean isFilledIn() {
         return element != null;
     }
+
+    @Override
+    public String getTextValue() {
+        return element.getContent();
+    }
 }

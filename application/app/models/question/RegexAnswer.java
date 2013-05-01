@@ -30,4 +30,9 @@ public class RegexAnswer extends Answer{
     public boolean isFilledIn() {
         return input!=null && !input.equals("");
     }
+
+    @Override
+    public String getTextValue() {
+        return this.input;
+    }
 }

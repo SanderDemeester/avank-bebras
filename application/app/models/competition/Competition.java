@@ -222,5 +222,9 @@ public class Competition {
     public String getID() {
         return this.data.getID();
     }
+    
+    public Date getExpirationDate() {
+        return this.data.endtime;
+    }
 
 }

@@ -1,70 +1,98 @@
 package models.competition;
 
 
-import models.question.Answer;
-import models.user.User;
+import java.util.Date;
+import java.util.Map.Entry;
 
-import java.sql.Time;
-import java.util.List;
+import org.codehaus.jackson.JsonNode;
+
+import play.libs.Json;
+
+import models.EMessages;
+import models.data.Language;
+import models.data.UnavailableLanguageException;
+import models.data.UnknownLanguageCodeException;
+import models.dbentities.AnswerModel;
+import models.dbentities.AnswerModelGenerator;
+import models.question.Answer;
+import models.question.AnswerGeneratorException;
+import models.question.Question;
+import models.question.QuestionFeedback;
+import models.question.QuestionFeedbackGenerator;
+import models.question.QuestionSet;
+import models.user.User;
 
 /**
  * Competition user state class.
- * TODO: DEPRECATED, TO BE REMOVED
  *
- * @author Kevin Stobbelaar.
+ * @author Ruben Taelman
+ * @author Kevin Stobbelaar
  */
 
 public class CompetitionUserState {
 
-    private Time startTime;
-    private Time endTime;
-    private String cookie;
+    private Date startTime;
+    private Date endTime;
+    private QuestionFeedback feedback;
     private User user;
-    private Competition competition;
+    private QuestionSet questionSet;
 
     /**
      * Constructor
      * @param user corresponding user
      * @param competition corresponding competition
      */
-    public CompetitionUserState(User user, Competition competition){
+    public CompetitionUserState(User user, QuestionSet questionSet){
+        this.feedback = null;
+        this.startTime = new Date();
         this.user = user;
-        this.competition = competition;
-        this.cookie = null;
+        this.questionSet = questionSet;
     }
 
     /**
-     * Updates the current competition user state by setting a updated cookie.
+     * Updates the current competition user state by setting the feedback
      * @param cookie new cookie
      */
-    public void update(String cookie){
-        this.cookie = cookie;
+    public void setResults(QuestionFeedback feedback){
+        this.feedback = feedback;
+        this.endTime = new Date();
     }
-
+    
     /**
-     * Converts the current cookie to a list of answers.
-     * @return answer list
+     * Updates the current competition user state by setting the json encoded input
+     * @param json answers by the user encoded in json
+     * @param language the language the question were answered in
+     * @throws AnswerGeneratorException if something went wrong while parsing the answers
      */
-    public List<Answer> convertCookieToAnswerList(){
-        throw new UnsupportedOperationException();
+    public void setResults(String json, Language language) throws AnswerGeneratorException {
+        JsonNode input = Json.parse(json);
+        QuestionFeedback feedback = QuestionFeedbackGenerator.generateFromJson(input, language);
+        setResults(feedback);
     }
-
+    
     /**
-     * Gives the user an amount of grace time.
-     * @param time grace time granted
-     * @param cookie cookie
+     * Returns the feedback of this state
+     * @return the feedback of the answers, will return null if the setResults(...) wasn't called
+     * successfuly.
      */
-    public void addGraceTime(int time, String cookie){
-        throw new UnsupportedOperationException();
+    public QuestionFeedback getFeedback() {
+        return this.feedback;
     }
-
+    
     /**
-     * Sets the time for this state.
-     * @param time time
+     * Save the answers for this competition user state in the database
      */
-    public void setTime(int time){
-        throw new UnsupportedOperationException();
+    public void save() {
+        for(Entry<Question, Answer> entry : feedback.getAnswers().entrySet()) {
+            AnswerModel answer = AnswerModelGenerator.make(user);
+            Answer a = entry.getValue();
+            answer.setAnswer(a.getTextValue());
+            answer.setCorrect(a.isCorrect());
+            answer.setLanguageCode(user.getData().preflanguage);
+            answer.setQuestion(entry.getKey().getData());
+            answer.setQuestionSet(questionSet.getData());
+            answer.save();
+        }
     }
-
 
 }

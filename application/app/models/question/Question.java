@@ -266,4 +266,11 @@ public abstract class Question {
      */
     public abstract Answer getAnswerByInput(String input, Language language) throws AnswerGeneratorException;
 
+    /**
+     * The data model of this question
+     * @return the data model
+     */
+    public QuestionModel getData() {
+        return this.model;
+    }
 }
