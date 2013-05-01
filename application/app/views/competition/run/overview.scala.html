@@ -1,0 +1,49 @@
+@(competition : models.competition.Competition, breadcrumbs : List[models.data.Link])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import models.EMessages
+
+@main(EMessages.get("competition.name"), breadcrumbs){
+	<div class="well">
+		TODO: Roles, EMessages, json auto-update amount finished, submit answers modal, stop competition, countdown
+		<h1 class="muted">Competition: <i>@competition.getName()</i></h1>
+		<hr />
+		<div class="pull-right">
+			<button id="submitAnswers" class="btn">Submit pupil answers</button>
+			<button id="stopCompetition" class="btn btn-danger">Stop competition</button>
+		</div>
+		<h2>Progress</h2>
+		<div class="text-center">
+			<div>Time left: <span id="countdown">02:10</span></div>
+			<div id="timeprogress" class="progress progress-striped active">
+			  <div class="bar" style="width: 40%;"></div>
+			</div>
+			<div>Finished: <span id="finished">20/200</span></div>
+			<div id="finishedprogress" class="progress progress-striped active">
+			  <div class="bar" style="width: 40%;"></div>
+			</div>
+		</div>
+		<hr />
+		<h2>Details</h2>
+		<table class="table table-striped table-condensed table-hover">
+			<tr><th>ID</th><td>@competition.getID()</td></tr>
+			<tr><th>Time</th><td>@competition.getDuration() minutes</td></tr>
+			<tr><th>Expiration date</th><td>@controllers.util.DateFormatter.formatDate(competition.getExpirationDate(), true)</td></tr>
+			<tr><th>Question sets</th><td>
+			<ul class="unstyled">
+			@for(grade <- competition.getAvailableGrades()) {
+				<li><strong>@grade.getName()</strong>: @competition.getQuestionSet(grade).getName() </li>
+			}
+			</ul>
+			</td></tr>
+			<tr><th>Available languages</th><td>
+			<ul class="unstyled">
+			@for(language <- competition.getAvailableLanguages()) {
+				<li>@language.getName()</li>
+			}
+			</ul>
+			</td></tr>
+		</table>
+	</div>
+}

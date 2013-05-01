@@ -51,12 +51,14 @@ public class CompetitionUserStateManager {
             public void run() {
                 try {
                     finishCompetition(competition.getID());
+                    competition.setState(CompetitionState.FINISHED);
                 } catch (CompetitionNotStartedException e) {
                     // Silently fail, this means that the competition was ended before
                 }
             }
             
-        }, calendar);        
+        }, calendar);  
+        competition.setState(CompetitionState.RUNNING);
     }
     
     /**

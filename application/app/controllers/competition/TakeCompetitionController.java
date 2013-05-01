@@ -34,6 +34,7 @@ import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Page;
 
 import controllers.EController;
+import controllers.util.DateFormatter;
 
 /**
  * Controller for taking competitions. Includes the listing of available
@@ -187,6 +188,14 @@ public class TakeCompetitionController extends EController {
         QuestionSetModel qsModel = Ebean.find(QuestionSetModel.class).where().idEq(feedback.getQuestionSetID()).findUnique();
         QuestionSet questionSet = new QuestionSet(qsModel);
         return ok(views.html.competition.run.questionSet.render(questionSet, feedback, defaultBreadcrumbs()));
+    }
+    
+    // TODO: add roles
+    public static Result overview(String id) {
+        CompetitionModel competitionModel = Ebean.find(CompetitionModel.class).where().idEq(id).findUnique();
+        Competition competition = new Competition(competitionModel);
+        
+        return ok(views.html.competition.run.overview.render(competition, defaultBreadcrumbs()));
     }
 
 }
