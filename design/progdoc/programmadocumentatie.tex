@@ -70,8 +70,30 @@ Men kan in de lijst zoeken naar klassen van een bepaalde leerkracht door te filt
 [TODO: screenshot nieuwe klas]
 Om een nieuwe klas aan te maken, klik je rechtsboven op 'Nieuw'. Daar geef je de naam van de nieuwe klas, de school, leeftijdscategorie en geldigheidsdatum in en klik je op 'Save'.
 
+Men kan ook een klas toevoegen door een Excel-bestand te uploaden. Dit bestand moet voldoen aan het vaste formaat dat hier beschreven wordt. 
+Vooreerst is het belangrijk om te weten dat enkel en alleen het eerste werkblad zal verwerkt worden. Alle nodige gegevens zullen dus hier terecht moeten komen. De gegevens worden per rij verwerkt. Elke rij komt dus overeen met een record. Er wordt onderscheid gemaakt tussen 3 soorten records: 'Pupil'-records, 'Class'-records en records voor commentaar.
+
+Een 'Pupil'-record bevat in de eerste cel het woord 'Pupil'. De volgende kolommen hebben achtereenvolgens als inhoud: ID, naam, geboortedatum, geslacht, voorkeurstaal, wachtwoord en e-mailadres. Om een bestaande gebruiker als leerling toe te voegen aan de klas, volstaat het om zijn Bebras-ID in te vullen. De rest van het record zal dan genegeerd worden. Als het ID gevonden wordt bij een leerling in het systeem, wordt die toegevoegd aan de nieuwe klas en, indien hij nog actief zou zijn in een andere klas, als oud-leerling ingesteld bij zijn huidige klas.  
+Om een nieuwe gebruiker toe te voegen, laat je het veld ID leeg. De overige kolommen zijn verplicht, met uitzondering van e-mailadres.
+
+Een 'Class'-record bevat in de eerste cel het woord 'Class'. De volgende kolommen hebben achtereenvolgens als inhoud: naam, geldigheidsdatum, leeftijdscategorie en het ID van de school. Alle kolommen moeten correct ingevuld worden en de klas zal enkel toegevoegd worden als de leeftijdscategorie en het ID van de school in het systeem aanwezig zijn. 
+
+De overige records worden beschouwd als commentaar en zullen genegeerd worden.
+
+Alle 'Pupil'-records die onder een 'Class'-record staan, worden beschouwd als leerlingen van deze klas. 
+
 [TODO: screenshot klasinfo]
 Een klas aanpassen kan door in de lijst op de 'Bewerk'-knop te klikken bij de betreffende klas. Hier vindt men meer info over de klas, school en leraar. Daarenboven is hier ook de lijst van studenten uit deze klas te vinden, alsook de hulpleerkrachten en de oud-studenten. Deze kunnen toegevoegd worden aan de hand van hun Bebras-ID.
+
+Door hier een Excel-bestand te uploaden zoals reeds beschreven, kan men leerlingen toevoegen aan de bestaande klas. 'Class'-records zullen hierbij genegeerd worden.
+
+\textbf{\textit{Wat kan er mislopen?}}
+
+Na het uploaden van het Excel-bestand, wordt er een bevestigingspagina getoond. Dit is een overzicht met alle records die zullen toegevoegd worden en welke niet wegens fouten. Als een 'Class'-record foutief is, worden de bijhorende leerlingen niet opgeslaan. Men kan eventueel een nieuw bestand uploaden of doorgaan met opslaan.
+
+Als het bestand niet kon ingelezen worden, zal je hiervan een melding krijgen. Controleer of de records voldoen aan de richtlijnen en sla het bestand op in xlsx-formaat.
+
+Het kan ook occassioneel gebeuren dat de gegevens niet kunnen opgeslaan worden. Dit is waarschijnlijk te wijten aan een interne fout. Probeer opnieuw of contacteer de administrator bij aanhoudende problemen. 
 
 \subsection{Vrageneditor}
 
