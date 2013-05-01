@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Table(name="contestclasses")
 public class ContestClass extends ManageableModel {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     @ManyToOne
     @JoinColumn(name="classid")

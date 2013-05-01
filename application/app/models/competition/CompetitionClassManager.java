@@ -1,10 +1,12 @@
 package models.competition;
 
+import com.avaje.ebean.Ebean;
 import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.Page;
 import controllers.competition.routes;
 import models.dbentities.ClassGroup;
 import models.dbentities.CompetitionModel;
+import models.dbentities.ContestClass;
 import models.management.Manager;
 import models.management.ModelState;
 import play.mvc.Call;
@@ -35,10 +37,24 @@ public class CompetitionClassManager extends Manager<ClassGroup> {
         this.contestid = contestid;
         this.teacherid = teacherid;
         setPageSize(5);
-        // TODO aanpassen zodat alleen de klassen geregistreerd voor deze contest hier komen te staan
+
+        // setting the expression list for this manager
+        CompetitionModel contest = Ebean.find(CompetitionModel.class).where().idEq(contestid).findUnique();
+        List<ContestClass> contestClasses = Ebean.find(ContestClass.class).where().eq("contestid", contest).findList();
+        //List<ClassGroup> classIds = new ArrayList<ClassGroup>();
+        //for (ContestClass contestClass : contestClasses){
+        //    classIds.add(Ebean.find(ClassGroup.class).where().eq("id",contestClass.classid.id).findUnique());
+        //}
+        List<Integer> classIds = new ArrayList<Integer>();
+        for (ContestClass contestClass : contestClasses){
+            classIds.add(contestClass.classid.id);
+        }
         this.expressionList = getFinder()
                 .where()
+                .in("id", classIds)
                 .eq("teacherid", teacherid);
+
+        // disables the action buttons
         setHasActions(false);
     }
 
