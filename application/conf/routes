@@ -74,6 +74,7 @@ GET     /available-contests                 controllers.competition.TakeCompetit
 GET     /available-contests/take/:id        controllers.competition.TakeCompetitionController.takeCompetition(id)
 GET     /available-contests/submit		    controllers.competition.TakeCompetitionController.submit(json)
 GET     /available-contests/feedback/:json	controllers.competition.TakeCompetitionController.feedback(json)
+GET     /competition-overview/:id			controllers.competition.TakeCompetitionController.overview(id)
 
 # Question Management
 GET     /questions                  		 controllers.question.QuestionController.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")

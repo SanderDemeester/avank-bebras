@@ -196,7 +196,7 @@ public class AuthenticationManager {
 		return stack.peek();
 	}
 
-	private String getAuthCookie() {
+	public String getAuthCookie() {
 		Cookie cookie = Context.current().request().cookies().get(COOKIENAME);
 		if(cookie == null)
 			return null;

@@ -177,5 +177,9 @@ public class QuestionSet {
     public QuestionSetModel getData() {
         return this.data;
     }
+    
+    public String getName() {
+        return "TODO: getName()";
+    }
 
 }

@@ -79,6 +79,14 @@ public class Competition {
     public CompetitionType getType(){
         return data.type;
     }
+    
+    /**
+     * Sets the state for this competition.
+     * @param type new competition state
+     */
+    public void setState(CompetitionState competitionState) {
+        this.competitionState = competitionState;
+    }
 
     /**
      * Gets the duration for this competition.
@@ -225,6 +233,10 @@ public class Competition {
     
     public Date getExpirationDate() {
         return this.data.endtime;
+    }
+    
+    public String getName() {
+        return this.data.name;
     }
 
 }
