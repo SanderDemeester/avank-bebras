@@ -123,8 +123,6 @@ public class AuthenticationManager {
 		User user = create(userModel);
 		Stack<User> stack = users.get(cookie);
 		
-		System.out.println(loggedInUserID.contains(user.getID())); //TODO is this syso necessary?
-		
 		// If the user that is trying to login is being the target of a mimic proces. Then deny login.
 		if(loggedInUserID.contains(user.getID()) && user.isMimicTarget()) return null;
 		if(loggedInUserID.contains(user.getID()) && !current.isMimicking()){

@@ -201,7 +201,6 @@ public class ClassGroupContainer {
 			}
 			Ebean.commitTransaction();
 		}catch(PersistenceException pe){
-			pe.printStackTrace();
 			Ebean.rollbackTransaction();
 			res=false;
 		}finally{
@@ -227,6 +226,7 @@ public class ClassGroupContainer {
 		model.type = UserType.PUPIL_OR_INDEP;
 		model.active=true;
 	    }catch(Exception e){
+	    	
 		//TODO: Jens, eventueel zelf kijken om verder fouten af te handelen in uw code.
 	    }
 	}
