@@ -24,6 +24,7 @@ Om te registreren en een Bebras account aan te maken klik je op 'Registreer'. Hi
 \begin{itemize}
 \item Verplichte velden die niet ingevuld zijn: Vul alle verplichte velden in.
 \item Ongeldig e-mailadres: Vul een geldig e-mailadres in.
+\item Het opgegeven e-mailadres is reeds in gebruik: Vul een ander e-mailadres in.
 \item Ongeldige datum: Vul de datum in volgens het 'DD/MM/YYYY'-formaat.
 \item Wachtwoorden komen niet overeen: Wees zeker dat je tweemaal hetzelfde wachtwoord invult.
 \end{itemize}
@@ -32,6 +33,7 @@ Om te registreren en een Bebras account aan te maken klik je op 'Registreer'. Hi
 Nu je een Bebras account hebt aangemaakt, kun je ook inloggen. Hiervoor klik je op de startpagina op 'Log in'. [TODO: screenshot startpagina] Vul je Bebras-ID en wachtwoord in, klik op 'Log in' en je bent ingelogd! Als alles goed gaat, zie je nu jouw persoonlijke pagina. 
 
 \textbf{\textit{Wat kan er mislopen?}}
+Als er een veld niet ingevuld is, zal je hier een melding van krijgen. Zorg ervoor dat alle verplichte velden ingevuld zijn.
 
 In het geval dat je een foute gebruikersnaam of wachtwoord hebt ingevuld, zal je hiervan een melding krijgen. Probeer opnieuw in te loggen met de correcte gegevens of klik op 'Wachtwoord vergeten' indien je jouw wachtwoord niet meer weet.
 
@@ -53,6 +55,15 @@ Nu je aangemeld bent, beschik je over een aantal standaardfuncties.
 \subsection{Profiel bewerken}
 Om je profiel te bewerken, klik je rechtsboven op je Bebras-ID zodat er een menu wordt geopend. [TODO: screenshot account-dropdown] In dit menu kies je voor 'Instellingen'. [TODO: screenshot personaledit] Hier kan je de verschillende gegevens die op jouw profiel verschijnen, zoals opgegeven bij registratie, aanpassen. Om de aanpassingen op te slaan, klik je op 'Verzend'.
 
+\textbf{\textit{Wat kan er mislopen?}}
+
+\begin{itemize}
+\item Verplichte velden die niet ingevuld zijn: Vul alle verplichte velden in.
+\item Ongeldig e-mailadres: Vul een geldig e-mailadres in.
+\item Het opgegeven e-mailadres is reeds in gebruik: Vul een ander e-mailadres in.
+\item Ongeldige datum: Vul de datum in volgens het 'DD/MM/YYYY'-formaat.
+\end{itemize}
+
 \subsection{Wachtwoord veranderen}
 Om je wachtwoord te veranderen, vul je jouw huidig wachtwoord in. Geef dan je nieuwe wachtwoord in en bevestig dit in het veld eronder. Klik op 'Ok' om je wachtwoord te wijzigen.
 
@@ -69,6 +80,20 @@ Als leerkracht beschik je over volgende extra functies.
 Hier vindt de leerkracht de lijst van scholen waaraan hij/zij les heeft gegeven.
 
 Om een nieuwe school aan het systeem toe te voegen, klik je op 'Voeg een nieuwe school toe'. Vul de naam en het adres van de school in en klik op 'Save'. De nieuwe school zal dan verschijnen in het overzicht als er een verbintenis met de school is.
+
+\textbf{\textit{Wat kan er mislopen?}}
+
+\begin{itemize}
+\item Verplichte velden die niet ingevuld zijn: Vul alle verplichte velden in.
+\item Ongeldig e-mailadres: Vul een geldig e-mailadres in.
+\item Het opgegeven e-mailadres is reeds in gebruik: Vul een ander e-mailadres in.
+\item Ongeldige datum: Vul de datum in volgens het 'DD/MM/YYYY'-formaat.
+\item Wachtwoorden komen niet overeen: Wees zeker dat je tweemaal hetzelfde wachtwoord invult.
+\end{itemize}
+
+\textbf{\textit{Wat kan er mislopen?}}
+
+Zorg ervoor dat alle verplichte velden ingevuld zijn.
 
 \subsection{Lijst van klassen}
 
@@ -96,7 +121,12 @@ Een klas aanpassen kan door in de lijst op de 'Bewerk'-knop te klikken bij de be
 
 Door hier een Excel-bestand te uploaden zoals reeds beschreven, kan men leerlingen toevoegen aan de bestaande klas. 'Class'-records zullen hierbij genegeerd worden.
 
+De mogelijkheid bestaat ook om een Excel-bestand met alle informatie van de klas te downloaden.
+
 \textbf{\textit{Wat kan er mislopen?}}
+Alle verplichte velden moeten zeker en vast ingevuld zijn.
+
+Het ID van de school en de leerkracht moet bestaan in het systeem. Verzeker je er dus van dat je zeker de juiste ID's ingeeft als je een foutmelding hieromtrent krijgt.
 
 Na het uploaden van het Excel-bestand, wordt er een bevestigingspagina getoond. Dit is een overzicht met alle records die zullen toegevoegd worden en welke niet wegens fouten. Als een 'Class'-record foutief is, worden de bijhorende leerlingen niet opgeslaan. Men kan eventueel een nieuw bestand uploaden of doorgaan met opslaan.
 
@@ -160,6 +190,10 @@ Deze pagina geeft een overzicht van de servers die momenteel gebruikt worden. Bo
 \subsubsection{Voeg server toe}
 Om een nieuwe server toe te voegen, vul je de gevraagde velden in. Kies vooreerst een naam voor de server. Vervolgens moet je de locatie van de server opgeven. Tot slot worden er nog enkele FTP-gegevens gevraagd: locatie, poortnummer, gebruikersnaam, paswoord en pas. Klik op 'Maak aan' om de server toe te voegen. Om de actie te annuleren, klik je op 'Annuleer'.
 
+\textbf{\textit{Wat kan er mislopen?}}
+
+Zorg er zeker voor dat alle verplichte velden zijn ingevuld. Bij de melding dat de base url of het pad ongeldig is, kijk je dit best nog eens na en verbeter waar nodig.
+
 \subsection{Vragenbeheer}
 
 \subsubsection{Bekijk vragen}
@@ -207,8 +241,22 @@ Hier kan de administrator de links wijzigen die de gebruikers linksbovenaan te z
 \subsubsection{Wijzig de leeftijdscategorieën}
 Hier kan de administrator de leeftijdscategorieën wijzigen. Om een nieuwe leeftijdscategorie toe te voegen, moet men de minimum- en maximumleeftijd opgeven en vervolgens op de plus-knop klikken. Een categorie verwijderen uit de lijst kan door op de min-knop te klikken.
 
+\textbf{\textit{Wat kan er mislopen?}}
+
+Alle verplichte velden moeten zeker ingevuld worden.
+
+Zorg ervoor dat de minimumleeftijd jonger is dan de maximumleeftijd als je hierover een melding krijgt.
+
+Als de naam voor de leeftijdscategorie al bestaat, kies dan een andere naam.
+
 \subsubsection{Wijzig de moeilijkheidsgraden}
 Hier kan de administrator de moeilijkheidsgraden wijzigen. Om een nieuwe moeilijkheidsgraad toe te voegen, moet men de naam en de rang meegeven die de moeilijkheid voorstelt en vervolgens op de plus-knop klikken. Een graad verwijderen uit de lijst kan door op de min-knop te klikken.
+
+\textbf{\textit{Wat kan er mislopen?}}
+
+Alle verplichte velden moeten zeker ingevuld worden.
+
+Als de naam voor de moeilijkheidsgraad al bestaat, kies dan een andere naam.
 
 \subsection{Boots gebruiker na}
 Om een gebruiker die lager in rang staat na te bootsen, heb je diens Bebras-ID nodig. Vul dit in in het daarvoor bestemde veld en klik dan op 'Mimic'. Nu heb je toegang tot de account van de gebruiker die je wilt imiteren. Dit is zichtbaar rechtsboven waar je naast je eigen ingelogde status nu ook de ge"imiteerde gebruiker ziet staan. De admin kan elke gebruiker nabootsen, de organizer iedereen behalve de admin en leerkrachten kunnen enkel hun eigen actieve leerlingen imiteren. Indien je een account probeert na te bootsen waar je geen toegangsrechten tot hebt, zal je hiervan een melding krijgen. Het is mogelijk om via een ge"imiteerde account een andere account te imiteren. Om terug te keren naar je originele account, meld je je af bij de nagebootste account. Zo kom je terug op jouw startpagina. 
