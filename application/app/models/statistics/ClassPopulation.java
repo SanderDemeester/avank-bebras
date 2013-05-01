@@ -16,7 +16,7 @@ import models.dbentities.ClassPupil;
  * A Population of one class.
  * @author Felix Van der Jeugt
  */
-public class ClassPopulation implements Population {
+public class ClassPopulation extends Population {
 
     private ClassGroup classGroup;
 

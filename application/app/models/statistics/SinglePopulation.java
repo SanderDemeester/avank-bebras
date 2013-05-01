@@ -10,7 +10,7 @@ import models.dbentities.UserModel;
  * Quite a stupid Population, actually. Represents a single user.
  * @author Felix Van der Jeugt
  */
-public class SinglePopulation implements Population {
+public class SinglePopulation extends Population {
 
     private UserModel user;
 

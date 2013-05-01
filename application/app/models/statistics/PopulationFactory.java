@@ -29,11 +29,14 @@ public class PopulationFactory {
      * population.
      * @param type The type of population.
      * @param identifier The type-unique identifier.
+     * @param colour The html colour literal for the population.
      * @return A new population.
      */
-    public Population create(PopulationType type, String identifier)
-            throws PopulationFactoryException {
-        return factories.get(type).create(identifier);
+    public Population create(PopulationType type, String identifier,
+            String colour) throws PopulationFactoryException {
+        Population p = factories.get(type).create(identifier);
+        p.setColour(colour);
+        return p;
     }
 
     /**
@@ -41,11 +44,12 @@ public class PopulationFactory {
      * population.
      * @param type The type of population.
      * @param identifier The type-unique identifier.
+     * @param colour The html colour literal for the population.
      * @return A new population.
      */
-    public Population create(String type, String identifier)
+    public Population create(String type, String identifier, String colour)
             throws PopulationFactoryException {
-        return create(types.get(type), identifier);
+        return create(types.get(type), identifier, colour);
     }
 
     private final Map<PopulationType, TypePopulationFactory> factories;

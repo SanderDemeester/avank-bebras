@@ -1,6 +1,6 @@
 @(
-    populationGroups:   List[models.statistics.PopulationGroup],
-    breadcrumbs:        List[models.data.Link]
+    populations:    List[models.statistics.Population],
+    breadcrumbs:    List[models.data.Link]
 )
 
 @main(EMessages.get("statistics.title"), breadcrumbs) {
@@ -12,29 +12,100 @@
     }
 </style>
 <form method="POST" action="/statistics">
-    <div class="population-groups">
-        @for(i <- 0 to populationGroups.size() - 1) { <!>
-        <div class="population-group"
-            style="background-color: @populationGroups(i).colour.getHtml()">
-            <input type="hidden"
-                id="colours[@i]"
-                value="@populationGroups(i).colour.getName()">
-            </input>
-            @for(j <- 0 to populationGroups(i).populations.size() - 1) { <!>
-            <div class="population">
-                <input type="hidden"
-                    id="ids[@i][@j]"
-                    value="@populationGroups(i).populations(j).id()">
-                </input>
-                <input type="hidden"
-                    id="types[@i][@j]"
-                    value="@populationGroups(i).populations(j).stringtype()">
-                </input>
-                <p>@populationGroups(i).populations(j).describe()</p>
-            </div>
+    <table class="populations">
+        <tbody>
+            @for(i <- 0 to populations.size() - 1) { <!>
+            <tr class="population">
+                <!-- Hidden properties of the population. -->
+                <input type="hidden" name="colours[@i]" class="colours" value="@populations(i).getColour()" />
+                <input type="hidden" name="ids[@i]"     class="ids"     value="@populations(i).id()" />
+                <input type="hidden" name="types[@i]"   class="types"   value="@populations(i).stringtype()" />
+
+                <!-- Hidden data for dynamic adding. -->
+                <input type="hidden" class="index" value="@i"/>
+
+                <!-- The actual content -->
+                <td class="colour-picker">
+                    <a href="#" class="btn colorPicker" data-color-format="hex" data-color="@populations(i).getColour()">
+                        <div class="preview" style="background-color: @populations(i).getColour()"></div>
+                    </a>
+                </td>
+                <td class="description">
+                    <div class="well">@populations(i).describe()</div>
+                </td>
+            </tr>
             }
+        </tbody>
+    </table>
+
+    <!-- Hidden data for dynamic adding. -->
+    <input type="hidden" id="population-count" value="@populations.size()" />
+
+    <!-- Functionality for adding populations. -->
+    <button type="button" data-toggle="modal" data-target="#population-chooser">@EMessages.get("forms.add")</button>
+    <div class="modal hide fade" id="population-chooser">
+        <!--<div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>-->
+        <div class="modal-body">
+            <ul class="nav nav-tabs">
+                <li><a href="#home" data-toggle="tab">Home</a></li>
+                <li><a href="#profile" data-toggle="tab">Profile</a></li>
+                <li><a href="#messages" data-toggle="tab">Messages</a></li>
+                <li><a href="#settings" data-toggle="tab">Settings</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="home">...</div>
+                <div class="tab-pane" id="profile">...</div>
+                <div class="tab-pane" id="messages">...</div>
+                <div class="tab-pane" id="settings">...</div>
+            </div>
         </div>
-        }
+        <div class="modal-footer">
+            <a href="#" class="btn" data-dismiss="modal">Close</a>
+            <a href="#" class="btn btn-primary" id="population-add" data-dismiss="modal">Add</a>
+        </div>
     </div>
+
 </form>
+<script type="text/javascript" src="/assets/javascripts/colorpicker/bootstrap-colorpicker.js"></script>
+<link type="text/css" rel="stylesheet" href="/assets/stylesheets/colorpicker/colorpicker.css"/>
+<style type="text/css">
+    .preview {
+        width: 1em;
+        height: 1em;
+    }
+    table.populations {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    tr.population {
+        width: 100%;
+    }
+    .colorPicker {
+        height: 100%;
+    }
+    .description {
+        width: 100%;
+    }
+    .description div {
+        margin-bottom: 0px;
+        padding: 2px;
+    }
+</style>
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        window.prettyPrint && prettyPrint();
+        $(".colorPicker").colorpicker();
+        $(".colorPicker").colorpicker().on("changeColor", function(e) {
+            var color = e.color.toHex();
+            $(this).children(".preview").css("background-color", color);
+        });
+    });
+
+    $(document).on("click", "#add-population", function() {
+        alert("Oh, new population :-)");
+    });
+</script>
 }
