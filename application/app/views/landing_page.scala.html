@@ -27,7 +27,7 @@
 @if(roles(i).onLandingPage()) {
 <div class="column-fast">
     <div class="navbar navbar-inner no-margin"><div class="container">
-        <span class="brand">@EMessages.get(roles(i).title())</span>
+        <span class="brand">@roles(i).title()</span>
     </div></div>
     <div class="well well-small"><ul>
         @for(link <- roles(i).pages()) { <!-- stupid &lt; -->
