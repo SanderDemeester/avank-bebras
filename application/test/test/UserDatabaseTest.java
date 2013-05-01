@@ -154,7 +154,7 @@ public class UserDatabaseTest extends ContextTest {
     @Test
     public void findListBasedOnType(){
         int numberOfIndependentUser = 10;
-        int numberOfPupils = 5;
+        int numberOfTeachers = 5;
 
         //First clear the Users
         for (UserModel um :UserModel.find.all()){
@@ -178,9 +178,9 @@ public class UserDatabaseTest extends ContextTest {
         }
 
         //generate random Pupils.
-        for(int i = 0; i < numberOfPupils; i++){
+        for(int i = 0; i < numberOfTeachers; i++){
             try{
-                Independent pu = new Independent(new UserModel(new BigInteger(130,random).toString(),UserType.PUPIL_OR_INDEP,
+                Teacher t = new Teacher(new UserModel(new BigInteger(130,random).toString(),UserType.TEACHER,
                         new BigInteger(130,random).toString(),
                         new Date(),
                         new Date(),
@@ -189,17 +189,17 @@ public class UserDatabaseTest extends ContextTest {
                         "mail@localhost",
                         Gender.Female,"nl"));
 
-                pu.data.save();
+                t.data.save();
             }catch(PersistenceException e){Assert.fail("Could not save the user");}
         }
 
         List<UserModel> allUsers = UserModel.find.all();
         List<UserModel> allIndepententUser = UserModel.find.where().like("type", UserType.PUPIL_OR_INDEP.toString()).findList();
-        List<UserModel> allPupils = UserModel.find.where().like("type",UserType.PUPIL_OR_INDEP.toString()).findList();
+        List<UserModel> allTeachers = UserModel.find.where().like("type",UserType.TEACHER.toString()).findList();
         System.out.println(allIndepententUser.size());
-        System.out.println(allPupils.size());
-        Assert.assertTrue(Integer.toString(allUsers.size()),allUsers.size() == numberOfIndependentUser+numberOfPupils);
+        System.out.println(allTeachers.size());
+        Assert.assertTrue(Integer.toString(allUsers.size()),allUsers.size() == numberOfIndependentUser+numberOfTeachers);
         Assert.assertTrue("indep",allIndepententUser.size() == numberOfIndependentUser);
-        Assert.assertTrue("pup",allPupils.size() == numberOfPupils);
+        Assert.assertTrue("teach",allTeachers.size() == numberOfTeachers);
     }
 }
