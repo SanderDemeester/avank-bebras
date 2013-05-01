@@ -1,5 +1,6 @@
 package models.user;
 
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -37,13 +38,19 @@ public class IndependentTest extends ContextTest {
 
     @Test
     public void testGetCurrentClass() {
+    	Calendar c = Calendar.getInstance();
+    	c.add(Calendar.MONTH, 1);
+    	Date exp = c.getTime();
         UserModel data = createTestUserModel(UserType.PUPIL_OR_INDEP);
         ClassGroup cl1 = new ClassGroup();
         cl1.id = 1;
+        cl1.expdate=exp;
         ClassGroup cl2 = new ClassGroup();
         cl2.id = 2;
+        cl2.expdate=exp;
         ClassGroup cl3 = new ClassGroup();
         cl3.id = 3;
+        cl3.expdate=exp;
         data.classgroup = cl1.id;
 
         ClassPupil cp1 = new ClassPupil();
@@ -74,13 +81,20 @@ public class IndependentTest extends ContextTest {
 
     @Test
     public void testGetPreviousClasses() {
+    	Calendar c = Calendar.getInstance();
+    	c.add(Calendar.MONTH, 1);
+    	Date exp = c.getTime();
+    	
         UserModel data = createTestUserModel(UserType.PUPIL_OR_INDEP);
         ClassGroup cl1 = new ClassGroup();
         cl1.id = 1;
+        cl1.expdate=exp;
         ClassGroup cl2 = new ClassGroup();
         cl2.id = 2;
+        cl2.expdate=exp;
         ClassGroup cl3 = new ClassGroup();
         cl3.id = 3;
+        cl3.expdate=exp;
         data.classgroup = cl1.id;
 
         ClassPupil cp1 = new ClassPupil();

@@ -1,4 +1,5 @@
 package test;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import models.dbentities.UserModel;
@@ -8,6 +9,8 @@ import models.user.Organizer;
 import models.user.Teacher;
 import models.user.UserType;
 import models.user.User;
+
+import org.junit.Before;
 import org.junit.Test;
 import com.avaje.ebean.Ebean;
 import java.security.SecureRandom;
@@ -18,6 +21,14 @@ import junit.framework.Assert;
 public class UserDatabaseTest extends ContextTest {
 
     private SecureRandom random = new SecureRandom();
+    
+    @Before
+    public void cleanDB(){
+    	Collection<UserModel> um = Ebean.find(UserModel.class).findList();
+    	for(UserModel u : um){
+    		u.delete();
+    	}
+    }
 
     /*
      * Test IndependentUser database insertion.
@@ -75,7 +86,7 @@ public class UserDatabaseTest extends ContextTest {
         }
 
         List<UserModel> teacherList = UserModel.find.where().like("type", "TEACHER").findList();
-        Assert.assertTrue(teacherList.size() == numberOfTeachers);
+        Assert.assertTrue("listsize",teacherList.size() == numberOfTeachers);
 
         User teacher = new Teacher(new UserModel(teacherID, UserType.TEACHER,
                 name,
@@ -93,10 +104,10 @@ public class UserDatabaseTest extends ContextTest {
         Assert.assertNotNull(Ebean.find(UserModel.class).where().eq("name", name).findUnique());
         
         UserModel userModel = Ebean.find(UserModel.class).where().eq("id", teacher.data.id).findUnique();
-        Assert.assertEquals(true, userModel.gender == Gender.Female);
-        Assert.assertEquals(true, userModel.preflanguage == "nl");
-        Assert.assertEquals(true, userModel.email =="mail@localhost");
-        Assert.assertEquals(true, userModel.password == "password");
+        Assert.assertEquals("gender",true, userModel.gender == Gender.Female);
+        Assert.assertEquals("preflan",true, userModel.preflanguage == "nl");
+        Assert.assertEquals("mail",true, userModel.email =="mail@localhost");
+        Assert.assertEquals("pass",true, userModel.password == "password");
 
         teacher.data.delete();
     }
