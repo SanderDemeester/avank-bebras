@@ -4,33 +4,39 @@ import it.sauronsoftware.ftp4j.FTPAbortedException;
 import it.sauronsoftware.ftp4j.FTPClient;
 import it.sauronsoftware.ftp4j.FTPDataTransferException;
 import it.sauronsoftware.ftp4j.FTPException;
+import it.sauronsoftware.ftp4j.FTPFile;
 import it.sauronsoftware.ftp4j.FTPIllegalReplyException;
+import it.sauronsoftware.ftp4j.FTPListParseException;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.Authenticator;
 import java.net.HttpURLConnection;
 import java.net.PasswordAuthentication;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import controllers.EController;
+import controllers.question.routes;
+
 import models.management.Editable;
 import models.management.Listable;
 import models.management.ManageableModel;
 import play.Logger;
+import play.Play;
 import play.data.validation.Constraints;
 
 /**
@@ -205,6 +211,53 @@ public class Server extends ManageableModel implements Listable{
         
         // We are nice and close the connection
         client.disconnect(true);
+    }
+    
+    public File downloadFile(String questionID, String userID) throws IllegalStateException, IOException, FTPIllegalReplyException, FTPException, FTPDataTransferException, FTPAbortedException, FTPListParseException, QuestionBuilderException {
+        FTPClient client = new FTPClient();
+        
+        String download = Play.application().configuration().getString("questioneditor.download");
+        
+        // Connect to server
+        client.connect(ftpuri, ftpport);
+        client.login(ftpuser, ftppass);
+        
+        client.changeDirectory(ftppath);
+        client.changeDirectory(questionID);
+        
+        List<File> files = new ArrayList<File>();
+        Logger.debug(questionID);
+        // Read all the files in that folder
+        for(FTPFile file : client.list()) {
+            Logger.debug(file.getName());
+            File f = QuestionIO.addTempFile(
+                    download,
+                    file.getName()
+            );
+            files.add(f);
+            client.download(file.getName(), f);
+        }
+        
+        // Add all those files to a new zip file
+        File zipFile = QuestionIO.addTempFile(download, QuestionPack.QUESTIONZIPFILE+"~"+questionID+"~"+userID);
+
+        // Let's be cool and delete those files immediately
+        for(File file : files) {
+            file.delete();
+        }
+        
+        FileOutputStream fout = new FileOutputStream(zipFile);
+        ZipOutputStream zout = new ZipOutputStream(fout);
+
+        QuestionPack.addToZip(zout, files);
+        
+        zout.close();
+        fout.close();
+        
+        // We are nice and close the connection
+        client.disconnect(true);
+        
+        return zipFile;
     }
     
     private class ServerAuthenticator extends Authenticator {

@@ -13,6 +13,7 @@
 	@for(language <- q.getLanguages()) {
 	<p class="muted">@language.getName():</p>
 	<div id="@q.getID()" class="question well">
+		<a class="btn pull-right" href="@controllers.question.routes.QuestionController.export(Integer.toString(q.getID()))">@EMessages.get("question.editor.exportAsZip")</a>
 		<b>@q.getTitle(language)</b><br />
 		<p class="muted">@EMessages.get("question.editor.tabs.question"):</p>
 		<hr />

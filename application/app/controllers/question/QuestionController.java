@@ -1,13 +1,18 @@
 package controllers.question;
 
+import it.sauronsoftware.ftp4j.FTPAbortedException;
+import it.sauronsoftware.ftp4j.FTPDataTransferException;
+import it.sauronsoftware.ftp4j.FTPException;
+import it.sauronsoftware.ftp4j.FTPIllegalReplyException;
+import it.sauronsoftware.ftp4j.FTPListParseException;
+
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.codehaus.jackson.JsonNode;
 
 import models.EMessages;
 import models.data.Language;
@@ -23,23 +28,28 @@ import models.question.QuestionBuilderException;
 import models.question.QuestionFeedback;
 import models.question.QuestionFeedbackGenerator;
 import models.question.QuestionIO;
+import models.question.QuestionPack;
 import models.question.QuestionSet;
 import models.question.Server;
 import models.question.submits.Submit;
 import models.question.submits.SubmitsPage;
+import models.user.AuthenticationManager;
+
+import org.codehaus.jackson.JsonNode;
+import org.w3c.dom.Document;
+
 import play.Play;
 import play.cache.Cache;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Result;
 import views.html.commons.noaccess;
+import views.html.competition.run.questionSet;
 import views.html.question.approveQuestionForm;
 import views.html.question.editQuestionForm;
 import views.html.question.newQuestionForm;
 import views.html.question.questionManagement;
 import views.html.question.submitsManagement;
-import views.html.question.previewQuestion;
-import views.html.competition.run.questionSet;
 
 import com.avaje.ebean.annotation.Transactional;
 
@@ -412,6 +422,32 @@ public class QuestionController extends EController{
         // Return the file with the correct header
         response().setHeader(CONTENT_TYPE, contentType);
         return ok(result);
+    }
+    
+    /**
+     * Export a question to a .ZIP file
+     * @param id id of the question
+     * @return the archived question file
+     */
+    public static Result export(String id) {
+        // Make some error breadcrumbs for when an error occurs
+        List<Link> errorBreadcrumbs = new ArrayList<Link>();
+        errorBreadcrumbs.add(new Link("Home", "/"));
+        errorBreadcrumbs.add(new Link("Error",""));
+        
+        if(isAuthorized()) {
+            response().setHeader("Content-Disposition", "attachment; filename=question.zip");
+            Question q;
+            try {
+                q = Question.fetch(id);
+                return ok(q.export());
+            } catch (QuestionBuilderException | IllegalStateException | IOException | FTPIllegalReplyException | FTPException | FTPDataTransferException | FTPAbortedException | FTPListParseException e) {
+                return ok(e.getMessage());
+                //return internalServerError(views.html.commons.error.render(errorBreadcrumbs, EMessages.get("error.title"), EMessages.get("error.text")));
+            }
+        } else {
+            return forbidden();
+        }
     }
     
     //TODO: delete

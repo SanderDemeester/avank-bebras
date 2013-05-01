@@ -7,12 +7,12 @@
 @main(EMessages.get("competition.name"), breadcrumbs){
 	<div class="well">
 		TODO: Roles, EMessages, json auto-update amount finished, submit answers modal, stop competition, countdown
-		<h1 class="muted">Competition: <i>@competition.getName()</i></h1>
-		<hr />
 		<div class="pull-right">
 			<button id="submitAnswers" class="btn">Submit pupil answers</button>
 			<button id="stopCompetition" class="btn btn-danger">Stop competition</button>
 		</div>
+		<h1 class="muted">Competition: <i>@competition.getName()</i></h1>
+		<hr />
 		<h2>Progress</h2>
 		<div class="text-center">
 			<div>Time left: <span id="countdown">02:10</span></div>
@@ -26,7 +26,7 @@
 		</div>
 		<hr />
 		<h2>Details</h2>
-		<table class="table table-striped table-condensed table-hover">
+		<table class="table table-striped table-condensed table-hover table-bordered">
 			<tr><th>ID</th><td>@competition.getID()</td></tr>
 			<tr><th>Time</th><td>@competition.getDuration() minutes</td></tr>
 			<tr><th>Expiration date</th><td>@controllers.util.DateFormatter.formatDate(competition.getExpirationDate(), true)</td></tr>
