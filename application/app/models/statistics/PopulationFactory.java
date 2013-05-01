@@ -34,7 +34,7 @@ public class PopulationFactory {
      */
     public Population create(PopulationType type, String identifier,
             String colour) throws PopulationFactoryException {
-        Population p = factories.get(type).create(identifier);
+        Population p = type.getFactory().create(identifier);
         p.setColour(colour);
         return p;
     }
@@ -49,74 +49,7 @@ public class PopulationFactory {
      */
     public Population create(String type, String identifier, String colour)
             throws PopulationFactoryException {
-        return create(types.get(type), identifier, colour);
+        return create(PopulationType.getType(type), identifier, colour);
     }
 
-    private final Map<PopulationType, TypePopulationFactory> factories;
-    private final Map<String, PopulationType> types;
-
-    private PopulationFactory() {
-
-        factories = new HashMap<PopulationType, TypePopulationFactory>();
-        factories.put(PopulationType.INDIVIDUAL, new SinglePopulationFactory());
-        factories.put(PopulationType.CLASS,      new ClassPopulationFactory());
-        /* insert new populations here */
-
-        types = new HashMap<String, PopulationType>();
-        types.put("INDIVIDUAL", PopulationType.INDIVIDUAL);
-        types.put("CLASS",      PopulationType.CLASS);
-
-    }
-
-
-    /* Interface for a factory of populations. */
-    private static interface TypePopulationFactory {
-
-        /**
-         * Creates a new Population with the identifier unique for that type of
-         * population.
-         * @param identifier The type-unique identifier.
-         * @return A new population.
-         */
-        public Population create(String identifier)
-            throws PopulationFactoryException;
-
-    }
-
-    /**
-     * Factory for ClassPopulations.
-     * @see models.statistics.ClassPopulation
-     * @see models.statistics.PopulationFactory
-     */
-    private static class ClassPopulationFactory
-            implements TypePopulationFactory {
-        @Override public Population create(String identifier)
-                throws PopulationFactoryException {
-            try {
-                int id = Integer.parseInt(identifier);
-                ClassGroup cg = Ebean.find(ClassGroup.class, identifier);
-                return new ClassPopulation(cg);
-            } catch(Exception e) {
-                throw new PopulationFactoryException(e);
-            }
-        }
-    }
-
-    /**
-     * Factory for SinglePopulations.
-     * @see models.statistics.SinglePopulation
-     * @see models.statistics.PopulationFactory
-     */
-    private static class SinglePopulationFactory
-            implements TypePopulationFactory {
-        @Override public Population create(String identifier)
-                throws PopulationFactoryException {
-            try {
-                UserModel um = Ebean.find(UserModel.class, identifier);
-                return new SinglePopulation(um);
-            } catch(Exception e) {
-                throw new PopulationFactoryException(e);
-            }
-        }
-    }
 }

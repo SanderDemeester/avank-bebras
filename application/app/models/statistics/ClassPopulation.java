@@ -26,8 +26,8 @@ public class ClassPopulation extends Population {
         this.classGroup = classGroup;
     }
 
-    @Override public String stringtype() {
-        return "CLASS";
+    @Override public PopulationType populationType() {
+        return PopulationType.CLASS;
     }
 
     @Override public String id() {
@@ -49,6 +49,24 @@ public class ClassPopulation extends Population {
             list.add(Ebean.find(UserModel.class, cp.classid));
         }
         return list;
+    }
+
+    /**
+     * Factory for ClassPopulations.
+     * @see models.statistics.ClassPopulation
+     * @see models.statistics.PopulationFactory
+     */
+    public static class Factory implements Population.Factory {
+        @Override public Population create(String identifier)
+                throws PopulationFactoryException {
+            try {
+                int id = Integer.parseInt(identifier);
+                ClassGroup cg = Ebean.find(ClassGroup.class, identifier);
+                return new ClassPopulation(cg);
+            } catch(Exception e) {
+                throw new PopulationFactoryException(e);
+            }
+        }
     }
 
 }

@@ -3,6 +3,7 @@ package models.statistics;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 
 import models.statistics.Population;
 import models.statistics.ClassPopulation;
@@ -15,17 +16,32 @@ import models.statistics.SinglePopulation;
  */
 public class PopulationChooser {
 
-    private Map<Class<? extends Population>, List<Population>> pops;
+    private Map<PopulationType, List<Population>> pops;
 
     public PopulationChooser() {
-        pops = new HashMap<Class<? extends Population>, List<Population>>();
+        pops = new HashMap<PopulationType, List<Population>>();
     }
 
     /**
      * Adds a new "tab" to the chooser.
      */
-    public void newType(Class<? extends Population> c, List<Population> l) {
-        pops.put(c, l);
+    public void newType(PopulationType t, List<Population> l) {
+        pops.put(t, l);
+    }
+
+    /**
+     * Filters the given list of Populations. This makes sure there are no
+     * populations in the provided list, that cannot be selected with this
+     * PopulationChooser.
+     * @param list The list to be filtered.
+     * @return The filtered list.
+     */
+    public List<Population> filter(List<Population> list) {
+        List<Population> newlist = new ArrayList<Population>();
+        for(Population p : list) {
+            if(pops.get(p.populationType()).contains(p)) newlist.add(p);
+        }
+        return newlist;
     }
 
 }

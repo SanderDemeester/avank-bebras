@@ -1,6 +1,7 @@
 @(
-    populations:    List[models.statistics.Population],
-    breadcrumbs:    List[models.data.Link]
+    populations:       List[models.statistics.Population],
+    populationChooser: models.statistics.PopulationChooser,
+    breadcrumbs:       List[models.data.Link]
 )
 
 @main(EMessages.get("statistics.title"), breadcrumbs) {
@@ -19,7 +20,7 @@
                 <!-- Hidden properties of the population. -->
                 <input type="hidden" name="colours[@i]" class="colours" value="@populations(i).getColour()" />
                 <input type="hidden" name="ids[@i]"     class="ids"     value="@populations(i).id()" />
-                <input type="hidden" name="types[@i]"   class="types"   value="@populations(i).stringtype()" />
+                <input type="hidden" name="types[@i]"   class="types"   value="@populations(i).populationType().getName()" />
 
                 <!-- Hidden data for dynamic adding. -->
                 <input type="hidden" class="index" value="@i"/>

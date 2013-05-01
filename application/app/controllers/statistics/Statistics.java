@@ -13,9 +13,11 @@ import controllers.EController;
 
 import models.dbentities.UserModel;
 import models.data.Link;
+import models.user.AuthenticationManager;
 import models.statistics.Population;
 import models.statistics.SinglePopulation;
 import models.statistics.PopulationFactory;
+import models.statistics.PopulationChooser;
 import models.statistics.PopulationFactoryException;
 
 import views.html.statistics.statistics;
@@ -35,9 +37,16 @@ public class Statistics extends EController {
 
     /** Display the main statistics page. */
     public static Result show() {
+
+        // Open the population chooser for the logged in user.
+        PopulationChooser populationChooser =
+            models.statistics.Statistics.getPopulationChooser(
+                    AuthenticationManager.getInstance().getUser()
+            );
+
+        // Derive the selected populations from the POST data.
         GroupForm gf = form(GroupForm.class).bindFromRequest().get();
         List<Population> populations = new ArrayList<Population>();
-
         if(gf.colours != null)
         for(int i=0; i < gf.colours.size(); i++) {
             try {
@@ -50,18 +59,22 @@ public class Statistics extends EController {
                 // TODO Show error message.
             }
         }
+
+        // Make sure the user doesn't view populations he shouldn't.
+        populations = populationChooser.filter(populations);
+
         // TODO remove this when there are actual values.
-        if(populations.size() == 0) {
-            try {
-                populations.add(PopulationFactory.instance().create(
-                    "INDIVIDUAL", "fvdjeugt", "red"));
-            } catch(PopulationFactoryException e) {
-                System.out.println("DAMMIT");
-            }
-        } else {
-            System.out.println("YYYAAAAAY, groups");
-        }
-        return ok(statistics.render(populations, breadcrumbs));
+        //if(populations.size() == 0) {
+        //    try {
+        //        populations.add(PopulationFactory.instance().create(
+        //            "INDIVIDUAL", "fvdjeugt", "red"));
+        //    } catch(PopulationFactoryException e) {
+        //        System.out.println("DAMMIT");
+        //    }
+        //} else {
+        //    System.out.println("YYYAAAAAY, groups");
+        //}
+        return ok(statistics.render(populations, populationChooser, breadcrumbs));
     }
 
     public static class GroupForm {

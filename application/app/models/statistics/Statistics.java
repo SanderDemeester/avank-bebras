@@ -38,6 +38,13 @@ public class Statistics {
         return genMap.get(type).choose(user);
     }
 
+    /**
+     * Creates a list of Populations the given user of the given type can view.
+     */
+    public static PopulationChooser getPopulationChooser(User user) {
+        return genMap.get(user.getType()).choose(user);
+    }
+
     private static interface PopulationGenerator {
         /**
          * Lists the viewable populations for this user. Note that for
@@ -55,7 +62,7 @@ public class Statistics {
             @Override public PopulationChooser choose(User user) {
                 PopulationChooser chooser = new PopulationChooser();
                 chooser.newType(
-                    SinglePopulation.class,
+                    PopulationType.INDIVIDUAL,
                     mapToPop(
                         SinglePopulation.class,
                         UserModel.class,
@@ -63,7 +70,7 @@ public class Statistics {
                     )
                 );
                 chooser.newType(
-                    ClassPopulation.class,
+                    PopulationType.CLASS,
                     mapToPop(
                         ClassPopulation.class,
                         ClassGroup.class,

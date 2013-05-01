@@ -12,8 +12,8 @@ public abstract class Population {
 
     private String colour;
 
-    /** Returns the Stringwise type of this population. */
-    public abstract String stringtype();
+    /** Returns the type of this population. */
+    public abstract PopulationType populationType();
 
     /** The colour this population should be displayed in. The colour should be
      * in an html readable format. */
@@ -40,5 +40,21 @@ public abstract class Population {
      * Returns the list of users in this population.
      */
     public abstract List<UserModel> getUsers();
+
+    /* ====================================================================== *\
+     * The interface for Population Factories.
+    \* ====================================================================== */
+    public static interface Factory {
+
+        /**
+         * Creates a new Population with the identifier unique for that type of
+         * population.
+         * @param identifier The type-unique identifier.
+         * @return A new population.
+         */
+        public Population create(String identifier)
+            throws PopulationFactoryException;
+
+    }
 
 }

@@ -3,6 +3,8 @@ package models.statistics;
 import java.util.List;
 import java.util.ArrayList;
 
+import com.avaje.ebean.Ebean;
+
 import models.statistics.Population;
 import models.dbentities.UserModel;
 
@@ -20,8 +22,8 @@ public class SinglePopulation extends Population {
         this.user = user;
     }
 
-    @Override public String stringtype() {
-        return "INDIVIDUAL";
+    @Override public PopulationType populationType() {
+        return PopulationType.INDIVIDUAL;
     }
 
     @Override public String id() {
@@ -36,6 +38,23 @@ public class SinglePopulation extends Population {
         List<UserModel> list = new ArrayList<UserModel>();
         list.add(user);
         return list;
+    }
+
+    /**
+     * Factory for SinglePopulations.
+     * @see models.statistics.SinglePopulation
+     * @see models.statistics.Population
+     */
+    public static class Factory implements Population.Factory {
+        @Override public Population create(String identifier)
+                throws PopulationFactoryException {
+            try {
+                UserModel um = Ebean.find(UserModel.class, identifier);
+                return new SinglePopulation(um);
+            } catch(Exception e) {
+                throw new PopulationFactoryException(e);
+            }
+        }
     }
 
 }
