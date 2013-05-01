@@ -22,6 +22,7 @@ import models.question.QuestionFeedback;
 import models.question.QuestionFeedbackGenerator;
 import models.question.QuestionSet;
 import models.user.AuthenticationManager;
+import models.user.User;
 import models.user.UserType;
 
 import org.codehaus.jackson.JsonNode;
@@ -106,11 +107,20 @@ public class TakeCompetitionController extends EController {
         
         // Register the user in the competition
         try {
-            CompetitionUserStateManager.getInstance().registerUser(
+            User user = AuthenticationManager.getInstance().getUser();
+            if(user.isAnon()) {
+                CompetitionUserStateManager.getInstance().registerAnon(
                         competition.getID(),
                         questionSet,
-                        AuthenticationManager.getInstance().getUser()
+                        AuthenticationManager.getInstance().getAuthCookie()
                     );
+            } else {
+                CompetitionUserStateManager.getInstance().registerUser(
+                            competition.getID(),
+                            questionSet,
+                            user
+                        );
+            }
         } catch (CompetitionNotStartedException e) {
             // TODO: prettify
             return badRequest(e.getMessage());
@@ -131,10 +141,19 @@ public class TakeCompetitionController extends EController {
                     input, Language.getLanguage(EMessages.getLang()));
             
             // Save the results
-            CompetitionUserStateManager.getInstance().getState(
+            User user = AuthenticationManager.getInstance().getUser();
+            if(user.isAnon()) {
+                CompetitionUserStateManager.getInstance().getState(
+                        feedback.getCompetitionID(),
+                        AuthenticationManager.getInstance().getAuthCookie()
+                    ).setResults(feedback);
+            } else {
+                CompetitionUserStateManager.getInstance().getState(
                         feedback.getCompetitionID(),
                         AuthenticationManager.getInstance().getUser().getID()
-                    );
+                    ).setResults(feedback);
+            }
+            
             
             // TMP: move this to the daemon and add a runnable when the competition is started
             CompetitionUserStateManager.getInstance().finishCompetition(feedback.getCompetitionID());

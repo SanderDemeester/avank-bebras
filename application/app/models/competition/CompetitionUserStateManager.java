@@ -4,8 +4,10 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import models.EMessages;
 import models.data.DataDaemon;
 import models.question.QuestionSet;
+import models.user.Anon;
 import models.user.User;
 
 /**
@@ -67,7 +69,20 @@ public class CompetitionUserStateManager {
      */
     public void registerUser(String competitionID, QuestionSet questionSet, User user) throws CompetitionNotStartedException {
         Map<String, CompetitionUserState> list = getStates(competitionID);
-        list.put(user.getID(), new CompetitionUserState(user, questionSet));
+        list.put(user.getID(), new CompetitionUserState(user, questionSet, user.data.preflanguage));
+    }
+    
+    /**
+     * Adds a new competitionuserstate for an anonymous user to the given competition
+     * @param competitionID the id of the competition
+     * @param questionSet the id of the questionset taken by the user
+     * @param token a unique token for this user, could be the cookie
+     * @throws CompetitionNotStartedException if the competition has not been started yet, be sure to
+     * call startCompetition(competition) first.
+     */
+    public void registerAnon(String competitionID, QuestionSet questionSet, String token) throws CompetitionNotStartedException {
+        Map<String, CompetitionUserState> list = getStates(competitionID);
+        list.put(token, new CompetitionUserState(new Anon(), questionSet, EMessages.getLang()));
     }
     
     /**

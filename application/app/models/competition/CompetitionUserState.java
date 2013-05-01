@@ -36,17 +36,19 @@ public class CompetitionUserState {
     private QuestionFeedback feedback;
     private User user;
     private QuestionSet questionSet;
+    private String languageCode;
 
     /**
      * Constructor
      * @param user corresponding user
      * @param competition corresponding competition
      */
-    public CompetitionUserState(User user, QuestionSet questionSet){
+    public CompetitionUserState(User user, QuestionSet questionSet, String languageCode){
         this.feedback = null;
         this.startTime = new Date();
         this.user = user;
         this.questionSet = questionSet;
+        this.languageCode = languageCode;
     }
 
     /**
@@ -88,7 +90,7 @@ public class CompetitionUserState {
             Answer a = entry.getValue();
             answer.setAnswer(a.getTextValue());
             answer.setCorrect(a.isCorrect());
-            answer.setLanguageCode(user.getData().preflanguage);
+            answer.setLanguageCode(languageCode);
             answer.setQuestion(entry.getKey().getData());
             answer.setQuestionSet(questionSet.getData());
             answer.save();

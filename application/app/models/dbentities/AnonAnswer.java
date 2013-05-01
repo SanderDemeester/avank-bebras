@@ -39,7 +39,7 @@ public class AnonAnswer extends Model implements AnswerModel{
     
     @ManyToOne
     @NotNull
-    @JoinColumn(name="questionset")
+    @JoinColumn(name="questionsetid")
     public QuestionSetModel questionset;
 
     @Override

@@ -21,10 +21,10 @@ public class PupilAnswer extends Model implements AnswerModel{
     private static final long serialVersionUID = 1L;
     
     @Id
-    @ManyToOne
+    /*@ManyToOne
     @NotNull
-    @JoinColumn(name="indid")
-    public UserModel user;
+    @JoinColumn(name="indid")*/
+    public String indid;
     
     @ManyToOne
     @NotNull
@@ -39,11 +39,11 @@ public class PupilAnswer extends Model implements AnswerModel{
     
     @ManyToOne
     @NotNull
-    @JoinColumn(name="questionset")
+    @JoinColumn(name="questionsetid")
     public QuestionSetModel questionset;
     
     public PupilAnswer(UserModel user) {
-        this.user = user;
+        this.indid = user.id;
     }
 
     @Override
