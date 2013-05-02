@@ -106,7 +106,7 @@ public class TakeCompetitionManager extends Manager<CompetitionModel> {
     public Call getEditRoute(String id) {
         CompetitionModel competitionModel = Ebean.find(CompetitionModel.class).where().idEq(id).findUnique();
         if (new Competition(competitionModel).getType() != CompetitionType.RESTRICTED){
-            // the user has to select his prefered grade
+            // the user has to select his preferred grade
             return routes.TakeCompetitionController.chooseGrade(id);
         }
         return routes.TakeCompetitionController.takeCompetition(id);

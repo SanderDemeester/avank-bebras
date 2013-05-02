@@ -15,10 +15,7 @@ import models.competition.CompetitionType;
 import models.competition.CompetitionUserStateManager;
 import models.competition.TakeCompetitionManager;
 import models.data.*;
-import models.dbentities.ClassGroup;
-import models.dbentities.CompetitionModel;
-import models.dbentities.QuestionSetModel;
-import models.dbentities.UserModel;
+import models.dbentities.*;
 import models.management.ModelState;
 import models.question.AnswerGeneratorException;
 import models.question.QuestionFeedback;
@@ -92,27 +89,26 @@ public class TakeCompetitionController extends EController {
             Page<CompetitionModel> managerPage = competitionManager.page(page);
             return ok(views.html.competition.contests.render(defaultBreadcrumbs(), managerPage, competitionManager, order, orderBy, filter));
         }
-        if (userType(UserType.INDEPENDENT)){
-            // independent user can only see "running" anonymous and unrestricted competitions
-            competitionManager.setExpressionList(competitionManager.getFinder()
-                    .where()
-                    .or(Expr.eq("type", CompetitionType.ANONYMOUS), Expr.eq("type", CompetitionType.UNRESTRICTED))
-                    .eq("active", true)
-                    .lt("starttime", new Date())
-                    .gt("endtime", new Date())
-            );
-            Page<CompetitionModel> managerPage = competitionManager.page(page);
-            return ok(views.html.competition.contests.render(defaultBreadcrumbs(), managerPage, competitionManager, order, orderBy, filter));
-        }
-        if (userType(UserType.PUPIL)){
+        if (userType(UserType.PUPIL_OR_INDEP)){
             // pupils can see "running" anonymous and unrestricted competitions + restricted competitions if their class is registered
             UserModel user = AuthenticationManager.getInstance().getUser().getData();
+            ClassGroup classGroup = Ebean.find(ClassGroup.class).where().idEq(user.classgroup).findUnique();
+            List<ContestClass> contestClasses = Ebean.find(ContestClass.class).where().eq("classid", classGroup).findList();
+            List<String> competitionIds = new ArrayList<String>();
+            for (ContestClass contestClass : contestClasses){
+                competitionIds.add(contestClass.contestid.id);
+            }
             competitionManager.setExpressionList(competitionManager.getFinder()
                     .where()
-                    // TODO ook restricted contests if class is registrered!
                     .or(
-                            Expr.eq("type", CompetitionType.ANONYMOUS),
-                            Expr.eq("type", CompetitionType.UNRESTRICTED))
+                            Expr.or(
+                                    Expr.eq("type", CompetitionType.ANONYMOUS),
+                                    Expr.eq("type", CompetitionType.UNRESTRICTED)
+                            ),
+                            Expr.and(
+                                    Expr.eq("type", CompetitionType.RESTRICTED),
+                                    Expr.in("id", competitionIds)
+                                    ))
                     .eq("active", true)
                     .lt("starttime", new Date())
                     .gt("endtime", new Date())
