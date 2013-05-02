@@ -1,4 +1,4 @@
-@(questionSet : models.question.QuestionSet, feedback : models.question.QuestionFeedback, breadcrumbs : List[models.data.Link])
+@(stateID : String, questionSet : models.question.QuestionSet, feedback : models.question.QuestionFeedback, breadcrumbs : List[models.data.Link])
 
 @import helper._
 @import helper.twitterBootstrap._
@@ -99,6 +99,7 @@
 	var answers = {
 						"competition": "@questionSet.getCompetition().getID()",
 						"questionset": "@questionSet.getID()",
+						"userid": "@stateID",
 						"timeleft": 0,
 						"questions": {
 									@for(q <- questionSet.getQuestions()) {

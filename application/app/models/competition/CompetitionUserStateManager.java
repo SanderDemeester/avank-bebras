@@ -71,7 +71,10 @@ public class CompetitionUserStateManager {
      */
     public void registerUser(String competitionID, QuestionSet questionSet, User user) throws CompetitionNotStartedException {
         Map<String, CompetitionUserState> list = getStates(competitionID);
-        list.put(user.getID(), new CompetitionUserState(user, questionSet, user.data.preflanguage));
+        // Change lang to user.data.preflanguage if the current way should give any problems,
+        // The current way will allow registering users who have chosen a different language
+        // for executing the competition than their current preferred language.
+        list.put(user.getID(), new CompetitionUserState(user, questionSet, EMessages.getLang()));
     }
     
     /**
@@ -121,5 +124,37 @@ public class CompetitionUserStateManager {
         if(list == null) throw new CompetitionNotStartedException(
                 "This competition has not yet been started.");
         return list;
+    }
+    
+    /**
+     * Counts the amount of registered users for a certain competition that are started
+     * @param competitionID the id of the competition
+     * @return the amount of pupils in a competition
+     * @throws CompetitionNotStartedException if the competition has not been started yet, be sure to
+     * call startCompetition(competition) first.
+     */
+    public int getAmountRegistered(String competitionID) throws CompetitionNotStartedException{
+        Map<String, CompetitionUserState> list = states.get(competitionID);
+        if(list == null) throw new CompetitionNotStartedException(
+                "This competition has not yet been started.");
+        return list.size();
+    }
+    
+    /**
+     * Counts the amount of registered users for a certain competition that are started
+     * @param competitionID the id of the competition
+     * @return the amount of pupils in a competition
+     * @throws CompetitionNotStartedException if the competition has not been started yet, be sure to
+     * call startCompetition(competition) first.
+     */
+    public int getAmountFinished(String competitionID) throws CompetitionNotStartedException{
+        int finished = 0;
+        Map<String, CompetitionUserState> list = states.get(competitionID);
+        if(list == null) throw new CompetitionNotStartedException(
+                "This competition has not yet been started.");
+        for(CompetitionUserState state : states.get(competitionID).values()) {
+            if(state.isFinished()) finished++;
+        }
+        return finished;
     }
 }

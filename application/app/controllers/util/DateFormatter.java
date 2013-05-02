@@ -15,7 +15,7 @@ import java.util.Date;
 public class DateFormatter {
 	
 	public static final String FORMAT = "dd/MM/yyyy";
-	public static final String FORMAT_EXTENDED = "hh:mm dd/MM/yyyy";
+	public static final String FORMAT_EXTENDED = "HH:MM dd/MM/yyyy";
 
 	public static String formatDate(Date d){
 		return formatDate(d, false);

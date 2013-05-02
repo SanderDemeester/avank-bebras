@@ -33,6 +33,8 @@ public class RegexAnswer extends Answer{
 
     @Override
     public String getTextValue() {
+        if(this.input == null)
+            return "";
         return this.input;
     }
 }

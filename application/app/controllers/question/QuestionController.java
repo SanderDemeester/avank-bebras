@@ -442,8 +442,7 @@ public class QuestionController extends EController{
                 q = Question.fetch(id);
                 return ok(q.export());
             } catch (QuestionBuilderException | IllegalStateException | IOException | FTPIllegalReplyException | FTPException | FTPDataTransferException | FTPAbortedException | FTPListParseException e) {
-                return ok(e.getMessage());
-                //return internalServerError(views.html.commons.error.render(errorBreadcrumbs, EMessages.get("error.title"), EMessages.get("error.text")));
+                return internalServerError(views.html.commons.error.render(errorBreadcrumbs, EMessages.get("error.title"), EMessages.get("error.text")));
             }
         } else {
             return forbidden();
@@ -481,7 +480,7 @@ public class QuestionController extends EController{
                 return badRequest(e.getMessage());
             }
             
-            return ok(questionSet.render(set, null, new ArrayList<Link>()));
+            return ok(questionSet.render("", set, null, new ArrayList<Link>()));
             //return ok(q.getIndexLink(Language.getLanguage(EMessages.getLang())).absoluteURL(request()));
         } catch (QuestionBuilderException e) {
             // TODO Auto-generated catch block

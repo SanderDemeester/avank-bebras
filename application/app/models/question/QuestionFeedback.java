@@ -21,20 +21,23 @@ public class QuestionFeedback {
     
     private String competitionID;
     private int questionSetID;
+    private String userid;
 
     /**
      * Generate feedback from a given map of answers
      * @param answers the questions mapped on answers
      * @param competitionID the id of the competition
      * @param questionSetID the id of the questionset
+     * @param userid the token of the person who takes the competition
      * @param timeLeft the time left in seconds when the answers were submitted
      */
-    public QuestionFeedback(Map<Question, Answer> answers, String competitionID, String questionSetID, int timeLeft) {
+    public QuestionFeedback(Map<Question, Answer> answers, String competitionID, String questionSetID, int timeLeft, String userid) {
         makeFeedbackElements(answers);
         this.answers = answers;
         
         this.competitionID = competitionID;
         this.questionSetID = Integer.parseInt(questionSetID);
+        this.userid = userid;
         
         calculateScore();
     }
@@ -92,5 +95,13 @@ public class QuestionFeedback {
      */
     public int getScore() {
         return score;
+    }
+    
+    /**
+     * Returns the token for the CompetitionUserState for this user
+     * @return the token for this user
+     */
+    public String getToken() {
+        return this.userid;
     }
 }

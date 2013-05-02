@@ -72,6 +72,9 @@ GET     /available-contests/take/:id    controllers.competition.TakeCompetitionC
 GET     /available-contests/submit		controllers.competition.TakeCompetitionController.submit(json)
 GET     /available-contests/feedback/:json	controllers.competition.TakeCompetitionController.feedback(json)
 GET     /competition-overview/:id			controllers.competition.TakeCompetitionController.overview(id)
+GET     /competition-overview-data/:id		controllers.competition.TakeCompetitionController.overviewData(id)
+GET     /competition/finish/:id				controllers.competition.TakeCompetitionController.forceFinish(id)
+GET     /available-contests/forceSubmit		controllers.competition.TakeCompetitionController.forceSubmit(json)
 
 # Question Management
 GET     /questions                  		 controllers.question.QuestionController.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")
