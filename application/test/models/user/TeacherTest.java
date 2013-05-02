@@ -142,9 +142,9 @@ public class TeacherTest extends ContextTest {
     	c.set(Calendar.YEAR, c.get(Calendar.YEAR)+1);
     	cg1.expdate = c.getTime();
     	
-    	UserModel pup1 = createTestUserModel(UserType.PUPIL);
+    	UserModel pup1 = createTestUserModel(UserType.PUPIL_OR_INDEP);
     	pup1.id="pup1";
-    	UserModel pup2 = createTestUserModel(UserType.PUPIL);
+    	UserModel pup2 = createTestUserModel(UserType.PUPIL_OR_INDEP);
     	pup2.id="pup2";
     	pup1.classgroup=cg1.id;
     	

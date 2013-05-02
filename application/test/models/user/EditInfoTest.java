@@ -53,7 +53,7 @@ public class EditInfoTest extends test.ContextTest {
             controllers.user.routes.ref.PersonalPageController.show(1),fakeRequest().withFormUrlEncodedBody(map)
         );
      
-        assertNotNull(Ebean.find(UserModel.class).where().eq("id","jimjones").where().eq("type", UserType.INDEPENDENT.toString()).findUnique());
+        assertNotNull(Ebean.find(UserModel.class).where().eq("id","jimjones").where().eq("type", UserType.PUPIL_OR_INDEP.toString()).findUnique());
         assertNotNull(Ebean.find(UserModel.class).where().eq("id","jimjones").where().eq("name", "Jim Test Jones"));
         assertNotNull(Ebean.find(UserModel.class).where().eq("id","jimjones").where().eq("email", "jimtestjones@localhost.com"));
         assertNotNull(Ebean.find(UserModel.class).where().eq("id","jimjones").where().eq("prefLanguage", "nl"));
