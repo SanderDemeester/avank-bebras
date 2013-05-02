@@ -82,7 +82,7 @@ public class Competition {
     
     /**
      * Sets the state for this competition.
-     * @param type new competition state
+     * @param competitionState new competition state
      */
     public void setState(CompetitionState competitionState) {
         this.competitionState = competitionState;

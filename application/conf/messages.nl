@@ -269,6 +269,9 @@ competitions.totake = Beschikbare competities waaraan je op dit moment kan deeln
 competitions.taken = Competities die je in het verleden hebt afgelegd.
 competitions.grade.title = Gelieve het gewenste niveau te selecteren.
 competitions.grade = Niveau
+competitions.grade.warning = Opgepast!
+competitions.grade.info = Je staat op het punt om aan een competitie deel te nemen. Om de juiste vragen te kunnen selecteren, hebben we je voorkeur niveau nodig.  Gelieve een niveau te selecteren
+competitions.grade.breadcrumb = Niveau kiezen
 
 # schools
 schools.title = Lijst van Scholen

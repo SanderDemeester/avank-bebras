@@ -27,8 +27,7 @@ public class Application extends EController {
      * @return the index page
      */
     public static Result index() {
-        Form<Grade> form = form(Grade.class).bindFromRequest();
-        return ok(index.render("Nothing here yet...", breadcrumbs, form));
+        return ok(index.render("Nothing here yet...", breadcrumbs));
     }
     
     /**

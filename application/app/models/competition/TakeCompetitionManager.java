@@ -1,5 +1,6 @@
 package models.competition;
 
+import com.avaje.ebean.Ebean;
 import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.Page;
 import controllers.competition.routes;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Manager for avaiable competitions for each type of user.
+ * Manager for available competitions for each type of user.
  *
  * @author Kevin Stobbelaar.
  */
@@ -103,6 +104,11 @@ public class TakeCompetitionManager extends Manager<CompetitionModel> {
      */
     @Override
     public Call getEditRoute(String id) {
+        CompetitionModel competitionModel = Ebean.find(CompetitionModel.class).where().idEq(id).findUnique();
+        if (new Competition(competitionModel).getType() != CompetitionType.RESTRICTED){
+            // the user has to select his prefered grade
+            return routes.TakeCompetitionController.chooseGrade(id);
+        }
         return routes.TakeCompetitionController.takeCompetition(id);
     }
 

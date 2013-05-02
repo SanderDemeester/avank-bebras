@@ -1,4 +1,4 @@
-@(message: String, breadcrumbs : List[models.data.Link], gform : Form[models.data.Grade])
+@(message: String, breadcrumbs : List[models.data.Link])
 
 @import helper._
 @import helper.twitterBootstrap._
@@ -8,47 +8,6 @@
         <h1>@EMessages.get("app.startTitle")</h1>
         <p>@message</p>
         <p><a href="http://avank.ugent.be/~rtaelman/">Team pagina</a></p>
-
-
-        @***********************************************************************
-        * DIT HOORT NIET HIER TE STAAN!!                                       *
-        *        VERPLAATSEN!!!!      FORM WEGHALEN UIT APPLICATION CONTROLLER *
-        ***********************************************************************@
-
-        <a href="#myModal" role="button" class="btn btn-large" data-toggle="modal">TEST</a>
-        <div id="myModal" class="modal hide fade">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h3>@EMessages.get("competitions.grade.title")</h3>
-            </div>
-
-                @form(controllers.competition.routes.TakeCompetitionController.list()) {
-
-                    <div class="modal-body">
-
-                        <fieldset>
-                            @select(
-                                gform("grade"),
-                                options = options(models.data.DataHandler.getGrades().toList.map(_.getName)),
-                                '_label -> EMessages.get("competitions.grade"),
-                                '_showConstraints -> false
-                            )
-                        </fieldset>
-
-                    </div>
-
-                    <div class="modal-footer">
-                        <input type="submit" value="@EMessages.get("forms.submit")" class="btn btn-primary">
-                        <a href="/" class="btn"> @EMessages.get("forms.cancel")</a>
-                    </div>
-
-                }
-
-        </div>
-
-        <a href="@controllers.competition.routes.TakeCompetitionController.list()" class="btn btn-large">
-            TAKE ME TO THE AVAILABLE CONTESTS !
-        </a>
 
     </div>
 }
