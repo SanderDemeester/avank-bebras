@@ -1,0 +1,8 @@
+CREATE TABLE competitionScore(
+qsID integer REFERENCES questionSets,
+uID text REFERENCES users,
+score integer NOT NULL,
+PRIMARY KEY (qsID, uID)
+);
+
+ALTER TABLE users ADD CONSTRAINT unique_email UNIQUE (email);
