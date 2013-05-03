@@ -80,6 +80,9 @@ GET     /competition/finish/:id				controllers.competition.TakeCompetitionContro
 GET     /available-contests/forceSubmit		controllers.competition.TakeCompetitionController.forceSubmit(json)
 GET     /available-contests/:id/grade       controllers.competition.TakeCompetitionController.chooseGrade(id)
 
+# Contest history module
+GET     /available-contests/history         controllers.competition.CompetitionHistoryController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+
 # Question Management
 GET     /questions                  		 controllers.question.QuestionController.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")
 GET     /questionsubmits            		 controllers.question.QuestionController.listSubmits(p:Int ?= 0, f ?= "")

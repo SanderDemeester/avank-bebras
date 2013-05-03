@@ -5,6 +5,8 @@ import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Expr;
 import com.avaje.ebean.Page;
 import controllers.EController;
+
+import java.lang.String;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -82,11 +84,11 @@ public class TakeCompetitionController extends EController {
      * Returns a new competition manager object.
      * @return competition manager
      */
-    private static TakeCompetitionManager getManager(){
+    private static TakeCompetitionManager getManager(String orderBy, String order, String filter){
         TakeCompetitionManager competitionManager = new TakeCompetitionManager(ModelState.READ, "name", null);
-        competitionManager.setOrder("asc");
-        competitionManager.setOrderBy("name");
-        competitionManager.setFilter("");
+        competitionManager.setOrder(order);
+        competitionManager.setOrderBy(orderBy);
+        competitionManager.setFilter(filter);
         return competitionManager;
     }
 
@@ -96,7 +98,7 @@ public class TakeCompetitionController extends EController {
      * @return  available competitions list page
      */
     public static Result list(int page, String orderBy, String order, String filter){
-        TakeCompetitionManager competitionManager = getManager();
+        TakeCompetitionManager competitionManager = getManager(orderBy, order, filter);
         if (userType(UserType.ANON)){
             // anonymous user can only see "running" anonymous competitions
             competitionManager.setExpressionList(competitionManager.getFinder()

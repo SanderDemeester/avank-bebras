@@ -10,31 +10,42 @@ manager: models.management.Manager[_], currentOrderBy: String, currentOrder: Str
 
 @import views.html.management.list
 @import models.EMessages
+@import models.user.AuthenticationManager
 
 @main(EMessages.get("competitions.title"), breadcrumbs) {
+    <div class="row-fluid">
 
-        <div>
+            <div class="row12">
+                <p class="lead"> @EMessages.get("competitions.totake")
 
-            <h4>
-                @EMessages.get("competitions.totake")
-            </h4>
+            @****************
+            * History       *
+            ****************@
+            @if(AuthenticationManager.getInstance().getUser().getType() == models.user.UserType.ANON){
 
-            <p>
-                @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
-            </p>
+                </p></div>
+                <div>
+                    <div class="alert">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>@EMessages.get("competition.history.warning")</strong> @EMessages.get("competition.history.info")
+                    </div>
+                </div>
 
-        </div>
+            } else{
+                <a href="@controllers.competition.routes.CompetitionHistoryController.list(0, "", "", "")" class="pull-right btn btn-large btn-primary">
+                    @EMessages.get("competitions.taken")
+                </a>
+                </p></div>
 
-        <div>
+            }
 
-            <h4>
-                @EMessages.get("competitions.taken")
-            </h4>
-
-            <p>
-                TODO!
-            </p>
-
-        </div>
-
+            @*********************
+            * Available contests *
+            *********************@
+            <div class="row12">
+                <p>
+                    @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
+                </p>
+            </div>
+    </div>
 }

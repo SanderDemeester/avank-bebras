@@ -266,12 +266,15 @@ competition.class.register.error = De gekozen klas is al geregistreerd voor deze
 competitions.breadcrumb = Beschikbare competities.
 competitions.title = Beschikbare competities.
 competitions.totake = Beschikbare competities waaraan je op dit moment kan deelnemen.
-competitions.taken = Competities die je in het verleden hebt afgelegd.
+competitions.taken = Competities die je in het verleden hebt afgelegd
 competitions.grade.title = Gelieve het gewenste niveau te selecteren.
 competitions.grade = Niveau
 competitions.grade.warning = Opgepast!
 competitions.grade.info = Je staat op het punt om aan een competitie deel te nemen. Om de juiste vragen te kunnen selecteren, hebben we je voorkeur niveau nodig.  Gelieve een niveau te selecteren
 competitions.grade.breadcrumb = Niveau kiezen
+
+competition.history.warning = Opgelet!
+competition.history.info = Je bent momenteel niet ingelogd. Om resultaten en statistieken van vorige competities te bekijken, moet je ingelogd zijn.
 
 # schools
 schools.title = Lijst van Scholen
@@ -504,7 +507,7 @@ competition.overview.submitAnswers = Verzend antwoorden van leerlingen
 competition.overview.submitAnswers.info = Plak de code die je gekopieerd hebt van de leerling, plak het in dit tekstveld en klik op verzenden.
 competition.overview.stopCompetition = Stop competitie
 competition.overview.progress = Verloop
-competition.overview.timeLeft = Tijd ober
+competition.overview.timeLeft = Tijd over
 competition.overview.finished = Klaar
 competition.overview.details = Details
 competition.overview.id = ID

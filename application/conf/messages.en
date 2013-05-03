@@ -265,12 +265,15 @@ competition.class.register.error = The selected class is already registered for 
 competitions.breadcrumb = Available contests.
 competitions.title = Available contests.
 competitions.totake = Available contests that you can take at this moment.
-competitions.taken = Contests you've taken in the past.
+competitions.taken = Contests taken in the past
 competitions.grade.title = Please choose a preferred grade.
 competitions.grade = Grade
 competitions.grade.warning = Warning!
 competitions.grade.info = You're about to take a contest. In order to select the appropriate questions, we need to know your desired grade. Please select the grade you prefer
 competitions.grade.breadcrumb = Select grade
+
+competition.history.warning = Warning!
+competition.history.info = You are currently not signed in. In order to keep track off your results and stats, you need to be signed in.
 
 # schools
 schools.title = List of Schools

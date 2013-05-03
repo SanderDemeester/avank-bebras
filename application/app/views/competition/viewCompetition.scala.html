@@ -27,7 +27,7 @@ contest: models.competition.Competition)
         <div class="span6 pull-right">
             <p class="text-info lead pull-right"> @EMessages.get("competition.view.status"): @contest.getCompetitionState()
             @if(contest.getCompetitionState() == models.competition.CompetitionState.RUNNING){
-                <a href="@controllers.competition.TakeCompetitionController.overview(contest.getID())" class="btn btn-large btn-primary">
+                <a href="@controllers.competition.routes.TakeCompetitionController.overview(contest.getID())" class="btn btn-large btn-primary">
                     @EMessages.get("competition.overview.button")
                 </a>
             }
