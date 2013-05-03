@@ -408,7 +408,7 @@ classes.import.info.classinvalid = Er is geen klas met dat ID.
 classes.import.info.classstart = Begin klas record:
 classes.import.info.existstudent = Bestaande studenten:
 classes.import.info.newstudent = Nieuwe studenten:
-classes.import.error.savefail = Er is iets misgelopen met het opslaan. Misschien hebt u te lang gewacht? De data wordt verwijderd na een aantal uren. 
+classes.import.error.savefail = Er is iets misgelopen met het opslaan. Misschien hebt u te lang gewacht? De data wordt verwijderd na een aantal uren. Of er heeft ondertussen iemand een van de emailadressen geregistreerd. Of misschien heeft u meerdere keren hetzelfde emailadres gebruikt in het bestand.
 classes.import.error.postfail = Er is iets misgelopen met het inlezen van het XLSX bestand. Bent u zeker dat het geldig was? Controleer de documentatie.
 
 
