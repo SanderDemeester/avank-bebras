@@ -5,11 +5,11 @@ import play.Play;
 
 public class ForgotPwdMail extends EMail {
 
-    public ForgotPwdMail(String recipient, String id, String password) {
+    public ForgotPwdMail(String recipient, String id, String url) {
         super();
         this.setSubject(EMessages.get("forgot_pwd.mail_subject"));
         this.addReplyTo(recipient)         ;
         this.addToAddress(Play.application().configuration().getString("email.contactmail"));
-        this.setMessage(EMessages.get("forgot_pwd.mail_sent", id, password));
+        this.setMessage(EMessages.get("forgot_pwd.mail_sent", id, url));
     }
 }
