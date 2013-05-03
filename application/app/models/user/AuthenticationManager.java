@@ -7,12 +7,12 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Stack;
 
 import javax.crypto.SecretKeyFactory;
@@ -24,12 +24,12 @@ import models.user.factory.AdministratorUserFactory;
 import models.user.factory.AuthorUserFactory;
 import models.user.factory.IndependentUserFactory;
 import models.user.factory.OrganizerUserFactory;
-import models.user.factory.PupilUserFactory;
 import models.user.factory.TeacherUserFactory;
 import models.user.factory.UserFactory;
 
 import org.apache.commons.codec.binary.Hex;
 
+import play.Logger;
 import play.data.Form;
 import play.mvc.Http.Context;
 import play.mvc.Http.Cookie;
@@ -70,9 +70,8 @@ public class AuthenticationManager {
 	static {
 		FACTORIES.put(UserType.ADMINISTRATOR, new AdministratorUserFactory());
 		FACTORIES.put(UserType.AUTHOR, new AuthorUserFactory());
-		FACTORIES.put(UserType.INDEPENDENT, new IndependentUserFactory());
+		FACTORIES.put(UserType.PUPIL_OR_INDEP, new IndependentUserFactory());
 		FACTORIES.put(UserType.ORGANIZER, new OrganizerUserFactory());
-		FACTORIES.put(UserType.PUPIL, new PupilUserFactory());
 		FACTORIES.put(UserType.TEACHER, new TeacherUserFactory());
 	}
 
@@ -126,8 +125,6 @@ public class AuthenticationManager {
 		User user = create(userModel);
 		Stack<User> stack = users.get(cookie);
 		
-		System.out.println(loggedInUserID.contains(user.getID()));
-		
 		// If the user that is trying to login is being the target of a mimic proces. Then deny login.
 		if(loggedInUserID.contains(user.getID()) && user.isMimicTarget()) return null;
 		if(loggedInUserID.contains(user.getID()) && !current.isMimicking()){
@@ -142,6 +139,7 @@ public class AuthenticationManager {
 				stackToKick.peek().setMimickStatus(false);
 			}
 		}
+		
 		loggedInUserID.add(user.getID());
 		
 		if(stack == null) { // The user is not yet logged in (would be the case if the stack is empty)
@@ -152,6 +150,7 @@ public class AuthenticationManager {
 		} else if(current.canMimic(user)) { // If the current user can mimic the other user.
 			stack.push(user);
 		}else{
+			loggedInUserID.remove(user.getID());
 			return null;
 		}
 
@@ -174,8 +173,10 @@ public class AuthenticationManager {
 			users.put(getAuthCookie(), null);
 			return null;
 		} else {
-			stack.peek().setMimickStatus(false);
-			return stack.peek();
+			User res = stack.peek();
+			res.setMimickStatus(false);
+			EMessages.setLang(res.data.preflanguage);
+			return res;
 		}
 	}
 
@@ -188,6 +189,19 @@ public class AuthenticationManager {
 	 * @return the current authenticated user object.
 	 */
 	public User getUser() {
+		Stack<User> stack = users.get(getAuthCookie());
+		if(stack==null) return new Anon();
+		else
+			return stack.peek();
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @return the original User in the chain of mimicked users. Note: This will return the same User object
+	 * if there is no mimicking.
+	 */
+	public User getOriginalUser(){
 		Stack<User> stack = users.get(getAuthCookie());
 		if(stack==null) return new Anon();
 		else
@@ -268,7 +282,7 @@ public class AuthenticationManager {
 		Calendar birthday = Calendar.getInstance();
 		birthday.setTime(birtyDay);
 		bebrasID = IDGenerator.generate(registerForm.get().name, birthday);
-		new UserModel(bebrasID, UserType.INDEPENDENT,
+		new UserModel(bebrasID, UserType.PUPIL_OR_INDEP,
 				name,
 				birtyDay,
 				new Date(),
@@ -298,6 +312,8 @@ public class AuthenticationManager {
 
 		// To store the password as it is stored in the database.
 		String passwordDB = null;
+		
+		Logger.debug(pw);
 
 		// Get the users information from the database.
 		UserModel userModel = Ebean.find(UserModel.class).where().eq(
@@ -310,6 +326,7 @@ public class AuthenticationManager {
 		SecretKeyFactory secretFactory = null;
 		try{
 			salt = Hex.decodeHex(userModel.hash.toCharArray());
+			Logger.debug(userModel.hash);
 		}catch(Exception e){}
 
 		KeySpec PBKDF2 = new PBEKeySpec(pw.toCharArray(), salt, 1000, 160);
@@ -321,7 +338,7 @@ public class AuthenticationManager {
 			//            throw new Exception(EMessages.get("error.text"));
 			throw new Exception("ssmldkjfmsqldfjk");
 		}
-
+		
 		try {
 			passwordByteString = secretFactory.generateSecret(PBKDF2).getEncoded();
 		}catch (InvalidKeySpecException e) {
