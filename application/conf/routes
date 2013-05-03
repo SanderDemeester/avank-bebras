@@ -92,7 +92,6 @@ POST    /questions/:name              		 controllers.question.QuestionController
 GET     /question/remove/:name      		 controllers.question.QuestionController.remove(name)
 GET     /questionfile/:id/:file      		 controllers.question.QuestionController.showQuestionFile(id, file)
 GET     /question/export/:id      		 	 controllers.question.QuestionController.export(id)
-GET     /test					      		 controllers.question.QuestionController.test()
 
 # FAQ
 GET		/faq						controllers.faq.FAQController.getFAQ()

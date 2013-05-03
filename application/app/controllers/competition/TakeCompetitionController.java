@@ -23,6 +23,7 @@ import models.question.QuestionFeedback;
 import models.question.QuestionFeedbackGenerator;
 import models.question.QuestionSet;
 import models.user.AuthenticationManager;
+import models.user.Role;
 import models.user.User;
 import models.user.UserType;
 
@@ -41,6 +42,7 @@ import controllers.EController;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Result;
+import views.html.commons.noaccess;
 /**
  * Controller for taking competitions. Includes the listing of available
  * competitions for each user type.
@@ -55,6 +57,14 @@ public class TakeCompetitionController extends EController {
      */
     private static boolean userType(UserType type) {
         return AuthenticationManager.getInstance().getUser().getType().equals(type);
+    }
+    
+    /**
+     * Check if the current user is authorized for the competition management
+     * @return is the user authorized
+     */
+    private static boolean isAuthorized() {
+        return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGECONTESTS);
     }
 
     /**
@@ -170,7 +180,8 @@ public class TakeCompetitionController extends EController {
 
         QuestionSet questionSet = competition.getQuestionSet(grade);
 
-        // TMP: start competition here
+        // TODO: only start competition here if the user is anonymous, otherwise the competition
+        // should already have been started.
         CompetitionUserStateManager.getInstance().startCompetition(competition);
         
         // Register the user in the competition
@@ -191,7 +202,7 @@ public class TakeCompetitionController extends EController {
                         );
             }
         } catch (CompetitionNotStartedException e) {
-            // TODO: prettify
+            // TODO: prettify, redirect to previous page with alert? or just an error page
             return badRequest(e.getMessage());
         }
         
@@ -222,18 +233,15 @@ public class TakeCompetitionController extends EController {
                         AuthenticationManager.getInstance().getUser().getID()
                     ).setResults(feedback);
             }
-            
-            
-            // TMP: move this to the daemon and add a runnable when the competition is started
-            CompetitionUserStateManager.getInstance().finishCompetition(feedback.getCompetitionID());
+        } catch (CompetitionNotStartedException e) {
+            return badRequest(EMessages.get("competition.run.submit.notStarted"));
         } catch (UnavailableLanguageException
                 | UnknownLanguageCodeException
-                | AnswerGeneratorException
-                | CompetitionNotStartedException e) {
+                | AnswerGeneratorException e) {
             return badRequest(e.getMessage());
         }
         
-        return ok("Submission was successful!");
+        return ok(EMessages.get("competition.run.submit.ok"));
     }
     
     /**
@@ -241,34 +249,35 @@ public class TakeCompetitionController extends EController {
      * @param json answers in json format
      * @return message with the submission result
      */
-    // TODO: add roles
     public static Result forceSubmit(String json) {
-        // Dirty check, because Play is to dumb to throw exceptions
-        try {
-            new org.codehaus.jackson.JsonFactory().createJsonParser(json).nextToken();
-        }
-        catch(NullPointerException | IOException ex) { 
-            return badRequest("Invalid answers.");
-        }
-        if(json == null || json.equals(""))
-            return badRequest("Invalid answers.");
-        try {
-            JsonNode input = Json.parse(json);
-            QuestionFeedback feedback = QuestionFeedbackGenerator.generateFromJson(
-                    input, Language.getLanguage(EMessages.getLang()));
-            // Save the results
-            CompetitionUserStateManager.getInstance().getState(
-                    feedback.getCompetitionID(),
-                    feedback.getToken()
-                ).setResults(feedback);
-        } catch (UnavailableLanguageException
-                | UnknownLanguageCodeException
-                | AnswerGeneratorException
-                | CompetitionNotStartedException e) {
-            return badRequest(e.getMessage());
-        }
-        
-        return ok("Submission was successful!");
+        if(isAuthorized()) {
+            // Dirty check, because Play is to dumb to throw exceptions
+            try {
+                new org.codehaus.jackson.JsonFactory().createJsonParser(json).nextToken();
+            }
+            catch(NullPointerException | IOException ex) { 
+                return badRequest(EMessages.get("competition.run.submit.invalid"));
+            }
+            if(json == null || json.equals(""))
+                return badRequest(EMessages.get("competition.run.submit.invalid"));
+            try {
+                JsonNode input = Json.parse(json);
+                QuestionFeedback feedback = QuestionFeedbackGenerator.generateFromJson(
+                        input, Language.getLanguage(EMessages.getLang()));
+                // Save the results
+                CompetitionUserStateManager.getInstance().getState(
+                        feedback.getCompetitionID(),
+                        feedback.getToken()
+                    ).setResults(feedback);
+            } catch (UnavailableLanguageException
+                    | UnknownLanguageCodeException
+                    | AnswerGeneratorException
+                    | CompetitionNotStartedException e) {
+                return badRequest(e.getMessage());
+            }
+            
+            return ok(EMessages.get("competition.run.submit.ok"));
+        } else return forbidden();
     }
     
     /**
@@ -293,41 +302,64 @@ public class TakeCompetitionController extends EController {
         return ok(views.html.competition.run.questionSet.render("", questionSet, feedback, defaultBreadcrumbs()));
     }
     
-    // TODO: add roles
+    /**
+     * Live competition overview page
+     * @param id competition id
+     * @return view of the competition overview
+     */
     public static Result overview(String id) {
         // Make some error breadcrumbs for when an error occurs
         List<Link> errorBreadcrumbs = new ArrayList<Link>();
         errorBreadcrumbs.add(new Link("Home", "/"));
         errorBreadcrumbs.add(new Link("Error",""));
         
-        CompetitionModel competitionModel = Ebean.find(CompetitionModel.class).where().idEq(id).findUnique();
-        if(competitionModel == null) return internalServerError(views.html.commons.error.render(errorBreadcrumbs, EMessages.get("error.title"), EMessages.get("error.text")));
-        Competition competition = new Competition(competitionModel);
-        
-        return ok(views.html.competition.run.overview.render(competition, defaultBreadcrumbs()));
+        if(isAuthorized()) {        
+            CompetitionModel competitionModel = Ebean.find(CompetitionModel.class).where().idEq(id).findUnique();
+            if(competitionModel == null) return internalServerError(views.html.commons.error.render(errorBreadcrumbs, EMessages.get("error.title"), EMessages.get("error.text")));
+            Competition competition = new Competition(competitionModel);
+            
+            return ok(views.html.competition.run.overview.render(competition, defaultBreadcrumbs()));
+        } else return ok(noaccess.render(errorBreadcrumbs));
     }
     
-    // TODO: add roles
+    /**
+     * Live competition overview data
+     * @param id competition id
+     * @return json encoded data
+     */
     public static Result overviewData(String id) {
-        try {
-            ObjectNode result = Json.newObject();
-            result.put("amountFinished", CompetitionUserStateManager.getInstance().getAmountFinished(id));
-            result.put("amountRegistered", CompetitionUserStateManager.getInstance().getAmountRegistered(id));
-            return ok(result);
-        } catch (CompetitionNotStartedException e) {
-            return badRequest(e.getMessage());
-        }
+        // Make some error breadcrumbs for when an error occurs
+        List<Link> errorBreadcrumbs = new ArrayList<Link>();
+        errorBreadcrumbs.add(new Link("Home", "/"));
+        errorBreadcrumbs.add(new Link("Error",""));
+        
+        if(isAuthorized()) {
+            try {
+                ObjectNode result = Json.newObject();
+                result.put("amountFinished", CompetitionUserStateManager.getInstance().getAmountFinished(id));
+                result.put("amountRegistered", CompetitionUserStateManager.getInstance().getAmountRegistered(id));
+                return ok(result);
+            } catch (CompetitionNotStartedException e) {
+                return badRequest(e.getMessage());
+            }
+        } else return ok(noaccess.render(errorBreadcrumbs));
         
     }
     
-    // TODO: add roles
+    /**
+     * Force a competition to finish before the expiration date
+     * @param id competitionid
+     * @return return message
+     */
     public static Result forceFinish(String id) {
-        try {
-            CompetitionUserStateManager.getInstance().finishCompetition(id);
-            return ok("The competition has been finished.");
-        } catch (CompetitionNotStartedException e) {
-            return badRequest(e.getMessage());
-        }
+        if(isAuthorized()) {
+            try {
+                CompetitionUserStateManager.getInstance().finishCompetition(id);
+                return ok(EMessages.get("competition.run.finished"));
+            } catch (CompetitionNotStartedException e) {
+                return badRequest(e.getMessage());
+            }
+        } else return forbidden();
     }
 
 }

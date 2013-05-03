@@ -494,6 +494,23 @@ competition.modal.finished.text = Je hebt met succes de competitie beëindigd.
 competition.modal.finished.return = Keer terug naar start
 competition.modal.finished.showFeedback = Toon feedback
 
+competition.run.submit.notStarted = Deze competitie is nog niet begonnen, of is al reeds gestopt door de verantwoordelijke.
+competition.run.submit.ok = Antwoorden zijn verstuurd.
+competition.run.submit.invalid = Antwoorden zijn ongeldig.
+competition.run.finished = De competitie is gestopt.
+
+competition.overview.submitAnswers = Verzend antwoorden van leerlingen
+competition.overview.submitAnswers.info = Plak de code die je gekopieerd hebt van de leerling, plak het in dit tekstveld en klik op verzenden.
+competition.overview.stopCompetition = Stop competitie
+competition.overview.progress = Verloop
+competition.overview.timeLeft = Tijd ober
+competition.overview.finished = Klaar
+competition.overview.details = Details
+competition.overview.id = ID
+competition.overview.questionSets = Vragen sets
+competition.overview.availableLanguages = Beschikbare talen
+competition.overview.confirmFinish = Ben je zeker dat je deze competitie wilt stoppen? Alle niet-verzonden vragen zullen verloren gaan!
+
 # Contact form
 contact.formtitle = Contact formulier
 contact.email = Uw email-adres

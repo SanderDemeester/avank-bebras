@@ -28,15 +28,14 @@ import models.question.QuestionBuilderException;
 import models.question.QuestionFeedback;
 import models.question.QuestionFeedbackGenerator;
 import models.question.QuestionIO;
-import models.question.QuestionPack;
 import models.question.QuestionSet;
 import models.question.Server;
 import models.question.submits.Submit;
 import models.question.submits.SubmitsPage;
 import models.user.AuthenticationManager;
+import models.user.Role;
 
 import org.codehaus.jackson.JsonNode;
-import org.w3c.dom.Document;
 
 import play.Play;
 import play.cache.Cache;
@@ -75,9 +74,7 @@ public class QuestionController extends EController{
      * @return is the user authorized
      */
     public static boolean isAuthorized() {
-        // TODO: enable this authorization
-        //return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGEQUESTIONS);
-        return true;
+        return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGEQUESTIONS);
     }
 
     /**
@@ -446,46 +443,6 @@ public class QuestionController extends EController{
             }
         } else {
             return forbidden();
-        }
-    }
-    
-    //TODO: delete
-    public static Result test() {
-        String id = "474";
-        String id2 = "454";
-        String id3 = "494";
-        try {
-            // TODO: cache
-            //if (true) return ok(routes.QuestionController.showQuestionFile(id, QuestionPack.QUESTIONXMLFILE).absoluteURL(request()));
-            Question q = Question.fetch(id);
-            Question q2 = Question.fetch(id2);
-            QuestionSet set = new QuestionSet(null);
-            Question q3 = Question.fetch(id3);
-            set.addQuestion(q);
-            //set.addQuestion(q2);
-            set.addQuestion(q3);
-            
-            // TMP
-            QuestionFeedback feedback = null;
-            try {
-                JsonNode input = Json.parse("{\"competition\":\"TODO\",\"questionset\":\"TODO\",\"timeleft\":0,\"questions\":{\"474\":\"qsdqsd\",\"494\":\"blablabla\"}}");
-                try {
-                    feedback = QuestionFeedbackGenerator.generateFromJson(input, Language.getLanguage(EMessages.getLang()));
-                } catch (UnavailableLanguageException
-                        | UnknownLanguageCodeException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            } catch (AnswerGeneratorException e) {
-                return badRequest(e.getMessage());
-            }
-            
-            return ok(questionSet.render("", set, null, new ArrayList<Link>()));
-            //return ok(q.getIndexLink(Language.getLanguage(EMessages.getLang())).absoluteURL(request()));
-        } catch (QuestionBuilderException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return ok(e.getMessage());
         }
     }
 }

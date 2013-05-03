@@ -240,11 +240,6 @@ public class Server extends ManageableModel implements Listable{
         
         // Add all those files to a new zip file
         File zipFile = QuestionIO.addTempFile(download, QuestionPack.QUESTIONZIPFILE+"~"+questionID+"~"+userID);
-
-        // Let's be cool and delete those files immediately
-        for(File file : files) {
-            file.delete();
-        }
         
         FileOutputStream fout = new FileOutputStream(zipFile);
         ZipOutputStream zout = new ZipOutputStream(fout);
@@ -253,6 +248,11 @@ public class Server extends ManageableModel implements Listable{
         
         zout.close();
         fout.close();
+        
+        // Let's be cool and delete those files immediately
+        for(File file : files) {
+            file.delete();
+        }
         
         // We are nice and close the connection
         client.disconnect(true);
