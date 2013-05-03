@@ -458,3 +458,4 @@ contact.requestupgrade.explanation = Hier kunt u een aanvraag indienen om uw acc
 # Other user
 otheruser.view = View user
 otheruser.block = Blokkeer
+otheruser.block.date = Blokkeer tot (leeg laten indien u niet wil blokkeren)

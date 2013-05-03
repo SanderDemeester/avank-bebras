@@ -465,3 +465,4 @@ contact.requestupgrade.explanation = Here you can request an upgrade of your acc
 # Other user
 otheruser.view = Bekijk gebruiker
 otheruser.block = Block
+otheruser.block.date = Block until (leave blank for no block)

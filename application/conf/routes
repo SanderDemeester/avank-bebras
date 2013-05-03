@@ -152,3 +152,4 @@ POST		/upgrade			controllers.contactform.RequestTeacherController.upload()
 
 GET		/user/:id			controllers.user.OtherUserController.show(id)
 GET		/user/:id/block			controllers.user.BlockController.show(id)
+POST		/user/:id/block/		controllers.user.BlockController.block(id)
