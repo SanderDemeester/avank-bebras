@@ -191,6 +191,7 @@ forgot_pwd.nosent = Er is een fout opgetreden, de e-mail kon niet verstuurd word
 forgot_pwd.mail = Er werd een e-mail verzonden naar het opgegeven adres.
 forgot_pwd.mail_sent = Iemand heeft een nieuw wachtwoord aangevraagd voor Avank-Bebras. Er werd een tijdelijk wachtwoord voor gebruiker {0} gemaakt. Dit tijdelijke wachtwoord is {1}. Indien dit je bedoeling was, kan je nu inloggen met dit tijdelijk wachtwoord en een nieuw wachtwoord instellen. Indien iemand anders dit verzoek maakte en jij de verantwoordelijke voor hem/haar bent, gelieve dan deze gebruiker hierover te informeren.
 forgot_pwd.mail_subject = Wachtwoord resetten
+forgot_pwd.email_blank = "Laat leeg als u geen veld heeft"
 
 # Edit pwd
 edit_pwd.edit_pwd = Wachtwoord veranderen

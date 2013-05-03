@@ -190,6 +190,7 @@ forgot_pwd.nosent = An error occurred, the email wasn't sent.
 forgot_pwd.mail = An email was sent to the provided address.
 forgot_pwd.mail_sent = Someone requested a new password for Avank-Bebras. A temporary password for user {0} has been created and was set to {1}. If this was your intent, you will need to log in and choose a new password now. If someone else made this request and you're responsible for this user, please inform him/her.
 forgot_pwd.mail_subject = Password reset
+forgot_pwd.email_blank = "Leave blanco if you dont have an email addres"
 
 # Edit pwd
 edit_pwd.edit_pwd = Edit password
@@ -208,6 +209,8 @@ reset_pwd.submit = Submit
 # Personal Info
 pers_info.pers_info = Personal information
 pers_info.edit = Edit information
+
+# Reset
 
 #faq
 faq.title = Frequently Asked Questions
