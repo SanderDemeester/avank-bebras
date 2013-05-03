@@ -56,7 +56,7 @@ public class UserModel extends ManageableModel implements Listable{
     @Enumerated(EnumType.STRING)
     public UserType type;
 
-    public Date blockedUntil;
+    public Date blockeduntil;
 
     @Column(name="class")
     public Integer classgroup;
@@ -76,7 +76,7 @@ public class UserModel extends ManageableModel implements Listable{
         this.email = email;
         this.gender = gender;
         this.preflanguage = preflanguage;
-        this.blockedUntil = null;
+        this.blockeduntil = null;
         EMessages.setLang(preflanguage);
     }
 
@@ -108,7 +108,7 @@ public class UserModel extends ManageableModel implements Listable{
 				gender.toString(),
 				convertDate(birthdate),
 				preflanguage,
-				DateFormatter.formatDate(this.blockedUntil)				
+				DateFormatter.formatDate(this.blockeduntil)				
 		};		
 		return res;
 	}
@@ -131,8 +131,8 @@ public class UserModel extends ManageableModel implements Listable{
 	 * @return whether the user is currently blocked
 	 */
 	public boolean isCurrentlyBlocked(){
-		if(this.blockedUntil==null) return false;
+		if(this.blockeduntil==null) return false;
 		Date today = Calendar.getInstance().getTime();
-		return !today.before(this.blockedUntil);
+		return !today.before(this.blockeduntil);
 	}
 }
