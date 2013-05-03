@@ -333,7 +333,7 @@ public class UserController extends EController {
 		// There are two cases, the user has an email or the user does not has a email
 
 		if(!userModel.email.isEmpty()){
-
+			// Case 1
 			// Put reset token into database
 			userModel.reset_token = new BigInteger(130, secureRandom).toString(32);
 			Ebean.save(userModel);
@@ -347,11 +347,15 @@ public class UserController extends EController {
 				flash("error", EMessages.get("forgot_pwd.nosent"));
 			}
 		}else{
-
+			// Case 2
 		}
 		return Results.redirect("/");
 	}
 
+	public static Result receivePasswordResetToken(String token){
+		return null;
+	}
+		
 	public static class ForgotPwd {
 		@Required
 		public String id;
