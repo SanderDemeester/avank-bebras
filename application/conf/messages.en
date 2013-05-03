@@ -403,6 +403,7 @@ classes.add.nograde = There is no level with that name.
 classes.add.error = Something went wrong with the database. Try again later.
 classes.edit = Edit a class.
 
+classes.import = Import a class
 classes.import.classnotexist = There is no class with that ID.
 classes.import.classrecordwhileaddingtoexisting = You are adding pupils to an existing class. CLASS records will be ignored.
 classes.import.usernotexist = There is no user with that ID.
@@ -460,3 +461,7 @@ contact.requestupgrade.noemail = There is no email associated with your account.
 contact.upgraderequest.subject = [EN] Upgrade request
 contact.requestupgrade.notimage = The uploaded file is not an image.
 contact.requestupgrade.explanation = Here you can request an upgrade of your account to a teacher account. Please upload a link of a scan of your Teacher Card. Abuse of this form will lead to the suspension of your account.
+
+# Other user
+otheruser.view = Bekijk gebruiker
+otheruser.block = Block

@@ -12,11 +12,14 @@ import com.avaje.ebean.Expr;
 import com.avaje.ebean.Expression;
 import com.avaje.ebean.ExpressionList;
 
+import controllers.user.OtherUserController;
+
 import play.mvc.Call;
 import models.dbentities.ClassPupil;
 import models.dbentities.UserModel;
 import models.management.Manager;
 import models.management.ModelState;
+import models.user.ChainOfCommand;
 
 /**
  * @author Jens N. Rammant
@@ -49,7 +52,7 @@ public class ClassPupilManager extends Manager<UserModel> {
 
 	@Override
 	public Call getEditRoute(String id) {
-		// TODO link to the pupil's edit page
+		if(ChainOfCommand.isSuperiorOf(id))return controllers.user.routes.OtherUserController.show(id);
 		return null;
 	}
 

@@ -24,6 +24,9 @@ public class ChainOfCommand {
 	 */
 	public static boolean isSuperiorOf(String inferior) throws PersistenceException{
 		UserModel inf = Ebean.find(UserModel.class, inferior);
+		if(inf==null){
+			return false;
+		}
 		//checked on database TYPE entry, not java class
 		return isSuperiorOf(new Independent(inf));
 	}
@@ -38,6 +41,9 @@ public class ChainOfCommand {
 	public static boolean isSuperiorOf(String superior,String inferior) throws PersistenceException{
 		UserModel inf = Ebean.find(UserModel.class, inferior);
 		UserModel sup = Ebean.find(UserModel.class, superior);
+		if(inf==null||sup==null){
+			return false;
+		}
 		//checked on database TYPE entry, not java class
 		return isSuperiorOf(new Independent(sup),new Independent(inf));
 	}
@@ -50,7 +56,7 @@ public class ChainOfCommand {
 	 * @throws PersistenceException
 	 */
 	public static boolean isSuperiorOf(User inferior) throws PersistenceException{
-		return isSuperiorOf(AuthenticationManager.getInstance().getCurrentMimickUser(), inferior);
+		return isSuperiorOf(AuthenticationManager.getInstance().getUser(), inferior);
 	}
 	
 	/**
@@ -61,13 +67,19 @@ public class ChainOfCommand {
 	 * @return whether superior IS the superior of inferior
 	 */
 	public static boolean isSuperiorOf(User superior, User inferior){
-		if(!(inferior instanceof Authenticated)) return false;
+		if(!(inferior instanceof Authenticated && superior instanceof Authenticated)) {
+			return false;
+		}
 		UserType sup = superior.data.type;
-		UserType inf = superior.data.type;
+		UserType inf = inferior.data.type;
 		
-		if(sup.equals(UserType.ADMINISTRATOR))return !inf.equals(UserType.ADMINISTRATOR);
-		if(sup.equals(UserType.ORGANIZER))return !(inf.equals(UserType.ADMINISTRATOR)
-				||inf.equals(UserType.ORGANIZER));
+		if(sup.equals(UserType.ADMINISTRATOR)){
+			return !inf.equals(UserType.ADMINISTRATOR);
+		}
+		if(sup.equals(UserType.ORGANIZER)){
+			return !(inf.equals(UserType.ADMINISTRATOR)||inf.equals(UserType.ORGANIZER));
+		}
+				
 		if(sup.equals(UserType.TEACHER)&&inf.equals(UserType.PUPIL_OR_INDEP)){
 			Teacher t = (Teacher) superior;
 			return t.isPupilsTeacher(inferior);
