@@ -1,0 +1,2 @@
+ALTER TABLE users DROP COLUMN active;
+ALTER TABLE users ADD COLUMN blockedUntil date;
