@@ -8,6 +8,8 @@ import java.util.Date;
 
 import javax.persistence.PersistenceException;
 
+import play.i18n.Lang;
+
 import com.avaje.ebean.Ebean;
 
 import controllers.util.InputChecker;
@@ -37,7 +39,12 @@ public class UserModelValidator {
 		//Check if there is a Gender and preferred language
 		if(toValidate.gender==null)return Result.NO_GENDER;
 		if(toValidate.preflanguage==null)return Result.NO_LANGUAGE;
-		//TODO language
+		try{
+			Lang lan = Lang.forCode(toValidate.preflanguage);
+			if(!Lang.availables().contains(lan))return Result.INVALID_LANGUAGE;
+		}catch(Exception e){
+			return Result.INVALID_LANGUAGE;
+		}
 		//Check password
 		if(toValidate.password==null||toValidate.password.isEmpty())return Result.NO_PASSWORD;
 		//Check email, if any
@@ -59,6 +66,7 @@ public class UserModelValidator {
 		BIRTHDAY_AFTER_TODAY,
 		NO_GENDER,
 		NO_LANGUAGE,
+		INVALID_LANGUAGE,
 		NO_PASSWORD,
 		INVALID_EMAIL,
 		ALREADY_EXISTING_EMAIL;
