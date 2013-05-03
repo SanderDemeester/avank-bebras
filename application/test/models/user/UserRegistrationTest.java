@@ -49,7 +49,7 @@ public class UserRegistrationTest extends ContextTest{
 
 		assertThat(contentAsString(result)).contains("There is already a user with the selected email address");
 
-		assertNotNull(Ebean.find(UserModel.class).where().eq("id","jjones").where().eq("type", UserType.INDEPENDENT.toString()).findUnique());
+		assertNotNull(Ebean.find(UserModel.class).where().eq("id","jjones").where().eq("type", UserType.PUPIL_OR_INDEP.toString()).findUnique());
 
 
 		// ok.. He is not dutch.. 

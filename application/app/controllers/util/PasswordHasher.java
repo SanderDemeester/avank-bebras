@@ -12,6 +12,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
 import models.EMessages;
+import models.user.AuthenticationManager;
 
 import org.apache.commons.codec.binary.Hex;
 
@@ -22,13 +23,13 @@ import org.apache.commons.codec.binary.Hex;
 public class PasswordHasher {
 	
 	/**
-	 * @param password the "plaintext" password
+	 * @param clientHashedPassword the "client-side hashed" password
 	 * @return a container containing the fully hashed & hexed password and the hexed hash. Ready to be put in the
 	 *       database
 	 * @throws Exception 
 	 */
 	
-	public static SaltAndPassword generateSP(char[] password) throws Exception{
+	public static SaltAndPassword generateSP(char[] clientHashedPassword) throws Exception{
 		
 		// Create object for returning salt and password.
 		SaltAndPassword saltAndPassword = new SaltAndPassword();
@@ -60,7 +61,7 @@ public class PasswordHasher {
         random.nextBytes(salt);
 
         // Get the key for PBKDF2.
-        KeySpec PBKDF2 = new PBEKeySpec(password, salt, 1000, 160);
+        KeySpec PBKDF2 = new PBEKeySpec(clientHashedPassword, salt, 1000, 160);
 
         // init keyFactory.
         try{
@@ -84,6 +85,17 @@ public class PasswordHasher {
         saltAndPassword.password = passwordHEX;
         
         return saltAndPassword;
+	}
+	/**
+	 * 
+	 * @param plainTextPassword password in plaintext
+	 * @return a container containing the fully hashed & hexed password and the hexed hash. Ready to be put in the
+	 *       database
+	 * @throws Exception 
+	 */
+	public static SaltAndPassword fullyHash(String plainTextPassword) throws Exception{
+		String clientHashed = AuthenticationManager.getInstance().simulateClientsidePasswordStrengthening(plainTextPassword);		
+		return generateSP(clientHashed.toCharArray());
 	}
 
 	public static class SaltAndPassword{

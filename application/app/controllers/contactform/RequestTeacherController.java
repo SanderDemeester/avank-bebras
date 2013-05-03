@@ -7,8 +7,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.mail.MessagingException;
-
 import models.EMessages;
 import models.data.Link;
 import models.mail.UpgradeRequestMail;
@@ -19,6 +17,7 @@ import models.user.UserType;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
+import scala.actors.threadpool.Arrays;
 import views.html.commons.noaccess;
 import views.html.contactform.upgradeRequest;
 import controllers.EController;
@@ -27,12 +26,22 @@ import controllers.EController;
  * @author Jens N. Rammant
  *
  */
+@SuppressWarnings("unchecked")
 public class RequestTeacherController extends EController {
 
 	/**
 	 * 
 	 * @return a page to upload the image
 	 */
+	
+	private static final List<String> ALLOWED_FILE_TYPES;
+	
+	static{
+		String[] toAdd = {"jpg","bmp","png","gif","jpeg"};
+		ALLOWED_FILE_TYPES = Arrays.asList(toAdd);
+	}
+		
+	
 	public static Result showForm(){
 		//Generate breadcrumbs
 		List<Link> breadcrumbs = getBreadcrumbs();
@@ -69,8 +78,7 @@ public class RequestTeacherController extends EController {
 
 			FilePart card = data.getFile("card");
 			File file = card.getFile();
-			// Doesn't work atm since isImage isn't implemented
-			if (!isImage(file)) {
+			if (!isImage(card.getFilename())) {
 				flash("warning",
 						EMessages.get("contact.requestupgrade.notimage"));
 				return redirect(routes.RequestTeacherController.showForm());
@@ -82,6 +90,7 @@ public class RequestTeacherController extends EController {
 			flash("success", EMessages.get("contact.form.sendsuccess"));
 
 		} catch (Exception e) {
+			e.printStackTrace();//TODO
 			flash("error", EMessages.get("contact.form.couldnotsend"));
 		}
 		return redirect(routes.RequestTeacherController.showForm());
@@ -104,16 +113,19 @@ public class RequestTeacherController extends EController {
 	 */
 	private static boolean isAuthorized(){
 		User current = AuthenticationManager.getInstance().getUser();
-		return current.getType()==UserType.INDEPENDENT||current.getType()==UserType.PUPIL;
+		return current.getType()==UserType.PUPIL_OR_INDEP;
 	}
 	
 	/**
-	 * Not yet implemented
-	 * @param file file to check
+	 * Checks wether a file is an image using the extension
+	 * @param file filename of the file to check
 	 * @return whether file is an image
 	 */
-	private static boolean isImage(File file){
-		//TODO might be useful, but is rather difficult
-		return true;
+	private static boolean isImage(String fileName){
+		if(fileName==null||fileName.isEmpty())return false;
+		String[] parts = fileName.split("\\.");
+		String extension = parts[parts.length-1];
+		return ALLOWED_FILE_TYPES.contains(extension.toLowerCase());
+		
 	}
 }

@@ -29,12 +29,12 @@ public class IDGeneratorTest extends test.ContextTest {
     }
 
     @Test public void testGenerator() {
-        for(int i = 0; i < 30; i++) {
+        for(int i = 0; i < 100; i++) {
             String name = "Felix Van der Jeugt";
             String id = IDGenerator.generate(name, Calendar.getInstance());
             try {
                 Ebean.save(new UserModel(
-                    id, UserType.INDEPENDENT, name, new Date(), new Date(),
+                    id, UserType.PUPIL_OR_INDEP, name, new Date(), new Date(),
                     "password", "salt", "email", Gender.Other, "en"
                 ));
             } catch(OptimisticLockException e) {
