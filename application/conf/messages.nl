@@ -153,6 +153,7 @@ question.questionset.overview.questions = Deze vragenbundel bevat de volgende vr
 question.questionset.overview.basic = Bewerk vragenbundel:
 question.questionset.form.qid = Vraag id
 question.questionset.form.qsid = Vragenbundel id
+question.questionset.doublegrade = De competitie heeft al een vragenbundel met het geselecteerde niveau!
 
 # Languages
 languages.language = Taal
@@ -224,7 +225,7 @@ management.add = Nieuw
 management.confirmDelete = Ben je zeker dat je deze record wilt verwijderen?
 
 # competition
-competition.name = Competities
+competition.breadcrumb = Competities
 competition.create.breadcrumb = Nieuwe competitie
 competition.create = Maak een nieuwe competitie aan.
 competition.create.title = Maak een nieuwe competitie aan.
@@ -249,13 +250,28 @@ competition.edit.breadcrumb = Bewerk
 competition.overview = Competitie overzicht
 competition.overview.info = Op deze pagina, kan je de voor jouw zichtbare competities bekijken. Je kan nieuwe competities aanmaken of een al bestaande competitie aanpassen.
 competition.info.grades = Voor deze contest zijn op dit moment de volgende niveaus beschikbaar:
+competition.info.languages = Voor deze contest zijn op dit moment de volgende talen beschikbaar:
 competition.view.title = Competitie
 competition.view.status = Status
+competition.class.info = Dit is een restricted competitie. Als je jouw leerlingen deze competitie wil laten afleggen, moet je hun klas registreren.
+competition.class.button = Bekijk geregistreerde klassen.
+competition.class.title = Competitie klassen
+competition.class.breadcrumb = Klassen
+competition.class.management.form.name = Naam van de klas
+competition.class.register.title = Registreer nieuwe klas
+competition.class.register.breadcrumb = Registreer nieuwe klas
+competition.class.register.pick = Kies een klas
+competition.class.register.error = De gekozen klas is al geregistreerd voor deze competitie.
 
 competitions.breadcrumb = Beschikbare competities.
 competitions.title = Beschikbare competities.
 competitions.totake = Beschikbare competities waaraan je op dit moment kan deelnemen.
 competitions.taken = Competities die je in het verleden hebt afgelegd.
+competitions.grade.title = Gelieve het gewenste niveau te selecteren.
+competitions.grade = Niveau
+competitions.grade.warning = Opgepast!
+competitions.grade.info = Je staat op het punt om aan een competitie deel te nemen. Om de juiste vragen te kunnen selecteren, hebben we je voorkeur niveau nodig.  Gelieve een niveau te selecteren
+competitions.grade.breadcrumb = Niveau kiezen
 
 # schools
 schools.title = Lijst van Scholen

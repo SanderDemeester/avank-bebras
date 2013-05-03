@@ -1,6 +1,10 @@
 package controllers.competition;
 
 import java.io.IOException;
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Expr;
+import com.avaje.ebean.Page;
+import controllers.EController;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,12 +15,8 @@ import models.competition.CompetitionNotStartedException;
 import models.competition.CompetitionType;
 import models.competition.CompetitionUserStateManager;
 import models.competition.TakeCompetitionManager;
-import models.data.Language;
-import models.data.Link;
-import models.data.UnavailableLanguageException;
-import models.data.UnknownLanguageCodeException;
-import models.dbentities.CompetitionModel;
-import models.dbentities.QuestionSetModel;
+import models.data.*;
+import models.dbentities.*;
 import models.management.ModelState;
 import models.question.AnswerGeneratorException;
 import models.question.QuestionFeedback;
@@ -38,6 +38,9 @@ import com.avaje.ebean.Page;
 
 import controllers.EController;
 
+import play.data.Form;
+import play.libs.Json;
+import play.mvc.Result;
 /**
  * Controller for taking competitions. Includes the listing of available
  * competitions for each user type.
@@ -83,9 +86,9 @@ public class TakeCompetitionController extends EController {
      * @return  available competitions list page
      */
     public static Result list(int page, String orderBy, String order, String filter){
+        TakeCompetitionManager competitionManager = getManager();
         if (userType(UserType.ANON)){
-            // anonymous user
-            TakeCompetitionManager competitionManager = getManager();
+            // anonymous user can only see "running" anonymous competitions
             competitionManager.setExpressionList(competitionManager.getFinder()
                     .where()
                     .eq("type", CompetitionType.ANONYMOUS)
@@ -96,23 +99,82 @@ public class TakeCompetitionController extends EController {
             Page<CompetitionModel> managerPage = competitionManager.page(page);
             return ok(views.html.competition.contests.render(defaultBreadcrumbs(), managerPage, competitionManager, order, orderBy, filter));
         }
-        return TODO;
+        if (userType(UserType.PUPIL_OR_INDEP)){
+            // pupils can see "running" anonymous and unrestricted competitions + restricted competitions if their class is registered
+            UserModel user = AuthenticationManager.getInstance().getUser().getData();
+            ClassGroup classGroup = Ebean.find(ClassGroup.class).where().idEq(user.classgroup).findUnique();
+            List<ContestClass> contestClasses = Ebean.find(ContestClass.class).where().eq("classid", classGroup).findList();
+            List<String> competitionIds = new ArrayList<String>();
+            for (ContestClass contestClass : contestClasses){
+                competitionIds.add(contestClass.contestid.id);
+            }
+            competitionManager.setExpressionList(competitionManager.getFinder()
+                    .where()
+                    .or(
+                            Expr.or(
+                                    Expr.eq("type", CompetitionType.ANONYMOUS),
+                                    Expr.eq("type", CompetitionType.UNRESTRICTED)
+                            ),
+                            Expr.and(
+                                    Expr.eq("type", CompetitionType.RESTRICTED),
+                                    Expr.in("id", competitionIds)
+                                    ))
+                    .eq("active", true)
+                    .lt("starttime", new Date())
+                    .gt("endtime", new Date())
+            );
+            Page<CompetitionModel> managerPage = competitionManager.page(page);
+            return ok(views.html.competition.contests.render(defaultBreadcrumbs(), managerPage, competitionManager, order, orderBy, filter));
+        }
+        // teachers, organizers and admins will be taken to the competition management index page
+        return redirect(routes.CompetitionController.index(0, "name", "asc", ""));
     }
 
+    /**
+     * Returns the page on which the user can choose the preferred grade for the a selected contest.
+     * This is needed to be able to pick to correct question set according to the user's grade.
+     * @param id contest id.
+     * @return choose-grade page
+     */
+    public static Result chooseGrade(String id){
+        Form<Grade> form = form(Grade.class).bindFromRequest();
+        List<Link> breadcrumbs = defaultBreadcrumbs();
+        breadcrumbs.add(new Link(EMessages.get("competitions.grade.breadcrumb"), "/available-contests/" + id + "/grade"));
+        CompetitionModel competitionModel = Ebean.find(CompetitionModel.class).where().idEq(id).findUnique();
+        return ok(views.html.competition.grade.render(breadcrumbs, form, new Competition(competitionModel)));
+    }
+
+    /**
+     * Setting up the competition to be taken.
+     * Returns the page on which users can start the competition and answer questions.
+     * @param id contest id
+     * @return start-contest page
+     */
     public static Result takeCompetition(String id){
         String stateID;
         
         CompetitionModel competitionModel = Ebean.find(CompetitionModel.class).where().idEq(id).findUnique();
         Competition competition = new Competition(competitionModel);
-        // TODO juiste question set kiezen !
-        QuestionSet questionSet = competition.getQuestionSet(competition.getAvailableGrades().get(0));
-        
+        User user = AuthenticationManager.getInstance().getUser();
+
+        // setting the correct grade
+        Grade grade;
+        if (user.data != null && user.data.classgroup != null){
+            ClassGroup classGroup = Ebean.find(ClassGroup.class).where().idEq(user.data.classgroup).findUnique();
+            grade = Ebean.find(Grade.class).where().ieq("name", classGroup.level).findUnique();
+        }
+        else {
+            String gradeName = form(Grade.class).bindFromRequest().field("grade").value();
+            grade = Ebean.find(Grade.class).where().ieq("name", gradeName).findUnique();
+        }
+
+        QuestionSet questionSet = competition.getQuestionSet(grade);
+
         // TMP: start competition here
         CompetitionUserStateManager.getInstance().startCompetition(competition);
         
         // Register the user in the competition
         try {
-            User user = AuthenticationManager.getInstance().getUser();
             if(user.isAnon()) {
                 stateID = AuthenticationManager.getInstance().getAuthCookie();
                 CompetitionUserStateManager.getInstance().registerAnon(

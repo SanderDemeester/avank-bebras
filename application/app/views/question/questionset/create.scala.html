@@ -31,6 +31,12 @@
                 </div>
             }
 
+            @if(flash.containsKey("questionset-error")) {
+            <div class="alert alert-error">
+                <strong>Error!</strong> @flash.get("questionset-error")
+            </div>
+            }
+
             @inputText(qsForm("name"), '_label -> EMessages.get("question.questionset.create.name"), '_showConstraints -> false)
 
             @select(

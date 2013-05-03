@@ -80,6 +80,18 @@ public class QuestionSetController extends EController {
         }
         QuestionSetModel questionSetModel = form.get();
         questionSetModel.grade = Ebean.find(Grade.class).where().ieq("name", form.field("gradetext").value()).findUnique();
+        QuestionSetModel oldQuestionSetModel = Ebean.find(QuestionSetModel.class)
+                .where()
+                .eq("grade", questionSetModel.grade)
+                .eq("contid", contestid)
+                .findUnique();
+        if (oldQuestionSetModel != null){
+            // there exists a question set with the same grade
+            List<Link> breadcrumbs = defaultBreadcrumbs();
+            breadcrumbs.add(new Link(EMessages.get("question.questionset.create.breadcrumb"), "/questionset/new"));
+            flash("questionset-error", EMessages.get("question.questionset.doublegrade"));
+            return badRequest(views.html.question.questionset.create.render(form, contestid, breadcrumbs, true));
+        }
         // TODO check of deze question set actief gezet mag worden !
         // TODO opvangen dat wanneer er op Cancel wordt gedrukt, de contest terug verwijderd wordt uit de database!
         questionSetModel.contest = Ebean.find(CompetitionModel.class).where().ieq("id", contestid).findUnique();

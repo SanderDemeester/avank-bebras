@@ -214,7 +214,7 @@ public class ClassPupilController extends EController {
 					OperationResultInfo.Type.WARNING);
 			return badRequest(addExistingPupil.render(f, bc, ori, id));
 		}
-		if (um.type != UserType.INDEPENDENT && um.type != UserType.PUPIL) { //TODO check if both are needed
+		if (um.type != UserType.PUPIL_OR_INDEP) {
 			// User is not a pupil
 			ori.add(EMessages.get("classes.pupil.add.usernotpupil"),
 					OperationResultInfo.Type.WARNING);
@@ -252,7 +252,6 @@ public class ClassPupilController extends EController {
 	 */
 	public static Result downloadClass(int id) {
 		List<Link> bc = getBreadCrumbs(id);
-		OperationResultInfo ori = new OperationResultInfo();
 		try {
 			//Check if authorized
 			if (!isAuthorized(id))

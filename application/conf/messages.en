@@ -152,6 +152,7 @@ question.questionset.overview.questions = This question set contains the followi
 question.questionset.overview.basic = Edit question set information.
 question.questionset.form.qid = Question id
 question.questionset.form.qsid = Question set id
+question.questionset.doublegrade = The contest already contains a question set with the selected grade.
 
 # Languages
 languages.language = Language
@@ -223,7 +224,7 @@ management.add = Create
 management.confirmDelete = Are you certain you want to delete this record?
 
 # competition
-competition.name = Contests
+competition.breadcrumb = Contests
 competition.create.breadcrumb = New contest
 competition.create = Create new contest!
 competition.create.title = Create contest.
@@ -247,14 +248,29 @@ competition.edit = Edit contest
 competition.edit.breadcrumb = Edit
 competition.overview = Contest overview.
 competition.overview.info = On this page, you can view contest which are open for you. You can create new contests or edit an existing contest.
-competition.info.grades = This contests currently supports the following grades:
+competition.info.grades = This contest currently supports the following grades:
+competition.info.languages = This contests currently supports the following languages:
 competition.view.title = Contest
 competition.view.status = Status
+competition.class.info = This is a restricted contest. If you want to let your pupils take this contest you have to register their class.
+competition.class.button = View registered classes.
+competition.class.title = Contest classes
+competition.class.breadcrumb = Classes
+competition.class.management.form.name = Class name
+competition.class.register.title = Register new class
+competition.class.register.breadcrumb = Register new class
+competition.class.register.pick = Pick a class
+competition.class.register.error = The selected class is already registered for this contest.
 
 competitions.breadcrumb = Available contests.
 competitions.title = Available contests.
 competitions.totake = Available contests that you can take at this moment.
 competitions.taken = Contests you've taken in the past.
+competitions.grade.title = Please choose a preferred grade.
+competitions.grade = Grade
+competitions.grade.warning = Warning!
+competitions.grade.info = You're about to take a contest. In order to select the appropriate questions, we need to know your desired grade. Please select the grade you prefer
+competitions.grade.breadcrumb = Select grade
 
 # schools
 schools.title = List of Schools

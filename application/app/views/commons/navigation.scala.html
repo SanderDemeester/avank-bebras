@@ -15,14 +15,25 @@
                 }
             </ul>
             <ul class="nav pull-right">
-                <li class="divider-vertical"></li>
+            	<li class="divider-vertical"></li>
+            	<li class="dropdown"><a class="dropdown-toggle" href="#"
+                    data-toggle="dropdown">@EMessages.get("app.changeLanguage") <strong class="caret"></strong>
+                	</a>
+                	<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                    	@for(language <- models.data.Language.listLanguages()) {
+                            <li><a href="@routes.Application.changeLanguage(language.getCode)">@language.getName(language)</a></li>
+                        }
+                    </ul>
+               	</li>
+                
                 @if(models.user.AuthenticationManager.getInstance().isLoggedIn()) {
+                <li class="divider-vertical"></li>
                 <li class="dropdown"><a class="dropdown-toggle" href="#"
-                    data-toggle="dropdown">@EMessages.get("app.signedInAs") <i>@models.user.AuthenticationManager.getInstance().getUser().getID()</i> <strong class="icon-cog"></strong><strong class="caret"></strong>
+                    data-toggle="dropdown">@EMessages.get("app.signedInAs") <i>@models.user.AuthenticationManager.getInstance().getOriginalUser().getID()</i> <strong class="icon-cog"></strong><strong class="caret"></strong>
                     </a>
                 @if(models.user.AuthenticationManager.getInstance().getUser().isMimicking()){
                     <li class="dropdown"><a class="dropdown-toggle" href="#"
-                    data-toggle="dropdown">@EMessages.get("app.mimic") <i>: @models.user.AuthenticationManager.getInstance().getCurrentMimickUser().getID() </i> <strong class="icon-cog"></strong><strong class="caret"></strong>
+                    data-toggle="dropdown">@EMessages.get("app.mimic") <i>: @models.user.AuthenticationManager.getInstance().getUser().getID() </i> <strong class="icon-cog"></strong><strong class="caret"></strong>
                     </a>
                     }
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
@@ -31,16 +42,7 @@
                           <li><a tabindex="0" href="@controllers.user.routes.PersonalPageController.show(0)">@EMessages.get("user.pip.settings")</a></li>
                           <li><a tabindex="1" href="@routes.UserController.logout">@EMessages.get("app.signOut")</a></li>
                     </ul>
-                } else {
-                <li class="dropdown"><a class="dropdown-toggle" href="#"
-                    data-toggle="dropdown">@EMessages.get("app.changeLanguage") <strong class="caret"></strong>
-                </a>
-                	<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                    	@for(language <- models.data.Language.listLanguages()) {
-                            <li><a href="@routes.Application.changeLanguage(language.getCode)">@language.getName(language)</a></li>
-                        }
-                    </ul>
-               	</li>
+                } else {                
                 <li class="divider-vertical"></li>
                 <li><a href='@routes.UserController.signup'>@EMessages.get("app.signUp")</a></li>
                 <li class="divider-vertical"></li>
