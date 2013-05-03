@@ -166,7 +166,7 @@ public class TakeCompetitionController extends EController {
         CompetitionModel competitionModel = Ebean.find(CompetitionModel.class).where().idEq(id).findUnique();
         Competition competition = new Competition(competitionModel);
         User user = AuthenticationManager.getInstance().getUser();
-
+        
         // setting the correct grade
         Grade grade;
         if (user.data != null && user.data.classgroup != null){
@@ -221,8 +221,7 @@ public class TakeCompetitionController extends EController {
                     input, Language.getLanguage(EMessages.getLang()));
             
             // Save the results
-            User user = AuthenticationManager.getInstance().getUser();
-            if(user.isAnon()) {
+            if(AuthenticationManager.getInstance().getUser().isAnon()) {
                 CompetitionUserStateManager.getInstance().getState(
                         feedback.getCompetitionID(),
                         AuthenticationManager.getInstance().getAuthCookie()
