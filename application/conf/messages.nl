@@ -395,6 +395,7 @@ classes.add.nograde = Er is geen level met die naam.
 classes.add.error = Er is iets misgelopen met de databank. Probeer opnieuw (later).
 classes.edit = Pas een klas aan.
 
+classes.import = Importeer een klas
 classes.import.classnotexist = Er is geen klas met dit ID.
 classes.import.classrecordwhileaddingtoexisting = U bent studenten aan het toevoegen aan een bestaande klas. CLASS records zullen genegeerd worden.
 classes.import.usernotexist = Er is geen gebruiker met dit ID.
@@ -410,7 +411,7 @@ classes.import.info.classinvalid = Er is geen klas met dat ID.
 classes.import.info.classstart = Begin klas record:
 classes.import.info.existstudent = Bestaande studenten:
 classes.import.info.newstudent = Nieuwe studenten:
-classes.import.error.savefail = Er is iets misgelopen met het opslaan. Misschien hebt u te lang gewacht? De data wordt verwijderd na een aantal uren. 
+classes.import.error.savefail = Er is iets misgelopen met het opslaan. Misschien hebt u te lang gewacht? De data wordt verwijderd na een aantal uren. Of er heeft ondertussen iemand een van de emailadressen geregistreerd. Of misschien heeft u meerdere keren hetzelfde emailadres gebruikt in het bestand.
 classes.import.error.postfail = Er is iets misgelopen met het inlezen van het XLSX bestand. Bent u zeker dat het geldig was? Controleer de documentatie.
 
 
@@ -453,3 +454,8 @@ contact.requestupgrade.noemail = Er is geen email-adres verbonden met uw account
 contact.upgraderequest.subject = [NL] Upgrade request
 contact.requestupgrade.notimage = Het opgeladen bestand is geen afbeelding.
 contact.requestupgrade.explanation = Hier kunt u een aanvraag indienen om uw account up te graden naar een leraar account. Gelieve een scan van uw lerarenkaart up te loaden. Misbruik van dit formulier zal leiden tot het blokkeren van uw account.
+
+# Other user
+otheruser.view = View user
+otheruser.block = Blokkeer
+otheruser.block.date = Blokkeer tot (leeg laten indien u niet wil blokkeren)

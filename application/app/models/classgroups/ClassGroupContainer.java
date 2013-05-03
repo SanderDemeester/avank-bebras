@@ -23,6 +23,7 @@ import models.dbentities.SchoolModel;
 import models.dbentities.UserModel;
 import models.user.AuthenticationManager;
 import models.user.IDGenerator;
+import models.user.UserModelValidator;
 import models.user.UserType;
 
 /**
@@ -121,13 +122,11 @@ public class ClassGroupContainer {
 		for(PupilRecordTriplet prt : newPupils){
 			if(prt.isValid){
 				UserModel um = prt.user;
-				if(um.name==null||um.name.isEmpty())prt.isValid=false;
-				if(um.birthdate==null)prt.isValid=false; //TODO check if before today
-				if(um.gender==null)prt.isValid=false;
-				if(um.preflanguage==null||um.preflanguage.isEmpty())prt.isValid=false;
-				if(um.password==null||um.password.isEmpty())prt.isValid=false;
-				//TODO check if possible emailadres is valid
-				if(!prt.isValid)prt.message=EMessages.get("classes.import.newpupil.incomplete");
+				UserModelValidator.Result check = UserModelValidator.validate(um);
+				if(check!=UserModelValidator.Result.OK){
+					prt.isValid=false;
+					prt.message = EMessages.get("classes.import.newpupil.incomplete") + " "+check.toString(); //TODO translate
+				}
 			}
 		}		
 		//For existing students, check if they exist & if they're a student
@@ -224,7 +223,7 @@ public class ClassGroupContainer {
 		model.password=hap.password;
 		model.hash = hap.salt;
 		model.type = UserType.PUPIL_OR_INDEP;
-		model.active=true;
+		model.blockeduntil = null;
 	    }catch(Exception e){
 	    	
 		//TODO: Jens, eventueel zelf kijken om verder fouten af te handelen in uw code.
