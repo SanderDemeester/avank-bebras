@@ -1,4 +1,4 @@
-@(title: String, breadcrumbs : List[models.data.Link], sForm: Form[ResetPasswordController.ResetPwd])
+@(title: String, breadcrumbs : List[models.data.Link], sForm: Form[UserController.ForgotPwd])
 @import commons._
 @import models.EMessages.get
 @import helper._
@@ -7,7 +7,7 @@
 
 @main(title, breadcrumbs){
 
-@helper.form(routes.ResetPasswordController.resetPwd) {
+@helper.form(routes.UserController.forgotPwdSendMail) {
 
 <legend>@EMessages.get("reset_pwd.title")</legend>
 @showflash()
