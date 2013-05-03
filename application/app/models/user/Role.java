@@ -21,7 +21,7 @@ public class Role {
 
     // Mimicing
     public static Role MIMIC = new Role("Mimick user",
-    		new Link(EMessages.get("links.mimic"),"/mimic")
+    		new Link("links.mimic","/mimic")
     );
 
     // Anon
@@ -31,8 +31,8 @@ public class Role {
     // Authenticated
     public static Role LANDINGPAGE = new Role();
     public static Role SETTINGS = new Role("links.settings.title",
-        new Link(EMessages.get("links.settings.editinfo"), "/settings/editinfo"),
-        new Link(EMessages.get("links.settings.changepassword"), "/settings/passwedit")
+        new Link("links.settings.editinfo", "/settings/editinfo"),
+        new Link("links.settings.changepassword", "/settings/passwedit")
     );
 
     // Organiser
@@ -82,7 +82,7 @@ public class Role {
     // Contest management
     public static Role MANAGECONTESTS = new Role(
         EMessages.get("links.contestmanager.title"),
-        new Link(EMessages.get("links.contestmanager.overview"), "/contests")
+        new Link("links.contestmanager.overview", "/contests")
     );
 
     /* Statistic Roles */

@@ -397,6 +397,7 @@ classes.pupil.add.useralreadyinclass = That user is already registered with the 
 classes.pupil.delete.success = Removal was successful.
 classes.pupil.delete.error = Something went wrong during the deleting. Try again (later).
 
+class.availableGrades = Available levels and their (suggested) lower and upper age bound.
 classes.add = Add a new class
 class.name = Class''s name
 class.school = Class''s school

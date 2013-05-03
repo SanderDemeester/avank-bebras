@@ -91,7 +91,7 @@ public class Statistics {
             }
         });
         genMap.put(UserType.ORGANIZER, genMap.get(UserType.ADMINISTRATOR));
-        genMap.put(UserType.INDEPENDENT, new PopulationGenerator() {
+        genMap.put(UserType.PUPIL_OR_INDEP, new PopulationGenerator() {
             @Override public PopulationChooser choose(User user) {
                 PopulationChooser chooser = new PopulationChooser();
                 Independent indep = (Independent) user;
@@ -126,7 +126,6 @@ public class Statistics {
                 return chooser;
             }
         });
-        genMap.put(UserType.PUPIL, genMap.get(UserType.INDEPENDENT));
         genMap.put(UserType.TEACHER, new PopulationGenerator() {
             @Override public PopulationChooser choose(User user) {
                 PopulationChooser chooser = new PopulationChooser();

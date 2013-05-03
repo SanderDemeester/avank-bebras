@@ -29,7 +29,7 @@ public class Independent extends Authenticated{
     }
 
     public Independent(UserModel data) {
-        this(data, UserType.INDEPENDENT);
+        this(data, UserType.PUPIL_OR_INDEP);
     }
 
     /**
@@ -49,7 +49,8 @@ public class Independent extends Authenticated{
     }
 
     public ClassGroup getCurrentClass() throws PersistenceException{
-        return Ebean.find(ClassGroup.class).where().eq("id", this.data.classgroup).findUnique();
+        ClassGroup res = Ebean.find(ClassGroup.class).where().eq("id", this.data.classgroup).findUnique();
+        return res.isActive()?res:null;
     }
 	
 	/**
@@ -65,6 +66,8 @@ public class Independent extends Authenticated{
 			ClassGroup cg = Ebean.find(ClassGroup.class).where().eq("id", c.classid).findUnique();
 			if(cg != null)res.add(cg);
 		}
+		ClassGroup posCurrent = Ebean.find(ClassGroup.class).where().eq("id", this.data.classgroup).findUnique();
+		if(!posCurrent.isActive())res.add(posCurrent);
 		
 		return res;
 	}

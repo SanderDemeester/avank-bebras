@@ -10,8 +10,7 @@ public enum UserType {
     ORGANIZER,
     TEACHER,
     AUTHOR,
-    PUPIL,
-    INDEPENDENT,
+    PUPIL_OR_INDEP,
     ANON;
 
 }

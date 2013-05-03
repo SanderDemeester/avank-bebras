@@ -388,6 +388,8 @@ classes.pupil.add.useralreadyinclass = Deze leelring zit al in de klas.
 classes.pupil.delete.success = Verwijderen was successvol.
 classes.pupil.delete.error = Er liep iets mis tijdens het verwijderen. Probeer opnieuw later.
 
+
+class.availableGrades = Toegelaten levels en hun (gesuggereerde) leeftijd onder- en bovengrenzen.
 classes.add = Voeg een nieuwe klas toe
 class.name = Naam van de klas
 class.school = School van de klas

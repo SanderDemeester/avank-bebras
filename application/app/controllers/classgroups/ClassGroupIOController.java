@@ -145,7 +145,8 @@ public class ClassGroupIOController extends EController {
 			//Something went wrong with the retrieval of the data. Could be because it expired
 			flash("error", EMessages.get("classes.import.error.savefail"));
 		}
-		ClassGroupContainer.save(cgc);
+		boolean b = ClassGroupContainer.save(cgc);
+		if(!b)flash("error", EMessages.get("classes.import.error.savefail"));
 		
 		if(id==null){
 			return redirect(controllers.classgroups.routes.ClassGroupController.viewClasses(0, "name", "asc", ""));
