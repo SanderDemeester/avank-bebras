@@ -10,7 +10,7 @@ import models.dbentities.UserModel;
  */
 public abstract class Population {
 
-    private String colour;
+    private String colour = null;
 
     /** Returns the type of this population. */
     public abstract PopulationType populationType();
@@ -40,6 +40,16 @@ public abstract class Population {
      * Returns the list of users in this population.
      */
     public abstract List<UserModel> getUsers();
+
+    @Override public boolean equals(Object o) {
+        if(o == null) return false;
+        if(!(o instanceof Population)) return false;
+        Population that = (Population) o;
+        return (
+            this.id().equals(that.id()) &&
+            this.populationType().equals(that.populationType())
+        );
+    }
 
     /* ====================================================================== *\
      * The interface for Population Factories.

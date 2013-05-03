@@ -41,7 +41,11 @@ public class PopulationChooser {
     public List<Population> filter(List<Population> list) {
         List<Population> newlist = new ArrayList<Population>();
         for(Population p : list) {
-            if(pops.get(p.populationType()).contains(p)) newlist.add(p);
+            int i = pops.get(p.populationType()).indexOf(p);
+            if(i >= 0) {
+                newlist.add(p);
+                pops.get(p.populationType()).set(i, p);
+            }
         }
         return newlist;
     }

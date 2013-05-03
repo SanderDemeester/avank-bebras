@@ -13,7 +13,7 @@
     }
 </style>
 <form method="POST" action="/statistics">
-    <table class="populations">
+    <table id="populations">
         <tbody>
             @for(i <- 0 to populations.size() - 1) { <!>
             <tr class="population">
@@ -43,7 +43,7 @@
     <input type="hidden" id="population-count" value="@populations.size()" />
 
     <!-- Functionality for adding populations. -->
-    <button type="button" data-toggle="modal" data-target="#population-chooser">@EMessages.get("forms.add")</button>
+    <button type="button" class="btn btn-large" data-toggle="modal" data-target="#population-chooser">@EMessages.get("forms.add")</button>
     <div class="modal hide fade" id="population-chooser">
         <!--<div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -59,8 +59,10 @@
                 <div class="tab-pane" id="@poptype.getName()">
                     @for(pop <- populationChooser.populations(poptype)) { <!>
                     <label class="checkbox">
-                        <input type="checkbox" class="population-check" />
-                        @pop.describe()
+                        <input type="checkbox" class="population-check"
+                        @if(pop.getColour() != null) { disabled="disabled" checked="checked" } />
+                        <input type="hidden" name="popid" value="@pop.id()" />
+                        @pop.describe() @pop.getColour()
                     </label>
                     }
                 </div>
@@ -73,6 +75,9 @@
         </div>
     </div>
 
+    <!-- Submit the form (and generate the new Plot). -->
+    <input type="submit" class="btn btn-primary btn-large" value="Generate" />
+
 </form>
 <script type="text/javascript" src="/assets/javascripts/colorpicker/bootstrap-colorpicker.js"></script>
 <link type="text/css" rel="stylesheet" href="/assets/stylesheets/colorpicker/colorpicker.css"/>
@@ -81,7 +86,7 @@
         width: 1em;
         height: 1em;
     }
-    table.populations {
+    table#populations {
         width: 100%;
         margin-bottom: 20px;
     }
@@ -101,18 +106,101 @@
 </style>
 <script type="text/javascript">
 
+    function onChangeColor(e) {
+        var color = e.color.toHex();
+        $(this).children(".preview").css("background-color", color);
+        $(this).parents(".population").children(".colours").val(color);
+    }
+
     $(document).ready(function() {
 
         /* For the colorpicker. */
         window.prettyPrint && prettyPrint();
         $(".colorPicker").colorpicker();
-        $(".colorPicker").colorpicker().on("changeColor", function(e) {
-            var color = e.color.toHex();
-            $(this).children(".preview").css("background-color", color);
-        });
+        $(".colorPicker").colorpicker().on("changeColor", onChangeColor);
 
         /* Dynamically mark the first tab as active. */
         $(".nav-tabs").children().children().first().click();
+
+    });
+
+
+    /* Add the selected populations on the right click. */
+    $(document).on("click", "#population-add", function() {
+        var populationCount = Number($("#population-count").val());
+        var defaultcolour = "red";
+        $(".population-check:checkbox:checked").each(function(i, e) {
+
+            if($(this).prop("disabled")) return;
+
+            var colour = $(document.createElement("input"));
+            colour.attr("type", "hidden");
+            colour.attr("name", "colours[" + populationCount + "]");
+            colour.addClass("colours")
+            colour.val(defaultcolour);
+
+            var id = $(document.createElement("input"));
+            id.attr("type", "hidden");
+            id.attr("name", "ids[" + populationCount + "]");
+            id.addClass("ids");
+            id.val($(this).parent().find("[name='popid']").val());
+
+            var type = $(document.createElement("input"));
+            type.attr("type", "hidden");
+            type.attr("name", "types[" + populationCount + "]");
+            type.addClass("types");
+            type.val($(this).parent().parent().attr("id"));
+
+            var index = $(document.createElement("input"));
+            index.attr("type", "hidden");
+            index.addClass("index");
+            index.val(populationCount);
+
+            var div = $(document.createElement("div"));
+            div.addClass("preview");
+            div.css("background-color", defaultcolour)
+
+            var btn = $(document.createElement("a"));
+            btn.attr("href", "#");
+            btn.addClass("btn colorPicker");
+            btn.attr("data-color-format", "hex");
+            btn.attr("data-color", defaultcolour);
+            btn.append(div);
+
+            var picker = $(document.createElement("td"));
+            picker.addClass("colour-picker");
+            picker.append(btn);
+
+            var well = $(document.createElement("div"));
+            well.addClass("well");
+            well.html($(this).parent().text());
+
+            var desc = $(document.createElement("td"));
+            desc.addClass("description");
+            desc.append(well);
+
+            var row = $(document.createElement("tr"));
+            row.addClass("population");
+            row.append(colour);
+            row.append(id);
+            row.append(type);
+            row.append(index);
+            row.append(picker);
+            row.append(desc);
+
+            $("#populations").children("tbody").append(row);
+            populationCount += 1;
+
+            // Init the new colorpickers.
+            btn.colorpicker();
+            btn.colorpicker().on("changeColor", onChangeColor);
+
+            // Remove the label so it cannot be selected again.
+            $(this).prop("disabled", true);
+
+        });
+
+        $("#population-count").val(populationCount);
 
     });
 

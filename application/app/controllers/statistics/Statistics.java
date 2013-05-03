@@ -60,20 +60,10 @@ public class Statistics extends EController {
             }
         }
 
-        // Make sure the user doesn't view populations he shouldn't.
+        // Make sure the user doesn't view populations he shouldn't, and disable
+        // those he already selected.
         populations = populationChooser.filter(populations);
 
-        // TODO remove this when there are actual values.
-        //if(populations.size() == 0) {
-        //    try {
-        //        populations.add(PopulationFactory.instance().create(
-        //            "INDIVIDUAL", "fvdjeugt", "red"));
-        //    } catch(PopulationFactoryException e) {
-        //        System.out.println("DAMMIT");
-        //    }
-        //} else {
-        //    System.out.println("YYYAAAAAY, groups");
-        //}
         return ok(statistics.render(populations, populationChooser, breadcrumbs));
     }
 

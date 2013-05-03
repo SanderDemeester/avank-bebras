@@ -144,6 +144,7 @@ GET		/classes/:id/old			controllers.classgroups.ClassPupilController.viewOldPupi
 
 # Statistics
 GET		/statistics					controllers.statistics.Statistics.show()
+POST	/statistics					controllers.statistics.Statistics.show()
 
 # Contact form
 GET		/contact			controllers.contactform.ContactFormController.showContactForm()
