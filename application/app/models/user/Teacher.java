@@ -113,7 +113,7 @@ public class Teacher extends SuperUser{
     public boolean isPupilsTeacher(String pupilID){
     	//Retrieve the pupil record
     	UserModel pupil = Ebean.find(UserModel.class, pupilID);
-    	return this.isPupilsTeacher(new Pupil(pupil));
+    	return this.isPupilsTeacher(new Independent(pupil));
     }
     
     @Override 
@@ -121,7 +121,7 @@ public class Teacher extends SuperUser{
     	//Teacher can mimic pupils that have one of their classes as main class
     	//Check if pupil
     	if(user==null||user.data==null||
-    			(user.data.type!=UserType.PUPIL && user.data.type!=UserType.INDEPENDENT))return false;
+    			(user.data.type!=UserType.PUPIL_OR_INDEP))return false;
     	return isPupilsTeacher(user);
     }
 
