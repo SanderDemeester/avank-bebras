@@ -65,9 +65,9 @@ public class IDGenerator {
             while(taken(id) && generator.hasNext());
         if(! taken(id)) return id;
 
-        generator = new UserName(name);
         int i = 0;
         while(true) {
+            generator = new UserName(name);
             do id = generator.next() + i;
                 while(taken(id) && generator.hasNext());
             if(! taken(id)) return id;

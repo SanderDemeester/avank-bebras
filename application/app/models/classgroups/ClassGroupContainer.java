@@ -223,7 +223,7 @@ public class ClassGroupContainer {
 		model.password=hap.password;
 		model.hash = hap.salt;
 		model.type = UserType.PUPIL_OR_INDEP;
-		model.active=true;
+		model.blockedUntil = null;
 	    }catch(Exception e){
 	    	
 		//TODO: Jens, eventueel zelf kijken om verder fouten af te handelen in uw code.

@@ -29,7 +29,7 @@ public class IDGeneratorTest extends test.ContextTest {
     }
 
     @Test public void testGenerator() {
-        for(int i = 0; i < 30; i++) {
+        for(int i = 0; i < 100; i++) {
             String name = "Felix Van der Jeugt";
             String id = IDGenerator.generate(name, Calendar.getInstance());
             try {
