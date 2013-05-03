@@ -200,6 +200,12 @@ edit_pwd.confirm_new_pwd = Herhaal nieuw wachtwoord
 edit_pwd.submit = Bevestigen
 edit_pwd.success = Wachtwoord veranderd.
 
+# Reset pwd
+reset_pwd.title = Wachtwoord resetten
+reset_pwd.id = Bebras-ID
+reset_pwd.new = Nieuw wachtwoord
+reset_pwd.submit = Ok
+
 # Personal Info
 pers_info.pers_info = Profiel
 pers_info.edit = Bewerk profiel

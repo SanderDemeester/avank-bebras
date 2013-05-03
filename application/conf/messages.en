@@ -199,6 +199,12 @@ edit_pwd.confirm_new_pwd = Confirm new password
 edit_pwd.submit = Ok
 edit_pwd.success = Password successfully changed.
 
+# Reset pwd
+reset_pwd.title = Reset password
+reset_pwd.id = Bebras-ID
+reset_pwd.new = New password
+reset_pwd.submit = Submit
+
 # Personal Info
 pers_info.pers_info = Personal information
 pers_info.edit = Edit information
