@@ -4,16 +4,10 @@ package models.competition;
 import java.util.Date;
 import java.util.Map.Entry;
 
-import org.codehaus.jackson.JsonNode;
-
-import play.libs.Json;
-
-import models.EMessages;
 import models.data.Language;
-import models.data.UnavailableLanguageException;
-import models.data.UnknownLanguageCodeException;
 import models.dbentities.AnswerModel;
 import models.dbentities.AnswerModelGenerator;
+import models.dbentities.Score;
 import models.question.Answer;
 import models.question.AnswerGeneratorException;
 import models.question.Question;
@@ -21,6 +15,11 @@ import models.question.QuestionFeedback;
 import models.question.QuestionFeedbackGenerator;
 import models.question.QuestionSet;
 import models.user.User;
+
+import org.codehaus.jackson.JsonNode;
+
+import play.Logger;
+import play.libs.Json;
 
 /**
  * Competition user state class.
@@ -82,7 +81,7 @@ public class CompetitionUserState {
     }
     
     /**
-     * Save the answers for this competition user state in the database
+     * Save the answers and score for this competition user state in the database
      */
     public void save() {
         if(feedback != null) {
@@ -95,6 +94,15 @@ public class CompetitionUserState {
                 answer.setQuestion(entry.getKey().getData());
                 answer.setQuestionSet(questionSet.getData());
                 answer.save();
+            }
+            
+            if(!user.isAnon()) {
+                Logger.debug("savd");
+                Score score = new Score();
+                score.questionset = questionSet.getData();
+                score.user = user.data;
+                score.score = feedback.getScore();
+                score.save();
             }
         }
     }

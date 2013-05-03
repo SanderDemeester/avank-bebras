@@ -229,7 +229,6 @@ public class Server extends ManageableModel implements Listable{
         Logger.debug(questionID);
         // Read all the files in that folder
         for(FTPFile file : client.list()) {
-            Logger.debug(file.getName());
             File f = QuestionIO.addTempFile(
                     download,
                     file.getName()
