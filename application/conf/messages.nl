@@ -211,13 +211,6 @@ reset_pwd.submit = Ok
 pers_info.pers_info = Profiel
 pers_info.edit = Bewerk profiel
 
-# Forgot pwd
-forgot_pwd.forgot_pwd = Wachtwoord vergeten
-forgot_pwd.email = E-mail
-forgot_pwd.pwd = Wachtwoord
-forgot_pwd.confirm_pwd = Bevestig wachtwoord
-forgot_pwd.submit = Verzoek reset wachtwoord
-
 #faq
 faq.title = Veel Gestelde Vragen
 faq.empty = De FAQ is leeg.

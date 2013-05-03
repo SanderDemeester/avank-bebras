@@ -361,4 +361,9 @@ public class UserController extends EController {
     public static class MimicForm {
         public String bebrasID;
     }
+
+    public static class ResetPwd {
+        public String id;
+        public String pwd;
+    }
 }
