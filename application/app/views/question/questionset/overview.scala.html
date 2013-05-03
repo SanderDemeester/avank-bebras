@@ -20,8 +20,8 @@ qsForm: Form[_ <: models.management.ManageableModel], qsmanager: models.manageme
 
         <div class="span4">
 
-            <div class="well">
-                <h4> @EMessages.get("question.questionset.overview.basic") </h4>
+            <div>
+                <p class="lead"> @EMessages.get("question.questionset.overview.basic") </p>
             </div>
 
             <div>
@@ -55,8 +55,8 @@ qsForm: Form[_ <: models.management.ManageableModel], qsmanager: models.manageme
         </div>
 
         <div class="span8">
-            <div class="well">
-                <h4> @EMessages.get("question.questionset.overview.questions") </h4>
+            <div>
+                <p class="lead"> @EMessages.get("question.questionset.overview.questions") </p>
             </div>
 
             @list(currentPage, qsqmanager, currentOrderBy, currentOrder, currentFilter)

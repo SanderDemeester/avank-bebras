@@ -499,6 +499,7 @@ competition.run.submit.ok = Antwoorden zijn verstuurd.
 competition.run.submit.invalid = Antwoorden zijn ongeldig.
 competition.run.finished = De competitie is gestopt.
 
+competition.overview.button = Overzicht
 competition.overview.submitAnswers = Verzend antwoorden van leerlingen
 competition.overview.submitAnswers.info = Plak de code die je gekopieerd hebt van de leerling, plak het in dit tekstveld en klik op verzenden.
 competition.overview.stopCompetition = Stop competitie

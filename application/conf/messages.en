@@ -506,6 +506,7 @@ competition.run.submit.ok = Submission was successful.
 competition.run.submit.invalid = Invalid answers.
 competition.run.finished = The competition has been finished.
 
+competition.overview.button = Overview
 competition.overview.submitAnswers = Submit pupil answers
 competition.overview.submitAnswers.info = Paste the code that you've copied from the pupil's screen in this textfield and click 'Submit'.
 competition.overview.stopCompetition = Stop competition

@@ -21,11 +21,17 @@ contest: models.competition.Competition)
     <div class="row-fluid">
 
         <div class="span6">
-            <h4> @EMessages.get("competition.view.title"): @contest.getCompetitionModel().name </h4>
+            <p class="text-info lead"> @EMessages.get("competition.view.title"): @contest.getCompetitionModel().name </p>
         </div>
 
-        <div class="span4 offset2">
-            <h4> @EMessages.get("competition.view.status"): @contest.getCompetitionState()</h4>
+        <div class="span6 pull-right">
+            <p class="text-info lead pull-right"> @EMessages.get("competition.view.status"): @contest.getCompetitionState()
+            @if(contest.getCompetitionState() == models.competition.CompetitionState.RUNNING){
+                <a href="@controllers.competition.TakeCompetitionController.overview(contest.getID())" class="btn btn-large btn-primary">
+                    @EMessages.get("competition.overview.button")
+                </a>
+            }
+            </p>
         </div>
 
     </div>
@@ -34,8 +40,8 @@ contest: models.competition.Competition)
 
         <div class="span4">
 
-            <div class="well">
-                <h4> @EMessages.get("competition.view.edit") </h4>
+            <div>
+                <p class="lead"> @EMessages.get("competition.view.edit") </p>
             </div>
 
             <div>
@@ -49,6 +55,21 @@ contest: models.competition.Competition)
 
                     @contestFormFields(modelForm)
 
+                    <div>
+                        <p> @EMessages.get("competition.info.grades") </p>
+                        <ul>
+                            @for(grade <- contest.getAvailableGrades()){
+                            <li>@grade.getName()</li>
+                            }
+                        </ul>
+                        <p> @EMessages.get("competition.info.languages") </p>
+                        <ul>
+                            @for(language <- contest.getAvailableLanguages()){
+                            <li>@language.getName()</li>
+                            }
+                        </ul>
+                    </div>
+
                     <div class="actions">
                         <input type="submit" value="@EMessages.get("forms.update")" class="btn btn-primary">
                     </div>
@@ -58,8 +79,8 @@ contest: models.competition.Competition)
         </div>
 
         <div class="span8">
-            <div class="well">
-                <h4> @EMessages.get("competition.view.qs") </h4>
+            <div>
+                <p class="lead"> @EMessages.get("competition.view.qs") </p>
             </div>
 
             <div>
@@ -68,38 +89,25 @@ contest: models.competition.Competition)
 
         </div>
 
-        <div class="hero-unit span12">
-            <div>
-                <p> @EMessages.get("competition.info.grades") </p>
-                <ul>
-                    @for(grade <- contest.getAvailableGrades()){
-                    <li>@grade.getName()</li>
-                    }
-                </ul>
-                <p> @EMessages.get("competition.info.languages") </p>
-                <ul>
-                    @for(language <- contest.getAvailableLanguages()){
-                    <li>@language.getName()</li>
-                    }
-                </ul>
-            </div>
+        @if(contest.getType() == models.competition.CompetitionType.RESTRICTED){
 
-            @if(contest.getType() == models.competition.CompetitionType.RESTRICTED){
-            <div>
-                <p>
-                    @EMessages.get("competition.class.info")
-                </p>
+            <div class="hero-unit span8">
+                <div>
+                    <p>
+                        @EMessages.get("competition.class.info")
+                    </p>
 
-                <div class="actions">
-                    <a href="@controllers.competition.routes.CompetitionClassController.list(contest.getID())" class="btn btn-primary">
-                        @EMessages.get("competition.class.button")
-                    </a>
+                    <div class="actions">
+                        <a href="@controllers.competition.routes.CompetitionClassController.list(contest.getID())" class="btn btn-primary">
+                            @EMessages.get("competition.class.button")
+                        </a>
+                    </div>
+
                 </div>
 
-            </div>
-            }
 
-        </div>
+            </div>
+        }
 
     </div>
 
