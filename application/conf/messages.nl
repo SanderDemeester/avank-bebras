@@ -189,8 +189,9 @@ forgot_pwd.submit = Verzoek reset wachtwoord
 forgot_pwd.success = Wachtwoord succesvol gereset.
 forgot_pwd.nosent = Er is een fout opgetreden, de e-mail kon niet verstuurd worden.
 forgot_pwd.mail = Er werd een e-mail verzonden naar het opgegeven adres.
-forgot_pwd.mail_sent = Iemand heeft een nieuw wachtwoord aangevraagd voor Avank-Bebras. Er werd een tijdelijk wachtwoord voor gebruiker {0} gemaakt. Dit tijdelijke wachtwoord is {1}. Indien dit je bedoeling was, kan je nu inloggen met dit tijdelijk wachtwoord en een nieuw wachtwoord instellen. Indien iemand anders dit verzoek maakte en jij de verantwoordelijke voor hem/haar bent, gelieve dan deze gebruiker hierover te informeren.
+forgot_pwd.mail_sent = Iemand heeft een nieuw wachtwoord aangevraagd voor Avank-Bebras. Klik {0} om uw wachtwoorden opnieuw in te stellen.
 forgot_pwd.mail_subject = Wachtwoord resetten
+forgot_pwd.email_blank = "Laat leeg als u geen veld heeft"
 
 # Edit pwd
 edit_pwd.edit_pwd = Wachtwoord veranderen
@@ -200,16 +201,15 @@ edit_pwd.confirm_new_pwd = Herhaal nieuw wachtwoord
 edit_pwd.submit = Bevestigen
 edit_pwd.success = Wachtwoord veranderd.
 
+# Reset pwd
+reset_pwd.title = Wachtwoord resetten
+reset_pwd.id = Bebras-ID
+reset_pwd.new = Nieuw wachtwoord
+reset_pwd.submit = Ok
+
 # Personal Info
 pers_info.pers_info = Profiel
 pers_info.edit = Bewerk profiel
-
-# Forgot pwd
-forgot_pwd.forgot_pwd = Wachtwoord vergeten
-forgot_pwd.email = E-mail
-forgot_pwd.pwd = Wachtwoord
-forgot_pwd.confirm_pwd = Bevestig wachtwoord
-forgot_pwd.submit = Verzoek reset wachtwoord
 
 #faq
 faq.title = Veel Gestelde Vragen
