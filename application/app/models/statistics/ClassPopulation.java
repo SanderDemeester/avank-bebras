@@ -36,7 +36,7 @@ public class ClassPopulation extends Population {
 
     @Override public String describe() {
         // TODO make messages with parameters
-        return classGroup.name + " of the " + classGroup.schoolid;
+        return classGroup.name + " of the " + classGroup.getSchool().name;
     }
 
     @Override public List<UserModel> getUsers() {

@@ -50,16 +50,21 @@
         </div>-->
         <div class="modal-body">
             <ul class="nav nav-tabs">
-                <li><a href="#home" data-toggle="tab">Home</a></li>
-                <li><a href="#profile" data-toggle="tab">Profile</a></li>
-                <li><a href="#messages" data-toggle="tab">Messages</a></li>
-                <li><a href="#settings" data-toggle="tab">Settings</a></li>
+                @for(poptype <- populationChooser.types()) { <!>
+                <li><a href="#@poptype.getName()" data-toggle="tab">@EMessages.get(poptype.getMessage())</a></li>
+                }
             </ul>
             <div class="tab-content">
-                <div class="tab-pane active" id="home">...</div>
-                <div class="tab-pane" id="profile">...</div>
-                <div class="tab-pane" id="messages">...</div>
-                <div class="tab-pane" id="settings">...</div>
+                @for(poptype <- populationChooser.types()) { <!>
+                <div class="tab-pane" id="@poptype.getName()">
+                    @for(pop <- populationChooser.populations(poptype)) { <!>
+                    <label class="checkbox">
+                        <input type="checkbox" class="population-check" />
+                        @pop.describe()
+                    </label>
+                    }
+                </div>
+                }
             </div>
         </div>
         <div class="modal-footer">
@@ -97,16 +102,20 @@
 <script type="text/javascript">
 
     $(document).ready(function() {
+
+        /* For the colorpicker. */
         window.prettyPrint && prettyPrint();
         $(".colorPicker").colorpicker();
         $(".colorPicker").colorpicker().on("changeColor", function(e) {
             var color = e.color.toHex();
             $(this).children(".preview").css("background-color", color);
         });
+
+        /* Dynamically mark the first tab as active. */
+        $(".nav-tabs").children().children().first().click();
+
     });
 
-    $(document).on("click", "#add-population", function() {
-        alert("Oh, new population :-)");
-    });
+
 </script>
 }

@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
 
 import models.statistics.Population;
 import models.statistics.ClassPopulation;
@@ -26,7 +27,8 @@ public class PopulationChooser {
      * Adds a new "tab" to the chooser.
      */
     public void newType(PopulationType t, List<Population> l) {
-        pops.put(t, l);
+        if(pops.containsKey(t)) pops.get(t).addAll(l);
+        else                    pops.put(t, l);
     }
 
     /**
@@ -42,6 +44,20 @@ public class PopulationChooser {
             if(pops.get(p.populationType()).contains(p)) newlist.add(p);
         }
         return newlist;
+    }
+
+    /**
+     * Lists the different types of populations this chooser allows.
+     */
+    public Set<PopulationType> types() {
+        return pops.keySet();
+    }
+
+    /**
+     * Lists the different populations of the given type.
+     */
+    public List<Population> populations(PopulationType t) {
+        return pops.get(t);
     }
 
 }

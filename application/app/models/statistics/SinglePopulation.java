@@ -31,7 +31,7 @@ public class SinglePopulation extends Population {
     }
 
     @Override public String describe() {
-        return user.name + "(" + user.id + ")";
+        return user.name + " (" + user.id + ")";
     }
 
     @Override public List<UserModel> getUsers() {

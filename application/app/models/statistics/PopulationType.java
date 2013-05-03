@@ -16,11 +16,11 @@ public class PopulationType {
             new ClassPopulation.Factory());
 
     // To keep track of instances.
-    private static Map<String, PopulationType> instances
-        = new HashMap<String, PopulationType>();
+    private static Map<String, PopulationType> instances;
 
     private static PopulationType create(String name, String message,
             Population.Factory factory) {
+        if(instances == null) instances = new HashMap<String, PopulationType>();
         PopulationType n = new PopulationType(name, message, factory);
         instances.put(name, n);
         return n;

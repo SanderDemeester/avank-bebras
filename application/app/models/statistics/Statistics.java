@@ -8,15 +8,21 @@ import java.lang.reflect.Constructor;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Arrays;
+
+import javax.persistence.PersistenceException;
 
 import com.avaje.ebean.Ebean;
 
 import models.user.UserType;
 
 import models.user.User;
+import models.user.Independent;
+import models.user.Teacher;
 import models.statistics.SinglePopulation;
 import models.statistics.ClassPopulation;
 import models.statistics.Population;
@@ -61,6 +67,8 @@ public class Statistics {
         genMap.put(UserType.ADMINISTRATOR, new PopulationGenerator() {
             @Override public PopulationChooser choose(User user) {
                 PopulationChooser chooser = new PopulationChooser();
+
+                /* Single Users: All of them. */
                 chooser.newType(
                     PopulationType.INDIVIDUAL,
                     mapToPop(
@@ -69,6 +77,8 @@ public class Statistics {
                         Ebean.find(UserModel.class).findList()
                     )
                 );
+
+                /* Classes: All of them. */
                 chooser.newType(
                     PopulationType.CLASS,
                     mapToPop(
@@ -80,29 +90,81 @@ public class Statistics {
                 return chooser;
             }
         });
-        genMap.put(UserType.ORGANIZER, new PopulationGenerator() {
-            @Override public PopulationChooser choose(User user) {
-                return null; // TODO
-            }
-        });
+        genMap.put(UserType.ORGANIZER, genMap.get(UserType.ADMINISTRATOR));
         genMap.put(UserType.INDEPENDENT, new PopulationGenerator() {
             @Override public PopulationChooser choose(User user) {
-                return null; // TODO
+                PopulationChooser chooser = new PopulationChooser();
+                Independent indep = (Independent) user;
+
+                /* Single Users: Well, himself. */
+                chooser.newType(
+                    PopulationType.INDIVIDUAL,
+                    Arrays.asList((Population) new SinglePopulation(user.data))
+                );
+
+                /* Classes: Current and old. */
+                List<ClassGroup> cgs = new LinkedList<ClassGroup>();
+
+                // Adding current class if it exists.
+                ClassGroup current = null;
+                try { current = indep.getCurrentClass(); }
+                catch (PersistenceException e) {}
+                if(current != null) cgs.add(current);
+
+                // Adding the old classes, if they exist.
+                try { cgs.addAll(indep.getPreviousClasses()); }
+                catch (PersistenceException e) {}
+
+                chooser.newType(
+                    PopulationType.CLASS,
+                    mapToPop(
+                        ClassPopulation.class,
+                        ClassGroup.class,
+                        cgs
+                    )
+                );
+                return chooser;
             }
         });
-        genMap.put(UserType.PUPIL, new PopulationGenerator() {
-            @Override public PopulationChooser choose(User user) {
-                return null; // TODO
-            }
-        });
+        genMap.put(UserType.PUPIL, genMap.get(UserType.INDEPENDENT));
         genMap.put(UserType.TEACHER, new PopulationGenerator() {
             @Override public PopulationChooser choose(User user) {
-                return null; // TODO
+                PopulationChooser chooser = new PopulationChooser();
+                Teacher teacher = (Teacher) user;
+                // Preparing some variables:
+                List<ClassGroup> classes = new ArrayList<ClassGroup>();
+                try {
+                    classes.addAll(teacher.getClasses());
+                    classes.addAll(teacher.getHelpClasses());
+                } catch(PersistenceException e) {}
+
+                /* Single Users: Himself and his students. */
+                List<UserModel> users = Arrays.asList(user.data);
+                for(ClassGroup cg : classes) {
+                    try { users.addAll(cg.getPupils(ClassGroup.PupilSet.ALL)); }
+                    catch (PersistenceException e) {}
+                }
+                chooser.newType(
+                    PopulationType.INDIVIDUAL,
+                    mapToPop(SinglePopulation.class, UserModel.class, users)
+                );
+
+                /* Classes: Just his classes. */
+                chooser.newType(
+                    PopulationType.CLASS,
+                    mapToPop(ClassPopulation.class, ClassGroup.class, classes)
+                );
+
+                return chooser;
             }
         });
         genMap.put(UserType.ANON, new PopulationGenerator() {
             @Override public PopulationChooser choose(User user) {
-                return null; // TODO
+                PopulationChooser chooser = new PopulationChooser();
+
+                /* Single Users: None. */
+                /* Classes: None. */
+                return chooser;
             }
         });
     }
