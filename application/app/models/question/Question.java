@@ -1,22 +1,27 @@
 package models.question;
 
+import it.sauronsoftware.ftp4j.FTPAbortedException;
+import it.sauronsoftware.ftp4j.FTPDataTransferException;
+import it.sauronsoftware.ftp4j.FTPException;
+import it.sauronsoftware.ftp4j.FTPIllegalReplyException;
+import it.sauronsoftware.ftp4j.FTPListParseException;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import play.Play;
-import play.mvc.Call;
-
-import controllers.EController;
-import controllers.question.QuestionManager;
-import controllers.question.routes;
-
 import models.EMessages;
 import models.data.Language;
 import models.dbentities.QuestionModel;
 import models.management.ModelState;
-import models.user.User;
+import models.user.AuthenticationManager;
+import play.mvc.Call;
+import controllers.EController;
+import controllers.question.QuestionManager;
+import controllers.question.routes;
 
 /**
  * The base class where questions for the competitions are stored in.
@@ -272,5 +277,25 @@ public abstract class Question {
      */
     public QuestionModel getData() {
         return this.model;
+    }
+    
+    public String getOfficialID() {
+        return this.model.officialid;
+    }
+    
+    /**
+     * Export this question to a zip archive
+     * @return the file in an archive
+     * @throws QuestionBuilderException 
+     * @throws FTPListParseException 
+     * @throws FTPAbortedException 
+     * @throws FTPDataTransferException 
+     * @throws FTPException 
+     * @throws FTPIllegalReplyException 
+     * @throws IOException 
+     * @throws IllegalStateException 
+     */
+    public File export() throws IllegalStateException, IOException, FTPIllegalReplyException, FTPException, FTPDataTransferException, FTPAbortedException, FTPListParseException, QuestionBuilderException {
+        return this.getServer().downloadFile(this.getOfficialID(), AuthenticationManager.getInstance().getUser().getID());
     }
 }

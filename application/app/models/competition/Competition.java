@@ -235,6 +235,10 @@ public class Competition {
         return this.data.endtime;
     }
     
+    public Date getStartDate() {
+        return this.data.starttime;
+    }
+    
     public String getName() {
         return this.data.name;
     }

@@ -34,6 +34,7 @@ public class QuestionFeedbackGenerator {
         // Info values
         String competition = json.get("competition").getTextValue();
         String questionset = json.get("questionset").getTextValue();
+        String userid = json.get("userid").getTextValue();
         int timeleft = json.get("timeleft").getIntValue();
         
         // Loop over the questions
@@ -54,6 +55,6 @@ public class QuestionFeedbackGenerator {
             // Save the answer
             inputMap.put(question, question.getAnswerByInput(input, language));
         }
-        return new QuestionFeedback(inputMap, competition, questionset, timeleft);
+        return new QuestionFeedback(inputMap, competition, questionset, timeleft, userid);
     }
 }

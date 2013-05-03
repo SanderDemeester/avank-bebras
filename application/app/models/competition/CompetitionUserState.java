@@ -85,16 +85,26 @@ public class CompetitionUserState {
      * Save the answers for this competition user state in the database
      */
     public void save() {
-        for(Entry<Question, Answer> entry : feedback.getAnswers().entrySet()) {
-            AnswerModel answer = AnswerModelGenerator.make(user);
-            Answer a = entry.getValue();
-            answer.setAnswer(a.getTextValue());
-            answer.setCorrect(a.isCorrect());
-            answer.setLanguageCode(languageCode);
-            answer.setQuestion(entry.getKey().getData());
-            answer.setQuestionSet(questionSet.getData());
-            answer.save();
+        if(feedback != null) {
+            for(Entry<Question, Answer> entry : feedback.getAnswers().entrySet()) {
+                AnswerModel answer = AnswerModelGenerator.make(user);
+                Answer a = entry.getValue();
+                answer.setAnswer(a.getTextValue());
+                answer.setCorrect(a.isCorrect());
+                answer.setLanguageCode(languageCode);
+                answer.setQuestion(entry.getKey().getData());
+                answer.setQuestionSet(questionSet.getData());
+                answer.save();
+            }
         }
+    }
+    
+    /**
+     * Checks if this state has a feedback and therefore has already been finished
+     * @return if this user is ready with the competition
+     */
+    public boolean isFinished() {
+        return this.feedback != null;
     }
 
 }

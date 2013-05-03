@@ -501,6 +501,23 @@ competition.modal.finished.text = You've successfully finished this competition!
 competition.modal.finished.return = Return to start
 competition.modal.finished.showFeedback = Show feedback
 
+competition.run.submit.notStarted = This competition has not been started yet, or has already been finished by the organizer.
+competition.run.submit.ok = Submission was successful.
+competition.run.submit.invalid = Invalid answers.
+competition.run.finished = The competition has been finished.
+
+competition.overview.submitAnswers = Submit pupil answers
+competition.overview.submitAnswers.info = Paste the code that you've copied from the pupil's screen in this textfield and click 'Submit'.
+competition.overview.stopCompetition = Stop competition
+competition.overview.progress = Progress
+competition.overview.timeLeft = Time left
+competition.overview.finished = Finished
+competition.overview.details = Details
+competition.overview.id = ID
+competition.overview.questionSets = Question sets
+competition.overview.availableLanguages = Available languages
+competition.overview.confirmFinish = Are you sure you want to finish this competition? Any unsubmitted answers will be lost!
+
 # Contact form
 contact.formtitle = Contact form
 contact.email = Your email address

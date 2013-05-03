@@ -75,6 +75,9 @@ GET     /available-contests/take/:id        controllers.competition.TakeCompetit
 GET     /available-contests/submit		    controllers.competition.TakeCompetitionController.submit(json)
 GET     /available-contests/feedback/:json	controllers.competition.TakeCompetitionController.feedback(json)
 GET     /competition-overview/:id			controllers.competition.TakeCompetitionController.overview(id)
+GET     /competition-overview-data/:id		controllers.competition.TakeCompetitionController.overviewData(id)
+GET     /competition/finish/:id				controllers.competition.TakeCompetitionController.forceFinish(id)
+GET     /available-contests/forceSubmit		controllers.competition.TakeCompetitionController.forceSubmit(json)
 GET     /available-contests/:id/grade       controllers.competition.TakeCompetitionController.chooseGrade(id)
 
 # Question Management
@@ -88,7 +91,7 @@ GET     /questions/:name              		 controllers.question.QuestionController
 POST    /questions/:name              		 controllers.question.QuestionController.update(name)
 GET     /question/remove/:name      		 controllers.question.QuestionController.remove(name)
 GET     /questionfile/:id/:file      		 controllers.question.QuestionController.showQuestionFile(id, file)
-GET     /test					      		 controllers.question.QuestionController.test()
+GET     /question/export/:id      		 	 controllers.question.QuestionController.export(id)
 
 # FAQ
 GET		/faq						controllers.faq.FAQController.getFAQ()

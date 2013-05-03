@@ -1,13 +1,18 @@
 package controllers.question;
 
+import it.sauronsoftware.ftp4j.FTPAbortedException;
+import it.sauronsoftware.ftp4j.FTPDataTransferException;
+import it.sauronsoftware.ftp4j.FTPException;
+import it.sauronsoftware.ftp4j.FTPIllegalReplyException;
+import it.sauronsoftware.ftp4j.FTPListParseException;
+
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.codehaus.jackson.JsonNode;
 
 import models.EMessages;
 import models.data.Language;
@@ -27,19 +32,23 @@ import models.question.QuestionSet;
 import models.question.Server;
 import models.question.submits.Submit;
 import models.question.submits.SubmitsPage;
+import models.user.AuthenticationManager;
+import models.user.Role;
+
+import org.codehaus.jackson.JsonNode;
+
 import play.Play;
 import play.cache.Cache;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Result;
 import views.html.commons.noaccess;
+import views.html.competition.run.questionSet;
 import views.html.question.approveQuestionForm;
 import views.html.question.editQuestionForm;
 import views.html.question.newQuestionForm;
 import views.html.question.questionManagement;
 import views.html.question.submitsManagement;
-import views.html.question.previewQuestion;
-import views.html.competition.run.questionSet;
 
 import com.avaje.ebean.annotation.Transactional;
 
@@ -65,9 +74,7 @@ public class QuestionController extends EController{
      * @return is the user authorized
      */
     public static boolean isAuthorized() {
-        // TODO: enable this authorization
-        //return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGEQUESTIONS);
-        return true;
+        return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGEQUESTIONS);
     }
 
     /**
@@ -414,43 +421,28 @@ public class QuestionController extends EController{
         return ok(result);
     }
     
-    //TODO: delete
-    public static Result test() {
-        String id = "474";
-        String id2 = "454";
-        String id3 = "494";
-        try {
-            // TODO: cache
-            //if (true) return ok(routes.QuestionController.showQuestionFile(id, QuestionPack.QUESTIONXMLFILE).absoluteURL(request()));
-            Question q = Question.fetch(id);
-            Question q2 = Question.fetch(id2);
-            QuestionSet set = new QuestionSet(null);
-            Question q3 = Question.fetch(id3);
-            set.addQuestion(q);
-            //set.addQuestion(q2);
-            set.addQuestion(q3);
-            
-            // TMP
-            QuestionFeedback feedback = null;
+    /**
+     * Export a question to a .ZIP file
+     * @param id id of the question
+     * @return the archived question file
+     */
+    public static Result export(String id) {
+        // Make some error breadcrumbs for when an error occurs
+        List<Link> errorBreadcrumbs = new ArrayList<Link>();
+        errorBreadcrumbs.add(new Link("Home", "/"));
+        errorBreadcrumbs.add(new Link("Error",""));
+        
+        if(isAuthorized()) {
+            response().setHeader("Content-Disposition", "attachment; filename=question.zip");
+            Question q;
             try {
-                JsonNode input = Json.parse("{\"competition\":\"TODO\",\"questionset\":\"TODO\",\"timeleft\":0,\"questions\":{\"474\":\"qsdqsd\",\"494\":\"blablabla\"}}");
-                try {
-                    feedback = QuestionFeedbackGenerator.generateFromJson(input, Language.getLanguage(EMessages.getLang()));
-                } catch (UnavailableLanguageException
-                        | UnknownLanguageCodeException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            } catch (AnswerGeneratorException e) {
-                return badRequest(e.getMessage());
+                q = Question.fetch(id);
+                return ok(q.export());
+            } catch (QuestionBuilderException | IllegalStateException | IOException | FTPIllegalReplyException | FTPException | FTPDataTransferException | FTPAbortedException | FTPListParseException e) {
+                return internalServerError(views.html.commons.error.render(errorBreadcrumbs, EMessages.get("error.title"), EMessages.get("error.text")));
             }
-            
-            return ok(questionSet.render(set, null, new ArrayList<Link>()));
-            //return ok(q.getIndexLink(Language.getLanguage(EMessages.getLang())).absoluteURL(request()));
-        } catch (QuestionBuilderException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return ok(e.getMessage());
+        } else {
+            return forbidden();
         }
     }
 }

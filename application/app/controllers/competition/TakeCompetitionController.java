@@ -1,5 +1,6 @@
 package controllers.competition;
 
+import java.io.IOException;
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Expr;
 import com.avaje.ebean.Page;
@@ -22,15 +23,26 @@ import models.question.QuestionFeedback;
 import models.question.QuestionFeedbackGenerator;
 import models.question.QuestionSet;
 import models.user.AuthenticationManager;
+import models.user.Role;
 import models.user.User;
 import models.user.UserType;
 
 import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.node.ObjectNode;
+
+import play.Logger;
+import play.libs.Json;
+import play.mvc.Result;
+
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Page;
+
+import controllers.EController;
 
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Result;
-
+import views.html.commons.noaccess;
 /**
  * Controller for taking competitions. Includes the listing of available
  * competitions for each user type.
@@ -45,6 +57,14 @@ public class TakeCompetitionController extends EController {
      */
     private static boolean userType(UserType type) {
         return AuthenticationManager.getInstance().getUser().getType().equals(type);
+    }
+    
+    /**
+     * Check if the current user is authorized for the competition management
+     * @return is the user authorized
+     */
+    private static boolean isAuthorized() {
+        return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGECONTESTS);
     }
 
     /**
@@ -141,6 +161,8 @@ public class TakeCompetitionController extends EController {
      * @return start-contest page
      */
     public static Result takeCompetition(String id){
+        String stateID;
+        
         CompetitionModel competitionModel = Ebean.find(CompetitionModel.class).where().idEq(id).findUnique();
         Competition competition = new Competition(competitionModel);
         User user = AuthenticationManager.getInstance().getUser();
@@ -158,18 +180,21 @@ public class TakeCompetitionController extends EController {
 
         QuestionSet questionSet = competition.getQuestionSet(grade);
 
-        // TMP: start competition here
+        // TODO: only start competition here if the user is anonymous, otherwise the competition
+        // should already have been started.
         CompetitionUserStateManager.getInstance().startCompetition(competition);
         
         // Register the user in the competition
         try {
             if(user.isAnon()) {
+                stateID = AuthenticationManager.getInstance().getAuthCookie();
                 CompetitionUserStateManager.getInstance().registerAnon(
                         competition.getID(),
                         questionSet,
-                        AuthenticationManager.getInstance().getAuthCookie()
+                        stateID
                     );
             } else {
+                stateID = user.getID();
                 CompetitionUserStateManager.getInstance().registerUser(
                             competition.getID(),
                             questionSet,
@@ -177,11 +202,11 @@ public class TakeCompetitionController extends EController {
                         );
             }
         } catch (CompetitionNotStartedException e) {
-            // TODO: prettify
+            // TODO: prettify, redirect to previous page with alert? or just an error page
             return badRequest(e.getMessage());
         }
         
-        return ok(views.html.competition.run.questionSet.render(questionSet, null, defaultBreadcrumbs()));
+        return ok(views.html.competition.run.questionSet.render(stateID, questionSet, null, defaultBreadcrumbs()));
     }
     
     /**
@@ -208,18 +233,51 @@ public class TakeCompetitionController extends EController {
                         AuthenticationManager.getInstance().getUser().getID()
                     ).setResults(feedback);
             }
-            
-            
-            // TMP: move this to the daemon and add a runnable when the competition is started
-            CompetitionUserStateManager.getInstance().finishCompetition(feedback.getCompetitionID());
+        } catch (CompetitionNotStartedException e) {
+            return badRequest(EMessages.get("competition.run.submit.notStarted"));
         } catch (UnavailableLanguageException
                 | UnknownLanguageCodeException
-                | AnswerGeneratorException
-                | CompetitionNotStartedException e) {
+                | AnswerGeneratorException e) {
             return badRequest(e.getMessage());
         }
         
-        return ok("Submission was successful!");
+        return ok(EMessages.get("competition.run.submit.ok"));
+    }
+    
+    /**
+     * Submit competition answers for pupils that lost their connection
+     * @param json answers in json format
+     * @return message with the submission result
+     */
+    public static Result forceSubmit(String json) {
+        if(isAuthorized()) {
+            // Dirty check, because Play is to dumb to throw exceptions
+            try {
+                new org.codehaus.jackson.JsonFactory().createJsonParser(json).nextToken();
+            }
+            catch(NullPointerException | IOException ex) { 
+                return badRequest(EMessages.get("competition.run.submit.invalid"));
+            }
+            if(json == null || json.equals(""))
+                return badRequest(EMessages.get("competition.run.submit.invalid"));
+            try {
+                JsonNode input = Json.parse(json);
+                QuestionFeedback feedback = QuestionFeedbackGenerator.generateFromJson(
+                        input, Language.getLanguage(EMessages.getLang()));
+                // Save the results
+                CompetitionUserStateManager.getInstance().getState(
+                        feedback.getCompetitionID(),
+                        feedback.getToken()
+                    ).setResults(feedback);
+            } catch (UnavailableLanguageException
+                    | UnknownLanguageCodeException
+                    | AnswerGeneratorException
+                    | CompetitionNotStartedException e) {
+                return badRequest(e.getMessage());
+            }
+            
+            return ok(EMessages.get("competition.run.submit.ok"));
+        } else return forbidden();
     }
     
     /**
@@ -241,15 +299,67 @@ public class TakeCompetitionController extends EController {
         
         QuestionSetModel qsModel = Ebean.find(QuestionSetModel.class).where().idEq(feedback.getQuestionSetID()).findUnique();
         QuestionSet questionSet = new QuestionSet(qsModel);
-        return ok(views.html.competition.run.questionSet.render(questionSet, feedback, defaultBreadcrumbs()));
+        return ok(views.html.competition.run.questionSet.render("", questionSet, feedback, defaultBreadcrumbs()));
     }
     
-    // TODO: add roles
+    /**
+     * Live competition overview page
+     * @param id competition id
+     * @return view of the competition overview
+     */
     public static Result overview(String id) {
-        CompetitionModel competitionModel = Ebean.find(CompetitionModel.class).where().idEq(id).findUnique();
-        Competition competition = new Competition(competitionModel);
+        // Make some error breadcrumbs for when an error occurs
+        List<Link> errorBreadcrumbs = new ArrayList<Link>();
+        errorBreadcrumbs.add(new Link("Home", "/"));
+        errorBreadcrumbs.add(new Link("Error",""));
         
-        return ok(views.html.competition.run.overview.render(competition, defaultBreadcrumbs()));
+        if(isAuthorized()) {        
+            CompetitionModel competitionModel = Ebean.find(CompetitionModel.class).where().idEq(id).findUnique();
+            if(competitionModel == null) return internalServerError(views.html.commons.error.render(errorBreadcrumbs, EMessages.get("error.title"), EMessages.get("error.text")));
+            Competition competition = new Competition(competitionModel);
+            
+            return ok(views.html.competition.run.overview.render(competition, defaultBreadcrumbs()));
+        } else return ok(noaccess.render(errorBreadcrumbs));
+    }
+    
+    /**
+     * Live competition overview data
+     * @param id competition id
+     * @return json encoded data
+     */
+    public static Result overviewData(String id) {
+        // Make some error breadcrumbs for when an error occurs
+        List<Link> errorBreadcrumbs = new ArrayList<Link>();
+        errorBreadcrumbs.add(new Link("Home", "/"));
+        errorBreadcrumbs.add(new Link("Error",""));
+        
+        if(isAuthorized()) {
+            try {
+                ObjectNode result = Json.newObject();
+                result.put("amountFinished", CompetitionUserStateManager.getInstance().getAmountFinished(id));
+                result.put("amountRegistered", CompetitionUserStateManager.getInstance().getAmountRegistered(id));
+                return ok(result);
+            } catch (CompetitionNotStartedException e) {
+                return badRequest(e.getMessage());
+            }
+        } else return ok(noaccess.render(errorBreadcrumbs));
+        
+    }
+    
+    /**
+     * Force a competition to finish before the expiration date
+     * @param id competitionid
+     * @return return message
+     */
+    public static Result forceFinish(String id) {
+        if(isAuthorized()) {
+            try {
+                CompetitionUserStateManager.getInstance().finishCompetition(id);
+                return ok(EMessages.get("competition.run.finished"));
+            } catch (CompetitionNotStartedException e) {
+                return badRequest(e.getMessage());
+            }
+        } else return forbidden();
     }
 
 }

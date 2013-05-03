@@ -43,6 +43,8 @@ public class MultipleChoiceAnswer extends Answer{
 
     @Override
     public String getTextValue() {
+        if(element == null || element.getContent() == null)
+            return "";
         return element.getContent();
     }
 }
