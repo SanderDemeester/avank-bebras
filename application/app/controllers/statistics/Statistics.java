@@ -40,7 +40,7 @@ public class Statistics extends EController {
 
         // Open the population chooser for the logged in user.
         PopulationChooser populationChooser =
-            models.statistics.Statistics.getPopulationChooser(
+            PopulationChooser.getPopulationChooser(
                     AuthenticationManager.getInstance().getUser()
             );
 
