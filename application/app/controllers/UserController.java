@@ -2,6 +2,7 @@ package controllers;
 
 import com.avaje.ebean.Ebean;
 import controllers.util.PasswordHasher;
+import controllers.util.PasswordHasher.SaltAndPassword;
 import models.EMessages;
 import models.data.Link;
 import models.dbentities.UserModel;
@@ -10,6 +11,7 @@ import models.mail.ForgotPwdMail;
 import models.user.AuthenticationManager;
 import models.user.Role;
 import models.user.UserType;
+import play.api.Play;
 import play.api.libs.Crypto;
 import play.data.Form;
 import play.data.format.Formats;
@@ -23,6 +25,7 @@ import views.html.forgotPwd;
 import views.html.login.register;
 import views.html.login.registerLandingPage;
 import views.html.mimic.mimicForm;
+import views.html.login.resetPwd;
 
 import javax.mail.MessagingException;
 
@@ -33,6 +36,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -46,6 +50,9 @@ import java.util.regex.Pattern;
  */
 
 public class UserController extends EController {
+
+	private static 		SecureRandom secureRandom = new SecureRandom();
+
 
 	private static final String EMAIL_PATTERN =
 			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -315,7 +322,6 @@ public class UserController extends EController {
 		breadcrumbs.add(new Link("Home", "/"));
 		breadcrumbs.add(new Link(EMessages.get("forgot_pwd.forgot_pwd"), "/forgotPwd"));
 
-		SecureRandom secureRandom = new SecureRandom();
 
 		Form<ForgotPwd> form = form(ForgotPwd.class).bindFromRequest();
 
@@ -323,8 +329,10 @@ public class UserController extends EController {
 			flash("error", EMessages.get(EMessages.get("forms.error")));
 			return badRequest(forgotPwd.render((EMessages.get("forgot_pwd.forgot_pwd")), breadcrumbs, form));
 		}
+		System.out.println(form.get().id);
+		String id = form.get().id;
+		UserModel userModel = Ebean.find(UserModel.class).where().eq("id", id).findUnique();
 
-		UserModel userModel = Ebean.find(UserModel.class).where().eq("id",form.get().id).findUnique();
 		if(userModel == null){
 			flash("error", EMessages.get("error.invalid_id"));
 			return badRequest(views.html.forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
@@ -338,6 +346,9 @@ public class UserController extends EController {
 			userModel.reset_token = new BigInteger(130, secureRandom).toString(32);
 			Ebean.save(userModel);
 
+			String baseUrl = request().host() + "/reset_password?token=" + userModel.reset_token;
+			//TODO: delete
+			System.out.println(baseUrl);
 			// Prepare email
 			EMail mail = new ForgotPwdMail(userModel.email,userModel.id,"url");
 			try{
@@ -352,10 +363,102 @@ public class UserController extends EController {
 		return Results.redirect("/");
 	}
 
+	/**
+	 * The methode is called when the user clicks in the email on the provided link.
+	 * The purpose of this methode is to generate a new time-based token to verify the
+	 * form validity and the provide a new view for the users to enter his new password.
+	 * @param The generated token <url>?token=TOKEN
+	 * @return if the provided token is valid, this method will return a view for the user to set his new password.
+	 */
 	public static Result receivePasswordResetToken(String token){
-		return null;
+		//TODO: remove
+		System.out.println(token);
+
+		List<Link> breadcrumbs = new ArrayList<Link>();
+		breadcrumbs.add(new Link(EMessages.get("app.home"), "/"));
+		breadcrumbs.add(new Link(EMessages.get("app.signUp"), "/signup"));
+
+		UserModel userModel = Ebean.find(UserModel.class).where().eq("reset_token",token).findUnique();
+		if(userModel == null){
+			return ok(noaccess.render(breadcrumbs));
+		}else{
+			Form<ResetPasswordVerify> reset_form = form(ResetPasswordVerify.class);
+
+			// old token that is beining re-used?
+			// generate new token to send back to the client to make sure that we dont get a random request.
+			// it's import that time is included in this token.
+			String secure_token = new BigInteger(130,secureRandom).toString(32);
+
+			Long unixTime = System.currentTimeMillis() / 1000L;
+			secure_token = secure_token + unixTime.toString();
+
+			//TODO: remove
+			System.out.println("secure token :" + secure_token);
+
+			userModel.reset_token = secure_token;
+
+			// Save  new token.
+			userModel.save();
+
+			return ok(resetPwd.render(EMessages.get("forgot_pwd.forgot_pwd"),
+					breadcrumbs,
+					reset_form,
+					secure_token
+					));
+		}
 	}
-		
+
+	/**
+	 * This methode is called when the users filled in his new password. 
+	 * The purpose of this methode is to calculate the new hash value of the password and store it into the database
+	 * @return
+	 * @throws Exception 
+	 */
+	public static Result resetPassword() throws Exception{
+		List<Link> breadcrumbs = new ArrayList<Link>();
+		breadcrumbs.add(new Link(EMessages.get("app.home"), "/"));
+		breadcrumbs.add(new Link(EMessages.get("app.signUp"), "/signup"));
+
+		Form<ResetPasswordVerify> form = form(ResetPasswordVerify.class).bindFromRequest();
+		String id = form.get().id;
+		String reset_token = form.get().reset_token;
+		UserModel userModel =         Ebean.find(UserModel.class).where().eq("id", id).findUnique();
+		if(userModel == null){
+			// If provided id is invalid. Abort reset proces;
+			userModel.reset_token = "";
+			userModel.save();
+			return ok(noaccess.render(breadcrumbs));
+		}
+
+		String reset_token_database = userModel.reset_token;
+
+		System.out.println("reset token client: " + reset_token);
+		System.out.println("reset token server: " + reset_token_database);
+		if(reset_token.equals(reset_token_database)){
+
+			SaltAndPassword sp = PasswordHasher.generateSP(form.get().password.toCharArray());
+			String passwordHEX = sp.password;
+			String saltHEX = sp.salt;
+
+			userModel.password = passwordHEX;
+			userModel.hash = saltHEX;
+
+			flash("success", EMessages.get("forgot_pwd.reset_succes"));
+			return ok(resetPwd.render(EMessages.get("forgot_pwd.forgot_pwd"),
+					breadcrumbs,
+					form,
+					reset_token
+					));
+		}else{
+			flash("error", EMessages.get("forgot_pwd.reset_succes"));
+			return ok(resetPwd.render(EMessages.get("forgot_pwd.forgot_pwd"),
+					breadcrumbs,
+					form,
+					reset_token
+					));
+		}
+	}
+
 	public static class ForgotPwd {
 		@Required
 		public String id;
@@ -366,8 +469,14 @@ public class UserController extends EController {
 		public String bebrasID;
 	}
 
-    public static class ResetPwd {
-        public String id;
-        public String pwd;
-    }
+	public static class ResetPwd {
+		public String id;
+		public String pwd;
+	}
+	public static class ResetPasswordVerify{
+		public String id;
+		public String password;
+		public String confirmPassword;
+		public String reset_token;
+	}
 }

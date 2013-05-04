@@ -1,4 +1,4 @@
-@(title: String, breadcrumbs : List[models.data.Link], sForm: Form[UserController.ForgotPwd])
+@(title: String, breadcrumbs : List[models.data.Link], sForm: Form[UserController.ResetPasswordVerify], secure_token : String)
 @import commons._
 @import models.EMessages.get
 @import helper._
@@ -7,11 +7,12 @@
 
 @main(title, breadcrumbs){
 
-@helper.form(routes.UserController.forgotPwdSendMail) {
+@helper.form(routes.UserController.resetPassword) {
 
 <legend>@EMessages.get("reset_pwd.title")</legend>
 @showflash()
 
+<input name="reset_token" value="@secure_token" type="hidden"/>
 <div class="control-group row-fluid">
     <label class="control-label span2">@EMessages.get("reset_pwd.id")</label>
     <div class="controls span10">
@@ -28,8 +29,19 @@
     <div class="controls span10">
         <div class="input-prepend span12">
             <span class="add-on"><i class="icon-lock"></i> </span> <input
-                type="Password" class="input-xlarge span11" id="new_pwd" name="new_pwd"
-                required placeholder="@EMessages.get("reset_pwd.new_pwd")">
+                type="Password" class="input-xlarge span11" id="register_password" name="register_password"
+                required placeholder="@EMessages.get("register.password")">
+        </div>
+    </div>
+</div>
+
+<div class="control-group row-fluid">
+    <label class="control-label span2">@EMessages.get("register.confirm_password")</label>
+    <div class="controls span10">
+        <div class="input-prepend span12">
+            <span class="add-on"><i class="icon-lock"></i> </span> <input
+                type="Password" class="input-xlarge span11" id="controle_passwd" name="controle_passwd"
+                required placeholder="@EMessages.get("register.confirm_password")">
         </div>
     </div>
 </div>
@@ -37,7 +49,7 @@
 <div class="control-group row-fluid">
     <div class="span2">&nbsp;</div>
     <div class="controls span2">
-        <button type="submit" class="btn btn-primary" name="btn" id="btn">@EMessages.get("reset_pwd.submit")</button>
+        <button type="submit" class="btn btn-primary" name="btn_reset" id="btn_reset">@EMessages.get("reset_pwd.submit")</button>
     </div>
     <div class="span8">&nbsp;</div>
 </div>

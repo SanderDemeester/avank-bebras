@@ -191,7 +191,9 @@ forgot_pwd.nosent = Er is een fout opgetreden, de e-mail kon niet verstuurd word
 forgot_pwd.mail = Er werd een e-mail verzonden naar het opgegeven adres.
 forgot_pwd.mail_sent = Iemand heeft een nieuw wachtwoord aangevraagd voor Avank-Bebras. Klik {0} om uw wachtwoorden opnieuw in te stellen.
 forgot_pwd.mail_subject = Wachtwoord resetten
-forgot_pwd.email_blank = "Laat leeg als u geen veld heeft"
+forgot_pwd.email_blank = Laat leeg als u geen veld heeft
+forgot_pwd.reset_succes = Wachtwoord is met succes opnieuw ingesteld
+forgot_pwd.reset_fail = Wachtwoord opnieuw instelling is mislukt
 
 # Edit pwd
 edit_pwd.edit_pwd = Wachtwoord veranderen
