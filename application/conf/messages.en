@@ -13,6 +13,10 @@ app.signUp = Sign Up
 app.signIn = Sign In
 app.signOut = Sign Out
 app.mimic = mimic
+app.welcome = Welcome back {0}!
+app.overview = Overview
+app.dashboard = Dashboard
+app.getStarted = Choose a link from the left to get started.
 
 # Error
 notFound.title = Oops!

@@ -13,6 +13,10 @@ app.signUp = Registreer
 app.signIn = Log in
 app.signOut = Log uit
 app.mimic = nabootsen
+app.welcome = Welkom terug {0}!
+app.overview = Overzicht
+app.dashboard = Start
+app.getStarted = Kies een van de links hiernaast om te beginnen.
 
 # Error
 notFound.title = Oeps!
