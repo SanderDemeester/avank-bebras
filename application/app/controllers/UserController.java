@@ -434,6 +434,8 @@ public class UserController extends EController {
 
 		System.out.println("reset token client: " + reset_token);
 		System.out.println("reset token server: " + reset_token_database);
+		
+		//TODO: check timestamp on token from client.
 		if(reset_token.equals(reset_token_database)){
 
 			SaltAndPassword sp = PasswordHasher.generateSP(form.get().password.toCharArray());
@@ -442,6 +444,10 @@ public class UserController extends EController {
 
 			userModel.password = passwordHEX;
 			userModel.hash = saltHEX;
+			
+			userModel.reset_token = "";
+			
+			userModel.save();
 
 			flash("success", EMessages.get("forgot_pwd.reset_succes"));
 			return ok(resetPwd.render(EMessages.get("forgot_pwd.forgot_pwd"),
