@@ -12,10 +12,10 @@ $(document).ready(function(){
 	});
 	
 	$("#btn_reset").live("click",function(){
-		var password = $("#register_password").val();
+		var password = $("#reset_password").val();
 		var salt = CryptoJS.SHA256(password); // eventueel kunnen hier later ook al onze bebras id bepalen en als salt gebruiken voor de hash.
 		var PBKDF2_password = CryptoJS.PBKDF2(password,salt,{ keySize: 4, iterations: 10});
-		$("#register_password").val(PBKDF2_password);
+		$("#reset_password").val(PBKDF2_password);
 		$("#controle_passwd").val(PBKDF2_password);
 	});
 	

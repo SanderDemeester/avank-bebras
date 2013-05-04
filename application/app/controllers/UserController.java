@@ -430,6 +430,7 @@ public class UserController extends EController {
 		String reset_token = form.get().reset_token;
 		UserModel userModel =         Ebean.find(UserModel.class).where().eq("id", id).findUnique();
 		
+		//TODO: 
 		// We perform some checks on the server side (view can be skiped).
 		if(userModel == null || userModel.reset_token.isEmpty() || !form.get().password.equals(form.get().confirmPassword)){
 			return ok(noaccess.render(breadcrumbs));

@@ -40,5 +40,16 @@ $(document).ready(function(){
 	
 	$("#reset_password").validate({
 		
+		rules:{
+			bebras_id:"required",
+			register_password:"requred",
+			controle_passwd:{
+					required:true,
+					equalTo: "#register_password"
+			}
+			
+		},
+		errorClass: "help-inline"
+		
 	});
 });
