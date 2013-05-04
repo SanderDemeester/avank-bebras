@@ -37,4 +37,8 @@ $(document).ready(function(){
 		},
 		errorClass: "help-inline"
 	});
+	
+	$("#reset_password").validate({
+		
+	});
 });

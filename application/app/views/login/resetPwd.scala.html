@@ -7,7 +7,7 @@
 
 @main(title, breadcrumbs){
 
-@helper.form(routes.UserController.resetPassword) {
+@helper.form(routes.UserController.resetPassword, 'id -> "reset_password") {
 
 <legend>@EMessages.get("reset_pwd.title")</legend>
 @showflash()
