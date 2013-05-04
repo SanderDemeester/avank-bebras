@@ -33,7 +33,6 @@ $(document).ready(function(){
 				required:true,
 				date_check: true
 			}
-
 		},
 		errorClass: "help-inline"
 	});
@@ -42,10 +41,10 @@ $(document).ready(function(){
 		
 		rules:{
 			bebras_id:"required",
-			register_password:"requred",
+			r_password:"required",
 			controle_passwd:{
 					required:true,
-					equalTo: "#register_password"
+					equalTo: "#r_password"
 			}
 			
 		},
