@@ -12,6 +12,9 @@
     .larger {
     	font-size:16px;
     }
+    .nav-small-margin {
+        margin-bottom: 5px;
+    }
     //-->
 </style>
 <div class="row-fluid">
@@ -30,7 +33,7 @@
 	    <div class="navbar navbar-inner no-margin"><div class="container">
 	        <span class="brand">@roles(i).title()</span>
 	    </div></div>
-	    <div class="well"><ul class="nav nav-pills nav-stacked">
+	    <div class="well"><ul class="nav nav-pills nav-stacked nav-small-margin">
 	        @for(link <- roles(i).pages()) { <!-- stupid &lt; -->
 	        <li class="larger"><a href="@link.getUrl()">@EMessages.get(link.getName())</a></li>
 	        }
