@@ -152,3 +152,9 @@ GET		/contact			controllers.contactform.ContactFormController.showContactForm()
 POST		/contact/			controllers.contactform.ContactFormController.saveContactForm()
 GET		/upgrade			controllers.contactform.RequestTeacherController.showForm()
 POST		/upgrade			controllers.contactform.RequestTeacherController.upload()
+
+# Other users
+
+GET		/user/:id			controllers.user.OtherUserController.show(id)
+GET		/user/:id/block			controllers.user.BlockController.show(id)
+POST		/user/:id/block/		controllers.user.BlockController.block(id)
