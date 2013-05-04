@@ -334,7 +334,7 @@ public class UserController extends EController {
 		UserModel userModel = Ebean.find(UserModel.class).where().eq("id", id).findUnique();
 
 		if(userModel == null){
-			flash("error", EMessages.get("error.invalid_id"));
+			flash("error", EMessages.get("error.text"));
 			return badRequest(views.html.forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
 		}
 
@@ -342,6 +342,12 @@ public class UserController extends EController {
 
 		if(!userModel.email.isEmpty()){
 			// Case 1
+			
+			//check if provided email is the same as stored in the database associated with the ID
+			if(!userModel.email.equals(form.get().email)){
+				flash("error", EMessages.get("error.text"));
+				return badRequest(views.html.forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
+			}
 			// Put reset token into database
 			userModel.reset_token = new BigInteger(130, secureRandom).toString(32);
 			Ebean.save(userModel);
@@ -436,6 +442,7 @@ public class UserController extends EController {
 		System.out.println("reset token server: " + reset_token_database);
 		
 		//TODO: check timestamp on token from client.
+		System.out.println(reset_token);
 		if(reset_token.equals(reset_token_database)){
 
 			SaltAndPassword sp = PasswordHasher.generateSP(form.get().password.toCharArray());
