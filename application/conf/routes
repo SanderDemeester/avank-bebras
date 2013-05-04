@@ -15,10 +15,10 @@ POST	/signup 					controllers.UserController.register()
 
 # Login
 GET		/login_validate			controllers.UserController.validate_login(id, password)
-GET     /forgotPwd          	controllers.UserController.forgotPwd()
-POST    /forgotPwd          	controllers.UserController.forgotPwdSendMail()
-GET     /reset_password  		controllers.UserController.receivePasswordResetToken(token)
-POST	/reset_password			controllers.UserController.resetPassword()
+GET     /forgotPwd          	controllers.user.ResetPasswordController.forgotPwd()
+POST    /forgotPwd          	controllers.user.ResetPasswordController.forgotPwdSendMail()
+GET     /reset_password  		controllers.user.ResetPasswordController.receivePasswordResetToken(token)
+POST	/reset_password			controllers.user.ResetPasswordController.resetPassword()
 
 # Mimic
 GET		/mimic						controllers.UserController.mimic()			

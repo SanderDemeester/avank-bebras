@@ -1,4 +1,4 @@
-@(title: String, breadcrumbs : List[models.data.Link], sForm: Form[UserController.ResetPasswordVerify], secure_token : String)
+@(title: String, breadcrumbs : List[models.data.Link], sForm: Form[controllers.user.ResetPasswordController.ResetPasswordVerify], secure_token : String)
 @import commons._
 @import models.EMessages.get
 @import helper._
@@ -7,7 +7,7 @@
 
 @main(title, breadcrumbs){
 
-@helper.form(routes.UserController.resetPassword, 'id -> "reset_password") {
+@helper.form(controllers.user.routes.ResetPasswordController.resetPassword, 'id -> "reset_password") {
 
 <legend>@EMessages.get("reset_pwd.title")</legend>
 @showflash()

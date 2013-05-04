@@ -190,8 +190,8 @@ forgot_pwd.nosent = An error occurred, the email wasn't sent.
 forgot_pwd.mail = An email was sent to the provided address.
 forgot_pwd.mail_sent = Someone requested a new password for Avank-Bebras. Please click {0} to reset it.
 forgot_pwd.mail_subject = Password reset
-forgot_pwd.email_blank = Leave blanco if you dont have an email addres
-forgot_pwd.reset_succes = Password reset success
+forgot_pwd.email_blank = Leave empty if you don't have an email address
+forgot_pwd.reset_success = Password reset success
 forgot_pwd.reset_fail = Failed to reset password
 
 # Edit pwd
