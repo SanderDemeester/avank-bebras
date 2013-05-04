@@ -5,6 +5,7 @@ import controllers.util.PasswordHasher;
 import controllers.util.PasswordHasher.SaltAndPassword;
 import models.EMessages;
 import models.data.Link;
+import models.dbentities.ClassGroup;
 import models.dbentities.UserModel;
 import models.mail.EMail;
 import models.mail.ForgotPwdMail;
@@ -363,8 +364,19 @@ public class UserController extends EController {
 			}catch(MessagingException e){
 				flash("error", EMessages.get("forgot_pwd.nosent"));
 			}
-		}else{
+		}else if (userModel.email.isEmpty() && userModel.classgroup > 0){
 			// Case 2
+			Integer classGroupID = userModel.classgroup;
+			ClassGroup g = Ebean.find(ClassGroup.class).where().eq("id",classGroupID).findUnique();
+			String teacherEmail = g.getTeacher().getData().email;
+			
+			
+			
+			
+			
+		}else{
+			flash("error", EMessages.get("error.text"));
+			return badRequest(views.html.forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
 		}
 		return Results.redirect("/");
 	}
