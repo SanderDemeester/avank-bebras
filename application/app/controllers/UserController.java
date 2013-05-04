@@ -429,21 +429,31 @@ public class UserController extends EController {
 		String id = form.get().id;
 		String reset_token = form.get().reset_token;
 		UserModel userModel =         Ebean.find(UserModel.class).where().eq("id", id).findUnique();
-		if(userModel == null){
+		if(userModel == null || userModel.reset_token.isEmpty()){
 			// If provided id is invalid. Abort reset proces;
 			userModel.reset_token = "";
 			userModel.save();
 			return ok(noaccess.render(breadcrumbs));
 		}
-
 		String reset_token_database = userModel.reset_token;
+		
+		
 
 		System.out.println("reset token client: " + reset_token);
 		System.out.println("reset token server: " + reset_token_database);
 		
+		Long time_check = Long.parseLong(reset_token_database.substring(26,reset_token_database.length()));
+		Long system_time_check = (System.currentTimeMillis() / 1000L);
+		
+		System.out.println("time check        : " + time_check);
+		System.out.println("time check_server : " + system_time_check);
+		System.out.println("-                 : " + (system_time_check - time_check));
+		
 		//TODO: check timestamp on token from client.
 		System.out.println(reset_token);
-		if(reset_token.equals(reset_token_database)){
+		
+		// 1 min time to fill in new password
+		if(reset_token.equals(reset_token_database) && (system_time_check - time_check) < 60){
 
 			SaltAndPassword sp = PasswordHasher.generateSP(form.get().password.toCharArray());
 			String passwordHEX = sp.password;
@@ -463,7 +473,7 @@ public class UserController extends EController {
 					reset_token
 					));
 		}else{
-			flash("error", EMessages.get("forgot_pwd.reset_succes"));
+			flash("error", EMessages.get("forgot_pwd.reset_fail"));
 			return ok(resetPwd.render(EMessages.get("forgot_pwd.forgot_pwd"),
 					breadcrumbs,
 					form,
