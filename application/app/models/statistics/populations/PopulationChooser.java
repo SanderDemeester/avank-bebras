@@ -1,4 +1,4 @@
-package models.statistics;
+package models.statistics.populations;
 
 import java.lang.Object;
 import java.lang.Class;
@@ -22,10 +22,6 @@ import models.user.UserType;
 import models.user.User;
 import models.user.Independent;
 import models.user.Teacher;
-
-import models.statistics.Population;
-import models.statistics.ClassPopulation;
-import models.statistics.SinglePopulation;
 
 import models.dbentities.UserModel;
 import models.dbentities.ClassGroup;

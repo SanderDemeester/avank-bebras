@@ -14,11 +14,11 @@ import controllers.EController;
 import models.dbentities.UserModel;
 import models.data.Link;
 import models.user.AuthenticationManager;
-import models.statistics.Population;
-import models.statistics.SinglePopulation;
-import models.statistics.PopulationFactory;
-import models.statistics.PopulationChooser;
-import models.statistics.PopulationFactoryException;
+import models.statistics.populations.Population;
+import models.statistics.populations.SinglePopulation;
+import models.statistics.populations.PopulationFactory;
+import models.statistics.populations.PopulationChooser;
+import models.statistics.populations.PopulationFactoryException;
 
 import views.html.statistics.statistics;
 

@@ -1,4 +1,4 @@
-package models.statistics;
+package models.statistics.populations;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -7,7 +7,6 @@ import com.avaje.ebean.Ebean;
 
 import play.db.ebean.Model.Finder;
 
-import models.statistics.Population;
 import models.dbentities.ClassGroup;
 import models.dbentities.UserModel;
 import models.dbentities.ClassPupil;

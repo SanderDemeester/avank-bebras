@@ -1,4 +1,4 @@
-package models.statistics;
+package models.statistics.populations;
 
 /**
  * Exception thrown to indicate a factory could not create a Population from the

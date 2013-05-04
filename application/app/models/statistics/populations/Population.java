@@ -1,4 +1,4 @@
-package models.statistics;
+package models.statistics.populations;
 
 import java.util.List;
 

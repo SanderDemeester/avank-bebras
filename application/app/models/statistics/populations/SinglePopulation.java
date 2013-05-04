@@ -1,11 +1,10 @@
-package models.statistics;
+package models.statistics.populations;
 
 import java.util.List;
 import java.util.ArrayList;
 
 import com.avaje.ebean.Ebean;
 
-import models.statistics.Population;
 import models.dbentities.UserModel;
 
 /**
