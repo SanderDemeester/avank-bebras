@@ -432,9 +432,6 @@ public class UserController extends EController {
 		
 		// We perform some checks on the server side (view can be skiped).
 		if(userModel == null || userModel.reset_token.isEmpty() || !form.get().password.equals(form.get().confirmPassword)){
-			// If provided id is invalid. Abort reset proces;
-			userModel.reset_token = "";
-			userModel.save();
 			return ok(noaccess.render(breadcrumbs));
 		}
 		String reset_token_database = userModel.reset_token;
