@@ -203,14 +203,16 @@ public class ClassGroupIO {
 	private static UserModel parseToUserModel(List<String> toParse){
 		UserModel res = new UserModel();
 		try{
-			res.id=toParse.get(1);
-			res.name=toParse.get(2);
-			res.birthdate = DateFormatter.parseString(toParse.get(3));
-			res.gender=GenderParser.parseString(toParse.get(4));
-			res.preflanguage=toParse.get(5); //TODO: controller parsing (making sure only valid languages are allowed)
-			res.password=toParse.get(6);
-			res.email=toParse.get(7);
-		}catch(IndexOutOfBoundsException e){}
+			res.id=toParse.get(1).trim();
+			res.name=toParse.get(2).trim();
+			res.birthdate = DateFormatter.parseString(toParse.get(3).trim());
+			res.gender=GenderParser.parseString(toParse.get(4).trim());
+			res.preflanguage=toParse.get(5).trim();
+			res.password=toParse.get(6).trim();
+			String email = toParse.get(7).trim();
+			if(email!=null)email=email.trim();
+			res.email=email.isEmpty()?null:email;
+		}catch(Exception e){}
 		return res;
 	}
 	

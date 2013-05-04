@@ -1,4 +1,5 @@
-@(classForm: Form[models.dbentities.ClassGroup], breadcrumbs : List[models.data.Link],inf : models.util.OperationResultInfo,id : Int)
+@(classForm: Form[models.dbentities.ClassGroup], breadcrumbs : List[models.data.Link],inf : models.util.OperationResultInfo,id : Int,
+gradeValues : java.util.Map[String,String])
 
 @import helper._
 @import helper.twitterBootstrap._
@@ -10,7 +11,7 @@
 	@if(classForm!=null){
 		@form(controllers.classgroups.routes.ClassGroupController.update(id)) {
 
-    		@classgroupForm(classForm)
+    		@classgroupForm(classForm,gradeValues)
 
     	<div class="actions">
         	<input type="submit" value="Save" class="btn primary"> or
