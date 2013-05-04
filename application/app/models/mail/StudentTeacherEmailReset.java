@@ -1,8 +1,15 @@
 package models.mail;
 
+import models.EMessages;
+import play.Play;
+
 public class StudentTeacherEmailReset extends EMail{
 	
-	public StudentTeacherEmailReset(String recipient, String id, String message){
-		// Send email to teacher of students class that he needs to reset his password
+	public StudentTeacherEmailReset(String recipient, String id, String url){
+        super();
+        this.setSubject(EMessages.get("forgot_pwd.teachersubject"));
+        this.addReplyTo(Play.application().configuration().getString("email.contactmail"));
+        this.addToAddress(recipient);
+        this.setMessage(EMessages.get("forgot_pwd.teachermail", id, url));
 	}
 }

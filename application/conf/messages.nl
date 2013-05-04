@@ -172,7 +172,7 @@ register.password = Wachtwoord
 register.confirm_password = Bevestig password
 register.create_account = Maak account
 register.bebras_id_message = Uw Bebras ID is: 
-register.inlog_message = U kan inloggen me uw ID en wachtwoord.
+register.inlog_message = U kan inloggen met uw ID en wachtwoord.
 register.title = Registreer
 register.same_email = Er is al een gebruiker met het zelfde email addres.
 register.giveinfo = Geef uw Bebras ID en wachtwoord in.
@@ -187,13 +187,15 @@ forgot_pwd.id = Bebras-ID
 forgot_pwd.email = E-mail
 forgot_pwd.submit = Verzoek reset wachtwoord
 forgot_pwd.success = Wachtwoord succesvol gereset.
-forgot_pwd.nosent = Er is een fout opgetreden, de e-mail kon niet verstuurd worden.
+forgot_pwd.notsent = Er is een fout opgetreden, de e-mail kon niet verstuurd worden.
 forgot_pwd.mail = Er werd een e-mail verzonden naar het opgegeven adres.
-forgot_pwd.mail_sent = Iemand heeft een nieuw wachtwoord aangevraagd voor Avank-Bebras. Klik {0} om uw wachtwoorden opnieuw in te stellen.
+forgot_pwd.mail_sent = Er werd een nieuw wachtwoord aangevraagd voor gebruiker {0} op Avank-Bebras. Ga naar deze link {1} om het wachtwoord opnieuw in te stellen.
 forgot_pwd.mail_subject = Wachtwoord resetten
 forgot_pwd.email_blank = Laat leeg als u geen e-mailadres heeft
 forgot_pwd.reset_success = Wachtwoord is met succes opnieuw ingesteld
 forgot_pwd.reset_fail = Wachtwoord opnieuw instelling is mislukt
+forgot_pwd.teachermail = Uw leerling(e) {0} heeft een nieuw wachtwoord aangevraagd voor Avank-Bebras. Ga naar deze link {1} om het wachtwoord opnieuw in te stellen.
+forgot_pwd.teachersubject = Wachtwoord van leerling(e) resetten
 
 # Edit pwd
 edit_pwd.edit_pwd = Wachtwoord veranderen

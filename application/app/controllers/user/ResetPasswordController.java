@@ -1,7 +1,7 @@
 package controllers.user;
 
 import com.avaje.ebean.Ebean;
-import controllers.EController;
+import controllers.*;
 import controllers.util.PasswordHasher;
 import models.EMessages;
 import models.data.Link;
@@ -9,10 +9,10 @@ import models.dbentities.ClassGroup;
 import models.dbentities.UserModel;
 import models.mail.EMail;
 import models.mail.ForgotPwdMail;
+import models.mail.StudentTeacherEmailReset;
 import play.data.Form;
 import play.data.validation.Constraints;
 import play.mvc.Result;
-import play.mvc.Results;
 import views.html.commons.noaccess;
 import views.html.forgotPwd;
 import views.html.login.resetPwd;
@@ -83,25 +83,33 @@ public class ResetPasswordController extends EController {
             //TODO: delete
             System.out.println(baseUrl);
             // Prepare email
-            EMail mail = new ForgotPwdMail(userModel.email, userModel.id, "url");
+            EMail mail = new ForgotPwdMail(userModel.email, userModel.id, baseUrl);
             try {
                 mail.send();
                 flash("success", EMessages.get("forgot_pwd.mail"));
+                return ok(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
             } catch (MessagingException e) {
-                flash("error", EMessages.get("forgot_pwd.nosent"));
+                flash("error", EMessages.get("forgot_pwd.notsent"));
+                return badRequest(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
             }
         } else if (userModel.email.isEmpty() && userModel.classgroup > 0) {
             // Case 2
             Integer classGroupID = userModel.classgroup;
             ClassGroup g = Ebean.find(ClassGroup.class).where().eq("id", classGroupID).findUnique();
             String teacherEmail = g.getTeacher().getData().email;
-
-
+            EMail mail = new StudentTeacherEmailReset(teacherEmail, userModel.id, "url");
+            try {
+                mail.send();
+                flash("success", EMessages.get("forgot_pwd.mail"));
+                return ok(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
+            } catch (MessagingException e) {
+                flash("error", EMessages.get("forgot_pwd.notsent"));
+                return badRequest(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
+            }
         } else {
             flash("error", EMessages.get("error.text"));
             return badRequest(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
         }
-        return Results.redirect("/");
     }
 
     /**
