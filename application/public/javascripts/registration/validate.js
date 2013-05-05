@@ -1,3 +1,4 @@
+// validate used name attr.
 $(document).ready(function(){
 	$.validator.addMethod(
 			"date_check",
