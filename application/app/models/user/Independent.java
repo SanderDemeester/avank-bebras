@@ -51,7 +51,7 @@ public class Independent extends Authenticated{
 
     public ClassGroup getCurrentClass() throws PersistenceException{
         ClassGroup res = Ebean.find(ClassGroup.class).where().eq("id", this.data.classgroup).findUnique();
-        return res.isActive()?res:null;
+        return res != null && res.isActive() ? res : null;
     }
 	
 	/**
@@ -68,7 +68,7 @@ public class Independent extends Authenticated{
 			if(cg != null)res.add(cg);
 		}
 		ClassGroup posCurrent = Ebean.find(ClassGroup.class).where().eq("id", this.data.classgroup).findUnique();
-		if(!posCurrent.isActive())res.add(posCurrent);
+		if(posCurrent != null && !posCurrent.isActive())res.add(posCurrent);
 		
 		return res;
 	}

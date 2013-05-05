@@ -49,6 +49,7 @@ public class UserModel extends ManageableModel implements Listable{
     public String telephone;
     public String address;
     public String email;
+    public String reset_token;
 
     @Enumerated(EnumType.STRING)
     public Gender gender;
