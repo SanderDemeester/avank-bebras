@@ -12,6 +12,7 @@ import models.mail.ForgotPwdMail;
 import models.mail.StudentTeacherEmailReset;
 import play.data.Form;
 import play.data.validation.Constraints;
+import play.data.validation.Constraints.Required;
 import play.mvc.Result;
 import views.html.commons.noaccess;
 import views.html.forgotPwd;
@@ -226,7 +227,7 @@ public class ResetPasswordController extends EController {
     }
 
     public static class ForgotPwd {
-    	@Required
+        @Required
         public String id;
         public String email;
     }
