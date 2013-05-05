@@ -29,7 +29,8 @@ error.back = Go back
 error.date = Could not parse date.
 error.login = Invalid login.
 error.invalid_symbols = Input contains invalid symbols.
-error.invalid_email = Invalid email addres.
+error.invalid_email = Invalid email address.
+error.invalid_id = Invalid id.
 error.wrong_date_time = Time traveler?
 error.invalid_date = Invalid date format, please use (yyyy/mm/dd).
 error.no_password = No password.
@@ -182,6 +183,40 @@ register.password_mismatch = Password did not match.
 register.Male = Male
 register.Female = Female
 register.Other = Other
+
+# Forgot pwd
+forgot_pwd.forgot_pwd = Forgot password
+forgot_pwd.id = Bebras-ID
+forgot_pwd.email = Email
+forgot_pwd.submit = Reset password
+forgot_pwd.success = Password successfully reset.
+forgot_pwd.notsent = An error occurred, the email wasn't sent.
+forgot_pwd.mail = An email was sent to the provided address.
+forgot_pwd.mail_sent = A new password was requested for user {0} on Avank-Bebras. Go to {1} to reset it.
+forgot_pwd.mail_subject = Password reset
+forgot_pwd.email_blank = Leave empty if you don't have an email address
+forgot_pwd.reset_success = Password reset success
+forgot_pwd.reset_fail = Failed to reset password
+forgot_pwd.teachermail = Your pupil {0} requested a new password for Avank-Bebras. Go to {1} to reset it.
+forgot_pwd.teachersubject = Password reset for pupil
+
+# Edit pwd
+edit_pwd.edit_pwd = Edit password
+edit_pwd.current_pwd = Current password
+edit_pwd.new_pwd = New password
+edit_pwd.confirm_new_pwd = Confirm new password
+edit_pwd.submit = Ok
+edit_pwd.success = Password successfully changed.
+
+# Reset pwd
+reset_pwd.title = Reset password
+reset_pwd.id = Bebras-ID
+reset_pwd.new = New password
+reset_pwd.submit = Submit
+
+# Personal Info
+pers_info.pers_info = Personal information
+pers_info.edit = Edit information
 
 #faq
 faq.title = Frequently Asked Questions
