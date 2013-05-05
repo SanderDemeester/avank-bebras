@@ -227,7 +227,6 @@ public class ResetPasswordController extends EController {
     }
 
     public static class ForgotPwd {
-        @Required
         public String id;
         public String email;
     }
