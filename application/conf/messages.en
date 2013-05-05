@@ -265,6 +265,13 @@ competition.class.register.title = Register new class
 competition.class.register.breadcrumb = Register new class
 competition.class.register.pick = Pick a class
 competition.class.register.error = The selected class is already registered for this contest.
+competition.state.draft = Draft
+competition.state.active = Active
+competition.state.running = Running
+competition.state.finished = Finished
+competition.type.anonymous = Anonymous
+competition.type.restricted = Restricted
+competition.type.unrestricted = Unrestricted
 
 competitions.breadcrumb = Available contests.
 competitions.title = Available contests

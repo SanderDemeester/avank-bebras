@@ -266,6 +266,13 @@ competition.class.register.title = Registreer nieuwe klas
 competition.class.register.breadcrumb = Registreer nieuwe klas
 competition.class.register.pick = Kies een klas
 competition.class.register.error = De gekozen klas is al geregistreerd voor deze competitie.
+competition.state.draft = Ontwerp
+competition.state.active = Actief
+competition.state.running = Lopend
+competition.state.finished = Afgelopen
+competition.type.anonymous = Anoniem
+competition.type.restricted = Begrensd
+competition.type.unrestricted = Onbegrensd
 
 competitions.breadcrumb = Beschikbare competities
 competitions.title = Beschikbare competities.

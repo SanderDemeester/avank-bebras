@@ -1,5 +1,8 @@
 package models.competition;
 
+import com.avaje.ebean.annotation.EnumValue;
+import models.EMessages;
+
 /**
  * An enumeration of contests types.
  *
@@ -7,8 +10,18 @@ package models.competition;
  */
 public enum CompetitionType {
 
+    @EnumValue("UNRESTRICTED")
     UNRESTRICTED,
+
+    @EnumValue("RESTRICTED")
     RESTRICTED,
-    ANONYMOUS
+
+    @EnumValue("ANONYMOUS")
+    ANONYMOUS;
+
+    @Override
+    public String toString(){
+        return EMessages.get("competition.type." + this.name().toLowerCase());
+    }
 
 }

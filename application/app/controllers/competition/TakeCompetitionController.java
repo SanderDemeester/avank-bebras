@@ -103,7 +103,7 @@ public class TakeCompetitionController extends EController {
             // anonymous user can only see "running" anonymous competitions
             competitionManager.setExpressionList(competitionManager.getFinder()
                     .where()
-                    .eq("type", CompetitionType.ANONYMOUS)
+                    .eq("type", CompetitionType.ANONYMOUS.name())
                     .eq("active", true)
                     .lt("starttime", new Date())
                     .gt("endtime", new Date())
@@ -124,11 +124,11 @@ public class TakeCompetitionController extends EController {
                     .where()
                     .or(
                             Expr.or(
-                                    Expr.eq("type", CompetitionType.ANONYMOUS),
-                                    Expr.eq("type", CompetitionType.UNRESTRICTED)
+                                    Expr.eq("type", CompetitionType.ANONYMOUS.name()),
+                                    Expr.eq("type", CompetitionType.UNRESTRICTED.name())
                             ),
                             Expr.and(
-                                    Expr.eq("type", CompetitionType.RESTRICTED),
+                                    Expr.eq("type", CompetitionType.RESTRICTED.name()),
                                     Expr.in("id", competitionIds)
                                     ))
                     .eq("active", true)
