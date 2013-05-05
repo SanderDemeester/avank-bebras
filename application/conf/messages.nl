@@ -414,6 +414,16 @@ classes.import.info.newstudent = Nieuwe studenten:
 classes.import.error.savefail = Er is iets misgelopen met het opslaan. Misschien hebt u te lang gewacht? De data wordt verwijderd na een aantal uren. Of er heeft ondertussen iemand een van de emailadressen geregistreerd. Of misschien heeft u meerdere keren hetzelfde emailadres gebruikt in het bestand.
 classes.import.error.postfail = Er is iets misgelopen met het inlezen van het XLSX bestand. Bent u zeker dat het geldig was? Controleer de documentatie.
 
+classes.pupil.classes.list = Lijst van klassen
+classes.pupil.classes.current = Jouw huidige klas
+classes.pupil.classes.previous = Jouw vorige klassen
+classes.pupil.classes.form.id = id
+classes.pupil.classes.form.name = Naam
+classes.pupil.classes.form.schoolid = School ID
+classes.pupil.classes.form.teacherid = Leraar ID
+classes.pupil.classes.form.grade = Niveau
+classes.pupil.classes.form.expirationdate = Vervallingsdatum
+
 
 # User
 user.pip.settings = Instellingen

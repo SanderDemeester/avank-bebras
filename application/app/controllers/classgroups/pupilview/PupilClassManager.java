@@ -34,14 +34,12 @@ public class PupilClassManager extends Manager<ClassGroup> {
 	@Override
 	public Call getListRoute(int page, String orderBy, String order,
 			String filter) {
-		// TODO Auto-generated method stub
-		return null;
+		return routes.PupilClassController.viewClasses(page, orderBy, order, filter);
 	}
 
 	@Override
 	public String getMessagesPrefix() {
-		// TODO Auto-generated method stub
-		return null;
+		return "classes.pupil.classes";
 	}
 	
 	@Override
@@ -58,6 +56,20 @@ public class PupilClassManager extends Manager<ClassGroup> {
 		//Return an expressionlist
 		return super.getDataSet().where().in("id", ids);
 		
+		
+	}
+	
+	@Override
+	public List<String> getColumnHeaders(){
+		
+		List<String> res = new ArrayList<String>();
+		res.add("id");
+		res.add("name");
+		res.add("schoolid");
+		res.add("teacherid");
+		res.add("grade");
+		res.add("expirationdate");
+		return res;
 		
 	}
 	
