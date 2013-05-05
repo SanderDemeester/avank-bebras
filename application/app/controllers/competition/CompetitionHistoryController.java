@@ -7,7 +7,10 @@ import models.competition.CompetitionHistoryManager;
 import models.data.Link;
 import models.dbentities.CompetitionModel;
 import models.management.ModelState;
+import models.user.AuthenticationManager;
+import models.user.Role;
 import play.mvc.Result;
+import views.html.commons.noaccess;
 import views.html.competition.history;
 
 import java.util.ArrayList;
@@ -19,6 +22,14 @@ import java.util.List;
  * @author Kevin Stobbelaar.
  */
 public class CompetitionHistoryController extends EController {
+
+    /**
+     * Check if the current user is authorized for the competition management
+     * @return is the user authorized
+     */
+    private static boolean isAuthorized() {
+        return AuthenticationManager.getInstance().getUser().hasRole(Role.TAKINGCONTESTS);
+    }
 
     /**
      * Returns the default breadcrumbs for the contest pages.
@@ -48,6 +59,7 @@ public class CompetitionHistoryController extends EController {
     }
 
     public static Result list(int page, String orderBy, String order, String filter){
+        if (!isAuthorized()) return ok(noaccess.render(defaultBreadcrumbs()));;
         CompetitionHistoryManager competitionManager = getManager(orderBy, order, filter);
         Page<CompetitionModel> managerPage = competitionManager.page(page);
         return ok(history.render(defaultBreadcrumbs(), managerPage, competitionManager, order, orderBy, filter));

@@ -30,6 +30,7 @@ public class Independent extends Authenticated{
 
     public Independent(UserModel data) {
         this(data, UserType.PUPIL_OR_INDEP);
+        ROLES.add(Role.TAKINGCONTESTS);
     }
 
     /**

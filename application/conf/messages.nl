@@ -65,6 +65,9 @@ links.datamanager.grades = Wijzig de graden voor studenten
 links.contestmanager.title = Competitie beheer
 links.contestmanager.overview = Competitie overzicht
 links.mimic = Gebruiker nabootsen
+links.contesttaking.title = Competities
+links.contesttaking.overview = Beschikbare competities
+links.contesttaking.history = Geschiedenis
 
 # Forms
 forms.cancel = Annuleer

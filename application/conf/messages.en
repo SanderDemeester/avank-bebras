@@ -63,6 +63,9 @@ links.datamanager.grades = Manage the student grades
 links.contestmanager.title = Contest management
 links.contestmanager.overview = Contest overview
 links.mimic = Mimic user
+links.contesttaking.title = Contests
+links.contesttaking.overview = Available contests
+links.contesttaking.history = History
 
 # Forms
 forms.cancel = Cancel

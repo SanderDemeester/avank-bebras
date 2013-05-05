@@ -81,8 +81,15 @@ public class Role implements Comparable<Role>{
 
     // Contest management
     public static Role MANAGECONTESTS = new Role(
-        EMessages.get("links.contestmanager.title"),
+        "links.contestmanager.title",
         new Link("links.contestmanager.overview", "/contests")
+    );
+
+    // Contest taken
+    public static Role TAKINGCONTESTS = new Role(
+        "links.contesttaking.title",
+        new Link("links.contesttaking.overview", "/available-contests"),
+        new Link("links.contesttaking.history", "/available-contests/history")
     );
 
 
