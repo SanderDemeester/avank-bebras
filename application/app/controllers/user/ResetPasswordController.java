@@ -226,7 +226,7 @@ public class ResetPasswordController extends EController {
     }
 
     public static class ForgotPwd {
-        @Constraints.Required
+    	@Required
         public String id;
         public String email;
     }
