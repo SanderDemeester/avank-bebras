@@ -14,7 +14,6 @@ $(document).ready(function(){
 	$("#btn_reset").live("click",function(){
 		
 		
-		alert($("#reset_password").validate().form());
 		if($("#reset_password").validate().form()){
 		var password = $("#r_password").val();
 		var salt = CryptoJS.SHA256(password); // eventueel kunnen hier later ook al onze bebras id bepalen en als salt gebruiken voor de hash.
