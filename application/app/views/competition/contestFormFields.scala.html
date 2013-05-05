@@ -14,7 +14,7 @@
 
 @select(
     contestForm("type"),
-    options = options(models.competition.CompetitionType.values().toList.map(_.toString)),
+    options = options(models.competition.CompetitionType.options()),
     '_label -> EMessages.get("competition.create.type"),
     '_showConstraints -> false
 )
