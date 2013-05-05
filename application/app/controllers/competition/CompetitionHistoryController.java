@@ -1,9 +1,14 @@
 package controllers.competition;
 
+import com.avaje.ebean.Page;
 import controllers.EController;
 import models.EMessages;
+import models.competition.CompetitionHistoryManager;
 import models.data.Link;
+import models.dbentities.CompetitionModel;
+import models.management.ModelState;
 import play.mvc.Result;
+import views.html.competition.history;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +32,25 @@ public class CompetitionHistoryController extends EController {
         return breadcrumbs;
     }
 
+    /**
+     * Returns a new competition manager object
+     * @param orderBy order by
+     * @param order order
+     * @param filter filter
+     * @return history competition manager
+     */
+    private static CompetitionHistoryManager getManager(String orderBy, String order, String filter){
+        CompetitionHistoryManager competitionManager = new CompetitionHistoryManager(ModelState.READ, "name", null);
+        competitionManager.setOrder(order);
+        competitionManager.setOrderBy(orderBy);
+        competitionManager.setFilter(filter);
+        return competitionManager;
+    }
+
     public static Result list(int page, String orderBy, String order, String filter){
-        return TODO;
+        CompetitionHistoryManager competitionManager = getManager(orderBy, order, filter);
+        Page<CompetitionModel> managerPage = competitionManager.page(page);
+        return ok(history.render(defaultBreadcrumbs(), managerPage, competitionManager, order, orderBy, filter));
     }
 
 }

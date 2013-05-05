@@ -267,7 +267,7 @@ competition.class.register.breadcrumb = Registreer nieuwe klas
 competition.class.register.pick = Kies een klas
 competition.class.register.error = De gekozen klas is al geregistreerd voor deze competitie.
 
-competitions.breadcrumb = Beschikbare competities.
+competitions.breadcrumb = Beschikbare competities
 competitions.title = Beschikbare competities.
 competitions.totake = Beschikbare competities waaraan je op dit moment kan deelnemen.
 competitions.taken = Competities die je in het verleden hebt afgelegd
@@ -279,6 +279,9 @@ competitions.grade.breadcrumb = Niveau kiezen
 
 competition.history.warning = Opgelet!
 competition.history.info = Je bent momenteel niet ingelogd. Om resultaten en statistieken van vorige competities te bekijken, moet je ingelogd zijn.
+competition.history.title = Competities afgelegd in het verleden.
+competition.history.breadcrumb = Geschiedenis
+competition.history.form.name = Name
 
 # schools
 schools.title = Lijst van Scholen
