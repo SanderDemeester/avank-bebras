@@ -534,6 +534,9 @@ competition.overview.id = ID
 competition.overview.questionSets = Vragen sets
 competition.overview.availableLanguages = Beschikbare talen
 competition.overview.confirmFinish = Ben je zeker dat je deze competitie wilt stoppen? Alle niet-verzonden vragen zullen verloren gaan!
+competition.started.title = Competitie nog niet gestart
+competition.started.info = De gekozen competitie is nog niet gestart. Gelieve het later nogmaals te proberen.
+
 
 # Contact form
 contact.formtitle = Contact formulier

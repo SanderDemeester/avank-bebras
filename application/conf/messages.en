@@ -531,7 +531,7 @@ competition.run.finished = The competition has been finished.
 competition.overview.button = Overview
 competition.overview.submitAnswers = Submit pupil answers
 competition.overview.submitAnswers.info = Paste the code that you've copied from the pupil's screen in this textfield and click 'Submit'.
-competition.overview.stopCompetition = Stop competition
+competition.overview.stopCompetition = Stop contest
 competition.overview.progress = Progress
 competition.overview.timeLeft = Time left
 competition.overview.finished = Finished
@@ -539,7 +539,9 @@ competition.overview.details = Details
 competition.overview.id = ID
 competition.overview.questionSets = Question sets
 competition.overview.availableLanguages = Available languages
-competition.overview.confirmFinish = Are you sure you want to finish this competition? Any unsubmitted answers will be lost!
+competition.overview.confirmFinish = Are you sure you want to finish this contest? Any unsubmitted answers will be lost!
+competition.started.title = Contest is not yet started
+competition.started.info = The chosen contest is not yet started. Please try again later.
 
 # Contact form
 contact.formtitle = Contact form

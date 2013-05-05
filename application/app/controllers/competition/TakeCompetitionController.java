@@ -182,9 +182,9 @@ public class TakeCompetitionController extends EController {
 
         QuestionSet questionSet = competition.getQuestionSet(grade);
 
-        // TODO: only start competition here if the user is anonymous, otherwise the competition
-        // should already have been started.
-        CompetitionUserStateManager.getInstance().startCompetition(competition);
+        if (userType(UserType.ANON)){
+            CompetitionUserStateManager.getInstance().startCompetition(competition);
+        }
         
         // Register the user in the competition
         try {
@@ -204,8 +204,9 @@ public class TakeCompetitionController extends EController {
                         );
             }
         } catch (CompetitionNotStartedException e) {
-            // TODO: prettify, redirect to previous page with alert? or just an error page
-            return badRequest(e.getMessage());
+            return ok(views.html.commons.error.render(defaultBreadcrumbs(),
+                    EMessages.get("competition.started.title"), EMessages.get("competition.started.info"))
+            );
         }
         
         return ok(views.html.competition.run.questionSet.render(stateID, questionSet, null, defaultBreadcrumbs()));
