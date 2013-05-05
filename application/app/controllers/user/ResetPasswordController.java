@@ -54,7 +54,7 @@ public class ResetPasswordController extends EController {
         Form<ForgotPwd> form = form(ForgotPwd.class).bindFromRequest();
 
         if (form.hasErrors()) {
-            flash("error", EMessages.get(EMessages.get("forms.error")));
+            flash("error", EMessages.get(EMessages.get("error.text")));
             return badRequest(forgotPwd.render((EMessages.get("forgot_pwd.forgot_pwd")), breadcrumbs, form));
         }
         System.out.println(form.get().id);
@@ -227,6 +227,7 @@ public class ResetPasswordController extends EController {
     }
 
     public static class ForgotPwd {
+    	@Required
         public String id;
         public String email;
     }
