@@ -14,39 +14,42 @@
 
 @main(EMessages.get("question.questionset.addquestion.title"), breadcrumbs){
 
-<div class="row">
+    <div class="row">
 
-    <div class="span4">
+        <div class="span4">
+
+        </div>
+
+        <div class="span8">
+            <h3> @EMessages.get("question.questionset.addquestion.title") </h3>
+
+            @form(controllers.question.routes.QuestionSetController.updateQuestions(qsid)) {
+
+                @showflash()
+
+                <fieldset>
+
+                    <label>@EMessages.get("question.questionset.addquestion.id")</label>
+                    <input type="text" id="search" name="qid" data-provide="typeahead" >
+
+                    @select(
+                        qsqForm("diftext"),
+                        options = options(models.data.DataHandler.getDifficulties().toList.map(_.id)),
+                        '_label -> EMessages.get("question.questionset.form.difficulty"),
+                        '_showConstraints -> false
+                    )
+
+                </fieldset>
+
+                <div class="actions">
+                    <input type="submit" value="@EMessages.get("forms.submit")" class="btn btn-primary">
+                    <a href="@controllers.question.routes.QuestionSetController.list(qsid, 0, "", "", "")" class="btn"> @EMessages.get("forms.cancel")</a>
+                </div>
+            }
+
+        </div>
 
     </div>
+    <script src="@routes.Assets.at("javascripts/contest/questionTypeAhead.js")" type="text/javascript"></script>
 
-    <div class="span8">
-        <h3> @EMessages.get("question.questionset.addquestion.title") </h3>
-
-        @form(controllers.question.routes.QuestionSetController.updateQuestions(qsid)) {
-
-            @showflash()
-
-            <fieldset>
-
-                @inputText(qsqForm("qid"), '_label -> EMessages.get("question.questionset.addquestion.id"), '_showConstraints -> false)
-
-                @select(
-                    qsqForm("diftext"),
-                    options = options(models.data.DataHandler.getDifficulties().toList.map(_.id)),
-                    '_label -> EMessages.get("question.questionset.form.difficulty"),
-                    '_showConstraints -> false
-                )
-
-                <input type="text" id="test" data-provide="typeahead" data-source='"@QuestionSetController.typeAhead()"'>
-
-            </fieldset>
-
-            <div class="actions">
-                <input type="submit" value="@EMessages.get("forms.submit")" class="btn btn-primary">
-                <a href="@controllers.question.routes.QuestionSetController.list(qsid, 0, "", "", "")" class="btn"> @EMessages.get("forms.cancel")</a>
-            </div>
-        }
-
-    </div>
-}
+    }

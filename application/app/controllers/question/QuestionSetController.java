@@ -236,8 +236,7 @@ public class QuestionSetController extends EController {
         ArrayNode arrayNode = objectNode.putArray("array");
         List<QuestionModel> questionModels = Ebean.find(QuestionModel.class).findList();
         for (int i = 0; i < questionModels.size(); i++){
-            // todo aanpassen naar de naam van de vraag
-            arrayNode.add("test" + i);
+            arrayNode.add(questionModels.get(i).getID());
         }
         return ok(objectNode);
     }
