@@ -10,6 +10,7 @@ import models.dbentities.UserModel;
 import models.mail.EMail;
 import models.mail.ForgotPwdMail;
 import models.mail.StudentTeacherEmailReset;
+import models.user.Independent;
 import play.data.Form;
 import play.data.validation.Constraints;
 import play.data.validation.Constraints.Required;
@@ -95,9 +96,11 @@ public class ResetPasswordController extends EController {
             }
         } else if (userModel.email.isEmpty() && userModel.classgroup > 0) {
             // Case 2
-            Integer classGroupID = userModel.classgroup;
-            ClassGroup g = Ebean.find(ClassGroup.class).where().eq("id", classGroupID).findUnique();
+            Independent indep = new Independent(userModel);
+            ClassGroup g = indep.getCurrentClass();
+            //TODO: nullcheck
             String teacherEmail = g.getTeacher().getData().email;
+            //TODO: token_url?
             EMail mail = new StudentTeacherEmailReset(teacherEmail, userModel.id, "url");
             try {
                 mail.send();
