@@ -142,7 +142,7 @@ public class PersonalPageController extends EController {
         //TODO: check current_pwd
 
         System.out.println(userModel.password);
-        PasswordHasher.SaltAndPassword sap = PasswordHasher.fullyHash(editPass.get("current_pwd"));
+        PasswordHasher.SaltAndPassword sap = PasswordHasher.generateSP(editPass.get("current_pwd").toCharArray());
         System.out.println(sap.password);
         System.out.println(userModel.password.equals(sap.password));
 
@@ -153,7 +153,7 @@ public class PersonalPageController extends EController {
             flash("error", EMessages.get(EMessages.get("forms.error")));
             return Results.redirect(controllers.user.routes.PersonalPageController.show(2));
         }
-        PasswordHasher.SaltAndPassword sp = PasswordHasher.fullyHash(editPass.get("n_password"));
+        PasswordHasher.SaltAndPassword sp = PasswordHasher.generateSP(editPass.get("n_password").toCharArray());
         String passwordHEX = sp.password;
         String saltHEX = sp.salt;
 
