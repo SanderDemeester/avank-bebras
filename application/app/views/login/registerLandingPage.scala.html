@@ -3,8 +3,9 @@
 @import models.EMessages
 
 @main(title, breadcrumbs) {
-                <div class="well">
-                    @EMessages.get("register.bebras_id_message") @id.
-                       @EMessages.get("register.inlog_message")
+                <div class="hero-unit">
+                	<h1>@EMessages.get("info.success")!</h1>
+                    <p>@EMessages.get("register.bebras_id_message") <strong>@id</strong></p>
+                    <p class="muted">@EMessages.get("register.inlog_message")</p>
                 </div>
 }
