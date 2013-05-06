@@ -215,7 +215,7 @@ public class UserController extends EController {
         }
 
         // Return a register success page.
-        return ok(registerLandingPage.render(EMessages.get("info.success"), new ArrayList<Link>(), bebrasID));
+        return ok(registerLandingPage.render(EMessages.get("info.success"), breadcrumbs, bebrasID));
     }
 
     /**

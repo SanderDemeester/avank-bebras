@@ -40,7 +40,7 @@ public class UserRegistrationTest extends ContextTest{
 				);
 
 		assertThat(status(result)).isEqualTo(200);
-		assertThat(contentAsString(result)).contains("Your Bebras ID is: jjones.");
+		assertThat(contentAsString(result)).contains("Your Bebras ID is: <strong>jjones</strong>");
 		assertThat(contentAsString(result)).contains("You may login with your ID and password.");
 
 		result = callAction(

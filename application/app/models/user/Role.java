@@ -12,7 +12,7 @@ import models.data.Link;
  * @author Ruben Taelman
  * @author Felix Van der Jeugt
  */
-public class Role {
+public class Role implements Comparable<Role>{
 
 
     /* ====================================================================== *\
@@ -81,10 +81,15 @@ public class Role {
 
     // Contest management
     public static Role MANAGECONTESTS = new Role(
-        EMessages.get("links.contestmanager.title"),
+        "links.contestmanager.title",
         new Link("links.contestmanager.overview", "/contests")
     );
-
+    
+    //Classes view for pupils
+    public static Role PUPILCLASSVIEW = new Role(
+    		"classes.pupil.classes.list",
+    		new Link("classes.pupil.classes.list","/pclasses/view")
+    );
 
 
     /* ====================================================================== *\
@@ -144,6 +149,13 @@ public class Role {
      */
     public List<Link> pages() {
         return pages;
+    }
+
+    @Override
+    public int compareTo(Role o) {
+        if(this.mtitle == null) return -1;
+        if(o.mtitle == null) return 1;
+        return this.mtitle.compareTo(o.mtitle);
     }
 
 }
