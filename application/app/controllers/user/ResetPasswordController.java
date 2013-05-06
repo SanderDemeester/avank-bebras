@@ -1,7 +1,7 @@
 package controllers.user;
 
 import com.avaje.ebean.Ebean;
-import controllers.*;
+import controllers.EController;
 import controllers.util.PasswordHasher;
 import models.EMessages;
 import models.data.Link;
@@ -12,7 +12,6 @@ import models.mail.ForgotPwdMail;
 import models.mail.StudentTeacherEmailReset;
 import models.user.Independent;
 import play.data.Form;
-import play.data.validation.Constraints;
 import play.data.validation.Constraints.Required;
 import play.mvc.Result;
 import views.html.commons.noaccess;
@@ -46,6 +45,12 @@ public class ResetPasswordController extends EController {
         ));
     }
 
+    /**
+     * This method sends an email when the user requests a new password.
+     * @return page after user tried to request a new pwd
+     * @throws InvalidKeySpecException
+     * @throws NoSuchAlgorithmException
+     */
     public static Result forgotPwdSendMail() throws InvalidKeySpecException, NoSuchAlgorithmException {
         List<Link> breadcrumbs = new ArrayList<>();
         breadcrumbs.add(new Link("Home", "/"));
@@ -166,7 +171,7 @@ public class ResetPasswordController extends EController {
      * This method is called when the users filled in his new password.
      * The purpose of this method is to calculate the new hash value of the password and store it into the database
      *
-     * @return
+     * @return page after try to reset pwd
      * @throws Exception
      */
     public static Result resetPassword() throws Exception {
@@ -229,12 +234,18 @@ public class ResetPasswordController extends EController {
         }
     }
 
+    /**
+     * Inline class that contains public fields for play forms.
+     */
     public static class ForgotPwd {
-    	@Required
+        @Required
         public String id;
         public String email;
     }
 
+    /**
+     * Inline class that contains public fields for play forms.
+     */
     public static class ResetPasswordVerify {
         public String id;
         public String password;

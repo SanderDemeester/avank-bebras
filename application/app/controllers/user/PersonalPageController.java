@@ -128,6 +128,11 @@ public class PersonalPageController extends EController {
         return newdate;
     }
 
+    /**
+     * This method is called when the user clicks on 'Change password'.
+     * @return page after password is changed
+     * @throws Exception
+     */
     public static Result changePassword() throws Exception {
         ArrayList<Link> breadcrumbs = new ArrayList<>();
         breadcrumbs.add(new Link("Home", "/"));

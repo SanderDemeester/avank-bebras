@@ -8,42 +8,12 @@ import models.user.AuthenticationManager;
 import models.user.Role;
 import models.user.UserType;
 import play.api.libs.Crypto;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import play.api.libs.Crypto;
-import play.data.validation.ValidationError;
-import play.data.DynamicForm;
-
 import play.data.Form;
 import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
 import play.mvc.Http.Context;
 import play.mvc.Result;
 import play.mvc.Results;
-import sun.awt.EmbeddedFrame;
-import views.html.forgotPwd;
-import play.mvc.Http.Context;
-
-import models.EMessages;
-import models.data.Link;
-import models.dbentities.UserModel;
-import models.user.AuthenticationManager;
-
-import models.user.Gender;
-import models.user.Role;
-
-import models.user.UserType;
-
-import views.html.landing_page;
-import scala.math.BigInt;
 import views.html.commons.noaccess;
 import views.html.login.register;
 import views.html.login.registerLandingPage;
@@ -75,7 +45,7 @@ public class UserController extends EController {
 
 
     /**
-     * This methode gets requested when the user clicks on "signup".
+     * This method gets requested when the user clicks on "signup".
      *
      * @return Result page.
      */
