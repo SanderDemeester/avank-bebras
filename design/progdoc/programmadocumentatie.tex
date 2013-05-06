@@ -100,11 +100,11 @@ Als leerkracht beschik je over volgende extra functies.
 [TODO: screenshot schooloverzicht]
 Hier vindt de leerkracht de lijst van scholen waaraan hij/zij les heeft gegeven.
 
-Om een nieuwe school aan het systeem toe te voegen, klik je op 'Voeg een nieuwe school toe'. Vul de naam en het adres van de school in en klik op 'Save'. De nieuwe school zal dan verschijnen in het overzicht als er een verbintenis met de school is.
+Om een nieuwe school aan het systeem toe te voegen, klik je op 'Nieuw'. Vul de naam en het adres van de school in en klik op 'Save'. De nieuwe school zal dan verschijnen in het overzicht als er een verbintenis met de school is.
 
 \textbf{\textit{Wat kan er mislopen?}}
 
-Zorg ervoor dat alle verplichte velden ingevuld zijn.
+Zorg ervoor dat alle verplichte velden ingevuld zijn. Het is niet de bedoeling dat scholen tweemaal in het systeem opgenomen worden. Als de school al aanwezig is in het systeem, vraag dan naar het ID.
 
 \subsection{Lijst van klassen}
 
@@ -135,6 +135,7 @@ Door hier een Excel-bestand te uploaden zoals reeds beschreven, kan men leerling
 De mogelijkheid bestaat ook om een Excel-bestand met alle informatie van de klas te downloaden.
 
 \textbf{\textit{Wat kan er mislopen?}}
+
 Alle verplichte velden moeten zeker en vast ingevuld zijn.
 
 Het ID van de school en de leerkracht moet bestaan in het systeem. Verzeker je er dus van dat je zeker de juiste ID's ingeeft als je een foutmelding hieromtrent krijgt.
@@ -147,7 +148,7 @@ Het kan ook occassioneel gebeuren dat de gegevens niet kunnen opgeslaan worden. 
 
 \subsection{Vrageneditor}
 
-Om een eigen vraag toe te voegen ga je naar de 'Vraagstukontwerper'. [TODO: screenshot questioneditor] Bij het maken van een vraag, heb je verschillende keuzes. Of je maakt een meerkeuzevraag, of een open vraag. Voor meer ervaren gebruikers is er ook de mogelijkheid een vraag te uploaden in de vorm van een ZIP-bestand.
+Om een eigen vraag toe te voegen ga je naar de 'Vrageneditor'. [TODO: screenshot questioneditor] Bij het maken van een vraag, heb je verschillende keuzes. Of je maakt een meerkeuzevraag, of een open vraag. Voor meer ervaren gebruikers is er ook de mogelijkheid een vraag te uploaden in de vorm van een ZIP-bestand.
 
 \subsubsection{Meerkeuzevraag}
 
@@ -189,6 +190,14 @@ Voorbeelden:
 \lstinputlisting[language=XML, frame=single]{xml/MCQ.xml}
 \lstinputlisting[language=XML, frame=single]{xml/open_question.xml} 
 
+
+\begin{itemize}
+\item Verplichte velden die niet ingevuld zijn: Vul alle verplichte velden in.
+\item De vraag moet in minstens 1 taal compleet opgesteld zijn om te kunnen verzenden of exporteren.
+\item Bij elke meerkeuzevraag moet in iedere beschikbare taal een correct antwoord aangeduid worden.
+\item Importeren mislukt: Zorg ervoor dat het ZIP-bestand aan de vooropgestelde eisen voldoet.
+\end{itemize}
+
 \section{Organisator}
 
 Als organisator beschik je over volgende extra functies.
@@ -211,7 +220,11 @@ Zorg er zeker voor dat alle verplichte velden zijn ingevuld. Bij de melding dat 
 Deze pagina geeft een overzicht van de servers die momenteel gebruikt worden. Bovenaan kan men filteren op ID. [TODO: screenshot questions]
 
 \subsubsection{Goedkeuren van vragen}
-Hier krijg je een overzicht van alle ingediende vragen met vermelding van de auteur en de indiendatum. [TODO: screenshot ingediende vragen] Hier kan de administrator een vraag goedkeuren of afkeuren door op de desbetreffende knoppen te klikken. Bij het goedkeuren van een vraag, kent de administrator een officieel ID toe aan de vraag zodat deze later kan teruggevonden worden. Ook kiest hij een server waarop de vraag geplaatst wordt en bepaalt hij of de vraag momenteel actief is. Eens de vraag goedgekeurd is, wordt ze verwijderd uit de voorlopige lijst en toegevoegd aan de officiële lijst van vragen.
+Hier krijg je een overzicht van alle ingediende vragen met vermelding van de auteur en de indiendatum. [TODO: screenshot ingediende vragen] Hier kan de organisator een vraag goedkeuren of afkeuren door op de desbetreffende knoppen te klikken. Bij het goedkeuren van een vraag, kent de organisator een officieel ID toe aan de vraag zodat deze later kan teruggevonden worden. Ook kiest hij een server waarop de vraag geplaatst wordt en bepaalt hij of de vraag momenteel actief is. Eens de vraag goedgekeurd is, wordt ze verwijderd uit de voorlopige lijst en toegevoegd aan de officiële lijst van vragen.
+
+\textbf{\textit{Wat kan er mislopen?}}
+
+Zorg er zeker voor dat de vraag een officieel ID krijgt toegekend.
 
 \subsection{Wedstrijdbeheer}
 Op deze pagina kan je de wedstrijden bekijken die voor jou zichtbaar zijn. 
@@ -231,6 +244,10 @@ Geef een naam voor de vragenbundel en bepaal het niveau. Je kan hiervoor kiezen 
 \textbf{Stap 3}
 In stap 3 kun je de vragen selecteren die je wilt opnemen in de vragenbundel. Om een nieuwe vraag toe te voegen, klik je op 'Nieuw'. Hier kun je een vraag kiezen door het ID van de vraag in te geven. Selecteer een moeilijkheidsgraad uit de beschikbare opties en klik op 'Verzend'. De vraag zal nu in de vragenbundel opgenomen zijn. Wanneer je vragenbundel volledig is, klik je op 'Pas aan' om verder te gaan.
 
+\textbf{\textit{Wat kan er mislopen?}}
+
+Zorg er zeker voor dat de wedstrijd een naam, begin- en eindtijdstip krijgt toegekend. Ook de vragenbundel moet een naam krijgen.
+
 \section{Beheerder}
 
 \subsection{Beheer Veelgestelde vragen}
@@ -243,6 +260,10 @@ Op deze pagina zie je de lijst van alle veelgestelde vragen. Door op een kolomna
 
 \subsubsection{Maak een nieuwe veelgestelde vraag aan}
 Om een nieuwe veelgestelde vraag toe te voegen, klik je op 'Voeg nieuwe FAQ toe'. [TODO: screenshot newFAQ] Op deze pagina vul je de vraag en het antwoord in in de daarvoor bestemde (en vereiste) velden. Daarna kies je de taal waarin de vraag is opgesteld en klik je op 'Save' om de vraag op te slaan. Je hebt ook de mogelijkheid om de vraag niet op te slaan en de actie te annuleren.
+
+\textbf{\textit{Wat kan er mislopen?}}
+
+Zorg er zeker voor dat alle verplichte velden zijn ingevuld.
 
 \subsection{Pas de databank aan}
 
