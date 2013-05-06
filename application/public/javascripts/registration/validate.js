@@ -1,3 +1,4 @@
+// validate used name attr.
 $(document).ready(function(){
 	$.validator.addMethod(
 			"date_check",
@@ -33,8 +34,22 @@ $(document).ready(function(){
 				required:true,
 				date_check: true
 			}
-
 		},
 		errorClass: "help-inline"
+	});
+	
+	$("#reset_password").validate({
+		
+		rules:{
+			bebras_id:"required",
+			r_password:"required",
+			controle_passwd:{
+					required:true,
+					equalTo: "#r_password"
+			}
+			
+		},
+		errorClass: "help-inline"
+		
 	});
 });

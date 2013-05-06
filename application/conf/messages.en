@@ -186,11 +186,15 @@ forgot_pwd.id = Bebras-ID
 forgot_pwd.email = Email
 forgot_pwd.submit = Reset password
 forgot_pwd.success = Password successfully reset.
-forgot_pwd.nosent = An error occurred, the email wasn't sent.
+forgot_pwd.notsent = An error occurred, the email wasn't sent.
 forgot_pwd.mail = An email was sent to the provided address.
-forgot_pwd.mail_sent = Someone requested a new password for Avank-Bebras. Please click {0} to reset it.
+forgot_pwd.mail_sent = A new password was requested for user {0} on Avank-Bebras. Go to {1} to reset it.
 forgot_pwd.mail_subject = Password reset
-forgot_pwd.email_blank = "Leave blanco if you dont have an email addres"
+forgot_pwd.email_blank = Leave empty if you don't have an email address
+forgot_pwd.reset_success = Password reset success
+forgot_pwd.reset_fail = Failed to reset password
+forgot_pwd.teachermail = Your pupil {0} requested a new password for Avank-Bebras. Go to {1} to reset it.
+forgot_pwd.teachersubject = Password reset for pupil
 
 # Edit pwd
 edit_pwd.edit_pwd = Edit password
@@ -209,8 +213,6 @@ reset_pwd.submit = Submit
 # Personal Info
 pers_info.pers_info = Personal information
 pers_info.edit = Edit information
-
-# Reset
 
 #faq
 faq.title = Frequently Asked Questions
@@ -423,6 +425,7 @@ classes.pupil.add.useralreadyinclass = That user is already registered with the 
 classes.pupil.delete.success = Removal was successful.
 classes.pupil.delete.error = Something went wrong during the deleting. Try again (later).
 
+class.availableGrades = Available levels and their (suggested) lower and upper age bound.
 classes.add = Add a new class
 class.name = Class''s name
 class.school = Class''s school
@@ -435,6 +438,7 @@ classes.add.nograde = There is no level with that name.
 classes.add.error = Something went wrong with the database. Try again later.
 classes.edit = Edit a class.
 
+classes.import = Import a class
 classes.import.classnotexist = There is no class with that ID.
 classes.import.classrecordwhileaddingtoexisting = You are adding pupils to an existing class. CLASS records will be ignored.
 classes.import.usernotexist = There is no user with that ID.
@@ -450,7 +454,7 @@ classes.import.info.classinvalid = There is no class with this ID.
 classes.import.info.classstart = New class record:
 classes.import.info.existstudent = Existing students:
 classes.import.info.newstudent = New students:
-classes.import.error.savefail = Something went wrong with the saving. Maybe you waited too long? The unsafed data gets removed after a couple of hours.
+classes.import.error.savefail = Something went wrong with the saving. Maybe you waited too long? The unsafed data gets removed after a couple of hours. Or someone registered one of the email addresses you were using. Or you used the same email address twice in the file.
 classes.import.error.postfail = Something went wrong with the parsing of the XLSX file. Are you sure it's a valid file? Check the documentation.
 
 # User
@@ -492,3 +496,8 @@ contact.requestupgrade.noemail = There is no email associated with your account.
 contact.upgraderequest.subject = [EN] Upgrade request
 contact.requestupgrade.notimage = The uploaded file is not an image.
 contact.requestupgrade.explanation = Here you can request an upgrade of your account to a teacher account. Please upload a link of a scan of your Teacher Card. Abuse of this form will lead to the suspension of your account.
+
+# Other user
+otheruser.view = Bekijk gebruiker
+otheruser.block = Block
+otheruser.block.date = Block until (leave blank for no block)

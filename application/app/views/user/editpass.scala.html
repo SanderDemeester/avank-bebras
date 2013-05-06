@@ -4,7 +4,7 @@
 @import helper.twitterBootstrap._
 @import views.html.commons.showflash
 
-@helper.form(action=controllers.user.routes.PersonalPageController.checkValid) {
+@helper.form(action=controllers.user.routes.PersonalPageController.changePassword) {
 
 <div class="container-fluid">
   <div class="span10">
@@ -55,3 +55,4 @@
 </div>
 
 }
+<script src="@routes.Assets.at("javascripts/registration/validate.js")" type="text/javascript"></script>

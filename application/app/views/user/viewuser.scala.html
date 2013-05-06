@@ -1,0 +1,10 @@
+@(breadcrumbs : List[models.data.Link], id : String)
+
+@main(id, breadcrumbs){
+
+
+<a href="@controllers.user.routes.BlockController.show(id)" 
+	class="btn">@EMessages.get("otheruser.block")</a>
+	<br />
+	<br />
+}

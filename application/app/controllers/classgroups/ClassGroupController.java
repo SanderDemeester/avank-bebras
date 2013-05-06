@@ -5,7 +5,10 @@ package controllers.classgroups;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.persistence.PersistenceException;
 
 import com.avaje.ebean.Ebean;
@@ -80,7 +83,7 @@ public class ClassGroupController extends EController {
 		//Check if authorized
 		if(!isAuthorized())return ok(noaccess.render(bc));
 		//Show form		
-		return ok(createClass.render(f, bc, ori));
+		return ok(createClass.render(f, bc, ori,listOfGrades()));
 	}
 	
 	/**
@@ -101,7 +104,7 @@ public class ClassGroupController extends EController {
 		try{
 			//Check if form is valid
 			OperationResultInfo check = checkForm(f);
-			if(check!=null) return badRequest(createClass.render(f, bc, check));
+			if(check!=null) return badRequest(createClass.render(f, bc, check,listOfGrades()));
 			//Get classgroup and add teacher data
 			ClassGroup cg = f.get();
 			//getTeacher() should never be null, but it's a safeguard
@@ -112,7 +115,7 @@ public class ClassGroupController extends EController {
 		}catch(PersistenceException pe){
 			//Database error
 			ori.add(EMessages.get("classes.add.error"),OperationResultInfo.Type.ERROR);
-			return badRequest(createClass.render(f, bc, ori));
+			return badRequest(createClass.render(f, bc, ori,listOfGrades()));
 		}
 		//Return to list page
 		return redirect(routes.ClassGroupController.viewClasses(0, "name", "asc", ""));
@@ -139,11 +142,11 @@ public class ClassGroupController extends EController {
 			@SuppressWarnings("unused")
 			int temp = cg.id; //will throw exception if null
 			Form<ClassGroup> f = form(ClassGroup.class).bindFromRequest().fill(cg);
-			return ok(views.html.classes.editClass.render(f, bc, ori,id));
+			return ok(views.html.classes.editClass.render(f, bc, ori,id,listOfGrades()));
 		}catch(Exception e){
 			ori.add(EMessages.get("classes.add.error"),OperationResultInfo.Type.ERROR);
 			return ok(
-					views.html.classes.editClass.render(null, bc, ori,id)
+					views.html.classes.editClass.render(null, bc, ori,id,listOfGrades())
 					);
 		}
 		
@@ -165,7 +168,7 @@ public class ClassGroupController extends EController {
 			
 			//Check if form is valid
 			OperationResultInfo check = checkForm(f);
-			if(check!=null)return badRequest(views.html.classes.editClass.render(f, bc, check,id));
+			if(check!=null)return badRequest(views.html.classes.editClass.render(f, bc, check,id,listOfGrades()));
 			//Retrieve ClassGroup from form and set id to the correct id
 			ClassGroup cg = f.get();
 			cg.id = id;
@@ -179,7 +182,7 @@ public class ClassGroupController extends EController {
 		}catch(Exception e){
 			ori.add(EMessages.get("classes.add.error"),OperationResultInfo.Type.ERROR);
 			return ok(
-					views.html.classes.editClass.render(f, bc, ori,id)
+					views.html.classes.editClass.render(f, bc, ori,id,listOfGrades())
 					);
 		}
 		return redirect(routes.ClassPupilController.viewClass(id, 0, "name", "asc", ""));
@@ -265,6 +268,14 @@ public class ClassGroupController extends EController {
 		}
 		
 		return null;
+	}
+	
+	private static Map<String,String> listOfGrades(){
+		Map<String,String> res = new HashMap<String, String>();
+		for(Grade g : Grade.getGrades()){
+			res.put(g.name, g.name);
+		}
+		return res;
 	}
 	
 }

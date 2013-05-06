@@ -172,7 +172,7 @@ register.password = Wachtwoord
 register.confirm_password = Bevestig password
 register.create_account = Maak account
 register.bebras_id_message = Uw Bebras ID is: 
-register.inlog_message = U kan inloggen me uw ID en wachtwoord.
+register.inlog_message = U kan inloggen met uw ID en wachtwoord.
 register.title = Registreer
 register.same_email = Er is al een gebruiker met het zelfde email addres.
 register.giveinfo = Geef uw Bebras ID en wachtwoord in.
@@ -187,11 +187,15 @@ forgot_pwd.id = Bebras-ID
 forgot_pwd.email = E-mail
 forgot_pwd.submit = Verzoek reset wachtwoord
 forgot_pwd.success = Wachtwoord succesvol gereset.
-forgot_pwd.nosent = Er is een fout opgetreden, de e-mail kon niet verstuurd worden.
+forgot_pwd.notsent = Er is een fout opgetreden, de e-mail kon niet verstuurd worden.
 forgot_pwd.mail = Er werd een e-mail verzonden naar het opgegeven adres.
-forgot_pwd.mail_sent = Iemand heeft een nieuw wachtwoord aangevraagd voor Avank-Bebras. Klik {0} om uw wachtwoorden opnieuw in te stellen.
+forgot_pwd.mail_sent = Er werd een nieuw wachtwoord aangevraagd voor gebruiker {0} op Avank-Bebras. Ga naar deze link {1} om het wachtwoord opnieuw in te stellen.
 forgot_pwd.mail_subject = Wachtwoord resetten
-forgot_pwd.email_blank = "Laat leeg als u geen veld heeft"
+forgot_pwd.email_blank = Laat leeg als u geen e-mailadres heeft
+forgot_pwd.reset_success = Wachtwoord is met succes opnieuw ingesteld
+forgot_pwd.reset_fail = Wachtwoord opnieuw instelling is mislukt
+forgot_pwd.teachermail = Uw leerling(e) {0} heeft een nieuw wachtwoord aangevraagd voor Avank-Bebras. Ga naar deze link {1} om het wachtwoord opnieuw in te stellen.
+forgot_pwd.teachersubject = Wachtwoord van leerling(e) resetten
 
 # Edit pwd
 edit_pwd.edit_pwd = Wachtwoord veranderen
@@ -412,6 +416,8 @@ classes.pupil.add.useralreadyinclass = Deze leelring zit al in de klas.
 classes.pupil.delete.success = Verwijderen was successvol.
 classes.pupil.delete.error = Er liep iets mis tijdens het verwijderen. Probeer opnieuw later.
 
+
+class.availableGrades = Toegelaten levels en hun (gesuggereerde) leeftijd onder- en bovengrenzen.
 classes.add = Voeg een nieuwe klas toe
 class.name = Naam van de klas
 class.school = School van de klas
@@ -424,6 +430,7 @@ classes.add.nograde = Er is geen level met die naam.
 classes.add.error = Er is iets misgelopen met de databank. Probeer opnieuw (later).
 classes.edit = Pas een klas aan.
 
+classes.import = Importeer een klas
 classes.import.classnotexist = Er is geen klas met dit ID.
 classes.import.classrecordwhileaddingtoexisting = U bent studenten aan het toevoegen aan een bestaande klas. CLASS records zullen genegeerd worden.
 classes.import.usernotexist = Er is geen gebruiker met dit ID.
@@ -439,7 +446,7 @@ classes.import.info.classinvalid = Er is geen klas met dat ID.
 classes.import.info.classstart = Begin klas record:
 classes.import.info.existstudent = Bestaande studenten:
 classes.import.info.newstudent = Nieuwe studenten:
-classes.import.error.savefail = Er is iets misgelopen met het opslaan. Misschien hebt u te lang gewacht? De data wordt verwijderd na een aantal uren. 
+classes.import.error.savefail = Er is iets misgelopen met het opslaan. Misschien hebt u te lang gewacht? De data wordt verwijderd na een aantal uren. Of er heeft ondertussen iemand een van de emailadressen geregistreerd. Of misschien heeft u meerdere keren hetzelfde emailadres gebruikt in het bestand.
 classes.import.error.postfail = Er is iets misgelopen met het inlezen van het XLSX bestand. Bent u zeker dat het geldig was? Controleer de documentatie.
 
 
@@ -482,3 +489,8 @@ contact.requestupgrade.noemail = Er is geen email-adres verbonden met uw account
 contact.upgraderequest.subject = [NL] Upgrade request
 contact.requestupgrade.notimage = Het opgeladen bestand is geen afbeelding.
 contact.requestupgrade.explanation = Hier kunt u een aanvraag indienen om uw account up te graden naar een leraar account. Gelieve een scan van uw lerarenkaart up te loaden. Misbruik van dit formulier zal leiden tot het blokkeren van uw account.
+
+# Other user
+otheruser.view = View user
+otheruser.block = Blokkeer
+otheruser.block.date = Blokkeer tot (leeg laten indien u niet wil blokkeren)
