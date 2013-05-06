@@ -165,6 +165,10 @@ POST		/classes/view/:id/help/			controllers.classgroups.HelpTeacherController.sa
 
 GET		/classes/view/:id/old			controllers.classgroups.ClassPupilController.viewOldPupils(id:Int,p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
+# Classes (views of the pupils)
+
+GET		/pclasses/view				controllers.classgroups.pupilview.PupilClassController.viewClasses(p:Int ?=0, s ?= "name", o ?= "asc", f ?= "")
+
 # Contact form
 
 GET		/contact			controllers.contactform.ContactFormController.showContactForm()

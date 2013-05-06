@@ -169,17 +169,29 @@ public class QuestionSet {
     public boolean canActivate(){
         return true;
     }
-    
+
+    /**
+     * Returns the id of this question set
+     * @return question set id
+     */
     public String getID() {
         return this.data.getID();
     }
-    
+
+    /**
+     * Returns the underlying database model
+     * @return Question set model
+     */
     public QuestionSetModel getData() {
         return this.data;
     }
-    
+
+    /**
+     * Returns the name of the question set
+     * @return question set name
+     */
     public String getName() {
-        return "TODO: getName()";
+        return data.name;
     }
 
 }

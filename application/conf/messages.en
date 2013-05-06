@@ -511,6 +511,16 @@ classes.import.info.newstudent = New students:
 classes.import.error.savefail = Something went wrong with the saving. Maybe you waited too long? The unsafed data gets removed after a couple of hours. Or someone registered one of the email addresses you were using. Or you used the same email address twice in the file.
 classes.import.error.postfail = Something went wrong with the parsing of the XLSX file. Are you sure it's a valid file? Check the documentation.
 
+classes.pupil.classes.list = List of classes
+classes.pupil.classes.current = Your current class
+classes.pupil.classes.previous = Your previous classes
+classes.pupil.classes.form.id = id
+classes.pupil.classes.form.name = Name
+classes.pupil.classes.form.schoolid = School ID
+classes.pupil.classes.form.teacherid = Teacher ID
+classes.pupil.classes.form.grade = Grade
+classes.pupil.classes.form.expirationdate = Expiration date
+
 # User
 user.pip.settings = Settings
 user.pip.welcome = Welcome!
