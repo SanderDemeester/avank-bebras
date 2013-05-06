@@ -52,4 +52,19 @@ $(document).ready(function(){
 		errorClass: "help-inline"
 		
 	});
+
+	$("#change_password").validate({
+
+    		rules:{
+    			current_pwd:"required",
+    			n_password:"required",
+    			controle_password:{
+    					required:true,
+    					equalTo: "#n_password"
+    			}
+
+    		},
+    		errorClass: "help-inline"
+
+    });
 });

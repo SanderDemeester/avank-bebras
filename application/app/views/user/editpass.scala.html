@@ -4,7 +4,7 @@
 @import helper.twitterBootstrap._
 @import views.html.commons.showflash
 
-@helper.form(action=controllers.user.routes.PersonalPageController.changePassword) {
+@helper.form(action=controllers.user.routes.PersonalPageController.changePassword, 'id -> "change_password") {
 
 <div class="container-fluid">
   <div class="span10">
@@ -26,8 +26,8 @@
             <div class="controls span10">
                 <div class="input-prepend span12">
                     <span class="add-on"><i class="icon-lock"></i> </span> <input
-                        type="Password" id="new_password" class="input-xlarge span11"
-                        name="new_password" required placeholder="@EMessages.get("edit_pwd.new_pwd")">
+                        type="Password" id="n_password" class="input-xlarge span11"
+                        name="n_password" required placeholder="@EMessages.get("edit_pwd.new_pwd")">
                 </div>
             </div>
         </div>
@@ -46,7 +46,7 @@
         <div class="control-group row-fluid">
             <div class="span2">&nbsp;</div>
             <div class="controls span2">
-                <button type="submit" class="btn btn-primary" name="btn" id="btn">@EMessages.get("edit_pwd.submit")</button>
+                <button type="submit" class="btn btn-primary" name="btn_changepwd" id="btn_changepwd">@EMessages.get("edit_pwd.submit")</button>
             </div>
             <div class="span8">&nbsp;</div>
         </div>
