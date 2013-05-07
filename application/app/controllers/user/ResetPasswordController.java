@@ -103,15 +103,15 @@ public class ResetPasswordController extends EController {
             // Case 2
             Independent indep = new Independent(userModel);
             ClassGroup g = indep.getCurrentClass();
-
+	    
+	    // check if there is a classgroup.
 	    if(g == null){
-		flash("error", EMessages.get("forgot_pwd.mail"));
+		flash("error", EMessages.get("forgot_pwd.no_classgroup"));
 		return ok(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
 	    }
-            //TODO: nullcheck
             String teacherEmail = g.getTeacher().getData().email;
-            //TODO: token_url?
-            EMail mail = new StudentTeacherEmailReset(teacherEmail, userModel.id, "url");
+            //TODO: should point to location where teacher can change passwords for a student
+            EMail mail = new StudentTeacherEmailReset(teacherEmail, userModel.id, "");
             try {
                 mail.send();
                 flash("success", EMessages.get("forgot_pwd.mail"));

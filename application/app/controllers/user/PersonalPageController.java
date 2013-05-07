@@ -138,6 +138,8 @@ public class PersonalPageController extends EController {
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link(EMessages.get("edit_pwd.edit_pwd"), "/passwedit"));
 
+	System.out.println("hierhier");
+
         DynamicForm editPass = form().bindFromRequest();
         UserModel userModel = Ebean.find(UserModel.class).where().eq(
                 "id", AuthenticationManager.getInstance().getUser().getID()).findUnique();
