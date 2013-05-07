@@ -99,7 +99,7 @@ public class ResetPasswordController extends EController {
                 flash("error", EMessages.get("forgot_pwd.notsent"));
                 return badRequest(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
             }
-        } else if (userModel.email.isEmpty() && userModel.classgroup > 0) {
+        } else if (userModel.email.isEmpty()) {
             // Case 2
             Independent indep = new Independent(userModel);
             ClassGroup g = indep.getCurrentClass();
