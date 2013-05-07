@@ -63,7 +63,6 @@ public class ResetPasswordController extends EController {
             flash("error", EMessages.get(EMessages.get("error.text")));
             return badRequest(forgotPwd.render((EMessages.get("forgot_pwd.forgot_pwd")), breadcrumbs, form));
         }
-        System.out.println(form.get().id);
         String id = form.get().id;
         UserModel userModel = Ebean.find(UserModel.class).where().eq("id", id).findUnique();
 
@@ -87,8 +86,6 @@ public class ResetPasswordController extends EController {
             Ebean.save(userModel);
 
             String baseUrl = request().host() + "/reset_password?token=" + userModel.reset_token;
-            //TODO: delete
-            System.out.println(baseUrl);
             // Prepare email
             EMail mail = new ForgotPwdMail(userModel.email, userModel.id, baseUrl);
             try {
@@ -139,9 +136,6 @@ public class ResetPasswordController extends EController {
      * @return if the provided token is valid, this method will return a view for the user to set his new password.
      */
     public static Result receivePasswordResetToken(String token) {
-        //TODO: remove
-        System.out.println(token);
-
         List<Link> breadcrumbs = new ArrayList<>();
         breadcrumbs.add(new Link(EMessages.get("app.home"), "/"));
         breadcrumbs.add(new Link(EMessages.get("app.signUp"), "/signup"));
@@ -160,8 +154,6 @@ public class ResetPasswordController extends EController {
             Long unixTime = System.currentTimeMillis() / 1000L;
             secure_token = secure_token + unixTime.toString();
 
-            //TODO: remove
-            System.out.println("secure token :" + secure_token);
 
             userModel.reset_token = secure_token;
 
@@ -193,35 +185,15 @@ public class ResetPasswordController extends EController {
         String reset_token = form.get().reset_token;
 	UserModel userModel = Ebean.find(UserModel.class).where().eq("id", id).findUnique();
 
-	if(userModel == null){
-	    System.out.println("userModel is null");
-	    System.out.println("id: " + id);
-	    }
 	
-
-	System.out.println("reset token" + userModel.reset_token);
-	System.out.println("pw: " + form.get().r_password);
-	System.out.println("pw: " + form.get().controle_passwd);
-	
-        //TODO:
         // We perform some checks on the server side (view can be skipped).
         if (userModel == null || userModel.reset_token.isEmpty() || !form.get().r_password.equals(form.get().controle_passwd)) {
             return ok(noaccess.render(breadcrumbs));
         }
         String reset_token_database = userModel.reset_token;
 
-
-        System.out.println("reset token client: " + reset_token);
-        System.out.println("reset token server: " + reset_token_database);
-
         Long time_check = Long.parseLong(reset_token_database.substring(26, reset_token_database.length()));
         Long system_time_check = (System.currentTimeMillis() / 1000L);
-
-        System.out.println("time check        : " + time_check);
-        System.out.println("time check_server : " + system_time_check);
-        System.out.println("-                 : " + (system_time_check - time_check));
-
-        System.out.println(reset_token);
 
         // 1 min time to fill in new password
         if (reset_token.equals(reset_token_database) && (system_time_check - time_check) < 60) {
@@ -229,8 +201,6 @@ public class ResetPasswordController extends EController {
             PasswordHasher.SaltAndPassword sp = PasswordHasher.generateSP(form.get().r_password.toCharArray());
             String passwordHEX = sp.password;
             String saltHEX = sp.salt;
-
-	    System.out.println("test");
 
             userModel.password = passwordHEX;
             userModel.hash = saltHEX;
