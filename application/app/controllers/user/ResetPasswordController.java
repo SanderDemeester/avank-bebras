@@ -109,6 +109,10 @@ public class ResetPasswordController extends EController {
 		flash("error", EMessages.get("forgot_pwd.no_classgroup"));
 		return ok(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
 	    }
+	    if(g.getTeacher() == null){
+		flash("error",EMessages.get("forgot_pwd.no_teacher"));
+		return ok(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
+	    }
             String teacherEmail = g.getTeacher().getData().email;
             //TODO: should point to location where teacher can change passwords for a student
             EMail mail = new StudentTeacherEmailReset(teacherEmail, userModel.id, "");

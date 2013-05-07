@@ -10,6 +10,9 @@ $(document).ready(function(){
 	$.validator.addMethod(
 			"email_check",
 			function(value, element){
+				if(!value){
+				return true;
+				}
 				return value.match(/^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/);
 			},
 			"email"
@@ -20,7 +23,8 @@ $(document).ready(function(){
 			name:"required",
 			prefLanguage:"required",
 			email:{
-				email_check: true
+				email_check: true,
+				required:false
 			},
 			register_password:{
 				required:true,
