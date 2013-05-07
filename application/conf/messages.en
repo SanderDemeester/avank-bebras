@@ -185,6 +185,7 @@ register.Female = Female
 register.Other = Other
 
 # Forgot pwd
+forgot_pwd.no_classgroup = There is no class associated with your account, cannot reset password
 forgot_pwd.forgot_pwd = Forgot password
 forgot_pwd.id = Bebras-ID
 forgot_pwd.email = Email

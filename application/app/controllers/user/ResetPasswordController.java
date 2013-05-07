@@ -103,6 +103,11 @@ public class ResetPasswordController extends EController {
             // Case 2
             Independent indep = new Independent(userModel);
             ClassGroup g = indep.getCurrentClass();
+
+	    if(g == null){
+		flash("error", EMessages.get("forgot_pwd.mail"));
+		return ok(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
+	    }
             //TODO: nullcheck
             String teacherEmail = g.getTeacher().getData().email;
             //TODO: token_url?
@@ -222,6 +227,7 @@ public class ResetPasswordController extends EController {
             String saltHEX = sp.salt;
 
 	    System.out.println("test");
+
             userModel.password = passwordHEX;
             userModel.hash = saltHEX;
 
