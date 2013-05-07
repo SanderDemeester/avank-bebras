@@ -172,13 +172,23 @@ public class ResetPasswordController extends EController {
         breadcrumbs.add(new Link(EMessages.get("app.signUp"), "/signup"));
 
         Form<ResetPasswordVerify> form = form(ResetPasswordVerify.class).bindFromRequest();
-        String id = form.get().id;
+        String id = form.get().bebras_id;
         String reset_token = form.get().reset_token;
-        UserModel userModel = Ebean.find(UserModel.class).where().eq("id", id).findUnique();
+	UserModel userModel = Ebean.find(UserModel.class).where().eq("id", id).findUnique();
 
+	if(userModel == null){
+	    System.out.println("userModel is null");
+	    System.out.println("id: " + id);
+	    }
+	
+
+	System.out.println("reset token" + userModel.reset_token);
+	System.out.println("pw: " + form.get().r_password);
+	System.out.println("pw: " + form.get().controle_passwd);
+	
         //TODO:
         // We perform some checks on the server side (view can be skipped).
-        if (userModel == null || userModel.reset_token.isEmpty() || !form.get().password.equals(form.get().confirmPassword)) {
+        if (userModel == null || userModel.reset_token.isEmpty() || !form.get().r_password.equals(form.get().controle_passwd)) {
             return ok(noaccess.render(breadcrumbs));
         }
         String reset_token_database = userModel.reset_token;
@@ -199,10 +209,11 @@ public class ResetPasswordController extends EController {
         // 1 min time to fill in new password
         if (reset_token.equals(reset_token_database) && (system_time_check - time_check) < 60) {
 
-            PasswordHasher.SaltAndPassword sp = PasswordHasher.generateSP(form.get().password.toCharArray());
+            PasswordHasher.SaltAndPassword sp = PasswordHasher.generateSP(form.get().r_password.toCharArray());
             String passwordHEX = sp.password;
             String saltHEX = sp.salt;
 
+	    System.out.println("test");
             userModel.password = passwordHEX;
             userModel.hash = saltHEX;
 
@@ -233,9 +244,9 @@ public class ResetPasswordController extends EController {
     }
 
     public static class ResetPasswordVerify {
-        public String id;
-        public String password;
-        public String confirmPassword;
+        public String bebras_id;
+        public String r_password;
+        public String controle_passwd;
         public String reset_token;
     }
 }
