@@ -45,7 +45,7 @@ public class UserController extends EController {
 
 
     /**
-     * This methode gets requested when the user clicks on "signup".
+     * This method gets requested when the user clicks on "signup".
      *
      * @return Result page.
      */

@@ -11,7 +11,7 @@
 	@inputText(mimicForm("bebrasID"), '_label -> "bebras ID:")
 </fieldset>
 <div class="actions">
-	<input type="submit" value="Mimic" class="btn-primary" id="mimic">
+	<input type="submit" value="Mimic" class=" btn btn-primary" id="mimic">
 </div>
 }
 
@@ -29,7 +29,7 @@ $("#mimic").live("click",function(){
 		});
 	
 	request.fail(function(jqXHR, data){
-		$("#mimic_alert").show('fast').attr("class","alert-error").text(jqXHR.responseText + ".");
+		$("#mimic_alert").show('fast').attr("class","alert alert-error").text(jqXHR.responseText + ".");
 	});
 });
 </script>

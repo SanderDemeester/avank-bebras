@@ -1,7 +1,7 @@
 package controllers.user;
 
 import com.avaje.ebean.Ebean;
-import controllers.*;
+import controllers.EController;
 import controllers.util.PasswordHasher;
 import models.EMessages;
 import models.data.Link;
@@ -10,8 +10,8 @@ import models.dbentities.UserModel;
 import models.mail.EMail;
 import models.mail.ForgotPwdMail;
 import models.mail.StudentTeacherEmailReset;
+import models.user.Independent;
 import play.data.Form;
-import play.data.validation.Constraints;
 import play.data.validation.Constraints.Required;
 import play.mvc.Result;
 import views.html.commons.noaccess;
@@ -45,6 +45,12 @@ public class ResetPasswordController extends EController {
         ));
     }
 
+    /**
+     * This method sends an email when the user requests a new password.
+     * @return page after user tried to request a new pwd
+     * @throws InvalidKeySpecException
+     * @throws NoSuchAlgorithmException
+     */
     public static Result forgotPwdSendMail() throws InvalidKeySpecException, NoSuchAlgorithmException {
         List<Link> breadcrumbs = new ArrayList<>();
         breadcrumbs.add(new Link("Home", "/"));
@@ -57,7 +63,6 @@ public class ResetPasswordController extends EController {
             flash("error", EMessages.get(EMessages.get("error.text")));
             return badRequest(forgotPwd.render((EMessages.get("forgot_pwd.forgot_pwd")), breadcrumbs, form));
         }
-        System.out.println(form.get().id);
         String id = form.get().id;
         UserModel userModel = Ebean.find(UserModel.class).where().eq("id", id).findUnique();
 
@@ -81,8 +86,6 @@ public class ResetPasswordController extends EController {
             Ebean.save(userModel);
 
             String baseUrl = request().host() + "/reset_password?token=" + userModel.reset_token;
-            //TODO: delete
-            System.out.println(baseUrl);
             // Prepare email
             EMail mail = new ForgotPwdMail(userModel.email, userModel.id, baseUrl);
             try {
@@ -93,12 +96,23 @@ public class ResetPasswordController extends EController {
                 flash("error", EMessages.get("forgot_pwd.notsent"));
                 return badRequest(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
             }
-        } else if (userModel.email.isEmpty() && userModel.classgroup > 0) {
+        } else if (userModel.email.isEmpty()) {
             // Case 2
-            Integer classGroupID = userModel.classgroup;
-            ClassGroup g = Ebean.find(ClassGroup.class).where().eq("id", classGroupID).findUnique();
+            Independent indep = new Independent(userModel);
+            ClassGroup g = indep.getCurrentClass();
+	    
+	    // check if there is a classgroup.
+	    if(g == null){
+		flash("error", EMessages.get("forgot_pwd.no_classgroup"));
+		return ok(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
+	    }
+	    if(g.getTeacher() == null){
+		flash("error",EMessages.get("forgot_pwd.no_teacher"));
+		return ok(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
+	    }
             String teacherEmail = g.getTeacher().getData().email;
-            EMail mail = new StudentTeacherEmailReset(teacherEmail, userModel.id, "url");
+            //TODO: should point to location where teacher can change passwords for a student
+            EMail mail = new StudentTeacherEmailReset(teacherEmail, userModel.id, "");
             try {
                 mail.send();
                 flash("success", EMessages.get("forgot_pwd.mail"));
@@ -122,9 +136,6 @@ public class ResetPasswordController extends EController {
      * @return if the provided token is valid, this method will return a view for the user to set his new password.
      */
     public static Result receivePasswordResetToken(String token) {
-        //TODO: remove
-        System.out.println(token);
-
         List<Link> breadcrumbs = new ArrayList<>();
         breadcrumbs.add(new Link(EMessages.get("app.home"), "/"));
         breadcrumbs.add(new Link(EMessages.get("app.signUp"), "/signup"));
@@ -143,8 +154,6 @@ public class ResetPasswordController extends EController {
             Long unixTime = System.currentTimeMillis() / 1000L;
             secure_token = secure_token + unixTime.toString();
 
-            //TODO: remove
-            System.out.println("secure token :" + secure_token);
 
             userModel.reset_token = secure_token;
 
@@ -163,7 +172,7 @@ public class ResetPasswordController extends EController {
      * This method is called when the users filled in his new password.
      * The purpose of this method is to calculate the new hash value of the password and store it into the database
      *
-     * @return
+     * @return page after try to reset pwd
      * @throws Exception
      */
     public static Result resetPassword() throws Exception {
@@ -172,34 +181,24 @@ public class ResetPasswordController extends EController {
         breadcrumbs.add(new Link(EMessages.get("app.signUp"), "/signup"));
 
         Form<ResetPasswordVerify> form = form(ResetPasswordVerify.class).bindFromRequest();
-        String id = form.get().id;
+        String id = form.get().bebras_id;
         String reset_token = form.get().reset_token;
-        UserModel userModel = Ebean.find(UserModel.class).where().eq("id", id).findUnique();
+	UserModel userModel = Ebean.find(UserModel.class).where().eq("id", id).findUnique();
 
-        //TODO:
+	
         // We perform some checks on the server side (view can be skipped).
-        if (userModel == null || userModel.reset_token.isEmpty() || !form.get().password.equals(form.get().confirmPassword)) {
+        if (userModel == null || userModel.reset_token.isEmpty() || !form.get().r_password.equals(form.get().controle_passwd)) {
             return ok(noaccess.render(breadcrumbs));
         }
         String reset_token_database = userModel.reset_token;
 
-
-        System.out.println("reset token client: " + reset_token);
-        System.out.println("reset token server: " + reset_token_database);
-
         Long time_check = Long.parseLong(reset_token_database.substring(26, reset_token_database.length()));
         Long system_time_check = (System.currentTimeMillis() / 1000L);
-
-        System.out.println("time check        : " + time_check);
-        System.out.println("time check_server : " + system_time_check);
-        System.out.println("-                 : " + (system_time_check - time_check));
-
-        System.out.println(reset_token);
 
         // 1 min time to fill in new password
         if (reset_token.equals(reset_token_database) && (system_time_check - time_check) < 60) {
 
-            PasswordHasher.SaltAndPassword sp = PasswordHasher.generateSP(form.get().password.toCharArray());
+            PasswordHasher.SaltAndPassword sp = PasswordHasher.generateSP(form.get().r_password.toCharArray());
             String passwordHEX = sp.password;
             String saltHEX = sp.salt;
 
@@ -226,16 +225,22 @@ public class ResetPasswordController extends EController {
         }
     }
 
+    /**
+     * Inline class that contains public fields for play forms.
+     */
     public static class ForgotPwd {
-    	@Required
+        @Required
         public String id;
         public String email;
     }
 
+    /**
+     * Inline class that contains public fields for play forms.
+     */
     public static class ResetPasswordVerify {
-        public String id;
-        public String password;
-        public String confirmPassword;
+        public String bebras_id;
+        public String r_password;
+        public String controle_passwd;
         public String reset_token;
     }
 }
