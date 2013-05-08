@@ -20,6 +20,7 @@ import org.bouncycastle.util.encoders.Hex;
 import org.springframework.validation.FieldError;
 
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Expr;
 import com.avaje.ebean.InvalidValue;
 import com.avaje.ebean.ValidationException;
 import com.avaje.ebean.annotation.Transactional;
@@ -201,8 +202,7 @@ public class UserManagerController extends EController {
     		def_model.name = form.data().get("name");
     		
     		// check if email is unique and validate
-			if(Ebean.find(UserModel.class).where().eq(
-			    "email",form.data().get("email")).findUnique() != null){
+			if(Ebean.find(UserModel.class).where().and(Expr.eq("email",form.data().get("email")),Expr.ne("id",def_model.id)).findUnique() != null){
 				flash("error", EMessages.get(EMessages.get("register.same_email")));
 				return badRequest(edituser.render(form, new UserManager(ModelState.UPDATE), breadcrumbs));
 			}

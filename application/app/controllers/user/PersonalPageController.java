@@ -1,6 +1,8 @@
 package controllers.user;
 
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Expr;
+
 import controllers.EController;
 import controllers.user.management.UserManager;
 import controllers.util.InputChecker;
@@ -70,8 +72,8 @@ public class PersonalPageController extends EController {
         }
 
         // email
-        if (!InputChecker.getInstance().isCorrectEmail(editInfo.get("email")) || Ebean.find(UserModel.class).where().eq(
-			  	"email",editInfo.get("email")).findUnique() != null) {
+        if (!InputChecker.getInstance().isCorrectEmail(editInfo.get("email")) || Ebean.find(UserModel.class).where().and(Expr.eq(
+			  	"email",editInfo.get("email")),Expr.ne("id",AuthenticationManager.getInstance().getUser().getID())).findUnique() != null) {
         	if(editInfo.get("email").isEmpty()){
         		userModel.email = null;
         		AuthenticationManager.getInstance().getUser().data.email = null;
