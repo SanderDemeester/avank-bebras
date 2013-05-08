@@ -70,12 +70,15 @@ public class PersonalPageController extends EController {
         }
 
         // email
-        if (!InputChecker.getInstance().isCorrectEmail(editInfo.get("email"))) {     	
-		    if(Ebean.find(UserModel.class).where().eq(
-				  	"email",editInfo.get("email")).findUnique() != null){
-				    flash("error", EMessages.get(EMessages.get("register.same_email")));
-				    return Results.redirect(controllers.user.routes.PersonalPageController.show(1));
-			}
+        if (!InputChecker.getInstance().isCorrectEmail(editInfo.get("email")) || Ebean.find(UserModel.class).where().eq(
+			  	"email",editInfo.get("email")).findUnique() != null) {
+        	if(editInfo.get("email").isEmpty()){
+        		userModel.email = null;
+        		AuthenticationManager.getInstance().getUser().data.email = null;
+        	}else{
+		        flash("error", EMessages.get(EMessages.get("register.same_email")));
+	            return Results.redirect(controllers.user.routes.PersonalPageController.show(1));
+        	}
         } else {
             userModel.email = editInfo.get("email");
             AuthenticationManager.getInstance().getUser().data.email = editInfo.get("email");

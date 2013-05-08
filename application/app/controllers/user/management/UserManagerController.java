@@ -218,8 +218,10 @@ public class UserManagerController extends EController {
 			    }
 			
 			    if(!InputChecker.getInstance().isCorrectEmail(form.data().get("email"))){
-		            flash("error", EMessages.get(EMessages.get("user.error.wrong_email")));
-	        	    return badRequest(edituser.render(form, new UserManager(ModelState.UPDATE), breadcrumbs));
+			    	if(!form.data().get("email").isEmpty()){
+			            flash("error", EMessages.get(EMessages.get("user.error.wrong_email")));
+	        	        return badRequest(edituser.render(form, new UserManager(ModelState.UPDATE), breadcrumbs));
+			    	}
 			    }
     		}
 
@@ -372,8 +374,10 @@ public class UserManagerController extends EController {
 			}
 			
 			if(!InputChecker.getInstance().isCorrectEmail(form.get().email)){
-		        flash("error", EMessages.get(EMessages.get("user.error.wrong_email")));
-	        	return badRequest(createuser.render(form, new UserManager(ModelState.CREATE), breadcrumbs));
+				if(!form.get().email.isEmpty()){
+		            flash("error", EMessages.get(EMessages.get("user.error.wrong_email")));
+	        	    return badRequest(createuser.render(form, new UserManager(ModelState.CREATE), breadcrumbs));
+				}
 			}
     		
     		// set id

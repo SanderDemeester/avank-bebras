@@ -73,7 +73,6 @@ public class UserModel extends ManageableModel implements Listable{
     public String name;
     
     @Editable
-    @NotNull
     @JoinColumn(name="email")
     public String email;
     
