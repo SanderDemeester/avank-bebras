@@ -194,6 +194,8 @@ register.Female = Vrouw
 register.Other = Andere
 
 # Forgot pwd
+forgot_pwd.no_teacher = Er is geen leerkracht geasocieerd met uw huidige klass, wachtwoord reset is niet mogelijk
+forgot_pwd.no_classgroup = Er is geen klas geasocieerd met uw account, wachtwoord reset is niet mogelijk
 forgot_pwd.forgot_pwd = Wachtwoord vergeten
 forgot_pwd.id = Bebras-ID
 forgot_pwd.email = E-mail

@@ -128,10 +128,17 @@ public class PersonalPageController extends EController {
         return newdate;
     }
 
+    /**
+     * This method is called when the user clicks on 'Change password'.
+     * @return page after password is changed
+     * @throws Exception
+     */
     public static Result changePassword() throws Exception {
         ArrayList<Link> breadcrumbs = new ArrayList<>();
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link(EMessages.get("edit_pwd.edit_pwd"), "/passwedit"));
+
+	System.out.println("hierhier");
 
         DynamicForm editPass = form().bindFromRequest();
         UserModel userModel = Ebean.find(UserModel.class).where().eq(
@@ -139,19 +146,21 @@ public class PersonalPageController extends EController {
 
         System.out.println(userModel.id);
 
+        //TODO: check current_pwd
+
         System.out.println(userModel.password);
         PasswordHasher.SaltAndPassword sap = PasswordHasher.generateSP(editPass.get("current_pwd").toCharArray());
         System.out.println(sap.password);
         System.out.println(userModel.password.equals(sap.password));
 
-        if (userModel == null || !editPass.get("new_password").equals(editPass.get("controle_password"))) {
+        if (userModel == null || !editPass.get("n_password").equals(editPass.get("controle_password"))) {
             return ok(noaccess.render(breadcrumbs));
         }
         if (editPass.hasErrors()) {
             flash("error", EMessages.get(EMessages.get("forms.error")));
             return Results.redirect(controllers.user.routes.PersonalPageController.show(2));
         }
-        PasswordHasher.SaltAndPassword sp = PasswordHasher.generateSP(editPass.get("new_password").toCharArray());
+        PasswordHasher.SaltAndPassword sp = PasswordHasher.generateSP(editPass.get("n_password").toCharArray());
         String passwordHEX = sp.password;
         String saltHEX = sp.salt;
 

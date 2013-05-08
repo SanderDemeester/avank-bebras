@@ -193,6 +193,8 @@ register.Female = Female
 register.Other = Other
 
 # Forgot pwd
+forgot_pwd.no_teacher = There is no teacher associated with your current class, cannot reset password
+forgot_pwd.no_classgroup = There is no class associated with your account, cannot reset password
 forgot_pwd.forgot_pwd = Forgot password
 forgot_pwd.id = Bebras-ID
 forgot_pwd.email = Email
@@ -205,7 +207,7 @@ forgot_pwd.mail_subject = Password reset
 forgot_pwd.email_blank = Leave empty if you don't have an email address
 forgot_pwd.reset_success = Password reset success
 forgot_pwd.reset_fail = Failed to reset password
-forgot_pwd.teachermail = Your pupil {0} requested a new password for Avank-Bebras. Go to {1} to reset it.
+forgot_pwd.teachermail = Your pupil {0} requested a new password for Avank-Bebras. Please reset it. 
 forgot_pwd.teachersubject = Password reset for pupil
 
 # Edit pwd
