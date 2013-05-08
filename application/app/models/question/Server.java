@@ -183,7 +183,7 @@ public class Server extends ManageableModel implements Listable{
         // Connect to server
         client.connect(ftpuri, ftpport);
         client.login(ftpuser, ftppass);
-        // TODO: non-static dit
+        
         client.changeDirectory(ftppath);
         client.createDirectory(questionID);
         client.changeDirectory(questionID);
@@ -202,6 +202,9 @@ public class Server extends ManageableModel implements Listable{
             
             // Upload the new file
             client.upload(file);
+            
+            // Let's keep things clean
+            file.delete();
             
             // Close everything to avoid leaks
             zis.closeEntry();
