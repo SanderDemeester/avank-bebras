@@ -67,6 +67,11 @@ public class Role {
         new Link("links.datamanager.diffs", "/manage/difficulties/show"),
         new Link("links.datamanager.grades", "/manage/grades/show")
     );
+
+    public static Role MANAGEUSERS = new Role(
+        "links.manageusers.title",
+        new Link("links.manageusers.users","/manage/users")
+    );
     
     //TEACHER
     public static Role MANAGESCHOOLS = new Role(
@@ -84,8 +89,7 @@ public class Role {
         EMessages.get("links.contestmanager.title"),
         new Link("links.contestmanager.overview", "/contests")
     );
-
-
+    
 
     /* ====================================================================== *\
                              Actual implementation.

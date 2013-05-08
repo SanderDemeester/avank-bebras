@@ -2,6 +2,7 @@ package models.dbentities;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -23,6 +24,7 @@ import javax.persistence.Transient;
 import models.data.Language;
 import models.management.Editable;
 
+import com.avaje.ebean.Ebean;
 import com.avaje.ebean.validation.NotNull;
 
 import controllers.util.DateFormatter;
@@ -51,8 +53,8 @@ public class UserModel extends ManageableModel implements Listable{
     private static final long serialVersionUID = 1L;
 
     @Id
-	@NotNull
-	@JoinColumn(name="id")
+    @NotNull
+    @JoinColumn(name="id")
     public String id;
     
     @Enumerated(EnumType.STRING)
@@ -85,14 +87,14 @@ public class UserModel extends ManageableModel implements Listable{
     @Editable
     public GenderWrap wrap_gender;
     
-    @Formats.DateTime(pattern = "MM/dd/yyyy")
+    @Formats.DateTime(pattern = "dd/MM/yyyy")
     @Editable
 	@ManyToOne
 	@NotNull
 	@JoinColumn(name="bday")
     public Date birthdate;
     
-    @Formats.DateTime(pattern = "MM/dd/yyyy")
+    @Formats.DateTime(pattern = "dd/MM/yyyy")
     @Editable
     @ManyToOne
     @NotNull
@@ -109,11 +111,19 @@ public class UserModel extends ManageableModel implements Listable{
     public Language wrap_language;
     
     @Editable
-    @NotNull
-    @Constraints.Required
-    @JoinColumn(name="active")
-    public boolean active;
-
+    @JoinColumn(name="comment")
+    public String comment;
+    
+    @Formats.DateTime(pattern = "dd/MM/yyyy")
+    @Editable
+    @ManyToOne
+    @JoinColumn(name="blockeduntil")
+    public Date blockeduntil;
+    
+    @Editable
+    @Transient
+    public boolean blocked;
+   
     public String password;
     public String hash;
     public String telephone;
@@ -142,8 +152,9 @@ public class UserModel extends ManageableModel implements Listable{
         this.email = email;
         this.gender = gender;
         this.preflanguage = preflanguage;
-        active = true;
+        this.blockeduntil = null;
         EMessages.setLang(preflanguage);
+      
     }
 
     public UserModel() {
@@ -155,8 +166,6 @@ public class UserModel extends ManageableModel implements Listable{
      * We will use this finder to execute specific sql query's.
      */
     public static Finder<String,UserModel> find = new Model.Finder<String, UserModel>(String.class,UserModel.class);
-
-
 
     @Override
     public Map<String, String> options() {
@@ -170,6 +179,7 @@ public class UserModel extends ManageableModel implements Listable{
 
 	@Override
 	public String[] getFieldValues() {
+		//TODO voor jens: rekening houden met toegevoegde velden
 		String[] res = {
 				id,
 				EMessages.get("user." + type.toString()),
@@ -178,8 +188,9 @@ public class UserModel extends ManageableModel implements Listable{
 				EMessages.get("user." + gender.toString()),
 				convertDate(birthdate),
 				convertDate(registrationdate),
-				preflanguage,
-				Boolean.toString(active)
+				EMessages.get("languages." + preflanguage),
+				comment,
+				DateFormatter.formatDate(this.blockeduntil)
 		};		
 		return res;
 	}
@@ -190,5 +201,15 @@ public class UserModel extends ManageableModel implements Listable{
 	
 	private String convertDate(Date d){
 		return DateFormatter.formatDate(d);
+	}
+
+        /**
+	 * 
+	 * @return whether the user is currently blocked
+	 */
+	public boolean isCurrentlyBlocked(){
+		if(this.blockeduntil==null) return false;
+		Date today = Calendar.getInstance().getTime();
+		return !today.before(this.blockeduntil);
 	}
 }
