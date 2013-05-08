@@ -163,15 +163,7 @@ public class UserManagerController extends EController {
     public static UserType getUserType(UserModel um){
     	return um.type;
     }
-    
-    public static Result changeInformation(String id){
-    	return Results.ok();
-    }
-    
-    public static Result changePassword(String id){
-    	return Results.ok();
-    }
-    
+        
     @Transactional
     public static Result updateUser(){
     	List<Link> breadcrumbs = new ArrayList<Link>();
@@ -187,7 +179,6 @@ public class UserManagerController extends EController {
         Form<UserModel> form = form(UserModel.class).bindFromRequest();
 
         if(form.hasErrors()) {
-        	System.out.println("Error: " + form.errors());
             return badRequest(edituser.render(form, new UserManager(ModelState.UPDATE), breadcrumbs));
         }
         
@@ -209,21 +200,23 @@ public class UserManagerController extends EController {
     		// name
     		def_model.name = form.data().get("name");
     		
-    		if(!def_model.email.equals(form.data().get("email"))) {
-    		    // check if email is unique and validate
-			    if(Ebean.find(UserModel.class).where().eq(
-				  	"email",form.data().get("email")).findUnique() != null){
-				    flash("error", EMessages.get(EMessages.get("register.same_email")));
-				    return badRequest(edituser.render(form, new UserManager(ModelState.UPDATE), breadcrumbs));
-			    }
+    		// check if email is unique and validate
+			if(Ebean.find(UserModel.class).where().eq(
+			    "email",form.data().get("email")).findUnique() != null){
+				flash("error", EMessages.get(EMessages.get("register.same_email")));
+				return badRequest(edituser.render(form, new UserManager(ModelState.UPDATE), breadcrumbs));
+			}
 			
-			    if(!InputChecker.getInstance().isCorrectEmail(form.data().get("email"))){
-			    	if(!form.data().get("email").isEmpty()){
-			            flash("error", EMessages.get(EMessages.get("user.error.wrong_email")));
-	        	        return badRequest(edituser.render(form, new UserManager(ModelState.UPDATE), breadcrumbs));
-			    	}
+			if(!InputChecker.getInstance().isCorrectEmail(form.data().get("email"))){
+			    if(!form.data().get("email").isEmpty()){
+			        flash("error", EMessages.get(EMessages.get("user.error.wrong_email")));
+	        	    return badRequest(edituser.render(form, new UserManager(ModelState.UPDATE), breadcrumbs));
+			    }else{
+			        def_model.email = null;
 			    }
-    		}
+			}else{
+			    def_model.email = form.data().get("email");
+			}
 
 			// password
 			if(!form.data().get("password1").isEmpty()){
@@ -377,6 +370,8 @@ public class UserManagerController extends EController {
 				if(!form.get().email.isEmpty()){
 		            flash("error", EMessages.get(EMessages.get("user.error.wrong_email")));
 	        	    return badRequest(createuser.render(form, new UserManager(ModelState.CREATE), breadcrumbs));
+				}else{
+					form.get().email = null;
 				}
 			}
     		

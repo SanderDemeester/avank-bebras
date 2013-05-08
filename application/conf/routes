@@ -124,8 +124,6 @@ GET			/manage/users/update		controllers.user.management.UserManagerController.up
 GET			/manage/users/save		controllers.user.management.UserManagerController.saveUser()
 GET			/manage/users/:id/edit		controllers.user.management.UserManagerController.editUser(id)
 GET			/manage/users/:id/remove	controllers.user.management.UserManagerController.removeUser(id)
-POST			/manage/users/:id/edit/info/submit		controllers.user.management.UserManagerController.changeInformation(id)
-POST			/manage/users/:id/edit/passw/submit		controllers.user.management.UserManagerController.changePassword(id)
 
 # Classes
 
