@@ -162,7 +162,7 @@ public class QuestionController extends EController{
         try {
             form.get().fixServer();
             Server server = form.get().server;
-            server.sendFile(form.get().officialid, submit.getFile(), userID);
+            server.sendFile(Integer.toString(form.get().id), submit.getFile(), userID);
         } catch (Exception e) {
             flash("error", "An error occured: "+e.getMessage());
             return badRequest(approveQuestionForm.render(form, manager, breadcrumbs, userID, file));
