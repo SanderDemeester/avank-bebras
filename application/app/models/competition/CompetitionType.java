@@ -1,13 +1,9 @@
 package models.competition;
 
-import com.avaje.ebean.Ebean;
 import com.avaje.ebean.annotation.EnumValue;
 import models.EMessages;
-import models.dbentities.ClassGroup;
-import models.user.AuthenticationManager;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 
 /**
  * An enumeration of contests types.
