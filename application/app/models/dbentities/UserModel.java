@@ -128,6 +128,7 @@ public class UserModel extends ManageableModel implements Listable{
     public String hash;
     public String telephone;
     public String address;
+    public String reset_token;
 
     @Override
 	public String getID() {
