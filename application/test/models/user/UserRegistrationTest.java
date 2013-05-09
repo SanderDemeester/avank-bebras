@@ -40,7 +40,7 @@ public class UserRegistrationTest extends ContextTest{
 				);
 
 		assertThat(status(result)).isEqualTo(200);
-		assertThat(contentAsString(result)).contains("Your Bebras ID is: jjones.");
+		assertThat(contentAsString(result)).contains("Your Bebras ID is: <strong>jjones</strong>");
 		assertThat(contentAsString(result)).contains("You may login with your ID and password.");
 
 		result = callAction(
@@ -82,7 +82,7 @@ public class UserRegistrationTest extends ContextTest{
 				controllers.routes.ref.UserController.register(),fakeRequest().withFormUrlEncodedBody(map3)
 				);
 		assertThat(status(result)).isEqualTo(400);
-		assertThat(contentAsString(result)).contains("Invalid email addres.");
+		assertThat(contentAsString(result)).contains("Invalid email address.");
 
 
 		Map<String, String> map4 = new HashMap<String,String>();

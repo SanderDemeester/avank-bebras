@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import controllers.CommonHeaders;
+
 import models.EMessages;
 import models.data.Link;
 import play.GlobalSettings;
 import play.mvc.Http;
+import play.mvc.With;
 import play.mvc.Http.Context;
 import play.mvc.Http.Request;
 import play.mvc.Http.RequestHeader;
@@ -17,6 +20,7 @@ import play.mvc.Result;
 /**
  * @author Sander Demeester, Ruben Taelman
  */
+@With(CommonHeaders.class)
 public class Global extends GlobalSettings{
 
     private static List<Link> breadcrumbs = new ArrayList<Link>();

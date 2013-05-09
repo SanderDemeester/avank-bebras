@@ -13,6 +13,10 @@ app.signUp = Registreer
 app.signIn = Log in
 app.signOut = Log uit
 app.mimic = nabootsen
+app.welcome = Welkom terug {0}!
+app.overview = Overzicht
+app.dashboard = Start
+app.getStarted = Kies een van de links hiernaast om te beginnen.
 
 # Error
 notFound.title = Oeps!
@@ -26,6 +30,7 @@ error.date = Kon datum niet verwerken.
 error.login = Ongeldige login poging.
 error.invalid_symbols = Input bevat foutieve tekens.
 error.invalid_email = Geen geldig email addres.
+error.invalid_id = Geen geldig id.
 error.wrong_date_time = Tijd reizer?
 error.invalid_date = Geen geldig datum formaat, gebruik (yyyy/mm/dd).
 error.no_password = Geen password.
@@ -178,7 +183,7 @@ register.password = Wachtwoord
 register.confirm_password = Bevestig password
 register.create_account = Maak account
 register.bebras_id_message = Uw Bebras ID is: 
-register.inlog_message = U kan inloggen me uw ID en wachtwoord.
+register.inlog_message = U kan inloggen met uw ID en wachtwoord.
 register.title = Registreer
 register.same_email = Er is al een gebruiker met het zelfde email addres.
 register.giveinfo = Geef uw Bebras ID en wachtwoord in.
@@ -186,6 +191,42 @@ register.password_mismatch = Wachtwoorden zijn niet aan elkaar gelijk.
 register.Male = Man
 register.Female = Vrouw
 register.Other = Andere
+
+# Forgot pwd
+forgot_pwd.no_teacher = Er is geen leerkracht geasocieerd met uw huidige klass, wachtwoord reset is niet mogelijk
+forgot_pwd.no_classgroup = Er is geen klas geasocieerd met uw account, wachtwoord reset is niet mogelijk
+forgot_pwd.forgot_pwd = Wachtwoord vergeten
+forgot_pwd.id = Bebras-ID
+forgot_pwd.email = E-mail
+forgot_pwd.submit = Verzoek reset wachtwoord
+forgot_pwd.success = Wachtwoord succesvol gereset.
+forgot_pwd.notsent = Er is een fout opgetreden, de e-mail kon niet verstuurd worden.
+forgot_pwd.mail = Er werd een e-mail verzonden naar het opgegeven adres.
+forgot_pwd.mail_sent = Er werd een nieuw wachtwoord aangevraagd voor gebruiker {0} op Avank-Bebras. Ga naar deze link {1} om het wachtwoord opnieuw in te stellen.
+forgot_pwd.mail_subject = Wachtwoord resetten
+forgot_pwd.email_blank = Laat leeg als u geen e-mailadres heeft
+forgot_pwd.reset_success = Wachtwoord is met succes opnieuw ingesteld
+forgot_pwd.reset_fail = Wachtwoord opnieuw instelling is mislukt
+forgot_pwd.teachermail = Uw leerling(e) {0} heeft een nieuw wachtwoord aangevraagd voor Avank-Bebras. Ga naar deze link {1} om het wachtwoord opnieuw in te stellen.
+forgot_pwd.teachersubject = Wachtwoord van leerling(e) resetten
+
+# Edit pwd
+edit_pwd.edit_pwd = Wachtwoord veranderen
+edit_pwd.current_pwd = Huidig wachtwoord
+edit_pwd.new_pwd = Nieuw wachtwoord
+edit_pwd.confirm_new_pwd = Herhaal nieuw wachtwoord
+edit_pwd.submit = Bevestigen
+edit_pwd.success = Wachtwoord veranderd.
+
+# Reset pwd
+reset_pwd.title = Wachtwoord resetten
+reset_pwd.id = Bebras-ID
+reset_pwd.new = Nieuw wachtwoord
+reset_pwd.submit = Ok
+
+# Personal Info
+pers_info.pers_info = Profiel
+pers_info.edit = Bewerk profiel
 
 #faq
 faq.title = Veel Gestelde Vragen
@@ -402,6 +443,7 @@ classes.add.nograde = Er is geen level met die naam.
 classes.add.error = Er is iets misgelopen met de databank. Probeer opnieuw (later).
 classes.edit = Pas een klas aan.
 
+classes.import = Importeer een klas
 classes.import.classnotexist = Er is geen klas met dit ID.
 classes.import.classrecordwhileaddingtoexisting = U bent studenten aan het toevoegen aan een bestaande klas. CLASS records zullen genegeerd worden.
 classes.import.usernotexist = Er is geen gebruiker met dit ID.
@@ -417,8 +459,18 @@ classes.import.info.classinvalid = Er is geen klas met dat ID.
 classes.import.info.classstart = Begin klas record:
 classes.import.info.existstudent = Bestaande studenten:
 classes.import.info.newstudent = Nieuwe studenten:
-classes.import.error.savefail = Er is iets misgelopen met het opslaan. Misschien hebt u te lang gewacht? De data wordt verwijderd na een aantal uren. 
+classes.import.error.savefail = Er is iets misgelopen met het opslaan. Misschien hebt u te lang gewacht? De data wordt verwijderd na een aantal uren. Of er heeft ondertussen iemand een van de emailadressen geregistreerd. Of misschien heeft u meerdere keren hetzelfde emailadres gebruikt in het bestand.
 classes.import.error.postfail = Er is iets misgelopen met het inlezen van het XLSX bestand. Bent u zeker dat het geldig was? Controleer de documentatie.
+
+classes.pupil.classes.list = Lijst van klassen
+classes.pupil.classes.current = Jouw huidige klas
+classes.pupil.classes.previous = Jouw vorige klassen
+classes.pupil.classes.form.id = id
+classes.pupil.classes.form.name = Naam
+classes.pupil.classes.form.schoolid = School ID
+classes.pupil.classes.form.teacherid = Leraar ID
+classes.pupil.classes.form.grade = Niveau
+classes.pupil.classes.form.expirationdate = Vervallingsdatum
 
 
 # User
@@ -460,3 +512,8 @@ contact.requestupgrade.noemail = Er is geen email-adres verbonden met uw account
 contact.upgraderequest.subject = [NL] Upgrade request
 contact.requestupgrade.notimage = Het opgeladen bestand is geen afbeelding.
 contact.requestupgrade.explanation = Hier kunt u een aanvraag indienen om uw account up te graden naar een leraar account. Gelieve een scan van uw lerarenkaart up te loaden. Misbruik van dit formulier zal leiden tot het blokkeren van uw account.
+
+# Other user
+otheruser.view = View user
+otheruser.block = Blokkeer
+otheruser.block.date = Blokkeer tot (leeg laten indien u niet wil blokkeren)

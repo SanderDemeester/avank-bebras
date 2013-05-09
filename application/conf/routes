@@ -14,7 +14,11 @@ GET		/signup						controllers.UserController.signup()
 POST	/signup 					controllers.UserController.register()
 
 # Login
-GET		/login_validate				controllers.UserController.validate_login(id, password)
+GET		/login_validate			controllers.UserController.validate_login(id, password)
+GET     /forgotPwd          	controllers.user.ResetPasswordController.forgotPwd()
+POST    /forgotPwd          	controllers.user.ResetPasswordController.forgotPwdSendMail()
+GET     /reset_password  		controllers.user.ResetPasswordController.receivePasswordResetToken(token)
+POST	/reset_password			controllers.user.ResetPasswordController.resetPassword()
 
 # Mimic
 GET		/mimic						controllers.UserController.mimic()			
@@ -106,11 +110,12 @@ GET     /assets/img/glyphicons-halflings-white.png      controllers.Assets.at(pa
 GET     /assets/img/glyphicons-halflings.png            controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings.png")
 
 # Settings
-GET			/settings			controllers.user.PersonalPageController.show(tab:Int ?= 0)
+GET			/settings			        controllers.user.PersonalPageController.show(tab:Int ?= 0)
 POST		/settings/submit			controllers.user.PersonalPageController.changeInformation()
 GET			/settings/editinfo			controllers.user.PersonalPageController.show(tab:Int ?= 1)
 GET			/settings/passwedit			controllers.user.PersonalPageController.show(tab:Int ?= 2)
-GET			/settings/:id			controllers.user.PersonalPageController.show(id:Int)
+POST		/settings/passwedit			controllers.user.PersonalPageController.changePassword()
+GET			/settings/:id			    controllers.user.PersonalPageController.show(id:Int)
 
 # Classes
 
@@ -145,8 +150,17 @@ GET		/classes/view/:id/old			controllers.classgroups.ClassPupilController.viewOl
 GET		/statistics					controllers.statistics.Statistics.show()
 POST	/statistics					controllers.statistics.Statistics.show()
 
+# Classes (views of the pupils)
+GET		/pclasses/view				controllers.classgroups.pupilview.PupilClassController.viewClasses(p:Int ?=0, s ?= "name", o ?= "asc", f ?= "")
+
 # Contact form
 GET		/contact			controllers.contactform.ContactFormController.showContactForm()
 POST		/contact/			controllers.contactform.ContactFormController.saveContactForm()
 GET		/upgrade			controllers.contactform.RequestTeacherController.showForm()
 POST		/upgrade			controllers.contactform.RequestTeacherController.upload()
+
+# Other users
+
+GET		/user/:id			controllers.user.OtherUserController.show(id)
+GET		/user/:id/block			controllers.user.BlockController.show(id)
+POST		/user/:id/block/		controllers.user.BlockController.block(id)

@@ -12,7 +12,7 @@ import models.data.Link;
  * @author Ruben Taelman
  * @author Felix Van der Jeugt
  */
-public class Role {
+public class Role implements Comparable<Role>{
 
 
     /* ====================================================================== *\
@@ -21,7 +21,7 @@ public class Role {
 
     // Mimicing
     public static Role MIMIC = new Role("Mimick user",
-    		new Link("links.mimic","/mimic")
+        new Link("links.mimic","/mimic")
     );
 
     // Anon
@@ -75,13 +75,13 @@ public class Role {
     );
 
     public static Role MANAGECLASSES = new Role(
-	    "classes.list",
-	    new Link("classes.list", "/classes")
+        "classes.list",
+        new Link("classes.list", "/classes")
     );
 
     // Contest management
     public static Role MANAGECONTESTS = new Role(
-        EMessages.get("links.contestmanager.title"),
+        "links.contestmanager.title",
         new Link("links.contestmanager.overview", "/contests")
     );
 
@@ -90,8 +90,12 @@ public class Role {
         "statistics.title",
         new Link("links.statistics", "/statistics")
     );
-    public static Role CLASSSTATS = new Role();
-    public static Role PERSONALSTATS = new Role();
+    
+    //Classes view for pupils
+    public static Role PUPILCLASSVIEW = new Role(
+        "classes.pupil.classes.list",
+        new Link("classes.pupil.classes.list","/pclasses/view")
+    );
 
 
     /* ====================================================================== *\
@@ -151,6 +155,13 @@ public class Role {
      */
     public List<Link> pages() {
         return pages;
+    }
+
+    @Override
+    public int compareTo(Role o) {
+        if(this.mtitle == null) return -1;
+        if(o.mtitle == null) return 1;
+        return this.mtitle.compareTo(o.mtitle);
     }
 
 }

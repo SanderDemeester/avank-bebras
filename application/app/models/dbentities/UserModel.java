@@ -1,6 +1,7 @@
 package models.dbentities;
 
 import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -31,7 +32,7 @@ import models.EMessages;
 @Table(name="users")
 public class UserModel extends ManageableModel implements Listable{
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     @Id
     public String id;
@@ -48,6 +49,7 @@ public class UserModel extends ManageableModel implements Listable{
     public String telephone;
     public String address;
     public String email;
+    public String reset_token;
 
     @Enumerated(EnumType.STRING)
     public Gender gender;
@@ -55,7 +57,7 @@ public class UserModel extends ManageableModel implements Listable{
     @Enumerated(EnumType.STRING)
     public UserType type;
 
-    public boolean active;
+    public Date blockeduntil;
 
     @Column(name="class")
     public Integer classgroup;
@@ -75,7 +77,7 @@ public class UserModel extends ManageableModel implements Listable{
         this.email = email;
         this.gender = gender;
         this.preflanguage = preflanguage;
-        active = true;
+        this.blockeduntil = null;
         EMessages.setLang(preflanguage);
     }
 
@@ -107,7 +109,7 @@ public class UserModel extends ManageableModel implements Listable{
 				gender.toString(),
 				convertDate(birthdate),
 				preflanguage,
-				Boolean.toString(active)				
+				DateFormatter.formatDate(this.blockeduntil)				
 		};		
 		return res;
 	}
@@ -123,5 +125,15 @@ public class UserModel extends ManageableModel implements Listable{
 	
 	private String convertDate(Date d){
 		return DateFormatter.formatDate(d);
+	}
+	
+	/**
+	 * 
+	 * @return whether the user is currently blocked
+	 */
+	public boolean isCurrentlyBlocked(){
+		if(this.blockeduntil==null) return false;
+		Date today = Calendar.getInstance().getTime();
+		return !today.before(this.blockeduntil);
 	}
 }
