@@ -86,6 +86,12 @@ public class Role implements Comparable<Role>{
         new Link("links.contestmanager.create", "/contests/new/contest")
     );
 
+    // Contest view
+    public static Role VIEWCONTESTS = new Role(
+        "links.contestmanager.title",
+        new Link("links.contestmanager.overview", "/contests")
+    );
+
     // Contest taken
     public static Role TAKINGCONTESTS = new Role(
         "links.contesttaking.title",

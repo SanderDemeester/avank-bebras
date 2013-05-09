@@ -33,10 +33,11 @@ public class CompetitionController extends EController {
 
     /**
      * Check if the current user is authorized for this editor
+     * @param role the role the user has to have
      * @return is the user authorized
      */
-    private static boolean isAuthorized() {
-        return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGECONTESTS);
+    private static boolean isAuthorized(Role role) {
+        return AuthenticationManager.getInstance().getUser().hasRole(role);
     }
 
     /**
@@ -78,7 +79,7 @@ public class CompetitionController extends EController {
      * @return index page
      */
     public static Result index(int page, String orderBy, String order, String filter){
-        if (!isAuthorized()) return ok(noaccess.render(defaultBreadcrumbs()));
+        if (! (isAuthorized(Role.MANAGECONTESTS) || isAuthorized(Role.VIEWCONTESTS)) ) return ok(noaccess.render(defaultBreadcrumbs()));
         CompetitionManager competitionManager = new CompetitionManager(ModelState.READ, orderBy, "");
         competitionManager.setOrder(order);
         competitionManager.setOrderBy(orderBy);
@@ -93,7 +94,7 @@ public class CompetitionController extends EController {
      * @return create contest page
      */
     public static Result create(){
-        if (!isAuthorized()) return ok(noaccess.render(defaultBreadcrumbs()));
+        if (!isAuthorized(Role.MANAGECONTESTS)) return ok(noaccess.render(defaultBreadcrumbs()));
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("competition.create.breadcrumb"), "/contests/create"));
         Form<CompetitionModel> form = form(CompetitionModel.class).bindFromRequest();
@@ -107,7 +108,7 @@ public class CompetitionController extends EController {
      * @return create question set page
      */
     public static Result save(){
-        if (!isAuthorized()) return ok(noaccess.render(defaultBreadcrumbs()));
+        if (!isAuthorized(Role.MANAGECONTESTS)) return ok(noaccess.render(defaultBreadcrumbs()));
         Form<CompetitionModel> form = form(CompetitionModel.class).bindFromRequest();
         if(form.hasErrors()) {
             List<Link> breadcrumbs = defaultBreadcrumbs();
@@ -167,7 +168,7 @@ public class CompetitionController extends EController {
      * @return redirect to view contest page.
      */
     public static Result updateCompetition(String contestid){
-        if (!isAuthorized()) return ok(noaccess.render(defaultBreadcrumbs()));
+        if (!isAuthorized(Role.MANAGECONTESTS)) return ok(noaccess.render(defaultBreadcrumbs()));
         CompetitionManager competitionManager = new CompetitionManager(ModelState.UPDATE, "name", contestid);
         QuestionSetManager questionSetManager = getQuestionSetManager(ModelState.READ, "grade", "", "", contestid);
         Form<CompetitionModel> form = form(CompetitionModel.class).fill(competitionManager.getFinder().byId(contestid)).bindFromRequest();
@@ -208,7 +209,7 @@ public class CompetitionController extends EController {
      * @return overview page for a single contest
      */
     public static Result viewCompetition(String contestid, int page, String orderBy, String order, String filter){
-        if (!isAuthorized()) return ok(noaccess.render(defaultBreadcrumbs()));
+        if (! (isAuthorized(Role.VIEWCONTESTS) || isAuthorized(Role.MANAGECONTESTS)) ) return ok(noaccess.render(defaultBreadcrumbs()));
         CompetitionManager competitionManager = new CompetitionManager(ModelState.UPDATE, "", contestid);
         Form<CompetitionModel> form = form(CompetitionModel.class).bindFromRequest().fill(competitionManager.getFinder().byId(contestid));
         List<Link> breadcrumbs = defaultBreadcrumbs();
@@ -227,7 +228,7 @@ public class CompetitionController extends EController {
      * @return redirect to contest index page.
      */
     public static Result removeCompetition(String contestid){
-        if (!isAuthorized()) return ok(noaccess.render(defaultBreadcrumbs()));
+        if (!isAuthorized(Role.MANAGECONTESTS)) return ok(noaccess.render(defaultBreadcrumbs()));
         // remove all question sets in this contest from questionsets table
         QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.DELETE, contestid, 0);
         List<QuestionSetModel> questionSetModels = questionSetManager.getFinder().where().ieq("contid", contestid).findList();
@@ -248,7 +249,7 @@ public class CompetitionController extends EController {
      * @return redirect to the contest overview page
      */
     public static Result removeQuestionSet(int qsid, String contestid){
-        if (!isAuthorized()) return ok(noaccess.render(defaultBreadcrumbs()));
+        if (!isAuthorized(Role.MANAGECONTESTS)) return ok(noaccess.render(defaultBreadcrumbs()));
         // remove all questions in this question set from questionsetquestions table
         QuestionSetQuestionManager questionSetQuestionManager = new QuestionSetQuestionManager(ModelState.DELETE, qsid);
         List<QuestionSetQuestion> questions = questionSetQuestionManager.getFinder().where().eq("qsid", qsid).findList();
