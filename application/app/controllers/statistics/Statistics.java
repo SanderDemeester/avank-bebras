@@ -19,6 +19,8 @@ import models.statistics.populations.SinglePopulation;
 import models.statistics.populations.PopulationFactory;
 import models.statistics.populations.PopulationChooser;
 import models.statistics.populations.PopulationFactoryException;
+import models.statistics.statistics.Statistic;
+import models.statistics.statistics.StatisticFactory;
 
 import views.html.statistics.statistics;
 
@@ -36,7 +38,10 @@ public class Statistics extends EController {
     }
 
     /** Display the main statistics page. */
-    public static Result show() {
+    public static Result show(String questionorset, Integer id) {
+        GroupForm gf = form(GroupForm.class).bindFromRequest().get();
+
+        System.out.println(gf.statistic);
 
         // Open the population chooser for the logged in user.
         PopulationChooser populationChooser =
@@ -45,7 +50,6 @@ public class Statistics extends EController {
             );
 
         // Derive the selected populations from the POST data.
-        GroupForm gf = form(GroupForm.class).bindFromRequest().get();
         List<Population> populations = new ArrayList<Population>();
         if(gf.colours != null)
         for(int i=0; i < gf.colours.size(); i++) {
@@ -64,13 +68,30 @@ public class Statistics extends EController {
         // those he already selected.
         populations = populationChooser.filter(populations);
 
-        return ok(statistics.render(populations, populationChooser, breadcrumbs));
+        // Reproduce the selected statistic.
+        Statistic statistic = null;
+        if(gf.statistic != null) {
+            statistic = StatisticFactory.instance().create(gf.statistic);
+            Statistic filter;
+            if(gf.filters != null) for(int i = 0; i < gf.filters.size(); i++) {
+                filter = StatisticFactory.instance().create(gf.filters.get(i));
+                if(gf.conditions != null) {
+                    for(String j : gf.conditions.get(i)) filter.addConditions(j);
+                }
+                statistic.addFilters(filter);
+            }
+        }
+
+        return ok(statistics.render(populations, populationChooser, statistic, breadcrumbs));
     }
 
     public static class GroupForm {
         @Valid public List<String> colours;
         @Valid public List<String> types;
         @Valid public List<String> ids;
+        @Valid public String statistic;
+        @Valid public List<String> filters;
+        @Valid public List<List<String>> conditions;
         public GroupForm() {}
     }
 
