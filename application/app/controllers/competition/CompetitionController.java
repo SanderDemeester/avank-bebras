@@ -233,6 +233,10 @@ public class CompetitionController extends EController {
         QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.DELETE, contestid, 0);
         List<QuestionSetModel> questionSetModels = questionSetManager.getFinder().where().ieq("contid", contestid).findList();
         for (QuestionSetModel questionSetModel : questionSetModels){
+            List<QuestionSetQuestion> questions = Ebean.find(QuestionSetQuestion.class).where().eq("qsid", questionSetModel.id).findList();
+            for (QuestionSetQuestion questionSetQuestion : questions){
+                questionSetQuestion.delete();
+            }
             questionSetModel.delete();
         }
         // remove competition
