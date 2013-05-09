@@ -160,6 +160,8 @@ languages.language = Language
 languages.languages = Languages
 languages.en = English
 languages.nl = Dutch
+languages.fr = French
+languages.de = German
 
 # Login
 redirect_message = You will be redirected to your homepage shortly.
