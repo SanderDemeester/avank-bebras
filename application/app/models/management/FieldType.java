@@ -1,5 +1,6 @@
 package models.management;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,12 +13,14 @@ import java.util.Map;
 public enum FieldType {
     TEXT,
     CHECKBOX,
-    LIST;
+    LIST,
+    DATE;
 
     private static final Map<Class<?>, FieldType> TYPES = new HashMap<Class<?>, FieldType>();
     static {
         TYPES.put(boolean.class, CHECKBOX);
         TYPES.put(Listable.class, LIST);
+        TYPES.put(Date.class, DATE);
     }
 
     /**
