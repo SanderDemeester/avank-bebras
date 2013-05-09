@@ -64,6 +64,8 @@ links.datamanager.grades = Verwalten der Schüler-Klasse
 links.contestmanager.title = Wettbewerb-Verwaltung
 links.contestmanager.overview = Wettbewerb-Übersicht
 links.mimic = Benutzer zu imitieren
+links.manageusers.users = Benutzer zeigen
+links.manageusers.title = Benutzerverwaltung
 
 # Forms
 forms.cancel = Abbrechen
@@ -497,9 +499,54 @@ user.pie.editintro = Meine Informationen bearbeiten
 user.pie.intro = Unten können Sie Ihre persönlichen Daten bearbeiten.
 user.error.no_login = Ihre persönlichen Daten sind nicht verfügbar! Bitte stellen Sie sicher, dass Sie angemeldet sind.
 user.error.wrong_email = Angesichts E-Mail ist nicht korrekt!
+user.error.sameid = Kann nicht entfernen / bearbeiten Sie selbst!
+user.error.passwnotequal = Die beiden eingegeben Passwörter sind nicht gleich!
+user.error.blockdateinvalid = Der Block Datum muss in der Zukunft liegen!
 user.Male = Männchen
 user.Female = Weiblich
 user.Other = Andere
+user.ADMINISTRATOR = Administrator
+user.ORGANIZER = Organisator
+user.TEACHER = Lehrer
+user.AUTHOR = Verfasser
+user.PUPIL = Schüler
+user.INDEPENDENT = Unabhängige
+user.ANON = Anonymer Benutzer
+user.PUPIL_OR_INDEP = Schüler
+
+# User management
+user.management.others = Benutzer
+user.management.list = Registrierte Nutzer
+user.management.welcome = Im folgenden können Sie hinzufügen\/bearbeiten\/entfernen registrierte Benutzer.
+user.management.edituser.userinfo = Benutzerinformationen
+user.management.edituser.partuserinfo = Benutzerinformationen zu ändern
+user.management.edituser.passwinfo = Passwort
+user.management.edituser.partpasswinfo = Passwort ändern
+user.management.edit = Informationen ändern
+user.management.change = Gelten
+user.management.type = Typ:
+user.management.create = Neuen Benutzer erstellen
+users.form.id = ID
+users.form.type = Typ
+users.form.wrap_type = Typ
+users.form.name = Name
+users.form.email = E-Mail
+users.form.birthdate = Geburtstag
+users.form.wrap_gender = Geschlecht
+users.form.wrap_language = Sprache
+users.form.registrationdate = Registrationdate
+users.form.blockeduntil = Blockiert, bis die
+users.form.comment = Kommentar
+users.form.passw = Passwort
+users.form.passwrep = Passwort wiederholen
+users.form.warning = Warnung!
+users.form.passwedit = Lassen Sie das Kennwortfeld leer, wenn Sie nicht das Kennwort ändern möchten! 
+users.form.block = Lassen Sie das Block-Feld leer, wenn Sie nicht, dass der Benutzer sperren möchten!
+users.title.add = Neuen Benutzer erstellen
+users.title.edit = Benutzer bearbeiten
+user.success.added = Benutzer {0} wurde erfolgreich erstellt.
+user.success.edited = Benutzer {0} wurde erfolgreich bearbeitet
+user.success.removed = Benutzer {0} wurde erfolgreich entfernt.
 
 # Contact form
 contact.formtitle = Kontakt-Formular

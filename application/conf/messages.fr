@@ -64,6 +64,8 @@ links.datamanager.grades = Gérer les notes de l'étudiant
 links.contestmanager.title = Gestion de concours
 links.contestmanager.overview = Vue d'ensemble des concours
 links.mimic = Imiter l'utilisateur
+links.manageusers.users = Afficher les utilisateurs
+links.manageusers.title = Gestion des utilisateurs
 
 # Forms
 forms.cancel = Annuler
@@ -497,9 +499,54 @@ user.pie.editintro = Modifier mes informations
 user.pie.intro = Ci-dessous, vous pouvez modifier vos informations personnelles.
 user.error.no_login = Vos renseignements personnels ne soient pas disponibles ! S'il vous plaît assurez-vous que vous êtes connecté.
 user.error.wrong_email = Compte tenu de l'E-Mail n'est pas correct !
+user.error.sameid = Impossible de supprimer / modifier vous-même!
+user.error.passwnotequal = Les deux codes donnés ne se valent pas!
+user.error.blockdateinvalid = La date de bloc doit être une date future!
 user.Male = Mâle
 user.Female = Femelle
 user.Other = Autres
+user.ADMINISTRATOR = Administrateur
+user.ORGANIZER = Organisateur
+user.TEACHER = Enseignant
+user.AUTHOR = Auteur
+user.PUPIL = Élève
+user.INDEPENDENT = Independent
+user.ANON = Utilisateur Anonyme
+user.PUPIL_OR_INDEP = Étudiant
+
+# User management
+user.management.others = Utilisateurs
+user.management.list = Utilisateurs inscrits
+user.management.welcome = Ci-dessous, vous pouvez ajouter\/éditer\/supprimer registred utilisateurs.
+user.management.edituser.userinfo = Informations de l'utilisateur
+user.management.edituser.partuserinfo = Modifier les informations de l'utilisateur
+user.management.edituser.passwinfo = Mot de passe
+user.management.edituser.partpasswinfo = Changer mot de passe
+user.management.edit = Informations relatives aux modifications
+user.management.change = Appliquer
+user.management.type = Type :
+user.management.create = Créer un nouvel utilisateur
+users.form.id = ID
+users.form.type = Type
+users.form.wrap_type = Type
+users.form.name = Nom
+users.form.email = Messagerie
+users.form.birthdate = Anniversaire
+users.form.wrap_gender = Sexe
+users.form.wrap_language = Langue
+users.form.registrationdate = Registrationdate
+users.form.blockeduntil = Bloqué jusqu'au
+users.form.comment = Commentaire
+users.form.passw = Mot de passe
+users.form.passwrep = Répétez le mot de passe
+users.form.warning = Mise en garde !
+users.form.passwedit = Laissez le champ mot de passe vide si vous ne voulez pas modifier le mot de passe ! 
+users.form.block = Laissez le champ bloc vide si vous ne voulez pas bloquer l'utilisateur !
+users.title.add = Créer un nouvel utilisateur
+users.title.edit = Modifier utilisateur
+user.success.added = Utilisateur : {0} a été créé avec succès
+user.success.edited = Utilisateur : {0} a été modifié avec succès
+user.success.removed = Utilisateur : {0} a été supprimé avec succès
 
 # Contact form
 contact.formtitle = Formulaire de contact
