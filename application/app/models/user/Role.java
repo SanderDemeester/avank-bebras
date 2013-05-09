@@ -97,16 +97,13 @@ public class Role implements Comparable<Role>{
         new Link("links.contestmanager.overview", "/contests")
     );
 
-<<<<<<< HEAD
-    // Contest taken
+    // Contest taking
     public static Role TAKINGCONTESTS = new Role(
         "links.contesttaking.title",
         new Link("links.contesttaking.overview", "/available-contests"),
         new Link("links.contesttaking.history", "/available-contests/history")
     );
     
-=======
->>>>>>> abc0ab56b220e4a3576e678c927a2089dfedce78
     //Classes view for pupils
     public static Role PUPILCLASSVIEW = new Role(
     		"classes.pupil.classes.list",
