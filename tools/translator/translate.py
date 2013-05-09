@@ -29,7 +29,8 @@ def translate(input, langcode_from, langcode_to):
     headers={'Authorization': 'Bearer '+oauth_junk['access_token']}
     translation_url = 'http://api.microsofttranslator.com/V2/Ajax.svc/Translate?'
     translation_result = requests.get(translation_url+urllib.urlencode(translation_args),headers=headers)
-    return translation_result.content.replace("\"","")
+    translation = translation_result.content.replace("\"","")
+    return translation[3:] # removes three weird bytes.
     
 # Check CL arguments
 if len(sys.argv) != 4:
