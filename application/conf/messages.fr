@@ -63,11 +63,7 @@ links.datamanager.diffs = ﻿Gérer les niveaux de Difficulté
 links.datamanager.grades = ﻿Gérer les notes de l'étudiant
 links.contestmanager.title = ﻿Gestion de concours
 links.contestmanager.overview = ﻿Vue d'ensemble des concours
-links.contestmanager.create = ﻿Créer nouveau concours
 links.mimic = ﻿Imiter l'utilisateur
-links.contesttaking.title = ﻿Concours
-links.contesttaking.overview = ﻿Concours disponibles
-links.contesttaking.history = ﻿Histoire
 
 # Forms
 forms.cancel = ﻿Annuler
@@ -115,8 +111,6 @@ question.editor.answerOptionsInfo = ﻿Ajouter des solutions de réponse possibl
 question.editor.addAnswerOption = ﻿Ajouter l'option de réponse
 question.editor.regexInfo = ﻿Entrez la réponse exacte à la question. Java-a accepté les expressions régulières sont également autorisées.
 question.editor.submitted = ﻿Votre question a été envoyée avec succès.
-question.editor.possibleAnswer = ﻿Une réponse possible
-question.editor.regex = ﻿Expression régulière
 
 question.editor.tabs.general = ﻿Générales
 question.editor.tabs.answers = ﻿Réponses
@@ -138,7 +132,6 @@ question.factory.error.noCorrectAnswers = ﻿Les réponses pour langue {0} ne co
 question.factory.error.moreThanOneCorrectAnswers = ﻿Les réponses pour langue {0} contiennent plusieurs bonnes réponses.
 question.factory.error.invalidRegex = ﻿Expressions régulières non valide trouvée dans langue {0}
 question.factory.error.invalidUpload = ﻿Votre téléchargement n'est pas valide
-question.factory.error.invalidID = ﻿ID non valide
 
 question.questionset.name = ﻿Jeux de question
 question.questionset.create.breadcrumb = ﻿Nouvelle série de question
@@ -146,7 +139,7 @@ question.questionset.create = ﻿Créer un nouvel ensemble de question !
 question.questionset.create.title = ﻿Créer ensemble de la question.
 question.questionset.create.step2 = ﻿Étape 2: Informations de jeu de la Question
 question.questionset.create.name = ﻿Nom de la nouvelle série de question :
-question.questionset.create.grade = ﻿Grade de la nouvelle série de question :
+question.questionset.create.level = ﻿Niveau de la nouvelle série de question :
 question.questionset.create.active = ﻿Cochez cette case pour faire la question de la valeur active.
 question.questionset.overview = ﻿Question définie la vue d'ensemble
 question.questionset.addquestion = ﻿Ajouter question pour définir
@@ -154,22 +147,21 @@ question.questionset.form.difficulty = ﻿Difficulté
 question.questionset.addquestion.title = ﻿Ajouter nouvelle question à l'ensemble de la question.
 question.questionset.addquestion.id = ﻿ID de la question :
 question.questionset.addquestion.brcr = ﻿Ajouter
-question.questionset.manager.form.grade = ﻿Grade
+question.questionset.manager.form.level = ﻿Niveau
 question.questionset.manager.form.name = ﻿Nom
 question.questionset.manager.form.active = ﻿Active
 question.questionset.overview.questions = ﻿Cet ensemble contient les questions suivantes :
 question.questionset.overview.basic = ﻿Modifier les informations de jeu de question.
 question.questionset.form.qid = ﻿Id de la question
 question.questionset.form.qsid = ﻿Question set id
-question.questionset.doublegrade = ﻿Le concours contient déjà une question sertie de la catégorie sélectionnée.
 
 # Languages
 languages.language = ﻿Langue
 languages.languages = ﻿Traduction
 languages.en = ﻿Anglais
 languages.nl = ﻿Néerlandais
-languages.fr = Français
-languages.de = Allemand
+languages.fr = ﻿Français
+languages.de = ﻿Allemand
 
 # Login
 redirect_message = ﻿Vous allez être redirigé vers votre page d'accueil sous peu.
@@ -271,7 +263,7 @@ management.add = ﻿Créer
 management.confirmDelete = ﻿Êtes-vous sûr de que vouloir supprimer cet enregistrement ?
 
 # competition
-competition.breadcrumb = ﻿Concours
+competition.name = ﻿Concours
 competition.create.breadcrumb = ﻿Nouveau concours
 competition.create = ﻿Créer un nouveau concours !
 competition.create.title = ﻿Créer des concours.
@@ -281,56 +273,19 @@ competition.create.type = ﻿Type de nouveau concours :
 competition.create.end = ﻿Heure de fin du concours de nouvel :
 competition.create.start = ﻿Heure de début du concours de nouvel :
 competition.create.active = ﻿Cochez cette case pour activer le concours.
-competition.create.duration = ﻿Durée du concours de nouvel (en minutes) :
 competition.manager.form.name = ﻿Nom
 competition.manager.form.type = ﻿Type
 competition.manager.form.active = ﻿Active
 competition.manager.form.starttime = ﻿Heure de début
 competition.manager.form.endtime = ﻿Heure de fin
 competition.manager.form.creator = ﻿Créateur
-competition.manager.form.duration = ﻿Durée (minutes)
 competition.view.edit = ﻿Modifier les informations de concours.
 competition.view.qs = ﻿Jeux de question pour ce concours :
 competition.edit = ﻿Éditer concours
 competition.edit.breadcrumb = ﻿Edit
 competition.overview = ﻿Présentation du concours.
 competition.overview.info = ﻿Sur cette page, vous pouvez afficher les concours qui sont ouverts pour vous. Vous pouvez créer de nouveaux concours ou de modifier un concours existant.
-competition.info.grades = ﻿Ce concours prend actuellement en charge les classes suivantes :
-competition.info.languages = ﻿Il conteste actuellement prend en charge les langues suivantes :
-competition.view.title = ﻿Concours
-competition.view.status = ﻿Statut
-competition.class.info = ﻿Il s'agit d'un concours restreint. Si vous voulez laisser vos élèves à ce concours, vous devrez inscrire leur classe.
-competition.class.button = ﻿Découvre des classes.
-competition.class.title = ﻿Classes de concours
-competition.class.breadcrumb = ﻿Classes
-competition.class.management.form.name = ﻿Nom de la classe
-competition.class.register.title = ﻿Nouvelle classe de Registre
-competition.class.register.breadcrumb = ﻿Nouvelle classe de Registre
-competition.class.register.pick = ﻿Choisissez une classe
-competition.class.register.error = ﻿La classe sélectionnée est déjà inscrite pour ce concours.
-competition.state.draft = ﻿Projet
-competition.state.active = ﻿Active
-competition.state.running = ﻿En cours d'exécution
-competition.state.finished = ﻿Fini
-competition.type.anonymous = ﻿Anonyme
-competition.type.restricted = ﻿Restreint
-competition.type.unrestricted = ﻿Sans restriction
 
-competitions.breadcrumb = ﻿Concours disponibles.
-competitions.title = ﻿Concours disponibles
-competitions.totake = ﻿Concours disponibles que vous pouvez prendre en ce moment.
-competitions.taken = ﻿Concours prises dans le passé
-competitions.grade.title = ﻿Veuillez choisir une catégorie préférée.
-competitions.grade = ﻿Grade
-competitions.grade.warning = ﻿Mise en garde !
-competitions.grade.info = ﻿Vous êtes sur le point de prendre un concours. Afin de sélectionner les questions appropriées, nous avons besoin de connaître votre niveau désiré. Veuillez sélectionner la catégorie que vous préférez
-competitions.grade.breadcrumb = ﻿Sélectionnez la catégorie
-
-competition.history.warning = ﻿Mise en garde !
-competition.history.info = ﻿Vous n'êtes actuellement pas connecté. Afin de suivre vos résultats et statistiques, vous devez être signé en.
-competition.history.title = ﻿Concours prises dans le passé
-competition.history.breadcrumb = ﻿Histoire
-competition.history.form.name = ﻿Nom
 
 # schools
 schools.title = ﻿Liste des écoles
@@ -362,9 +317,6 @@ servers.form.ftpport = ﻿Port FTP
 servers.form.ftpuser = ﻿Nom d'utilisateur FTP
 servers.form.ftppass = ﻿Mot de passe FTP
 servers.form.ftppath = ﻿Chemin d'accès FTP
-servers.form.is_http_secured = ﻿HTTP sécurisé
-servers.form.http_username = ﻿Nom d'utilisateur HTTP
-servers.form.http_password = ﻿Mot de passe HTTP
 servermanagement.servers.name = ﻿Serveurs
 servermanagement.servers.new = ﻿Nouveau serveur
 servermanagement.servers.server = ﻿Serveur
@@ -376,13 +328,11 @@ servers.success.edited = ﻿Serveur {0} a été modifié avec succès
 servers.success.removed = ﻿Serveur {0} a été supprimé avec succès
 
 # question management
-questions.preview = ﻿Aperçu
 questions.form.author = ﻿Auteur
 questions.form.officialid = ﻿Pièce d'identité officielle
 questions.form.path = ﻿??Chemin??
 questions.form.active = ﻿Active
 questions.form.server = ﻿Serveur
-questions.form.questionFileNotFound = ﻿Cette question est introuvable sur le serveur fourni ou n'est pas valide.
 question.questions.name = ﻿Questions
 question.questions.new = ﻿Nouvelle Question
 question.questions.list = ﻿Questions
@@ -550,48 +500,6 @@ user.error.wrong_email = ﻿Compte tenu de l'E-Mail n'est pas correct !
 user.Male = ﻿Mâle
 user.Female = ﻿Femelle
 user.Other = ﻿Autres
-
-# Competitions
-competition.name = ﻿Concours
-competition.submit = ﻿Envoyer
-competition.intro = ﻿Le concours a commencé ! Ne perdez pas trop de temps à lire ceci.
-competition.confirmSubmit = ﻿Êtes-vous certain de que vouloir soumettre vos réponses et de terminer la compétition ?
-competition.noInternet = ﻿Vous n'avez pas une connexion internet active !
-competition.timesUp = ﻿Temps vers le haut !
-competition.overview = ﻿Début
-competition.input.regex = ﻿Votre réponse
-competition.feedback = ﻿Vos commentaires
-competition.modal.submitting = ﻿Présentation
-competition.modal.ready = ﻿Vous êtes prêt !
-competition.modal.sendingAnswers = ﻿Envoi de réponses...
-competition.modal.error = ﻿Oups ! Quelque chose a mal tourné
-competition.modal.error.code = ﻿Donne le code suivant à un enseignant à proximité de soumettre vos réponses pour vous.
-competition.modal.error.orYouCan = ﻿Ou vous pouvez
-competition.modal.error.retry = ﻿Nouvelle tentative
-competition.modal.finished = ﻿Fini
-competition.modal.finished.text = ﻿Vous avez terminé avec succès ce concours !
-competition.modal.finished.return = ﻿Retour au début
-competition.modal.finished.showFeedback = ﻿Voir la rétroaction
-
-competition.run.submit.notStarted = ﻿Ce concours n'a pas encore été démarré, ou a déjà été terminé par l'organisateur.
-competition.run.submit.ok = ﻿Présentation a réussi.
-competition.run.submit.invalid = ﻿Réponses non valides.
-competition.run.finished = ﻿La compétition a été finie.
-
-competition.overview.button = ﻿Vue d'ensemble
-competition.overview.submitAnswers = ﻿Présenter les réponses de l'élève
-competition.overview.submitAnswers.info = ﻿Collez le code que vous avez copié de l'écran de l'élève dans ce textfield et cliquez sur « Soumettre ».
-competition.overview.stopCompetition = ﻿Arrêter le concours
-competition.overview.progress = ﻿Progrès
-competition.overview.timeLeft = ﻿Temps restant
-competition.overview.finished = ﻿Fini
-competition.overview.details = ﻿Détails
-competition.overview.id = ﻿ID
-competition.overview.questionSets = ﻿Jeux de question
-competition.overview.availableLanguages = ﻿Langues disponibles
-competition.overview.confirmFinish = ﻿Êtes-vous certain de que vouloir terminer ce concours ? Toutes les réponses non soumises seront perdues !
-competition.started.title = ﻿Concours n'est pas encore commencé
-competition.started.info = ﻿Le concours choisi n'est pas encore commencé. Please try again later.
 
 # Contact form
 contact.formtitle = ﻿Formulaire de contact
