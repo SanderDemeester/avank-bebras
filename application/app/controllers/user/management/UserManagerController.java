@@ -265,7 +265,7 @@ public class UserManagerController extends EController {
 			
     		def_model.gender = GenderWrap.getUserType(form.data().get("wrap_gender.id"));
     		def_model.type = UserTypeWrap.getUserType(form.data().get("wrap_type.id"));
-    		def_model.preflanguage = Language.getLangCode(form.data().get("wrap_language.id"));
+    		def_model.preflanguage = form.data().get("wrap_language.id");
     		def_model.comment = form.data().get("comment");
     		
         } catch (Exception e) {
@@ -393,7 +393,7 @@ public class UserManagerController extends EController {
     		form.get().id = bebrasID;
     		form.get().gender = GenderWrap.getUserType(form.data().get("wrap_gender.id"));
     		form.get().type = UserTypeWrap.getUserType(form.data().get("wrap_type.id"));
-    		form.get().preflanguage = Language.getLangCode(form.data().get("wrap_language.id"));
+    		form.get().preflanguage = form.data().get("wrap_language.id");
     		form.get().comment = form.data().get("comment");
     		
     		// save
