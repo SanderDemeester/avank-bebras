@@ -68,6 +68,8 @@ links.mimic = Mimic user
 links.contesttaking.title = Contests
 links.contesttaking.overview = Available contests
 links.contesttaking.history = History
+links.manageusers.users = Show users
+links.manageusers.title = User management
 
 # Forms
 forms.cancel = Cancel
@@ -168,6 +170,8 @@ languages.language = Language
 languages.languages = Languages
 languages.en = English
 languages.nl = Dutch
+languages.fr = French
+languages.de = German
 
 # Login
 redirect_message = You will be redirected to your homepage shortly.
@@ -545,9 +549,54 @@ user.pie.editintro = Edit my information
 user.pie.intro = Below you can edit your personal information.
 user.error.no_login = Your personal information is not available! Please make sure you are logged in.
 user.error.wrong_email = Given E-Mail is not correct!
+user.error.sameid = Cannot remove/edit yourself!
+user.error.passwnotequal = The two given passwords are not equal!
+user.error.blockdateinvalid = The block date must be a future date!
 user.Male = Male
 user.Female = Female
 user.Other = Other
+user.ADMINISTRATOR = Administrator
+user.ORGANIZER = Organizer
+user.TEACHER = Teacher
+user.AUTHOR = Author
+user.PUPIL = Pupil
+user.INDEPENDENT = Independent
+user.ANON = Anon
+user.PUPIL_OR_INDEP = Student
+
+# User management
+user.management.others = Users
+user.management.list = Registred users
+user.management.welcome = Below you can add/edit/remove registred users.
+user.management.edituser.userinfo = User information
+user.management.edituser.partuserinfo = Change user information
+user.management.edituser.passwinfo = Password
+user.management.edituser.partpasswinfo = Change password
+user.management.edit = Change information
+user.management.change = Apply
+user.management.type = Type:
+user.management.create = Create new user
+users.form.id = ID
+users.form.type = Type
+users.form.wrap_type = Type
+users.form.name = Name
+users.form.email = Email
+users.form.birthdate = Birthday
+users.form.wrap_gender = Gender
+users.form.wrap_language = Language
+users.form.registrationdate = Registrationdate
+users.form.blockeduntil = Blocked until
+users.form.comment = Comment
+users.form.passw = Password
+users.form.passwrep = Repeat password
+users.form.warning = Warning!
+users.form.passwedit = Leave the password field empty if you don't want to change the password! 
+users.form.block = Leave the block field empty if you don't want to block the user!
+users.title.add = Create new user
+users.title.edit = Edit user
+user.success.added = User {0} was successfully created
+user.success.edited = User {0} was successfully edited
+user.success.removed = User {0} was successfully removed
 
 # Competitions
 competition.name = Competition

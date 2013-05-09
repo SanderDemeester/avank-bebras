@@ -70,6 +70,8 @@ links.mimic = Gebruiker nabootsen
 links.contesttaking.title = Competities
 links.contesttaking.overview = Beschikbare competities
 links.contesttaking.history = Geschiedenis
+links.manageusers.users = Toon gebruikers
+links.manageusers.title = Gebruikers beheer
 
 # Forms
 forms.cancel = Annuleer
@@ -169,6 +171,8 @@ languages.language = Taal
 languages.languages = Talen
 languages.en = Engels
 languages.nl = Nederlands
+languages.fr = Frans
+languages.de = Duits
 
 # Login
 redirect_message = U zal zodadelijk worden doorgestuurd naar uw startpagina.
@@ -539,9 +543,54 @@ user.pie.editintro = Bewerk mijn informatie
 user.pie.intro = Hieronder kan u uw persoonlijke informatie veranderen.
 user.error.no_login = Uw persoonlijke informatie is niet beschikbaar! U moet zich eerst aanmelden!
 user.error.wrong_email = Het E-Mail adres is niet correct!
+user.error.sameid = U kan niet uzelf aanpassen/verwijderen!
+user.error.passwnotequal = De twee ingegeven wachtwoorden komen niet overeen!
+user.error.blockdateinvalid = De blokkeerdatum moet in de toekomst liggen!
 user.Male = Man
 user.Female = Vrouw
 user.Other = Anders
+user.ADMINISTRATOR = Administrator
+user.ORGANIZER = Organisator
+user.TEACHER = Leerkracht
+user.AUTHOR = Auteur
+user.PUPIL = Leerling
+user.INDEPENDENT = Onafhankelijk
+user.ANON = Anoniem
+user.PUPIL_OR_INDEP = Student
+
+# User management
+user.management.others = Gebruikers
+user.management.list = Geregistreerde gebruikers
+user.management.welcome = Hieronder kan u geregistreerde gebruikers toevoegen/verwijderen/aanpassen.
+user.management.edituser.userinfo = Gebruikersinformatie
+user.management.edituser.partuserinfo = Gebruikersinformatie aanpassen
+user.management.edituser.passwinfo = Wachtwoord
+user.management.edituser.partpasswinfo = Wachtwoord aanpassen
+user.management.edit = Aanpassen gegevens
+user.management.change = Verander
+user.management.type = Type
+user.management.create = Maak nieuwe gebruiker
+users.form.id = ID
+users.form.type = Type
+users.form.wrap_type = Type
+users.form.name = Naam
+users.form.email = Email
+users.form.birthdate = Geboortedatum
+users.form.wrap_gender = Geslacht
+users.form.wrap_language = Taal
+users.form.registrationdate = Registratiedatum
+users.form.blockeduntil = Geblokkeerd tot
+users.form.comment = Commentaar
+users.form.passw = Wachtwoord
+users.form.passwrep = Herhaal wachtwoord
+users.form.warning = Waarschuwing!
+users.form.passwedit = Laat het wachtwoord veld leeg indien u het wachtwoord niet wenst aan te passen! 
+users.form.block = Laat het blokkeer veld leeg indien u de gebruiker niet wenst te blokkeren!
+users.title.add = Maak nieuwe gebruiker
+users.title.edit = Aanpassen gebruiker
+user.success.added = Gebruiker {0} is succesvol aangemaakt
+user.success.edited = Gebruiker {0} is succesvol aangepast
+user.success.removed = Gebruiker {0} is succesvol verwijderd
 
 # Competitions
 competition.name = Competitie

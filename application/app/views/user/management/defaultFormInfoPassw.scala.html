@@ -1,0 +1,205 @@
+@(modelForm: Form[_ <: models.management.ManageableModel], manager: models.management.Manager[_])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import models.EMessages
+@import models.management.FieldType
+@import views.html.commons.showflash
+@import controllers.user.management.UserManagerController
+
+@***************************************
+* Flash messages *
+***************************************@
+@showflash()
+
+	@if(!manager.isIgnoreErrors() && modelForm.hasErrors()) {
+		<div class="alert alert-error">
+			<strong>Error</strong> There seem to be some issues with the following fields:
+			<ul>
+			@for((k, v) <- modelForm.errors()) {
+				<li>@EMessages.get(manager.getMessagesPrefix() + ".form." + k)</li>
+			}
+			</ul>
+		</div>
+	}
+
+    <fieldset>
+        <br>
+        <div class="accordion" id="accordion1">
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
+                        <strong>@EMessages.get("user.management.edituser.partuserinfo")</strong>
+                    </a>
+                </div>
+               <div id="collapseOne" class="accordion-body collapse">
+                   <div class="accordion-inner">
+                       @for(field <- manager.getFieldNames()) {
+            @if(!field.charAt(0).equals('_')) { @* don't show hidden fields *@
+                @if(!manager.isFieldDisabled(field)) {
+                    @defining(manager.getFields().get(field)) { fType =>
+                        @fType match {
+                            case FieldType.TEXT => {
+                                @inputText(
+                                    modelForm(field),
+                                    '_label -> (EMessages.get(manager.getMessagesPrefix() + ".form." + field)+":"),
+                                    '_class -> "defaultFormElement",
+                                    '_showConstraints -> false
+                                )
+                            }
+                            case FieldType.CHECKBOX => {
+                                @checkbox(
+                                    modelForm(field),
+                                    '_label -> (EMessages.get(manager.getMessagesPrefix() + ".form." + field)+":"),
+                                    '_class -> "defaultFormElement",
+                                    '_showConstraints -> false
+                                )
+                            }
+                            case FieldType.LIST => {
+                                @select(
+                                    modelForm(field+".id"),
+                                    options(manager.getDummyField(field).asInstanceOf[models.management.Listable].options()),
+                                    '_id -> field,
+                                    '_label -> (EMessages.get(manager.getMessagesPrefix() + ".form." + field)+":"),
+                                    '_class -> "defaultFormElement",
+                                    '_showConstraints -> false
+                                )
+                            }
+                            case FieldType.DATE => {
+                                    @inputText(
+                                        modelForm(field),
+                                        '_label -> (EMessages.get(manager.getMessagesPrefix() + ".form." + field)+":"),
+                                        '_class -> "defaultFormElement",
+                                        '_showConstraints -> false,
+                                        '_id -> "datepick"
+                                    )       
+                            }
+                        }
+                    }
+                } else {
+                    <input type="hidden" name="@modelForm(field).name" value="@modelForm(field).value" />
+                }
+            }
+        }
+                   </div>
+               </div>
+            </div>
+       </div>	
+        
+        
+        
+        <div class="accordion" id="accordion2">
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                        <strong>@EMessages.get("user.management.edituser.partpasswinfo")</strong>
+                    </a>
+                </div>
+               <div id="collapseTwo" class="accordion-body collapse">
+                   <div class="accordion-inner">
+                               <div class="alert alert-block">
+  		                           <h4>@EMessages.get("users.form.warning")</h4>
+  		                           @EMessages.get("users.form.passwedit")
+  		                           <br>
+  		                           <br>
+                                   @inputText(
+                                       modelForm("password1"),
+                                       '_label -> (EMessages.get("users.form.passw")+":"),
+                                       '_class -> "defaultFormElement",
+                                       '_showConstraints -> false
+                                   )
+                                   <br>
+                                   @inputText(
+                                       modelForm("password2"),
+                                       '_label -> (EMessages.get("users.form.passwrep")+":"),
+                                       '_class -> "defaultFormElement",
+                                       '_showConstraints -> false
+                                   )
+                               </div> 
+                   </div>
+               </div>
+            </div>
+       </div>	
+       
+               <div class="accordion" id="accordion3">
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseThree">
+                        <strong>@EMessages.get("otheruser.block")</strong>
+                    </a>
+                </div>
+               <div id="collapseThree" class="accordion-body collapse">
+                   <div class="accordion-inner">
+                       <div class="alert alert-block">
+                           <h4>@EMessages.get("users.form.warning")</h4>
+                           @EMessages.get("users.form.block")
+                           <br>
+                           <br>
+                           @checkbox(modelForm("blocked"), 
+  		                       '_label -> (EMessages.get("otheruser.block")+":"),
+  		                       '_class -> "defaultFormElement", 
+  		                       '_showConstraints -> false
+  		                   )
+  		                   <br>
+  		                   <br>
+  		                   @inputText(modelForm("blockeduntil"), 
+  		                       '_label -> (EMessages.get("users.form.blockeduntil")+":"),
+  		                       '_class -> "defaultFormElement", 
+  		                       '_showConstraints -> false,
+  		                       '_id -> "datepick"
+  		                   )
+					   </div>                   
+                   </div>
+               </div>
+            </div>
+       </div>	
+    </fieldset>
+
+
+	<script type="text/javascript">
+		$("#registrationdate").datepicker({ format: 'dd/mm/yyyy' });
+		$("#birthdate").datepicker({ format: 'dd/mm/yyyy' });		
+		$( "#blockeduntil" ).datepicker({      
+            format: 'dd/mm/yyyy'  
+        });
+		
+		document.getElementById('password1').type = 'password'
+		document.getElementById('password2').type = 'password'
+		
+		if(!$('#blocked').is(':checked')){
+		    document.getElementById('blockeduntil').disabled = true
+		}
+		
+		$('#blocked').click(function(){
+    	    if (this.checked) {
+                document.getElementById('blockeduntil').disabled = false
+                $('#blocked').prop('checked', true);
+            } else {
+            	document.getElementById('blockeduntil').disabled = true
+            	$('#blocked').prop('checked', false);
+            }
+        })
+		
+		var type = {};
+		type["ADMINISTRATOR"] = "0";
+		type["ORGANIZER"] = "1";
+		type["TEACHER"] = "2";
+		type["AUTHOR"] = "3";
+		type["PUPIL_OR_INDEP"] = "4";
+		type["ANON"] = "5";
+		
+		var gender = {};
+		gender["Male"] = "0";
+		gender["Female"] = "1";
+		gender["Other"] = "2";
+		
+		var lang = {};
+		lang["nl"] = "0";
+		lang["en"] = "1";
+		
+		wrap_type_id.options[type["@controllers.user.management.UserManagerController.getUserType()"]].selected = true
+		wrap_gender_id.options[gender["@controllers.user.management.UserManagerController.getUserGender()"]].selected = true
+		wrap_language_id.options[lang["@controllers.user.management.UserManagerController.getUserLang()"]].selected = true
+		
+	</script>
+    

@@ -17,6 +17,7 @@ public class Organizer extends SuperUser{
         ROLES.add(Role.MANAGEQUESTIONS);
         ROLES.add(Role.MANAGESERVERS);
         ROLES.add(Role.MANAGECONTESTS);
+        ROLES.add(Role.MANAGEUSERS);
         ROLES.add(Role.MIMIC);
     }
 

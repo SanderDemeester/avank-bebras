@@ -67,6 +67,11 @@ public class Role implements Comparable<Role>{
         new Link("links.datamanager.diffs", "/manage/difficulties/show"),
         new Link("links.datamanager.grades", "/manage/grades/show")
     );
+
+    public static Role MANAGEUSERS = new Role(
+        "links.manageusers.title",
+        new Link("links.manageusers.users","/manage/users")
+    );
     
     //TEACHER
     public static Role MANAGESCHOOLS = new Role(
@@ -92,6 +97,7 @@ public class Role implements Comparable<Role>{
         new Link("links.contestmanager.overview", "/contests")
     );
 
+<<<<<<< HEAD
     // Contest taken
     public static Role TAKINGCONTESTS = new Role(
         "links.contesttaking.title",
@@ -99,12 +105,13 @@ public class Role implements Comparable<Role>{
         new Link("links.contesttaking.history", "/available-contests/history")
     );
     
+=======
+>>>>>>> abc0ab56b220e4a3576e678c927a2089dfedce78
     //Classes view for pupils
     public static Role PUPILCLASSVIEW = new Role(
     		"classes.pupil.classes.list",
     		new Link("classes.pupil.classes.list","/pclasses/view")
     );
-
 
     /* ====================================================================== *\
                              Actual implementation.
