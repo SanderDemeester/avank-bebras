@@ -163,6 +163,8 @@ languages.language = Taal
 languages.languages = Talen
 languages.en = Engels
 languages.nl = Nederlands
+languages.fr = Frans
+languages.de = Duits
 
 # Login
 redirect_message = U zal zodadelijk worden doorgestuurd naar uw startpagina.
