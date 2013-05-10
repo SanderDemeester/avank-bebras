@@ -55,20 +55,38 @@ GET     /server/remove/:name        controllers.question.ServerController.remove
 # Question set management
 GET     /questionset/new                        controllers.question.QuestionSetController.create(c)
 POST    /questionset                            controllers.question.QuestionSetController.save(c)
-GET     /questionset/:qs/questions              controllers.question.QuestionSetController.list(qs, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
-GET     /questionset/:qs/questions/add          controllers.question.QuestionSetController.addQuestion(qs)
-POST    /questionset/:qs/questions              controllers.question.QuestionSetController.updateQuestions(qs)
-POST    /questionset/edit                       controllers.question.QuestionSetController.update(qs)
-GET     /questionset/:qs/questions/remove:id    controllers.question.QuestionSetController.removeQuestion(qs, id)
+GET     /questionset/:qs/questions              controllers.question.QuestionSetController.list(qs:Int, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /questionset/:qs/questions/add          controllers.question.QuestionSetController.addQuestion(qs:Int)
+POST    /questionset/:qs/questions              controllers.question.QuestionSetController.updateQuestions(qs:Int)
+POST    /questionset/edit                       controllers.question.QuestionSetController.update(qs:Int)
+GET     /questionset/:qs/questions/remove:id    controllers.question.QuestionSetController.removeQuestion(qs:Int, id)
+GET     /questionset/questions/add-data         controllers.question.QuestionSetController.typeAhead()
 
-# Contests module
-GET     /contests                   controllers.competition.CompetitionController.index(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
-GET     /contests/new/contest       controllers.competition.CompetitionController.create()
-POST    /contests                   controllers.competition.CompetitionController.save()
-GET     /contests/:id/overview      controllers.competition.CompetitionController.viewCompetition(id, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
-POST    /contests/                  controllers.competition.CompetitionController.updateCompetition(id)
-GET     /contests/remove/:id        controllers.competition.CompetitionController.removeCompetition(id)
-GET     /contests/qs/remove/:qsid   controllers.competition.CompetitionController.removeQuestionSet(qsid, contestid)
+# Contest management module
+GET     /contests                       controllers.competition.CompetitionController.index(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /contests/new/contest           controllers.competition.CompetitionController.create()
+POST    /contests                       controllers.competition.CompetitionController.save()
+GET     /contests/:id/overview          controllers.competition.CompetitionController.viewCompetition(id, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+POST    /contests/                      controllers.competition.CompetitionController.updateCompetition(id)
+GET     /contests/remove/:id            controllers.competition.CompetitionController.removeCompetition(id)
+GET     /contests/qs/remove/:qsid       controllers.competition.CompetitionController.removeQuestionSet(qsid:Int, contestid)
+GET     /contests/:id/classes           controllers.competition.CompetitionClassController.list(id, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /contests/:id/classes/register  controllers.competition.CompetitionClassController.register(id)
+POST    /contests/:id/classes/save      controllers.competition.CompetitionClassController.save(id)
+
+# Contest taking module
+GET     /available-contests                 controllers.competition.TakeCompetitionController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /available-contests/take/:id        controllers.competition.TakeCompetitionController.takeCompetition(id)
+GET     /available-contests/submit		    controllers.competition.TakeCompetitionController.submit(json)
+GET     /available-contests/feedback/:json	controllers.competition.TakeCompetitionController.feedback(json)
+GET     /competition-overview/:id			controllers.competition.TakeCompetitionController.overview(id)
+GET     /competition-overview-data/:id		controllers.competition.TakeCompetitionController.overviewData(id)
+GET     /competition/finish/:id				controllers.competition.TakeCompetitionController.forceFinish(id)
+GET     /available-contests/forceSubmit		controllers.competition.TakeCompetitionController.forceSubmit(json)
+GET     /available-contests/:id/grade       controllers.competition.TakeCompetitionController.chooseGrade(id)
+
+# Contest history module
+GET     /available-contests/history         controllers.competition.CompetitionHistoryController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
 # Question Management
 GET     /questions                  		 controllers.question.QuestionController.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")
@@ -80,6 +98,8 @@ POST    /question/                  		 controllers.question.QuestionController.s
 GET     /questions/:name              		 controllers.question.QuestionController.edit(name)
 POST    /questions/:name              		 controllers.question.QuestionController.update(name)
 GET     /question/remove/:name      		 controllers.question.QuestionController.remove(name)
+GET     /questionfile/:id/:file      		 controllers.question.QuestionController.showQuestionFile(id, file)
+GET     /question/export/:id      		 	 controllers.question.QuestionController.export(id)
 
 # FAQ
 GET		/faq						controllers.faq.FAQController.getFAQ()

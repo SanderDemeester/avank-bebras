@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,8 +39,6 @@ import com.avaje.ebean.Ebean;
 import controllers.UserController.Register;
 import controllers.util.PasswordHasher;
 import controllers.util.PasswordHasher.SaltAndPassword;
-
-import models.user.IDGenerator;
 
 /**
  * Class to handle UserAuthentication.
@@ -215,7 +214,7 @@ public class AuthenticationManager {
 		return stack.peek();
 	}
 
-	private String getAuthCookie() {
+	public String getAuthCookie() {
 		Cookie cookie = Context.current().request().cookies().get(COOKIENAME);
 		if(cookie == null)
 			return null;
@@ -332,7 +331,7 @@ public class AuthenticationManager {
 		try{
 			salt = Hex.decodeHex(userModel.hash.toCharArray());
 		}catch(Exception e){}
-
+		
 		KeySpec PBKDF2 = new PBEKeySpec(pw.toCharArray(), salt, 1000, 160);
 
 		try{

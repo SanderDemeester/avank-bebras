@@ -1,29 +1,58 @@
 package controllers.question;
 
+import it.sauronsoftware.ftp4j.FTPAbortedException;
+import it.sauronsoftware.ftp4j.FTPDataTransferException;
+import it.sauronsoftware.ftp4j.FTPException;
+import it.sauronsoftware.ftp4j.FTPIllegalReplyException;
+import it.sauronsoftware.ftp4j.FTPListParseException;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
 import models.EMessages;
+import models.data.Language;
 import models.data.Link;
+import models.data.UnavailableLanguageException;
+import models.data.UnknownLanguageCodeException;
 import models.dbentities.QuestionModel;
 import models.dbentities.UserModel;
 import models.management.ModelState;
+import models.question.AnswerGeneratorException;
+import models.question.Question;
+import models.question.QuestionBuilderException;
+import models.question.QuestionFeedback;
+import models.question.QuestionFeedbackGenerator;
+import models.question.QuestionIO;
+import models.question.QuestionSet;
 import models.question.Server;
 import models.question.submits.Submit;
 import models.question.submits.SubmitsPage;
+import models.user.AuthenticationManager;
+import models.user.Role;
+
+import org.codehaus.jackson.JsonNode;
+
+import play.Play;
+import play.cache.Cache;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Result;
 import views.html.commons.noaccess;
+import views.html.competition.run.questionSet;
 import views.html.question.approveQuestionForm;
-import views.html.question.newQuestionForm;
 import views.html.question.editQuestionForm;
+import views.html.question.newQuestionForm;
 import views.html.question.questionManagement;
 import views.html.question.submitsManagement;
 
 import com.avaje.ebean.annotation.Transactional;
 
 import controllers.EController;
-import controllers.question.routes;
 
 /**
  * Actions for controlling the CRUD actions for questions (including approval)
@@ -45,9 +74,7 @@ public class QuestionController extends EController{
      * @return is the user authorized
      */
     public static boolean isAuthorized() {
-        // TODO: enable this authorization
-        //return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGEQUESTIONS);
-        return true;
+        return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGEQUESTIONS);
     }
 
     /**
@@ -158,18 +185,21 @@ public class QuestionController extends EController{
         // Fetch the submission
         Submit submit = Submit.find(userID, file);
         
+        // Save the question
+        form.get().save();
+        
         // Try to send the question to the server
         try {
             form.get().fixServer();
             Server server = form.get().server;
-            server.sendFile(form.get().officialid, submit.getFile(), userID);
+            server.sendFile(Integer.toString(form.get().id), submit.getFile(), userID);
         } catch (Exception e) {
+            // delete the question again
+            form.get().delete();
+            
             flash("error", "An error occured: "+e.getMessage());
             return badRequest(approveQuestionForm.render(form, manager, breadcrumbs, userID, file));
         }
-        
-        // If everything went well, we can save the question
-        form.get().save();
         
         // Only if the saving went well, we can delete the submitted archive file
         submit.getFile().delete();
@@ -264,10 +294,16 @@ public class QuestionController extends EController{
         if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
 
         QuestionManager manager = new QuestionManager(name, ModelState.UPDATE);
+        Question q;
+        try {
+            q = Question.fetch(name);
+        } catch (QuestionBuilderException e) {
+            q = null;
+        }
         manager.setIgnoreErrors(true);
 
         Form<QuestionModel> form = form(QuestionModel.class).bindFromRequest().fill(manager.getFinder().ref(name));
-        return ok(editQuestionForm.render(form, manager, breadcrumbs));
+        return ok(editQuestionForm.render(form, manager, breadcrumbs, q));
     }
 
     /**
@@ -285,11 +321,17 @@ public class QuestionController extends EController{
         if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
 
         QuestionManager manager = new QuestionManager(name, ModelState.UPDATE);
+        Question q;
+        try {
+            q = Question.fetch(name);
+        } catch (QuestionBuilderException e) {
+            q = null;
+        }
         
         // Validate form
         Form<QuestionModel> form = form(QuestionModel.class).fill(manager.getFinder().byId(name)).bindFromRequest();
         if(form.hasErrors()) {
-            return badRequest(editQuestionForm.render(form, manager, breadcrumbs));
+            return badRequest(editQuestionForm.render(form, manager, breadcrumbs, q));
         }
         
         // Update
@@ -297,7 +339,7 @@ public class QuestionController extends EController{
             form.get().update();
         } catch (Exception e) {
             flash("error", e.getMessage());
-            return badRequest(editQuestionForm.render(form, manager, breadcrumbs));
+            return badRequest(editQuestionForm.render(form, manager, breadcrumbs, q));
         }
         
         // Result
@@ -327,5 +369,83 @@ public class QuestionController extends EController{
         // Result
         flash("success", EMessages.get("question.success.removed", question.officialid));
         return LIST;
+    }
+    
+    /**
+     * This will show a file from a certain question pack
+     *
+     * @param name name of the question
+     * @param fileName name of the file to show
+     * @return question list page
+     */
+    public static Result showQuestionFile(String id, String fileName){
+        // Make some error breadcrumbs for when an error occurs
+        List<Link> errorBreadcrumbs = new ArrayList<Link>();
+        errorBreadcrumbs.add(new Link("Home", "/"));
+        errorBreadcrumbs.add(new Link("Error",""));
+        
+        // Get the cachetime from the config file
+        int cacheTime = Integer.parseInt(Play.application().configuration().getString("question.proxy.cache"));
+        
+        // Try to get the file from our cache
+        String contentCacheKey = "question.file."+fileName+".content."+id;
+        String typeCacheKey = "question.file."+fileName+".type."+id;
+        byte[] result = (byte[]) Cache.get(contentCacheKey);
+        String contentType = (String) Cache.get(typeCacheKey);
+        
+        // If this file is not in our cache, we go and get the content ourselves
+        if(result == null || contentType == null) {
+            try {
+                QuestionModel question = new QuestionManager(ModelState.DELETE).getFinder().byId(id);
+                
+                // Very important step, authenticate via HTTP
+                question.server.setAuthentication();
+                
+                // Copy the url content
+                URL url = new URL(question.server.path + Integer.toString(question.id) + "/" + fileName);
+                URLConnection connection = url.openConnection();
+                InputStream is = connection.getInputStream();
+                ByteArrayOutputStream os = new ByteArrayOutputStream();
+                QuestionIO.copyStream(is, os);
+                
+                result = os.toByteArray();
+                contentType = connection.getContentType();
+                
+                // Add new data to the cache
+                Cache.set(contentCacheKey, result, cacheTime);
+                Cache.set(typeCacheKey, contentType, cacheTime);
+            } catch (Exception e) {
+                return internalServerError(views.html.commons.error.render(errorBreadcrumbs, EMessages.get("error.title"), EMessages.get("error.text")));
+            }
+        }
+        
+        // Return the file with the correct header
+        response().setHeader(CONTENT_TYPE, contentType);
+        return ok(result);
+    }
+    
+    /**
+     * Export a question to a .ZIP file
+     * @param id id of the question
+     * @return the archived question file
+     */
+    public static Result export(String id) {
+        // Make some error breadcrumbs for when an error occurs
+        List<Link> errorBreadcrumbs = new ArrayList<Link>();
+        errorBreadcrumbs.add(new Link("Home", "/"));
+        errorBreadcrumbs.add(new Link("Error",""));
+        
+        if(isAuthorized()) {
+            response().setHeader("Content-Disposition", "attachment; filename=question.zip");
+            Question q;
+            try {
+                q = Question.fetch(id);
+                return ok(q.export());
+            } catch (QuestionBuilderException | IllegalStateException | IOException | FTPIllegalReplyException | FTPException | FTPDataTransferException | FTPAbortedException | FTPListParseException e) {
+                return internalServerError(views.html.commons.error.render(errorBreadcrumbs, EMessages.get("error.title"), EMessages.get("error.text")));
+            }
+        } else {
+            return forbidden();
+        }
     }
 }

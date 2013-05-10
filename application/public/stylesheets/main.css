@@ -100,3 +100,19 @@ body{
   border-top: 4px solid transparent;
   border-bottom: 4px solid transparent;
 }
+
+/* Start of competition styles */
+.questionframe {
+	border: none;
+	width: 100%;
+}
+
+#countdown {
+	font-size: 40px;
+}
+
+#competitionScore {
+	font-size: 40px;
+}
+
+/* End of competition styles */

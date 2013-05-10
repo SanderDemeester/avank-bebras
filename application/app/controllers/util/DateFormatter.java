@@ -15,12 +15,17 @@ import java.util.Date;
 public class DateFormatter {
 	
 	public static final String FORMAT = "dd/MM/yyyy";
+	public static final String FORMAT_EXTENDED = "HH:MM dd/MM/yyyy";
 
 	public static String formatDate(Date d){
-		if(d==null)return null;
-		Format formatter = new SimpleDateFormat(FORMAT);
-		return formatter.format(d);
+		return formatDate(d, false);
 	}
+	
+	public static String formatDate(Date d, boolean extended){
+        if(d==null)return null;
+        Format formatter = new SimpleDateFormat(extended?FORMAT_EXTENDED:FORMAT);
+        return formatter.format(d);
+    }
 	
 	public static Date parseString(String st){
 		if(st==null)return null;

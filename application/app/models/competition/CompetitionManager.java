@@ -1,5 +1,6 @@
 package models.competition;
 
+import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.Page;
 import controllers.competition.routes;
 import models.dbentities.CompetitionModel;
@@ -18,6 +19,7 @@ import java.util.List;
 public class CompetitionManager extends Manager<CompetitionModel> {
 
     private String contestid;
+    private ExpressionList<CompetitionModel> expressionList;
 
     /**
      * Constructor for manager class.
@@ -30,6 +32,7 @@ public class CompetitionManager extends Manager<CompetitionModel> {
         super(CompetitionModel.class, state, orderBy, "name");
         this.contestid = contestid;
         setPageSize(5);
+        this.expressionList = getFinder().where();
     }
 
     /**
@@ -42,12 +45,23 @@ public class CompetitionManager extends Manager<CompetitionModel> {
      */
     @Override
     public Page<CompetitionModel> page(int page) {
-        return  getFinder()
-                .where()
+        return getDataSet()
                 .ilike(filterBy, "%" + filter + "%")
                 .orderBy(orderBy + " " + order)
                 .findPagingList(pageSize)
                 .getPage(page);
+    }
+
+    /**
+     * Returns the expression list for quering the database.
+     * @return expression list for quering
+     */
+    protected ExpressionList<CompetitionModel> getDataSet(){
+        return expressionList;
+    }
+
+    public void setExpressionList(ExpressionList<CompetitionModel> expressionList){
+        this.expressionList = expressionList;
     }
 
     /**
@@ -64,6 +78,7 @@ public class CompetitionManager extends Manager<CompetitionModel> {
         columnHeaders.add("starttime");
         columnHeaders.add("endtime");
         columnHeaders.add("creator");
+        columnHeaders.add("duration");
         return columnHeaders;
     }
 
