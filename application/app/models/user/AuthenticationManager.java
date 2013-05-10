@@ -66,6 +66,7 @@ public class AuthenticationManager {
 	public static final int INVALID_LOGIN = 0;
 	public static final int VALID_LOGING = 1;
 	public static final int DUPLICATED_LOGIN = 2;
+	public static final int USER_BLOCKED = 3;
 
 	static {
 		FACTORIES.put(UserType.ADMINISTRATOR, new AdministratorUserFactory());
