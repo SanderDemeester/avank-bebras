@@ -263,8 +263,8 @@ public class UserManagerController extends EController {
 				}	
 			}
 			
-    		def_model.gender = GenderWrap.getUserType(form.data().get("wrap_gender.id"));
-    		def_model.type = UserTypeWrap.getUserType(form.data().get("wrap_type.id"));
+    		def_model.gender = Gender.valueOf(form.data().get("wrap_gender.id"));
+    		def_model.type = UserType.valueOf(form.data().get("wrap_type.id"));
     		def_model.preflanguage = form.data().get("wrap_language.id");
     		def_model.comment = form.data().get("comment");
     		
@@ -391,8 +391,8 @@ public class UserManagerController extends EController {
     		form.get().password = passwordHEX;
     		form.get().hash = saltHEX;
     		form.get().id = bebrasID;
-    		form.get().gender = GenderWrap.getUserType(form.data().get("wrap_gender.id"));
-    		form.get().type = UserTypeWrap.getUserType(form.data().get("wrap_type.id"));
+    		form.get().gender = Gender.valueOf(form.data().get("wrap_gender.id"));
+    		form.get().type = UserType.valueOf(form.data().get("wrap_type.id"));
     		form.get().preflanguage = form.data().get("wrap_language.id");
     		form.get().comment = form.data().get("comment");
     		
