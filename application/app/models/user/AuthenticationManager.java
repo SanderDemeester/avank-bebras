@@ -323,14 +323,9 @@ public class AuthenticationManager {
 			return INVALID_LOGIN;
 		}
 		
-		if(userModel.blocked){
+		if(userModel.isCurrentlyBlocked())
 			return USER_BLOCKED;
-		}
-
-		if(userModel.blockeduntil != null){
-			if(!new Date().after(userModel.blockeduntil)) 
-				return USER_BLOCKED;
-		}
+		
 		
 		passwordDB = userModel.password;
 		SecretKeyFactory secretFactory = null;
