@@ -7,6 +7,7 @@ import models.dbentities.UserModel;
 import models.user.AuthenticationManager;
 import models.user.Role;
 import models.user.UserType;
+import play.Logger;
 import play.api.libs.Crypto;
 import play.data.Form;
 import play.data.format.Formats;
@@ -213,7 +214,7 @@ public class UserController extends EController {
             int return_code = AuthenticationManager.getInstance().validate_credentials(id, password, cookie);
             switch (return_code) {
                 case AuthenticationManager.VALID_LOGING: {
-                    return ok(cookie);
+                    return ok(AuthenticationManager.COOKIENAME + "=" + cookie);
                 }
                 case AuthenticationManager.INVALID_LOGIN: {
                     return badRequest(EMessages.get("error.login"));
