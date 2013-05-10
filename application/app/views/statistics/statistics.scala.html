@@ -143,6 +143,8 @@
     <input type="submit" class="btn btn-primary btn-large" value="Generate" />
 
 </form>
+<div id="container" style="height: 400px"></div>
+<script src="http://code.highcharts.com/highcharts.js"></script>
 <script type="text/javascript" src="/assets/javascripts/colorpicker/bootstrap-colorpicker.js"></script>
 <link type="text/css" rel="stylesheet" href="/assets/stylesheets/colorpicker/colorpicker.css"/>
 <style type="text/css">
@@ -192,6 +194,11 @@
 
         /* Dynamically mark the first tab as active. */
         $(".nav-tabs").children().children().first().click();
+
+        /* For the HighChart. */
+        @if(statistic != null && populations != null && populations.size() > 0) {
+        $("#container").highcharts(@Html(statistic.asJson(populations).toString()));
+        }
 
     });
 

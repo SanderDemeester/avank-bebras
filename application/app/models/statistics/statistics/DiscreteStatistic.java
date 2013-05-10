@@ -6,27 +6,57 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.HashMap;
 
-import models.statistics.populations.Population;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.node.ObjectNode;
+import org.codehaus.jackson.node.ArrayNode;
 
+import play.libs.Json;
+
+import models.EMessages;
+import models.statistics.populations.Population;
 import models.dbentities.UserModel;
 
 public abstract class DiscreteStatistic extends Statistic {
 
-    @Override public Summary calculate(Collection<Population> data) {
-        DiscreteSummary summary = new DiscreteSummary(getName());
+    @Override public ObjectNode asJson(Collection<Population> data) {
         Integer value;
         String key;
+        Map<String, Integer> map = new HashMap<String, Integer>();
         for(Population population : data) {
-            Map<String, Integer> map = new HashMap<String, Integer>();
             for(UserModel user : population.getUsers()) {
                 key = calculate(user);
                 value = map.get(key);
                 if(value == null) value = 0;
                 map.put(key, value + 1);
             }
-            summary.addData(population, map);
         }
-        return summary;
+
+        /* Creating the Json object. */
+        ObjectNode json = Json.newObject();
+
+        /* Chart object */
+        ObjectNode chart = Json.newObject();
+        chart.put("defaultSeriesType", "pie");
+        json.put("chart", chart);
+
+        /* The title. */
+        ObjectNode title = Json.newObject();
+        title.put("text", EMessages.get(getName()));
+        json.put("title", title);
+
+        /* The series object. */
+        ArrayNode series = json.putArray("series");
+        ObjectNode serie = Json.newObject();
+        serie.put("name", "Count"); // TODO EMessage
+        ArrayNode pairs = serie.putArray("data");
+        for(String str : map.keySet()) {
+            ArrayNode pair = pairs.addArray();
+            pair.add(str);
+            pair.add(map.get(str));
+        }
+        series.add(serie);
+
+        return json;
     }
 
     @Override public boolean check(UserModel user) {

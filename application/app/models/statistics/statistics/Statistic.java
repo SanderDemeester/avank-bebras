@@ -5,6 +5,8 @@ import java.lang.String;
 import java.util.Collection;
 import java.util.ArrayList;
 
+import org.codehaus.jackson.node.ObjectNode;
+
 import models.dbentities.UserModel;
 import models.dbentities.QuestionModel;
 import models.dbentities.QuestionSetModel;
@@ -22,11 +24,11 @@ public abstract class Statistic {
     private Collection<String> conditions = new ArrayList<String>();
 
     /**
-     * Summarize the provided list of populations.
-     * @param data The populations to be summarized.
-     * @return The summary.
+     * Return a Json object of the data, ready for plotting with HighCharts.
+     * @param data The populations to be processed.
+     * @return A HighCharts Json object.
      */
-    public abstract Summary calculate(Collection<Population> data);
+    public abstract ObjectNode asJson(Collection<Population> data);
 
     /**
      * Add a filter to the statistic. Users who do not pass anny of the given
