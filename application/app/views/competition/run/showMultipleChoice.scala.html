@@ -1,0 +1,29 @@
+@(question: models.question.MultipleChoiceQuestion, language : models.data.Language, answer : models.question.MultipleChoiceAnswer)
+
+@import models.EMessages
+@import helper._
+@import helper.twitterBootstrap._
+
+@element(aElement : models.question.MultipleChoiceElement) = {
+    <li>
+    	<input type="radio" class="multiple_choice" name="@question.getID()" value="" 
+    	@if(answer!=null) {
+    		disabled="disabled"
+    	}
+    	@if(answer!=null && answer.getElement()!= null && answer.getElement().equals(aElement)) {
+    		checked="checked"
+    	}
+    	/>
+        <span class="content">@aElement.getContent()</span>
+    </li>
+}
+
+    <div class="answers @if(answer!=null){@if(answer.isCorrect()){alert alert-success}else{alert alert-error}}">
+	    <ul class="unstyled">
+	    @if(language != null) {
+	        @for(aElement <- question.getElements(language)) {
+	            @element(aElement)
+	        }
+	    }
+	    </ul>
+    </div>

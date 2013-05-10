@@ -1,9 +1,10 @@
 package controllers.competition;
 
+import com.avaje.ebean.Ebean;
 import controllers.EController;
-import controllers.question.QuestionSetController;
 import models.EMessages;
-import models.competition.CompetitionManager;
+import models.competition.*;
+import models.data.DataDaemon;
 import models.data.Link;
 import models.dbentities.CompetitionModel;
 import models.dbentities.QuestionSetModel;
@@ -15,8 +16,10 @@ import models.user.AuthenticationManager;
 import models.user.Role;
 import play.data.Form;
 import play.mvc.Result;
+import views.html.commons.noaccess;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,10 +33,11 @@ public class CompetitionController extends EController {
 
     /**
      * Check if the current user is authorized for this editor
+     * @param role the role the user has to have
      * @return is the user authorized
      */
-    private static boolean isAuthorized() {
-        return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGECONTESTS);
+    private static boolean isAuthorized(Role role) {
+        return AuthenticationManager.getInstance().getUser().hasRole(role);
     }
 
     /**
@@ -59,7 +63,7 @@ public class CompetitionController extends EController {
      */
     private static QuestionSetManager getQuestionSetManager(ModelState modelState, String orderBy, String order,
                                                             String filter, String contid){
-        QuestionSetManager questionSetManager = new QuestionSetManager(modelState, contid, "");
+        QuestionSetManager questionSetManager = new QuestionSetManager(modelState, contid, 0);
         questionSetManager.setOrderBy(orderBy);
         questionSetManager.setOrder(order);
         questionSetManager.setFilter(filter);
@@ -75,7 +79,7 @@ public class CompetitionController extends EController {
      * @return index page
      */
     public static Result index(int page, String orderBy, String order, String filter){
-        if (!isAuthorized()) return redirect(controllers.routes.Application.index());
+        if (! (isAuthorized(Role.MANAGECONTESTS) || isAuthorized(Role.VIEWCONTESTS)) ) return ok(noaccess.render(defaultBreadcrumbs()));
         CompetitionManager competitionManager = new CompetitionManager(ModelState.READ, orderBy, "");
         competitionManager.setOrder(order);
         competitionManager.setOrderBy(orderBy);
@@ -90,7 +94,7 @@ public class CompetitionController extends EController {
      * @return create contest page
      */
     public static Result create(){
-        if (!isAuthorized()) return redirect(controllers.routes.Application.index());
+        if (!isAuthorized(Role.MANAGECONTESTS)) return ok(noaccess.render(defaultBreadcrumbs()));
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("competition.create.breadcrumb"), "/contests/create"));
         Form<CompetitionModel> form = form(CompetitionModel.class).bindFromRequest();
@@ -104,16 +108,18 @@ public class CompetitionController extends EController {
      * @return create question set page
      */
     public static Result save(){
-        if (!isAuthorized()) return redirect(controllers.routes.Application.index());
+        if (!isAuthorized(Role.MANAGECONTESTS)) return ok(noaccess.render(defaultBreadcrumbs()));
         Form<CompetitionModel> form = form(CompetitionModel.class).bindFromRequest();
         if(form.hasErrors()) {
             List<Link> breadcrumbs = defaultBreadcrumbs();
             breadcrumbs.add(new Link(EMessages.get("competition.create.breadcrumb"), "/contests/create"));
+            flash("competition-error", EMessages.get("forms.error"));
             return badRequest(views.html.competition.create.render(form, breadcrumbs, true));
         }
         CompetitionModel competitionModel = form.get();
         competitionModel.id = UUID.randomUUID().toString();
         competitionModel.creator = AuthenticationManager.getInstance().getUser().getID();
+
         if (competitionModel.starttime.after(competitionModel.endtime)){
             // starttime is after endtime
             List<Link> breadcrumbs = defaultBreadcrumbs();
@@ -121,8 +127,37 @@ public class CompetitionController extends EController {
             flash("competition-error", EMessages.get("forms.error.dates"));
             return badRequest(views.html.competition.create.render(form, breadcrumbs, true));
         }
+
+        if (competitionModel.active){
+            addToDataDaemon(competitionModel);
+        }
+
         competitionModel.save();
         return redirect(controllers.question.routes.QuestionSetController.create(competitionModel.id));
+    }
+
+    /**
+     * Tells the data daemon to make this contest running at start time.
+     * @param competitionModel competition model
+     */
+    private static void addToDataDaemon(CompetitionModel competitionModel) {
+        // automatically start this contest at start time
+        final Competition competition = new Competition(competitionModel);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(competition.getStartDate());
+        DataDaemon.getInstance().runAt(new Runnable(){
+
+            @Override
+            public void run() {
+                if (competition.getCompetitionModel().active){
+                    // if this competition is still active, start it
+                    CompetitionUserStateManager competitionUserStateManager = CompetitionUserStateManager.getInstance();
+                    competitionUserStateManager.startCompetition(competition);
+                    competition.setState(CompetitionState.ACTIVE);
+                }
+            }
+
+        }, calendar);
     }
 
     /**
@@ -133,26 +168,33 @@ public class CompetitionController extends EController {
      * @return redirect to view contest page.
      */
     public static Result updateCompetition(String contestid){
-        if (!isAuthorized()) return redirect(controllers.routes.Application.index());
+        if (!isAuthorized(Role.MANAGECONTESTS)) return ok(noaccess.render(defaultBreadcrumbs()));
         CompetitionManager competitionManager = new CompetitionManager(ModelState.UPDATE, "name", contestid);
-        QuestionSetManager questionSetManager = getQuestionSetManager(ModelState.READ, "level", "", "", contestid);
+        QuestionSetManager questionSetManager = getQuestionSetManager(ModelState.READ, "grade", "", "", contestid);
         Form<CompetitionModel> form = form(CompetitionModel.class).fill(competitionManager.getFinder().byId(contestid)).bindFromRequest();
+        Competition contest = new Competition(Ebean.find(CompetitionModel.class).where().ieq("id", contestid).findUnique());
         if(form.hasErrors()) {
             List<Link> breadcrumbs = defaultBreadcrumbs();
             breadcrumbs.add(new Link(EMessages.get("competition.edit.breadcrumb"), "/contest/:" + contestid));
             flash("competition-error", EMessages.get("forms.error"));
             return badRequest(views.html.competition.viewCompetition.render(breadcrumbs, questionSetManager.page(0),
-                    questionSetManager, "difficulty", "", "", form, competitionManager));
+                    questionSetManager, "difficulty", "", "", form, competitionManager, contest));
         }
         CompetitionModel competitionModel = form.get();
+
         if (competitionModel.starttime.after(competitionModel.endtime)){
             // starttime is after endtime
             List<Link> breadcrumbs = defaultBreadcrumbs();
             breadcrumbs.add(new Link(EMessages.get("competition.edit.breadcrumb"), "/contests/:" + contestid));
             flash("competition-error", EMessages.get("forms.error.dates"));
             return badRequest(views.html.competition.viewCompetition.render(breadcrumbs, questionSetManager.page(0),
-                    questionSetManager, "difficulty", "", "", form, competitionManager));
+                    questionSetManager, "difficulty", "", "", form, competitionManager, contest));
         }
+
+        if (competitionModel.active){
+            addToDataDaemon(competitionModel);
+        }
+
         form.get().update();
         return redirect(routes.CompetitionController.viewCompetition(contestid, 0, "", "", ""));
     }
@@ -167,14 +209,15 @@ public class CompetitionController extends EController {
      * @return overview page for a single contest
      */
     public static Result viewCompetition(String contestid, int page, String orderBy, String order, String filter){
-        if (!isAuthorized()) return redirect(controllers.routes.Application.index());
+        if (! (isAuthorized(Role.VIEWCONTESTS) || isAuthorized(Role.MANAGECONTESTS)) ) return ok(noaccess.render(defaultBreadcrumbs()));
         CompetitionManager competitionManager = new CompetitionManager(ModelState.UPDATE, "", contestid);
         Form<CompetitionModel> form = form(CompetitionModel.class).bindFromRequest().fill(competitionManager.getFinder().byId(contestid));
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("competition.edit.breadcrumb"), "/contest/:" + contestid));
         QuestionSetManager questionSetManager = getQuestionSetManager(ModelState.READ, orderBy, order, filter, contestid);
+        Competition contest = new Competition(Ebean.find(CompetitionModel.class).where().ieq("id", contestid).findUnique());
         return ok(views.html.competition.viewCompetition.render(breadcrumbs, questionSetManager.page(page),
-                questionSetManager, orderBy, order, filter, form, competitionManager));
+                questionSetManager, orderBy, order, filter, form, competitionManager, contest));
     }
 
     /**
@@ -185,11 +228,15 @@ public class CompetitionController extends EController {
      * @return redirect to contest index page.
      */
     public static Result removeCompetition(String contestid){
-        if (!isAuthorized()) return redirect(controllers.routes.Application.index());
+        if (!isAuthorized(Role.MANAGECONTESTS)) return ok(noaccess.render(defaultBreadcrumbs()));
         // remove all question sets in this contest from questionsets table
-        QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.DELETE, contestid, "");
+        QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.DELETE, contestid, 0);
         List<QuestionSetModel> questionSetModels = questionSetManager.getFinder().where().ieq("contid", contestid).findList();
         for (QuestionSetModel questionSetModel : questionSetModels){
+            List<QuestionSetQuestion> questions = Ebean.find(QuestionSetQuestion.class).where().eq("qsid", questionSetModel.id).findList();
+            for (QuestionSetQuestion questionSetQuestion : questions){
+                questionSetQuestion.delete();
+            }
             questionSetModel.delete();
         }
         // remove competition
@@ -205,18 +252,18 @@ public class CompetitionController extends EController {
      * @param contestid contest id
      * @return redirect to the contest overview page
      */
-    public static Result removeQuestionSet(String qsid, String contestid){
-        if (!isAuthorized()) return redirect(controllers.routes.Application.index());
+    public static Result removeQuestionSet(int qsid, String contestid){
+        if (!isAuthorized(Role.MANAGECONTESTS)) return ok(noaccess.render(defaultBreadcrumbs()));
         // remove all questions in this question set from questionsetquestions table
         QuestionSetQuestionManager questionSetQuestionManager = new QuestionSetQuestionManager(ModelState.DELETE, qsid);
-        List<QuestionSetQuestion> questions = questionSetQuestionManager.getFinder().where().ieq("qsid", qsid).findList();
+        List<QuestionSetQuestion> questions = questionSetQuestionManager.getFinder().where().eq("qsid", qsid).findList();
         for (QuestionSetQuestion questionSetQuestion : questions){
             questionSetQuestion.delete();
         }
         // remove the question set
-        QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.DELETE, contestid, "");
-        questionSetManager.getFinder().byId(qsid).delete();
-        return redirect(routes.CompetitionController.viewCompetition(contestid, 0, "level", "asc", ""));
+        QuestionSetManager questionSetManager = new QuestionSetManager(ModelState.DELETE, contestid, 0);
+        questionSetManager.getFinder().byId(Integer.toString(qsid)).delete();
+        return redirect(routes.CompetitionController.viewCompetition(contestid, 0, "grade", "asc", ""));
     }
 
 

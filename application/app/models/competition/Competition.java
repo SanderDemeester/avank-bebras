@@ -1,18 +1,20 @@
 package models.competition;
 
+import com.avaje.ebean.Ebean;
 import models.data.Grade;
 import models.data.Language;
 import models.dbentities.ClassGroup;
 import models.dbentities.CompetitionModel;
+import models.dbentities.QuestionSetModel;
+import models.dbentities.QuestionSetQuestion;
+import models.question.Question;
 import models.question.QuestionFeedback;
 import models.question.QuestionSet;
 import models.user.User;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
- *
  * Class that contains all logic implementation about competitions.
  *
  * @author Kevin Stobbelaar.
@@ -21,6 +23,8 @@ import java.util.List;
 public class Competition {
 
     private CompetitionModel data;
+    private Map<Grade, QuestionSet> questionSets;
+    private CompetitionState competitionState;
 
     /**
      * Default constructor
@@ -28,6 +32,35 @@ public class Competition {
      */
     public Competition(CompetitionModel data){
         this.data = data;
+
+        // setting the competition state
+        if (data.active){
+            if (data.starttime.before(new Date())){
+                if (data.endtime.after(new Date())){
+                    competitionState = CompetitionState.RUNNING;
+                }
+                else competitionState = CompetitionState.FINISHED;
+            }
+            else {
+                competitionState = CompetitionState.ACTIVE;
+            }
+        }
+        else competitionState = CompetitionState.DRAFT;
+
+        // setting the question sets for this contest
+        questionSets = new HashMap<Grade, QuestionSet>();
+        List<QuestionSetModel> questionSetModels = Ebean.find(QuestionSetModel.class).where().ieq("contid", data.id).findList();
+        for (QuestionSetModel questionSetModel : questionSetModels){
+            questionSets.put(questionSetModel.grade, new QuestionSet(questionSetModel));
+        }
+    }
+
+    /**
+     * Returns the database model for this competition.
+     * @return underlying database model
+     */
+    public CompetitionModel getCompetitionModel(){
+        return data;
     }
 
     /**
@@ -36,6 +69,7 @@ public class Competition {
      */
     public void setType(CompetitionType type){
         data.type = type;
+        Ebean.update(data);
     }
 
     /**
@@ -45,22 +79,39 @@ public class Competition {
     public CompetitionType getType(){
         return data.type;
     }
-
+    
     /**
-     * Sets a question set for this competition.
-     * @param grade grade
-     * @param questionSet question set
+     * Sets the state for this competition.
+     * @param competitionState new competition state
      */
-    public void setQuestionSet(Grade grade, QuestionSet questionSet){
-        throw new UnsupportedOperationException();
+    public void setState(CompetitionState competitionState) {
+        this.competitionState = competitionState;
     }
 
     /**
-     * Removes a question set for this competition.
-     * @param grade
+     * Gets the duration for this competition.
+     * @return duration in minutes
      */
-    public void removeQuestionSet(Grade grade){
-        throw new UnsupportedOperationException();
+    public int getDuration(){
+        return data.duration;
+    }
+
+    /**
+     * Sets the duration for this competition.
+     * @param duration duration in minutes
+     */
+    public void setDuration(int duration){
+        data.duration = duration;
+        Ebean.update(data);
+
+    }
+
+    /**
+     * Gets the competition state.
+     * @return competition state
+     */
+    public CompetitionState getCompetitionState(){
+        return competitionState;
     }
 
     /**
@@ -68,15 +119,25 @@ public class Competition {
      * @return available languages
      */
     public List<Language> getAvailableLanguages(){
-        throw new UnsupportedOperationException();
+        List<Language> languages = Language.listLanguages();
+        for (QuestionSet questionSet : questionSets.values()){
+            languages.retainAll(questionSet.getLanguages());
+        }
+        return languages;
     }
 
     /**
      * Returns the available grades for this competition.
-     * @return
+     * @return the supported grades for this competition
      */
     public List<Grade> getAvailableGrades(){
-        throw new UnsupportedOperationException();
+        ArrayList<Grade> grades = new ArrayList<Grade>();
+        for (Grade grade : questionSets.keySet()){
+            if (!grades.contains(grade)){
+                grades.add(grade);
+            }
+        }
+        return new ArrayList<Grade>(grades);
     }
 
     /**
@@ -139,6 +200,16 @@ public class Competition {
     }
 
     /**
+     * Returns the question set for the given grade.
+     * @param grade given grade
+     * @return question set
+     */
+    public QuestionSet getQuestionSet(Grade grade){
+        return questionSets.get(grade);
+    }
+
+
+    /**
      * Finishes the competition for the pupil.
      * @param pupil pupil
      * @return question feedback
@@ -154,6 +225,22 @@ public class Competition {
      */
     public CompetitionState getCompetitionState(User pupil){
         throw new UnsupportedOperationException();
+    }
+    
+    public String getID() {
+        return this.data.getID();
+    }
+    
+    public Date getExpirationDate() {
+        return this.data.endtime;
+    }
+    
+    public Date getStartDate() {
+        return this.data.starttime;
+    }
+    
+    public String getName() {
+        return this.data.name;
     }
 
 }

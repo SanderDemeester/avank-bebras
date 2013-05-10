@@ -9,8 +9,6 @@
 
 	@showflash()
 
-	<div class="well">TODO: Preview <br />Maak dit wanneer de questions in competitions gerendered kunnen worden.</div>
-
     @form(controllers.question.routes.QuestionController.saveApprove(userID, file)) {
 
 	@if(!manager.isIgnoreErrors() && modelForm.hasErrors()) {

@@ -1,0 +1,46 @@
+@********************************************
+* Page on which the user selects his grade  *
+*                                           *
+* author: Kevin Stobbelaar                  *
+********************************************@
+
+@(breadcrumbs : List[models.data.Link], gform : Form[models.data.Grade], contest : models.competition.Competition)
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main(EMessages.get("competitions.grade.title"), breadcrumbs) {
+    <div class="row-fluid">
+
+        <div class="alert alert-block">
+            <h4>@EMessages.get("competitions.grade.warning")</h4>
+            @EMessages.get("competitions.grade.info"):
+        </div>
+
+        @form(controllers.competition.routes.TakeCompetitionController.takeCompetition(contest.getID())) {
+
+        <div>
+
+            <fieldset>
+                @select(
+                    gform("grade"),
+                    options = options(contest.getAvailableGrades().toList.map(_.getName)),
+                    '_label -> EMessages.get("competitions.grade"),
+                    '_showConstraints -> false
+                )
+            </fieldset>
+
+        </div>
+
+        <div class="actions">
+            <input type="submit" value="@EMessages.get("forms.submit")" class="btn btn-primary">
+            <a href="@controllers.competition.routes.TakeCompetitionController.list()" class="btn"> @EMessages.get("forms.cancel")</a>
+        </div>
+
+        }
+
+    </div>
+
+</div>
+
+}

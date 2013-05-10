@@ -1,0 +1,21 @@
+@*******************************************
+* Contest class overview                   *
+*                                          *
+* author: Kevin Stobbelaar                 *
+*******************************************@
+
+@(breadcrumbs : List[models.data.Link], currentPage: Page[_ <: models.management.ManageableModel],
+manager: models.management.Manager[_], currentOrderBy: String, currentOrder: String, currentFilter: String)
+
+@import models.EMessages
+@import views.html.management.list
+
+@main(EMessages.get("competition.class.title"), breadcrumbs) {
+
+    <div class="row-fluid">
+        <div class="span12">
+            @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
+        </div>
+    </div>
+
+}
