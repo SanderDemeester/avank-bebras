@@ -44,6 +44,7 @@ error.mimic = Kan gebruiker niet nabootsen
 error.mimic.cant_find_user = Kan de opgegeven gebruiker niet vinden
 error.mimic.policy_deny = Systeem beleid verhinderd u van de gebruiker na te bootsen
 error.mimic.user_logged_in = De gebruiker die u probeerd na te bootsen is ingelogd in het systeem
+error.user_blocked = Uw account is geschorst, gelieve een admin te contacteren
 
 
 

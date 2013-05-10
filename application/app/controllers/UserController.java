@@ -221,6 +221,9 @@ public class UserController extends EController {
                 case AuthenticationManager.DUPLICATED_LOGIN: {
                     return badRequest(EMessages.get("error.duplicated_login"));
                 }
+                case AuthenticationManager.USER_BLOCKED: {
+                	return badRequest(EMessages.get("error.user_blocked"));
+                }
                 default: {
                     return badRequest(EMessages.get("error.login"));
 
