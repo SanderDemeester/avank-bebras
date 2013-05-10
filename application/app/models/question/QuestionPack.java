@@ -192,7 +192,7 @@ public class QuestionPack {
         } catch (FileNotFoundException e) {
             throw new RuntimeException("Invalid file.", e);
         } catch (IOException e) {
-            throw new RuntimeException("IO error.", e);
+            throw new RuntimeException(e);
         }
     }
 

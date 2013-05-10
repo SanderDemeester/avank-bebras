@@ -185,18 +185,21 @@ public class QuestionController extends EController{
         // Fetch the submission
         Submit submit = Submit.find(userID, file);
         
+        // Save the question
+        form.get().save();
+        
         // Try to send the question to the server
         try {
             form.get().fixServer();
             Server server = form.get().server;
-            server.sendFile(form.get().officialid, submit.getFile(), userID);
+            server.sendFile(Integer.toString(form.get().id), submit.getFile(), userID);
         } catch (Exception e) {
+            // delete the question again
+            form.get().delete();
+            
             flash("error", "An error occured: "+e.getMessage());
             return badRequest(approveQuestionForm.render(form, manager, breadcrumbs, userID, file));
         }
-        
-        // If everything went well, we can save the question
-        form.get().save();
         
         // Only if the saving went well, we can delete the submitted archive file
         submit.getFile().delete();
@@ -399,7 +402,7 @@ public class QuestionController extends EController{
                 question.server.setAuthentication();
                 
                 // Copy the url content
-                URL url = new URL(question.server.path + question.officialid + "/" + fileName);
+                URL url = new URL(question.server.path + Integer.toString(question.id) + "/" + fileName);
                 URLConnection connection = url.openConnection();
                 InputStream is = connection.getInputStream();
                 ByteArrayOutputStream os = new ByteArrayOutputStream();
