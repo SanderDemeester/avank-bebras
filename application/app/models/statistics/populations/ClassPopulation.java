@@ -7,6 +7,7 @@ import com.avaje.ebean.Ebean;
 
 import play.db.ebean.Model.Finder;
 
+import models.EMessages;
 import models.dbentities.ClassGroup;
 import models.dbentities.UserModel;
 import models.dbentities.ClassPupil;
@@ -34,8 +35,7 @@ public class ClassPopulation extends Population {
     }
 
     @Override public String describe() {
-        // TODO make messages with parameters
-        return classGroup.name + " of the " + classGroup.getSchool().name;
+        return EMessages.get("statistics.populations.of_the", classGroup.name, classGroup.getSchool().name);
     }
 
     @Override public List<UserModel> getUsers() {

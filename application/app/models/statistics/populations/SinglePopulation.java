@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.avaje.ebean.Ebean;
 
+import models.EMessages;
 import models.dbentities.UserModel;
 
 /**

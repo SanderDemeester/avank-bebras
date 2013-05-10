@@ -3,17 +3,24 @@ package models.statistics.populations;
 import java.util.Map;
 import java.util.HashMap;
 
+import models.EMessages;
+
 /**
  * The different types of population.
  * @author Felix Van der Jeugt
  */
 public class PopulationType {
 
-    // TODO EMessages.
     public static PopulationType INDIVIDUAL = create(
-            "INDIVIDUAL", "Single User", new SinglePopulation.Factory());
-    public static PopulationType CLASS = create("CLASS", "Class",
-            new ClassPopulation.Factory());
+        "INDIVIDUAL",
+        EMessages.get("statistics.populations.individuals"),
+        new SinglePopulation.Factory()
+    );
+    public static PopulationType CLASS = create(
+        "CLASS",
+        EMessages.get("statistics.populations.classes"),
+        new ClassPopulation.Factory()
+    );
 
     // To keep track of instances.
     private static Map<String, PopulationType> instances;

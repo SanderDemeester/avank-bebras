@@ -165,9 +165,14 @@ languages.nl = Nederlands
 
 # Statistics
 statistics.title = Statistieken
-statistics.boxplot = Boxplot
-statistics.histogram = Histogram
-statistics.piechart = Taartdiagram
+statistics.add_population = Voeg een populatie toe
+statistics.add_filter = Voeg een filter toe
+statistics.count = Aantal
+statistics.populations.of_the = {0} van de/het {1}
+statistics.populations.individuals = Personen
+statistics.populations.classes = Klassen
+statistics.statistics.gender = Geslacht
+statistics.statistics.score = Correcte vragen
 
 # Login
 redirect_message = U zal zodadelijk worden doorgestuurd naar uw startpagina.

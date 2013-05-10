@@ -47,7 +47,7 @@ public abstract class DiscreteStatistic extends Statistic {
         /* The series object. */
         ArrayNode series = json.putArray("series");
         ObjectNode serie = Json.newObject();
-        serie.put("name", "Count"); // TODO EMessage
+        serie.put("name", EMessages.get("statistics.count"));
         ArrayNode pairs = serie.putArray("data");
         for(String str : map.keySet()) {
             ArrayNode pair = pairs.addArray();

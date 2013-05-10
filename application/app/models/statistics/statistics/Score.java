@@ -14,6 +14,8 @@ import models.dbentities.QuestionSetModel;
 
 public class Score extends ContinuousStatistic {
 
+    public static final String name = "statistics.statistics.score";
+
     @Override public Double calculate(UserModel user) {
         double total = 0;
         List<Boolean> corrects = new ArrayList<Boolean>();
@@ -43,8 +45,7 @@ public class Score extends ContinuousStatistic {
     }
 
     @Override public String getName() {
-        // TODO EMessage
-        return "statistics.score";
+        return name;
     }
 
 }

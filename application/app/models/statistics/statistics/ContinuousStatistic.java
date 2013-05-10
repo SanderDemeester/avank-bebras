@@ -91,7 +91,7 @@ public abstract class ContinuousStatistic extends Statistic {
         ArrayNode series = json.putArray("series");
         for(String colour : map.keySet()) {
             ObjectNode serie = Json.newObject();
-            serie.put("name", " ");
+            serie.put("name", colour);
             serie.put("color", colour);
             ArrayNode pairs = serie.putArray("data");
             

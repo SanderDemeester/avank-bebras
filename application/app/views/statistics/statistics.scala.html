@@ -6,6 +6,7 @@
 )
 
 @import models.statistics.statistics.StatisticFactory
+@import models.EMessages
 
 @main(EMessages.get("statistics.title"), breadcrumbs) {
 <style type="text/css">
@@ -46,7 +47,7 @@
     <input type="hidden" id="population-count" value="@populations.size()" />
 
     <!-- Functionality for adding populations. -->
-    <button type="button" class="btn btn-large" data-toggle="modal" data-target="#population-chooser">@EMessages.get("forms.add")</button>
+    <button type="button" class="btn btn-large" data-toggle="modal" data-target="#population-chooser">@EMessages.get("statistics.add_population")</button>
     <div class="modal hide fade" id="population-chooser">
         <!--<div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -65,7 +66,7 @@
                         <input type="checkbox" class="population-check"
                         @if(pop.getColour() != null) { disabled="disabled" checked="checked" } />
                         <input type="hidden" name="popid" value="@pop.id()" />
-                        @pop.describe() @pop.getColour()
+                        @pop.describe()
                     </label>
                     }
                 </div>
@@ -73,8 +74,8 @@
             </div>
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn" data-dismiss="modal">Close</a>
-            <a href="#" class="btn btn-primary" id="population-add" data-dismiss="modal">Add</a>
+            <a href="#" class="btn" data-dismiss="modal">@EMessages.get("forms.cancel")</a>
+            <a href="#" class="btn btn-primary" id="population-add" data-dismiss="modal">@EMessages.get("forms.add")</a>
         </div>
     </div>
 
@@ -123,7 +124,7 @@
         </div>
 
         <!-- Functionality to add a filter. -->
-        <button type="button" class="btn btn-large" id="filter-add">@EMessages.get("forms.add")</button>
+        <button type="button" class="btn btn-large" id="filter-add">@EMessages.get("statistics.add_filter")</button>
         <div class="hide statistic-filter form-inline" id="statistic-filter-template">
             <input type="hidden" class="index" value="@if(statistic == null) {0} else {@statistic.filters().size()}">
             <select>

@@ -18,10 +18,10 @@ public class StatisticFactory {
 
     private StatisticFactory() {
         map = new HashMap<String, Factory>();
-        map.put("statistics.gender", new Factory() {
+        map.put(Gender.name, new Factory() {
             public Statistic create() { return new Gender(); }
         });
-        map.put("statistics.score", new Factory() {
+        map.put(Score.name, new Factory() {
             public Statistic create() { return new Score(); }
         });
     }
