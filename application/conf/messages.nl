@@ -44,6 +44,7 @@ error.mimic = Kan gebruiker niet nabootsen
 error.mimic.cant_find_user = Kan de opgegeven gebruiker niet vinden
 error.mimic.policy_deny = Systeem beleid verhinderd u van de gebruiker na te bootsen
 error.mimic.user_logged_in = De gebruiker die u probeerd na te bootsen is ingelogd in het systeem
+error.user_blocked = Uw account is geschorst, gelieve een admin te contacteren
 
 
 
@@ -65,7 +66,11 @@ links.datamanager.diffs = Wijzig de moeilijkheidsgraden
 links.datamanager.grades = Wijzig de graden voor studenten
 links.contestmanager.title = Competitie beheer
 links.contestmanager.overview = Competitie overzicht
+links.contestmanager.create = Nieuwe competitie
 links.mimic = Gebruiker nabootsen
+links.contesttaking.title = Competities
+links.contesttaking.overview = Beschikbare competities
+links.contesttaking.history = Geschiedenis
 links.manageusers.users = Toon gebruikers
 links.manageusers.title = Gebruikers beheer
 
@@ -114,6 +119,8 @@ question.editor.answerOptionsInfo = Voeg de mogelijke antwoorden toe aan de vraa
 question.editor.addAnswerOption = Voeg antwoordmogelijkheid toe
 question.editor.regexInfo = Voeg het exacte antwoord toe. Javagestileerde reguliere expresies zijn ook toegestaan.
 question.editor.submitted = Uw vraag werd succesvol ingediend.
+question.editor.possibleAnswer = Een mogelijk antwoord
+question.editor.regex = Input
 
 question.editor.tabs.general = Algemeen
 question.editor.tabs.answers = Antwoorden
@@ -135,6 +142,7 @@ question.factory.error.noCorrectAnswers = Er is geen correct antwoord aangeduid 
 question.factory.error.moreThanOneCorrectAnswers = Voor de vraag in het {0} zijn er meerdere correcte antwoorden aangeduid.
 question.factory.error.invalidRegex = De vraag bevat een foutieve reguliere expressie in het {0}.
 question.factory.error.invalidUpload = Uw bestand is ongeldig
+question.factory.error.invalidID = Ongeldig ID
 
 question.questionset.name = Vragenbundels.
 question.questionset.create.breadcrumb = Niewe vragenbundel
@@ -142,7 +150,7 @@ question.questionset.create = Maak een nieuwe vragenbundel aan!
 question.questionset.create.title = Maak een nieuwe vragenbundel aan.
 question.questionset.create.step2 = Stap 2: Vragenbundel informatie.
 question.questionset.create.name = Naam van de vragenbundel:
-question.questionset.create.level = Niveau van de vragenbundel:
+question.questionset.create.grade = Niveau van de vragenbundel:
 question.questionset.create.active = Vink aan om deze vragenbundel actief te maken.
 question.questionset.overview = Vragenbundel overzicht.
 question.questionset.addquestion = Voeg een vraag toe aan de bundel.
@@ -150,19 +158,22 @@ question.questionset.form.difficulty = Moeilijkheidsgraad
 question.questionset.addquestion.title = Voeg een nieuwe vraag toe aan de bundel.
 question.questionset.addquestion.id = Id van de vraag:
 question.questionset.addquestion.brcr = Voeg toe
-question.questionset.manager.form.level = Niveau
+question.questionset.manager.form.grade = Niveau
 question.questionset.manager.form.name = Naam
 question.questionset.manager.form.active = Actief
 question.questionset.overview.questions = Deze vragenbundel bevat de volgende vragen:
 question.questionset.overview.basic = Bewerk vragenbundel:
 question.questionset.form.qid = Vraag id
 question.questionset.form.qsid = Vragenbundel id
+question.questionset.doublegrade = De competitie heeft al een vragenbundel met het geselecteerde niveau!
 
 # Languages
 languages.language = Taal
 languages.languages = Talen
 languages.en = Engels
 languages.nl = Nederlands
+languages.fr = Frans
+languages.de = Duits
 
 # Login
 redirect_message = U zal zodadelijk worden doorgestuurd naar uw startpagina.
@@ -264,7 +275,7 @@ management.add = Nieuw
 management.confirmDelete = Ben je zeker dat je deze record wilt verwijderen?
 
 # competition
-competition.name = Competities
+competition.breadcrumb = Competities
 competition.create.breadcrumb = Nieuwe competitie
 competition.create = Maak een nieuwe competitie aan.
 competition.create.title = Maak een nieuwe competitie aan.
@@ -274,18 +285,56 @@ competition.create.type = Type van de competitie:
 competition.create.end = Eindtijdstip van de competitie:
 competition.create.start = Starttijdstip van de competitie:
 competition.create.active = Vink aan om deze competitie actief te maken.
+competition.create.duration = Duur van de nieuwe competitie (in minuten):
 competition.manager.form.name = Naam
 competition.manager.form.type = Type
 competition.manager.form.active = Actief
 competition.manager.form.starttime = Starttijdstip
 competition.manager.form.endtime = Eindtijdstip
 competition.manager.form.creator = Auteur
+competition.manager.form.duration = Duur (minuten)
 competition.view.edit = Bewerk de competitie:
 competition.view.qs = Vragenbundels voor deze competitie:
 competition.edit = Bewerk competitie
 competition.edit.breadcrumb = Bewerk
 competition.overview = Competitie overzicht
 competition.overview.info = Op deze pagina, kan je de voor jouw zichtbare competities bekijken. Je kan nieuwe competities aanmaken of een al bestaande competitie aanpassen.
+competition.info.grades = Voor deze contest zijn op dit moment de volgende niveaus beschikbaar:
+competition.info.languages = Voor deze contest zijn op dit moment de volgende talen beschikbaar:
+competition.view.title = Competitie
+competition.view.status = Status
+competition.class.info = Dit is een restricted competitie. Als je jouw leerlingen deze competitie wil laten afleggen, moet je hun klas registreren.
+competition.class.button = Bekijk geregistreerde klassen.
+competition.class.title = Competitie klassen
+competition.class.breadcrumb = Klassen
+competition.class.management.form.name = Naam van de klas
+competition.class.register.title = Registreer nieuwe klas
+competition.class.register.breadcrumb = Registreer nieuwe klas
+competition.class.register.pick = Kies een klas
+competition.class.register.error = De gekozen klas is al geregistreerd voor deze competitie.
+competition.state.draft = Ontwerp
+competition.state.active = Actief
+competition.state.running = Lopend
+competition.state.finished = Afgelopen
+competition.type.anonymous = Anoniem
+competition.type.restricted = Begrensd
+competition.type.unrestricted = Onbegrensd
+
+competitions.breadcrumb = Beschikbare competities
+competitions.title = Beschikbare competities.
+competitions.totake = Beschikbare competities waaraan je op dit moment kan deelnemen.
+competitions.taken = Competities die je in het verleden hebt afgelegd
+competitions.grade.title = Gelieve het gewenste niveau te selecteren.
+competitions.grade = Niveau
+competitions.grade.warning = Opgepast!
+competitions.grade.info = Je staat op het punt om aan een competitie deel te nemen. Om de juiste vragen te kunnen selecteren, hebben we je voorkeur niveau nodig.  Gelieve een niveau te selecteren
+competitions.grade.breadcrumb = Niveau kiezen
+
+competition.history.warning = Opgelet!
+competition.history.info = Je bent momenteel niet ingelogd. Om resultaten en statistieken van vorige competities te bekijken, moet je ingelogd zijn.
+competition.history.title = Competities afgelegd in het verleden.
+competition.history.breadcrumb = Geschiedenis
+competition.history.form.name = Name
 
 # schools
 schools.title = Lijst van Scholen
@@ -315,6 +364,9 @@ servers.form.ftpport = FTP poort
 servers.form.ftpuser = FTP gebruikersnaam
 servers.form.ftppass = FTP paswoord
 servers.form.ftppath = FTP pad
+servers.form.is_http_secured = HTTP beveiligd
+servers.form.http_username = HTTP gebruikersnaam
+servers.form.http_password = HTTP wachtwoord
 servermanagement.servers.name = Servers
 servermanagement.servers.new = Nieuwe Server
 servermanagement.servers.server = Server
@@ -325,11 +377,13 @@ servers.success.added = Server {0} is aangemaakt
 servers.success.edited = Server {0} is aangepast
 servers.success.removed = Server {0} is verwijderd
 
+questions.preview = Voorvertoning
 questions.form.author = Auteur
 questions.form.officialid = Officieel ID
 questions.form.path = ??Padnaam??
 questions.form.active = Actief
 questions.form.server = Server
+questions.form.questionFileNotFound = Deze vraag kon niet gevonden worden op de opgegeven server of is ongeldig.
 question.questions.name = Vragen
 question.questions.new = Nieuwe Vraag
 question.questions.list = Vragen
@@ -538,6 +592,49 @@ users.title.edit = Aanpassen gebruiker
 user.success.added = Gebruiker {0} is succesvol aangemaakt
 user.success.edited = Gebruiker {0} is succesvol aangepast
 user.success.removed = Gebruiker {0} is succesvol verwijderd
+
+# Competitions
+competition.name = Competitie
+competition.submit = Indienen
+competition.intro = De competitie is begonnen! Verlies niet teveel tijd door deze tekst te lezen.
+competition.confirmSubmit = Ben je zeker dat je jouw antwoorden wilt doorsturen en de competitie beëindiggen?
+competition.noInternet = Je hebt geen actieve internetconnectie!
+competition.timesUp = Tijd is verstreken!
+competition.overview = Start
+competition.input.regex = Uw antwoord
+competition.feedback = Feedback
+competition.modal.submitting = Versturen
+competition.modal.ready = Je bent klaar!
+competition.modal.sendingAnswers = Bezig met versturen van antwoorden...
+competition.modal.error = Oeps! Er is iets misgelopen
+competition.modal.error.code = Geef onderstaande code aan een verantwoordelijke die dan jouw antwoorden zal doorsturen.
+competition.modal.error.orYouCan = Of
+competition.modal.error.retry = Probeer opnieuw
+competition.modal.finished = Competitie is klaar
+competition.modal.finished.text = Je hebt met succes de competitie beëindigd.
+competition.modal.finished.return = Keer terug naar start
+competition.modal.finished.showFeedback = Toon feedback
+
+competition.run.submit.notStarted = Deze competitie is nog niet begonnen, of is al reeds gestopt door de verantwoordelijke.
+competition.run.submit.ok = Antwoorden zijn verstuurd.
+competition.run.submit.invalid = Antwoorden zijn ongeldig.
+competition.run.finished = De competitie is gestopt.
+
+competition.overview.button = Overzicht
+competition.overview.submitAnswers = Verzend antwoorden van leerlingen
+competition.overview.submitAnswers.info = Plak de code die je gekopieerd hebt van de leerling, plak het in dit tekstveld en klik op verzenden.
+competition.overview.stopCompetition = Stop competitie
+competition.overview.progress = Verloop
+competition.overview.timeLeft = Tijd over
+competition.overview.finished = Klaar
+competition.overview.details = Details
+competition.overview.id = ID
+competition.overview.questionSets = Vragen sets
+competition.overview.availableLanguages = Beschikbare talen
+competition.overview.confirmFinish = Ben je zeker dat je deze competitie wilt stoppen? Alle niet-verzonden vragen zullen verloren gaan!
+competition.started.title = Competitie nog niet gestart
+competition.started.info = De gekozen competitie is nog niet gestart. Gelieve het later nogmaals te proberen.
+
 
 # Contact form
 contact.formtitle = Contact formulier

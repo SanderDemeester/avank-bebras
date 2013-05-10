@@ -34,8 +34,7 @@ public class QuestionModel extends ManageableModel{
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Seq")//@GeneratedValue(strategy = GenerationType.AUTO)
     public int id;
 
-    @Editable(uponCreation=true)
-    @Constraints.Required
+    @Editable
     public String officialid;
 
     @Editable

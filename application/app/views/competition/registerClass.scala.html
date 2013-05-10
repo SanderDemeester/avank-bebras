@@ -1,0 +1,50 @@
+@*******************************************
+* Register class for contest page          *
+*                                          *
+* author: Kevin Stobbelaar                 *
+*******************************************@
+
+@(breadcrumbs : List[models.data.Link], modelForm : Form[_ <: models.management.ManageableModel],
+contestId : String)
+
+@import helper._
+@import helper.twitterBootstrap._
+@import models.EMessages
+@import models.management.FieldType
+@import views.html.commons.showflash
+
+@main(EMessages.get("competition.class.register.title"), breadcrumbs) {
+
+    <div class="row-fluid">
+        <div class="span12">
+
+            @form(controllers.competition.routes.CompetitionClassController.save(contestId)) {
+
+                <fieldset>
+
+                    @if(flash.containsKey("error")) {
+                        <div class="alert alert-error">
+                            <strong>Error!</strong> @flash.get("error")
+                        </div>
+                    }
+
+                    @select(
+                        modelForm("class"),
+                        options(controllers.competition.CompetitionClassController.options()),
+                        '_label -> (EMessages.get("competition.class.register.pick")+":"),
+                        '_showConstraints -> false
+                    )
+
+                </fieldset>
+
+                <div class="actions">
+                    <input type="submit" value="@EMessages.get("forms.submit")" class="btn btn-primary">
+                    <a href="@controllers.competition.routes.CompetitionClassController.list(contestId, 0, "", "", "")" class="btn"> @EMessages.get("forms.cancel")</a>
+                </div>
+
+            }
+
+        </div>
+    </div>
+
+}
