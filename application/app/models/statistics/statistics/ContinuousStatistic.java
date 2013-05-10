@@ -42,7 +42,7 @@ public abstract class ContinuousStatistic extends Statistic {
                 values = new ArrayList<Double>();
                 map.put(population.getColour(), values);
             }
-            for(UserModel user : population.getUsers()) {
+            for(UserModel user : population.getUsers()) if(passes(user)) {
                 double x = calculate(user);
                 sum += x;
                 n ++;

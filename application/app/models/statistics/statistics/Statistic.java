@@ -4,6 +4,7 @@ import java.lang.String;
 
 import java.util.Collection;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.codehaus.jackson.node.ObjectNode;
 
@@ -54,6 +55,20 @@ public abstract class Statistic {
      * @return Whether or not he passes.
      */
     public abstract boolean check(UserModel user);
+
+    /**
+     * Checks is the given user passes all the filters for this statistic.
+     * @param user The user to check.
+     * @return Whether he passes all filters.
+     */
+    public boolean passes(UserModel user) {
+        boolean passes = true;
+        Iterator<Statistic> it = filters().iterator();
+        for(int i = 0; it.hasNext() && passes; i++) {
+            passes = passes && it.next().check(user);
+        }
+        return passes;
+    }
 
     /**
      * Add conditions, for when this statistic is used as a filter.

@@ -23,7 +23,7 @@ public abstract class DiscreteStatistic extends Statistic {
         String key;
         Map<String, Integer> map = new HashMap<String, Integer>();
         for(Population population : data) {
-            for(UserModel user : population.getUsers()) {
+            for(UserModel user : population.getUsers()) if(passes(user)) {
                 key = calculate(user);
                 value = map.get(key);
                 if(value == null) value = 0;
