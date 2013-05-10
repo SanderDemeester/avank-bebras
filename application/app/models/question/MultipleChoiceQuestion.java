@@ -71,4 +71,16 @@ public class MultipleChoiceQuestion extends Question{
     public void setCorrectElement(Language language, MultipleChoiceElement element) {
         correctElement.put(language, element);
     }
+
+    @Override
+    public Answer getAnswerByInput(String input, Language language) throws AnswerGeneratorException {
+        MultipleChoiceElement chosenElement = null;
+        for (MultipleChoiceElement e : elements.get(language)) {
+            if(e.getContent().equals(input)) chosenElement = e;
+        }
+        
+        if(chosenElement == null && input != null)
+            throw new AnswerGeneratorException("Invalid multiple choice element.");
+        return new MultipleChoiceAnswer(this, chosenElement, language);
+    }
 }

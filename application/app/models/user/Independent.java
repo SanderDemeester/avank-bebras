@@ -25,11 +25,13 @@ public class Independent extends Authenticated{
 
     protected Independent(UserModel data, UserType type){
         super(data, type); //abstract class constructor could init some values
+        ROLES.add(Role.PUPILCLASSVIEW);
         previousClassList = new ArrayList<String>();
     }
 
     public Independent(UserModel data) {
-        this(data, UserType.INDEPENDENT);
+        this(data, UserType.PUPIL_OR_INDEP);
+        ROLES.add(Role.TAKINGCONTESTS);
     }
 
     /**
@@ -49,7 +51,8 @@ public class Independent extends Authenticated{
     }
 
     public ClassGroup getCurrentClass() throws PersistenceException{
-        return Ebean.find(ClassGroup.class).where().eq("id", this.data.classgroup).findUnique();
+        ClassGroup res = Ebean.find(ClassGroup.class).where().eq("id", this.data.classgroup).findUnique();
+        return res != null && res.isActive() ? res : null;
     }
 	
 	/**
@@ -65,6 +68,8 @@ public class Independent extends Authenticated{
 			ClassGroup cg = Ebean.find(ClassGroup.class).where().eq("id", c.classid).findUnique();
 			if(cg != null)res.add(cg);
 		}
+		ClassGroup posCurrent = Ebean.find(ClassGroup.class).where().eq("id", this.data.classgroup).findUnique();
+		if(posCurrent != null && !posCurrent.isActive())res.add(posCurrent);
 		
 		return res;
 	}

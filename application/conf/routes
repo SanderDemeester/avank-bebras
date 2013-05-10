@@ -14,7 +14,11 @@ GET		/signup						controllers.UserController.signup()
 POST	/signup 					controllers.UserController.register()
 
 # Login
-GET		/login_validate				controllers.UserController.validate_login(id, password)
+GET		/login_validate			controllers.UserController.validate_login(id, password)
+GET     /forgotPwd          	controllers.user.ResetPasswordController.forgotPwd()
+POST    /forgotPwd          	controllers.user.ResetPasswordController.forgotPwdSendMail()
+GET     /reset_password  		controllers.user.ResetPasswordController.receivePasswordResetToken(token)
+POST	/reset_password			controllers.user.ResetPasswordController.resetPassword()
 
 # Mimic
 GET		/mimic						controllers.UserController.mimic()			
@@ -51,20 +55,38 @@ GET     /server/remove/:name        controllers.question.ServerController.remove
 # Question set management
 GET     /questionset/new                        controllers.question.QuestionSetController.create(c)
 POST    /questionset                            controllers.question.QuestionSetController.save(c)
-GET     /questionset/:qs/questions              controllers.question.QuestionSetController.list(qs, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
-GET     /questionset/:qs/questions/add          controllers.question.QuestionSetController.addQuestion(qs)
-POST    /questionset/:qs/questions              controllers.question.QuestionSetController.updateQuestions(qs)
-POST    /questionset/edit                       controllers.question.QuestionSetController.update(qs)
-GET     /questionset/:qs/questions/remove:id    controllers.question.QuestionSetController.removeQuestion(qs, id)
+GET     /questionset/:qs/questions              controllers.question.QuestionSetController.list(qs:Int, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /questionset/:qs/questions/add          controllers.question.QuestionSetController.addQuestion(qs:Int)
+POST    /questionset/:qs/questions              controllers.question.QuestionSetController.updateQuestions(qs:Int)
+POST    /questionset/edit                       controllers.question.QuestionSetController.update(qs:Int)
+GET     /questionset/:qs/questions/remove:id    controllers.question.QuestionSetController.removeQuestion(qs:Int, id)
+GET     /questionset/questions/add-data         controllers.question.QuestionSetController.typeAhead()
 
-# Contests module
-GET     /contests                   controllers.competition.CompetitionController.index(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
-GET     /contests/new/contest       controllers.competition.CompetitionController.create()
-POST    /contests                   controllers.competition.CompetitionController.save()
-GET     /contests/:id/overview      controllers.competition.CompetitionController.viewCompetition(id, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
-POST    /contests/                  controllers.competition.CompetitionController.updateCompetition(id)
-GET     /contests/remove/:id        controllers.competition.CompetitionController.removeCompetition(id)
-GET     /contests/qs/remove/:qsid   controllers.competition.CompetitionController.removeQuestionSet(qsid, contestid)
+# Contest management module
+GET     /contests                       controllers.competition.CompetitionController.index(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /contests/new/contest           controllers.competition.CompetitionController.create()
+POST    /contests                       controllers.competition.CompetitionController.save()
+GET     /contests/:id/overview          controllers.competition.CompetitionController.viewCompetition(id, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+POST    /contests/                      controllers.competition.CompetitionController.updateCompetition(id)
+GET     /contests/remove/:id            controllers.competition.CompetitionController.removeCompetition(id)
+GET     /contests/qs/remove/:qsid       controllers.competition.CompetitionController.removeQuestionSet(qsid:Int, contestid)
+GET     /contests/:id/classes           controllers.competition.CompetitionClassController.list(id, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /contests/:id/classes/register  controllers.competition.CompetitionClassController.register(id)
+POST    /contests/:id/classes/save      controllers.competition.CompetitionClassController.save(id)
+
+# Contest taking module
+GET     /available-contests                 controllers.competition.TakeCompetitionController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /available-contests/take/:id        controllers.competition.TakeCompetitionController.takeCompetition(id)
+GET     /available-contests/submit		    controllers.competition.TakeCompetitionController.submit(json)
+GET     /available-contests/feedback/:json	controllers.competition.TakeCompetitionController.feedback(json)
+GET     /competition-overview/:id			controllers.competition.TakeCompetitionController.overview(id)
+GET     /competition-overview-data/:id		controllers.competition.TakeCompetitionController.overviewData(id)
+GET     /competition/finish/:id				controllers.competition.TakeCompetitionController.forceFinish(id)
+GET     /available-contests/forceSubmit		controllers.competition.TakeCompetitionController.forceSubmit(json)
+GET     /available-contests/:id/grade       controllers.competition.TakeCompetitionController.chooseGrade(id)
+
+# Contest history module
+GET     /available-contests/history         controllers.competition.CompetitionHistoryController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
 # Question Management
 GET     /questions                  		 controllers.question.QuestionController.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")
@@ -76,6 +98,8 @@ POST    /question/                  		 controllers.question.QuestionController.s
 GET     /questions/:name              		 controllers.question.QuestionController.edit(name)
 POST    /questions/:name              		 controllers.question.QuestionController.update(name)
 GET     /question/remove/:name      		 controllers.question.QuestionController.remove(name)
+GET     /questionfile/:id/:file      		 controllers.question.QuestionController.showQuestionFile(id, file)
+GET     /question/export/:id      		 	 controllers.question.QuestionController.export(id)
 
 # FAQ
 GET		/faq						controllers.faq.FAQController.getFAQ()
@@ -106,11 +130,20 @@ GET     /assets/img/glyphicons-halflings-white.png      controllers.Assets.at(pa
 GET     /assets/img/glyphicons-halflings.png            controllers.Assets.at(path="/public", file="/images/bootstrap/glyphicons-halflings.png")
 
 # Settings
-GET			/settings			controllers.user.PersonalPageController.show(tab:Int ?= 0)
+GET			/settings			        controllers.user.PersonalPageController.show(tab:Int ?= 0)
 POST		/settings/submit			controllers.user.PersonalPageController.changeInformation()
 GET			/settings/editinfo			controllers.user.PersonalPageController.show(tab:Int ?= 1)
 GET			/settings/passwedit			controllers.user.PersonalPageController.show(tab:Int ?= 2)
-GET			/settings/:id			controllers.user.PersonalPageController.show(id:Int)
+POST		/settings/passwedit			controllers.user.PersonalPageController.changePassword()
+GET			/settings/:id			    controllers.user.PersonalPageController.show(id:Int)
+
+# User management
+GET 		/manage/users		controllers.user.management.UserManagerController.showUsers(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET			/manage/users/create		controllers.user.management.UserManagerController.createUser()
+GET			/manage/users/update		controllers.user.management.UserManagerController.updateUser()
+GET			/manage/users/save		controllers.user.management.UserManagerController.saveUser()
+GET			/manage/users/:id/edit		controllers.user.management.UserManagerController.editUser(id)
+GET			/manage/users/:id/remove	controllers.user.management.UserManagerController.removeUser(id)
 
 # Classes
 
@@ -118,19 +151,18 @@ GET		/classes					controllers.classgroups.ClassGroupController.viewClasses(p:Int
 GET 		/classes/add					controllers.classgroups.ClassGroupController.create()
 GET		/classes/upload					controllers.classgroups.ClassGroupIOController.upload()
 POST		/classes/upload/				controllers.classgroups.ClassGroupIOController.post()
-GET		/classes/upload/:id				controllers.classgroups.ClassGroupIOController.save(id)
+GET		/classes/upload/save/:id				controllers.classgroups.ClassGroupIOController.save(id)
 POST		/classes/					controllers.classgroups.ClassGroupController.save()
-POST		/classes/:id/					controllers.classgroups.ClassGroupIOController.save(id)
 GET		/classes/view/:id				controllers.classgroups.ClassPupilController.viewClass(id:Int, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
 
 GET		/classes/view/:id/remove/:studid	controllers.classgroups.ClassPupilController.removeStudent(id:Int,studid)
 GET		/classes/view/:id/add			controllers.classgroups.ClassPupilController.addExistingStudent(id:Int)
-POST		/classes/view/:id/				controllers.classgroups.ClassPupilController.saveExisting(id:Int)
+POST		/classes/view/:id/				controllers.classgroups.ClassPupilController.saveExisting(id:java.lang.Integer)
 GET		/classes/view/:id/download			controllers.classgroups.ClassPupilController.downloadClass(id:Int)
-GET		/classes/view/:id/upload			controllers.classgroups.ClassGroupIOController.uploadExisting(id:Int)
-POST		/classes/view/:id/upload/				controllers.classgroups.ClassGroupIOController.postExisting(id:Int)
-GET		/classes/view/:id/upload/:dataid				controllers.classgroups.ClassGroupIOController.saveExisting(id:Int,dataid)
+GET		/classes/view/:id/upload			controllers.classgroups.ClassGroupIOController.uploadExisting(id:java.lang.Integer)
+POST		/classes/view/:id/upload/				controllers.classgroups.ClassGroupIOController.postExisting(id:java.lang.Integer)
+GET		/classes/view/:id/upload/save/:dataid				controllers.classgroups.ClassGroupIOController.saveExisting(id:java.lang.Integer,dataid)
 
 GET		/classes/view/:id/edit			controllers.classgroups.ClassGroupController.editClass(id:Int)
 POST		/classes/view/:id/edit/			controllers.classgroups.ClassGroupController.update(id:Int)
@@ -140,7 +172,11 @@ GET		/classes/view/:id/help/remove/:teachid	controllers.classgroups.HelpTeacherC
 GET		/classes/view/:id/help/add			controllers.classgroups.HelpTeacherController.create(id:Int)
 POST		/classes/view/:id/help/			controllers.classgroups.HelpTeacherController.save(id:Int)
 
-GET		/classes/:id/old			controllers.classgroups.ClassPupilController.viewOldPupils(id:Int,p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET		/classes/view/:id/old			controllers.classgroups.ClassPupilController.viewOldPupils(id:Int,p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+
+# Classes (views of the pupils)
+
+GET		/pclasses/view				controllers.classgroups.pupilview.PupilClassController.viewClasses(p:Int ?=0, s ?= "name", o ?= "asc", f ?= "")
 
 # Contact form
 
@@ -148,3 +184,9 @@ GET		/contact			controllers.contactform.ContactFormController.showContactForm()
 POST		/contact/			controllers.contactform.ContactFormController.saveContactForm()
 GET		/upgrade			controllers.contactform.RequestTeacherController.showForm()
 POST		/upgrade			controllers.contactform.RequestTeacherController.upload()
+
+# Other users
+
+GET		/user/:id			controllers.user.OtherUserController.show(id)
+GET		/user/:id/block			controllers.user.BlockController.show(id)
+POST		/user/:id/block/		controllers.user.BlockController.block(id)

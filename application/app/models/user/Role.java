@@ -12,7 +12,7 @@ import models.data.Link;
  * @author Ruben Taelman
  * @author Felix Van der Jeugt
  */
-public class Role {
+public class Role implements Comparable<Role>{
 
 
     /* ====================================================================== *\
@@ -21,7 +21,7 @@ public class Role {
 
     // Mimicing
     public static Role MIMIC = new Role("Mimick user",
-    		new Link(EMessages.get("links.mimic"),"/mimic")
+    		new Link("links.mimic","/mimic")
     );
 
     // Anon
@@ -31,8 +31,8 @@ public class Role {
     // Authenticated
     public static Role LANDINGPAGE = new Role();
     public static Role SETTINGS = new Role("links.settings.title",
-        new Link(EMessages.get("links.settings.editinfo"), "/settings/editinfo"),
-        new Link(EMessages.get("links.settings.changepassword"), "/settings/passwedit")
+        new Link("links.settings.editinfo", "/settings/editinfo"),
+        new Link("links.settings.changepassword", "/settings/passwedit")
     );
 
     // Organiser
@@ -67,6 +67,11 @@ public class Role {
         new Link("links.datamanager.diffs", "/manage/difficulties/show"),
         new Link("links.datamanager.grades", "/manage/grades/show")
     );
+
+    public static Role MANAGEUSERS = new Role(
+        "links.manageusers.title",
+        new Link("links.manageusers.users","/manage/users")
+    );
     
     //TEACHER
     public static Role MANAGESCHOOLS = new Role(
@@ -81,11 +86,29 @@ public class Role {
 
     // Contest management
     public static Role MANAGECONTESTS = new Role(
-        EMessages.get("links.contestmanager.title"),
-        new Link(EMessages.get("links.contestmanager.overview"), "/contests")
+        "links.contestmanager.title",
+        new Link("links.contestmanager.overview", "/contests"),
+        new Link("links.contestmanager.create", "/contests/new/contest")
     );
 
+    // Contest view
+    public static Role VIEWCONTESTS = new Role(
+        "links.contestmanager.title",
+        new Link("links.contestmanager.overview", "/contests")
+    );
 
+    // Contest taking
+    public static Role TAKINGCONTESTS = new Role(
+        "links.contesttaking.title",
+        new Link("links.contesttaking.overview", "/available-contests"),
+        new Link("links.contesttaking.history", "/available-contests/history")
+    );
+    
+    //Classes view for pupils
+    public static Role PUPILCLASSVIEW = new Role(
+    		"classes.pupil.classes.list",
+    		new Link("classes.pupil.classes.list","/pclasses/view")
+    );
 
     /* ====================================================================== *\
                              Actual implementation.
@@ -144,6 +167,13 @@ public class Role {
      */
     public List<Link> pages() {
         return pages;
+    }
+
+    @Override
+    public int compareTo(Role o) {
+        if(this.mtitle == null) return -1;
+        if(o.mtitle == null) return 1;
+        return this.mtitle.compareTo(o.mtitle);
     }
 
 }

@@ -31,12 +31,18 @@
                 </div>
             }
 
+            @if(flash.containsKey("questionset-error")) {
+            <div class="alert alert-error">
+                <strong>Error!</strong> @flash.get("questionset-error")
+            </div>
+            }
+
             @inputText(qsForm("name"), '_label -> EMessages.get("question.questionset.create.name"), '_showConstraints -> false)
 
             @select(
-                qsForm("level"),
+                qsForm("gradetext"),
                 options = options(models.data.DataHandler.getGrades().toList.map(_.getName)),
-                '_label -> EMessages.get("question.questionset.create.level"),
+                '_label -> EMessages.get("question.questionset.create.grade"),
                 '_showConstraints -> false
             )
 
@@ -45,7 +51,7 @@
         </fieldset>
 
         <div class="actions">
-            <input type="submit" value="@EMessages.get("forms.submit")" class="btn primary">
+            <input type="submit" value="@EMessages.get("forms.submit")" class="btn btn-primary">
             <a href="@controllers.competition.routes.CompetitionController.index(0, "", "", "")" class="btn"> @EMessages.get("forms.cancel")</a>
         </div>
         }

@@ -1,12 +1,13 @@
 package models.dbentities;
 
+import com.avaje.ebean.validation.NotNull;
+import models.data.Grade;
+import models.management.Editable;
 import models.management.ManageableModel;
+import models.question.Server;
 import play.data.validation.Constraints.Required;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Version;
+import javax.persistence.*;
 
 
 /**
@@ -22,17 +23,23 @@ public class QuestionSetModel extends ManageableModel {
     private static final long serialVersionUID = 4L;
 
     @Id
-    public String id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "questionsets_id_seq")
+    public int id;
+
+    @Column(name="level")
+    @ManyToOne
+    @JoinColumn(name="level")
+    public Grade grade;
 
     @Required
-    public String level;
-
     public boolean active;
 
     @Required
     public String name;
 
-    public String contid;
+    @ManyToOne
+    @JoinColumn(name="contid")
+    public CompetitionModel contest;
 
     /**
      * Returns those values that have to be represented in a table.
@@ -40,7 +47,7 @@ public class QuestionSetModel extends ManageableModel {
      * @return array with the current values of the fields to be represented in the table
      */
     public String[] getFieldValues() {
-        String[] result = {name, level, Boolean.toString(active)};
+        String[] result = {name, grade.getName(), Boolean.toString(active)};
         return result;
     }
 
@@ -50,7 +57,7 @@ public class QuestionSetModel extends ManageableModel {
      * @return id
      */
     public String getID() {
-        return id;
+        return Integer.toString(id);
     }
 
 }

@@ -1,9 +1,13 @@
 @(message: String, breadcrumbs : List[models.data.Link])
 
+@import helper._
+@import helper.twitterBootstrap._
+
 @main(EMessages.get("app.home"), breadcrumbs) {
     <div class="hero-unit">
         <h1>@EMessages.get("app.startTitle")</h1>
         <p>@message</p>
         <p><a href="http://avank.ugent.be/~rtaelman/">Team pagina</a></p>
+
     </div>
 }

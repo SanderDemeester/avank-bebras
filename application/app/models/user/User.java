@@ -1,10 +1,10 @@
 
 package models.user;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import models.dbentities.UserModel;
 
@@ -19,7 +19,7 @@ public abstract class User{
 
     public UserModel data;
     // The roles this user has or can have
-    protected Set<Role> ROLES = new HashSet<Role>();// Can be made non-static if roles have to be altered on runtime
+    protected Set<Role> ROLES = new TreeSet<Role>();// Can be made non-static if roles have to be altered on runtime
     private UserType type;
     
     // Field to check if the users is mimicking some other user;
@@ -135,5 +135,7 @@ public abstract class User{
     public void setMimickStatus(boolean isMimicking){
     	this.isMimicking = isMimicking;
     }
+    
+    public abstract boolean isAnon();
 
 }

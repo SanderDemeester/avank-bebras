@@ -1,6 +1,6 @@
 @(breadcrumbs : List[models.data.Link], title : String, text : String)
 
-@main(EMessages.get("noAccess.title"),breadcrumbs){
+@main(EMessages.get(title),breadcrumbs){
     <div class="hero-unit">
         <h1>@title</h1>
         <p>@text</p>

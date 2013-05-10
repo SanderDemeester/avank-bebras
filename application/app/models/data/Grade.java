@@ -1,8 +1,14 @@
 package models.data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Id;
 import javax.persistence.Entity;
+import javax.persistence.PersistenceException;
 import javax.persistence.Table;
+
+import com.avaje.ebean.Ebean;
 
 import models.data.manager.DataElement;
 
@@ -66,6 +72,18 @@ public class Grade implements DataElement {
 
     @Override public String id() {
         return name;
+    }
+    
+    /**
+     * 
+     * @return all the Grades in the system
+     */
+    public static List<Grade> getGrades(){
+    	try{
+    		return Ebean.find(Grade.class).findList();
+    	}catch(PersistenceException pe){
+    		return new ArrayList<Grade>();
+    	}
     }
 
 }

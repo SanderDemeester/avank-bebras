@@ -13,7 +13,7 @@
 @element(aElement : models.question.MultipleChoiceElement) = {
     <label class="mc_answer row-fluid">
         <div class="span1"><i class="icon-remove removeanswer"></i></div>
-        <div class="span8"><input class="span12" type="text" name="answer-" id="answer-textbox-" value="@aElement.getContent()" placeholder="A possible answer"/></div>
+        <div class="span8"><input class="span12" type="text" name="answer-" id="answer-textbox-" value="@aElement.getContent()" placeholder="@EMessages.get("question.editor.possibleAnswer")"/></div>
         <div class="span3">Correct: <input type="radio" name="correct_answer_@language.getCode()" value="" @correctValue(aElement) ></div>
     </label>
 }

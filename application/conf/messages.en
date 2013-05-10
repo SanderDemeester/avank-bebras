@@ -13,6 +13,10 @@ app.signUp = Sign Up
 app.signIn = Sign In
 app.signOut = Sign Out
 app.mimic = mimic
+app.welcome = Welcome back {0}!
+app.overview = Overview
+app.dashboard = Dashboard
+app.getStarted = Choose a link from the left to get started.
 
 # Error
 notFound.title = Oops!
@@ -25,7 +29,8 @@ error.back = Go back
 error.date = Could not parse date.
 error.login = Invalid login.
 error.invalid_symbols = Input contains invalid symbols.
-error.invalid_email = Invalid email addres.
+error.invalid_email = Invalid email address.
+error.invalid_id = Invalid id.
 error.wrong_date_time = Time traveler?
 error.invalid_date = Invalid date format, please use (yyyy/mm/dd).
 error.no_password = No password.
@@ -39,6 +44,7 @@ error.mimic = Cant mimic user
 error.mimic.cant_find_user = Can not find user
 error.mimic.policy_deny = Can not mimic user by policy
 error.mimic.user_logged_in = The user that you are trying to mimic is logged into the system
+error.user_blocked = Your account has been suspended, please contact admin
 
 # Links from roles
 links.settings.title = Settings
@@ -58,7 +64,13 @@ links.datamanager.diffs = Manage the difficulty levels
 links.datamanager.grades = Manage the student grades
 links.contestmanager.title = Contest management
 links.contestmanager.overview = Contest overview
+links.contestmanager.create = Create new contest
 links.mimic = Mimic user
+links.contesttaking.title = Contests
+links.contesttaking.overview = Available contests
+links.contesttaking.history = History
+links.manageusers.users = Show users
+links.manageusers.title = User management
 
 # Forms
 forms.cancel = Cancel
@@ -106,6 +118,8 @@ question.editor.answerOptionsInfo = Add possible answer solutions to the questio
 question.editor.addAnswerOption = Add answer option
 question.editor.regexInfo = Enter the exact answer of the question. Java-accepted regular expressions are also allowed.
 question.editor.submitted = Your question was successfully submitted.
+question.editor.possibleAnswer = A possible answer
+question.editor.regex = Regular expression
 
 question.editor.tabs.general = General
 question.editor.tabs.answers = Answers
@@ -127,6 +141,7 @@ question.factory.error.noCorrectAnswers = The answers for language {0} contain n
 question.factory.error.moreThanOneCorrectAnswers = The answers for language {0} contain more than one correct answers.
 question.factory.error.invalidRegex = Invalid regular expression found in language {0}
 question.factory.error.invalidUpload = Your upload was invalid
+question.factory.error.invalidID = Invalid ID
 
 question.questionset.name = Question sets
 question.questionset.create.breadcrumb = New question set
@@ -134,7 +149,7 @@ question.questionset.create = Create new question set!
 question.questionset.create.title = Create question set.
 question.questionset.create.step2 = Step 2: Question Set Information
 question.questionset.create.name = Name of new question set:
-question.questionset.create.level = Level of new question set:
+question.questionset.create.grade = Grade of new question set:
 question.questionset.create.active = Check this box to make the question set active.
 question.questionset.overview = Question set overview
 question.questionset.addquestion = Add question to set
@@ -142,19 +157,22 @@ question.questionset.form.difficulty = Difficulty
 question.questionset.addquestion.title = Add new question to the question set.
 question.questionset.addquestion.id = Id of the question:
 question.questionset.addquestion.brcr = Add
-question.questionset.manager.form.level = Level
+question.questionset.manager.form.grade = Grade
 question.questionset.manager.form.name = Name
 question.questionset.manager.form.active = Active
 question.questionset.overview.questions = This question set contains the following questions:
 question.questionset.overview.basic = Edit question set information.
 question.questionset.form.qid = Question id
 question.questionset.form.qsid = Question set id
+question.questionset.doublegrade = The contest already contains a question set with the selected grade.
 
 # Languages
 languages.language = Language
 languages.languages = Languages
 languages.en = English
 languages.nl = Dutch
+languages.fr = French
+languages.de = German
 
 # Login
 redirect_message = You will be redirected to your homepage shortly.
@@ -178,6 +196,42 @@ register.password_mismatch = Password did not match.
 register.Male = Male
 register.Female = Female
 register.Other = Other
+
+# Forgot pwd
+forgot_pwd.no_teacher = There is no teacher associated with your current class, cannot reset password
+forgot_pwd.no_classgroup = There is no class associated with your account, cannot reset password
+forgot_pwd.forgot_pwd = Forgot password
+forgot_pwd.id = Bebras-ID
+forgot_pwd.email = Email
+forgot_pwd.submit = Reset password
+forgot_pwd.success = Password successfully reset.
+forgot_pwd.notsent = An error occurred, the email wasn't sent.
+forgot_pwd.mail = An email was sent to the provided address.
+forgot_pwd.mail_sent = A new password was requested for user {0} on Avank-Bebras. Go to {1} to reset it.
+forgot_pwd.mail_subject = Password reset
+forgot_pwd.email_blank = Leave empty if you don't have an email address
+forgot_pwd.reset_success = Password reset success
+forgot_pwd.reset_fail = Failed to reset password
+forgot_pwd.teachermail = Your pupil {0} requested a new password for Avank-Bebras. Please reset it. 
+forgot_pwd.teachersubject = Password reset for pupil
+
+# Edit pwd
+edit_pwd.edit_pwd = Edit password
+edit_pwd.current_pwd = Current password
+edit_pwd.new_pwd = New password
+edit_pwd.confirm_new_pwd = Confirm new password
+edit_pwd.submit = Ok
+edit_pwd.success = Password successfully changed.
+
+# Reset pwd
+reset_pwd.title = Reset password
+reset_pwd.id = Bebras-ID
+reset_pwd.new = New password
+reset_pwd.submit = Submit
+
+# Personal Info
+pers_info.pers_info = Personal information
+pers_info.edit = Edit information
 
 #faq
 faq.title = Frequently Asked Questions
@@ -220,7 +274,7 @@ management.add = Create
 management.confirmDelete = Are you certain you want to delete this record?
 
 # competition
-competition.name = Contests
+competition.breadcrumb = Contests
 competition.create.breadcrumb = New contest
 competition.create = Create new contest!
 competition.create.title = Create contest.
@@ -230,19 +284,56 @@ competition.create.type = Type of new contest:
 competition.create.end = End time of new contest:
 competition.create.start = Start time of new contest:
 competition.create.active = Check this box to make the contest active.
+competition.create.duration = Duration of new contest (in minutes):
 competition.manager.form.name = Name
 competition.manager.form.type = Type
 competition.manager.form.active = Active
 competition.manager.form.starttime = Start time
 competition.manager.form.endtime = End time
 competition.manager.form.creator = Creator
+competition.manager.form.duration = Duration (minuten)
 competition.view.edit = Edit contest information.
 competition.view.qs = Question sets for this contest:
 competition.edit = Edit contest
 competition.edit.breadcrumb = Edit
 competition.overview = Contest overview.
 competition.overview.info = On this page, you can view contest which are open for you. You can create new contests or edit an existing contest.
+competition.info.grades = This contest currently supports the following grades:
+competition.info.languages = This contests currently supports the following languages:
+competition.view.title = Contest
+competition.view.status = Status
+competition.class.info = This is a restricted contest. If you want to let your pupils take this contest you have to register their class.
+competition.class.button = View registered classes.
+competition.class.title = Contest classes
+competition.class.breadcrumb = Classes
+competition.class.management.form.name = Class name
+competition.class.register.title = Register new class
+competition.class.register.breadcrumb = Register new class
+competition.class.register.pick = Pick a class
+competition.class.register.error = The selected class is already registered for this contest.
+competition.state.draft = Draft
+competition.state.active = Active
+competition.state.running = Running
+competition.state.finished = Finished
+competition.type.anonymous = Anonymous
+competition.type.restricted = Restricted
+competition.type.unrestricted = Unrestricted
 
+competitions.breadcrumb = Available contests.
+competitions.title = Available contests
+competitions.totake = Available contests that you can take at this moment.
+competitions.taken = Contests taken in the past
+competitions.grade.title = Please choose a preferred grade.
+competitions.grade = Grade
+competitions.grade.warning = Warning!
+competitions.grade.info = You're about to take a contest. In order to select the appropriate questions, we need to know your desired grade. Please select the grade you prefer
+competitions.grade.breadcrumb = Select grade
+
+competition.history.warning = Warning!
+competition.history.info = You are currently not signed in. In order to keep track off your results and stats, you need to be signed in.
+competition.history.title = Contests taken in the past
+competition.history.breadcrumb = History
+competition.history.form.name = Name
 
 # schools
 schools.title = List of Schools
@@ -274,6 +365,9 @@ servers.form.ftpport = FTP port
 servers.form.ftpuser = FTP username
 servers.form.ftppass = FTP password
 servers.form.ftppath = FTP path
+servers.form.is_http_secured = HTTP secured
+servers.form.http_username = HTTP username
+servers.form.http_password = HTTP password
 servermanagement.servers.name = Servers
 servermanagement.servers.new = New Server
 servermanagement.servers.server = Server
@@ -285,11 +379,13 @@ servers.success.edited = Server {0} was successfully edited
 servers.success.removed = Server {0} was successfully removed
 
 # question management
+questions.preview = Preview
 questions.form.author = Author
 questions.form.officialid = Official ID
 questions.form.path = ??Path??
 questions.form.active = Active
 questions.form.server = Server
+questions.form.questionFileNotFound = This question could not be found on the provided server or is invalid.
 question.questions.name = Questions
 question.questions.new = New Question
 question.questions.list = Questions
@@ -390,6 +486,7 @@ classes.pupil.add.useralreadyinclass = That user is already registered with the 
 classes.pupil.delete.success = Removal was successful.
 classes.pupil.delete.error = Something went wrong during the deleting. Try again (later).
 
+class.availableGrades = Available levels and their (suggested) lower and upper age bound.
 classes.add = Add a new class
 class.name = Class''s name
 class.school = Class''s school
@@ -402,6 +499,7 @@ classes.add.nograde = There is no level with that name.
 classes.add.error = Something went wrong with the database. Try again later.
 classes.edit = Edit a class.
 
+classes.import = Import a class
 classes.import.classnotexist = There is no class with that ID.
 classes.import.classrecordwhileaddingtoexisting = You are adding pupils to an existing class. CLASS records will be ignored.
 classes.import.usernotexist = There is no user with that ID.
@@ -417,8 +515,18 @@ classes.import.info.classinvalid = There is no class with this ID.
 classes.import.info.classstart = New class record:
 classes.import.info.existstudent = Existing students:
 classes.import.info.newstudent = New students:
-classes.import.error.savefail = Something went wrong with the saving. Maybe you waited too long? The unsafed data gets removed after a couple of hours.
+classes.import.error.savefail = Something went wrong with the saving. Maybe you waited too long? The unsafed data gets removed after a couple of hours. Or someone registered one of the email addresses you were using. Or you used the same email address twice in the file.
 classes.import.error.postfail = Something went wrong with the parsing of the XLSX file. Are you sure it's a valid file? Check the documentation.
+
+classes.pupil.classes.list = List of classes
+classes.pupil.classes.current = Your current class
+classes.pupil.classes.previous = Your previous classes
+classes.pupil.classes.form.id = id
+classes.pupil.classes.form.name = Name
+classes.pupil.classes.form.schoolid = School ID
+classes.pupil.classes.form.teacherid = Teacher ID
+classes.pupil.classes.form.grade = Grade
+classes.pupil.classes.form.expirationdate = Expiration date
 
 # User
 user.pip.settings = Settings
@@ -442,9 +550,96 @@ user.pie.editintro = Edit my information
 user.pie.intro = Below you can edit your personal information.
 user.error.no_login = Your personal information is not available! Please make sure you are logged in.
 user.error.wrong_email = Given E-Mail is not correct!
+user.error.sameid = Cannot remove/edit yourself!
+user.error.passwnotequal = The two given passwords are not equal!
+user.error.blockdateinvalid = The block date must be a future date!
 user.Male = Male
 user.Female = Female
 user.Other = Other
+user.ADMINISTRATOR = Administrator
+user.ORGANIZER = Organizer
+user.TEACHER = Teacher
+user.AUTHOR = Author
+user.PUPIL = Pupil
+user.INDEPENDENT = Independent
+user.ANON = Anon
+user.PUPIL_OR_INDEP = Student
+
+# User management
+user.management.others = Users
+user.management.list = Registred users
+user.management.welcome = Below you can add/edit/remove registred users.
+user.management.edituser.userinfo = User information
+user.management.edituser.partuserinfo = Change user information
+user.management.edituser.passwinfo = Password
+user.management.edituser.partpasswinfo = Change password
+user.management.edit = Change information
+user.management.change = Apply
+user.management.type = Type:
+user.management.create = Create new user
+users.form.id = ID
+users.form.type = Type
+users.form.wrap_type = Type
+users.form.name = Name
+users.form.email = Email
+users.form.birthdate = Birthday
+users.form.wrap_gender = Gender
+users.form.wrap_language = Language
+users.form.registrationdate = Registrationdate
+users.form.blockeduntil = Blocked until
+users.form.comment = Comment
+users.form.passw = Password
+users.form.passwrep = Repeat password
+users.form.warning = Warning!
+users.form.passwedit = Leave the password field empty if you don't want to change the password! 
+users.form.block = Leave the block field empty if you don't want to block the user!
+users.title.add = Create new user
+users.title.edit = Edit user
+user.success.added = User {0} was successfully created
+user.success.edited = User {0} was successfully edited
+user.success.removed = User {0} was successfully removed
+
+# Competitions
+competition.name = Competition
+competition.submit = Submit
+competition.intro = The contest has begun! Don't lose too much time reading this.
+competition.confirmSubmit = Are you sure you want to submit your answers and finish the competition?
+competition.noInternet = You don't have an active internet connection!
+competition.timesUp = Time's up!
+competition.overview = Start
+competition.input.regex = Your answer
+competition.feedback = Feedback
+competition.modal.submitting = Submitting
+competition.modal.ready = You're ready!
+competition.modal.sendingAnswers = Sending anwers...
+competition.modal.error = Oops! Something went wrong
+competition.modal.error.code = Give the following code to a nearby teacher to submit your answers for you.
+competition.modal.error.orYouCan = Or you can
+competition.modal.error.retry = Retry
+competition.modal.finished = Finished
+competition.modal.finished.text = You've successfully finished this competition!
+competition.modal.finished.return = Return to start
+competition.modal.finished.showFeedback = Show feedback
+
+competition.run.submit.notStarted = This competition has not been started yet, or has already been finished by the organizer.
+competition.run.submit.ok = Submission was successful.
+competition.run.submit.invalid = Invalid answers.
+competition.run.finished = The competition has been finished.
+
+competition.overview.button = Overview
+competition.overview.submitAnswers = Submit pupil answers
+competition.overview.submitAnswers.info = Paste the code that you've copied from the pupil's screen in this textfield and click 'Submit'.
+competition.overview.stopCompetition = Stop contest
+competition.overview.progress = Progress
+competition.overview.timeLeft = Time left
+competition.overview.finished = Finished
+competition.overview.details = Details
+competition.overview.id = ID
+competition.overview.questionSets = Question sets
+competition.overview.availableLanguages = Available languages
+competition.overview.confirmFinish = Are you sure you want to finish this contest? Any unsubmitted answers will be lost!
+competition.started.title = Contest is not yet started
+competition.started.info = The chosen contest is not yet started. Please try again later.
 
 # Contact form
 contact.formtitle = Contact form
@@ -459,3 +654,8 @@ contact.requestupgrade.noemail = There is no email associated with your account.
 contact.upgraderequest.subject = [EN] Upgrade request
 contact.requestupgrade.notimage = The uploaded file is not an image.
 contact.requestupgrade.explanation = Here you can request an upgrade of your account to a teacher account. Please upload a link of a scan of your Teacher Card. Abuse of this form will lead to the suspension of your account.
+
+# Other user
+otheruser.view = Bekijk gebruiker
+otheruser.block = Block
+otheruser.block.date = Block until (leave blank for no block)
