@@ -1,1 +1,1 @@
-$('#bday').datepicker();
+$('#bday').datepicker({ format: 'dd/mm/yyyy' });
