@@ -16,6 +16,7 @@
     contestForm("type"),
     options = options(models.competition.CompetitionType.options()),
     '_label -> EMessages.get("competition.create.type"),
+    '_default -> contestForm("type").value(),
     '_showConstraints -> false
 )
 
@@ -23,7 +24,7 @@
 
 <div id="starttimepicker" class="input-append date">
     <label>@EMessages.get("competition.create.start")</label>
-    <input data-format="dd/MM/yyyy hh:mm:ss" type="text" id="starttime" name="starttime" value='@contestForm("starttime").value'></input>
+    <input class="add-on" data-format="dd/MM/yyyy hh:mm:ss" type="text" id="starttime" name="starttime" value='@contestForm("starttime").value'></input>
             <span class="add-on">
                 <i data-time-icon="icon-time" data-date-icon="icon-calendar">
                 </i>
@@ -32,7 +33,7 @@
 
 <div id="endtimepicker" class="input-append date">
     <label>@EMessages.get("competition.create.end")</label>
-    <input data-format="dd/MM/yyyy hh:mm:ss" type="text" id="endtime" name="endtime" value='@contestForm("endtime").value'></input>
+    <input class="add-on" data-format="dd/MM/yyyy hh:mm:ss" type="text" id="endtime" name="endtime" value='@contestForm("endtime").value'></input>
             <span class="add-on">
                 <i data-time-icon="icon-time" data-date-icon="icon-calendar">
                 </i>
