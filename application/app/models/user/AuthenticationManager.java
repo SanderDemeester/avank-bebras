@@ -65,6 +65,7 @@ public class AuthenticationManager {
 	public static final int INVALID_LOGIN = 0;
 	public static final int VALID_LOGING = 1;
 	public static final int DUPLICATED_LOGIN = 2;
+	public static final int USER_BLOCKED = 3;
 
 	static {
 		FACTORIES.put(UserType.ADMINISTRATOR, new AdministratorUserFactory());
@@ -321,6 +322,11 @@ public class AuthenticationManager {
 		if(userModel == null){
 			return INVALID_LOGIN;
 		}
+		
+		if(userModel.isCurrentlyBlocked())
+			return USER_BLOCKED;
+		
+		
 		passwordDB = userModel.password;
 		SecretKeyFactory secretFactory = null;
 		try{

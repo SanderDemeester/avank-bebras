@@ -44,6 +44,7 @@ error.mimic = Benutzer kann nicht nachgeahmt werden.
 error.mimic.cant_find_user = Benutzer kann nicht gefunden werden.
 error.mimic.policy_deny = Benutzer kann von Politik nicht nachahmen.
 error.mimic.user_logged_in = Der Benutzer, den Sie versuchen zu imitieren, ist in das System angemeldet.
+error.user_blocked = Ihr Konto gesperrt ist, wenden Sie sich bitte ein Admin
 
 # Links from roles
 links.settings.title = Einstellungen
