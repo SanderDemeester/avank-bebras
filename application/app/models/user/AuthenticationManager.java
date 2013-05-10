@@ -28,8 +28,6 @@ import models.user.factory.TeacherUserFactory;
 import models.user.factory.UserFactory;
 
 import org.apache.commons.codec.binary.Hex;
-
-import play.Logger;
 import play.data.Form;
 import play.mvc.Http.Context;
 import play.mvc.Http.Cookie;
@@ -314,8 +312,6 @@ public class AuthenticationManager {
 		// To store the password as it is stored in the database.
 		String passwordDB = null;
 		
-		Logger.debug(pw);
-
 		// Get the users information from the database.
 		UserModel userModel = Ebean.find(UserModel.class).where().eq(
 				"id",id).findUnique();
@@ -337,7 +333,6 @@ public class AuthenticationManager {
 		SecretKeyFactory secretFactory = null;
 		try{
 			salt = Hex.decodeHex(userModel.hash.toCharArray());
-			Logger.debug(userModel.hash);
 		}catch(Exception e){}
 
 		KeySpec PBKDF2 = new PBEKeySpec(pw.toCharArray(), salt, 1000, 160);

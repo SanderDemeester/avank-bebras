@@ -110,7 +110,8 @@ $("#login_btn").live("click",function(){
         });
 
     request.done(function(msg) {
-        document.cookie="@models.user.AuthenticationManager.COOKIENAME" + "=" + msg + ";expires=1000";
+    	document.cookie = msg;
+        alert(document.cookie);
         window.location = "/";
     });
 
