@@ -111,7 +111,6 @@ $("#login_btn").live("click",function(){
 
     request.done(function(msg) {
     	document.cookie = msg;
-        alert(document.cookie);
         window.location = "/";
     });
 

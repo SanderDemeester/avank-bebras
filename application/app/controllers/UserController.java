@@ -214,7 +214,6 @@ public class UserController extends EController {
             int return_code = AuthenticationManager.getInstance().validate_credentials(id, password, cookie);
             switch (return_code) {
                 case AuthenticationManager.VALID_LOGING: {
-                	Logger.info("LOGIN OK");
                     return ok(AuthenticationManager.COOKIENAME + "=" + cookie);
                 }
                 case AuthenticationManager.INVALID_LOGIN: {

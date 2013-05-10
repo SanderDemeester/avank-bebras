@@ -128,7 +128,6 @@ public class AuthenticationManager {
 		if(loggedInUserID.contains(user.getID()) && user.isMimicTarget()) return null;
 		if(loggedInUserID.contains(user.getID()) && !current.isMimicking()){
 			String cookieToKick = idToCookie.get(user.getID());
-			
 			Stack<User> stackToKick = users.get(cookieToKick);
 			loggedInUserID.remove(stackToKick.peek().getID());
 			stackToKick.pop();
@@ -166,6 +165,10 @@ public class AuthenticationManager {
 	 */
 	public User logout() {
 		Stack<User> stack = users.get(getAuthCookie());
+		if(stack == null){
+			//special case. The user is kicked but the very next thing he does in the UI to logout.
+			return null;
+		}
 		loggedInUserID.remove(stack.peek().getID());
 		stack.pop();
 		if(stack.isEmpty()) {
