@@ -174,10 +174,10 @@ public class Language implements Comparable<Language>, Listable {
     }
 
 	@Override
-	public Map<String, String> options() {
+	public Map<String, String> options() {		
 		LinkedHashMap<String, String> ret_opts = new LinkedHashMap<String, String>();
-		for(lang_el l : lang_el.values()){
-			ret_opts.put(l.toString(), EMessages.get("languages." + l.toString()));
+		for(Language l : listLanguages()){
+			ret_opts.put(l.getCode(), l.getName());
 		}
 		return ret_opts;
 	}
