@@ -43,7 +43,7 @@ error.no_info = Informatie is niet beschikbaar!
 error.mimic = Kan gebruiker niet nabootsen
 error.mimic.cant_find_user = Kan de opgegeven gebruiker niet vinden
 error.mimic.policy_deny = Systeem beleid verhinderd u van de gebruiker na te bootsen
-error.mimic.user_logged_in = De gebruiker die u probeerd na te bootsen is ingelogd in het systeem
+error.mimic.user_logged_in = De gebruiker die u probeert na te bootsen is ingelogd in het systeem
 
 
 
@@ -186,8 +186,8 @@ register.Female = Vrouw
 register.Other = Andere
 
 # Forgot pwd
-forgot_pwd.no_teacher = Er is geen leerkracht geasocieerd met uw huidige klass, wachtwoord reset is niet mogelijk
-forgot_pwd.no_classgroup = Er is geen klas geasocieerd met uw account, wachtwoord reset is niet mogelijk
+forgot_pwd.no_teacher = Er is geen leerkracht geassocieerd met uw huidige klas, wachtwoord reset is niet mogelijk
+forgot_pwd.no_classgroup = Er is geen klas geassocieerd met uw account, wachtwoord reset is niet mogelijk
 forgot_pwd.forgot_pwd = Wachtwoord vergeten
 forgot_pwd.id = Bebras-ID
 forgot_pwd.email = E-mail
@@ -199,7 +199,7 @@ forgot_pwd.mail_sent = Er werd een nieuw wachtwoord aangevraagd voor gebruiker {
 forgot_pwd.mail_subject = Wachtwoord resetten
 forgot_pwd.email_blank = Laat leeg als u geen e-mailadres heeft
 forgot_pwd.reset_success = Wachtwoord is met succes opnieuw ingesteld
-forgot_pwd.reset_fail = Wachtwoord opnieuw instelling is mislukt
+forgot_pwd.reset_fail = Wachtwoord opnieuw instellen is mislukt
 forgot_pwd.teachermail = Uw leerling(e) {0} heeft een nieuw wachtwoord aangevraagd voor Avank-Bebras. Ga naar deze link {1} om het wachtwoord opnieuw in te stellen.
 forgot_pwd.teachersubject = Wachtwoord van leerling(e) resetten
 
