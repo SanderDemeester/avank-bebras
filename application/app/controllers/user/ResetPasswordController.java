@@ -67,7 +67,7 @@ public class ResetPasswordController extends EController {
         UserModel userModel = Ebean.find(UserModel.class).where().eq("id", id).findUnique();
 
         if (userModel == null) {
-            flash("error", EMessages.get("error.text"));
+            flash("error", EMessages.get("error.invalid_id"));
             return badRequest(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
         }
 

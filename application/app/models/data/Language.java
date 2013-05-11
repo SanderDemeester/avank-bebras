@@ -1,11 +1,14 @@
 package models.data;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
 import models.EMessages;
+import models.management.Listable;
 import play.i18n.Lang;
 
 /**
@@ -13,9 +16,20 @@ import play.i18n.Lang;
  * limit the languages to the supported languages.
  * @author Felix Van der Jeugt
  */
-public class Language implements Comparable<Language> {
+public class Language implements Comparable<Language>, Listable {
 
     private Lang lang;
+    
+    // Encapsulation for UserManagement
+    public enum lang_el {
+    	nl,
+    	en;
+    }
+    
+    // Empty constructor for UserManagement
+    public Language(){
+    	
+    }
 
     // The list of already created languages.
     private static Set<Language> languages = new TreeSet<Language>();
@@ -117,6 +131,17 @@ public class Language implements Comparable<Language> {
     public Lang getLang() {
         return lang;
     }
+    
+    /*
+     * Returns the Lang code in string format
+     */
+    public static String getLangCode(String language){
+    	if(language.equals("English") || language.equals("Engels")){
+    		return "en";
+    	}else{
+    		return "nl";
+    	}
+    }
 
     /**
      * Lists the available Languages.
@@ -147,5 +172,14 @@ public class Language implements Comparable<Language> {
         if(this.equals(that)) return 0;
         return this.getCode().compareTo(that.getCode());
     }
+
+	@Override
+	public Map<String, String> options() {
+		LinkedHashMap<String, String> ret_opts = new LinkedHashMap<String, String>();
+		for(lang_el l : lang_el.values()){
+			ret_opts.put(l.toString(), EMessages.get("languages." + l.toString()));
+		}
+		return ret_opts;
+	}
 
 }

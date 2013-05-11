@@ -1,12 +1,16 @@
 package controllers.user;
 
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Expr;
+
 import controllers.EController;
+import controllers.user.management.UserManager;
 import controllers.util.InputChecker;
 import controllers.util.PasswordHasher;
 import models.EMessages;
 import models.data.Link;
 import models.dbentities.UserModel;
+import models.management.ModelState;
 import models.user.AuthenticationManager;
 import models.user.Gender;
 import models.user.Role;
@@ -17,6 +21,7 @@ import play.mvc.Result;
 import play.mvc.Results;
 import views.html.commons.noaccess;
 import views.html.user.settings;
+import views.html.user.management.edituser;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -67,9 +72,15 @@ public class PersonalPageController extends EController {
         }
 
         // email
-        if (!InputChecker.getInstance().isCorrectEmail(editInfo.get("email"))) {
-            flash("error", EMessages.get(EMessages.get("user.error.wrong_email")));
-            return Results.redirect(controllers.user.routes.PersonalPageController.show(1));
+        if (!InputChecker.getInstance().isCorrectEmail(editInfo.get("email")) || Ebean.find(UserModel.class).where().and(Expr.eq(
+			  	"email",editInfo.get("email")),Expr.ne("id",AuthenticationManager.getInstance().getUser().getID())).findUnique() != null) {
+        	if(editInfo.get("email").isEmpty()){
+        		userModel.email = null;
+        		AuthenticationManager.getInstance().getUser().data.email = null;
+        	}else{
+		        flash("error", EMessages.get(EMessages.get("register.same_email")));
+	            return Results.redirect(controllers.user.routes.PersonalPageController.show(1));
+        	}
         } else {
             userModel.email = editInfo.get("email");
             AuthenticationManager.getInstance().getUser().data.email = editInfo.get("email");
