@@ -69,7 +69,16 @@ public class UserManager extends Manager<UserModel> {
         headers.add("id");
         for(String key : fields.keySet()) {
         	if(!key.equals("blocked")){
-            	headers.add(key);	
+        		// correcting wrapper classes
+        		if(key.equals("wrap_type")){
+        			headers.add("type");
+        		}else if(key.equals("wrap_gender")){
+        			headers.add("gender");
+        		}else if(key.equals("wrap_language")){
+        			headers.add("preflanguage");
+        		}else{
+        			headers.add(key);
+        		}
         	}
         }
         return headers;
