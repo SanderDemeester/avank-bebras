@@ -75,6 +75,11 @@ public class IDGenerator {
         }
     }
 
+    /**
+     * Cleans a name of all special characters.
+     * @param name The name to be cleaned
+     * @return A Clean name
+     */
     public static String cleanName(String name) {
         CharSequence comp = Normalizer.normalize(name, Normalizer.Form.NFKD);
         StringBuilder builder = new StringBuilder();
