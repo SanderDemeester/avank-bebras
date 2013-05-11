@@ -151,7 +151,6 @@ public class Server extends ManageableModel implements Listable{
         client.connect(ftpuri, ftpport);
         client.login(ftpuser, ftppass);
         
-        // TODO: non-static dit
         client.changeDirectory(ftppath);
         
         // Close server connection

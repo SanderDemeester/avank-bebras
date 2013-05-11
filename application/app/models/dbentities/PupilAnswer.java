@@ -49,7 +49,7 @@ public class PupilAnswer extends Model implements AnswerModel{
 
     @Override
     public int getID() {
-        // TODO: joined id?
+        // Unsupported, ebean support for joined id's is kinda non-existing
         return 0;
     }
 
