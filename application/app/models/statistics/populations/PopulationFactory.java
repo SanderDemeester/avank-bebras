@@ -34,6 +34,7 @@ public class PopulationFactory {
      */
     public Population create(PopulationType type, String identifier,
             String colour) throws PopulationFactoryException {
+        if(type == null) throw new PopulationFactoryException("Type is null");
         Population p = type.getFactory().create(identifier);
         p.setColour(colour);
         return p;

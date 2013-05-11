@@ -60,7 +60,10 @@ public class Statistics extends EController {
                     gf.colours.get(i)
                 ));
             } catch(PopulationFactoryException e) {
-                // TODO Show error message.
+                // Simply don't add the population. This happens only when the
+                // type is nonexistent due to holes in the array (when people
+                // remove populations) or when users are modifying the
+                // parameters.
             }
         }
 
@@ -76,7 +79,9 @@ public class Statistics extends EController {
             if(gf.filters != null) for(int i = 0; i < gf.filters.size(); i++) {
                 filter = StatisticFactory.instance().create(gf.filters.get(i));
                 if(gf.conditions != null) {
-                    for(String j : gf.conditions.get(i)) filter.addConditions(j);
+                    for(String j : gf.conditions.get(i)) {
+                        if(!"".equals(j)) filter.addConditions(j);
+                    }
                 }
                 statistic.addFilters(filter);
             }
