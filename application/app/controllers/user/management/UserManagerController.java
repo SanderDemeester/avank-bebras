@@ -42,6 +42,7 @@ import models.dbentities.UserModel;
 import models.management.ModelState;
 import models.question.Server;
 import models.user.AuthenticationManager;
+import models.user.ChainOfCommand;
 import models.user.Gender;
 import models.user.GenderWrap;
 import models.user.IDGenerator;
@@ -75,6 +76,10 @@ public class UserManagerController extends EController {
 	
     public static boolean isAuthorized() {
         return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGEUSERS);
+    }
+    
+    public static boolean isAuthorized(String userID){
+    	return ChainOfCommand.isSuperiorOf(userID);
     }
     
     private static List<Link> defaultBreadcrumbs() {
@@ -136,23 +141,7 @@ public class UserManagerController extends EController {
         return ok(createuser.render(form, manager, breadcrumbs));
     }
     
-    @Transactional
-    public static Result removeUser(String id){
-	    // breadcrumbs links
-    	List<Link> breadcrumbs = defaultBreadcrumbs();
-		
-	    // authorized?
-        if(!isAuthorized()) return Results.ok(noaccess.render(breadcrumbs));
-        
-        // check if id is not the same as the id of the current active user
-        if(AuthenticationManager.getInstance().getUser().getID().equals(id)){
-		    flash("error", EMessages.get(EMessages.get("user.error.sameid")));
-		    return Results.redirect(controllers.user.management.routes.UserManagerController.showUsers(0,"name","asc",""));
-        }
-        Ebean.delete(Ebean.find(UserModel.class).where().eq("id",id).findUnique());
-        
-        return Results.redirect(controllers.user.management.routes.UserManagerController.showUsers(0,"name","asc",""));
-    }
+    
     
     // find UserModel based on id
     public static UserModel findUser(String id){
@@ -170,12 +159,11 @@ public class UserManagerController extends EController {
     	List<Link> breadcrumbs = new ArrayList<Link>();
 	    breadcrumbs.add(new Link("app.home", "/"));
 	    breadcrumbs.add(new Link(EMessages.get("user.management.edit"), "/manage/users/update"));
-        
 	    // old usermodel
 	    UserModel def_model = Ebean.find(UserModel.class).where().eq(
 				"id",edit_id).findUnique();
 	    
-        if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
+        if(!isAuthorized(edit_id)) return ok(noaccess.render(breadcrumbs));
 
         Form<UserModel> form = form(UserModel.class).bindFromRequest();
 
@@ -277,7 +265,10 @@ public class UserManagerController extends EController {
 
         // success!
         flash("success", EMessages.get("user.success.edited", edit_id));
-        return Results.redirect(controllers.user.management.routes.UserManagerController.showUsers(0,"name","asc",""));
+        if(isAuthorized())
+        	return Results.redirect(controllers.user.management.routes.UserManagerController.showUsers(0,"name","asc",""));
+        else
+        	return Results.redirect(routes.UserManagerController.editUser(edit_id));
     }
     
     @Transactional(readOnly=true)
@@ -288,7 +279,7 @@ public class UserManagerController extends EController {
         breadcrumbs.add(new Link(EMessages.get("user.management.edit"),"/manage/users/"+id+"/edit"));
 	    
         // authorized?
-        if(!isAuthorized()) return Results.ok(noaccess.render(breadcrumbs));
+        if(!isAuthorized(id)) return Results.ok(noaccess.render(breadcrumbs));
         
         // check if id is not the same as the id of the current active user
         if(AuthenticationManager.getInstance().getUser().getID().equals(id)){
