@@ -444,10 +444,15 @@ classes.pupil.list = Liste von Schülern
 classes.pupil.title = Klasse info
 classes.pupil.form.id = ID
 classes.pupil.form.name = Name
-classes.pupil.form.gender = Geschlecht
+classes.pupil.form.wrap_gender = Geschlecht
 classes.pupil.form.birthdate 	= Birthdate
-classes.pupil.form.preflanguage = Bevorzugte Sprache
+classes.pupil.form.wrap_language = Bevorzugte Sprache
 classes.pupil.form.active = Ist der Benutzer nicht blockiert?
+classes.pupil.form.wrap_type = Type
+classes.pupil.form.email = Email
+classes.pupil.form.registrationdate = Angemeldet seit
+classes.pupil.form.comment = Kommentar
+classes.pupil.form.blockeduntil = Gesperrt bis
 
 classes.novalidclassid = Dies ist keine gültige Klasse-ID.
 classes.pupil.editclassinfo = Bearbeiten der Klasseninformationen

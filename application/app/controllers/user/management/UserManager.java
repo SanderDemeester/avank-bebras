@@ -50,7 +50,7 @@ public class UserManager extends Manager<UserModel> {
 
 	@Override
 	public Call getRemoveRoute(String id) {
-		return routes.UserManagerController.removeUser(id);
+		return null;
 	}
 
 	@Override

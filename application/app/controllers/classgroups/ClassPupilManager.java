@@ -52,7 +52,7 @@ public class ClassPupilManager extends Manager<UserModel> {
 
 	@Override
 	public Call getEditRoute(String id) {
-		if(ChainOfCommand.isSuperiorOf(id))return controllers.user.routes.OtherUserController.show(id);
+		if(ChainOfCommand.isSuperiorOf(id))return controllers.user.management.routes.UserManagerController.editUser(id);
 		return null;
 	}
 
@@ -102,14 +102,14 @@ public class ClassPupilManager extends Manager<UserModel> {
 	
 	@Override
 	public List<String> getColumnHeaders(){
-		ArrayList<String> res = new ArrayList<String>();
-		res.add("id");
-		res.add("name");
-		res.add("gender");
-		res.add("birthdate");
-		res.add("preflanguage");
-		res.add("active");
-		return res;
+		List<String> headers = new ArrayList<String>();
+        headers.add("id");
+        for(String key : fields.keySet()) {
+        	if(!key.equals("blocked")){
+            	headers.add(key);	
+        	}
+        }
+        return headers;
 	}
 	
 	/**
