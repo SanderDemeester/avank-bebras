@@ -15,21 +15,15 @@ import models.management.Listable;
 
 public class GenderWrap implements Listable {
 	
-	public static Gender getUserType(String g) {
-		if(g.equals("Male") || g.equals("Man")) {
-			return Gender.Male;
-		} else if(g.equals("Female") || g.equals("Vrouw")) {
-			return Gender.Female;
-		} else {
-			return Gender.Other;
-		}
+	public GenderWrap() {
+
 	}
 
 	@Override
 	public Map<String, String> options() {
 		LinkedHashMap<String, String> ret_opts = new LinkedHashMap<String, String>();
 		for(Gender g : Gender.values()){
-			ret_opts.put(EMessages.get("user." + g.toString()), EMessages.get("user." + g.toString()));
+			ret_opts.put(g.toString(), EMessages.get("user." + g.toString()));
 		}
 		return ret_opts;
 	}

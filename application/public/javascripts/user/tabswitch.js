@@ -1,0 +1,1 @@
+$("#mytabs").tabs("select", "#pie");
