@@ -6,6 +6,7 @@
 @import models.management.FieldType
 @import views.html.commons.showflash
 @import controllers.user.management.UserManagerController
+@import models.dbentities.UserModel
 
 @***************************************
 * Flash messages *
@@ -153,10 +154,54 @@
                </div>
             </div>
        </div>	
+       
+                   <div class="accordion" id="accordion4">
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#collapseFour">
+                        <strong>@EMessages.get("otheruser.mimic")</strong>
+                    </a>
+                </div>
+               <div id="collapseFour" class="accordion-body collapse">
+                   <div class="accordion-inner">
+                   @form(controllers.routes.UserController.mimic()){
+                       <div class="alert alert-info">
+                           <h4>@EMessages.get("info.info")</h4>
+                           @EMessages.get("users.form.mimic")
+                           <br>
+                           <br>
+                           <div class="actions">
+                           		<!-- TODO sander : juiste code oproepen voor mimic -->
+						       <input type="submit" value="@EMessages.get("otheruser.mimic")" class=" btn btn-primary" id="mimic">
+                           </div>
+                       </div>
+                   }
+                   </div>
+               </div>
+            </div>
+       </div>	
     </fieldset>
 
 
 	<script type="text/javascript">
+	
+		$("#mimic").live("click",function(){
+	        var request = $.ajax({
+		    type: 'POST',
+		    url: '/mimic',
+		    data: {"id": $("#bebrasID").val()}
+	        });
+
+	        request.done(function(data){
+		    document.cookie="@models.user.AuthenticationManager.COOKIENAME" + "=" + data + ";expires=1000";
+            window.location = "/";
+		    });
+
+	        request.fail(function(jqXHR, data){
+		    $("#mimic_alert").show('fast').attr("class","alert alert-error").text(jqXHR.responseText + ".");
+	        });
+        });
+	
 		$("#registrationdate").datepicker({ format: 'dd/mm/yyyy' });
 		$("#birthdate").datepicker({ format: 'dd/mm/yyyy' });		
 		$( "#blockeduntil" ).datepicker({      
@@ -180,9 +225,9 @@
             }
         })
 				
-		wrap_type_id.options[$("#wrap_type_id option[value='@controllers.user.management.UserManagerController.getUserType()']").index()].selected = true
-		wrap_gender_id.options[$("#wrap_gender_id option[value='@controllers.user.management.UserManagerController.getUserGender()']").index()].selected = true
-		wrap_language_id.options[$("#wrap_language_id option[value='@controllers.user.management.UserManagerController.getUserLang()']").index()].selected = true
+		wrap_type_id.options[$("#wrap_type_id option[value='@controllers.user.management.UserManagerController.getUserType(modelForm.get().asInstanceOf[UserModel].id)']").index()].selected = true
+		wrap_gender_id.options[$("#wrap_gender_id option[value='@controllers.user.management.UserManagerController.getUserGender(modelForm.get().asInstanceOf[UserModel].id)']").index()].selected = true
+		wrap_language_id.options[$("#wrap_language_id option[value='@controllers.user.management.UserManagerController.getUserLang(modelForm.get().asInstanceOf[UserModel].id)']").index()].selected = true
 		
 	</script>
     

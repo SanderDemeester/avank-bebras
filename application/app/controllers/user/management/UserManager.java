@@ -23,9 +23,16 @@ import controllers.user.management.routes;
 public class UserManager extends Manager<UserModel> {
 	
 	ExpressionList<UserModel> UMDataSet;
+	
+	public String edit_id;
 
 	public UserManager(ModelState state) {
 		super(UserModel.class, state, "type", "type");
+	}
+	
+	public UserManager(ModelState state, String i){
+		super(UserModel.class, state, "type", "type");
+		this.edit_id = i;
 	}
 
 	@Override
@@ -60,7 +67,7 @@ public class UserManager extends Manager<UserModel> {
 
 	@Override
 	public play.api.mvc.Call getUpdateRoute() {
-		return routes.UserManagerController.updateUser();
+		return routes.UserManagerController.updateUser(edit_id);
 	}
 	
 	@Override
