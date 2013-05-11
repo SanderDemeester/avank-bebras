@@ -143,7 +143,6 @@ GET			/manage/users/create		controllers.user.management.UserManagerController.cr
 GET			/manage/users/update		controllers.user.management.UserManagerController.updateUser()
 GET			/manage/users/save		controllers.user.management.UserManagerController.saveUser()
 GET			/manage/users/:id/edit		controllers.user.management.UserManagerController.editUser(id)
-GET			/manage/users/:id/remove	controllers.user.management.UserManagerController.removeUser(id)
 
 # Classes
 
