@@ -29,7 +29,12 @@ public class Global extends GlobalSettings{
         breadcrumbs.add(new Link("Error",""));
     }
 
-    public Result onError(Throwable t) {
+    /**
+     * Page to show when an application error occured.
+     * @param t the throwable error
+     * @return an error page
+     */
+    public Result onError(final Throwable t) {
         return internalServerError(
             views.html.commons.error.render(breadcrumbs, EMessages.get("error.title"), EMessages.get("error.text"))
         );

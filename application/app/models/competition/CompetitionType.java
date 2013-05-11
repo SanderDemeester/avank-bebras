@@ -12,12 +12,21 @@ import java.util.LinkedHashMap;
  */
 public enum CompetitionType {
 
+    /**
+     * unrestricted
+     */
     @EnumValue("UNRESTRICTED")
     UNRESTRICTED,
 
+    /**
+     * restricted
+     */
     @EnumValue("RESTRICTED")
     RESTRICTED,
 
+    /**
+     * anonymous
+     */
     @EnumValue("ANONYMOUS")
     ANONYMOUS;
 

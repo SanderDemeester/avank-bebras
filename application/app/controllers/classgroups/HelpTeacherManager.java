@@ -23,7 +23,12 @@ import models.management.ModelState;
 public class HelpTeacherManager extends Manager<UserModel> {
 
 	private int classID;
-	public HelpTeacherManager(int classID,ModelState state) {
+	/**
+	 * make a new HelpTeacherManager
+	 * @param classID id of the class
+	 * @param state state of the model
+	 */
+	public HelpTeacherManager(int classID, ModelState state) {
 		super(UserModel.class, state, "id", "name");
 		this.classID = classID;
 	}

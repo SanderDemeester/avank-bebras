@@ -226,8 +226,8 @@ public class AuthenticationManager {
 	}
 
 	/**
-	 * 
-	 * @param bebrasID.
+	 * Check if a certain user (id) is already logged in.
+	 * @param id bebrasID.
 	 * @return true is there is a user logged in with provided id.
 	 */
 	public boolean isUserLoggedIn(String id){
@@ -243,7 +243,8 @@ public class AuthenticationManager {
 	}
 
 	/**
-	 * @param Password string.
+	 * Simulate the encryption of a password that would happen on the client side.
+	 * @param password Password string.
 	 * @return The strengthed password as preformed by javascript code on client machine.
 	 * @throws NoSuchAlgorithmException 
 	 * @throws InvalidKeySpecException 

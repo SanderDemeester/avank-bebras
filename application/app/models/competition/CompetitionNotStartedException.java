@@ -7,11 +7,12 @@ package models.competition;
  *
  */
 public class CompetitionNotStartedException extends Exception{
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
+    /**
+     * New exception
+     * @param msg message
+     */
     public CompetitionNotStartedException(String msg) {
         super(msg);
     }

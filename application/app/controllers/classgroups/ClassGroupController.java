@@ -1,6 +1,3 @@
-/**
- * 
- */
 package controllers.classgroups;
 
 import java.util.ArrayList;
@@ -154,6 +151,7 @@ public class ClassGroupController extends EController {
 	
 	/**
 	 * Saves the updated classgroup
+	 * @param id Id of the classgroup
 	 * @return the class page
 	 */
 	public static Result update(int id){

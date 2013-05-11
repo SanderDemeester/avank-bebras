@@ -20,6 +20,7 @@ import com.avaje.ebean.Page;
  *
  * @author Ruben Taelman
  * @author Kevin Stobbelaar
+ * @param <T> Type of the model
  *
  */
 public abstract class Manager<T extends ManageableModel> {
@@ -32,7 +33,13 @@ public abstract class Manager<T extends ManageableModel> {
     protected String filterBy;
     protected String filter;
 
+    /**
+     * Default page size
+     */
     public static final int DEFAULTPAGESIZE = 10;
+    /**
+     * Default order
+     */
     public static final String DEFAULTORDER = "asc";
 
     protected Map<String, FieldType> fields = new LinkedHashMap<String, FieldType>();
@@ -76,6 +83,10 @@ public abstract class Manager<T extends ManageableModel> {
         }
     }
 
+    /**
+     * Ignore errors or not
+     * @param ignoreErrors if errors should be ignored
+     */
     public void setIgnoreErrors(boolean ignoreErrors) {
         this.ignoreErrors = ignoreErrors;
     }
@@ -220,6 +231,7 @@ public abstract class Manager<T extends ManageableModel> {
 
     /**
      * Returns the path of the route that must be followed to edit the selected item.
+     * @param id id
      *
      * @return Call path of the route that must be followed
      */
@@ -229,6 +241,7 @@ public abstract class Manager<T extends ManageableModel> {
 
     /**
      * Returns the path of the route that must be followed to remove the selected item.
+     * @param id id
      *
      * @return Call path of the route that must be followed
      */

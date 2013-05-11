@@ -11,9 +11,21 @@ import java.util.Map;
  *
  */
 public enum FieldType {
+    /**
+     * text
+     */
     TEXT,
+    /**
+     * checkbox
+     */
     CHECKBOX,
+    /**
+     * list
+     */
     LIST,
+    /**
+     * date
+     */
     DATE;
 
     private static final Map<Class<?>, FieldType> TYPES = new HashMap<Class<?>, FieldType>();

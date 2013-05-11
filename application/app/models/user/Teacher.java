@@ -86,7 +86,7 @@ public class Teacher extends SuperUser{
     
     /**
      * Checks whether the teacher is the pupil's current main teacher.
-     * @param pupilID the id of the pupil to check
+     * @param pupil the id of the pupil to check
      * @return whether the teacher is the pupil's main teacher
      * @throws PersistenceException if something goes wrong with the db
      */

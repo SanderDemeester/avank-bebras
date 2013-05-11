@@ -12,8 +12,6 @@ import models.management.ModelState;
 import models.user.AuthenticationManager;
 import models.user.Independent;
 import models.user.Role;
-import models.user.User;
-
 import play.mvc.Result;
 import views.html.classes.pupilviews.pupilclasses;
 import views.html.commons.noaccess;
@@ -25,6 +23,14 @@ import controllers.EController;
  */
 public class PupilClassController extends EController {
 
+	/**
+	 * view classes page
+	 * @param page page nr
+	 * @param orderBy order field
+	 * @param order ordering
+	 * @param filter filter
+	 * @return list view
+	 */
 	public static Result viewClasses(int page, String orderBy, String order, String filter){
 		List<Link> bc = getBreadcrumbs();
 		if(!isAuthorized())return ok(noaccess.render(bc));

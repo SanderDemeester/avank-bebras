@@ -128,7 +128,7 @@ public class ClassGroupIOController extends EController {
 	 * Save the posted data
 	 * @param id of the class. Null if it should not be added to existing class
 	 * @param dataid id under which the data is saved in the cache
-	 * @return
+	 * @return The result page when saving a class group
 	 */
 	@SuppressWarnings("unchecked")
 	public static Result saveExisting(Integer id, String dataid){

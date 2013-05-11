@@ -18,17 +18,32 @@ import models.data.manager.DataElement;
 )
 public class Difficulty implements DataElement {
 
+    /**
+     * name
+     */
     @Id public String name;
+    /**
+     * rank
+     */
     public int rank;
+    /**
+     * correct point
+     */
     public int cpoints;
+    /**
+     * wrong points
+     */
     public int wpoints;
+    /**
+     * nothing filled in points
+     */
     public int npoints;
 
     /**
      * Creates a new difficulty level with the given name and rank. The higher
      * the rank, the harder this difficulty level.
      * @param name The name of the level.
-     * @param rank The difficultie of this level.
+     * @param rank The difficulty of this level.
      * @param cpoints The points received when answered correct.
      * @param wpoints The points received when answered incorrect.
      * @param npoints The points received left open.

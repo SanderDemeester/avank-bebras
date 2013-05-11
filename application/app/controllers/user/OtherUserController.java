@@ -24,6 +24,7 @@ public class OtherUserController extends EController{
 
 	/**
 	 * 
+	 * @param userID id of the user
 	 * @return the page showing the actions you can do with that users
 	 */
 	public static Result show(String userID){

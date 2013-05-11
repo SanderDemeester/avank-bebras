@@ -1,9 +1,8 @@
 package models.competition;
 
-import com.avaje.ebean.Ebean;
-import com.avaje.ebean.ExpressionList;
-import com.avaje.ebean.Page;
-import controllers.competition.routes;
+import java.util.ArrayList;
+import java.util.List;
+
 import models.dbentities.CompetitionModel;
 import models.dbentities.PupilAnswer;
 import models.dbentities.QuestionSetModel;
@@ -13,8 +12,10 @@ import models.user.AuthenticationManager;
 import models.user.User;
 import play.mvc.Call;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Page;
+
+import controllers.competition.routes;
 
 /**
  * Manager for showing a list of contests taken in the past by an authenticated user.

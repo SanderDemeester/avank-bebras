@@ -40,7 +40,8 @@ public class CompetitionUserState {
     /**
      * Constructor
      * @param user corresponding user
-     * @param competition corresponding competition
+     * @param questionSet corresponding questionset
+     * @param languageCode the code of the language the questionset was taken in
      */
     public CompetitionUserState(User user, QuestionSet questionSet, String languageCode){
         this.feedback = null;
@@ -52,7 +53,7 @@ public class CompetitionUserState {
 
     /**
      * Updates the current competition user state by setting the feedback
-     * @param cookie new cookie
+     * @param feedback the feedback of the competition
      */
     public void setResults(QuestionFeedback feedback){
         this.feedback = feedback;

@@ -27,7 +27,7 @@ public class CompetitionUserStateManager {
     
     /**
      * Get the unique instance of this manager
-     * @return
+     * @return the unique CompetitionUserStateManager
      */
     public static CompetitionUserStateManager getInstance() {
         if(_instance == null)
@@ -97,9 +97,7 @@ public class CompetitionUserStateManager {
      * call startCompetition(competition) first.
      */
     public void finishCompetition(String competitionID)
-            throws CompetitionNotStartedException{
-        Map<String, CompetitionUserState> list = getStates(competitionID);
-        
+            throws CompetitionNotStartedException{        
         for(CompetitionUserState state : states.get(competitionID).values()) {
             state.save();
         }

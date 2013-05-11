@@ -4,18 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import play.db.ebean.Model;
+
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.validation.NotNull;
-
-import play.Logger;
-import play.db.ebean.Model;
 /**
  * The score of a competition by a pupil
  * @author Ruben Taelman
@@ -27,16 +23,25 @@ public class Score extends Model{
 
     private static final long serialVersionUID = 1L;
     
+    /**
+     * user
+     */
     @ManyToOne
     @NotNull
     @JoinColumn(name="uID")
     public UserModel user;
     
+    /**
+     * question set
+     */
     @ManyToOne
     @NotNull
     @JoinColumn(name="qsID")
     public QuestionSetModel questionset;
     
+    /**
+     * score
+     */
     public int score;
     
     @Override

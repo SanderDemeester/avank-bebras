@@ -1,6 +1,3 @@
-/**
- * 
- */
 package controllers.classgroups;
 
 import java.io.File;
@@ -131,7 +128,13 @@ public class ClassPupilController extends EController {
 		}
 	}
 	
-	public static Result removeStudent(int classID,String pupilID){		
+	/**
+	 * Remove a student from a class
+	 * @param classID id of the class
+	 * @param pupilID id of the pupil
+	 * @return confirmation page
+	 */
+	public static Result removeStudent(final int classID,final String pupilID){		
 		//Setting up template arguments
 		List<Link> breadcrumbs = getBreadCrumbs(classID);	
 		

@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 
 /**
  * Runs pieces of code at a set time or specified interval.
- * @Author Felix Van der Jeugt
+ * @author Felix Van der Jeugt
  */
 public class DataDaemon {
 
@@ -137,7 +137,11 @@ public class DataDaemon {
         private int interval;       // Interval between runs, <= 0 if none.
         private Runnable task;      // The task.
 
-        /** Creates a new TimedTask with the given settings. */
+        /** Creates a new TimedTask with the given settings. 
+         * @param date date
+         * @param interval interval
+         * @param task task
+         */
         public TimedTask(Calendar date, int interval, Runnable task) {
             this.date = (date != null) ? date : Calendar.getInstance();
             this.interval = interval;
@@ -183,6 +187,7 @@ public class DataDaemon {
             newTask = true;
             notify();
         }
+        @Override
         public synchronized void run() {
             TimedTask next = null;
             long left;
@@ -216,9 +221,21 @@ public class DataDaemon {
         }
     }
 
+    /**
+     * Type of time
+     */
     public static enum Time {
+        /**
+         * On the hour
+         */
         ON_THE_HOUR,
+        /**
+         * Midday
+         */
         MIDDAY,
+        /**
+         * Midnight
+         */
         MIDNIGHT
     }
 

@@ -36,6 +36,10 @@ public class SchoolController extends EController {
 
 	/**
 	 * 
+	 * @param page page nr
+	 * @param orderBy order field
+	 * @param order order
+	 * @param filter filter
 	 * @return a page of all the schools the teacher is somehow associated with.
 	 *         No Access page if user is not teacher.
 	 */

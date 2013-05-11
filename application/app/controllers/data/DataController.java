@@ -45,6 +45,7 @@ public class DataController extends EController {
     /**
      * Show the current list of elements.
      * @param t The type of elements, for instance "links".
+     * @return Show data page
      */
     public static Result show(String t) {
         if(!hasAccess()) return ok(noaccess.render(breadcrumbs(t)));
@@ -55,6 +56,7 @@ public class DataController extends EController {
      * Show the current list of elements along with an error message.
      * @param t The type of elements, for instance "links".
      * @param exception The exception message, or null if none.
+     * @return Show failure page
      */
     public static Result fail(String t, String exception) {
         if(!hasAccess()) return ok(noaccess.render(breadcrumbs(t)));
@@ -68,8 +70,8 @@ public class DataController extends EController {
     /**
      * This method adds a new element of T to the list.
      * @param t The type of elements, for instance "links".
+     * @return Show add page
      */
-     //* @param fields The strings describing the new element.
     public static Result add(String t) {
         if(!hasAccess()) return ok(noaccess.render(breadcrumbs(t)));
         FakeForm ff = form(FakeForm.class).bindFromRequest().get();
@@ -88,6 +90,7 @@ public class DataController extends EController {
      * This method removes an element from the list.
      * @param t The type of elements, for instance "links".
      * @param id The id of the element.
+     * @return Show removal page
      */
     public static Result remove(String t, String id) {
         if(!hasAccess()) return ok(noaccess.render(breadcrumbs(t)));
@@ -98,7 +101,10 @@ public class DataController extends EController {
         return show(t);
     }
 
-    /** The breadcrumbs. */
+    /** The breadcrumbs
+     * @param t breadcrumb
+     * @return breadcrumbs
+     */
     public static List<Link> breadcrumbs(String t) {
         List<Link> crumbs = new ArrayList<Link>();
         crumbs.add(new Link("Home", "/"));
@@ -106,8 +112,18 @@ public class DataController extends EController {
         return crumbs;
     }
 
+    /**
+     * A form data holder
+     *
+     */
     public static class FakeForm {
+        /**
+         * The fields
+         */
         @Valid public List<String> fields;
+        /**
+         * Make empty form
+         */
         public FakeForm() {}
     }
 

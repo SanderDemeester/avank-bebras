@@ -1,6 +1,3 @@
-/**
- * 
- */
 package controllers.user;
 
 import java.util.ArrayList;
@@ -49,6 +46,11 @@ public class BlockController extends EController {
 		}
 	}
 	
+	/**
+	 * block a user
+	 * @param id id of the user to block
+	 * @return show result of blocking
+	 */
 	public static Result block(String id) {
 		List<Link> bc = getBreadcrumbs(id);
 		try {
@@ -76,7 +78,13 @@ public class BlockController extends EController {
 	}
 
 	
+	/**
+	 * Wrapper for blocking data
+	 */
 	public static class BlockDateWrapper{
+	    /**
+	     * Date to block until
+	     */
 		@Formats.DateTime(pattern = "dd/MM/yyyy")
 		public Date blockedTill;
 	}

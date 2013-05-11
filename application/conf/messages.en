@@ -17,6 +17,8 @@ app.welcome = Welcome back {0}!
 app.overview = Overview
 app.dashboard = Dashboard
 app.getStarted = Choose a link from the left to get started.
+app.success = Success
+app.error = Error
 
 # Error
 notFound.title = Oops!

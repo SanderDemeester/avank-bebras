@@ -34,17 +34,35 @@ import play.data.format.Formats;
 public class ClassGroup extends ManageableModel{
     private static final long serialVersionUID = 4L;
 
+    /**
+     * id
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "classes_id_seq")
     public int id;
+    /**
+     * name
+     */
     @Constraints.Required
     public String name;
+    /**
+     * expiration date
+     */
     @Constraints.Required
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     public Date expdate;
+    /**
+     * school id
+     */
     @Constraints.Required
     public int schoolid;
+    /**
+     * teacher id
+     */
     public String teacherid;
+    /**
+     * level
+     */
     @Constraints.Required
     public String level;
 
@@ -55,10 +73,14 @@ public class ClassGroup extends ManageableModel{
 
     }
 
+    /**
+     * @return the name
+     */
     public String getName(){
         return this.name;
     }
 
+    @Override
     public String getID(){
         return Integer.toString(this.id);
     }
@@ -159,9 +181,23 @@ public class ClassGroup extends ManageableModel{
 		return null;
 	}
 	
+	/**
+	 * 
+	 * pupil set type
+	 *
+	 */
 	public enum PupilSet{
+	    /**
+	     * All
+	     */
 		ALL,
+		/**
+		 * Active
+		 */
 		ACTIVE,
+		/**
+		 * Non-active
+		 */
 		NONACTIVE
 	}
 

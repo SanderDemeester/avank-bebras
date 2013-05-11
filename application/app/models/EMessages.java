@@ -34,7 +34,7 @@ public class EMessages extends Messages {
      * Translates a message. Uses `java.text.MessageFormat` internally to format the message.
      * @param key the message key
      * @param args the message arguments
-     * @return
+     * @return the translated message
      */
     public static String get(java.lang.String key, java.lang.Object... args) {
         String lang = Context.current().session().get("customLanguage");

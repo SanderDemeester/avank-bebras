@@ -40,9 +40,21 @@ public class QuestionPack {
     private String hash;
     private String userDownloadLocation;
 
+    /**
+     * index file name
+     */
     public static final String INDEXFILENAME = "index_LANG.html";
+    /**
+     * feedback file name
+     */
     public static final String FEEDBACKFILENAME = "feedback_LANG.html";
+    /**
+     * question zip file name
+     */
     public static final String QUESTIONZIPFILE = "question.zip";
+    /**
+     * question xml file name
+     */
     public static final String QUESTIONXMLFILE = "question.xml";
 
     /**

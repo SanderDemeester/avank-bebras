@@ -97,9 +97,14 @@ public class FAQController extends EController {
 		}
 	}
 	
-	/*
-	 * Same as the other one, but uses an empty OperationResultInfo
-	 */
+	/**
+     * Returns the list of FAQs with OperationResultInfo
+     * @param page Page or results to be displayed
+     * @param orderBy What field to order on
+     * @param order Which order the results have to be in
+     * @param filter Filter to be used on the results
+     * @return the list of FAQs
+     */
 	public static Result list(int page, String orderBy, String order, String filter){
 		return list(page,orderBy,order,filter,new OperationResultInfo());
 	}	

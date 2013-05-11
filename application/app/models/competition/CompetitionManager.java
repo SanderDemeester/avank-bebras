@@ -56,10 +56,15 @@ public class CompetitionManager extends Manager<CompetitionModel> {
      * Returns the expression list for quering the database.
      * @return expression list for quering
      */
+    @Override
     protected ExpressionList<CompetitionModel> getDataSet(){
         return expressionList;
     }
 
+    /**
+     * set expression list for quering the database.
+     * @param expressionList expressionList
+     */
     public void setExpressionList(ExpressionList<CompetitionModel> expressionList){
         this.expressionList = expressionList;
     }
@@ -119,7 +124,7 @@ public class CompetitionManager extends Manager<CompetitionModel> {
     /**
      * Returns the path of the route that must be followed to remove the selected item.
      *
-     * @result Call path of the route that must be followed
+     * @return Call path of the route that must be followed
      */
     @Override
     public Call getRemoveRoute(String id) {

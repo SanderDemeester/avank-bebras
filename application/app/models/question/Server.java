@@ -29,9 +29,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import controllers.EController;
-import controllers.question.routes;
-
 import models.management.Editable;
 import models.management.Listable;
 import models.management.ManageableModel;
@@ -51,50 +48,88 @@ import play.data.validation.Constraints;
 public class Server extends ManageableModel implements Listable{
     private static final long serialVersionUID = 2L;
     
+    /**
+     * id
+     */
     @Editable(uponCreation=true)
     @Id
     @Column(name="id")
     public String id;
 
+    /**
+     * path
+     */
     @Editable
     @Column(name="location")
     @Constraints.Required
     public String path;
 
+    /**
+     * ftp url
+     */
     @Editable(hiddenInList=true)
     @Constraints.Required
     public String ftpuri;
 
+    /**
+     * ftp port
+     */
     @Editable(hiddenInList=true)
     @Constraints.Required
     public Integer ftpport;
 
+    /**
+     * ftp user
+     */
     @Editable(hiddenInList=true)
     @Constraints.Required
     public String ftpuser;
 
+    /**
+     * ftp password
+     */
     @Editable(hiddenInList=true)
     @Constraints.Required
     public String ftppass;
     
+    /**
+     * ftp path
+     */
     @Editable(hiddenInList=true)
     @Constraints.Required
     public String ftppath;
     
+    /**
+     * is http secured
+     */
     @Editable(hiddenInList=true)
     @Constraints.Required
     public boolean is_http_secured;
     
+    /**
+     * http username
+     */
     @Editable(hiddenInList=true)
     @Constraints.Required
     public String http_username;
     
+    /**
+     * http password
+     */
     @Editable(hiddenInList=true)
     @Constraints.Required
     public String http_password;
 
+    /**
+     * finder
+     */
     public static Finder<String, Server> finder = new Finder<String, Server>(String.class, Server.class);
 
+    /**
+     * find server by name
+     * @param name server name
+     * @return server
+     */
     public static Server findById(String name) {
         return finder.byId(name);
     }
@@ -215,6 +250,20 @@ public class Server extends ManageableModel implements Listable{
         client.disconnect(true);
     }
     
+    /**
+     * Download a zipped file of the given question
+     * @param questionID id of the question
+     * @param userID id of the user
+     * @return zip file of question
+     * @throws IllegalStateException
+     * @throws IOException
+     * @throws FTPIllegalReplyException
+     * @throws FTPException
+     * @throws FTPDataTransferException
+     * @throws FTPAbortedException
+     * @throws FTPListParseException
+     * @throws QuestionBuilderException
+     */
     public File downloadFile(String questionID, String userID) throws IllegalStateException, IOException, FTPIllegalReplyException, FTPException, FTPDataTransferException, FTPAbortedException, FTPListParseException, QuestionBuilderException {
         FTPClient client = new FTPClient();
         
@@ -262,6 +311,7 @@ public class Server extends ManageableModel implements Listable{
     }
     
     private class ServerAuthenticator extends Authenticator {
+        @Override
         protected PasswordAuthentication getPasswordAuthentication() {
             return new PasswordAuthentication(http_username, http_password.toCharArray());
         }

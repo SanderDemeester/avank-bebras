@@ -33,7 +33,7 @@ public abstract class Question {
     /** These fields are generated on reading the XML **/
     private QuestionModel model;
     protected QuestionType type;
-    public List<Language> languages;
+    protected List<Language> languages;
     protected Map<Language, String> titles;
     protected Map<Language, String> indexes;
     protected Map<Language, String> feedbacks;
@@ -62,6 +62,7 @@ public abstract class Question {
     /**
      * Retrieve a question by id
      * @param id the id of a question
+     * @return question
      * @throws QuestionBuilderException if something went wrong
      */
     public static Question fetch(String id) throws QuestionBuilderException {
@@ -268,6 +269,7 @@ public abstract class Question {
      * @param input input for the answer
      * @param language language in which the answer is answered
      * @return the answer object for this question answer
+     * @throws AnswerGeneratorException
      */
     public abstract Answer getAnswerByInput(String input, Language language) throws AnswerGeneratorException;
 
@@ -279,6 +281,9 @@ public abstract class Question {
         return this.model;
     }
     
+    /**
+     * @return official id
+     */
     public String getOfficialID() {
         return this.model.officialid;
     }

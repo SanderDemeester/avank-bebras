@@ -40,28 +40,49 @@ public class ClassGroupContainer {
 	private List<PupilRecordTriplet> newPupils;
 	private List<PupilRecordTriplet> existingPupils;
 	
-	
+	/**
+	 * Make a new ClassGroupContainer
+	 */
 	public ClassGroupContainer(){
 		this.classGroup=null;
 		this.newPupils = new ArrayList<PupilRecordTriplet>();
 		this.existingPupils = new ArrayList<PupilRecordTriplet>();
 	}
 	
-	public void setClassGroup(ClassGroup cg, boolean isValid, String message,boolean isNew){
+	/**
+	 * set class group
+	 * @param cg class group
+	 * @param isValid if this classgroup is valid
+	 * @param message message
+	 * @param isNew if the classgroup is new
+	 */
+	public void setClassGroup(ClassGroup cg, boolean isValid, String message, boolean isNew){
 		this.classGroup = cg;
 		this.isCGValid = isValid;
 		this.cgMessage = message;
 		this.isCGNew = isNew;
 	}
 	
+	/**
+	 * Append a messsage
+	 * @param st message
+	 */
 	public void appendCGMessage(String st){
 		this.cgMessage = this.cgMessage +"\n"+st;
 	}
 	
+	/**
+	 * Add new pupil
+	 * @param prt triplet
+	 */
 	public void addNewPupil(PupilRecordTriplet prt){
 		this.newPupils.add(prt);
 	}
 	
+	/**
+	 * Add existing pupil
+	 * @param prt triplet
+	 */
 	public void addExistingPupil(PupilRecordTriplet prt){
 		this.existingPupils.add(prt);
 	}	
@@ -167,6 +188,7 @@ public class ClassGroupContainer {
 
 	/**
 	 * Saves all the containers in a transaction
+	 * @param coll ClassGroupContainers
 	 * @return true if saving was successful
 	 */
 	public static boolean save(Collection<ClassGroupContainer> coll){
@@ -263,8 +285,17 @@ public class ClassGroupContainer {
 	 * that can be shown to users
 	 */
 	public static class PupilRecordTriplet{
+	    /**
+	     * user
+	     */
 		public UserModel user;
+		/**
+		 * if valid
+		 */
 		public boolean isValid;
+		/**
+		 * message
+		 */
 		public String message;
 	}
 	

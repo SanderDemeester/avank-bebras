@@ -15,35 +15,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.EMessages;
-import models.data.Language;
 import models.data.Link;
-import models.data.UnavailableLanguageException;
-import models.data.UnknownLanguageCodeException;
 import models.dbentities.QuestionModel;
 import models.dbentities.UserModel;
 import models.management.ModelState;
-import models.question.AnswerGeneratorException;
 import models.question.Question;
 import models.question.QuestionBuilderException;
-import models.question.QuestionFeedback;
-import models.question.QuestionFeedbackGenerator;
 import models.question.QuestionIO;
-import models.question.QuestionSet;
 import models.question.Server;
 import models.question.submits.Submit;
 import models.question.submits.SubmitsPage;
 import models.user.AuthenticationManager;
 import models.user.Role;
-
-import org.codehaus.jackson.JsonNode;
-
 import play.Play;
 import play.cache.Cache;
 import play.data.Form;
-import play.libs.Json;
 import play.mvc.Result;
 import views.html.commons.noaccess;
-import views.html.competition.run.questionSet;
 import views.html.question.approveQuestionForm;
 import views.html.question.editQuestionForm;
 import views.html.question.newQuestionForm;
@@ -61,11 +49,11 @@ import controllers.EController;
  */
 public class QuestionController extends EController{
     
-    public static Result LIST = redirect(
+    private static Result LIST = redirect(
             routes.QuestionController.list(0, "id", "asc", "")
     );
     
-    public static Result LISTSUBMITS = redirect(
+    private static Result LISTSUBMITS = redirect(
             routes.QuestionController.listSubmits(0, "")
     );
     
@@ -90,8 +78,8 @@ public class QuestionController extends EController{
 
     /**
      * This result will redirect to the question list page
-     *
-     * @param oderBy the field to order by
+     * @param page page nr
+     * @param orderBy the field to order by
      * @param order "asc" or "desc"
      * @param filter the string to filter on
      *
@@ -374,7 +362,7 @@ public class QuestionController extends EController{
     /**
      * This will show a file from a certain question pack
      *
-     * @param name name of the question
+     * @param id id of the question
      * @param fileName name of the file to show
      * @return question list page
      */

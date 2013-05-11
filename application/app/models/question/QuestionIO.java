@@ -306,6 +306,9 @@ public class QuestionIO {
     /**
      * Convert a json formatted question to an xml document
      * @param json json formatted question
+     * @param location location
+     * @param hash hash
+     * @param userDownloadLocation user download location
      * @return a question in xml format
      * @throws QuestionBuilderException possible things that can go wrong
      */

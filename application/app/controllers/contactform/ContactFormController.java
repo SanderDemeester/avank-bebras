@@ -1,6 +1,3 @@
-/**
- * 
- */
 package controllers.contactform;
 
 import java.util.ArrayList;
@@ -27,7 +24,7 @@ import controllers.EController;
 public class ContactFormController extends EController {
 
 	/**
-	 * 
+	 * Show the contact form
 	 * @return a page with a contactform
 	 */
 	public static Result showContactForm(){
@@ -79,10 +76,20 @@ public class ContactFormController extends EController {
 		return redirect(routes.ContactFormController.showContactForm());
 	}
 	
+	/**
+	 * Contact form data holder
+	 *
+	 */
 	public static class ContactForm{
+	    /**
+	     * Email address
+	     */
 		@Constraints.Required
 		@Constraints.Email
 		public String email;
+		/**
+		 * Inputted question
+		 */
 		@Constraints.Required		
 		public String question;
 	}

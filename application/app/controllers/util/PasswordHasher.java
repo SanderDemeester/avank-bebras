@@ -98,9 +98,18 @@ public class PasswordHasher {
 		return generateSP(clientHashed.toCharArray());
 	}
 
+	/**
+	 * salt and password holder
+	 *
+	 */
 	public static class SaltAndPassword{
-		
+		/**
+		 * salt
+		 */
 		public String salt;
+		/**
+		 * password
+		 */
 		public String password;
 		
 	}

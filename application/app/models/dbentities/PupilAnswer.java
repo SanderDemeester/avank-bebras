@@ -24,25 +24,47 @@ public class PupilAnswer extends Model implements AnswerModel{
 
     private static final long serialVersionUID = 1L;
     
+    /**
+     * pupil id
+     */
     @Id
     public String indid;
     
+    /**
+     * question
+     */
     @ManyToOne
     @NotNull
     @JoinColumn(name="qid")
     public QuestionModel question;
     
+    /**
+     * answer
+     */
     public String answer;
     
+    /**
+     * is correct
+     */
     public boolean correct;
     
+    /**
+     * language code
+     */
     public String language;
     
+    /**
+     * question set
+     */
     @ManyToOne
     @NotNull
     @JoinColumn(name="questionsetid")
     public QuestionSetModel questionset;
     
+    /**
+     * make new pupil answer
+     * @param user user
+     */
     public PupilAnswer(UserModel user) {
         this.indid = user.id;
     }

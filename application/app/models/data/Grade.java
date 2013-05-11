@@ -19,9 +19,18 @@ import models.data.manager.DataElement;
 @Entity @Table(name="Grades")
 public class Grade implements DataElement {
 
+    /**
+     * name
+     */
     @Id public String name;
 
+    /**
+     * lower age bound
+     */
     public int lowerbound;
+    /**
+     * upper age bound
+     */
     public int upperbound;
 
     /**

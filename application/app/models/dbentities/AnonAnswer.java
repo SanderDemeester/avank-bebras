@@ -22,21 +22,39 @@ public class AnonAnswer extends Model implements AnswerModel{
 
     private static final long serialVersionUID = 1L;
     
+    /**
+     * id
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "anonanswer_id_seq")
     public int id;
     
+    /**
+     * question model
+     */
     @ManyToOne
     @NotNull
     @JoinColumn(name="questionid")
     public QuestionModel question;
     
+    /**
+     * answer
+     */
     public String answer;
     
+    /**
+     * is correct
+     */
     public boolean correct;
     
+    /**
+     * language code
+     */
     public String language;
     
+    /**
+     * question set model
+     */
     @ManyToOne
     @NotNull
     @JoinColumn(name="questionsetid")

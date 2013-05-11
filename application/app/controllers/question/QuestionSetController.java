@@ -1,7 +1,8 @@
 package controllers.question;
 
-import com.avaje.ebean.Ebean;
-import controllers.EController;
+import java.util.ArrayList;
+import java.util.List;
+
 import models.EMessages;
 import models.data.Difficulty;
 import models.data.Grade;
@@ -15,19 +16,21 @@ import models.question.questionset.QuestionSetManager;
 import models.question.questionset.QuestionSetQuestionManager;
 import models.user.AuthenticationManager;
 import models.user.Role;
+
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
+
 import play.data.Form;
 import play.libs.Json;
-import play.mvc.BodyParser;
 import play.mvc.Result;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.avaje.ebean.Ebean;
+
+import controllers.EController;
 /**
  * Controller for question sets.
  *
- * @auhtor Kevin Stobbelaar.
+ * @author Kevin Stobbelaar.
  */
 public class QuestionSetController extends EController {
 
@@ -104,6 +107,10 @@ public class QuestionSetController extends EController {
      * Returns the overview page for a question set
      *
      * @param questionSetId id of the question set
+     * @param page page nr
+     * @param orderBy order field
+     * @param order order
+     * @param filter filter
      * @return overview page for a question set
      */
     public static Result list(int questionSetId, int page, String orderBy, String order, String filter){

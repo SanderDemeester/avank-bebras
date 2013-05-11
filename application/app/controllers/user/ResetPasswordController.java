@@ -26,6 +26,11 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Reset passwords
+ * @author Sander Demeester
+ *
+ */
 public class ResetPasswordController extends EController {
 
     private static SecureRandom secureRandom = new SecureRandom();
@@ -229,8 +234,14 @@ public class ResetPasswordController extends EController {
      * Inline class that contains public fields for play forms.
      */
     public static class ForgotPwd {
+        /**
+         * id
+         */
         @Required
         public String id;
+        /**
+         * email
+         */
         public String email;
     }
 
@@ -238,9 +249,21 @@ public class ResetPasswordController extends EController {
      * Inline class that contains public fields for play forms.
      */
     public static class ResetPasswordVerify {
+        /**
+         * bebras id
+         */
         public String bebras_id;
+        /**
+         * new password
+         */
         public String r_password;
+        /**
+         * verification of new password
+         */
         public String controle_passwd;
+        /**
+         * reset token
+         */
         public String reset_token;
     }
 }
