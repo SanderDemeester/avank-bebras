@@ -1,907 +1,262 @@
---
--- Up to date until and including alter11
---
-
---
--- PostgreSQL database dump
---
-
-SET statement_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-
---
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
-SET search_path = public, pg_catalog;
-
-SET default_tablespace = '';
-
-SET default_with_oids = false;
-
---
--- Name: anonanswer; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE anonanswer (
-    id integer NOT NULL,
-    questionid integer NOT NULL,
-    answer text NOT NULL,
-    correct boolean NOT NULL,
-    language text NOT NULL,
-    questionsetid text NOT NULL
+CREATE TABLE helpTeachers(
+teacherID text NOT NULL REFERENCES Users,
+classID text NOT NULL REFERENCES Classes,
+PRIMARY KEY (teacherID,classID)
 );
 
-
-ALTER TABLE public.anonanswer OWNER TO postgres;
-
---
--- Name: anonanswer_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE anonanswer_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.anonanswer_id_seq OWNER TO postgres;
-
---
--- Name: anonanswer_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE anonanswer_id_seq OWNED BY anonanswer.id;
-
-
---
--- Name: classes; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE classes (
-    id integer NOT NULL,
-    name text NOT NULL,
-    expdate date NOT NULL,
-    schoolid integer NOT NULL,
-    teacherid text NOT NULL,
-    level text NOT NULL
+CREATE TABLE anonAnswer(
+id SERIAL,
+questionID text NOT NULL REFERENCES Questions,
+contestID text NOT NULL REFERENCES Contests,
+answer text NOT NULL,
+PRIMARY KEY (id)
 );
 
+ALTER TABLE Users ADD COLUMN comment text;
 
-ALTER TABLE public.classes OWNER TO postgres;
+ALTER TABLE Questions ADD COLUMN author text;
+ALTER TABLE Users DROP CONSTRAINT users_check;
+ALTER TABLE Users ADD COLUMN class text REFERENCES Classes;
+ALTER TABLE Users ALTER COLUMN Type SET NOT NULL;
+ALTER TABLE Users ALTER COLUMN Type TYPE text;
 
---
--- Name: classes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
+ALTER TABLE Questions ADD CONSTRAINT forkey FOREIGN KEY (author) REFERENCES users;
+ALTER TABLE Questions DROP COLUMN namedut;
+ALTER TABLE Questions DROP COLUMN namefr;
+ALTER TABLE Questions DROP COLUMN namege;
+ALTER TABLE Questions DROP COLUMN correctansdut;
+ALTER TABLE Questions DROP COLUMN correctansfr;
+ALTER TABLE Questions DROP COLUMN correctansge;
+ALTER TABLE Questions DROP COLUMN type;
 
-CREATE SEQUENCE classes_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+ALTER TABLE QuestionSets ADD COLUMN active bool NOT NULL;
+ALTER TABLE QuestionSets ADD COLUMN name text NOT NULL;
 
+ALTER TABLE AnonAnswer DROP COLUMN contestid;
+ALTER TABLE AnonAnswer ADD COLUMN questionsetid text NOT NULL;
+ALTER TABLE AnonAnswer ADD FOREIGN KEY (questionsetid) REFERENCES questionsets;
+ALTER TABLE AnonAnswer ADD COLUMN correct bool NOT NULL;
+ALTER TABLE AnonAnswer ADD COLUMN language text NOT NULL;
 
-ALTER TABLE public.classes_id_seq OWNER TO postgres;
+ALTER TABLE PupilAnswers DROP COLUMN contid;
+ALTER TABLE PupilAnswers ADD COLUMN questionsetid text NOT NULL;
+ALTER TABLE PupilAnswers ADD FOREIGN KEY (questionsetid) REFERENCES questionsets;
+ALTER TABLE PupilAnswers ADD COLUMN correct bool NOT NULL;
+ALTER TABLE PupilAnswers ADD COLUMN language text NOT NULL;
 
---
--- Name: classes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
+CREATE TABLE faq(
+id SERIAL,
+name text,
+content text,
+language text NOT NULL,
+PRIMARY KEY (id)
+);
+ALTER TABLE contests ALTER COLUMN type TYPE text;
 
-ALTER SEQUENCE classes_id_seq OWNED BY classes.id;
+ALTER TABLE servers ADD COLUMN ftpUri text;
+ALTER TABLE servers ALTER COLUMN ftpUri SET NOT NULL;
 
+ALTER TABLE servers ADD COLUMN ftpPort text;
+ALTER TABLE servers ALTER COLUMN ftpPort SET NOT NULL;
 
---
--- Name: classpupil; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
+ALTER TABLE servers ADD COLUMN ftpUser text;
+ALTER TABLE servers ALTER COLUMN ftpUser SET NOT NULL;
 
-CREATE TABLE classpupil (
-    classid integer NOT NULL,
-    indid text NOT NULL
+ALTER TABLE servers ADD COLUMN ftpPass text;
+ALTER TABLE servers ALTER COLUMN ftpPass SET NOT NULL;
+
+DROP TABLE questionsetquestions;
+DROP TABLE anonanswer;
+DROP TABLE pupilanswers;
+DROP TABLE questions;
+
+CREATE TABLE questions(
+id SERIAL,
+officialid text,
+serverID text NOT NULL REFERENCES servers,
+path text NOT NULL,
+active boolean NOT NULL,
+author text REFERENCES users,
+PRIMARY KEY (id)
 );
 
-
-ALTER TABLE public.classpupil OWNER TO postgres;
-
---
--- Name: competitionresponsible; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE competitionresponsible (
-    userid text NOT NULL,
-    contid text NOT NULL
+CREATE TABLE questionsetquestions(
+qid integer REFERENCES questions,
+qsid text REFERENCES questionsets,
+difficulty text NOT NULL,
+PRIMARY KEY (qid,qsid)
 );
 
-
-ALTER TABLE public.competitionresponsible OWNER TO postgres;
-
---
--- Name: contestclasses; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE contestclasses (
-    classid integer NOT NULL,
-    contestid text NOT NULL
+CREATE TABLE anonanswer(
+id SERIAL,
+questionid integer NOT NULL REFERENCES questions,
+answer text NOT NULL,
+correct boolean NOT NULL,
+language text NOT NULL,
+questionsetid text NOT NULL REFERENCES questionsets,
+PRIMARY KEY (id)
 );
 
+CREATE TABLE pupilanswers(
+indid text REFERENCES users,
+qid integer REFERENCES questions,
+questionsetid text REFERENCES questionsets,
+answer text NOT NULL,
+correct boolean NOT NULL,
+language text NOT NULL,
+PRIMARY KEY (indid,qid,questionsetid)
+);
+ALTER TABLE contests DROP CONSTRAINT contests_type_check;
+ALTER TABLE schools ADD COLUMN orig text REFERENCES users;
+-- create new tables
 
-ALTER TABLE public.contestclasses OWNER TO postgres;
-
---
--- Name: contests; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE contests (
-    id text NOT NULL,
-    name text NOT NULL,
-    type text NOT NULL,
-    active boolean NOT NULL,
-    starttime timestamp without time zone,
-    endtime timestamp without time zone,
-    creator text NOT NULL
+CREATE TABLE grades(
+name text,
+startage integer NOT NULL,
+endage integer NOT NULL,
+PRIMARY KEY (name)
 );
 
-
-ALTER TABLE public.contests OWNER TO postgres;
-
---
--- Name: difficulties; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE difficulties (
-    name text NOT NULL,
-    rank integer NOT NULL
+CREATE TABLE difficulties(
+name text,
+ordr integer NOT NULL,
+PRIMARY KEY (name)
 );
 
-
-ALTER TABLE public.difficulties OWNER TO postgres;
-
---
--- Name: faq; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE faq (
-    id integer NOT NULL,
-    name text,
-    content text,
-    language text NOT NULL
+CREATE TABLE links(
+title text,
+url text NOT NULL,
+PRIMARY KEY (title)
 );
 
+-- Change references to classes
 
-ALTER TABLE public.faq OWNER TO postgres;
+DROP TABLE classpupil;
+DROP TABLE contestclasses;
+DROP TABLE helpteachers;
+ALTER TABLE users DROP COLUMN class;
 
---
--- Name: faq_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
+DROP TABLE classes;
+DROP TABLE schools;
 
-CREATE SEQUENCE faq_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+-- remake schools & classes with SERIAL
 
-
-ALTER TABLE public.faq_id_seq OWNER TO postgres;
-
---
--- Name: faq_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE faq_id_seq OWNED BY faq.id;
-
-
---
--- Name: grades; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE grades (
-    name text NOT NULL,
-    lowerbound integer NOT NULL,
-    upperbound integer NOT NULL
+CREATE TABLE schools(
+id SERIAL,
+name text NOT NULL,
+address text NOT NULL,
+orig text REFERENCES users,
+PRIMARY KEY (id)
 );
 
-
-ALTER TABLE public.grades OWNER TO postgres;
-
---
--- Name: helpteachers; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE helpteachers (
-    teacherid text NOT NULL,
-    classid integer NOT NULL
+CREATE TABLE classes(
+id SERIAL,
+name text NOT NULL,
+expdate date NOT NULL,
+schoolid integer NOT NULL REFERENCES schools,
+teacherid text NOT NULL REFERENCES users,
+level text NOT NULL,
+PRIMARY KEY (id)
 );
 
+-- recreate deleted tables
 
-ALTER TABLE public.helpteachers OWNER TO postgres;
+ALTER TABLE users ADD COLUMN class integer;
+ALTER TABLE users ADD FOREIGN KEY (class) REFERENCES classes;
 
---
--- Name: links; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE links (
-    title text NOT NULL,
-    url text NOT NULL
+CREATE TABLE helpteachers(
+teacherid text REFERENCES users,
+classid integer REFERENCES classes,
+PRIMARY KEY (teacherid,classid)
 );
 
-
-ALTER TABLE public.links OWNER TO postgres;
-
---
--- Name: pupilanswers; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE pupilanswers (
-    indid text NOT NULL,
-    qid integer NOT NULL,
-    questionsetid text NOT NULL,
-    answer text NOT NULL,
-    correct boolean NOT NULL,
-    language text NOT NULL
+CREATE TABLE contestclasses(
+classid integer REFERENCES classes,
+contestid text REFERENCES contests,
+PRIMARY KEY (classid,contestid)
 );
 
+CREATE TABLE classpupil(
+classid integer REFERENCES classes,
+indid text REFERENCES users,
+PRIMARY KEY (classid,indid)
+);
+ALTER TABLE contests ADD COLUMN creator text;
+ALTER TABLE contests ADD FOREIGN KEY (creator) REFERENCES users;
+ALTER TABLE contests ALTER COLUMN creator SET NOT NULL;
+ALTER TABLE servers ADD COLUMN ftppath text;
+ALTER TABLE questions DROP COLUMN path;
 
-ALTER TABLE public.pupilanswers OWNER TO postgres;
+ALTER TABLE grades RENAME COLUMN startage TO lowerbound;
+ALTER TABLE grades RENAME COLUMN endage TO upperbound;
 
---
--- Name: questions; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
+ALTER TABLE difficulties RENAME COLUMN ordr TO rank;
+ALTER TABLE difficulties ADD CONSTRAINT diff_uniq_rank UNIQUE (rank);
+ALTER TABLE servers ADD COLUMN is_http_secured boolean;
+ALTER TABLE servers ADD COLUMN http_username text;
+ALTER TABLE servers ADD COLUMN http_password text;
 
-CREATE TABLE questions (
-    id integer NOT NULL,
-    officialid text,
-    serverid text NOT NULL,
-    active boolean NOT NULL,
-    author text
+ALTER TABLE classes ADD FOREIGN KEY (level) REFERENCES grades;
+
+ALTER TABLE users ADD COLUMN reset_token text;
+ALTER TABLE servers ALTER COLUMN is_http_secured SET NOT NULL;
+
+ALTER TABLE contests ADD COLUMN duration integer;
+ALTER TABLE contests ALTER COLUMN duration SET NOT NULL;
+
+DROP TABLE anonanswer;
+DROP TABLE pupilanswers;
+DROP TABLE questionsetquestions;
+DROP TABLE questionsets;
+
+CREATE TABLE questionsets(
+id SERIAL,
+level text NOT NULL,
+contid text NOT NULL REFERENCES contests,
+active boolean NOT NULL,
+name text NOT NULL,
+PRIMARY KEY (id)
 );
 
-
-ALTER TABLE public.questions OWNER TO postgres;
-
---
--- Name: questions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE questions_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.questions_id_seq OWNER TO postgres;
-
---
--- Name: questions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE questions_id_seq OWNED BY questions.id;
-
-
---
--- Name: questionsetquestions; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE questionsetquestions (
-    qid integer NOT NULL,
-    qsid text NOT NULL,
-    difficulty text NOT NULL
+CREATE TABLE questionsetquestions(
+qid integer NOT NULL REFERENCES questions,
+qsid integer NOT NULL REFERENCES questionsets,
+difficulty text NOT NULL,
+PRIMARY KEY (qid,qsid)
 );
 
-
-ALTER TABLE public.questionsetquestions OWNER TO postgres;
-
---
--- Name: questionsets; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE questionsets (
-    id text NOT NULL,
-    level text NOT NULL,
-    contid text NOT NULL,
-    active boolean NOT NULL,
-    name text NOT NULL
+CREATE TABLE anonanswer(
+id SERIAL,
+questionid integer NOT NULL REFERENCES questions,
+answer text NOT NULL,
+correct boolean NOT NULL,
+language text NOT NULL,
+questionsetid integer NOT NULL REFERENCES questionsets,
+PRIMARY KEY (id)
 );
 
+CREATE TABLE pupilanswers(
+indid text NOT NULL REFERENCES users,
+qid integer NOT NULL REFERENCES questions,
+questionsetid integer NOT NULL REFERENCES questionsets,
+answer text NOT NULL,
+correct boolean NOT NULL,
+language text NOT NULL,
+PRIMARY KEY (indid,qid,questionsetid)
+);
+ALTER TABLE questionsets ADD CONSTRAINT qs_lvl_forkey FOREIGN KEY (level) REFERENCES grades;
+ALTER TABLE questionsetquestions ADD CONSTRAINT qsq_diff_forkey FOREIGN KEY (difficulty) REFERENCES difficulties;
+ALTER TABLE difficulties ADD COLUMN cpoints int NOT NULL;
+ALTER TABLE difficulties ADD COLUMN wpoints int NOT NULL;
+ALTER TABLE difficulties ADD COLUMN npoints int NOT NULL;
 
-ALTER TABLE public.questionsets OWNER TO postgres;
-
---
--- Name: schools; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE schools (
-    id integer NOT NULL,
-    name text NOT NULL,
-    address text NOT NULL,
-    orig text
+CREATE TABLE competitionScore(
+qsID integer REFERENCES questionSets,
+uID text REFERENCES users,
+score integer NOT NULL,
+PRIMARY KEY (qsID, uID)
 );
 
-
-ALTER TABLE public.schools OWNER TO postgres;
-
---
--- Name: schools_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE schools_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.schools_id_seq OWNER TO postgres;
-
---
--- Name: schools_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE schools_id_seq OWNED BY schools.id;
-
-
---
--- Name: servers; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE servers (
-    id text NOT NULL,
-    location text NOT NULL,
-    ftpuri text NOT NULL,
-    ftpport text NOT NULL,
-    ftpuser text NOT NULL,
-    ftppass text NOT NULL,
-    ftppath text
-);
-
-
-ALTER TABLE public.servers OWNER TO postgres;
-
---
--- Name: users; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE users (
-    id text NOT NULL,
-    name text NOT NULL,
-    gender text NOT NULL,
-    birthdate date NOT NULL,
-    email text,
-    registrationdate date NOT NULL,
-    preflanguage text NOT NULL,
-    password text NOT NULL,
-    hash text NOT NULL,
-    active boolean NOT NULL,
-    type text NOT NULL,
-    telephone character varying(256),
-    address character varying(256),
-    comment text,
-    class integer
-);
-
-
-ALTER TABLE public.users OWNER TO postgres;
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY anonanswer ALTER COLUMN id SET DEFAULT nextval('anonanswer_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY classes ALTER COLUMN id SET DEFAULT nextval('classes_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY faq ALTER COLUMN id SET DEFAULT nextval('faq_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY questions ALTER COLUMN id SET DEFAULT nextval('questions_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY schools ALTER COLUMN id SET DEFAULT nextval('schools_id_seq'::regclass);
-
-
---
--- Name: anonanswer_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY anonanswer
-    ADD CONSTRAINT anonanswer_pkey PRIMARY KEY (id);
-
-
---
--- Name: classes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY classes
-    ADD CONSTRAINT classes_pkey PRIMARY KEY (id);
-
-
---
--- Name: classpupil_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY classpupil
-    ADD CONSTRAINT classpupil_pkey PRIMARY KEY (classid, indid);
-
-
---
--- Name: competitionresponsible_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY competitionresponsible
-    ADD CONSTRAINT competitionresponsible_pkey PRIMARY KEY (userid, contid);
-
-
---
--- Name: contestclasses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY contestclasses
-    ADD CONSTRAINT contestclasses_pkey PRIMARY KEY (classid, contestid);
-
-
---
--- Name: contests_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY contests
-    ADD CONSTRAINT contests_pkey PRIMARY KEY (id);
-
-
---
--- Name: diff_uniq_rank; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY difficulties
-    ADD CONSTRAINT diff_uniq_rank UNIQUE (rank);
-
-
---
--- Name: difficulties_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY difficulties
-    ADD CONSTRAINT difficulties_pkey PRIMARY KEY (name);
-
-
---
--- Name: faq_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY faq
-    ADD CONSTRAINT faq_pkey PRIMARY KEY (id);
-
-
---
--- Name: grades_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY grades
-    ADD CONSTRAINT grades_pkey PRIMARY KEY (name);
-
-
---
--- Name: helpteachers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY helpteachers
-    ADD CONSTRAINT helpteachers_pkey PRIMARY KEY (teacherid, classid);
-
-
---
--- Name: links_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY links
-    ADD CONSTRAINT links_pkey PRIMARY KEY (title);
-
-
---
--- Name: pupilanswers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY pupilanswers
-    ADD CONSTRAINT pupilanswers_pkey PRIMARY KEY (indid, qid, questionsetid);
-
-
---
--- Name: questions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY questions
-    ADD CONSTRAINT questions_pkey PRIMARY KEY (id);
-
-
---
--- Name: questionsetquestions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY questionsetquestions
-    ADD CONSTRAINT questionsetquestions_pkey PRIMARY KEY (qid, qsid);
-
-
---
--- Name: questionsets_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY questionsets
-    ADD CONSTRAINT questionsets_pkey PRIMARY KEY (id);
-
-
---
--- Name: schools_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY schools
-    ADD CONSTRAINT schools_pkey PRIMARY KEY (id);
-
-
---
--- Name: servers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY servers
-    ADD CONSTRAINT servers_pkey PRIMARY KEY (id);
-
-
---
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
-
-
---
--- Name: anonanswer_questionid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY anonanswer
-    ADD CONSTRAINT anonanswer_questionid_fkey FOREIGN KEY (questionid) REFERENCES questions(id);
-
-
---
--- Name: anonanswer_questionsetid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY anonanswer
-    ADD CONSTRAINT anonanswer_questionsetid_fkey FOREIGN KEY (questionsetid) REFERENCES questionsets(id);
-
-
---
--- Name: classes_schoolid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY classes
-    ADD CONSTRAINT classes_schoolid_fkey FOREIGN KEY (schoolid) REFERENCES schools(id);
-
-
---
--- Name: classes_teacherid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY classes
-    ADD CONSTRAINT classes_teacherid_fkey FOREIGN KEY (teacherid) REFERENCES users(id);
-
-
---
--- Name: classpupil_classid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY classpupil
-    ADD CONSTRAINT classpupil_classid_fkey FOREIGN KEY (classid) REFERENCES classes(id);
-
-
---
--- Name: classpupil_indid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY classpupil
-    ADD CONSTRAINT classpupil_indid_fkey FOREIGN KEY (indid) REFERENCES users(id);
-
-
---
--- Name: competitionresponsible_contid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY competitionresponsible
-    ADD CONSTRAINT competitionresponsible_contid_fkey FOREIGN KEY (contid) REFERENCES contests(id);
-
-
---
--- Name: competitionresponsible_userid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY competitionresponsible
-    ADD CONSTRAINT competitionresponsible_userid_fkey FOREIGN KEY (userid) REFERENCES users(id);
-
-
---
--- Name: contestclasses_classid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY contestclasses
-    ADD CONSTRAINT contestclasses_classid_fkey FOREIGN KEY (classid) REFERENCES classes(id);
-
-
---
--- Name: contestclasses_contestid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY contestclasses
-    ADD CONSTRAINT contestclasses_contestid_fkey FOREIGN KEY (contestid) REFERENCES contests(id);
-
-
---
--- Name: contests_creator_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY contests
-    ADD CONSTRAINT contests_creator_fkey FOREIGN KEY (creator) REFERENCES users(id);
-
-
---
--- Name: helpteachers_classid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY helpteachers
-    ADD CONSTRAINT helpteachers_classid_fkey FOREIGN KEY (classid) REFERENCES classes(id);
-
-
---
--- Name: helpteachers_teacherid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY helpteachers
-    ADD CONSTRAINT helpteachers_teacherid_fkey FOREIGN KEY (teacherid) REFERENCES users(id);
-
-
---
--- Name: pupilanswers_indid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY pupilanswers
-    ADD CONSTRAINT pupilanswers_indid_fkey FOREIGN KEY (indid) REFERENCES users(id);
-
-
---
--- Name: pupilanswers_qid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY pupilanswers
-    ADD CONSTRAINT pupilanswers_qid_fkey FOREIGN KEY (qid) REFERENCES questions(id);
-
-
---
--- Name: pupilanswers_questionsetid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY pupilanswers
-    ADD CONSTRAINT pupilanswers_questionsetid_fkey FOREIGN KEY (questionsetid) REFERENCES questionsets(id);
-
-
---
--- Name: questions_author_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY questions
-    ADD CONSTRAINT questions_author_fkey FOREIGN KEY (author) REFERENCES users(id);
-
-
---
--- Name: questions_serverid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY questions
-    ADD CONSTRAINT questions_serverid_fkey FOREIGN KEY (serverid) REFERENCES servers(id);
-
-
---
--- Name: questionsetquestions_qid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY questionsetquestions
-    ADD CONSTRAINT questionsetquestions_qid_fkey FOREIGN KEY (qid) REFERENCES questions(id);
-
-
---
--- Name: questionsetquestions_qsid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY questionsetquestions
-    ADD CONSTRAINT questionsetquestions_qsid_fkey FOREIGN KEY (qsid) REFERENCES questionsets(id);
-
-
---
--- Name: questionsets_contid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY questionsets
-    ADD CONSTRAINT questionsets_contid_fkey FOREIGN KEY (contid) REFERENCES contests(id);
-
-
---
--- Name: schools_orig_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY schools
-    ADD CONSTRAINT schools_orig_fkey FOREIGN KEY (orig) REFERENCES users(id);
-
-
---
--- Name: users_class_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY users
-    ADD CONSTRAINT users_class_fkey FOREIGN KEY (class) REFERENCES classes(id);
-
-
---
--- Name: public; Type: ACL; Schema: -; Owner: postgres
---
-
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO PUBLIC;
-
-
---
--- Name: classes; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE classes FROM PUBLIC;
-REVOKE ALL ON TABLE classes FROM postgres;
-GRANT ALL ON TABLE classes TO postgres;
-GRANT ALL ON TABLE classes TO postgres;
-
-
---
--- Name: classes_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON SEQUENCE classes_id_seq FROM PUBLIC;
-REVOKE ALL ON SEQUENCE classes_id_seq FROM postgres;
-GRANT ALL ON SEQUENCE classes_id_seq TO postgres;
-GRANT SELECT,USAGE ON SEQUENCE classes_id_seq TO postgres;
-
-
---
--- Name: competitionresponsible; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE competitionresponsible FROM PUBLIC;
-REVOKE ALL ON TABLE competitionresponsible FROM postgres;
-GRANT ALL ON TABLE competitionresponsible TO postgres;
-GRANT ALL ON TABLE competitionresponsible TO postgres;
-
-
---
--- Name: contests; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE contests FROM PUBLIC;
-REVOKE ALL ON TABLE contests FROM postgres;
-GRANT ALL ON TABLE contests TO postgres;
-GRANT ALL ON TABLE contests TO postgres;
-
-
---
--- Name: faq; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE faq FROM PUBLIC;
-REVOKE ALL ON TABLE faq FROM postgres;
-GRANT ALL ON TABLE faq TO postgres;
-GRANT ALL ON TABLE faq TO postgres;
-
-
---
--- Name: faq_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON SEQUENCE faq_id_seq FROM PUBLIC;
-REVOKE ALL ON SEQUENCE faq_id_seq FROM postgres;
-GRANT ALL ON SEQUENCE faq_id_seq TO postgres;
-GRANT SELECT,USAGE ON SEQUENCE faq_id_seq TO postgres;
-
-
---
--- Name: questions; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE questions FROM PUBLIC;
-REVOKE ALL ON TABLE questions FROM postgres;
-GRANT ALL ON TABLE questions TO postgres;
-GRANT ALL ON TABLE questions TO postgres;
-
-
---
--- Name: questionsets; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE questionsets FROM PUBLIC;
-REVOKE ALL ON TABLE questionsets FROM postgres;
-GRANT ALL ON TABLE questionsets TO postgres;
-GRANT ALL ON TABLE questionsets TO postgres;
-
-
---
--- Name: schools; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE schools FROM PUBLIC;
-REVOKE ALL ON TABLE schools FROM postgres;
-GRANT ALL ON TABLE schools TO postgres;
-GRANT ALL ON TABLE schools TO postgres;
-
-
---
--- Name: schools_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON SEQUENCE schools_id_seq FROM PUBLIC;
-REVOKE ALL ON SEQUENCE schools_id_seq FROM postgres;
-GRANT ALL ON SEQUENCE schools_id_seq TO postgres;
-GRANT SELECT,USAGE ON SEQUENCE schools_id_seq TO postgres;
-
-
---
--- Name: servers; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE servers FROM PUBLIC;
-REVOKE ALL ON TABLE servers FROM postgres;
-GRANT ALL ON TABLE servers TO postgres;
-GRANT ALL ON TABLE servers TO postgres;
-
-
---
--- Name: users; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE users FROM PUBLIC;
-REVOKE ALL ON TABLE users FROM postgres;
-GRANT ALL ON TABLE users TO postgres;
-GRANT ALL ON TABLE users TO postgres;
-
-
---
--- PostgreSQL database dump complete
---
-
+ALTER TABLE users ADD CONSTRAINT unique_email UNIQUE (email);
+ALTER TABLE users DROP COLUMN active;
+ALTER TABLE users ADD COLUMN blockedUntil date;
