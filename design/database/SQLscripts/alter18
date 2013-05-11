@@ -1,0 +1,1 @@
+ALTER TABLE  questions ADD CONSTRAINT unique_offical UNIQUE (officialid);
