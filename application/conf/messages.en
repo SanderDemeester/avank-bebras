@@ -170,6 +170,8 @@ statistics.count = Count
 statistics.populations.of_the = {0} of the {1}
 statistics.populations.individuals = Individuals
 statistics.populations.classes = Classes
+statistics.populations.schools = Schools
+statistics.populations.all = All users
 statistics.statistics.gender = Gender
 statistics.statistics.score = Score
 

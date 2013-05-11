@@ -13,13 +13,23 @@ public class PopulationType {
 
     public static PopulationType INDIVIDUAL = create(
         "INDIVIDUAL",
-        EMessages.get("statistics.populations.individuals"),
+        "statistics.populations.individuals",
         new SinglePopulation.Factory()
     );
     public static PopulationType CLASS = create(
         "CLASS",
-        EMessages.get("statistics.populations.classes"),
+        "statistics.populations.classes",
         new ClassPopulation.Factory()
+    );
+    public static PopulationType SCHOOL = create(
+        "SCHOOL",
+        "statistics.populations.schools",
+        new SchoolPopulation.Factory()
+    );
+    public static PopulationType ALL = create(
+        "ALL",
+        "statistics.populations.all",
+        new AllPopulation.Factory()
     );
 
     // To keep track of instances.

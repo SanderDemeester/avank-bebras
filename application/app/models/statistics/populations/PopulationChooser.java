@@ -12,8 +12,10 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Set;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Arrays;
+import java.util.Collection;
 
 import javax.persistence.PersistenceException;
 import com.avaje.ebean.Ebean;
@@ -25,6 +27,7 @@ import models.user.Teacher;
 
 import models.dbentities.UserModel;
 import models.dbentities.ClassGroup;
+import models.dbentities.SchoolModel;
 
 /**
  * This is a helper class for choosing populations. I propose a popup with tabs
@@ -134,6 +137,23 @@ public class PopulationChooser {
                         Ebean.find(ClassGroup.class).findList()
                     )
                 );
+
+                /* Schools: All of them. */
+                chooser.newType(
+                    PopulationType.SCHOOL,
+                    mapToPop(
+                        SchoolPopulation.class,
+                        SchoolModel.class,
+                        Ebean.find(SchoolModel.class).findList()
+                    )
+                );
+
+                /* The whole bunch. */
+                chooser.newType(
+                    PopulationType.ALL,
+                    Arrays.asList((Population) new AllPopulation())
+                );
+
                 return chooser;
             }
         });
@@ -170,6 +190,26 @@ public class PopulationChooser {
                         cgs
                     )
                 );
+
+                /* Schools: His own school. */
+                if(current != null) {
+                    chooser.newType(
+                        PopulationType.SCHOOL,
+                        mapToPop(
+                            SchoolPopulation.class,
+                            SchoolModel.class,
+                            Ebean.find(SchoolModel.class)
+                                .where().eq("id", current.schoolid).findList()
+                        )
+                    );
+                }
+
+                /* The whole bunch. */
+                chooser.newType(
+                    PopulationType.ALL,
+                    Arrays.asList((Population) new AllPopulation())
+                );
+
                 return chooser;
             }
         });
@@ -201,6 +241,20 @@ public class PopulationChooser {
                     mapToPop(ClassPopulation.class, ClassGroup.class, classes)
                 );
 
+                /* Schools: Where he teaches. */
+                Set<Integer> schools = new HashSet<Integer>();
+                for(ClassGroup cg : classes) schools.add(cg.schoolid);
+                chooser.newType(
+                    PopulationType.SCHOOL,
+                    mapToPop(SchoolPopulation.class, SchoolModel.class, schools)
+                );
+
+                /* The whole bunch. */
+                chooser.newType(
+                    PopulationType.ALL,
+                    Arrays.asList((Population) new AllPopulation())
+                );
+
                 return chooser;
             }
         });
@@ -210,6 +264,14 @@ public class PopulationChooser {
 
                 /* Single Users: None. */
                 /* Classes: None. */
+                /* Schools: None. */
+
+                /* The whole bunch. */
+                chooser.newType(
+                    PopulationType.ALL,
+                    Arrays.asList((Population) new AllPopulation())
+                );
+
                 return chooser;
             }
         });
@@ -222,7 +284,7 @@ public class PopulationChooser {
     // for instance:
     // mapToPop(ClassPopulation.class, ClassGroup.class, listOfClassGroups)
     private static List<Population> mapToPop(Class<? extends Population> a,
-            Class<?> b, List<?> l) {
+            Class<?> b, Collection<?> l) {
         List<Population> pops = new ArrayList<Population>(l.size());
 
         // Get constructor.

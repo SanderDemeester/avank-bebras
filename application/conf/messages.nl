@@ -171,6 +171,8 @@ statistics.count = Aantal
 statistics.populations.of_the = {0} van de/het {1}
 statistics.populations.individuals = Personen
 statistics.populations.classes = Klassen
+statistics.populations.schools = Scholen
+statistics.populations.all = Alle gebruikers
 statistics.statistics.gender = Geslacht
 statistics.statistics.score = Correcte vragen
 
