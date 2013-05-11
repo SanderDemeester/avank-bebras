@@ -167,6 +167,7 @@ languages.nl = Nederlands
 statistics.title = Statistieken
 statistics.add_population = Voeg een populatie toe
 statistics.add_filter = Voeg een filter toe
+statistics.generate = Genereer
 statistics.count = Aantal
 statistics.populations.of_the = {0} van de/het {1}
 statistics.populations.individuals = Personen
