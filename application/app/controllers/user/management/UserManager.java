@@ -23,9 +23,16 @@ import controllers.user.management.routes;
 public class UserManager extends Manager<UserModel> {
 	
 	ExpressionList<UserModel> UMDataSet;
+	
+	public String edit_id;
 
 	public UserManager(ModelState state) {
 		super(UserModel.class, state, "type", "type");
+	}
+	
+	public UserManager(ModelState state, String i){
+		super(UserModel.class, state, "type", "type");
+		this.edit_id = i;
 	}
 
 	@Override
@@ -50,7 +57,7 @@ public class UserManager extends Manager<UserModel> {
 
 	@Override
 	public Call getRemoveRoute(String id) {
-		return routes.UserManagerController.removeUser(id);
+		return null;
 	}
 
 	@Override
@@ -60,7 +67,7 @@ public class UserManager extends Manager<UserModel> {
 
 	@Override
 	public play.api.mvc.Call getUpdateRoute() {
-		return routes.UserManagerController.updateUser();
+		return routes.UserManagerController.updateUser(edit_id);
 	}
 	
 	@Override
@@ -69,7 +76,16 @@ public class UserManager extends Manager<UserModel> {
         headers.add("id");
         for(String key : fields.keySet()) {
         	if(!key.equals("blocked")){
-            	headers.add(key);	
+        		// correcting wrapper classes
+        		if(key.equals("wrap_type")){
+        			headers.add("type");
+        		}else if(key.equals("wrap_gender")){
+        			headers.add("gender");
+        		}else if(key.equals("wrap_language")){
+        			headers.add("preflanguage");
+        		}else{
+        			headers.add(key);
+        		}
         	}
         }
         return headers;

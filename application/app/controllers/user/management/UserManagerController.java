@@ -42,6 +42,7 @@ import models.dbentities.UserModel;
 import models.management.ModelState;
 import models.question.Server;
 import models.user.AuthenticationManager;
+import models.user.ChainOfCommand;
 import models.user.Gender;
 import models.user.GenderWrap;
 import models.user.IDGenerator;
@@ -71,10 +72,12 @@ import views.html.user.management.createuser;
 
 public class UserManagerController extends EController {
 	
-	private static String edit_id;
-	
     public static boolean isAuthorized() {
         return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGEUSERS);
+    }
+    
+    public static boolean isAuthorized(String userID){
+    	return ChainOfCommand.isSuperiorOf(userID);
     }
     
     private static List<Link> defaultBreadcrumbs() {
@@ -136,23 +139,7 @@ public class UserManagerController extends EController {
         return ok(createuser.render(form, manager, breadcrumbs));
     }
     
-    @Transactional
-    public static Result removeUser(String id){
-	    // breadcrumbs links
-    	List<Link> breadcrumbs = defaultBreadcrumbs();
-		
-	    // authorized?
-        if(!isAuthorized()) return Results.ok(noaccess.render(breadcrumbs));
-        
-        // check if id is not the same as the id of the current active user
-        if(AuthenticationManager.getInstance().getUser().getID().equals(id)){
-		    flash("error", EMessages.get(EMessages.get("user.error.sameid")));
-		    return Results.redirect(controllers.user.management.routes.UserManagerController.showUsers(0,"name","asc",""));
-        }
-        Ebean.delete(Ebean.find(UserModel.class).where().eq("id",id).findUnique());
-        
-        return Results.redirect(controllers.user.management.routes.UserManagerController.showUsers(0,"name","asc",""));
-    }
+    
     
     // find UserModel based on id
     public static UserModel findUser(String id){
@@ -166,16 +153,15 @@ public class UserManagerController extends EController {
     }
         
     @Transactional
-    public static Result updateUser(){
+    public static Result updateUser(String edit_id){
     	List<Link> breadcrumbs = new ArrayList<Link>();
 	    breadcrumbs.add(new Link("app.home", "/"));
 	    breadcrumbs.add(new Link(EMessages.get("user.management.edit"), "/manage/users/update"));
-        
 	    // old usermodel
 	    UserModel def_model = Ebean.find(UserModel.class).where().eq(
 				"id",edit_id).findUnique();
 	    
-        if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
+        if(!isAuthorized(edit_id)) return ok(noaccess.render(breadcrumbs));
 
         Form<UserModel> form = form(UserModel.class).bindFromRequest();
 
@@ -277,7 +263,10 @@ public class UserManagerController extends EController {
 
         // success!
         flash("success", EMessages.get("user.success.edited", edit_id));
-        return Results.redirect(controllers.user.management.routes.UserManagerController.showUsers(0,"name","asc",""));
+        if(isAuthorized())
+        	return Results.redirect(controllers.user.management.routes.UserManagerController.showUsers(0,"name","asc",""));
+        else
+        	return Results.redirect(routes.UserManagerController.editUser(edit_id));
     }
     
     @Transactional(readOnly=true)
@@ -288,7 +277,7 @@ public class UserManagerController extends EController {
         breadcrumbs.add(new Link(EMessages.get("user.management.edit"),"/manage/users/"+id+"/edit"));
 	    
         // authorized?
-        if(!isAuthorized()) return Results.ok(noaccess.render(breadcrumbs));
+        if(!isAuthorized(id)) return Results.ok(noaccess.render(breadcrumbs));
         
         // check if id is not the same as the id of the current active user
         if(AuthenticationManager.getInstance().getUser().getID().equals(id)){
@@ -296,15 +285,17 @@ public class UserManagerController extends EController {
 		    return Results.redirect(controllers.user.management.routes.UserManagerController.showUsers(0,"name","asc",""));
         }
         
-        UserManager manager = new UserManager(ModelState.UPDATE);
+        UserManager manager = new UserManager(ModelState.UPDATE, id);
         
         Form<UserModel> form = form(UserModel.class).bindFromRequest();
         
-        edit_id = id;
         UserModel id_model = Ebean.find(UserModel.class).where().eq(
 				"id",id).findUnique();
         
         // setting the default values
+        form.get().id = id;
+        form.get().type = id_model.type;
+        form.get().gender = id_model.gender;
         form.get().name = id_model.name;
         form.get().email = id_model.email;
         form.get().birthdate = id_model.birthdate;
@@ -328,8 +319,6 @@ public class UserManagerController extends EController {
 		}
 		
         manager.setIgnoreErrors(true);
-
-        edit_id = id;
         
         return ok(edituser.render(form, manager, breadcrumbs));
     }
@@ -417,23 +406,23 @@ public class UserManagerController extends EController {
      */
     
     // USERTYPE
-    public static String getUserType(){
+    public static String getUserType(String id){
     	UserModel dum = Ebean.find(UserModel.class).where().eq(
-				"id",edit_id).findUnique();
+				"id",id).findUnique();
     	return dum.type.toString();
     }
     
     // USERLANG
-    public static String getUserLang(){
+    public static String getUserLang(String id){
     	UserModel dum = Ebean.find(UserModel.class).where().eq(
-				"id",edit_id).findUnique();
+				"id",id).findUnique();
     	return dum.preflanguage;
     }
     
     // USERGENDER
-    public static String getUserGender(){
+    public static String getUserGender(String id){
     	UserModel dum = Ebean.find(UserModel.class).where().eq(
-				"id",edit_id).findUnique();
+				"id",id).findUnique();
     	return dum.gender.toString();
     }
 }

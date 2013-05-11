@@ -19,13 +19,7 @@ import play.i18n.Lang;
 public class Language implements Comparable<Language>, Listable {
 
     private Lang lang;
-    
-    // Encapsulation for UserManagement
-    public enum lang_el {
-    	nl,
-    	en;
-    }
-    
+        
     // Empty constructor for UserManagement
     public Language(){
     	
@@ -132,17 +126,6 @@ public class Language implements Comparable<Language>, Listable {
         return lang;
     }
     
-    /*
-     * Returns the Lang code in string format
-     */
-    public static String getLangCode(String language){
-    	if(language.equals("English") || language.equals("Engels")){
-    		return "en";
-    	}else{
-    		return "nl";
-    	}
-    }
-
     /**
      * Lists the available Languages.
      * @return A List of the Available languages.

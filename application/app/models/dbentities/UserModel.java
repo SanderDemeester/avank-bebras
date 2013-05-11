@@ -210,6 +210,6 @@ public class UserModel extends ManageableModel implements Listable{
 	public boolean isCurrentlyBlocked(){
 		if(this.blockeduntil==null) return false;
 		Date today = Calendar.getInstance().getTime();
-		return !today.before(this.blockeduntil);
+		return !today.after(this.blockeduntil);
 	}
 }
