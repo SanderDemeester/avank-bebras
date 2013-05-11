@@ -130,7 +130,7 @@ public class QuestionPack {
      * @param file the file that will be added to the zip file
      * @throws IOException if a problem occured while writing to the zip file
      */
-    private static void addToZip(ZipOutputStream zout, String name, File file) throws IOException {
+    public static void addToZip(ZipOutputStream zout, String name, File file) throws IOException {
         ZipEntry ze = new ZipEntry(name);
         zout.putNextEntry(ze);
         byte[] buffer = new byte[1024];
@@ -151,7 +151,7 @@ public class QuestionPack {
      * @param files files to be added to the zip archive
      * @throws IOException if a problem occured while writing to the zip file
      */
-    private static void addToZip(ZipOutputStream zout, Iterable<File> files) throws IOException {
+    public static void addToZip(ZipOutputStream zout, Iterable<File> files) throws IOException {
         for(File file : files) {
             String newName = file.getName().replaceAll("~[^.]*$", "");
             addToZip(zout, newName, file);
@@ -192,7 +192,7 @@ public class QuestionPack {
         } catch (FileNotFoundException e) {
             throw new RuntimeException("Invalid file.", e);
         } catch (IOException e) {
-            throw new RuntimeException("IO error.", e);
+            throw new RuntimeException(e);
         }
     }
 

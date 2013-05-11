@@ -43,6 +43,9 @@ public class CompetitionModel extends ManageableModel {
     @Constraints.Required
     public Date endtime;
 
+    @Constraints.Required
+    public int duration;
+
     /**
      * Returns those values that have to be represented in a table.
      *
@@ -50,7 +53,7 @@ public class CompetitionModel extends ManageableModel {
      */
     @Override
     public String[] getFieldValues() {
-        String[] fieldValues = {name, type.name(), Boolean.toString(active), starttime.toString(), endtime.toString(), creator};
+        String[] fieldValues = {name, type.toString(), Boolean.toString(active), starttime.toString(), endtime.toString(), creator, "" + duration};
         return fieldValues;
     }
 

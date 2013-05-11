@@ -215,6 +215,31 @@ public class QuestionIO {
         }
         out.close();
     }
+    
+    /**
+     * Make a document from an url
+     * @param xml absolute URL of an xml file
+     * @return a document for the xml url
+     * @throws QuestionBuilderException possible things that can go wrong
+     */
+    public static Document makeDocument(String xml) throws QuestionBuilderException {
+        try {
+            // Parse the given XML into a DOM tree
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setNamespaceAware(true);
+    
+            // Parse our file
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(xml);
+            return doc;
+        } catch (ParserConfigurationException e) {
+            throw new QuestionBuilderException("Incorrect XML, can't be parsed.");
+        } catch (SAXException e) {
+            throw new QuestionBuilderException("The XML is invalid."+e.getMessage());
+        } catch (IOException e) {
+            throw new QuestionBuilderException("Can't read the xml file.");
+        }
+    }
 
     /**
      * Creates a new question from a certain XML input
@@ -223,24 +248,7 @@ public class QuestionIO {
      * @throws QuestionBuilderException possible things that can go wrong
      */
     public static Question getFromXml(String xml) throws QuestionBuilderException {
-        Question question = null;
-        try {
-            // Parse the given XML into a DOM tree
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            factory.setNamespaceAware(true);
-
-            // Parse our file
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(xml);
-
-            return getFromXml(doc);
-        } catch (ParserConfigurationException e) {
-            throw new QuestionBuilderException("Incorrect XML, can't be parsed.");
-        } catch (SAXException e) {
-            throw new QuestionBuilderException("The XML is invalid."+e.getMessage());
-        } catch (IOException e) {
-            throw new QuestionBuilderException("Can't read the xml file.");
-        }
+        return getFromXml(makeDocument(xml));
     }
 
     /**

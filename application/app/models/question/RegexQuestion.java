@@ -39,4 +39,10 @@ public class RegexQuestion extends Question{
     public String getRegex(Language language) {
         return regex.get(language);
     }
+
+    @Override
+    public Answer getAnswerByInput(String input, Language language)
+            throws AnswerGeneratorException {
+        return new RegexAnswer(this, input, language);
+    }
 }

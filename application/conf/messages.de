@@ -44,6 +44,7 @@ error.mimic = Benutzer kann nicht nachgeahmt werden.
 error.mimic.cant_find_user = Benutzer kann nicht gefunden werden.
 error.mimic.policy_deny = Benutzer kann von Politik nicht nachahmen.
 error.mimic.user_logged_in = Der Benutzer, den Sie versuchen zu imitieren, ist in das System angemeldet.
+error.user_blocked = Ihr Konto gesperrt ist, wenden Sie sich bitte ein Admin
 
 # Links from roles
 links.settings.title = Einstellungen
@@ -63,8 +64,12 @@ links.datamanager.diffs = Verwalten der Schwierigkeitsgrade
 links.datamanager.grades = Verwalten der Schüler-Klasse
 links.contestmanager.title = Wettbewerb-Verwaltung
 links.contestmanager.overview = Wettbewerb-Übersicht
+links.contestmanager.create = Erstellen neuen Wettbewerb
 links.mimic = Benutzer zu imitieren
-links.manageusers.users = Benutzer zeigen
+links.contesttaking.title = Wettbewerbe
+links.contesttaking.overview = Verfügbare Wettbewerbe
+links.contesttaking.history = Geschichte
+links.manageusers.users = Benutzer anzeigen
 links.manageusers.title = Benutzerverwaltung
 
 # Forms
@@ -113,6 +118,8 @@ question.editor.answerOptionsInfo = Hinzufügen von Lösungen für mögliche Ant
 question.editor.addAnswerOption = Antwort-Option hinzufügen
 question.editor.regexInfo = Geben Sie die genaue Antwort auf die Frage. Java akzeptiert reguläre Ausdrücke sind ebenfalls zulässig.
 question.editor.submitted = Ihre Frage wurde erfolgreich übermittelt.
+question.editor.possibleAnswer = Eine mögliche Antwort
+question.editor.regex = Regulärer Ausdruck
 
 question.editor.tabs.general = Allgemeine
 question.editor.tabs.answers = Antworten
@@ -134,6 +141,7 @@ question.factory.error.noCorrectAnswers = Die Antworten für Sprache {0} enthalt
 question.factory.error.moreThanOneCorrectAnswers = Die Antworten für Sprache {0} enthalten mehrere richtige Antworten.
 question.factory.error.invalidRegex = Ungültiger regulärer Ausdruck gefunden in Sprache {0}
 question.factory.error.invalidUpload = Upload war ungültig
+question.factory.error.invalidID = Ungültige ID
 
 question.questionset.name = Frage-Sätze
 question.questionset.create.breadcrumb = Neue Frage-Satz
@@ -141,7 +149,7 @@ question.questionset.create = Erstellen Sie neue Frage!
 question.questionset.create.title = Frage zu erstellen.
 question.questionset.create.step2 = Schritt 2: Frage-Informationen
 question.questionset.create.name = Name des neuen Satz in Frage:
-question.questionset.create.level = Ebene neue Frage-Reihe:
+question.questionset.create.grade = Grad der neue Frage einstellen:
 question.questionset.create.active = Aktivieren Sie dieses Kontrollkästchen, um die Frage legen Sie aktiv zu gestalten.
 question.questionset.overview = Frage set Übersicht
 question.questionset.addquestion = Fügen Frage festlegen hinzu
@@ -149,13 +157,14 @@ question.questionset.form.difficulty = Schwierigkeit
 question.questionset.addquestion.title = Fügen Sie neue Frage, auf die Frage.
 question.questionset.addquestion.id = ID der Frage:
 question.questionset.addquestion.brcr = Hinzufügen
-question.questionset.manager.form.level = Ebene
+question.questionset.manager.form.grade = Klasse
 question.questionset.manager.form.name = Name
 question.questionset.manager.form.active = Aktive
 question.questionset.overview.questions = Diese Frage enthält der folgenden Fragen:
 question.questionset.overview.basic = Bearbeiten Sie Frage Set Informationen.
 question.questionset.form.qid = Frage id
 question.questionset.form.qsid = Frage Id festgelegt
+question.questionset.doublegrade = Der Wettbewerb enthält bereits eine Frage mit der ausgewählten Klasse festgelegt.
 
 # Languages
 languages.language = Sprache
@@ -265,7 +274,7 @@ management.add = Erstellen
 management.confirmDelete = Sind Sie sicher, dass Sie diesen Datensatz löschen möchten?
 
 # competition
-competition.name = Wettbewerbe
+competition.breadcrumb = Wettbewerbe
 competition.create.breadcrumb = Neuer Wettbewerb
 competition.create = Erstellen Sie neuen Wettbewerb!
 competition.create.title = Wettbewerb zu erstellen.
@@ -275,19 +284,56 @@ competition.create.type = Art der neuen Wettbewerb:
 competition.create.end = Endzeit der neuen Wettbewerb:
 competition.create.start = Startzeit des neuen Wettbewerb:
 competition.create.active = Aktivieren Sie dieses Kontrollkästchen, um den Wettbewerb wirksam zu machen.
+competition.create.duration = Dauer der neuen Wettbewerb (in Minuten):
 competition.manager.form.name = Name
 competition.manager.form.type = Typ
 competition.manager.form.active = Aktive
 competition.manager.form.starttime = Startzeit
 competition.manager.form.endtime = Endzeit
 competition.manager.form.creator = Creator
+competition.manager.form.duration = Dauer (Minuten)
 competition.view.edit = Bearbeiten Sie die Informationen zum Wettbewerb.
 competition.view.qs = Frage legt für diesen Wettbewerb:
 competition.edit = Wettbewerb bearbeiten
 competition.edit.breadcrumb = Bearbeiten
 competition.overview = Wettbewerb im Überblick.
 competition.overview.info = Auf dieser Seite können Sie anzeigen, Wettbewerb, die für Sie offen stehen. Sie können neue Wettbewerbe erstellen oder bearbeiten einen vorhandenen Wettbewerb.
+competition.info.grades = Dieser Wettbewerb unterstützt derzeit die folgenden Typen:
+competition.info.languages = Dies bestreitet derzeit unterstützt folgenden Sprachen:
+competition.view.title = Wettbewerb
+competition.view.status = Status
+competition.class.info = Dies ist ein eingeschränkter Wettbewerb. Wenn Sie möchten, lassen Ihre Schüler, die diesen Wettbewerb zu nehmen, Sie ihre Klasse zu registrieren müssen.
+competition.class.button = Zeigen Sie registrierte Klassen an.
+competition.class.title = Wettbewerb Klassen
+competition.class.breadcrumb = Klassen
+competition.class.management.form.name = Klassenname
+competition.class.register.title = Registrieren neue Klasse
+competition.class.register.breadcrumb = Registrieren neue Klasse
+competition.class.register.pick = Wählen Sie eine Klasse
+competition.class.register.error = Die ausgewählte Klasse ist bereits für diesen Wettbewerb registriert.
+competition.state.draft = Entwurf
+competition.state.active = Aktive
+competition.state.running = Ausführen
+competition.state.finished = Fertig
+competition.type.anonymous = Anonym
+competition.type.restricted = Eingeschränkt
+competition.type.unrestricted = Uneingeschränkte
 
+competitions.breadcrumb = Wettbewerbe zur Verfügung.
+competitions.title = Verfügbare Wettbewerbe
+competitions.totake = Verfügbar-Wettbewerbe, die Sie, in diesem Augenblick ergreifen können.
+competitions.taken = Wettbewerbe, die in der Vergangenheit getroffen
+competitions.grade.title = Bitte wählen Sie eine bevorzugte Note.
+competitions.grade = Klasse
+competitions.grade.warning = Warnung!
+competitions.grade.info = Sie sind dabei, einen Wettbewerb zu nehmen. Um die entsprechenden Fragen auswählen, müssen wir Ihre gewünschte Klasse kennen. Bitte wählen Sie die Klasse, die Sie bevorzugen
+competitions.grade.breadcrumb = Wählen Sie Klasse
+
+competition.history.warning = Warnung!
+competition.history.info = Sie sind momentan nicht eingeloggt. Um Titel aus Ihrer Ergebnisse und Statistiken zu halten, müssen Sie angemeldet sein.
+competition.history.title = Wettbewerbe, die in der Vergangenheit getroffen
+competition.history.breadcrumb = Geschichte
+competition.history.form.name = Name
 
 # schools
 schools.title = Liste der Schulen
@@ -319,6 +365,9 @@ servers.form.ftpport = FTP-port
 servers.form.ftpuser = FTP-Benutzername
 servers.form.ftppass = FTP-Passwort
 servers.form.ftppath = FTP-Pfad
+servers.form.is_http_secured = HTTP gesichert
+servers.form.http_username = HTTP-Benutzername
+servers.form.http_password = HTTP-Passwort
 servermanagement.servers.name = Server
 servermanagement.servers.new = Neue Server
 servermanagement.servers.server = Server
@@ -330,11 +379,13 @@ servers.success.edited = Server {0} wurde erfolgreich bearbeitet
 servers.success.removed = Server {0} wurde erfolgreich entfernt.
 
 # question management
+questions.preview = Vorschau
 questions.form.author = Autor
 questions.form.officialid = Offizielle ID
 questions.form.path = ??Pfad??
 questions.form.active = Aktive
 questions.form.server = Server
+questions.form.questionFileNotFound = Diese Frage konnte nicht auf dem angegebenen Server gefunden werden oder ist ungültig.
 question.questions.name = Fragen
 question.questions.new = Neue Frage
 question.questions.list = Fragen
@@ -499,20 +550,20 @@ user.pie.editintro = Meine Informationen bearbeiten
 user.pie.intro = Unten können Sie Ihre persönlichen Daten bearbeiten.
 user.error.no_login = Ihre persönlichen Daten sind nicht verfügbar! Bitte stellen Sie sicher, dass Sie angemeldet sind.
 user.error.wrong_email = Angesichts E-Mail ist nicht korrekt!
-user.error.sameid = Kann nicht entfernen / bearbeiten Sie selbst!
-user.error.passwnotequal = Die beiden eingegeben Passwörter sind nicht gleich!
-user.error.blockdateinvalid = Der Block Datum muss in der Zukunft liegen!
+user.error.sameid = Kann nicht entfernen\/selbst bearbeiten!
+user.error.passwnotequal = Die beiden angegebenen Passwörter sind nicht gleich!
+user.error.blockdateinvalid = Das Block-Datum muss zukünftig sein!
 user.Male = Männchen
 user.Female = Weiblich
 user.Other = Andere
 user.ADMINISTRATOR = Administrator
-user.ORGANIZER = Organisator
+user.ORGANIZER = Veranstalter
 user.TEACHER = Lehrer
-user.AUTHOR = Verfasser
+user.AUTHOR = Autor
 user.PUPIL = Schüler
 user.INDEPENDENT = Unabhängige
-user.ANON = Anonymer Benutzer
-user.PUPIL_OR_INDEP = Schüler
+user.ANON = Anon
+user.PUPIL_OR_INDEP = Student
 
 # User management
 user.management.others = Benutzer
@@ -547,6 +598,48 @@ users.title.edit = Benutzer bearbeiten
 user.success.added = Benutzer {0} wurde erfolgreich erstellt.
 user.success.edited = Benutzer {0} wurde erfolgreich bearbeitet
 user.success.removed = Benutzer {0} wurde erfolgreich entfernt.
+
+# Competitions
+competition.name = Wettbewerb
+competition.submit = Senden
+competition.intro = Der Wettbewerb hat begonnen! Verlieren Sie nicht zuviel Zeit dies zu lesen.
+competition.confirmSubmit = Sind Sie sicher, dass Sie möchten, senden Sie Ihre Antworten und Wettbewerb zu beenden?
+competition.noInternet = Sie haben keine aktive Internetverbindung!
+competition.timesUp = Time's up!
+competition.overview = Start
+competition.input.regex = Ihre Antwort
+competition.feedback = Feedback
+competition.modal.submitting = Einreichen
+competition.modal.ready = Du bist bereit!
+competition.modal.sendingAnswers = Senden von Antworten...
+competition.modal.error = Oops! Irgendetwas ging schief
+competition.modal.error.code = Geben Sie folgenden Code zu einem nahegelegenen Lehrer Ihre Antworten für Sie zu übermitteln.
+competition.modal.error.orYouCan = Oder Sie können
+competition.modal.error.retry = \Wiederholen\
+competition.modal.finished = Fertig
+competition.modal.finished.text = Du hast diesen Wettbewerb erfolgreich beendet!
+competition.modal.finished.return = Rückkehr zu starten
+competition.modal.finished.showFeedback = Karte feedback
+
+competition.run.submit.notStarted = Dieser Wettbewerb wurde noch nicht gestartet oder ist bereits vom Veranstalter abgeschlossen.
+competition.run.submit.ok = Vorlage war erfolgreich.
+competition.run.submit.invalid = Ungültige Antworten.
+competition.run.finished = Der Wettbewerb ist abgeschlossen.
+
+competition.overview.button = Übersicht
+competition.overview.submitAnswers = Senden Sie Schüler Antworten
+competition.overview.submitAnswers.info = Fügen Sie den Code aus der Schüler-Bildschirm in dieses Textfeld kopiert haben und klicken Sie auf \Absenden\.
+competition.overview.stopCompetition = Kampf stoppen
+competition.overview.progress = Fortschritt
+competition.overview.timeLeft = Verbleibende Zeit
+competition.overview.finished = Fertig
+competition.overview.details = Informationen
+competition.overview.id = ID
+competition.overview.questionSets = Frage-Sätze
+competition.overview.availableLanguages = Verfügbare Sprachen
+competition.overview.confirmFinish = Sind Sie sicher, dass Sie diesen Wettbewerb zu beenden wollen? Alle noch nicht übermittelte Antworten werden gelöscht!
+competition.started.title = Wettbewerb ist noch nicht gestartet
+competition.started.info = Der gewählte Wettbewerb ist noch nicht gestartet. Bitte versuchen Sie es später erneut.
 
 # Contact form
 contact.formtitle = Kontakt-Formular

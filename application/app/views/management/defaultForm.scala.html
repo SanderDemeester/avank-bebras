@@ -23,7 +23,7 @@
 	}
 
     <fieldset>
-
+		
         @for(field <- manager.getFieldNames()) {
             @if(!field.charAt(0).equals('_')) { @* don't show hidden fields *@
                 @if(!manager.isFieldDisabled(field)) {
@@ -55,6 +55,15 @@
                                     '_showConstraints -> false
                                 )
                             }
+                            case FieldType.DATE => {
+                                    @inputText(
+                                        modelForm(field),
+                                        '_label -> (EMessages.get(manager.getMessagesPrefix() + ".form." + field)+":"),
+                                        '_class -> "defaultFormElement",
+                                        '_showConstraints -> false,
+                                        '_id -> "datepick"
+                                    )       
+                            }
                         }
                     }
                 } else {
@@ -62,6 +71,6 @@
                 }
             }
         }
-
-
+	
     </fieldset>
+    
