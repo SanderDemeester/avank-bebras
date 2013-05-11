@@ -22,21 +22,36 @@ public class QuestionSetModel extends ManageableModel {
 
     private static final long serialVersionUID = 4L;
 
+    /**
+     * id
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "questionsets_id_seq")
     public int id;
 
+    /**
+     * level/grade
+     */
     @Column(name="level")
     @ManyToOne
     @JoinColumn(name="level")
     public Grade grade;
 
+    /**
+     * active
+     */
     @Required
     public boolean active;
 
+    /**
+     * name
+     */
     @Required
     public String name;
 
+    /**
+     * corresponding contest
+     */
     @ManyToOne
     @JoinColumn(name="contid")
     public CompetitionModel contest;

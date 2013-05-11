@@ -22,6 +22,7 @@ public class QuestionSetQuestionManager extends Manager<QuestionSetQuestion> {
     /**
      * Constructor for manager.
      *
+     * @param modelState model state
      * @param qsid question set id
      */
     public QuestionSetQuestionManager(ModelState modelState, int qsid) {

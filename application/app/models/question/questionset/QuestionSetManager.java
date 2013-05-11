@@ -23,7 +23,9 @@ public class QuestionSetManager extends Manager<QuestionSetModel> {
     /**
      * Constructor for manager class.
      *
-     * @param state      model state
+     * @param state         model state
+     * @param contestid     contest id
+     * @param questionsetid question set id
      */
     public QuestionSetManager(ModelState state, String contestid, int questionsetid) {
         super(QuestionSetModel.class, state, "grade", "grade");
@@ -131,7 +133,7 @@ public class QuestionSetManager extends Manager<QuestionSetModel> {
     /**
      * Returns the prefix for translation messages.
      *
-     * @return name
+     * @return prefix
      */
     @Override
     public String getMessagesPrefix() {
