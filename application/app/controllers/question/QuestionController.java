@@ -298,7 +298,8 @@ public class QuestionController extends EController{
         try {
             q = Question.fetch(name);
         } catch (QuestionBuilderException e) {
-            q = null;
+            flash("error", EMessages.get("forms.unknownError")+e.getMessage());
+            return LISTSUBMITS;
         }
         manager.setIgnoreErrors(true);
 
@@ -415,7 +416,7 @@ public class QuestionController extends EController{
                 Cache.set(contentCacheKey, result, cacheTime);
                 Cache.set(typeCacheKey, contentType, cacheTime);
             } catch (Exception e) {
-                return internalServerError(views.html.commons.error.render(errorBreadcrumbs, EMessages.get("error.title"), EMessages.get("error.text")));
+                return internalServerError(views.html.commons.error.render(errorBreadcrumbs, EMessages.get("error.title"), EMessages.get("error.text")+" "+e.getMessage()));
             }
         }
         
