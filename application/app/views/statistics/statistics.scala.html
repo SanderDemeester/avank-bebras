@@ -16,7 +16,7 @@
         display: inline;
     }
 </style>
-<form method="POST" action="/statistics">
+<form method="POST" action="/statistics" id="statistics-form">
     <table id="populations">
         <tbody>
             @for(i <- 0 to populations.size() - 1) { <!>
@@ -150,10 +150,17 @@
     </div>
 
     <!-- Submit the form (and generate the new Plot). -->
-    <input type="submit" class="btn btn-primary btn-large" value="@EMessages.get("statistics.generate")" />
+    <button type="submit" class="btn btn-primary btn-large" id="show-chart">@EMessages.get("statistics.generate")</button>
 
 </form>
-<div id="container" style="height: 400px"></div>
+<div class="modal hide fade" id="stat-chart">
+    <div class="modal-body">
+        <div id="container"></div>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn btn-primary" data-dismiss="modal">@EMessages.get("forms.cancel")</a>
+    </div>
+</div>
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <script type="text/javascript" src="/assets/javascripts/colorpicker/bootstrap-colorpicker.js"></script>
 <link type="text/css" rel="stylesheet" href="/assets/stylesheets/colorpicker/colorpicker.css"/>
@@ -187,6 +194,16 @@
         margin-bottom: 3px;
     }
 
+    #container {
+        width: 600px;
+        height: 400px;
+    }
+
+    #stat-chart {
+        width: 650px;
+        margin-left: -325px;
+    }
+
 </style>
 <script type="text/javascript">
 
@@ -207,12 +224,11 @@
         $(".nav-tabs").children().children().first().click();
 
         /* For the HighChart. */
-        @if(statistic != null && populations != null && populations.size() > 0) {
-        $("#container").highcharts(@Html(statistic.asJson(populations).toString()));
-        }
+        //@if(statistic != null && populations != null && populations.size() > 0) {
+        //$("#container").highcharts(@Html(statistic.asJson(populations).toString()));
+        //}
 
     });
-
 
     /* Add the selected populations on the right click. */
     $(document).on("click", "#population-add", function() {
@@ -366,6 +382,14 @@
 
     $(document).on("click", ".condition-remove", function() {
         $(this).parent().remove();
+    });
+
+    $(document).on("click", "#show-chart", function() {
+        $.get("/statistics/json?" + $("#statistics-form").serialize(), function(data) {
+            $("#container").highcharts(data);
+            $("#stat-chart").modal();
+        });
+        return false;
     });
 
 </script>

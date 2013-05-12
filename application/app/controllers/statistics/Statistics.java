@@ -8,6 +8,8 @@ import javax.validation.Valid;
 import com.avaje.ebean.Ebean;
 
 import play.mvc.Result;
+import play.mvc.BodyParser;
+import play.mvc.BodyParser.Json;
 
 import controllers.EController;
 
@@ -40,16 +42,32 @@ public class Statistics extends EController {
     /** Display the main statistics page. */
     public static Result show(String questionorset, Integer id) {
         GroupForm gf = form(GroupForm.class).bindFromRequest().get();
+        PopulationChooser populationChooser = getPopulationChooser();
+        List<Population> populations = parsePopulations(gf);
+        Statistic statistic = parseStatistic(gf);
 
-        System.out.println(gf.statistic);
+        // Make sure the user doesn't view populations he shouldn't, and disable
+        // those he already selected.
+        populations = populationChooser.filter(populations);
 
-        // Open the population chooser for the logged in user.
-        PopulationChooser populationChooser =
-            PopulationChooser.getPopulationChooser(
-                    AuthenticationManager.getInstance().getUser()
-            );
+        return ok(statistics.render(populations, populationChooser, statistic, breadcrumbs));
+    }
 
-        // Derive the selected populations from the POST data.
+    /** Return the graph data as a Json object. */
+    public static Result showJson(String questionorset, Integer id) {
+        GroupForm gf = form(GroupForm.class).bindFromRequest().get();
+        PopulationChooser populationChooser = getPopulationChooser();
+        List<Population> populations = parsePopulations(gf);
+        Statistic statistic = parseStatistic(gf);
+
+        // Make sure the user doesn't view populations he shouldn't, and disable
+        // those he already selected.
+        populations = populationChooser.filter(populations);
+
+        return ok(statistic.asJson(populations));
+    }
+
+    private static List<Population> parsePopulations(GroupForm gf) {
         List<Population> populations = new ArrayList<Population>();
         if(gf.colours != null)
         for(int i=0; i < gf.colours.size(); i++) {
@@ -66,28 +84,31 @@ public class Statistics extends EController {
                 // parameters.
             }
         }
+        return populations;
+    }
 
-        // Make sure the user doesn't view populations he shouldn't, and disable
-        // those he already selected.
-        populations = populationChooser.filter(populations);
+    private static PopulationChooser getPopulationChooser() {
+        return PopulationChooser.getPopulationChooser(
+            AuthenticationManager.getInstance().getUser()
+        );
+    }
 
-        // Reproduce the selected statistic.
+    private static Statistic parseStatistic(GroupForm gf) {
         Statistic statistic = null;
         if(gf.statistic != null) {
             statistic = StatisticFactory.instance().create(gf.statistic);
             Statistic filter;
             if(gf.filters != null) for(int i = 0; i < gf.filters.size(); i++) {
                 filter = StatisticFactory.instance().create(gf.filters.get(i));
+                statistic.addFilters(filter);
                 if(gf.conditions != null) {
                     for(String j : gf.conditions.get(i)) {
                         if(!"".equals(j)) filter.addConditions(j);
                     }
                 }
-                statistic.addFilters(filter);
             }
         }
-
-        return ok(statistics.render(populations, populationChooser, statistic, breadcrumbs));
+        return statistic;
     }
 
     public static class GroupForm {

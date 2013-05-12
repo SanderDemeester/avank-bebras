@@ -176,6 +176,8 @@ GET		/classes/view/:id/old			controllers.classgroups.ClassPupilController.viewOl
 # Statistics
 GET		/statistics					controllers.statistics.Statistics.show(questionorset ?= null, id:java.lang.Integer ?= null)
 POST	/statistics					controllers.statistics.Statistics.show(questionorset ?= null, id:java.lang.Integer ?= null)
+GET		/statistics/json			controllers.statistics.Statistics.showJson(questionorset ?= null, id:java.lang.Integer ?= null)
+POST	/statistics/json			controllers.statistics.Statistics.showJson(questionorset ?= null, id:java.lang.Integer ?= null)
 
 # Classes (views of the pupils)
 GET		/pclasses/view				controllers.classgroups.pupilview.PupilClassController.viewClasses(p:Int ?=0, s ?= "name", o ?= "asc", f ?= "")
