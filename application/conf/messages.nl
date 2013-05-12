@@ -64,6 +64,7 @@ links.datamanager.diffs = Wijzig de moeilijkheidsgraden
 links.datamanager.grades = Wijzig de graden voor studenten
 links.contestmanager.title = Competitiebeheer
 links.contestmanager.overview = Competitie overzicht
+links.statistics = Bekijk je statistieken
 links.contestmanager.create = Nieuwe competitie
 links.mimic = Gebruiker nabootsen
 links.contesttaking.title = Competities
@@ -172,6 +173,22 @@ languages.en = Engels
 languages.nl = Nederlands
 languages.fr = Frans
 languages.de = Duits
+
+# Statistics
+statistics.title = Statistieken
+statistics.population_chooser = Stel de gewenste populaties samen
+statistics.statistics_chooser = Stel de gewenste statistiek samen
+statistics.add_population = Voeg een populatie toe
+statistics.add_filter = Voeg een filter toe
+statistics.generate = Genereer
+statistics.count = Aantal
+statistics.populations.of_the = {0} van de/het {1}
+statistics.populations.individuals = Personen
+statistics.populations.classes = Klassen
+statistics.populations.schools = Scholen
+statistics.populations.all = Alle gebruikers
+statistics.statistics.gender = Geslacht
+statistics.statistics.score = Correcte vragen
 
 # Login
 redirect_message = U zal zodadelijk worden doorgestuurd naar uw startpagina.

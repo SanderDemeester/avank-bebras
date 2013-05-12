@@ -64,6 +64,7 @@ links.datamanager.diffs = Manage the difficulty levels
 links.datamanager.grades = Manage the student grades
 links.contestmanager.title = Contest management
 links.contestmanager.overview = Contest overview
+links.statistics = View your stats
 links.contestmanager.create = Create new contest
 links.mimic = Mimic user
 links.contesttaking.title = Contests
@@ -173,6 +174,22 @@ languages.en = English
 languages.nl = Dutch
 languages.fr = French
 languages.de = German
+
+# Statistics
+statistics.title = Statistics
+statistics.population_chooser = Compose the desired populations
+statistics.statistics_chooser = Compose the desired statistic
+statistics.add_population = Add a Population
+statistics.add_filter = Add a Filter
+statistics.generate = Generate
+statistics.count = Count
+statistics.populations.of_the = {0} of the {1}
+statistics.populations.individuals = Individuals
+statistics.populations.classes = Classes
+statistics.populations.schools = Schools
+statistics.populations.all = All users
+statistics.statistics.gender = Gender
+statistics.statistics.score = Score
 
 # Login
 redirect_message = You will be redirected to your homepage shortly.

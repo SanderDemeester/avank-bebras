@@ -45,6 +45,7 @@ error.mimic.cant_find_user = L'utilisateur ne peut pas trouver
 error.mimic.policy_deny = Ne peut pas imiter utilisateur par politique
 error.mimic.user_logged_in = L'utilisateur que vous essayez d'imiter est enregistré dans le système
 error.user_blocked = Votre compte est suspendu, veuillez contacter un admin
+
 # Links from roles
 links.settings.title = Paramètres
 links.settings.editinfo = Modifier les informations
@@ -63,6 +64,7 @@ links.datamanager.diffs = Gérer les niveaux de Difficulté
 links.datamanager.grades = Gérer les notes de l'étudiant
 links.contestmanager.title = Gestion de concours
 links.contestmanager.overview = Vue d'ensemble des concours
+links.statistics = Voir vos statistiques
 links.contestmanager.create = Créer nouveau concours
 links.mimic = Imiter l'utilisateur
 links.contesttaking.title = Concours
@@ -172,6 +174,22 @@ languages.en = Anglais
 languages.nl = Néerlandais
 languages.fr = Français
 languages.de = Allemand
+
+# Statistics
+statistics.title = Statistiques
+statistics.population_chooser = Composez les populations souhaitées
+statistics.statistics_chooser = Composez la statistique souhaitées
+statistics.add_population = Ajouter une population
+statistics.add_filter = Ajouter un filtre
+statistics.generate = Générer
+statistics.count = Nombre
+statistics.populations.of_the = {0} de le/la {1}
+statistics.populations.individuals = Personnes
+statistics.populations.classes = Classes
+statistics.populations.schools = Écoles
+statistics.populations.all = Tout
+statistics.statistics.gender = Sexe
+statistics.statistics.score = Score
 
 # Login
 redirect_message = Vous allez être redirigé vers votre page d'accueil sous peu.
