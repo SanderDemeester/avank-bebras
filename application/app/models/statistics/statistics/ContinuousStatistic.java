@@ -51,28 +51,31 @@ public abstract class ContinuousStatistic extends Statistic {
                 values.add(x);
             }
         }
-        
-        /* Calculation the optimal bin width. */
-        double average = sum / n, m3 = 0, m2 = 0;
-        for(List<Double> list : map.values()) for(Double value : list) {
-            m2 += Math.pow(value - average, 2);
-            m3 += Math.pow(value - average, 3);
-        }
-        m2 /= n;
-        m3 /= n;
-        double binCount;
-        if(m2 != 0) {
-            double g1 = m3 / Math.pow(Math.sqrt(m2), 3.0);
-            double sigma_g1 = Math.sqrt(6 * (n - 2) / (n + 1) / (n + 3));
-            binCount = 1 + (Math.log(n)/Math.log(2)) +
-                (Math.log(1 + Math.abs(g1) / sigma_g1)/Math.log(2));
-        } else {
-            binCount = 1;
-        }
-        double binWidth = (max - min) / binCount;
 
-        System.out.println("==" + binCount);
-        System.out.println("==" + average);
+        /* In case there are no values, just return an empty json, which will
+         * draw about exactly nothing. */
+        double binCount = 0, binWidth = 0;
+        if(n != 0) {
+        
+            /* Calculation the optimal bin width. */
+            double average = sum / n, m3 = 0, m2 = 0;
+            for(List<Double> list : map.values()) for(Double value : list) {
+                m2 += Math.pow(value - average, 2);
+                m3 += Math.pow(value - average, 3);
+            }
+            m2 /= n;
+            m3 /= n;
+            if(m2 != 0) {
+                double g1 = m3 / Math.pow(Math.sqrt(m2), 3.0);
+                double sigma_g1 = Math.sqrt(6 * (n - 2) / (n + 1) / (n + 3));
+                binCount = 1 + (Math.log(n)/Math.log(2)) +
+                    (Math.log(1 + Math.abs(g1) / sigma_g1)/Math.log(2));
+            } else {
+                binCount = 1;
+            }
+            binWidth = (max - min) / binCount;
+
+        }
 
         /* Creating the Json object. */
         ObjectNode json = Json.newObject();
