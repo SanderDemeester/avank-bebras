@@ -200,7 +200,7 @@ $('#addLanguage').click(function(e) {
 // Open confirmation modal for removing a language from the question
 $("i.removelang").live("click", function(){
 	lang = $(this).parent().find("a").text();
-	code = $(this).parent().find("code").text();
+	code = $(this).parent().find(".code").text();
 	$("#removelang").text(lang);
 	$("#removelang").data("code", code);
 	$('#removeLanguageConfirm').modal();

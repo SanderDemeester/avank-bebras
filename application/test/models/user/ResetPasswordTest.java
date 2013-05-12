@@ -33,7 +33,7 @@ public class ResetPasswordTest extends ContextTest{
 				fakeRequest().withFormUrlEncodedBody(map)
 				);
 		assertThat(status(result)).isEqualTo(400);
-		assertThat(contentAsString(result)).contains("Something went wrong. Weve sent our pink monkeys to fix the problem");
+		assertThat(contentAsString(result)).contains("Invalid ID");
 
 		Map<String,String> map1 = new HashMap<String,String>();
 

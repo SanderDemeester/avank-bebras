@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,8 +29,6 @@ import models.user.factory.TeacherUserFactory;
 import models.user.factory.UserFactory;
 
 import org.apache.commons.codec.binary.Hex;
-
-import play.Logger;
 import play.data.Form;
 import play.mvc.Http.Context;
 import play.mvc.Http.Cookie;
@@ -40,8 +39,6 @@ import com.avaje.ebean.Ebean;
 import controllers.UserController.Register;
 import controllers.util.PasswordHasher;
 import controllers.util.PasswordHasher.SaltAndPassword;
-
-import models.user.IDGenerator;
 
 /**
  * Class to handle UserAuthentication.
@@ -66,6 +63,7 @@ public class AuthenticationManager {
 	public static final int INVALID_LOGIN = 0;
 	public static final int VALID_LOGING = 1;
 	public static final int DUPLICATED_LOGIN = 2;
+	public static final int USER_BLOCKED = 3;
 
 	static {
 		FACTORIES.put(UserType.ADMINISTRATOR, new AdministratorUserFactory());
@@ -129,7 +127,6 @@ public class AuthenticationManager {
 		if(loggedInUserID.contains(user.getID()) && user.isMimicTarget()) return null;
 		if(loggedInUserID.contains(user.getID()) && !current.isMimicking()){
 			String cookieToKick = idToCookie.get(user.getID());
-			
 			Stack<User> stackToKick = users.get(cookieToKick);
 			loggedInUserID.remove(stackToKick.peek().getID());
 			stackToKick.pop();
@@ -167,6 +164,10 @@ public class AuthenticationManager {
 	 */
 	public User logout() {
 		Stack<User> stack = users.get(getAuthCookie());
+		if(stack == null){
+			//special case. The user is kicked but the very next thing he does in the UI to logout.
+			return null;
+		}
 		loggedInUserID.remove(stack.peek().getID());
 		stack.pop();
 		if(stack.isEmpty()) {
@@ -213,7 +214,7 @@ public class AuthenticationManager {
 		return stack.peek();
 	}
 
-	private String getAuthCookie() {
+	public String getAuthCookie() {
 		Cookie cookie = Context.current().request().cookies().get(COOKIENAME);
 		if(cookie == null)
 			return null;
@@ -313,8 +314,6 @@ public class AuthenticationManager {
 		// To store the password as it is stored in the database.
 		String passwordDB = null;
 		
-		Logger.debug(pw);
-
 		// Get the users information from the database.
 		UserModel userModel = Ebean.find(UserModel.class).where().eq(
 				"id",id).findUnique();
@@ -322,13 +321,17 @@ public class AuthenticationManager {
 		if(userModel == null){
 			return INVALID_LOGIN;
 		}
+		
+		if(userModel.isCurrentlyBlocked())
+			return USER_BLOCKED;
+		
+		
 		passwordDB = userModel.password;
 		SecretKeyFactory secretFactory = null;
 		try{
 			salt = Hex.decodeHex(userModel.hash.toCharArray());
-			Logger.debug(userModel.hash);
 		}catch(Exception e){}
-
+		
 		KeySpec PBKDF2 = new PBEKeySpec(pw.toCharArray(), salt, 1000, 160);
 
 		try{

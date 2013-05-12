@@ -1,0 +1,30 @@
+@*******************************************
+* History of contests page for pupils,     *
+* independent                              *
+*                                          *
+* author: Kevin Stobbelaar                 *
+*******************************************@
+
+@(breadcrumbs : List[models.data.Link], currentPage: Page[_ <: models.management.ManageableModel],
+manager: models.management.Manager[_], currentOrderBy: String, currentOrder: String, currentFilter: String)
+
+@import views.html.management.list
+@import models.EMessages
+
+@main(EMessages.get("competition.history.title"), breadcrumbs) {
+
+    <div class="row-fluid">
+
+        <div class="row12">
+            <p class="lead"> @EMessages.get("competition.history.title")</p>
+        </div>
+
+        <div class="row12">
+            <p>
+                @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
+            </p>
+        </div>
+
+    </div>
+
+}

@@ -1,0 +1,685 @@
+#Commons
+example = Exemple
+
+# App
+app.title = Avank Bebras - {0}
+app.startTitle = Avank Bebras
+app.home = Accueil
+app.error = Erreur
+app.Page = Page
+app.signedInAs = Signé en tant que
+app.changeLanguage = Changer la langue
+app.signUp = Inscrivez-vous
+app.signIn = Connexion
+app.signOut = Se déconnecter
+app.mimic = imitateur
+app.welcome = Bon retour {0} !
+app.overview = Vue d'ensemble
+app.dashboard = Tableau de bord
+app.getStarted = Choisissez un lien dans la gauche pour commencer.
+
+# Error
+notFound.title = Oups !
+notFound.text = La page suivante n'existe pas : {0}
+noAccess.title = Oups !
+noAccess.text = Vous n'êtes pas autorisé à effectuer cette action.
+error.title = Oups !
+error.text = Quelque chose a mal tourné. Nous avons envoyé nos singes roses pour résoudre le problème
+error.back = Retour
+error.date = Pouvait pas analyser date.
+error.login = Connexion non valide.
+error.invalid_symbols = Input contient des caractΦres invalides.
+error.invalid_email = Adresse e-mail incorrecte.
+error.invalid_id = Id non valide.
+error.wrong_date_time = Voyageur du temps ?
+error.invalid_date = Format de date non valide, s'il vous plaît utilisation (aaaa\/mm\/jj).
+error.no_password = Aucun mot de passe.
+error.no_input = Chaîne vide.
+error.invalid_id = ID non valide
+error.no_input_fname = Nom vide !
+error.no_input_email = E-Mail vide !
+error.duplicated_login = Ouverture de session en double
+error.no_info = Informations ne sont pas disponibles !
+error.mimic = Ne peut pas imiter l'utilisateur
+error.mimic.cant_find_user = L'utilisateur ne peut pas trouver
+error.mimic.policy_deny = Ne peut pas imiter utilisateur par politique
+error.mimic.user_logged_in = L'utilisateur que vous essayez d'imiter est enregistré dans le système
+error.user_blocked = Votre compte est suspendu, veuillez contacter un admin
+
+# Links from roles
+links.settings.title = Paramètres
+links.settings.editinfo = Modifier les informations
+links.settings.changepassword = Changer mot de passe
+links.managequestions.title = Gestion de la question
+links.managequestions.list = Voir questions
+links.managequestions.listsubmitted = Approuver les questions
+links.manageserver.title = Gestion de serveur
+links.manageserver.list = Serveurs de vue
+links.manageserver.create = Ajouter un serveur
+links.questioneditor.title = Question éditeur
+links.questioneditor.open = Ouvrir l'éditeur
+links.datamanager.title = Manipuler la base de données
+links.datamanager.links = Gérer les liens de navigation bar
+links.datamanager.diffs = Gérer les niveaux de Difficulté
+links.datamanager.grades = Gérer les notes de l'étudiant
+links.contestmanager.title = Gestion de concours
+links.contestmanager.overview = Vue d'ensemble des concours
+links.statistics = Voir vos statistiques
+links.contestmanager.create = Créer nouveau concours
+links.mimic = Imiter l'utilisateur
+links.contesttaking.title = Concours
+links.contesttaking.overview = Concours disponibles
+links.contesttaking.history = Histoire
+links.manageusers.users = Afficher aux utilisateurs
+links.manageusers.title = Gestion des utilisateurs
+
+# Forms
+forms.cancel = Annuler
+forms.approve = Approuver
+forms.delete = Supprimer
+forms.deleteArg = Supprimer : {0}
+forms.remove = Supprimer
+forms.removeArg = Supprimer : {0}
+forms.name = Nom
+forms.preview = Aperçu
+forms.dropFilesHere = Déposez des fichiers ici
+forms.selectFileManually = Ou sélectionnez un fichier manuellement
+forms.loading = Chargement
+forms.submit = Envoyer
+forms.create = Créer
+forms.createArg = Créer {0}
+forms.update = Mise à jour
+forms.uploadFile = Télécharger le fichier
+forms.title = Titre
+forms.error = S'il vous plaît corriger toutes les erreurs.
+forms.open = Ouvert
+forms.unknownError = Une erreur s'est produite.
+forms.add = Ajouter
+forms.error.dates = S'il vous plaît choisir une heure de fin c'est après l'heure de début de l'élu.
+
+# Question
+question.editor.name = Question éditeur
+
+question.editor.index.hero = Les questions sont l'élément clé de l'application Bebras. Vous pouvez faire partie de cette fantastique application et posez votre propre question en les créant ici.
+question.editor.index.create.main = Créer {0}
+question.editor.index.create.import = Importer à partir.ZIP
+
+question.editor.confirmLeave = Êtes-vous sûr de que vouloir quitter cette page ? Les modifications non enregistrées seront perdues.
+question.editor.uploadServerDown = Télécharger serveur non disponible
+question.editor.uploading = Téléchargement
+question.editor.filesUploaded = Ou les fichiers téléchargés.
+question.editor.filesUploadFailed = Upload de fichier a échoué.
+question.editor.possibleAnswer = Une réponse possible
+question.editor.uploadFilesInfo = Ce sont vos fichiers personnels qui seront inclus dans cette question. Ils seront retirés du serveur après 24 heures.
+question.editor.sureRemoveLanguage = Êtes-vous sûr de que vouloir supprimer la langue
+question.editor.removeLanguageInfo = Une fois que cette langue est supprimée, il n'y a aucun moyen de récupérer le contenu de cette langue de la question.
+question.editor.startInfo = Ajouter une nouvelle langue ou sélectionner un pour commencer.
+question.editor.exportAsZip = Exporter en tant que.ZIP
+question.editor.answerOptionsInfo = Ajouter des solutions de réponse possible à la question et marquer un d'eux comme étant correcte.
+question.editor.addAnswerOption = Ajouter l'option de réponse
+question.editor.regexInfo = Entrez la réponse exacte à la question. Java-a accepté les expressions régulières sont également autorisées.
+question.editor.submitted = Votre question a été envoyée avec succès.
+question.editor.possibleAnswer = Une réponse possible
+question.editor.regex = Expression régulière
+
+question.editor.tabs.general = Générales
+question.editor.tabs.answers = Réponses
+question.editor.tabs.question = Question
+question.editor.tabs.feedback = Vos commentaires
+
+question.editor.title.placeholder = Le titre de cette question dans le langage courant.
+question.editor.index.info = Cette page sera présentée à l'utilisateur lorsqu'il doit résoudre cette question.
+question.editor.index.placeholder = Entrer dans la question ici.
+question.editor.feedback.info = Ce contenu servira à afficher des commentaires à l'utilisateur après une compétition.
+question.editor.feedback.placeholder = Entrez les commentaires question ici.
+
+question.editor.validate.ok = Question pertinente
+
+question.type.MULTIPLE_CHOICE = Question à Choice multiple
+question.type.REGEX = Question d'entrée
+
+question.factory.error.noCorrectAnswers = Les réponses pour langue {0} ne contenant aucune réponses correctes.
+question.factory.error.moreThanOneCorrectAnswers = Les réponses pour langue {0} contiennent plusieurs bonnes réponses.
+question.factory.error.invalidRegex = Expressions régulières non valide trouvée dans langue {0}
+question.factory.error.invalidUpload = Votre téléchargement n'est pas valide
+question.factory.error.invalidID = ID non valide
+
+question.questionset.name = Jeux de question
+question.questionset.create.breadcrumb = Nouvelle série de question
+question.questionset.create = Créer un nouvel ensemble de question !
+question.questionset.create.title = Créer ensemble de la question.
+question.questionset.create.step2 = Étape 2: Informations de jeu de la Question
+question.questionset.create.name = Nom de la nouvelle série de question :
+question.questionset.create.grade = Grade de la nouvelle série de question :
+question.questionset.create.active = Cochez cette case pour faire la question de la valeur active.
+question.questionset.overview = Question définie la vue d'ensemble
+question.questionset.addquestion = Ajouter question pour définir
+question.questionset.form.difficulty = Difficulté
+question.questionset.addquestion.title = Ajouter nouvelle question à l'ensemble de la question.
+question.questionset.addquestion.id = ID de la question :
+question.questionset.addquestion.brcr = Ajouter
+question.questionset.manager.form.grade = Grade
+question.questionset.manager.form.name = Nom
+question.questionset.manager.form.active = Active
+question.questionset.overview.questions = Cet ensemble contient les questions suivantes :
+question.questionset.overview.basic = Modifier les informations de jeu de question.
+question.questionset.form.qid = Id de la question
+question.questionset.form.qsid = Question set id
+question.questionset.doublegrade = Le concours contient déjà une question sertie de la catégorie sélectionnée.
+
+# Languages
+languages.language = Langue
+languages.languages = Traduction
+languages.en = Anglais
+languages.nl = Néerlandais
+languages.fr = Français
+languages.de = Allemand
+
+# Statistics
+statistics.title = Statistiques
+statistics.add_population = Ajouter une population
+statistics.add_filter = Ajouter un filtre
+statistics.generate = Générer
+statistics.count = Nombre
+statistics.populations.of_the = {0} de le/la {1}
+statistics.populations.individuals = Personnes
+statistics.populations.classes = Classes
+statistics.populations.schools = Écoles
+statistics.populations.all = Tout
+statistics.statistics.gender = Sexe
+statistics.statistics.score = Score
+
+# Login
+redirect_message = Vous allez être redirigé vers votre page d'accueil sous peu.
+login.bebras_ID = Bebras ID
+
+# Register
+register.name = Nom et prénom
+register.email = Messagerie
+register.bday = Anniversaire
+register.gender = Sexe
+register.preflan = Langue préférée
+register.password = Mot de passe
+register.confirm_password = Confirmer mot de passe
+register.create_account = Créer compte
+register.bebras_id_message = Votre ID Bebras est : 
+register.inlog_message = Vous pouvez vous connecter avec votre ID et mot de passe.
+register.title = S'inscrire
+register.same_email = Il y a déjà un utilisateur avec l'adresse e-mail sélectionné.
+register.giveinfo = Veuillez saisir un identifiant et un mot de passe.
+register.password_mismatch = Mot de passe ne correspondre pas.
+register.Male = Mâle
+register.Female = Femelle
+register.Other = Autres
+
+# Forgot pwd
+forgot_pwd.no_teacher = Il n'y a aucun enseignant associé à votre classe actuelle, ne peut pas réinitialiser le mot de passe
+forgot_pwd.no_classgroup = Il n'y a pas de classe associée à votre compte, ne pouvez pas réinitialiser le mot de passe
+forgot_pwd.forgot_pwd = Mot de passe oublié
+forgot_pwd.id = Bebras-ID
+forgot_pwd.email = Messagerie
+forgot_pwd.submit = Réinitialiser mot de passe
+forgot_pwd.success = Mot de passe réinitialisé avec succès.
+forgot_pwd.notsent = Une erreur s'est produite, l'email n'a pas été envoyé.
+forgot_pwd.mail = Un courriel a été envoyé à l'adresse fournie.
+forgot_pwd.mail_sent = Un nouveau mot de passe a été demandée pour l'utilisateur {0} sur Avank-Bebras. Aller à: {1} pour le réinitialiser.
+forgot_pwd.mail_subject = Réinitialisation de mot de passe
+forgot_pwd.email_blank = Laissez vide si vous n'avez pas une adresse e-mail
+forgot_pwd.reset_success = Mot de passe réinitialisé succès
+forgot_pwd.reset_fail = Impossible de réinitialiser le mot de passe
+forgot_pwd.teachermail = Votre élève {0} a demandé un nouveau mot de passe pour Avank-Bebras. S'il vous plaît le réinitialiser. 
+forgot_pwd.teachersubject = Mot de passe réinitialiser pour élève
+
+# Edit pwd
+edit_pwd.edit_pwd = Modifier le mot de passe
+edit_pwd.current_pwd = Mot de passe actuel
+edit_pwd.new_pwd = Nouveau mot de passe
+edit_pwd.confirm_new_pwd = Confirmer le nouveau mot de passe
+edit_pwd.submit = Bien
+edit_pwd.success = Mot de passe modifié avec succès.
+
+# Reset pwd
+reset_pwd.title = Réinitialiser mot de passe
+reset_pwd.id = Bebras-ID
+reset_pwd.new = Nouveau mot de passe
+reset_pwd.submit = Envoyer
+
+# Personal Info
+pers_info.pers_info = Renseignements personnels
+pers_info.edit = Modifier les informations
+
+#faq
+faq.title = Foire aux Questions
+faq.empty = La FAQ est vide.
+faq.error = Quelque chose n'allait pas au cours de la récupération de la FAQ. Réessayez plus tard.
+faq.name = Nom
+faq.language = Langue
+faq.form.language = Langue
+faq.form.name = Nom
+faq.form.id = ID
+faq.managefaq = Gérer les FAQ
+faq.addfaq = Ajouter Nouvelle FAQ
+faq.new.title = Nouvelle FAQ'' question s
+faq.new.content = Nouvelle FAQ'' réponse s
+faq.new.language = Nouvelle FAQ'' langue s
+faq.list = Liste des Questions fréquemment posées
+faq.alter = Modifier une FAQ
+faq.alter.title = FAQ'' question s
+faq.alter.content = FAQ'' réponse s
+faq.alter.language = FAQ'' langue s
+faq.error.notcomplete = Veuillez remplir tous les champs obligatoires
+faq.error.savefail = Il ne peut pas enregistrer la nouvelle question. S'il vous plaît essayer de nouveau (plus tard).
+faq.error = Quelque chose a mal tourné.
+faq.view.error = Quelque chose n'allait pas au cours de la récupération de la FAQ. S'il vous plaît essayer de nouveau (plus tard).
+faq.remove.error = Pas pu supprimer question. S'il vous plaît essayer de nouveau (plus tard).
+faq.list.error = Quelque chose n'allait pas au cours de la récupération de la liste.
+
+#info
+info.info = Info
+info.warning = Mise en garde
+info.error = Erreur
+info.success = Succès
+info.successedit = Votre information a été modifiée !
+
+# management
+management.filter.input = Valeur de filtre
+management.filter.button = Filtre
+management.empty = Rien à afficher.
+management.add = Créer
+management.confirmDelete = Êtes-vous sûr de que vouloir supprimer cet enregistrement ?
+
+# competition
+competition.breadcrumb = Concours
+competition.create.breadcrumb = Nouveau concours
+competition.create = Créer un nouveau concours !
+competition.create.title = Créer des concours.
+competition.create.step1 = Etape 1: Concours informations
+competition.create.name = Nom du nouveau concours :
+competition.create.type = Type de nouveau concours :
+competition.create.end = Heure de fin du concours de nouvel :
+competition.create.start = Heure de début du concours de nouvel :
+competition.create.active = Cochez cette case pour activer le concours.
+competition.create.duration = Durée du concours de nouvel (en minutes) :
+competition.manager.form.name = Nom
+competition.manager.form.type = Type
+competition.manager.form.active = Active
+competition.manager.form.starttime = Heure de début
+competition.manager.form.endtime = Heure de fin
+competition.manager.form.creator = Créateur
+competition.manager.form.duration = Durée (minutes)
+competition.view.edit = Modifier les informations de concours.
+competition.view.qs = Jeux de question pour ce concours :
+competition.edit = Éditer concours
+competition.edit.breadcrumb = Edit
+competition.overview = Présentation du concours.
+competition.overview.info = Sur cette page, vous pouvez afficher les concours qui sont ouverts pour vous. Vous pouvez créer de nouveaux concours ou de modifier un concours existant.
+competition.info.grades = Ce concours prend actuellement en charge les classes suivantes :
+competition.info.languages = Il conteste actuellement prend en charge les langues suivantes :
+competition.view.title = Concours
+competition.view.status = Statut
+competition.class.info = Il s'agit d'un concours restreint. Si vous voulez laisser vos élèves à ce concours, vous devrez inscrire leur classe.
+competition.class.button = Découvre des classes.
+competition.class.title = Classes de concours
+competition.class.breadcrumb = Classes
+competition.class.management.form.name = Nom de la classe
+competition.class.register.title = Nouvelle classe de Registre
+competition.class.register.breadcrumb = Nouvelle classe de Registre
+competition.class.register.pick = Choisissez une classe
+competition.class.register.error = La classe sélectionnée est déjà inscrite pour ce concours.
+competition.state.draft = Projet
+competition.state.active = Active
+competition.state.running = En cours d'exécution
+competition.state.finished = Fini
+competition.type.anonymous = Anonyme
+competition.type.restricted = Restreint
+competition.type.unrestricted = Sans restriction
+
+competitions.breadcrumb = Concours disponibles.
+competitions.title = Concours disponibles
+competitions.totake = Concours disponibles que vous pouvez prendre en ce moment.
+competitions.taken = Concours prises dans le passé
+competitions.grade.title = Veuillez choisir une catégorie préférée.
+competitions.grade = Grade
+competitions.grade.warning = Mise en garde !
+competitions.grade.info = Vous êtes sur le point de prendre un concours. Afin de sélectionner les questions appropriées, nous avons besoin de connaître votre niveau désiré. Veuillez sélectionner la catégorie que vous préférez
+competitions.grade.breadcrumb = Sélectionnez la catégorie
+
+competition.history.warning = Mise en garde !
+competition.history.info = Vous n'êtes actuellement pas connecté. Afin de suivre vos résultats et statistiques, vous devez être signé en.
+competition.history.title = Concours prises dans le passé
+competition.history.breadcrumb = Histoire
+competition.history.form.name = Nom
+
+# schools
+schools.title = Liste des écoles
+schools.listtext = Il s'agit de la liste des écoles vous soit créé ou sont\/étaient associés à une classe.
+schools.form.id = ID
+schools.form.name = Nom
+schools.form.address = Adresse
+schools.add = Ajouter une nouvelle école
+schools.error.notcomplete = Veuillez remplir tous les champs obligatoires
+schools.error.savefail = L'école ne peut pas enregistrer. S'il vous plaît essayer de nouveau (plus tard).
+schools.list.error = Pas pu récupérer la liste des écoles. S'il vous plaît essayer de nouveau (plus tard).
+schools.add.info = C'est censé être utilisé pour ajouter des écoles qui ne sont pas encore dans le système. Si l'école est déjà dans le système, demandez à un quelqu'un à l'école pour le code. N'ajoutez pas d'écoles en double. L'école sera affiché dans la liste si vous êtes associé à une classe de cette école (dans le système).
+school.name = École '' nom s
+school.address = École '' adresse s
+schools.add.success = École avec succès enregistrés. ID : 
+schools.edit = Modifier une école.
+schools.table.id = ID
+schools.table.name = Nom
+schools.table.name = Adresse
+schools.error = Quelque chose a mal tourné. Réessayez (plus tard).
+
+
+
+# server management
+servers.form.id = Nom du serveur
+servers.form.path = Emplacement du serveur
+servers.form.ftpuri = Emplacement FTP
+servers.form.ftpport = Port FTP
+servers.form.ftpuser = Nom d'utilisateur FTP
+servers.form.ftppass = Mot de passe FTP
+servers.form.ftppath = Chemin d'accès FTP
+servers.form.is_http_secured = HTTP sécurisé
+servers.form.http_username = Nom d'utilisateur HTTP
+servers.form.http_password = Mot de passe HTTP
+servermanagement.servers.name = Serveurs
+servermanagement.servers.new = Nouveau serveur
+servermanagement.servers.server = Serveur
+servermanagement.servers.list = Serveurs
+servers.error.testConnection = Erreur lors de la connexion au serveur : {0}
+servers.error.removePersistent = Il y a encore des questions qui sont sur ce serveur, de les modifier avant de supprimer ce serveur.
+servers.success.added = Serveur {0} a été créé avec succès
+servers.success.edited = Serveur {0} a été modifié avec succès
+servers.success.removed = Serveur {0} a été supprimé avec succès
+
+# question management
+questions.preview = Aperçu
+questions.form.author = Auteur
+questions.form.officialid = Pièce d'identité officielle
+questions.form.path = ??Chemin??
+questions.form.active = Active
+questions.form.server = Serveur
+questions.form.questionFileNotFound = Cette question est introuvable sur le serveur fourni ou n'est pas valide.
+question.questions.name = Questions
+question.questions.new = Nouvelle Question
+question.questions.list = Questions
+question.questions.listsubmits = Question présentations
+question.questions.submitslist.user = Auteur
+question.questions.submitslist.date = Date de soumission
+question.questions.submissions = Présentations
+question.questions.submitDeleted = La question soumise était supprimée
+question.questions.question = Question
+question.success.added = Question {0} a été créé avec succès
+question.success.edited = Question {0} a été modifié avec succès
+question.success.removed = Question {0} a été supprimé avec succès
+question.success.approved = Question {0} a été approuvé avec succès
+question.error.officialidTaken = Cette pièce d'identité officielle est déjà utilisé
+question.questions.list = Liste des Questions
+
+# Data Management
+manager.error.fieldno = Veuillez fournir tous les champs.
+manager.error.empty = S'il vous plaît remplir tous les champs.
+manager.error.nan = Veuillez fournir un nombre entier.
+manager.error.duplicate = J'ai '' m qui touche déjà existe.
+manager.error.notthere = Vous êtes shizofrenic, essayant d'enlever des choses ne pas même là ?
+links.title = Page d'Accueil Liens
+links.url = URL
+grades.title = Grades
+grades.lowerbound = Le plus bas âge
+grades.upperbound = Âge le plus élevé (exclusief)
+difficulties.title = Niveaux de Difficulté
+difficulties.numerical = Représentation numérique de Difficulté (Difficulté croissant)
+difficulties.correct = Note pour une réponse correcte
+difficulties.wrong = Score pour une mauvaise réponse
+difficulties.open = Score lorsque laissée ouverte
+
+# Classes
+classes.main.form.id = ID
+classes.main.form.name = Nom
+classes.main.form.schoolid = ID de l'école
+classes.main.form.level = Niveau
+classes.main.form.isactive = Est Active
+classes.main.form.teacherid = ID de l'enseignant
+classes.main.form.expdate = Date d'expiration
+classes.main.listerror = Quelque chose n'allait pas au cours de la récupération des classes principales. S'il vous plaît essayer de nouveau (plus tard)
+classes.list = Liste des Classes
+
+classes.pupil.error.classfetch = Quelque chose n'allait pas au cours de la récupération de l'info. S'il vous plaît essayer de nouveau (plus tard)
+classes.pupil.classinfo = Infos sur la classe
+classes.pupil.schoolinfo = Infos sur l'école
+classes.pupil.teacherinfo = Infos sur l'enseignant
+
+classes.teacher.id = ID
+classes.teacher.name = Nom
+
+classes.pupil.notactiveinfo = La classe n'est pas active. Cette page affiche tous les étudiants qu'à un moment donné étaient en elle. 
+classes.pupil.activeinfo  = La classe est actuellement active. Cette page affiche tous les étudiants qui ont actuellement comme classe principale.
+classes.pupil.list = Liste des élèves
+classes.pupil.title = Infos de la classe
+classes.pupil.form.id = ID
+classes.pupil.form.name = Nom
+classes.pupil.form.wrap_gender = Sexe
+classes.pupil.form.birthdate 	= Birthdate
+classes.pupil.form.wrap_language = Langue préférée
+classes.pupil.form.active = Est l'utilisateur non-bloqué ?
+classes.pupil.form.wrap_type = Type
+classes.pupil.form.email = Email
+classes.pupil.form.registrationdate = Date de régistration
+classes.pupil.form.comment = Commentaire
+classes.pupil.form.blockeduntil = Bloqué jusqu'à
+
+classes.novalidclassid = Ce n'est pas un ID de classe valide.
+classes.pupil.editclassinfo = Modifier les infos de la classe
+classes.pupil.oldpupils = Découvre les anciens élèves
+classes.pupil.viewhelp = Découvre les aider les enseignants
+classes.oldpupil.list = La liste des anciens élèves
+classes.oldpupil.info = Il s'agit de la liste des élèves qui étaient autrefois dans la classe, mais ne plus avoir comme leur classe principale
+classes.pupil.oldpupillist = La liste des anciens élèves
+
+classes.helpteacher.form.id = ID
+classes.helpteacher.form.name = Nom
+classes.helpteacher.form.gender = Sexe
+classes.helpteacher.form.birthdate 	= Birthdate
+classes.helpteacher.form.preflanguage = Langue préférée
+classes.helpteacher.form.active = Est l'utilisateur non-bloqué ?
+classes.helpteacher.list = Liste des enseignants de l'aide.
+classes.helpteacher.error = Quelque chose n'allait pas au cours de la récupération. Réessayez (plus tard).
+classes.helpteacher.delete.error = Quelque chose s'est passé lors de la suppression. Réessayez (plus tard).
+classes.helpteacher.delete.success = Suppression a réussi.
+classes.helpteacher.add = Ajouter un nouvel enseignant aide
+classes.help.add.explanation = Ici, vous pouvez ajouter des enseignants supplémentaires à la classe. 
+classes.helpteacher.add.incomplete = Veuillez remplir tous les champs obligatoires.
+classes.helpteacher.add.error = Quelque chose a mal tourné. S'il vous plaît essayer de nouveau (plus tard).
+classes.helpteacher.add.usernotexist = Il n'y a aucun utilisateur avec cet ID.
+classes.helpteacher.add.usernotteacher = L'utilisateur correspondant avec cet ID n'est pas un compte professeur.
+classes.helpteacher.add.useralreadyhelp = Ce professeur est déjà inscrit à la classe.
+classes.helpteacher.add.useralreadyteacher = Ce professeur est déjà inscrit à la classe.
+
+classes.pupil.add.explanation = Ici, vous pouvez ajouter des élèves fréquentant à la classe. Si l'élève est déjà actif dans une autre classe, qu'ils seront rendus inactive.
+classes.pupil.add = Ajouter un élève existant.
+classes.pupil.add.incomplete = Veuillez remplir tous les champs obligatoires.
+classes.pupil.add.error = Quelque chose a mal tourné. S'il vous plaît essayer de nouveau (plus tard).
+classes.pupil.add.usernotexist = Il n'y a aucun utilisateur avec cet ID.
+classes.pupil.add.usernotpupil = L'utilisateur correspondant avec cet ID n'est pas un compte de l'élève.
+classes.pupil.add.useralreadyinclass = Cet utilisateur est déjà inscrit avec la classe
+classes.pupil.delete.success = Suppression a réussi.
+classes.pupil.delete.error = Quelque chose s'est passé lors de la suppression. Réessayez (plus tard).
+
+class.availableGrades = Niveaux disponibles et leur âge inférieur et supérieur (suggéré) lié.
+classes.add = Ajoutez une nouvelle classe
+class.name = Classe '' nom s
+class.school = Classe '' école s
+class.level = Classe de '' niveau s
+class.expdate.format = Format de date
+class.expdate = Classe '' date de péremption s
+classes.add.notcomplete = Veuillez remplir tous les champs obligatoires.
+classes.add.noschool = Il n'y a pas d'école avec cet ID.
+classes.add.nograde = Il n'y a pas de niveau avec ce nom. 
+classes.add.error = Quelque chose n'allait pas avec la base de données. Réessayez plus tard.
+classes.edit = Modifier une classe.
+
+classes.import = Importer une classe
+classes.import.classnotexist = Il n'y a pas de classe avec cet ID.
+classes.import.classrecordwhileaddingtoexisting = Vous ajoutez des élèves à une classe existante. Records de classe seront ignorées.
+classes.import.usernotexist = Il n'y a aucun utilisateur avec cet ID.
+classes.import.newpupil.incomplete = Veuillez remplir tous les champs obligatoires correctement.
+classes.import.existingpupil.notexisting = Il n'y a aucun utilisateur avec cet ID.
+classes.import.existingpupil.nopupil = L'utilisateur avec cet ID n'est pas un élève.
+classes.import.newclass.incomplete = S'il vous plaît remplir tous les champs correctement.
+classes.import.newclass.nosuchschool = Il n'y a pas d'école avec cet ID.
+classes.import.newclass.nosuchgrade = Il n'y a aucun grade portant ce nom.
+classes.import.info.new = Ajout d'une nouvelle classe.
+classes.import.info.old = Ajout d'une classe existante.
+classes.import.info.classinvalid = Il n'y a pas de classe avec cet ID.
+classes.import.info.classstart = Nouveau record de classe :
+classes.import.info.existstudent = Étudiants actuels :
+classes.import.info.newstudent = Nouveaux étudiants :
+classes.import.error.savefail = Quelque chose n'allait pas avec l'économie. Peut-être que vous avez attendu trop longtemps ? Les données d'unsafed sont supprimées après une couple d'heures. Ou quelqu'un inscrit une des adresses e-mail que vous utilisiez. Ou vous avez utilisé la même adresse e-mail deux fois dans le fichier.
+classes.import.error.postfail = Quelque chose n'allait pas avec l'analyse du fichier XLSX. Êtes-vous sûr que c'est un fichier valide ? Consultez la documentation.
+
+classes.pupil.classes.list = Liste des classes
+classes.pupil.classes.current = Votre classe actuelle
+classes.pupil.classes.previous = Vos classes précédentes
+classes.pupil.classes.form.id = ID
+classes.pupil.classes.form.name = Nom
+classes.pupil.classes.form.schoolid = ID de l'école
+classes.pupil.classes.form.teacherid = ID de l'enseignant
+classes.pupil.classes.form.grade = Grade
+classes.pupil.classes.form.expirationdate = Date d'expiration
+
+# User
+user.pip.settings = Paramètres
+user.pip.welcome = Bienvenue !
+user.pip.personalinfo = Paramètres d'informations personnelles
+user.pip.editinfo = Modifier les informations
+user.pip.editpassw = Modifier le mot de passe
+user.pip.aboutme = À propos de moi
+user.pip.intro = Informations vous concernant qui sont stockées dans notre base de données.
+user.pip.fulln = Nom et prénom
+user.pip.birth = Date de naissance (jour\/mois\/année)
+user.pip.gender = Sexe
+user.pip.preflan = Langue
+user.pip.email = Courriel
+user.pie.edit = Edit
+user.pie.welcome = Bienvenue !
+user.pie.personalinfo = Renseignements personnels
+user.pie.editinfo = Modifier les informations
+user.pie.editpassw = Modifier le mot de passe
+user.pie.editintro = Modifier mes informations 
+user.pie.intro = Ci-dessous, vous pouvez modifier vos informations personnelles.
+user.error.no_login = Vos renseignements personnels ne soient pas disponibles ! S'il vous plaît assurez-vous que vous êtes connecté.
+user.error.wrong_email = Compte tenu de l'E-Mail n'est pas correct !
+user.error.sameid = Ne peut pas supprimer\/éditer vous-même !
+user.error.passwnotequal = Les deux mots de passe donnés ne sont pas égaux !
+user.error.blockdateinvalid = La date de bloc doit être une date ultérieure !
+user.Male = Mâle
+user.Female = Femelle
+user.Other = Autres
+user.ADMINISTRATOR = Administrateur
+user.ORGANIZER = Organisateur
+user.TEACHER = Enseignant
+user.AUTHOR = Auteur
+user.PUPIL = Élève
+user.INDEPENDENT = Indépendant
+user.ANON = Anon
+user.PUPIL_OR_INDEP = Étudiant
+
+# User management
+user.management.others = Utilisateurs
+user.management.list = Utilisateurs inscrits
+user.management.welcome = Ci-dessous, vous pouvez ajouter\/éditer (registred) utilisateurs.
+user.management.edituser.userinfo = Informations de l'utilisateur
+user.management.edituser.partuserinfo = Modifier les informations de l'utilisateur
+user.management.edituser.passwinfo = Mot de passe
+user.management.edituser.partpasswinfo = Changer mot de passe
+user.management.edit = Informations relatives aux modifications
+user.management.change = Appliquer
+user.management.type = Type :
+user.management.create = Créer un nouvel utilisateur
+users.form.id = ID
+users.form.type = Type
+users.form.wrap_type = Type
+users.form.name = Nom
+users.form.email = Messagerie
+users.form.birthdate = Anniversaire
+users.form.wrap_gender = Sexe
+users.form.gender = Sexe
+users.form.wrap_language = Langue
+users.form.preflanguage = Langue
+users.form.registrationdate = Registrationdate
+users.form.blockeduntil = Bloqué jusqu'au
+users.form.comment = Commentaire
+users.form.passw = Mot de passe
+users.form.passwrep = Répétez le mot de passe
+users.form.warning = Mise en garde !
+users.form.passwedit = Laissez le champ mot de passe vide si vous ne voulez pas modifier le mot de passe ! 
+users.form.block = Laissez le champ bloc vide si vous ne voulez pas bloquer l'utilisateur !
+users.form.mimic = Cliquez ci-dessous si vous souhaitez que l'utilisateur imiter
+users.title.add = Créer un nouvel utilisateur
+users.title.edit = Modifier utilisateur
+user.success.added = Utilisateur : {0} a été créé avec succès
+user.success.edited = Utilisateur : {0} a été modifié avec succès
+user.success.removed = Utilisateur : {0} a été supprimé avec succès
+
+# Competitions
+competition.name = Concours
+competition.submit = Envoyer
+competition.intro = Le concours a commencé ! Ne perdez pas trop de temps à lire ceci.
+competition.confirmSubmit = Êtes-vous certain de que vouloir soumettre vos réponses et de terminer la compétition ?
+competition.noInternet = Vous n'avez pas une connexion internet active !
+competition.timesUp = Temps vers le haut !
+competition.overview = Début
+competition.input.regex = Votre réponse
+competition.feedback = Vos commentaires
+competition.modal.submitting = Présentation
+competition.modal.ready = Vous êtes prêt !
+competition.modal.sendingAnswers = Envoi de réponses...
+competition.modal.error = Oups ! Quelque chose a mal tourné
+competition.modal.error.code = Donne le code suivant à un enseignant à proximité de soumettre vos réponses pour vous.
+competition.modal.error.orYouCan = Ou vous pouvez
+competition.modal.error.retry = Nouvelle tentative
+competition.modal.finished = Fini
+competition.modal.finished.text = Vous avez terminé avec succès ce concours !
+competition.modal.finished.return = Retour au début
+competition.modal.finished.showFeedback = Voir la rétroaction
+
+competition.run.submit.notStarted = Ce concours n'a pas encore été démarré, ou a déjà été terminé par l'organisateur.
+competition.run.submit.ok = Présentation a réussi.
+competition.run.submit.invalid = Réponses non valides.
+competition.run.finished = La compétition a été finie.
+
+competition.overview.button = Vue d'ensemble
+competition.overview.submitAnswers = Présenter les réponses de l'élève
+competition.overview.submitAnswers.info = Collez le code que vous avez copié de l'écran de l'élève dans ce textfield et cliquez sur « Soumettre ».
+competition.overview.stopCompetition = Arrêter le concours
+competition.overview.progress = Progrès
+competition.overview.timeLeft = Temps restant
+competition.overview.finished = Fini
+competition.overview.details = Détails
+competition.overview.id = ID
+competition.overview.questionSets = Jeux de question
+competition.overview.availableLanguages = Langues disponibles
+competition.overview.confirmFinish = Êtes-vous certain de que vouloir terminer ce concours ? Toutes les réponses non soumises seront perdues !
+competition.started.title = Concours n'est pas encore commencé
+competition.started.info = Le concours choisi n'est pas encore commencé. Please try again later.
+
+# Contact form
+contact.formtitle = Formulaire de contact
+contact.email = Votre adresse email
+contact.question = Votre question ou Remarque
+contact.form.incomplete = S'il vous plaît remplir tous les champs correctement
+contact.form.couldnotsend = Pas pu envoyer. Réessayez plus tard.
+contact.form.sendsuccess = Correctement envoyé.
+contact.mail.subject = [FR] Contact
+contact.upgraderequest  = Mise à niveau à la demande de l'enseignant
+contact.requestupgrade.noemail = Il n'y a aucun e-mail associée à votre compte. Cela est nécessaire.
+contact.upgraderequest.subject = [FR] Demande de surclassement
+contact.requestupgrade.notimage = Le fichier téléchargé n'est pas une image.
+contact.requestupgrade.explanation = Ici, vous pouvez demander une mise à niveau de votre compte à un compte professeur. S'il vous plaît envoyer un lien d'un scan de votre enseignant Cardinal Abuse de ce formulaire entraînera la suspension de votre compte.
+
+# Other user
+otheruser.view = Bekijk gebruiker
+otheruser.block = Bloc
+otheruser.block.date = Bloquer jusqu'à (laissez vide pour sans bloc)
+otheruser.mimic = Imiter

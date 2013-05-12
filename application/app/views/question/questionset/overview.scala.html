@@ -4,9 +4,9 @@
 * author: Kevin Stobbelaar                 *
 *******************************************@
 
-@(breadcrumbs : List[models.data.Link], qsid: String, currentPage: Page[_ <: models.management.ManageableModel],
+@(breadcrumbs : List[models.data.Link], qsid: Int, currentPage: Page[_ <: models.management.ManageableModel],
 qsqmanager: models.management.Manager[_], currentOrderBy: String, currentOrder: String, currentFilter: String,
-qsForm: Form[_ <: models.management.ManageableModel], qsmanager: models.management.Manager[_])
+qsForm: Form[_ <: models.management.ManageableModel], qsmanager: models.management.Manager[_], grade: String)
 
 @import models.EMessages
 @import views.html.management.list
@@ -20,8 +20,8 @@ qsForm: Form[_ <: models.management.ManageableModel], qsmanager: models.manageme
 
         <div class="span4">
 
-            <div class="well">
-                <h4> @EMessages.get("question.questionset.overview.basic") </h4>
+            <div>
+                <p class="lead"> @EMessages.get("question.questionset.overview.basic") </p>
             </div>
 
             <div>
@@ -37,9 +37,10 @@ qsForm: Form[_ <: models.management.ManageableModel], qsmanager: models.manageme
                     @inputText(qsForm("name"), '_label -> EMessages.get("question.questionset.create.name"), '_showConstraints -> false)
 
                     @select(
-                        qsForm("level"),
+                        qsForm("gradetext"),
                         options = options(models.data.DataHandler.getGrades().toList.map(_.getName)),
-                        '_label -> EMessages.get("question.questionset.create.level"),
+                        '_label -> EMessages.get("question.questionset.create.grade"),
+                        '_default -> grade,
                         '_showConstraints -> false
                     )
 
@@ -54,8 +55,8 @@ qsForm: Form[_ <: models.management.ManageableModel], qsmanager: models.manageme
         </div>
 
         <div class="span8">
-            <div class="well">
-                <h4> @EMessages.get("question.questionset.overview.questions") </h4>
+            <div>
+                <p class="lead"> @EMessages.get("question.questionset.overview.questions") </p>
             </div>
 
             @list(currentPage, qsqmanager, currentOrderBy, currentOrder, currentFilter)

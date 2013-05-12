@@ -1,5 +1,7 @@
 package models.competition;
 
+import models.EMessages;
+
 /**
  * An enumeration of contests states
  *
@@ -10,6 +12,12 @@ public enum CompetitionState {
     DRAFT,
     ACTIVE,
     RUNNING,
-    FINISHED
+    FINISHED;
+
+
+    @Override
+    public String toString() {
+        return EMessages.get("competition.state." + this.name().toLowerCase());
+    }
 
 }

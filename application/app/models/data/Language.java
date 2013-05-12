@@ -1,11 +1,14 @@
 package models.data;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
 import models.EMessages;
+import models.management.Listable;
 import play.i18n.Lang;
 
 /**
@@ -13,9 +16,14 @@ import play.i18n.Lang;
  * limit the languages to the supported languages.
  * @author Felix Van der Jeugt
  */
-public class Language implements Comparable<Language> {
+public class Language implements Comparable<Language>, Listable {
 
     private Lang lang;
+        
+    // Empty constructor for UserManagement
+    public Language(){
+    	
+    }
 
     // The list of already created languages.
     private static Set<Language> languages = new TreeSet<Language>();
@@ -117,7 +125,7 @@ public class Language implements Comparable<Language> {
     public Lang getLang() {
         return lang;
     }
-
+    
     /**
      * Lists the available Languages.
      * @return A List of the Available languages.
@@ -147,5 +155,14 @@ public class Language implements Comparable<Language> {
         if(this.equals(that)) return 0;
         return this.getCode().compareTo(that.getCode());
     }
+
+	@Override
+	public Map<String, String> options() {		
+		LinkedHashMap<String, String> ret_opts = new LinkedHashMap<String, String>();
+		for(Language l : listLanguages()){
+			ret_opts.put(l.getCode(), l.getName());
+		}
+		return ret_opts;
+	}
 
 }

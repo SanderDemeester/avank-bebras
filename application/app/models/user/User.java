@@ -135,5 +135,7 @@ public abstract class User{
     public void setMimickStatus(boolean isMimicking){
     	this.isMimicking = isMimicking;
     }
+    
+    public abstract boolean isAnon();
 
 }
