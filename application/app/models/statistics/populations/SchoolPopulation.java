@@ -17,6 +17,7 @@ public class SchoolPopulation extends Population {
 
     private SchoolModel school;
 
+    /** Creates a new population from the given school. */
     public SchoolPopulation(SchoolModel school) {
         this.school = school;
     }
@@ -46,6 +47,7 @@ public class SchoolPopulation extends Population {
         return pupils;
     }
 
+    /** @see models.statistics.populations.Population.Factory */
     public static class Factory implements Population.Factory {
         @Override public Population create(String identifier) 
                 throws PopulationFactoryException {

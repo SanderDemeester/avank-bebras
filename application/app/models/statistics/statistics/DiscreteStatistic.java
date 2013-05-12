@@ -63,6 +63,10 @@ public abstract class DiscreteStatistic extends Statistic {
         return conditions().contains(calculate(user));
     }
 
+    /**
+     * Returns the value the statistic yields for the given user. For example,
+     * "Male" if the statistic is Gender.
+     */
     public abstract String calculate(UserModel user);
 
 }

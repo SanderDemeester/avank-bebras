@@ -16,8 +16,7 @@ public class SinglePopulation extends Population {
 
     private UserModel user;
 
-    public SinglePopulation() {}
-
+    /** Creates a population for the given user. */
     public SinglePopulation(UserModel user) {
         this.user = user;
     }

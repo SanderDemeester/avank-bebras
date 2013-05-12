@@ -140,6 +140,10 @@ public abstract class ContinuousStatistic extends Statistic {
         return between;
     }
 
+    /**
+     * Calculates the value of this statistic for the given user. For instance,
+     * returns the score of the student.
+     */
     public abstract Double calculate(UserModel user);
 
 }

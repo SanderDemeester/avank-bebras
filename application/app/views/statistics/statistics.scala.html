@@ -236,9 +236,6 @@
         margin-bottom: 10px;
     }
 
-    .statistics-body {
-    }
-
 </style>
 <script type="text/javascript">
 
@@ -258,11 +255,6 @@
         /* Dynamically mark the first tab as active. */
         $(".nav-tabs").children().children().first().click();
 
-        /* For the HighChart. */
-        //@if(statistic != null && populations != null && populations.size() > 0) {
-        //$("#container").highcharts(@Html(statistic.asJson(populations).toString()));
-        //}
-
     });
 
     $(document).on("click", "#populations-popup", function() {
@@ -272,7 +264,7 @@
     /* Add the selected populations on the right click. */
     $(document).on("click", "#population-add", function() {
         var populationCount = Number($("#population-count").val());
-        var defaultcolour = "red";
+        var defaultcolour = "#ff0000";
         $(".population-check:checkbox:checked").each(function(i, e) {
 
             if($(this).prop("disabled")) return;
