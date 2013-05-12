@@ -30,7 +30,6 @@ import controllers.EController;
 
 /**
  * @author Jens N. Rammant
- * TODO try to shorten class some more
  */
 public class SchoolController extends EController {
 

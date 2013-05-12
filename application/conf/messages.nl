@@ -484,7 +484,7 @@ classes.pupil.delete.error = Er liep iets mis tijdens het verwijderen. Probeer (
 class.availableGrades = Toegelaten levels en hun (gesuggereerde) leeftijd onder- en bovengrenzen.
 classes.add = Voeg een nieuwe klas toe
 class.name = Naam van de klas
-class.school = School van de klas
+class.school = School ID van de klas
 class.level = Level van de klas
 class.expdate.format = Datumformaat
 class.expdate = Vervallingsdatum van de klas
@@ -512,6 +512,7 @@ classes.import.info.existstudent = Bestaande studenten:
 classes.import.info.newstudent = Nieuwe studenten:
 classes.import.error.savefail = Er is iets misgelopen met het opslaan. Misschien hebt u te lang gewacht? De data wordt verwijderd na een aantal uren. Of er heeft ondertussen iemand een van de e-mailadressen geregistreerd. Of misschien heeft u meerdere keren hetzelfde e-mailadres gebruikt in het bestand.
 classes.import.error.postfail = Er is iets misgelopen met het inlezen van het XLSX-bestand. Bent u zeker dat het geldig was? Controleer de documentatie.
+classes.pupil.download = Download klas
 
 classes.pupil.classes.list = Lijst van klassen
 classes.pupil.classes.current = Jouw huidige klas
@@ -660,3 +661,16 @@ otheruser.view = Toon gebruiker
 otheruser.block = Blokkeer
 otheruser.block.date = Blokkeer tot (leeg laten indien u niet wil blokkeren)
 otheruser.mimic = Boots na
+
+# UserModelValidator
+usermodelvalidator.result.ok = Ok
+usermodelvalidator.result.noname = Geen naam
+usermodelvalidator.result.invalidname = Ongeldige naam
+usermodelvalidator.result.nobirthday = Geen geboortedatum
+usermodelvalidator.result.latebirthday = Geboortedatum na vandaag
+usermodelvalidator.result.nogender = Geen (geldig) geslacht
+usermodelvalidator.result.nolanguage = Geen taal
+usermodelvalidator.result.invalidlanguage = Geen geldige taal
+usermodelvalidator.result.nopassword = Geen wachtwoord
+usermodelvalidator.result.invalidemail = Ongeldige email
+usermodelvalidator.result.existingemail = Email reeds geregistreerd

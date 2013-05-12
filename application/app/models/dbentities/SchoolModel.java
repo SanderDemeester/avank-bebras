@@ -16,7 +16,6 @@ import play.db.ebean.Model;
 
 /**
  * @author Jens N. Rammant
- * TODO change to Ruben's standard
  */
 @Entity
 @Table(name="Schools")

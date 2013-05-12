@@ -24,7 +24,6 @@ import controllers.util.XLSXImporter;
 
 /**
  * @author Jens N. Rammant
- * TODO emessages & decent errors & comments
  */
 public class ClassGroupIOController extends EController {
 
