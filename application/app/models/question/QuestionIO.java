@@ -237,7 +237,7 @@ public class QuestionIO {
         } catch (SAXException e) {
             throw new QuestionBuilderException("The XML is invalid."+e.getMessage());
         } catch (IOException e) {
-            throw new QuestionBuilderException("Can't read the xml file.");
+            throw new QuestionBuilderException("Can't read the xml file."+e.getMessage());
         }
     }
 
@@ -285,7 +285,7 @@ public class QuestionIO {
         } catch (SAXException e) {
             throw new QuestionBuilderException("The XML is invalid."+e.getMessage());
         } catch (IOException e) {
-            throw new QuestionBuilderException("Can't read the XML file.");
+            throw new QuestionBuilderException("Can't read the XML file."+e.getMessage());
         } catch (NullPointerException e) {
             throw new QuestionBuilderException("Unknown question type.");
         }

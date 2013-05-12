@@ -31,7 +31,6 @@ public class UserModelValidator {
 	public static Result validate(UserModel toValidate) throws PersistenceException{
 		//Check name for illegal characters
 		if(toValidate.name==null||toValidate.name.isEmpty())return Result.NO_NAME;
-		//TODO illegal characters (if any)
 		//Check if registrationdate is before today
 		if(toValidate.birthdate==null)return Result.NO_BIRTHDAY;
 		Date currentDate = Calendar.getInstance().getTime();
@@ -59,16 +58,26 @@ public class UserModelValidator {
 	}
 	
 	public enum Result{
-		OK,
-		NO_NAME,
-		INVALID_NAME,
-		NO_BIRTHDAY,
-		BIRTHDAY_AFTER_TODAY,
-		NO_GENDER,
-		NO_LANGUAGE,
-		INVALID_LANGUAGE,
-		NO_PASSWORD,
-		INVALID_EMAIL,
-		ALREADY_EXISTING_EMAIL;
+		OK("usermodelvalidator.result.ok"),
+		NO_NAME("usermodelvalidator.result.noname"),
+		INVALID_NAME("usermodelvalidator.result.invalidname"),
+		NO_BIRTHDAY("usermodelvalidator.result.nobirthday"),
+		BIRTHDAY_AFTER_TODAY("usermodelvalidator.result.latebirthday"),
+		NO_GENDER("usermodelvalidator.result.nogender"),
+		NO_LANGUAGE("usermodelvalidator.result.nolanguage"),
+		INVALID_LANGUAGE("usermodelvalidator.result.invalidlanguage"),
+		NO_PASSWORD("usermodelvalidator.result.nopassword"),
+		INVALID_EMAIL("usermodelvalidator.result.invalidemail"),
+		ALREADY_EXISTING_EMAIL("usermodelvalidator.result.existingemail");
+		
+		private final String EMessageString;
+		
+		Result(String st){
+			this.EMessageString = st;
+		}
+		
+		public String getEMessage(){
+			return this.EMessageString;
+		}
 	}
 }

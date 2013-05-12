@@ -109,6 +109,12 @@ public class Role implements Comparable<Role>{
     		"classes.pupil.classes.list",
     		new Link("classes.pupil.classes.list","/pclasses/view")
     );
+    
+    //Upgrade to teacher request
+    public static Role UPGRADETOTEACHER = new Role(
+    		"contact.upgraderequest",
+    		new Link("contact.upgraderequest","/upgrade")
+    );
 
     /* ====================================================================== *\
                              Actual implementation.

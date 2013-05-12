@@ -44,7 +44,6 @@ import models.EMessages;
 /**
  * @author Jens N. Rammant
  * @author Thomas Mortier
- * TODO check the date formats
  */
 @Entity
 @Table(name="users")
@@ -169,7 +168,7 @@ public class UserModel extends ManageableModel implements Listable{
 
     @Override
     public Map<String, String> options() {
-        List<UserModel> users = find.all(); //TODO try-catch
+        List<UserModel> users = find.all();
         LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
         for(UserModel user: users) {
             options.put(user.id, user.id);
@@ -179,7 +178,6 @@ public class UserModel extends ManageableModel implements Listable{
 
 	@Override
 	public String[] getFieldValues() {
-		//TODO voor jens: rekening houden met toegevoegde velden
 		String[] res = {
 				id,
 				EMessages.get("user." + type.toString()),

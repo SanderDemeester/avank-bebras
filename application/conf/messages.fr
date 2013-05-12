@@ -492,11 +492,11 @@ classes.pupil.delete.error = Quelque chose s'est passé lors de la suppression. 
 
 class.availableGrades = Niveaux disponibles et leur âge inférieur et supérieur (suggéré) lié.
 classes.add = Ajoutez une nouvelle classe
-class.name = Classe '' nom s
-class.school = Classe '' école s
-class.level = Classe de '' niveau s
+class.name = Classe '' nom 
+class.school = Classe '' école (ID)
+class.level = Classe de '' niveau 
 class.expdate.format = Format de date
-class.expdate = Classe '' date de péremption s
+class.expdate = Classe '' date de péremption 
 classes.add.notcomplete = Veuillez remplir tous les champs obligatoires.
 classes.add.noschool = Il n'y a pas d'école avec cet ID.
 classes.add.nograde = Il n'y a pas de niveau avec ce nom. 
@@ -521,6 +521,7 @@ classes.import.info.existstudent = Étudiants actuels :
 classes.import.info.newstudent = Nouveaux étudiants :
 classes.import.error.savefail = Quelque chose n'allait pas avec l'économie. Peut-être que vous avez attendu trop longtemps ? Les données d'unsafed sont supprimées après une couple d'heures. Ou quelqu'un inscrit une des adresses e-mail que vous utilisiez. Ou vous avez utilisé la même adresse e-mail deux fois dans le fichier.
 classes.import.error.postfail = Quelque chose n'allait pas avec l'analyse du fichier XLSX. Êtes-vous sûr que c'est un fichier valide ? Consultez la documentation.
+classes.pupil.download = Télécharger classe
 
 classes.pupil.classes.list = Liste des classes
 classes.pupil.classes.current = Votre classe actuelle
@@ -667,3 +668,16 @@ otheruser.view = Bekijk gebruiker
 otheruser.block = Bloc
 otheruser.block.date = Bloquer jusqu'à (laissez vide pour sans bloc)
 otheruser.mimic = Imiter
+
+# UserModelValidator
+usermodelvalidator.result.ok = Ok
+usermodelvalidator.result.noname = Pas de nom
+usermodelvalidator.result.invalidname = Nom invalide
+usermodelvalidator.result.nobirthday = Pas de jour de naissance
+usermodelvalidator.result.latebirthday = Jour de naissance après aujourd'hui
+usermodelvalidator.result.nogender = Pas de sexe (valide)
+usermodelvalidator.result.nolanguage = Pas de language
+usermodelvalidator.result.invalidlanguage = Pas de language valied
+usermodelvalidator.result.nopassword = Pas de mot de passe
+usermodelvalidator.result.invalidemail = Pas d'' email valide
+usermodelvalidator.result.existingemail = Email déjà registré
