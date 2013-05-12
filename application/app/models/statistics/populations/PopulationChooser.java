@@ -59,7 +59,7 @@ public class PopulationChooser {
      */
     public List<Population> filter(List<Population> list) {
         List<Population> newlist = new ArrayList<Population>();
-        for(Population p : list) {
+        for(Population p : list) if(pops.containsKey(p.populationType())) {
             int i = pops.get(p.populationType()).indexOf(p);
             if(i >= 0) {
                 newlist.add(p);

@@ -30,7 +30,6 @@ public class StatisticFactory {
         public Statistic create();
     }
 
-    // TODO throw statisticCreationException
     public Statistic create(String type) {
         return map.get(type).create();
     }

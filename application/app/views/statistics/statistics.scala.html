@@ -24,7 +24,7 @@
 
     <div class="statistics-group">
         <div class="statistics-heading">
-            @EMessages.get("statistics.accordion.populations")
+            @EMessages.get("statistics.population_chooser")
         </div>
         <div class="statistics-body" id="populations-tab">
             <div id="populations">
@@ -67,7 +67,7 @@
 
     <div class="statistics-group">
         <div class="statistics-heading">
-            @EMessages.get("statistics.accordion.statistics")
+            @EMessages.get("statistics.statistics_chooser")
         </div>
         <div class="statistics-body" id="statistics-tab">
             <select name="statistic"@if(statistic != null) { value="@statistic.getName()" }>
@@ -122,6 +122,8 @@
     <button type="submit" class="btn btn-primary btn-large" id="show-chart">@EMessages.get("statistics.generate")</button>
 
 </form>
+
+<!-- Modal popup for Choosing populations. -->
 <div class="modal hide fade" id="population-chooser">
     <div class="modal-body">
         <ul class="nav nav-tabs">
@@ -149,6 +151,8 @@
         <a href="#" class="btn btn-primary" id="population-add" data-dismiss="modal">@EMessages.get("forms.add")</a>
     </div>
 </div>
+
+<!-- Template for new filters. -->
 <div class="hide statistic-filter form-inline" id="statistic-filter-template">
     <input type="hidden" class="index" value="@if(statistic == null) {0} else {@statistic.filters().size()}">
     <button type="button" class="btn filter-remove">
@@ -164,6 +168,8 @@
         <button type="button" class="btn condition-add"><span class="icon-plus">+</span></button>
     </span>
 </div>
+
+<!-- Model for the actual chart. -->
 <div class="modal hide fade" id="stat-chart">
     <div class="modal-body">
         <div id="container"></div>
@@ -172,6 +178,7 @@
         <a href="#" class="btn btn-primary" data-dismiss="modal">@EMessages.get("forms.cancel")</a>
     </div>
 </div>
+
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <script type="text/javascript" src="/assets/javascripts/colorpicker/bootstrap-colorpicker.js"></script>
 <link type="text/css" rel="stylesheet" href="/assets/stylesheets/colorpicker/colorpicker.css"/>
@@ -187,10 +194,8 @@
     .colorPicker {
         height: 100%;
     }
+
     .description {
-        width: 100%;
-    }
-    .description div {
         display: inline-block;
         margin-bottom: 0px;
         padding: 2px;
@@ -300,7 +305,7 @@
             min.text("-");
 
             var mina = $(document.createElement("a"));
-            mina.addClass("btn btn-small population-remove");
+            mina.addClass("btn population-remove");
             mina.attr("href", "#");
             mina.append(min);
 
@@ -314,7 +319,7 @@
 
             var btn = $(document.createElement("a"));
             btn.attr("href", "#");
-            btn.addClass("btn btn-small colorPicker");
+            btn.addClass("btn colorPicker");
             btn.attr("data-color-format", "hex");
             btn.attr("data-color", defaultcolour);
             btn.append(col);
@@ -327,7 +332,7 @@
             desc.attr("type", "text");
             desc.addClass("description");
             desc.prop("disabled", true);
-            desc.val($(this).parent().text());
+            desc.val($(this).parent().text().trim());
 
             var row = $(document.createElement("div"));
             row.addClass("population form-inline");
@@ -336,7 +341,9 @@
             row.append(type);
             row.append(index);
             row.append(minbtn);
+            row.append(' ');
             row.append(picker);
+            row.append(' ');
             row.append(desc);
 
             $("#populations").append(row);
@@ -410,6 +417,8 @@
 
         $(this).before(condition);
         $(this).before(' ');
+
+        $(this).siblings(".condition-count").first().val(j + 1);
     });
 
     $(document).on("click", ".condition-remove", function() {

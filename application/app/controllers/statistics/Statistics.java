@@ -99,11 +99,13 @@ public class Statistics extends EController {
             statistic = StatisticFactory.instance().create(gf.statistic);
             Statistic filter;
             if(gf.filters != null) for(int i = 0; i < gf.filters.size(); i++) {
-                filter = StatisticFactory.instance().create(gf.filters.get(i));
-                statistic.addFilters(filter);
-                if(gf.conditions != null) {
-                    for(String j : gf.conditions.get(i)) {
-                        if(!"".equals(j)) filter.addConditions(j);
+                if(gf.filters.get(i) != null) {
+                    filter = StatisticFactory.instance().create(gf.filters.get(i));
+                    statistic.addFilters(filter);
+                    if(gf.conditions != null) {
+                        for(String j : gf.conditions.get(i)) {
+                            if(j != null && !"".equals(j)) filter.addConditions(j);
+                        }
                     }
                 }
             }
