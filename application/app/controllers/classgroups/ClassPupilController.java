@@ -40,7 +40,6 @@ import controllers.util.XLSXImporter;
 
 /**
  * @author Jens N. Rammant
- * TODO split in multiple classes, confirmation screen
  */
 public class ClassPupilController extends EController {
 	

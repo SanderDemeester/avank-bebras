@@ -24,7 +24,6 @@ import views.html.commons.noaccess;
 
 /**
  * @author Jens N. Rammant
- * TODO confirmation screen
  */
 public class HelpTeacherController extends ClassPupilController {
 

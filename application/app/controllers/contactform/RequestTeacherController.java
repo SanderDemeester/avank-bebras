@@ -11,6 +11,7 @@ import models.EMessages;
 import models.data.Link;
 import models.mail.UpgradeRequestMail;
 import models.user.AuthenticationManager;
+import models.user.Role;
 import models.user.User;
 import models.user.UserType;
 
@@ -90,7 +91,6 @@ public class RequestTeacherController extends EController {
 			flash("success", EMessages.get("contact.form.sendsuccess"));
 
 		} catch (Exception e) {
-			e.printStackTrace();//TODO
 			flash("error", EMessages.get("contact.form.couldnotsend"));
 		}
 		return redirect(routes.RequestTeacherController.showForm());
@@ -112,8 +112,7 @@ public class RequestTeacherController extends EController {
 	 * @return if user is authorized
 	 */
 	private static boolean isAuthorized(){
-		User current = AuthenticationManager.getInstance().getUser();
-		return current.getType()==UserType.PUPIL_OR_INDEP;
+		return AuthenticationManager.getInstance().getUser().hasRole(Role.UPGRADETOTEACHER);
 	}
 	
 	/**

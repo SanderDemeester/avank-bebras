@@ -494,7 +494,7 @@ classes.pupil.delete.error = Während das Löschen ging etwas schief. Versuchen 
 class.availableGrades = Verfügbaren Ebenen und (vorgeschlagene) untere und obere Alter gebunden.
 classes.add = Fügen Sie eine neue Klasse
 class.name = Klasse '' s Name
-class.school = Klasse '' s Schule
+class.school = Klasse '' s Schule (ID)
 class.level = Klasse '' s-Ebene
 class.expdate.format = Datumsformat
 class.expdate = Klasse '' s-Ablaufdatum
@@ -522,6 +522,7 @@ classes.import.info.existstudent = Vorhandenen Studenten:
 classes.import.info.newstudent = Neue Studenten:
 classes.import.error.savefail = Etwas schief gelaufen ist mit dem Speichern. Vielleicht habe Sie zu lange gewartet? Die Unsafed-Daten werden nach ein paar Stunden entfernt. Oder jemand registriert man die e-Mail-Adressen, die Sie verwendet haben. Oder Sie dieselbe e-Mail-Adresse zweimal in der Datei verwendet.
 classes.import.error.postfail = Etwas schief gelaufen ist mit der Analyse der XLSX-Datei. Sind Sie sicher, dass es eine gültige Datei ist? Sie in der Dokumentation.
+classes.pupil.download = Laden Klasse
 
 classes.pupil.classes.list = Liste der Klassen
 classes.pupil.classes.current = Die aktuelle Klasse
@@ -668,3 +669,16 @@ otheruser.view = Bekijk gebruiker
 otheruser.block = Block
 otheruser.block.date = Blockieren Sie bis (für kein Block leer lassen)
 otheruser.mimic = Imitier
+
+# UserModelValidator
+usermodelvalidator.result.ok = Ok
+usermodelvalidator.result.noname = Keine Name
+usermodelvalidator.result.invalidname = Name ungültig
+usermodelvalidator.result.nobirthday = Keine Geburtstag
+usermodelvalidator.result.latebirthday = Geburtstag nach dem heutigen Tag
+usermodelvalidator.result.nogender = Keine gültiges Geschlecht
+usermodelvalidator.result.nolanguage = Keine Sprache
+usermodelvalidator.result.invalidlanguage = Keine gültige Sprache
+usermodelvalidator.result.nopassword = Keine Kennwort
+usermodelvalidator.result.invalidemail = Keine gültiges Email
+usermodelvalidator.result.existingemail = Email schon registriert
