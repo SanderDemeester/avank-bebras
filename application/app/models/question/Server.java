@@ -86,11 +86,9 @@ public class Server extends ManageableModel implements Listable{
     public boolean is_http_secured;
     
     @Editable(hiddenInList=true)
-    @Constraints.Required
     public String http_username;
     
     @Editable(hiddenInList=true)
-    @Constraints.Required
     public String http_password;
 
     public static Finder<String, Server> finder = new Finder<String, Server>(String.class, Server.class);

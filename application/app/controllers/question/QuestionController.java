@@ -298,7 +298,8 @@ public class QuestionController extends EController{
         try {
             q = Question.fetch(name);
         } catch (QuestionBuilderException e) {
-            q = null;
+            flash("error", EMessages.get("forms.unknownError")+e.getMessage());
+            return LISTSUBMITS;
         }
         manager.setIgnoreErrors(true);
 
