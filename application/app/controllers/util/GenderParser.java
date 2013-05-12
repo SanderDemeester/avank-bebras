@@ -19,18 +19,6 @@ public class GenderParser {
 	
 	static{
 		stringToGender = new HashMap<String,Gender>();
-		/**stringToGender.put("M", Gender.Male);
-		stringToGender.put("MALE", Gender.Male);
-		stringToGender.put("MAN", Gender.Male);
-		stringToGender.put("HOMME", Gender.Male);
-		stringToGender.put("F", Gender.Female);
-		stringToGender.put("FEMALE", Gender.Female);
-		stringToGender.put("FEMME", Gender.Female);
-		stringToGender.put("FRAU", Gender.Female); 
-		stringToGender.put("VROUW", Gender.Female);
-		stringToGender.put("O", Gender.Other);
-		stringToGender.put("ANDERS", Gender.Other);
-		stringToGender.put("OTHER", Gender.Other);*/
 		String man = Play.application().configuration().getString("gender.male");
 		String female = Play.application().configuration().getString("gender.female");
 		String other = Play.application().configuration().getString("gender.other");
