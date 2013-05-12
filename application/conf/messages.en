@@ -177,6 +177,8 @@ languages.de = German
 
 # Statistics
 statistics.title = Statistics
+statistics.population_chooser = Compose the desired populations
+statistics.statistics_chooser = Compose the desired statistic
 statistics.add_population = Add a Population
 statistics.add_filter = Add a Filter
 statistics.generate = Generate

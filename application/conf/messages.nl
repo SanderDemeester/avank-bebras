@@ -176,6 +176,8 @@ languages.de = Duits
 
 # Statistics
 statistics.title = Statistieken
+statistics.population_chooser = Stel de gewenste populaties samen
+statistics.statistics_chooser = Stel de gewenste statistiek samen
 statistics.add_population = Voeg een populatie toe
 statistics.add_filter = Voeg een filter toe
 statistics.generate = Genereer

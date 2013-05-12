@@ -17,142 +17,153 @@
     }
 </style>
 <form method="POST" action="/statistics" id="statistics-form">
-    <table id="populations">
-        <tbody>
-            @for(i <- 0 to populations.size() - 1) { <!>
-            <tr class="population">
-                <!-- Hidden properties of the population. -->
-                <input type="hidden" name="colours[@i]" class="colours" value="@populations(i).getColour()" />
-                <input type="hidden" name="ids[@i]"     class="ids"     value="@populations(i).id()" />
-                <input type="hidden" name="types[@i]"   class="types"   value="@populations(i).populationType().getName()" />
 
-                <!-- Hidden data for dynamic adding. -->
-                <input type="hidden" class="index" value="@i"/>
+    <!-- =================================================================== -->
+    <!--  The accordion group for adding populations.                        -->
+    <!-- =================================================================== -->
 
-                <!-- The actual content -->
-                <td class="minus">
-                    <a href="#" class="btn btn-small population-remove"><span class="icon-minus">-</span></a>
-                </td>
-                <td class="colour-picker">
-                    <a href="#" class="btn btn-small colorPicker" data-color-format="hex" data-color="@populations(i).getColour()">
-                        <span class="preview" style="background-color: @populations(i).getColour()"></span>
-                    </a>
-                </td>
-                <td class="description">
-                    <div class="well">@populations(i).describe()</div>
-                </td>
-            </tr>
-            }
-        </tbody>
-    </table>
+    <div class="statistics-group">
+        <div class="statistics-heading">
+            @EMessages.get("statistics.accordion.populations")
+        </div>
+        <div class="statistics-body" id="populations-tab">
+            <div id="populations">
+                @for(i <- 0 to populations.size() - 1) { <!>
+                <div class="population form-inline">
+                    <!-- Hidden properties of the population. -->
+                    <input type="hidden" name="colours[@i]" class="colours" value="@populations(i).getColour()" />
+                    <input type="hidden" name="ids[@i]"     class="ids"     value="@populations(i).id()" />
+                    <input type="hidden" name="types[@i]"   class="types"   value="@populations(i).populationType().getName()" />
 
-    <!-- Hidden data for dynamic adding. -->
-    <input type="hidden" id="population-count" value="@populations.size()" />
+                    <!-- Hidden data for dynamic adding. -->
+                    <input type="hidden" class="index" value="@i"/>
 
-    <!-- Functionality for adding populations. -->
-    <button type="button" class="btn btn-large" data-toggle="modal" data-target="#population-chooser">@EMessages.get("statistics.add_population")</button>
-    <div class="modal hide fade" id="population-chooser">
-        <!--<div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        </div>-->
-        <div class="modal-body">
-            <ul class="nav nav-tabs">
-                @for(poptype <- populationChooser.types()) { <!>
-                <li><a href="#@poptype.getName()" data-toggle="tab">@EMessages.get(poptype.getMessage())</a></li>
-                }
-            </ul>
-            <div class="tab-content">
-                @for(poptype <- populationChooser.types()) { <!>
-                <div class="tab-pane" id="@poptype.getName()">
-                    @for(pop <- populationChooser.populations(poptype)) { <!>
-                    <label class="checkbox">
-                        <input type="checkbox" class="population-check"
-                        @if(pop.getColour() != null) { disabled="disabled" checked="checked" } />
-                        <input type="hidden" name="popid" value="@pop.id()" />
-                        @pop.describe()
-                    </label>
-                    }
+                    <!-- The actual content -->
+                    <span class="minus">
+                        <a href="#" class="btn population-remove"><span class="icon-minus">-</span></a>
+                    </span>
+                    <span class="colour-picker">
+                        <a href="#" class="btn colorPicker" data-color-format="hex" data-color="@populations(i).getColour()">
+                            <span class="preview" style="background-color: @populations(i).getColour()"></span>
+                        </a>
+                    </span>
+                    <input type="text" disabled="disabled" value="@populations(i).describe()" />
                 </div>
                 }
             </div>
-        </div>
-        <div class="modal-footer">
-            <a href="#" class="btn" data-dismiss="modal">@EMessages.get("forms.cancel")</a>
-            <a href="#" class="btn btn-primary" id="population-add" data-dismiss="modal">@EMessages.get("forms.add")</a>
+
+            <!-- Hidden data for dynamic adding. -->
+            <input type="hidden" id="population-count" value="@populations.size()" />
+
+            <!-- Functionality for adding populations. -->
+            <button type="button" class="btn" id="populations-popup">@EMessages.get("statistics.add_population")</button>
         </div>
     </div>
 
-    <!-- Choosing the statistic and filtering it's population. -->
-    <div id="statistic-chooser">
 
-        <!-- Statistic selector -->
-        <select name="statistic"@if(statistic != null) { value="@statistic.getName()" }>
-            @if(statistic != null) {
-            <option value="@statistic.getName()">@EMessages.get(statistic.getName())</option>
-            }
-            @for(s <- StatisticFactory.instance().statistics()) { <!>
-            @if(statistic == null || s != statistic.getName()) {
-            <option value="@s">@EMessages.get(s)</option>
-            }
-            }
-        </select>
+    <!-- =================================================================== -->
+    <!--  The statistics group for choosing a statistic and filtering.       -->
+    <!-- =================================================================== -->
 
-        <!-- Filter list -->
-        <div id="statistic-filters">
-            @if(statistic != null) {
-            @for((filter, i) <- statistic.filters().view.zipWithIndex) { <!>
-            <div class="statistic-filter form-inline">
-                <input type="hidden" class="index" value="@i" />
-                <button type="button" class="btn filter-remove">
-                    <span class="icon-minus">-</span>
-                </button>
-                <select name="filters[@i]" value="@filter.getName()">
-                    <option value="@filter.getName()">@EMessages.get(filter.getName())</option>
-                    @for(s <- StatisticFactory.instance().statistics()) { <!>
-                    @if(s != filter.getName()) {
-                    <option value="@s">@EMessages.get(s)</option>
-                    }
-                    }
-                </select>
-                <span class="statistic-conditions">
-                    <input type="hidden" class="condition-count" value="@filter.conditions().size()" />
-                    @for((condition, j) <- filter.conditions().view.zipWithIndex) { <!>
-                    <div class="statistic-condition input-prepend form-inline">
-                        <span class="add-on condition-remove"><span class="icon-minus">-</span></span>
-                        <input class="span2" name="conditions[@i][@j]" type="text" value="@condition" />
-                    </div>
-                    }
-                    <button type="button" class="btn condition-add"><span class="icon-plus">+</span></button>
-                </span>
-            </div>
-            }
-            }
+    <div class="statistics-group">
+        <div class="statistics-heading">
+            @EMessages.get("statistics.accordion.statistics")
         </div>
-
-        <!-- Functionality to add a filter. -->
-        <button type="button" class="btn btn-large" id="filter-add">@EMessages.get("statistics.add_filter")</button>
-        <div class="hide statistic-filter form-inline" id="statistic-filter-template">
-            <input type="hidden" class="index" value="@if(statistic == null) {0} else {@statistic.filters().size()}">
-            <button type="button" class="btn filter-remove">
-                <span class="icon-minus">-</span>
-            </button>
-            <select>
+        <div class="statistics-body" id="statistics-tab">
+            <select name="statistic"@if(statistic != null) { value="@statistic.getName()" }>
+                @if(statistic != null) {
+                <option value="@statistic.getName()">@EMessages.get(statistic.getName())</option>
+                }
                 @for(s <- StatisticFactory.instance().statistics()) { <!>
+                @if(statistic == null || s != statistic.getName()) {
                 <option value="@s">@EMessages.get(s)</option>
                 }
+                }
             </select>
-            <span class="statistic-conditions">
-                <input type="hidden" class="condition-count" value="0" />
-                <button type="button" class="btn condition-add"><span class="icon-plus">+</span></button>
-            </span>
+            <div id="statistic-filters">
+                @if(statistic != null) {
+                @for((filter, i) <- statistic.filters().view.zipWithIndex) { <!>
+                <div class="statistic-filter form-inline">
+                    <input type="hidden" class="index" value="@i" />
+                    <button type="button" class="btn filter-remove">
+                        <span class="icon-minus">-</span>
+                    </button>
+                    <select name="filters[@i]" value="@filter.getName()">
+                        <option value="@filter.getName()">@EMessages.get(filter.getName())</option>
+                        @for(s <- StatisticFactory.instance().statistics()) { <!>
+                        @if(s != filter.getName()) {
+                        <option value="@s">@EMessages.get(s)</option>
+                        }
+                        }
+                    </select>
+                    <span class="statistic-conditions">
+                        <input type="hidden" class="condition-count" value="@filter.conditions().size()" />
+                        @for((condition, j) <- filter.conditions().view.zipWithIndex) { <!>
+                        <div class="statistic-condition input-prepend form-inline">
+                            <span class="add-on condition-remove"><span class="icon-minus">-</span></span>
+                            <input class="span2" name="conditions[@i][@j]" type="text" value="@condition" />
+                        </div>
+                        }
+                        <button type="button" class="btn condition-add"><span class="icon-plus">+</span></button>
+                    </span>
+                </div>
+                }
+                }
+            </div>
+            <button type="button" class="btn" id="filter-add">@EMessages.get("statistics.add_filter")</button>
         </div>
+    </div> 
 
-    </div>
 
-    <!-- Submit the form (and generate the new Plot). -->
+    <!-- =================================================================== -->
+    <!--  The nice big generate button.                                      -->
+    <!-- =================================================================== -->
+
     <button type="submit" class="btn btn-primary btn-large" id="show-chart">@EMessages.get("statistics.generate")</button>
 
 </form>
+<div class="modal hide fade" id="population-chooser">
+    <div class="modal-body">
+        <ul class="nav nav-tabs">
+            @for(poptype <- populationChooser.types()) { <!>
+            <li><a href="#@poptype.getName()" data-toggle="tab">@EMessages.get(poptype.getMessage())</a></li>
+            }
+        </ul>
+        <div class="tab-content">
+            @for(poptype <- populationChooser.types()) { <!>
+            <div class="tab-pane" id="@poptype.getName()">
+                @for(pop <- populationChooser.populations(poptype)) { <!>
+                <label class="checkbox">
+                    <input type="checkbox" class="population-check"
+                    @if(pop.getColour() != null) { disabled="disabled" checked="checked" } />
+                    <input type="hidden" name="popid" value="@pop.id()" />
+                    @pop.describe()
+                </label>
+                }
+            </div>
+            }
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">@EMessages.get("forms.cancel")</a>
+        <a href="#" class="btn btn-primary" id="population-add" data-dismiss="modal">@EMessages.get("forms.add")</a>
+    </div>
+</div>
+<div class="hide statistic-filter form-inline" id="statistic-filter-template">
+    <input type="hidden" class="index" value="@if(statistic == null) {0} else {@statistic.filters().size()}">
+    <button type="button" class="btn filter-remove">
+        <span class="icon-minus">-</span>
+    </button>
+    <select>
+        @for(s <- StatisticFactory.instance().statistics()) { <!>
+        <option value="@s">@EMessages.get(s)</option>
+        }
+    </select>
+    <span class="statistic-conditions">
+        <input type="hidden" class="condition-count" value="0" />
+        <button type="button" class="btn condition-add"><span class="icon-plus">+</span></button>
+    </span>
+</div>
 <div class="modal hide fade" id="stat-chart">
     <div class="modal-body">
         <div id="container"></div>
@@ -170,12 +181,8 @@
         width: 1em;
         height: 1em;
     }
-    table#populations {
-        width: 100%;
-        margin-bottom: 20px;
-    }
-    tr.population {
-        width: 100%;
+    .population {
+        margin-bottom: 2px;
     }
     .colorPicker {
         height: 100%;
@@ -184,8 +191,13 @@
         width: 100%;
     }
     .description div {
+        display: inline-block;
         margin-bottom: 0px;
         padding: 2px;
+    }
+
+    .minus, .colour-picker {
+        display: inline-block;
     }
 
     .statistic-conditions {
@@ -202,6 +214,24 @@
     #stat-chart {
         width: 650px;
         margin-left: -325px;
+    }
+
+    .statistics-group {
+        border: 1px solid rgb(229, 229, 229);
+        border-radius: 4px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .statistics-heading {
+        font-size: 20px;
+        font-weight: 200;
+        color: rgb(119, 119, 119);
+        text-shadow: 0px 1px 0px rgb(255, 255, 255);
+        margin-bottom: 10px;
+    }
+
+    .statistics-body {
     }
 
 </style>
@@ -228,6 +258,10 @@
         //$("#container").highcharts(@Html(statistic.asJson(populations).toString()));
         //}
 
+    });
+
+    $(document).on("click", "#populations-popup", function() {
+        $("#population-chooser").modal();
     });
 
     /* Add the selected populations on the right click. */
@@ -270,7 +304,7 @@
             mina.attr("href", "#");
             mina.append(min);
 
-            var minbtn = $(document.createElement("td"));
+            var minbtn = $(document.createElement("span"));
             minbtn.addClass("minus");
             minbtn.append(mina);
 
@@ -285,20 +319,18 @@
             btn.attr("data-color", defaultcolour);
             btn.append(col);
 
-            var picker = $(document.createElement("td"));
+            var picker = $(document.createElement("span"));
             picker.addClass("colour-picker");
             picker.append(btn);
 
-            var well = $(document.createElement("div"));
-            well.addClass("well");
-            well.html($(this).parent().text());
-
-            var desc = $(document.createElement("td"));
+            var desc = $(document.createElement("input"));
+            desc.attr("type", "text");
             desc.addClass("description");
-            desc.append(well);
+            desc.prop("disabled", true);
+            desc.val($(this).parent().text());
 
-            var row = $(document.createElement("tr"));
-            row.addClass("population");
+            var row = $(document.createElement("div"));
+            row.addClass("population form-inline");
             row.append(colour);
             row.append(id);
             row.append(type);
@@ -307,7 +339,7 @@
             row.append(picker);
             row.append(desc);
 
-            $("#populations").children("tbody").append(row);
+            $("#populations").append(row);
             populationCount += 1;
 
             // Init the new colorpickers.

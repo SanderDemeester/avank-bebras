@@ -177,6 +177,8 @@ languages.de = Deutsch
 
 # Statistics
 statistics.title = Statistiken
+statistics.population_chooser = Verfassen Sie die gewünschten Populationen
+statistics.statistics_chooser = Arrangieren Sie die gewünschte Statistik
 statistics.add_population = Eine Bevölkerung hinzufügen
 statistics.add_filter = Einen Filter hinzufügen
 statistics.generate = Generieren
