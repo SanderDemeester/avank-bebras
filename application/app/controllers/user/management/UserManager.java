@@ -15,6 +15,7 @@ import models.EMessages;
 import models.management.FieldType;
 import models.management.Manager;
 import models.management.ModelState;
+import models.user.AuthenticationManager;
 import models.user.User;
 import models.dbentities.UserModel;
 import play.mvc.Call;
@@ -126,5 +127,6 @@ public class UserManager extends Manager<UserModel> {
 			typeList.add("ANON");
 			UMDataSet = this.getFinder().where().in("type",typeList);
 		}
+		UMDataSet = UMDataSet.where().ne("id",AuthenticationManager.getInstance().getUser().getID());
 	}
 }
