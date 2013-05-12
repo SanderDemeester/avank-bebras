@@ -140,7 +140,7 @@ GET			/settings/:id			    controllers.user.PersonalPageController.show(id:Int)
 # User management
 GET 		/manage/users		controllers.user.management.UserManagerController.showUsers(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 GET			/manage/users/create		controllers.user.management.UserManagerController.createUser()
-GET			/manage/users/update		controllers.user.management.UserManagerController.updateUser()
+GET			/manage/users/:id/update		controllers.user.management.UserManagerController.updateUser(id)
 GET			/manage/users/save		controllers.user.management.UserManagerController.saveUser()
 GET			/manage/users/:id/edit		controllers.user.management.UserManagerController.editUser(id)
 

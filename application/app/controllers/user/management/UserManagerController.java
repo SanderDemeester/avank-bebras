@@ -72,8 +72,6 @@ import views.html.user.management.createuser;
 
 public class UserManagerController extends EController {
 	
-	private static String edit_id;
-	
     public static boolean isAuthorized() {
         return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGEUSERS);
     }
@@ -155,7 +153,7 @@ public class UserManagerController extends EController {
     }
         
     @Transactional
-    public static Result updateUser(){
+    public static Result updateUser(String edit_id){
     	List<Link> breadcrumbs = new ArrayList<Link>();
 	    breadcrumbs.add(new Link("app.home", "/"));
 	    breadcrumbs.add(new Link(EMessages.get("user.management.edit"), "/manage/users/update"));
@@ -287,15 +285,17 @@ public class UserManagerController extends EController {
 		    return Results.redirect(controllers.user.management.routes.UserManagerController.showUsers(0,"name","asc",""));
         }
         
-        UserManager manager = new UserManager(ModelState.UPDATE);
+        UserManager manager = new UserManager(ModelState.UPDATE, id);
         
         Form<UserModel> form = form(UserModel.class).bindFromRequest();
         
-        edit_id = id;
         UserModel id_model = Ebean.find(UserModel.class).where().eq(
 				"id",id).findUnique();
         
         // setting the default values
+        form.get().id = id;
+        form.get().type = id_model.type;
+        form.get().gender = id_model.gender;
         form.get().name = id_model.name;
         form.get().email = id_model.email;
         form.get().birthdate = id_model.birthdate;
@@ -319,8 +319,6 @@ public class UserManagerController extends EController {
 		}
 		
         manager.setIgnoreErrors(true);
-
-        edit_id = id;
         
         return ok(edituser.render(form, manager, breadcrumbs));
     }
@@ -408,23 +406,23 @@ public class UserManagerController extends EController {
      */
     
     // USERTYPE
-    public static String getUserType(){
+    public static String getUserType(String id){
     	UserModel dum = Ebean.find(UserModel.class).where().eq(
-				"id",edit_id).findUnique();
+				"id",id).findUnique();
     	return dum.type.toString();
     }
     
     // USERLANG
-    public static String getUserLang(){
+    public static String getUserLang(String id){
     	UserModel dum = Ebean.find(UserModel.class).where().eq(
-				"id",edit_id).findUnique();
+				"id",id).findUnique();
     	return dum.preflanguage;
     }
     
     // USERGENDER
-    public static String getUserGender(){
+    public static String getUserGender(String id){
     	UserModel dum = Ebean.find(UserModel.class).where().eq(
-				"id",edit_id).findUnique();
+				"id",id).findUnique();
     	return dum.gender.toString();
     }
 }
