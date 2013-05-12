@@ -11,3 +11,4 @@ The app must run on 127.0.0.1:9000
 Requirements for each testsuite
 -------------------------------
 database                logged in as an ADMINISTRATOR user
+login			not logged in, user exists with id = test13 and password = test1, Run speed != fast
