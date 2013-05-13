@@ -364,4 +364,15 @@ public class TakeCompetitionController extends EController {
         } else return forbidden();
     }
 
+    public static List<CompetitionModel> snippet(){
+        TakeCompetitionManager competitionManager = getManager("name", "asc", "");
+        return competitionManager.getFinder()
+                .where()
+                .eq("type", CompetitionType.ANONYMOUS.name())
+                .eq("active", true)
+                .lt("starttime", new Date())
+                .gt("endtime", new Date())
+                .findList()
+        ;
+    }
 }

@@ -46,7 +46,16 @@
 	    <div class="well"><ul>
 	    	<h1>@EMessages.get("app.welcome", user.getData().name)</h1>
 	        <p>@EMessages.get("app.getStarted")</p>
-	        <br />[COMPETITIONLISTSNIPPET]
+	        <br />
+            @if(user.getType == models.user.UserType.PUPIL_OR_INDEP){
+                <p>
+                    <li>
+                        @for(competition <- controllers.competition.TakeCompetitionController.snippet()){
+                            <ul>@competition.name</ul>
+                        }
+                    </li>
+                </p>
+            }
 	        <br />[STATSSNIPPET]
 	    </ul></div>
 	</div>
