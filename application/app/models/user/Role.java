@@ -21,7 +21,7 @@ public class Role implements Comparable<Role>{
 
     // Mimicing
     public static Role MIMIC = new Role("Mimick user",
-    		new Link("links.mimic","/mimic")
+        new Link("links.mimic","/mimic")
     );
 
     // Anon
@@ -80,8 +80,8 @@ public class Role implements Comparable<Role>{
     );
 
     public static Role MANAGECLASSES = new Role(
-	    "classes.list",
-	    new Link("classes.list", "/classes")
+        "classes.list",
+        new Link("classes.list", "/classes")
     );
 
     // Contest management
@@ -97,6 +97,12 @@ public class Role implements Comparable<Role>{
         new Link("links.contestmanager.overview", "/contests")
     );
 
+    /* Statistic Roles */
+    public static Role VIEWSTATS = new Role(
+        "statistics.title",
+        new Link("links.statistics", "/statistics")
+    );
+
     // Contest taking
     public static Role TAKINGCONTESTS = new Role(
         "links.contesttaking.title",
@@ -106,8 +112,14 @@ public class Role implements Comparable<Role>{
     
     //Classes view for pupils
     public static Role PUPILCLASSVIEW = new Role(
-    		"classes.pupil.classes.list",
-    		new Link("classes.pupil.classes.list","/pclasses/view")
+        "classes.pupil.classes.list",
+        new Link("classes.pupil.classes.list","/pclasses/view")
+    );
+    
+    //Upgrade to teacher request
+    public static Role UPGRADETOTEACHER = new Role(
+    		"contact.upgraderequest",
+    		new Link("contact.upgraderequest","/upgrade")
     );
 
     /* ====================================================================== *\

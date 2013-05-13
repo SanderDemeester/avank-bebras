@@ -34,7 +34,6 @@ import controllers.EController;
 
 /**
  * @author Jens N. Rammant
- * TODO try to clean class some more
  */
 public class FAQController extends EController {
 

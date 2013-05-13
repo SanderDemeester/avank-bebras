@@ -164,7 +164,6 @@
                 </div>
                <div id="collapseFour" class="accordion-body collapse">
                    <div class="accordion-inner">
-                   @form(controllers.routes.UserController.mimic()){
                        <div class="alert alert-info">
                            <h4>@EMessages.get("info.info")</h4>
                            @EMessages.get("users.form.mimic")
@@ -172,10 +171,10 @@
                            <br>
                            <div class="actions">
                            		<!-- TODO sander : juiste code oproepen voor mimic -->
-						       <input type="submit" value="@EMessages.get("otheruser.mimic")" class=" btn btn-primary" id="mimic">
+                            	 <input type="hidden" value="@modelForm.get().asInstanceOf[UserModel].id" id="bebrasID" />
+						    	 <input type="submit" value="@EMessages.get("otheruser.mimic")" class=" btn btn-primary" id="mimic">
                            </div>
                        </div>
-                   }
                    </div>
                </div>
             </div>
@@ -186,12 +185,13 @@
 	<script type="text/javascript">
 	
 		$("#mimic").live("click",function(){
+			
 	        var request = $.ajax({
 		    type: 'POST',
+			async : false,
 		    url: '/mimic',
 		    data: {"id": $("#bebrasID").val()}
 	        });
-
 	        request.done(function(data){
 		    document.cookie="@models.user.AuthenticationManager.COOKIENAME" + "=" + data + ";expires=1000";
             window.location = "/";
