@@ -394,6 +394,7 @@ servers.error.removePersistent = There are still questions that are on this serv
 servers.success.added = Server {0} was successfully created
 servers.success.edited = Server {0} was successfully edited
 servers.success.removed = Server {0} was successfully removed
+servers.title.add = New Server
 
 # question management
 questions.preview = Preview

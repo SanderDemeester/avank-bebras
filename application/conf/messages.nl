@@ -391,6 +391,7 @@ servers.error.removePersistent = Er zijn nog vragen op deze server, pas ze aan v
 servers.success.added = Server {0} is aangemaakt
 servers.success.edited = Server {0} is aangepast
 servers.success.removed = Server {0} is verwijderd
+servers.title.add = Nieuwe Server
 
 questions.preview = Voorvertoning
 questions.form.author = Auteur
