@@ -11,6 +11,7 @@ $(".questionframe").load(function() {
 		$head.append($("<link/>", 
     	{ rel: "stylesheet", href: links[i], type: "text/css" }));
 	}
+	
 });
 
 // Change question tab
@@ -159,7 +160,7 @@ $(document).ready(function() {
 		$('#countdown').countdown({
 			until: deaddate,
 			format: 'HMS',
-			layout: '{hn} : {mn} : {sn}',
+			layout: '{hnn} : {mnn} : {snn}',
 			onExpiry: expired,
 			onTick: updateTimeleft,
 		}).parent().show("fast");
