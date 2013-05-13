@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://avank.ugent.be/" />
+<title>addServerFail</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">addServerFail</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/info</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Log in</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=login_id</td>
+	<td>lprotut</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=login_password</td>
+	<td>lydia</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=login_btn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Serverbeheer</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Voeg server toe</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id</td>
+	<td>test server</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=path</td>
+	<td>http://avank.rubensworks.net/</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ftpuri</td>
+	<td>ftp.freehostia.com</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ftpport</td>
+	<td>test</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ftpuser</td>
+	<td>rubtae</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ftppass</td>
+	<td>avank</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ftppath</td>
+	<td>avank.rubensworks.net/questions</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=is_http_secured</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=http_username</td>
+	<td>avank</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=http_password</td>
+	<td>avank</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ftpport</td>
+	<td>21</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ftpuri</td>
+	<td>ftp.test.com</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Annuleer</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=strong.icon-cog</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Log uit</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
