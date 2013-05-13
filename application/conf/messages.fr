@@ -45,6 +45,7 @@ error.mimic.cant_find_user = L'utilisateur ne peut pas trouver
 error.mimic.policy_deny = Ne peut pas imiter utilisateur par politique
 error.mimic.user_logged_in = L'utilisateur que vous essayez d'imiter est enregistré dans le système
 error.user_blocked = Votre compte est suspendu, veuillez contacter un admin
+
 # Links from roles
 links.settings.title = Paramètres
 links.settings.editinfo = Modifier les informations
@@ -63,6 +64,7 @@ links.datamanager.diffs = Gérer les niveaux de Difficulté
 links.datamanager.grades = Gérer les notes de l'étudiant
 links.contestmanager.title = Gestion de concours
 links.contestmanager.overview = Vue d'ensemble des concours
+links.statistics = Voir vos statistiques
 links.contestmanager.create = Créer nouveau concours
 links.mimic = Imiter l'utilisateur
 links.contesttaking.title = Concours
@@ -172,6 +174,22 @@ languages.en = Anglais
 languages.nl = Néerlandais
 languages.fr = Français
 languages.de = Allemand
+
+# Statistics
+statistics.title = Statistiques
+statistics.population_chooser = Composez les populations souhaitées
+statistics.statistics_chooser = Composez la statistique souhaitées
+statistics.add_population = Ajouter une population
+statistics.add_filter = Ajouter un filtre
+statistics.generate = Générer
+statistics.count = Nombre
+statistics.populations.of_the = {0} de le/la {1}
+statistics.populations.individuals = Personnes
+statistics.populations.classes = Classes
+statistics.populations.schools = Écoles
+statistics.populations.all = Tout
+statistics.statistics.gender = Sexe
+statistics.statistics.score = Score
 
 # Login
 redirect_message = Vous allez être redirigé vers votre page d'accueil sous peu.
@@ -492,11 +510,11 @@ classes.pupil.delete.error = Quelque chose s'est passé lors de la suppression. 
 
 class.availableGrades = Niveaux disponibles et leur âge inférieur et supérieur (suggéré) lié.
 classes.add = Ajoutez une nouvelle classe
-class.name = Classe '' nom s
-class.school = Classe '' école s
-class.level = Classe de '' niveau s
+class.name = Classe '' nom 
+class.school = Classe '' école (ID)
+class.level = Classe de '' niveau 
 class.expdate.format = Format de date
-class.expdate = Classe '' date de péremption s
+class.expdate = Classe '' date de péremption 
 classes.add.notcomplete = Veuillez remplir tous les champs obligatoires.
 classes.add.noschool = Il n'y a pas d'école avec cet ID.
 classes.add.nograde = Il n'y a pas de niveau avec ce nom. 
@@ -521,6 +539,7 @@ classes.import.info.existstudent = Étudiants actuels :
 classes.import.info.newstudent = Nouveaux étudiants :
 classes.import.error.savefail = Quelque chose n'allait pas avec l'économie. Peut-être que vous avez attendu trop longtemps ? Les données d'unsafed sont supprimées après une couple d'heures. Ou quelqu'un inscrit une des adresses e-mail que vous utilisiez. Ou vous avez utilisé la même adresse e-mail deux fois dans le fichier.
 classes.import.error.postfail = Quelque chose n'allait pas avec l'analyse du fichier XLSX. Êtes-vous sûr que c'est un fichier valide ? Consultez la documentation.
+classes.pupil.download = Télécharger classe
 
 classes.pupil.classes.list = Liste des classes
 classes.pupil.classes.current = Votre classe actuelle
@@ -667,3 +686,16 @@ otheruser.view = Bekijk gebruiker
 otheruser.block = Bloc
 otheruser.block.date = Bloquer jusqu'à (laissez vide pour sans bloc)
 otheruser.mimic = Imiter
+
+# UserModelValidator
+usermodelvalidator.result.ok = Ok
+usermodelvalidator.result.noname = Pas de nom
+usermodelvalidator.result.invalidname = Nom invalide
+usermodelvalidator.result.nobirthday = Pas de jour de naissance
+usermodelvalidator.result.latebirthday = Jour de naissance après aujourd'hui
+usermodelvalidator.result.nogender = Pas de sexe (valide)
+usermodelvalidator.result.nolanguage = Pas de language
+usermodelvalidator.result.invalidlanguage = Pas de language valied
+usermodelvalidator.result.nopassword = Pas de mot de passe
+usermodelvalidator.result.invalidemail = Pas d'' email valide
+usermodelvalidator.result.existingemail = Email déjà registré

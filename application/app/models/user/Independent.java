@@ -26,6 +26,7 @@ public class Independent extends Authenticated{
     protected Independent(UserModel data, UserType type){
         super(data, type); //abstract class constructor could init some values
         ROLES.add(Role.PUPILCLASSVIEW);
+        ROLES.add(Role.UPGRADETOTEACHER);
         previousClassList = new ArrayList<String>();
     }
 

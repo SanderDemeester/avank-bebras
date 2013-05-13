@@ -64,6 +64,7 @@ links.datamanager.diffs = Manage the difficulty levels
 links.datamanager.grades = Manage the student grades
 links.contestmanager.title = Contest management
 links.contestmanager.overview = Contest overview
+links.statistics = View your stats
 links.contestmanager.create = Create new contest
 links.mimic = Mimic user
 links.contesttaking.title = Contests
@@ -173,6 +174,22 @@ languages.en = English
 languages.nl = Dutch
 languages.fr = French
 languages.de = German
+
+# Statistics
+statistics.title = Statistics
+statistics.population_chooser = Compose the desired populations
+statistics.statistics_chooser = Compose the desired statistic
+statistics.add_population = Add a Population
+statistics.add_filter = Add a Filter
+statistics.generate = Generate
+statistics.count = Count
+statistics.populations.of_the = {0} of the {1}
+statistics.populations.individuals = Individuals
+statistics.populations.classes = Classes
+statistics.populations.schools = Schools
+statistics.populations.all = All users
+statistics.statistics.gender = Gender
+statistics.statistics.score = Score
 
 # Login
 redirect_message = You will be redirected to your homepage shortly.
@@ -494,7 +511,7 @@ classes.pupil.delete.error = Something went wrong during the deleting. Try again
 class.availableGrades = Available levels and their (suggested) lower and upper age bound.
 classes.add = Add a new class
 class.name = Class''s name
-class.school = Class''s school
+class.school = Class''s school ID
 class.level = Class''s level
 class.expdate.format = Date format
 class.expdate = Class''s expiration date
@@ -522,6 +539,7 @@ classes.import.info.existstudent = Existing students:
 classes.import.info.newstudent = New students:
 classes.import.error.savefail = Something went wrong with the saving. Maybe you waited too long? The unsafed data gets removed after a couple of hours. Or someone registered one of the email addresses you were using. Or you used the same email address twice in the file.
 classes.import.error.postfail = Something went wrong with the parsing of the XLSX file. Are you sure it's a valid file? Check the documentation.
+classes.pupil.download = Download class
 
 classes.pupil.classes.list = List of classes
 classes.pupil.classes.current = Your current class
@@ -668,3 +686,16 @@ otheruser.view = Bekijk gebruiker
 otheruser.block = Block
 otheruser.block.date = Block until (leave blank for no block)
 otheruser.mimic = Mimic
+
+# UserModelValidator
+usermodelvalidator.result.ok = Ok
+usermodelvalidator.result.noname = No name
+usermodelvalidator.result.invalidname = Invalid name
+usermodelvalidator.result.nobirthday = No birthday
+usermodelvalidator.result.latebirthday = Birthday after today
+usermodelvalidator.result.nogender = No (valid) gender
+usermodelvalidator.result.nolanguage = No language
+usermodelvalidator.result.invalidlanguage = No valid language
+usermodelvalidator.result.nopassword = No password
+usermodelvalidator.result.invalidemail = Invalid email
+usermodelvalidator.result.existingemail = Email already registered

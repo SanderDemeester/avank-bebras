@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 
 import com.avaje.ebean.Ebean;
+import com.google.common.util.concurrent.UncheckedExecutionException;
 
 import controllers.util.PasswordHasher;
 import controllers.util.PasswordHasher.SaltAndPassword;
@@ -125,7 +126,7 @@ public class ClassGroupContainer {
 				UserModelValidator.Result check = UserModelValidator.validate(um);
 				if(check!=UserModelValidator.Result.OK){
 					prt.isValid=false;
-					prt.message = EMessages.get("classes.import.newpupil.incomplete") + " "+check.toString(); //TODO translate
+					prt.message = EMessages.get("classes.import.newpupil.incomplete") + " "+EMessages.get(check.getEMessage()); 
 				}
 			}
 		}		
@@ -212,22 +213,22 @@ public class ClassGroupContainer {
 	 * @param model
 	 */
 	private static void prepareNewPupil(UserModel model,ClassGroup cg){
-	    try{
 		Calendar birthdate = Calendar.getInstance();
 		birthdate.setTime(model.birthdate);
 		
 		model.id=IDGenerator.generate(model.name,birthdate );
 		model.classgroup = cg.id;
 		model.registrationdate = Calendar.getInstance().getTime();		
-		SaltAndPassword hap = PasswordHasher.fullyHash(model.password);
+		SaltAndPassword hap;
+		try {
+			hap = PasswordHasher.fullyHash(model.password);
+		} catch (Exception e) {
+			throw new UncheckedExecutionException(e.getCause());
+		}
 		model.password=hap.password;
 		model.hash = hap.salt;
 		model.type = UserType.PUPIL_OR_INDEP;
 		model.blockeduntil = null;
-	    }catch(Exception e){
-	    	
-		//TODO: Jens, eventueel zelf kijken om verder fouten af te handelen in uw code.
-	    }
 	}
 	
 	/**
@@ -237,7 +238,6 @@ public class ClassGroupContainer {
 	 * @param cg ClassGroup to link
 	 */
 	private static void updateExistingPupil(UserModel modell, ClassGroup cg){
-		//TODO move this functionality to a more fitting class possibly (UserModel maybe?)
 		//Make sure you're using the most up-to-date version of the model
 		UserModel model = Ebean.find(UserModel.class, modell.id);
 		if(model==null)throw new PersistenceException();

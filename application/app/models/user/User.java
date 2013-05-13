@@ -114,8 +114,6 @@ public abstract class User{
      * @return
      */
     public boolean canMimic(User user) {
-    	System.out.println(this.getType().ordinal());
-    	System.out.println(user.getType().ordinal());
         return this.getType().ordinal() < user.getType().ordinal()
                 && this.hasRole(Role.MIMIC);
     }
