@@ -11,6 +11,18 @@ $(".questionframe").load(function() {
 		$head.append($("<link/>", 
     	{ rel: "stylesheet", href: links[i], type: "text/css" }));
 	}
+	
+	var script = $("<script/>");
+	script.html("var h = $(document).height();" +
+			"$('.questionframe', parent.document.body).height(h*1.01); ");
+	
+	$('.questionframe').contents().find('body').css({"min-height": "100", "overflow" : "hidden"});
+	setTimeout(function(){
+		$(".questionframe").contents().append(script);
+	}, 50);
+	
+	
+	
 });
 
 // Change question tab
