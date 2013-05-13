@@ -64,6 +64,7 @@ links.datamanager.diffs = Verwalten der Schwierigkeitsgrade
 links.datamanager.grades = Verwalten der Schüler-Klasse
 links.contestmanager.title = Wettbewerb-Verwaltung
 links.contestmanager.overview = Wettbewerb-Übersicht
+links.statistics = Sehen Sie Ihre Statistiken
 links.contestmanager.create = Erstellen neuen Wettbewerb
 links.mimic = Benutzer zu imitieren
 links.contesttaking.title = Wettbewerbe
@@ -173,6 +174,22 @@ languages.en = Englisch
 languages.nl = Holländisch
 languages.fr = Französisch
 languages.de = Deutsch
+
+# Statistics
+statistics.title = Statistiken
+statistics.population_chooser = Verfassen Sie die gewünschten Populationen
+statistics.statistics_chooser = Arrangieren Sie die gewünschte Statistik
+statistics.add_population = Eine Bevölkerung hinzufügen
+statistics.add_filter = Einen Filter hinzufügen
+statistics.generate = Generieren
+statistics.count = Anzahl
+statistics.populations.of_the = {0} der/des {1}
+statistics.populations.individuals = Individuen
+statistics.populations.classes = Klassen
+statistics.populations.schools = Schulen
+statistics.populations.all = Jeder
+statistics.statistics.gender = Geschlecht
+statistics.statistics.score = Punktzahl
 
 # Login
 redirect_message = Sie werden in Kürze auf Ihre Homepage umgeleitet.
