@@ -160,7 +160,7 @@ $(document).ready(function() {
 		$('#countdown').countdown({
 			until: deaddate,
 			format: 'HMS',
-			layout: '{hn} : {mn} : {sn}',
+			layout: '{hnn} : {mnn} : {snn}',
 			onExpiry: expired,
 			onTick: updateTimeleft,
 		}).parent().show("fast");
