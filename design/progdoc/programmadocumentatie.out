@@ -10,31 +10,38 @@
 \BOOKMARK [3][-]{subsubsection.2.1.1}{Profiel bewerken}{subsection.2.1}% 10
 \BOOKMARK [3][-]{subsubsection.2.1.2}{Wachtwoord veranderen}{subsection.2.1}% 11
 \BOOKMARK [2][-]{subsection.2.2}{Uitloggen}{section.2}% 12
-\BOOKMARK [1][-]{section.3}{Auteur}{}% 13
-\BOOKMARK [2][-]{subsection.3.1}{Vrageneditor}{section.3}% 14
-\BOOKMARK [3][-]{subsubsection.3.1.1}{Meerkeuzevraag}{subsection.3.1}% 15
-\BOOKMARK [3][-]{subsubsection.3.1.2}{Open vraag}{subsection.3.1}% 16
-\BOOKMARK [3][-]{subsubsection.3.1.3}{Importeren}{subsection.3.1}% 17
-\BOOKMARK [1][-]{section.4}{Leerkracht}{}% 18
-\BOOKMARK [2][-]{subsection.4.1}{Lijst van scholen}{section.4}% 19
-\BOOKMARK [2][-]{subsection.4.2}{Lijst van klassen}{section.4}% 20
-\BOOKMARK [1][-]{section.5}{Organisator}{}% 21
-\BOOKMARK [2][-]{subsection.5.1}{Gebruikersbeheer}{section.5}% 22
-\BOOKMARK [2][-]{subsection.5.2}{Serverbeheer}{section.5}% 23
-\BOOKMARK [3][-]{subsubsection.5.2.1}{Bekijk servers}{subsection.5.2}% 24
-\BOOKMARK [3][-]{subsubsection.5.2.2}{Voeg server toe}{subsection.5.2}% 25
-\BOOKMARK [2][-]{subsection.5.3}{Vragenbeheer}{section.5}% 26
-\BOOKMARK [3][-]{subsubsection.5.3.1}{Bekijk vragen}{subsection.5.3}% 27
-\BOOKMARK [3][-]{subsubsection.5.3.2}{Goedkeuren van vragen}{subsection.5.3}% 28
-\BOOKMARK [2][-]{subsection.5.4}{Wedstrijdbeheer}{section.5}% 29
-\BOOKMARK [3][-]{subsubsection.5.4.1}{Nieuwe wedstrijd aanmaken}{subsection.5.4}% 30
-\BOOKMARK [1][-]{section.6}{Administrator}{}% 31
-\BOOKMARK [2][-]{subsection.6.1}{Beheer Veelgestelde vragen}{section.6}% 32
-\BOOKMARK [3][-]{subsubsection.6.1.1}{Bekijk veelgestelde vragen}{subsection.6.1}% 33
-\BOOKMARK [3][-]{subsubsection.6.1.2}{Bewerk veelgestelde vragen}{subsection.6.1}% 34
-\BOOKMARK [3][-]{subsubsection.6.1.3}{Maak een nieuwe veelgestelde vraag aan}{subsection.6.1}% 35
-\BOOKMARK [2][-]{subsection.6.2}{Pas de databank aan}{section.6}% 36
-\BOOKMARK [3][-]{subsubsection.6.2.1}{Wijzig de navigatiebalk}{subsection.6.2}% 37
-\BOOKMARK [3][-]{subsubsection.6.2.2}{Wijzig de leeftijdscategorieën}{subsection.6.2}% 38
-\BOOKMARK [3][-]{subsubsection.6.2.3}{Wijzig de moeilijkheidsgraden}{subsection.6.2}% 39
-\BOOKMARK [2][-]{subsection.6.3}{Boots gebruiker na}{section.6}% 40
+\BOOKMARK [2][-]{subsection.2.3}{Lijst van klassen}{section.2}% 13
+\BOOKMARK [2][-]{subsection.2.4}{Upgrade verzoek}{section.2}% 14
+\BOOKMARK [2][-]{subsection.2.5}{Competities}{section.2}% 15
+\BOOKMARK [3][-]{subsubsection.2.5.1}{Beschikbare competities}{subsection.2.5}% 16
+\BOOKMARK [3][-]{subsubsection.2.5.2}{Geschiedenis}{subsection.2.5}% 17
+\BOOKMARK [2][-]{subsection.2.6}{Statistieken}{section.2}% 18
+\BOOKMARK [1][-]{section.3}{Auteur}{}% 19
+\BOOKMARK [2][-]{subsection.3.1}{Vrageneditor}{section.3}% 20
+\BOOKMARK [3][-]{subsubsection.3.1.1}{Meerkeuzevraag}{subsection.3.1}% 21
+\BOOKMARK [3][-]{subsubsection.3.1.2}{Open vraag}{subsection.3.1}% 22
+\BOOKMARK [3][-]{subsubsection.3.1.3}{Importeren}{subsection.3.1}% 23
+\BOOKMARK [1][-]{section.4}{Leerkracht}{}% 24
+\BOOKMARK [2][-]{subsection.4.1}{Lijst van scholen}{section.4}% 25
+\BOOKMARK [2][-]{subsection.4.2}{Lijst van klassen}{section.4}% 26
+\BOOKMARK [2][-]{subsection.4.3}{Competitiebeheer}{section.4}% 27
+\BOOKMARK [3][-]{subsubsection.4.3.1}{Nieuwe competitie aanmaken}{subsection.4.3}% 28
+\BOOKMARK [3][-]{subsubsection.4.3.2}{Competitie bewerken}{subsection.4.3}% 29
+\BOOKMARK [1][-]{section.5}{Organisator}{}% 30
+\BOOKMARK [2][-]{subsection.5.1}{Gebruikersbeheer}{section.5}% 31
+\BOOKMARK [2][-]{subsection.5.2}{Serverbeheer}{section.5}% 32
+\BOOKMARK [3][-]{subsubsection.5.2.1}{Bekijk servers}{subsection.5.2}% 33
+\BOOKMARK [3][-]{subsubsection.5.2.2}{Voeg server toe}{subsection.5.2}% 34
+\BOOKMARK [2][-]{subsection.5.3}{Vragenbeheer}{section.5}% 35
+\BOOKMARK [3][-]{subsubsection.5.3.1}{Bekijk vragen}{subsection.5.3}% 36
+\BOOKMARK [3][-]{subsubsection.5.3.2}{Goedkeuren van vragen}{subsection.5.3}% 37
+\BOOKMARK [1][-]{section.6}{Administrator}{}% 38
+\BOOKMARK [2][-]{subsection.6.1}{Beheer Veelgestelde vragen}{section.6}% 39
+\BOOKMARK [3][-]{subsubsection.6.1.1}{Bekijk veelgestelde vragen}{subsection.6.1}% 40
+\BOOKMARK [3][-]{subsubsection.6.1.2}{Bewerk veelgestelde vragen}{subsection.6.1}% 41
+\BOOKMARK [3][-]{subsubsection.6.1.3}{Maak een nieuwe veelgestelde vraag aan}{subsection.6.1}% 42
+\BOOKMARK [2][-]{subsection.6.2}{Pas de databank aan}{section.6}% 43
+\BOOKMARK [3][-]{subsubsection.6.2.1}{Wijzig de navigatiebalk}{subsection.6.2}% 44
+\BOOKMARK [3][-]{subsubsection.6.2.2}{Wijzig de leeftijdscategorieën}{subsection.6.2}% 45
+\BOOKMARK [3][-]{subsubsection.6.2.3}{Wijzig de moeilijkheidsgraden}{subsection.6.2}% 46
+\BOOKMARK [2][-]{subsection.6.3}{Boots gebruiker na}{section.6}% 47

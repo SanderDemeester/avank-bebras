@@ -201,6 +201,71 @@ Om je wachtwoord te veranderen, vul je jouw huidig wachtwoord in. Geef dan je ni
 
 Om de webapplicatie te verlaten, klik je rechtsbovenaan op je gebruikersnaam. Er zal een menu verschijnen waar je onderaan voor 'Log uit' kunt kiezen.
 
+\subsection{Lijst van klassen}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=1\textwidth]{img/classes}
+	\caption{Lijst van klassen}
+	\label{classlist}
+\end{figure}
+
+Hier kan de leerling zijn huidige klas raadplegen. Ook krijgt de student een overzicht van klassen waarvan hij/zij in de geschiedenis van zijn schoolloopbaan deel van heeft uitgemaakt. Bij elke klas staat de verantwoordelijke leraar, het niveau en de einddatum vermeld.
+
+\subsection{Upgrade verzoek}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=1\textwidth]{img/upgrade}
+	\caption{Account upgraden}
+	\label{upgrade}
+\end{figure}
+
+Op deze pagina kan een standaard leerling-gebruiker een verzoek indienen om zijn account te upgraden tot die van leerkracht. Hiervoor moet men een scan van zijn/haar lerarenkaart uploaden. Bij misbruik kan de account van de gebruiker geblokkeerd worden.
+
+\textbf{\textit{Wat kan er mislopen?}}
+
+Zorg er zeker voor dat u de afbeelding in een geldig formaat verstuurt.
+
+\subsection{Competities}
+
+\subsubsection{Beschikbare competities}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=1\textwidth]{img/comp}
+	\caption{Competities - overzicht}
+	\label{comp}
+\end{figure}
+
+Deze pagina geeft een overzicht van alle beschikbare competities. Klik op het icoontje naast de competitie om deel te nemen. Er zal nu gevraagd worden naar het niveau dat je verkiest. Selecteer een niveau uit de mogelijke opties en klik op 'Verzend'... [TODO vervolg]
+
+\subsubsection{Geschiedenis}
+
+Hier kan je de competities vinden die je in het verleden hebt afgelegd. [TODO: screenshot]
+
+\subsection{Statistieken}
+
+Op deze pagina kan men statistieken van allerlei aard samenstellen en bekijken. 
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.75\textwidth]{img/stats}
+	\caption{Statistieken bekijken}
+	\label{stats}
+\end{figure}
+
+Selecteer vooreerst een populatie waarvoor je de statistiek wilt bepalen. Je hebt de keuze uit alle gebruikers, bepaalde personen, klassen of scholen. Nadat je de populatie hebt toegevoegd kan je gebruikmaken van de kleurkiezer om de visualisatie van de statistiek volgens je eigen smaak op te maken. Klik op de 'min'-knop om de populatie terug te verwijderen.
+
+Vervolgens kies je het kenmerk van de populatie waarover je info wilt. Dit kan je verder verfijnen door filters toe te voegen. Als alles volgens je voorkeur is ingesteld, klik je op 'Genereer'. Het resultaat is een visuele weergave (histogram of taartdiagram) van de statistiek die je zojuist hebt samengesteld.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=1\textwidth]{img/chart}
+	\caption{Statistiek - voorbeeld}
+	\label{chart}
+\end{figure}
+
 \section{Auteur}
 
 Dit type van account is speciaal voorbehouden voor gebruikers die enkel het maken van vragen als hoofddoel hebben.
@@ -287,17 +352,31 @@ Hier vindt de leerkracht de lijst van scholen waaraan hij/zij les heeft gegeven.
 
 Om een nieuwe school aan het systeem toe te voegen, klik je op 'Nieuw'. Vul de naam en het adres van de school in en klik op 'Save'. De nieuwe school zal dan verschijnen in het overzicht als er een verbintenis met de school is.
 
+Je kan de info over de school bewerken door op het icoontje om te bewerken te klikken naast de school in kwestie.
+
 \textbf{\textit{Wat kan er mislopen?}}
 
 Zorg ervoor dat alle verplichte velden ingevuld zijn. Het is niet de bedoeling dat scholen tweemaal in het systeem opgenomen worden. Als de school al aanwezig is in het systeem, vraag dan naar het ID.
 
 \subsection{Lijst van klassen}
 
-[TODO: screenshot klasoverzicht]
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=1\textwidth]{img/classes}
+	\caption{Klassen}
+	\label{classes}
+\end{figure}
+
 Op deze pagina kan een leerkracht een overzicht krijgen van alle klassen met vermelding van de school, verantwoordelijke leraar en de leeftijdscategorie. Daarnaast staat ook de geldigheidsdatum vermeld en of de klas momenteel actief is.
 Men kan in de lijst zoeken naar klassen van een bepaalde leerkracht door te filteren op zijn/haar Bebras-ID.
 
-[TODO: screenshot nieuwe klas]
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{img/new_class}
+	\caption{Nieuwe klas aanmaken}
+	\label{new_class}
+\end{figure}
+
 Om een nieuwe klas aan te maken, klik je rechtsboven op 'Nieuw'. Daar geef je de naam van de nieuwe klas, de school, leeftijdscategorie en geldigheidsdatum in en klik je op 'Save'.
 
 Men kan ook een klas toevoegen door een Excel-bestand te uploaden. Dit bestand moet voldoen aan het vaste formaat dat hier beschreven wordt. 
@@ -312,7 +391,13 @@ De overige records worden beschouwd als commentaar en zullen genegeerd worden.
 
 Alle 'Pupil'-records die onder een 'Class'-record staan, worden beschouwd als leerlingen van deze klas. 
 
-[TODO: screenshot klasinfo]
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=1\textwidth]{img/classinfo}
+	\caption{Gegevens over de klas}
+	\label{classinfo}
+\end{figure}
+
 Een klas aanpassen kan door in de lijst op de 'Bewerk'-knop te klikken bij de betreffende klas. Hier vindt men meer info over de klas, school en leraar. Daarenboven is hier ook de lijst van studenten uit deze klas te vinden, alsook de hulpleerkrachten en de oud-studenten. Deze kunnen toegevoegd worden aan de hand van hun Bebras-ID.
 
 Door hier een Excel-bestand te uploaden zoals reeds beschreven, kan men leerlingen toevoegen aan de bestaande klas. 'Class'-records zullen hierbij genegeerd worden.
@@ -330,6 +415,74 @@ Na het uploaden van het Excel-bestand, wordt er een bevestigingspagina getoond. 
 Als het bestand niet kon ingelezen worden, zal je hiervan een melding krijgen. Controleer of de records voldoen aan de richtlijnen en sla het bestand op in xlsx-formaat.
 
 Het kan ook occassioneel gebeuren dat de gegevens niet kunnen opgeslaan worden. Dit is waarschijnlijk te wijten aan een interne fout. Probeer opnieuw of contacteer de administrator bij aanhoudende problemen. 
+
+\subsection{Competitiebeheer}
+Op deze pagina kan je de wedstrijden bekijken die voor jou zichtbaar zijn. Je krijgt een overzicht zoals te zien op figuur \ref{comp}. 
+
+\subsubsection{Nieuwe competitie aanmaken}
+
+Klik op 'Nieuw' om een nieuwe wedstrijd aan te maken.
+
+\textbf{Stap 1}
+Hier worden enkele gegevens gevraagd over de wedstrijd die je wenst aan te maken. 
+Kies om te beginnen een naam voor de wedstrijd (vb. "`Bebras November 2011"'). Daarna kies je het type wedstrijd: Unrestricted, restricted of anoniem. Bepaal het start- en eindtijdstip van de wedstrijd met behulp van de datum- en tijdkiezer, vul de duur van de competitie in en vink het vakje aan om de wedstrijd te activeren.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{img/stap1}
+	\caption{Stap 1}
+	\label{stap1}
+\end{figure}
+
+\textbf{Stap 2}
+Hier worden enkele gegevens gevraagd over de vragenbundel die je wenst te gebruiken. 
+Geef een naam voor de vragenbundel en bepaal het niveau. Je kan hiervoor kiezen uit de beschikbare leeftijdscategorie"en. Vink het vakje aan om deze vragenbundel actief te maken.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{img/stap2}
+	\caption{Stap 2}
+	\label{stap2}
+\end{figure}
+
+\textbf{Stap 3}
+In stap 3 kun je de vragen selecteren die je wilt opnemen in de vragenbundel. Om een nieuwe vraag toe te voegen, klik je op 'Nieuw'. Hier kun je een vraag kiezen door het ID van de vraag in te geven. Selecteer een moeilijkheidsgraad uit de beschikbare opties en klik op 'Verzend'. De vraag zal nu in de vragenbundel opgenomen zijn. Wanneer je vragenbundel volledig is, klik je op 'Pas aan' om verder te gaan.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=1\textwidth]{img/stap3}
+	\caption{Stap 3}
+	\label{stap3}
+\end{figure}
+
+\textbf{\textit{Wat kan er mislopen?}}
+
+Zorg er zeker voor dat de wedstrijd een naam, begin- en eindtijdstip krijgt toegekend. Ook de vragenbundel moet een naam krijgen.
+
+\subsubsection{Competitie bewerken}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=1\textwidth]{img/compinfo}
+	\caption{Gegevens over de competitie}
+	\label{compinfo}
+\end{figure}
+
+Door op het icoontje om te bewerken te klikken naast een competitie, krijg je alle beschikbare info over die competitie te zien en kan je deze aanpassen.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=1\textwidth]{img/comprun}
+	\caption{Lopende competitie}
+	\label{comprun}
+\end{figure}
+
+Rechtsboven vind je de status van de competitie. Mogelijke statussen zijn: inactief, actief en lopend. \\
+Bij een lopende competitie is het mogelijk het verloop te volgen. Je krijgt enkele details van de competite te zien, alsook de resterende tijd en het aantal studenten dat de competitie heeft afgerond. 
+
+Op deze pagina kan je ook een student toelaten om een onderbroken competitie verder te zetten. Klik daarvoor op 'Verzend antwoorden van leerlingen'. Kopieer de code die je gekregen hebt van de onderbroken competitie en plak die in het tekstveld. Klik op 'Verzend' en de student zal zijn competitie kunnen hervatten.
+
+Om een competitie te beëindigen, klik je op 'Stop competitie'.
 
 \section{Organisator}
 
@@ -369,7 +522,15 @@ Op deze pagina krijgt de organisator een volledig overzicht van alle geregistree
 \subsection{Serverbeheer}
 
 \subsubsection{Bekijk servers}
-Deze pagina geeft een overzicht van de servers die momenteel gebruikt worden. Bovenaan kan men filteren op naam alsook een nieuwe server toevoegen. [TODO: screenshot server]
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=1\textwidth]{img/server}
+	\caption{Overzicht servers}
+	\label{server}
+\end{figure}
+
+Deze pagina geeft een overzicht van de servers die momenteel gebruikt worden. Bovenaan kan men filteren op naam alsook een nieuwe server toevoegen.
 
 \subsubsection{Voeg server toe}
 
@@ -389,7 +550,15 @@ Zorg er zeker voor dat alle verplichte velden zijn ingevuld. Bij de melding dat 
 \subsection{Vragenbeheer}
 
 \subsubsection{Bekijk vragen}
-Deze pagina geeft een overzicht van de servers die momenteel gebruikt worden. Bovenaan kan men filteren op ID. [TODO: screenshot questions]
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=1\textwidth]{img/questions}
+	\caption{Lijst van vragen}
+	\label{questions}
+\end{figure}
+
+Deze pagina geeft een overzicht van de servers die momenteel gebruikt worden. Bovenaan kan men filteren op ID. 
 
 \subsubsection{Goedkeuren van vragen}
 
@@ -405,47 +574,6 @@ Hier krijg je een overzicht van alle ingediende vragen met vermelding van de aut
 \textbf{\textit{Wat kan er mislopen?}}
 
 Zorg er zeker voor dat de vraag een officieel ID krijgt toegekend.
-
-\subsection{Wedstrijdbeheer}
-Op deze pagina kan je de wedstrijden bekijken die voor jou zichtbaar zijn. 
-
-\subsubsection{Nieuwe wedstrijd aanmaken}
-
-\textbf{Stap 1}
-Hier worden enkele gegevens gevraagd over de wedstrijd die je wenst aan te maken. 
-Kies om te beginnen een naam voor de wedstrijd (vb. "`Bebras November 2011"'). Daarna kies je het type wedstrijd: Unrestricted, restricted of anoniem. Bepaal het start- en eindtijdstip van de wedstrijd met behulp van de datum- en tijdkiezer en vink het vakje aan om de wedstrijd te activeren.
-
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=0.5\textwidth]{img/stap1}
-	\caption{Stap 1}
-	\label{stap1}
-\end{figure}
-
-\textbf{Stap 2}
-Hier worden enkele gegevens gevraagd over de vragenbundel die je wenst te gebruiken. 
-Geef een naam voor de vragenbundel en bepaal het niveau. Je kan hiervoor kiezen uit de beschikbare leeftijdscategorie"en. Vink het vakje aan om deze vragenbundel actief te maken.
-
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=0.5\textwidth]{img/stap2}
-	\caption{Stap 2}
-	\label{stap2}
-\end{figure}
-
-\textbf{Stap 3}
-In stap 3 kun je de vragen selecteren die je wilt opnemen in de vragenbundel. Om een nieuwe vraag toe te voegen, klik je op 'Nieuw'. Hier kun je een vraag kiezen door het ID van de vraag in te geven. Selecteer een moeilijkheidsgraad uit de beschikbare opties en klik op 'Verzend'. De vraag zal nu in de vragenbundel opgenomen zijn. Wanneer je vragenbundel volledig is, klik je op 'Pas aan' om verder te gaan.
-
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=1\textwidth]{img/stap3}
-	\caption{Stap 3}
-	\label{stap3}
-\end{figure}
-
-\textbf{\textit{Wat kan er mislopen?}}
-
-Zorg er zeker voor dat de wedstrijd een naam, begin- en eindtijdstip krijgt toegekend. Ook de vragenbundel moet een naam krijgen.
 
 \section{Administrator}
 
@@ -474,7 +602,7 @@ Op deze pagina zie je de lijst van alle veelgestelde vragen. Door op een kolomna
 	\label{new_faq}
 \end{figure}
 
-Om een nieuwe veelgestelde vraag toe te voegen, klik je op 'Voeg nieuwe FAQ toe'. [TODO: screenshot newFAQ] Op deze pagina vul je de vraag en het antwoord in in de daarvoor bestemde (en vereiste) velden. Daarna kies je de taal waarin de vraag is opgesteld en klik je op 'Save' om de vraag op te slaan. Je hebt ook de mogelijkheid om de vraag niet op te slaan en de actie te annuleren.
+Om een nieuwe veelgestelde vraag toe te voegen, klik je op 'Voeg nieuwe FAQ toe'. Op deze pagina vul je de vraag en het antwoord in in de daarvoor bestemde (en vereiste) velden. Daarna kies je de taal waarin de vraag is opgesteld en klik je op 'Save' om de vraag op te slaan. Je hebt ook de mogelijkheid om de vraag niet op te slaan en de actie te annuleren.
 
 \textbf{\textit{Wat kan er mislopen?}}
 
@@ -534,10 +662,19 @@ Als de naam voor de moeilijkheidsgraad al bestaat, kies dan een andere naam.
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=0.5\textwidth]{img/mimic}
-	\caption{Gebruiker nabootsen}
+	\caption{Nabootsen}
 	\label{mimic}
 \end{figure}
 
-Om een gebruiker die lager in rang staat na te bootsen, heb je diens Bebras-ID nodig. Vul dit in in het daarvoor bestemde veld en klik dan op 'Mimic'. Nu heb je toegang tot de account van de gebruiker die je wilt imiteren. Dit is zichtbaar rechtsboven waar je naast je eigen ingelogde status nu ook de ge"imiteerde gebruiker ziet staan. De admin kan elke gebruiker nabootsen, de organizer iedereen behalve de admin en leerkrachten kunnen enkel hun eigen actieve leerlingen imiteren. Indien je een account probeert na te bootsen waar je geen toegangsrechten tot hebt, zal je hiervan een melding krijgen. Het is mogelijk om via een ge"imiteerde account een andere account te imiteren. Om terug te keren naar je originele account, meld je je af bij de nagebootste account. Zo kom je terug op jouw startpagina. 
+Om een gebruiker die lager in rang staat na te bootsen, heb je diens Bebras-ID nodig. Vul dit in in het daarvoor bestemde veld en klik dan op 'Mimic'. Een andere mogelijkheid is om via het gebruikersbeheer naar de pagina te gaan om de gebruiker aan te passen en daar voor 'Nabootsen' te kiezen.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=1\textwidth]{img/mimic_user}
+	\caption{Gebruiker nabootsen}
+	\label{mimic_user}
+\end{figure}
+
+Nu heb je toegang tot de account van de gebruiker die je wilt imiteren. Dit is zichtbaar rechtsboven waar je naast je eigen ingelogde status nu ook de ge"imiteerde gebruiker ziet staan. De admin kan elke gebruiker nabootsen, de organizer iedereen behalve de admin en leerkrachten kunnen enkel hun eigen actieve leerlingen imiteren. Indien je een account probeert na te bootsen waar je geen toegangsrechten tot hebt, zal je hiervan een melding krijgen. Het is mogelijk om via een ge"imiteerde account een andere account te imiteren. Om terug te keren naar je originele account, meld je je af bij de nagebootste account. Zo kom je terug op jouw startpagina. 
 
 \end{document}
