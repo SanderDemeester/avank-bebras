@@ -19,6 +19,8 @@ dist
 *.pdf
 *.log
 *.aux
+*.nav
+*.snm
 *.gz
 */.*
 *.bbl
