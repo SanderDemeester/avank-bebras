@@ -73,7 +73,7 @@ public class ResetPasswordController extends EController {
 
         // There are two cases, the user has an email or the user does not has a email
 
-        if (!userModel.email.isEmpty()) {
+        if (userModel != null && !userModel.email.isEmpty()) {
             // Case 1
 
             //check if provided email is the same as stored in the database associated with the ID
@@ -96,7 +96,7 @@ public class ResetPasswordController extends EController {
                 flash("error", EMessages.get("forgot_pwd.notsent"));
                 return badRequest(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
             }
-        } else if (userModel.email.isEmpty()) {
+        } else if (userModel == null || userModel.email.isEmpty()) {
             // Case 2
             Independent indep = new Independent(userModel);
             ClassGroup g = indep.getCurrentClass();
