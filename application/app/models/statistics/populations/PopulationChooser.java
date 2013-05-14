@@ -306,7 +306,7 @@ public class PopulationChooser {
         // Create list.
         Iterator<?> it = l.iterator();
         try {
-            //while(it.hasNext()) pops.add(c.newInstance(it.next()));
+            while(it.hasNext()) pops.add(c.newInstance(it.next()));
         	
         } catch(Exception e) {
             throw new RuntimeException(e.getMessage());
