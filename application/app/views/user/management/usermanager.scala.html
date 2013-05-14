@@ -3,9 +3,33 @@
 
 @import models.EMessages.get
 @import views.html.management.list
+@import models.user.UserType
 
 @main(EMessages.get("user.management.others"), breadcrumbs){
-        <h2>@EMessages.get("user.management.list")</h2>
-        @EMessages.get("user.management.welcome")<br><br>
-        @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
+    <h2>@EMessages.get("user.management.list")</h2>
+    @EMessages.get("user.management.welcome")<br><br>
+    @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
+    <a href="#legend" role="button" class="btn btn-info" data-toggle="modal">@EMessages.get("user.management.showlegendtype")</a>
+    <div id="legend" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="legendLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="legendLabel">@EMessages.get("user.management.legend")</h3>
+        </div>
+        <div class="modal-body">
+            <h6>
+                <table class="table table-bordered">
+                    <thead>
+                        <th><b><h5>@EMessages.get("users.form.type")</h5></b></th>
+                        <th><b><h5>@EMessages.get("user.management.meaning")</h5></b></th>
+                    </thead>
+                        @for(utype <- UserType.values()){
+                            <tr><td>@utype.toString()</td><td>@EMessages.get("user." + utype.toString())</td></tr>     
+                        }
+                </table>
+            </h6>    
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">@EMessages.get("user.management.close")</button>
+        </div>
+    </div>  
 }
