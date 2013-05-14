@@ -37,7 +37,7 @@ public class SchoolPopulation extends Population {
     @Override public List<UserModel> getUsers() {
         List<ClassGroup> classes = Ebean.find(ClassGroup.class)
             .where().eq("schoolid", school.id).findList();
-        if(classes == null || classes.size() > 0) {
+        if(classes == null || classes.size() <= 0) {
             return new ArrayList<UserModel>();
         }
         List<UserModel> pupils = new ArrayList<UserModel>();
