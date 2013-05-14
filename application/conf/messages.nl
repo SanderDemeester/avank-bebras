@@ -642,6 +642,8 @@ competition.run.submit.notStarted = Deze competitie is nog niet begonnen of is a
 competition.run.submit.ok = Antwoorden zijn verstuurd.
 competition.run.submit.invalid = Antwoorden zijn ongeldig.
 competition.run.finished = De competitie is gestopt.
+competition.run.submit.invalidUser = De competitie is niet correct gestart door de opgegeven gebruiker.
+competition.run.submit.invalidUserSelf = U heeft deze competitie op een ongeldige manier gestart.
 
 competition.overview.button = Overzicht
 competition.overview.submitAnswers = Verzend antwoorden van leerlingen

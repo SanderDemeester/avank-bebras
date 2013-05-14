@@ -651,6 +651,8 @@ competition.run.submit.notStarted = This competition has not been started yet, o
 competition.run.submit.ok = Submission was successful.
 competition.run.submit.invalid = Invalid answers.
 competition.run.finished = The competition has been finished.
+competition.run.submit.invalidUser = The competition is not properly started by the specified user.
+competition.run.submit.invalidUserSelf = You started this competition in an invalid way.
 
 competition.overview.button = Overview
 competition.overview.submitAnswers = Submit pupil answers
