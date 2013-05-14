@@ -1,12 +1,6 @@
 package controllers.competition;
 
 import java.io.IOException;
-import com.avaje.ebean.Ebean;
-import com.avaje.ebean.Expr;
-import com.avaje.ebean.Page;
-import controllers.EController;
-
-import java.lang.String;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,10 +9,19 @@ import models.EMessages;
 import models.competition.Competition;
 import models.competition.CompetitionNotStartedException;
 import models.competition.CompetitionType;
+import models.competition.CompetitionUserState;
 import models.competition.CompetitionUserStateManager;
 import models.competition.TakeCompetitionManager;
-import models.data.*;
-import models.dbentities.*;
+import models.data.Grade;
+import models.data.Language;
+import models.data.Link;
+import models.data.UnavailableLanguageException;
+import models.data.UnknownLanguageCodeException;
+import models.dbentities.ClassGroup;
+import models.dbentities.CompetitionModel;
+import models.dbentities.ContestClass;
+import models.dbentities.QuestionSetModel;
+import models.dbentities.UserModel;
 import models.management.ModelState;
 import models.question.AnswerGeneratorException;
 import models.question.QuestionFeedback;
@@ -32,19 +35,16 @@ import models.user.UserType;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 
-import play.Logger;
-import play.libs.Json;
-import play.mvc.Result;
-
-import com.avaje.ebean.Ebean;
-import com.avaje.ebean.Page;
-
-import controllers.EController;
-
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Result;
 import views.html.commons.noaccess;
+
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Expr;
+import com.avaje.ebean.Page;
+
+import controllers.EController;
 /**
  * Controller for taking competitions. Includes the listing of available
  * competitions for each user type.
@@ -224,17 +224,20 @@ public class TakeCompetitionController extends EController {
                     input, Language.getLanguage(EMessages.getLang()));
             
             // Save the results
+            CompetitionUserState state = null;
             if(AuthenticationManager.getInstance().getUser().isAnon()) {
-                CompetitionUserStateManager.getInstance().getState(
+                state = CompetitionUserStateManager.getInstance().getState(
                         feedback.getCompetitionID(),
                         AuthenticationManager.getInstance().getAuthCookie()
-                    ).setResults(feedback);
+                    );
             } else {
-                CompetitionUserStateManager.getInstance().getState(
+                state = CompetitionUserStateManager.getInstance().getState(
                         feedback.getCompetitionID(),
                         AuthenticationManager.getInstance().getUser().getID()
-                    ).setResults(feedback);
+                    );
             }
+            if(state == null) return badRequest(EMessages.get("competition.run.submit.notStarted"));
+            state.setResults(feedback);
         } catch (CompetitionNotStartedException e) {
             return badRequest(EMessages.get("competition.run.submit.notStarted"));
         } catch (UnavailableLanguageException
@@ -267,10 +270,13 @@ public class TakeCompetitionController extends EController {
                 QuestionFeedback feedback = QuestionFeedbackGenerator.generateFromJson(
                         input, Language.getLanguage(EMessages.getLang()));
                 // Save the results
-                CompetitionUserStateManager.getInstance().getState(
+                CompetitionUserState state = null;
+                state = CompetitionUserStateManager.getInstance().getState(
                         feedback.getCompetitionID(),
                         feedback.getToken()
-                    ).setResults(feedback);
+                    );
+                if(state == null) return badRequest(EMessages.get("competition.run.submit.invalidUser"));
+                state.setResults(feedback);
             } catch (UnavailableLanguageException
                     | UnknownLanguageCodeException
                     | AnswerGeneratorException

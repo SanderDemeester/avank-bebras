@@ -38,7 +38,7 @@ $("#retry").live("click", function() {
 });
 
 // Submit the answers to the server
-function submit() {
+function submit() {	
 	// Show modal
 	$("#submitting").modal({
 		keyboard: false,
