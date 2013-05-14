@@ -651,6 +651,8 @@ competition.run.submit.notStarted = Dieser Wettbewerb wurde noch nicht gestartet
 competition.run.submit.ok = Vorlage war erfolgreich.
 competition.run.submit.invalid = Ungültige Antworten.
 competition.run.finished = Der Wettbewerb ist abgeschlossen.
+competition.run.submit.invalidUser = Der Wettbewerb wird nicht richtig vom angegebenen Benutzer gestartet.
+competition.run.submit.invalidUserSelf = Sie begann diesen Wettkampf in einer ungültigen Weise.
 
 competition.overview.button = Übersicht
 competition.overview.submitAnswers = Senden Sie Schüler Antworten

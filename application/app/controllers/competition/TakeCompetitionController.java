@@ -236,7 +236,7 @@ public class TakeCompetitionController extends EController {
                         AuthenticationManager.getInstance().getUser().getID()
                     );
             }
-            if(state == null) return badRequest(EMessages.get("competition.run.submit.notStarted"));
+            if(state == null) return badRequest(EMessages.get("competition.run.submit.invalidUserSelf"));
             state.setResults(feedback);
         } catch (CompetitionNotStartedException e) {
             return badRequest(EMessages.get("competition.run.submit.notStarted"));
