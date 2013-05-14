@@ -64,8 +64,11 @@ function submit() {
 		
 		// If timeout -> show modal with cookie data & info
 		request.fail(function(jqXHR, textStatus) {
-			if(textStatus == "timeout" || textStatus == "abort") lostConnection();
-			else showError(jqXHR.responseText);
+			// We can't depend on the error status codes of browsers, they tend to lie (yes, I'm talking about you MS)
+			/*if(textStatus == "timeout" || textStatus == "abort") lostConnection();
+			else showError(jqXHR.responseText);*/
+			
+			lostConnection();
 		});
 		
 		request.always(function(jqXHR, textStatus, errorThrown) {
