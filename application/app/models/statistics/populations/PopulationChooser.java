@@ -117,7 +117,6 @@ public class PopulationChooser {
         genMap.put(UserType.ADMINISTRATOR, new PopulationGenerator() {
             @Override public PopulationChooser choose(User user) {
                 PopulationChooser chooser = new PopulationChooser();
-
                 /* Single Users: All of them. */
                 chooser.newType(
                     PopulationType.INDIVIDUAL,
@@ -181,7 +180,6 @@ public class PopulationChooser {
                 // Adding the old classes, if they exist.
                 try { cgs.addAll(indep.getPreviousClasses()); }
                 catch (PersistenceException e) {}
-
                 chooser.newType(
                     PopulationType.CLASS,
                     mapToPop(
@@ -225,25 +223,30 @@ public class PopulationChooser {
                 } catch(PersistenceException e) {}
 
                 /* Single Users: Himself and his students. */
-                List<UserModel> users = Arrays.asList(user.data);
+                List<UserModel> users = new ArrayList<UserModel>();
+                users.add(user.data);
                 for(ClassGroup cg : classes) {
-                    try { users.addAll(cg.getPupils(ClassGroup.PupilSet.ALL)); }
+                    try { 
+                    	users.addAll(cg.getPupils(ClassGroup.PupilSet.ALL)); 
+                    	}
                     catch (PersistenceException e) {}
                 }
                 chooser.newType(
                     PopulationType.INDIVIDUAL,
                     mapToPop(SinglePopulation.class, UserModel.class, users)
                 );
-
                 /* Classes: Just his classes. */
                 chooser.newType(
                     PopulationType.CLASS,
                     mapToPop(ClassPopulation.class, ClassGroup.class, classes)
                 );
-
                 /* Schools: Where he teaches. */
-                Set<Integer> schools = new HashSet<Integer>();
-                for(ClassGroup cg : classes) schools.add(cg.schoolid);
+                Set<SchoolModel> schools = new HashSet<SchoolModel>();//TODO felix, check if this is correct
+                for(ClassGroup cg : classes) {
+                	try{
+                		schools.add(Ebean.find(SchoolModel.class,cg.schoolid));
+                	}catch(PersistenceException pe){}
+                }
                 chooser.newType(
                     PopulationType.SCHOOL,
                     mapToPop(SchoolPopulation.class, SchoolModel.class, schools)
@@ -303,7 +306,8 @@ public class PopulationChooser {
         // Create list.
         Iterator<?> it = l.iterator();
         try {
-            while(it.hasNext()) pops.add(c.newInstance(it.next()));
+            //while(it.hasNext()) pops.add(c.newInstance(it.next()));
+        	
         } catch(Exception e) {
             throw new RuntimeException(e.getMessage());
         }
