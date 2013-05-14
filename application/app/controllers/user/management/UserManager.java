@@ -118,7 +118,7 @@ public class UserManager extends Manager<UserModel> {
 	
 	public void setDataSet(String userType){
 		if(userType.equals("ADMINISTRATOR")){
-			UMDataSet = getFinder().where();
+			UMDataSet = getFinder().where().ne("type", "ADMINISTRATOR");
 		}else if(userType.equals("ORGANIZER")){
 			ArrayList<String> typeList = new ArrayList<String>();
 			typeList.add("TEACHER");
