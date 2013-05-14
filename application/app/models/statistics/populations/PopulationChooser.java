@@ -275,6 +275,7 @@ public class PopulationChooser {
                 return chooser;
             }
         });
+        genMap.put(UserType.AUTHOR, genMap.get(UserType.ANON));
     }
 
     // Help function. Takes a list of Objects a class b, which can by passed to
