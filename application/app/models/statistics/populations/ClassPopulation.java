@@ -38,16 +38,12 @@ public class ClassPopulation extends Population {
         return EMessages.get("statistics.populations.of_the", classGroup.name, classGroup.getSchool().name);
     }
 
-    @Override public List<UserModel> getUsers() {
-        List<UserModel> list = Ebean.find(UserModel.class).where()
-                .eq("classid", classGroup.id).findList();
-        if(list != null && list.size() > 0) return list;
-        list = new ArrayList<UserModel>();
-        for(ClassPupil cp : Ebean.find(ClassPupil.class).where()
-                .eq("classID", classGroup.id).findList()) {
-            list.add(Ebean.find(UserModel.class, cp.classid));
-        }
-        return list;
+    @Override public List<UserModel> getUsers() { //TODO Felix, check if this does what it should
+    	if(classGroup.isActive()){
+    		return classGroup.getPupils(ClassGroup.PupilSet.ACTIVE);
+    	}else{
+    		return classGroup.getPupils(ClassGroup.PupilSet.ALL);
+    	}
     }
 
     /**
