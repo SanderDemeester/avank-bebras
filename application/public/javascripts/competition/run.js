@@ -11,6 +11,7 @@ $(".questionframe").load(function() {
 		$head.append($("<link/>", 
     	{ rel: "stylesheet", href: links[i], type: "text/css" }));
 	}
+	
 });
 
 // Change question tab
@@ -37,7 +38,7 @@ $("#retry").live("click", function() {
 });
 
 // Submit the answers to the server
-function submit() {
+function submit() {	
 	// Show modal
 	$("#submitting").modal({
 		keyboard: false,
@@ -63,8 +64,11 @@ function submit() {
 		
 		// If timeout -> show modal with cookie data & info
 		request.fail(function(jqXHR, textStatus) {
-			if(textStatus == "timeout" || textStatus == "abort") lostConnection();
-			else showError(jqXHR.responseText);
+			// We can't depend on the error status codes of browsers, they tend to lie (yes, I'm talking about you MS)
+			/*if(textStatus == "timeout" || textStatus == "abort") lostConnection();
+			else showError(jqXHR.responseText);*/
+			
+			lostConnection();
 		});
 		
 		request.always(function(jqXHR, textStatus, errorThrown) {
@@ -159,7 +163,7 @@ $(document).ready(function() {
 		$('#countdown').countdown({
 			until: deaddate,
 			format: 'HMS',
-			layout: '{hn} : {mn} : {sn}',
+			layout: '{hnn} : {mnn} : {snn}',
 			onExpiry: expired,
 			onTick: updateTimeleft,
 		}).parent().show("fast");

@@ -157,7 +157,7 @@ GET		/classes/view/:id				controllers.classgroups.ClassPupilController.viewClass
 
 GET		/classes/view/:id/remove/:studid	controllers.classgroups.ClassPupilController.removeStudent(id:Int,studid)
 GET		/classes/view/:id/add			controllers.classgroups.ClassPupilController.addExistingStudent(id:Int)
-POST		/classes/view/:id/				controllers.classgroups.ClassPupilController.saveExisting(id:java.lang.Integer)
+POST		/classes/view/:id/				controllers.classgroups.ClassPupilController.saveExisting(id:Int)
 GET		/classes/view/:id/download			controllers.classgroups.ClassPupilController.downloadClass(id:Int)
 GET		/classes/view/:id/upload			controllers.classgroups.ClassGroupIOController.uploadExisting(id:java.lang.Integer)
 POST		/classes/view/:id/upload/				controllers.classgroups.ClassGroupIOController.postExisting(id:java.lang.Integer)

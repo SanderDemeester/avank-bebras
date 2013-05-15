@@ -9,6 +9,7 @@ import models.data.DataDaemon;
 import models.question.QuestionSet;
 import models.user.Anon;
 import models.user.User;
+import play.Logger;
 
 /**
  * Manages the different CompetitionUserStates from each competition
@@ -26,12 +27,29 @@ public class CompetitionUserStateManager {
     }
     
     /**
+     * This will be called everytime the singleton instance of this class is requested.
+     */
+    public void whileGetInstance() {
+        // TODO: Kevin
+        // Fetch all the competitions from the db that should be running
+        //  (startdate <= current time <= enddate)
+        
+        // Loop over those competitions
+            // For each competition found, check isCompetitionStarted(competitionID)
+            // If it has not been started, call startCompetition(competitionID)
+
+        // Don't forget to remove all the other calls to startCompetition anywhere else in the code,
+        //  this will cause competition data to be reset.
+    }
+    
+    /**
      * Get the unique instance of this manager
-     * @return
+     * @return unique instance
      */
     public static CompetitionUserStateManager getInstance() {
         if(_instance == null)
             _instance = new CompetitionUserStateManager();
+        _instance.whileGetInstance();
         return _instance;
     }
     
@@ -124,6 +142,15 @@ public class CompetitionUserStateManager {
         if(list == null) throw new CompetitionNotStartedException(
                 "This competition has not yet been started.");
         return list;
+    }
+    
+    private boolean isCompetitionStarted(String competitionID) {
+        try {
+            getStates(competitionID);
+        } catch (CompetitionNotStartedException e) {
+            return false;
+        }
+        return true;
     }
     
     /**

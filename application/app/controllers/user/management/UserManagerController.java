@@ -164,6 +164,7 @@ public class UserManagerController extends EController {
         if(!isAuthorized(edit_id)) return ok(noaccess.render(breadcrumbs));
 
         Form<UserModel> form = form(UserModel.class).bindFromRequest();
+        form.get().id = edit_id;
 
         if(form.hasErrors()) {
             return badRequest(edituser.render(form, new UserManager(ModelState.UPDATE), breadcrumbs));
@@ -210,7 +211,7 @@ public class UserManagerController extends EController {
 				// check if two passwords are the same
 				if(!form.data().get("password1").equals(form.data().get("password2"))){
 		            flash("error", EMessages.get(EMessages.get("user.error.passwnotequal")));
-	        	    return badRequest(edituser.render(form, new UserManager(ModelState.UPDATE), breadcrumbs));
+	        	    return badRequest(edituser.render(form, new UserManager(ModelState.UPDATE,edit_id), breadcrumbs));
 				}
 				
     		    // edit passw
