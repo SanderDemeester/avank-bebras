@@ -8,10 +8,9 @@
 <body>
 <table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
 <tr><td><b>Test Suite</b></td></tr>
-<tr><td><a href="addServerSuccess.testcase">addServerSuccess</a></td></tr>
-<tr><td><a href="addServerFail.testcase">addServerFail</a></td></tr>
-<tr><td><a href="editServerSuccess.testcase">editServerSuccess</a></td></tr>
-<tr><td><a href="editServerFail.testcase">editServerFail</a></td></tr>
+<tr><td><a href="submitMultiQuestion.testcase">submitMultiQuestion</a></td></tr>
+<tr><td><a href="submitInputQuestion.testcase">submitInputQuestion</a></td></tr>
+<tr><td><a href="submitQuestionFail.testcase">submitQuestionFail</a></td></tr>
 </tbody></table>
 </body>
 </html>
