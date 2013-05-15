@@ -36,6 +36,9 @@ public class StatisticFactory {
         map.put(Language.name, new Factory() {
             public Statistic create() { return new Language(); }
         });
+        map.put(ClassLevel.name, new Factory() {
+            public Statistic create() { return new ClassLevel(); }
+        });
     }
 
     private static interface Factory {
