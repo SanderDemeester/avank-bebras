@@ -296,6 +296,6 @@ public abstract class Question {
      * @throws IllegalStateException 
      */
     public File export() throws IllegalStateException, IOException, FTPIllegalReplyException, FTPException, FTPDataTransferException, FTPAbortedException, FTPListParseException, QuestionBuilderException {
-        return this.getServer().downloadFile(this.getOfficialID(), AuthenticationManager.getInstance().getUser().getID());
+        return this.getServer().downloadFile(Integer.toString(this.getID()), AuthenticationManager.getInstance().getUser().getID());
     }
 }
