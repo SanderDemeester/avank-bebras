@@ -56,6 +56,14 @@ public class Competition {
     }
 
     /**
+     * Returns the number of question sets linked with this competition.
+     * @return number of linked question sets
+     */
+    public int getQuestionSetCount(){
+        return questionSets.values().size();
+    }
+
+    /**
      * Returns the database model for this competition.
      * @return underlying database model
      */

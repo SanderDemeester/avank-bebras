@@ -13,6 +13,8 @@ import models.EMessages;
 import models.data.Link;
 import models.management.ModelState;
 import models.question.Server;
+import models.user.AuthenticationManager;
+import models.user.Role;
 import play.data.Form;
 import play.db.ebean.Model.Finder;
 import play.mvc.Result;
@@ -43,9 +45,7 @@ public class ServerController extends EController {
      * @return is the user authorized
      */
     public static boolean isAuthorized() {
-        // TODO: enable this authorization
-        //return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGESERVERS);
-        return true;
+        return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGESERVERS);
     }
     
     /**

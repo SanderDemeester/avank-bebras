@@ -61,6 +61,7 @@ POST    /questionset/:qs/questions              controllers.question.QuestionSet
 POST    /questionset/edit                       controllers.question.QuestionSetController.update(qs:Int)
 GET     /questionset/:qs/questions/remove:id    controllers.question.QuestionSetController.removeQuestion(qs:Int, id)
 GET     /questionset/questions/add-data         controllers.question.QuestionSetController.typeAhead()
+GET     /questionset/:c/cancel                 controllers.question.QuestionSetController.cancel(c)
 
 # Contest management module
 GET     /contests                       controllers.competition.CompetitionController.index(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
