@@ -27,6 +27,7 @@ public class Score extends ContinuousStatistic {
             Boolean.class,
             "select correct from pupilanswers where questionsetid = " + set.id
         ).findList();
+        if(corrects.size() == 0) return null;
         for(boolean b : corrects) if(b) total++;
         return total;
     }

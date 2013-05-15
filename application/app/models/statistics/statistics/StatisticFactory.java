@@ -30,6 +30,9 @@ public class StatisticFactory {
         map.put(Score.name, new Factory() {
             public Statistic create() { return new Score(); }
         });
+        map.put(Age.name, new Factory() {
+            public Statistic create() { return new Age(); }
+        });
     }
 
     private static interface Factory {
