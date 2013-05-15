@@ -218,7 +218,6 @@ public class Server extends ManageableModel implements Listable{
         FTPClient client = new FTPClient();
         
         String download = Play.application().configuration().getString("questioneditor.download");
-        
         // Connect to server
         client.connect(ftpuri, ftpport);
         client.login(ftpuser, ftppass);
