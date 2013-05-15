@@ -15,7 +15,7 @@ object ApplicationBuild extends Build {
       "org.bouncycastle" % "bcpkix-jdk15on" % "1.48",
       "org.bouncycastle" % "bcprov-jdk15on" % "1.48",
       "dom4j" % "dom4j" % "1.6.1",
-      "org.apache.servicemix.bundles" % "org.apache.servicemix.bundles.aspectj" % "1.7.2_1",
+      "it.sauronsoftware.ftp4j" % "ftp4j" % "1.7.2",
       "stax" % "stax-api" % "1.0.1",
       "log4j" % "log4j" % "1.2.13",
       "org.apache.poi" % "poi" % "3.9",
@@ -26,6 +26,11 @@ object ApplicationBuild extends Build {
 
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
       // Add your own project settings here      
+      resolvers += Resolver.url("mvn-repo", url("https://raw.github.com/bastengao/mvn-repository/master/releases"))(Resolver.ivyStylePatterns),
+      resolvers += "mvn-repo" at "https://raw.github.com/bastengao/mvn-repository/master/releases/",
       javacOptions += "-Xlint:all"     
     )
+
+
 }
+
