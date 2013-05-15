@@ -1,11 +1,11 @@
 package models.competition;
 
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
+import com.avaje.ebean.Ebean;
 import models.EMessages;
 import models.data.DataDaemon;
+import models.dbentities.CompetitionModel;
 import models.question.QuestionSet;
 import models.user.Anon;
 import models.user.User;
@@ -30,16 +30,16 @@ public class CompetitionUserStateManager {
      * This will be called everytime the singleton instance of this class is requested.
      */
     public void whileGetInstance() {
-        // TODO: Kevin
-        // Fetch all the competitions from the db that should be running
-        //  (startdate <= current time <= enddate)
-        
-        // Loop over those competitions
-            // For each competition found, check isCompetitionStarted(competitionID)
-            // If it has not been started, call startCompetition(competitionID)
+        List<CompetitionModel> competitionModels = Ebean.find(CompetitionModel.class).where()
+                .lt("starttime", new Date())
+                .gt("endtime", new Date())
+                .findList();
 
-        // Don't forget to remove all the other calls to startCompetition anywhere else in the code,
-        //  this will cause competition data to be reset.
+        for (CompetitionModel competitionModel : competitionModels){
+            if (!isCompetitionStarted(competitionModel.id)){
+                startCompetition(new Competition(competitionModel));
+            }
+        }
     }
     
     /**
