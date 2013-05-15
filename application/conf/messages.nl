@@ -344,6 +344,7 @@ competitions.grade = Niveau
 competitions.grade.warning = Opgepast!
 competitions.grade.info = Je staat op het punt om aan een competitie deel te nemen. Om de juiste vragen te kunnen selecteren, hebben we je voorkeur niveau nodig.  Gelieve een niveau te selecteren
 competitions.grade.breadcrumb = Niveau kiezen
+competitions.take.landing = Snel een competitie doen
 
 competition.history.warning = Opgelet!
 competition.history.info = Je bent momenteel niet ingelogd. Om resultaten en statistieken van vorige competities te bekijken, moet je ingelogd zijn.

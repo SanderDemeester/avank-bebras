@@ -370,15 +370,39 @@ public class TakeCompetitionController extends EController {
         } else return forbidden();
     }
 
+    /**
+     * Returns a snippet of available contests.
+     * @return available contests snippet.
+     */
     public static List<CompetitionModel> snippet(){
+        UserModel user = AuthenticationManager.getInstance().getUser().getData();
+        ClassGroup classGroup = Ebean.find(ClassGroup.class).where().idEq(user.classgroup).findUnique();
+        List<ContestClass> contestClasses = Ebean.find(ContestClass.class).where().eq("classid", classGroup).findList();
+        List<String> competitionIds = new ArrayList<String>();
+        for (ContestClass contestClass : contestClasses){
+            competitionIds.add(contestClass.contestid.id);
+        }
         TakeCompetitionManager competitionManager = getManager("name", "asc", "");
-        return competitionManager.getFinder()
+        List<CompetitionModel> competitionModels = competitionManager.getFinder()
                 .where()
-                .eq("type", CompetitionType.ANONYMOUS.name())
+                .or(
+                        Expr.or(
+                                Expr.eq("type", CompetitionType.ANONYMOUS.name()),
+                                Expr.eq("type", CompetitionType.UNRESTRICTED.name())
+                        ),
+                        Expr.and(
+                                Expr.eq("type", CompetitionType.RESTRICTED.name()),
+                                Expr.in("id", competitionIds)
+                        ))
                 .eq("active", true)
                 .lt("starttime", new Date())
                 .gt("endtime", new Date())
                 .findList()
         ;
+
+        if (competitionModels.size() > 5){
+            competitionModels = competitionModels.subList(0,4);
+        }
+        return competitionModels;
     }
 }
