@@ -365,4 +365,60 @@ public class AuthenticationManager {
 		}
 
 	}
+	
+	
+	/**
+	 * check if the current user has the same password as pw.
+	 * @param pw
+	 * @return true if pw is the same as current users password.
+	 * @throws Exception
+	 */
+	public boolean hasCurrentUserSamePassw(String pw) throws Exception{
+		// For storing the users salt form the database.
+		byte[] salt = null;
+
+		// For storing the output of the PBKDF2 function.
+		byte[] passwordByteString = null;
+
+		// To store the output from the PBKDF2 function in HEX.
+		String passwordHEX = null;
+
+		// To store the password as it is stored in the database.
+		String passwordDB = null;
+		
+		// Get the users information from the database.
+		UserModel userModel = this.getUser().data;
+		
+		passwordDB = userModel.password;
+		SecretKeyFactory secretFactory = null;
+		
+		try{
+			salt = Hex.decodeHex(userModel.hash.toCharArray());
+		}catch(Exception e){
+			throw new Exception(EMessages.get("error.text"));
+		}
+		
+		KeySpec PBKDF2 = new PBEKeySpec(pw.toCharArray(), salt, 1000, 160);
+
+		try{
+			secretFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+		}catch(Exception e){
+			throw new Exception("error.text");
+		}
+	
+		try {
+			passwordByteString = secretFactory.generateSecret(PBKDF2).getEncoded();
+		}catch (InvalidKeySpecException e) {
+			throw new Exception(EMessages.get("error.text"));
+		}
+		
+		try{
+			passwordHEX = new String(Hex.encodeHex(passwordByteString));
+		}catch(Exception e){
+			throw new Exception(EMessages.get("error.text"));
+		}
+
+		return passwordHEX.equals(passwordDB);
+	}
+	
 }

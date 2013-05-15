@@ -45,6 +45,7 @@ error.mimic.cant_find_user = L'utilisateur ne peut pas trouver
 error.mimic.policy_deny = Ne peut pas imiter utilisateur par politique
 error.mimic.user_logged_in = L'utilisateur que vous essayez d'imiter est enregistré dans le système
 error.user_blocked = Votre compte est suspendu, veuillez contacter un admin
+error.invalid_password = Compte tenu de mot de passe n'est pas correct!
 
 # Links from roles
 links.settings.title = Paramètres
