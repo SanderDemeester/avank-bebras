@@ -23,7 +23,6 @@ import controllers.util.GenderParser;
  * @author Jens N. Rammant
  *	A helper class for the reading and writing of classgroups.
  *	Works together with {@link controllers.util.XLSXImporter}
- * TODO tests
  */
 public class ClassGroupIO {
 	
