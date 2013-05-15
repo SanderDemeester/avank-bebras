@@ -18,7 +18,6 @@ import models.data.Language;
 import models.dbentities.QuestionModel;
 import models.management.ModelState;
 import models.user.AuthenticationManager;
-import play.Logger;
 import play.mvc.Call;
 import controllers.EController;
 import controllers.question.QuestionManager;

@@ -29,9 +29,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import controllers.EController;
-import controllers.question.routes;
-
 import models.management.Editable;
 import models.management.Listable;
 import models.management.ManageableModel;
@@ -218,6 +215,7 @@ public class Server extends ManageableModel implements Listable{
         FTPClient client = new FTPClient();
         
         String download = Play.application().configuration().getString("questioneditor.download");
+        
         // Connect to server
         client.connect(ftpuri, ftpport);
         client.login(ftpuser, ftppass);
