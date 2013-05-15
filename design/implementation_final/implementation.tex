@@ -104,25 +104,24 @@
         previous two classes for easier distribution of the questions.
     \end{subsection}
     \begin{subsection}{Competitions}
-        TODO: Kevin (aanvullen?)
     
         Competitions have four kinds of states (as can be seen in CompetitionState).
         
         The first state is the draft state. In this state, it's only visible and editable
         by organisers. 
         
-        When organisers active the competition, it enters the active state. In this state
+        When organisers activate the competition, it enters the active state. In this state
         teachers can see the competition and register one or more of their classes to the
         competition. When the competition is started, it is given to the singleton object
-        CompetitionUserStateManager. This object will keep track of all the competition
+        CompetitionUserStateManager. This object will keep track of all the competitions
         and all of the CompetitionUserState's associated with each competition for when
         users enter this competition.
         
         From the moment the competition enters the running state (this will go
         automatically depending on the start date given by the organiser) the pupils
-        that were registered by the teachers will be able to see the competition and
-        take part of it. There they will have a predefined amount of time to answer
-        the questions.
+        that were registered by the teachers will be able to see the competition (if they can 
+        participate in this competition) and take part of it. There they will have a predefined 
+        amount of time to answer the questions.
         
         When the competition reaches the expiration date, the competition will reach the
         finished state, on which all the CompetitionUserState's that were associated to
@@ -131,7 +130,7 @@
         
         Competitions can in theory be executed without an internet connection since
         all the answers are saved locally via javascript. Only when the user wants to submit
-        the answers an connection to the server is required. The answers are sent to the
+        the answers, a connection to the server is required. The answers are sent to the
         server in JSON. At the server-side, the JSON will be parsed. Then the answers will
         be checked and a QuestionFeedback will be generated for that user and stored inside
         the CompetitionUserState for that user until the competition is finished.
