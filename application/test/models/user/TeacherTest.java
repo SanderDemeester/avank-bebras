@@ -13,6 +13,7 @@ import javax.persistence.PersistenceException;
 import junit.framework.Assert;
 
 import models.dbentities.ClassGroup;
+import models.dbentities.HelpTeacher;
 import models.dbentities.SchoolModel;
 import models.dbentities.UserModel;
 
@@ -41,6 +42,9 @@ public class TeacherTest extends ContextTest {
         
         List<SchoolModel> sm = Ebean.find(SchoolModel.class).findList();
         for(SchoolModel s : sm)s.delete();
+        
+        List<HelpTeacher> ht = Ebean.find(HelpTeacher.class).findList();
+        for(HelpTeacher h : ht)h.delete();
     }
 
     /**
@@ -160,5 +164,29 @@ public class TeacherTest extends ContextTest {
     	Assert.assertTrue("f1",teacher.isPupilsTeacher(pup1.id));
     	Assert.assertFalse("f2",teacher.isPupilsTeacher(pup2.id));
     	
+    }
+    
+    @Test
+    public void getHelpClassesTest(){
+    	UserModel teach = UserTests.createTestUserModel(UserType.TEACHER);
+    	teach.id="a";
+    	ClassGroup cg = new ClassGroup();
+    	cg.id=1;
+    	HelpTeacher ht = new HelpTeacher();
+    	ht.classid=cg.id;
+    	ht.teacherid=teach.id;
+    	
+    	try{
+    		teach.save();
+    		cg.save();
+    		ht.save();
+    	}catch(PersistenceException pe){
+    		Assert.fail("Something went wrong with the saving");
+    	}
+    	
+    	Teacher t = new Teacher(teach);
+    	List<ClassGroup> helpclasses = (List<ClassGroup>) t.getHelpClasses();
+    	Assert.assertEquals(1, helpclasses.size());
+    	Assert.assertEquals(cg.id, helpclasses.get(0).id);
     }
 }

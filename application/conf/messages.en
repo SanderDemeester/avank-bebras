@@ -370,7 +370,7 @@ schools.add.success = School succesfully saved. ID:
 schools.edit = Edit a school.
 schools.table.id = id
 schools.table.name = Name
-schools.table.name = Address
+schools.table.address = Address
 schools.error = Something went wrong. Try again (later).
 
 
@@ -471,6 +471,7 @@ classes.pupil.form.email = Email
 classes.pupil.form.registrationdate = Registration date
 classes.pupil.form.comment = Comment
 classes.pupil.form.blockeduntil = Blocked until
+classes.pupil.form.password = Password
 
 classes.novalidclassid = This is not a valid class ID.
 classes.pupil.editclassinfo = Edit the class info

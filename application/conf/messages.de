@@ -370,7 +370,7 @@ schools.add.success = Schule erfolgreich gespeichert. ID:
 schools.edit = Bearbeiten einer Schule.
 schools.table.id = ID
 schools.table.name = Name
-schools.table.name = Adresse
+schools.table.address = Adresse
 schools.error = Etwas schief gelaufen ist. Versuchen Sie es erneut (später).
 
 
@@ -471,6 +471,7 @@ classes.pupil.form.email = Email
 classes.pupil.form.registrationdate = Angemeldet seit
 classes.pupil.form.comment = Kommentar
 classes.pupil.form.blockeduntil = Gesperrt bis
+classes.pupil.form.password = Passwort
 
 classes.novalidclassid = Dies ist keine gültige Klasse-ID.
 classes.pupil.editclassinfo = Bearbeiten der Klasseninformationen
