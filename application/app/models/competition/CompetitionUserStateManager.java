@@ -1,14 +1,15 @@
 package models.competition;
 
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
+import com.avaje.ebean.Ebean;
 import models.EMessages;
 import models.data.DataDaemon;
+import models.dbentities.CompetitionModel;
 import models.question.QuestionSet;
 import models.user.Anon;
 import models.user.User;
+import play.Logger;
 
 /**
  * Manages the different CompetitionUserStates from each competition
@@ -26,12 +27,29 @@ public class CompetitionUserStateManager {
     }
     
     /**
+     * This will be called everytime the singleton instance of this class is requested.
+     */
+    public void whileGetInstance() {
+        List<CompetitionModel> competitionModels = Ebean.find(CompetitionModel.class).where()
+                .lt("starttime", new Date())
+                .gt("endtime", new Date())
+                .findList();
+
+        for (CompetitionModel competitionModel : competitionModels){
+            if (!isCompetitionStarted(competitionModel.id)){
+                startCompetition(new Competition(competitionModel));
+            }
+        }
+    }
+    
+    /**
      * Get the unique instance of this manager
-     * @return
+     * @return unique instance
      */
     public static CompetitionUserStateManager getInstance() {
         if(_instance == null)
             _instance = new CompetitionUserStateManager();
+        _instance.whileGetInstance();
         return _instance;
     }
     
@@ -124,6 +142,15 @@ public class CompetitionUserStateManager {
         if(list == null) throw new CompetitionNotStartedException(
                 "This competition has not yet been started.");
         return list;
+    }
+    
+    private boolean isCompetitionStarted(String competitionID) {
+        try {
+            getStates(competitionID);
+        } catch (CompetitionNotStartedException e) {
+            return false;
+        }
+        return true;
     }
     
     /**

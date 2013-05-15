@@ -345,6 +345,7 @@ competitions.grade = Grade
 competitions.grade.warning = Warning!
 competitions.grade.info = You're about to take a contest. In order to select the appropriate questions, we need to know your desired grade. Please select the grade you prefer
 competitions.grade.breadcrumb = Select grade
+competitions.take.landing = Quickly take a contest
 
 competition.history.warning = Warning!
 competition.history.info = You are currently not signed in. In order to keep track off your results and stats, you need to be signed in.
@@ -369,7 +370,7 @@ schools.add.success = School succesfully saved. ID:
 schools.edit = Edit a school.
 schools.table.id = id
 schools.table.name = Name
-schools.table.name = Address
+schools.table.address = Address
 schools.error = Something went wrong. Try again (later).
 
 
@@ -470,6 +471,7 @@ classes.pupil.form.email = Email
 classes.pupil.form.registrationdate = Registration date
 classes.pupil.form.comment = Comment
 classes.pupil.form.blockeduntil = Blocked until
+classes.pupil.form.password = Password
 
 classes.novalidclassid = This is not a valid class ID.
 classes.pupil.editclassinfo = Edit the class info
@@ -600,6 +602,10 @@ user.management.edit = Change information
 user.management.change = Apply
 user.management.type = Type:
 user.management.create = Create new user
+user.management.showlegendtype = Show type legend 
+user.management.legend = Legend
+user.management.meaning = Meaning
+user.management.close = Close
 users.form.id = ID
 users.form.type = Type
 users.form.wrap_type = Type
@@ -651,6 +657,8 @@ competition.run.submit.notStarted = This competition has not been started yet, o
 competition.run.submit.ok = Submission was successful.
 competition.run.submit.invalid = Invalid answers.
 competition.run.finished = The competition has been finished.
+competition.run.submit.invalidUser = The competition is not properly started by the specified user.
+competition.run.submit.invalidUserSelf = You started this competition in an invalid way.
 
 competition.overview.button = Overview
 competition.overview.submitAnswers = Submit pupil answers

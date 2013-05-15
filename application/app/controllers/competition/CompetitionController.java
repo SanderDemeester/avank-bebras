@@ -128,36 +128,8 @@ public class CompetitionController extends EController {
             return badRequest(views.html.competition.create.render(form, breadcrumbs, true));
         }
 
-        if (competitionModel.active){
-            addToDataDaemon(competitionModel);
-        }
-
         competitionModel.save();
         return redirect(controllers.question.routes.QuestionSetController.create(competitionModel.id));
-    }
-
-    /**
-     * Tells the data daemon to make this contest running at start time.
-     * @param competitionModel competition model
-     */
-    private static void addToDataDaemon(CompetitionModel competitionModel) {
-        // automatically start this contest at start time
-        final Competition competition = new Competition(competitionModel);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(competition.getStartDate());
-        DataDaemon.getInstance().runAt(new Runnable(){
-
-            @Override
-            public void run() {
-                if (competition.getCompetitionModel().active){
-                    // if this competition is still active, start it
-                    CompetitionUserStateManager competitionUserStateManager = CompetitionUserStateManager.getInstance();
-                    competitionUserStateManager.startCompetition(competition);
-                    competition.setState(CompetitionState.ACTIVE);
-                }
-            }
-
-        }, calendar);
     }
 
     /**
@@ -189,10 +161,6 @@ public class CompetitionController extends EController {
             flash("competition-error", EMessages.get("forms.error.dates"));
             return badRequest(views.html.competition.viewCompetition.render(breadcrumbs, questionSetManager.page(0),
                     questionSetManager, "difficulty", "", "", form, competitionManager, contest));
-        }
-
-        if (competitionModel.active){
-            addToDataDaemon(competitionModel);
         }
 
         form.get().update();

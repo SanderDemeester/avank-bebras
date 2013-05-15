@@ -20,7 +20,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  * @author Jens N. Rammant
  * Utility class for the reading and writing of XLSX files
- * TODO create jUnit test
  */
 
 public class XLSXImporter {

@@ -344,6 +344,7 @@ competitions.grade = Niveau
 competitions.grade.warning = Opgepast!
 competitions.grade.info = Je staat op het punt om aan een competitie deel te nemen. Om de juiste vragen te kunnen selecteren, hebben we je voorkeur niveau nodig.  Gelieve een niveau te selecteren
 competitions.grade.breadcrumb = Niveau kiezen
+competitions.take.landing = Snel een competitie doen
 
 competition.history.warning = Opgelet!
 competition.history.info = Je bent momenteel niet ingelogd. Om resultaten en statistieken van vorige competities te bekijken, moet je ingelogd zijn.
@@ -368,7 +369,7 @@ schools.add.success = Opslaan van school was succesvol. ID:
 schools.edit = Bewerk een school.
 schools.table.id = ID
 schools.table.name = Naam
-schools.table.name = Adres
+schools.table.address = Adres
 schools.error = Er is een fout opgetreden. Probeer (later) opnieuw.
 
 # server management
@@ -463,6 +464,7 @@ classes.pupil.form.email = E-mail
 classes.pupil.form.registrationdate = Registratiedatum
 classes.pupil.form.comment = Commentaar
 classes.pupil.form.blockeduntil = Geblokkeerd tot
+classes.pupil.form.password = Wachtwoord
 classes.novalidclassid = Dit is geen geldig klas ID.
 classes.pupil.editclassinfo = Bewerk de info van de klas.
 classes.pupil.oldpupils = Bekijk de oud-studenten.
@@ -591,6 +593,10 @@ user.management.edit = Aanpassen gegevens
 user.management.change = Verander
 user.management.type = Type
 user.management.create = Maak nieuwe gebruiker
+user.management.showlegendtype = Toon type legende
+user.management.legend = Legende
+user.management.meaning = Betekenis
+user.management.close = Sluit
 users.form.id = ID
 users.form.type = Type
 users.form.wrap_type = Type
@@ -642,6 +648,8 @@ competition.run.submit.notStarted = Deze competitie is nog niet begonnen of is a
 competition.run.submit.ok = Antwoorden zijn verstuurd.
 competition.run.submit.invalid = Antwoorden zijn ongeldig.
 competition.run.finished = De competitie is gestopt.
+competition.run.submit.invalidUser = De competitie is niet correct gestart door de opgegeven gebruiker.
+competition.run.submit.invalidUserSelf = U heeft deze competitie op een ongeldige manier gestart.
 
 competition.overview.button = Overzicht
 competition.overview.submitAnswers = Verzend antwoorden van leerlingen

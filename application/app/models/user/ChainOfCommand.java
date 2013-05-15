@@ -11,7 +11,6 @@ import com.avaje.ebean.Ebean;
 
 /**
  * @author Jens N. Rammant
- *TODO tests
  */
 public class ChainOfCommand {
 

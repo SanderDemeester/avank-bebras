@@ -5,7 +5,7 @@
 
 @main(EMessages.get("app.dashboard"), breadcrumbs) {
 @defining(user.roles()) { roles =>
-<style type="text/css"><!--
+<style type="text/css" xmlns="http://www.w3.org/1999/html"><!--
     div.no-margin {
         margin: 0;
     }
@@ -46,7 +46,24 @@
 	    <div class="well"><ul>
 	    	<h1>@EMessages.get("app.welcome", user.getData().name)</h1>
 	        <p>@EMessages.get("app.getStarted")</p>
-	        <br />[COMPETITIONLISTSNIPPET]
+	        <br />
+            @if(user.getType == models.user.UserType.PUPIL_OR_INDEP){
+                <p class="lead">@EMessages.get("competitions.take.landing"):</p>
+                <p>
+                    <dl>
+                        @for(competition <- controllers.competition.TakeCompetitionController.snippet()){
+                            <dt>
+                                <a href="@controllers.competition.routes.TakeCompetitionController.takeCompetition(competition.id)">
+                                    @competition.name
+                                </a>
+                            </dt>
+                            <dd>
+                                @competition.getType()
+                            </dd>
+                        }
+                    </dl>
+                </p>
+            }
 	        <br />[STATSSNIPPET]
 	    </ul></div>
 	</div>

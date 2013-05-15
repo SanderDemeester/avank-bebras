@@ -345,6 +345,7 @@ competitions.grade = Grade
 competitions.grade.warning = Mise en garde !
 competitions.grade.info = Vous êtes sur le point de prendre un concours. Afin de sélectionner les questions appropriées, nous avons besoin de connaître votre niveau désiré. Veuillez sélectionner la catégorie que vous préférez
 competitions.grade.breadcrumb = Sélectionnez la catégorie
+competitions.take.landing = Prendre rapidement une compétition
 
 competition.history.warning = Mise en garde !
 competition.history.info = Vous n'êtes actuellement pas connecté. Afin de suivre vos résultats et statistiques, vous devez être signé en.
@@ -369,7 +370,7 @@ schools.add.success = École avec succès enregistrés. ID :
 schools.edit = Modifier une école.
 schools.table.id = ID
 schools.table.name = Nom
-schools.table.name = Adresse
+schools.table.address = Adresse
 schools.error = Quelque chose a mal tourné. Réessayez (plus tard).
 
 
@@ -470,6 +471,7 @@ classes.pupil.form.email = Email
 classes.pupil.form.registrationdate = Date de régistration
 classes.pupil.form.comment = Commentaire
 classes.pupil.form.blockeduntil = Bloqué jusqu'à
+classes.pupil.form.password = Mot de passe
 
 classes.novalidclassid = Ce n'est pas un ID de classe valide.
 classes.pupil.editclassinfo = Modifier les infos de la classe
@@ -600,6 +602,10 @@ user.management.edit = Informations relatives aux modifications
 user.management.change = Appliquer
 user.management.type = Type :
 user.management.create = Créer un nouvel utilisateur
+user.management.showlegendtype = Afficher la légende de type 
+user.management.legend = Légende
+user.management.meaning = Sens
+user.management.close = Proche
 users.form.id = ID
 users.form.type = Type
 users.form.wrap_type = Type
@@ -651,6 +657,8 @@ competition.run.submit.notStarted = Ce concours n'a pas encore été démarré, 
 competition.run.submit.ok = Présentation a réussi.
 competition.run.submit.invalid = Réponses non valides.
 competition.run.finished = La compétition a été finie.
+competition.run.submit.invalidUser = La concurrence n'est pas bien commencé par l'utilisateur spécifié.
+competition.run.submit.invalidUserSelf = Vous avez commencé cette compétition de manière incorrecte.
 
 competition.overview.button = Vue d'ensemble
 competition.overview.submitAnswers = Présenter les réponses de l'élève
