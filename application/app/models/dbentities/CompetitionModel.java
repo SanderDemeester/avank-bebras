@@ -71,7 +71,7 @@ public class CompetitionModel extends ManageableModel {
      * Returns the type of this competition.
      * @return competition type
      */
-    public String getType(){
+    public String getTypeString(){
         return type.toString();
     }
 
