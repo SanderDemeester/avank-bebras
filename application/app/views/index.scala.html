@@ -8,6 +8,11 @@
         <h1>@EMessages.get("app.startTitle")</h1>
         <p>@message</p>
         <p><a href="http://avank.ugent.be/~rtaelman/">Team pagina</a></p>
-
     </div>
+    @if(!models.user.AuthenticationManager.getInstance().isLoggedIn()) {
+    <script type="text/javascript">
+      var name = "avank.auth";
+      document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    </script>
+    }
 }
