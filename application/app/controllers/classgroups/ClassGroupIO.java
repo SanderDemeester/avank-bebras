@@ -43,8 +43,8 @@ public class ClassGroupIO {
 		pupilHeader.add(EMessages.get("classes.pupil.form.id"));
 		pupilHeader.add(EMessages.get("classes.pupil.form.name"));
 		pupilHeader.add(EMessages.get("classes.pupil.form.birthdate"));
-		pupilHeader.add(EMessages.get("classes.pupil.form.gender"));
-		pupilHeader.add(EMessages.get("classes.pupil.form.preflanguage"));
+		pupilHeader.add(EMessages.get("classes.pupil.form.wrap_gender"));
+		pupilHeader.add(EMessages.get("classes.pupil.form.wrap_language"));
 		pupilHeader.add(EMessages.get("classes.pupil.form.password"));
 		pupilHeader.add(EMessages.get("classes.pupil.form.email"));
 		

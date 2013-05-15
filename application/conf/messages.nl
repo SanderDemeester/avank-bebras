@@ -368,7 +368,7 @@ schools.add.success = Opslaan van school was succesvol. ID:
 schools.edit = Bewerk een school.
 schools.table.id = ID
 schools.table.name = Naam
-schools.table.name = Adres
+schools.table.address = Adres
 schools.error = Er is een fout opgetreden. Probeer (later) opnieuw.
 
 # server management
@@ -463,6 +463,7 @@ classes.pupil.form.email = E-mail
 classes.pupil.form.registrationdate = Registratiedatum
 classes.pupil.form.comment = Commentaar
 classes.pupil.form.blockeduntil = Geblokkeerd tot
+classes.pupil.form.password = Wachtwoord
 classes.novalidclassid = Dit is geen geldig klas ID.
 classes.pupil.editclassinfo = Bewerk de info van de klas.
 classes.pupil.oldpupils = Bekijk de oud-studenten.

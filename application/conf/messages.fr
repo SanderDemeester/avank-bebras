@@ -369,7 +369,7 @@ schools.add.success = École avec succès enregistrés. ID :
 schools.edit = Modifier une école.
 schools.table.id = ID
 schools.table.name = Nom
-schools.table.name = Adresse
+schools.table.address = Adresse
 schools.error = Quelque chose a mal tourné. Réessayez (plus tard).
 
 
@@ -470,6 +470,7 @@ classes.pupil.form.email = Email
 classes.pupil.form.registrationdate = Date de régistration
 classes.pupil.form.comment = Commentaire
 classes.pupil.form.blockeduntil = Bloqué jusqu'à
+classes.pupil.form.password = Mot de passe
 
 classes.novalidclassid = Ce n'est pas un ID de classe valide.
 classes.pupil.editclassinfo = Modifier les infos de la classe
