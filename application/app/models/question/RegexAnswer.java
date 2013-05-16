@@ -21,11 +21,11 @@ public class RegexAnswer extends Answer{
     public boolean isCorrect() {
         return input != null && input.matches(question.getRegex(language));
     }
-    
+
     public String getInput() {
         return input;
     }
-    
+
     @Override
     public boolean isFilledIn() {
         return input!=null && !input.equals("");

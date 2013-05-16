@@ -5,19 +5,19 @@
 @import models.EMessages
 
 @main(EMessages.get("schools.add"),breadcrumbs){
-	@commons.info(inf)
-	<div class="well">
-	@EMessages.get("schools.add.info") 
-	</div>
-	@if(schoolForm!=null){
-		@form(controllers.schools.routes.SchoolController.save()) {
+    @commons.info(inf)
+    <div class="well">
+    @EMessages.get("schools.add.info")
+    </div>
+    @if(schoolForm!=null){
+        @form(controllers.schools.routes.SchoolController.save()) {
 
-    	@formSchool(schoolForm)
+        @formSchool(schoolForm)
 
-    	<div class="actions">
-        	<input type="submit" value="Save" class="btn primary"> or
-        	<a href="@controllers.schools.routes.SchoolController.viewSchools()" class="btn">Cancel</a>
-    	</div>
-    	}
+        <div class="actions">
+            <input type="submit" value="Save" class="btn primary"> or
+            <a href="@controllers.schools.routes.SchoolController.viewSchools()" class="btn">Cancel</a>
+        </div>
+        }
     }
 }

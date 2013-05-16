@@ -21,12 +21,12 @@
     </div><br><br>
 
     <strong>@EMessages.get("user.pip.birth")</strong><br>
-	<div class="input-prepend">
+    <div class="input-prepend">
        <span class="add-on"><i class="icon-calendar"></i> </span>
        <input type="text" class="input-xlarge span11" id="bday" name="bday"
            value="@controllers.user.PersonalPageController.dateToString(models.user.AuthenticationManager.getInstance().getUser().data.birthdate)">
-	</div><br><br>
-           
+    </div><br><br>
+
     <strong>@EMessages.get("user.pip.gender")</strong><br>
     <div class="input-prepend">
        <span class="add-on"><i class="icon-user"></i></span>
@@ -45,7 +45,7 @@
       </select>
     </div><br><br>
 
-	<strong>@EMessages.get("user.pip.preflan")</strong><br>
+    <strong>@EMessages.get("user.pip.preflan")</strong><br>
     <div class="input-prepend">
         <span class="add-on"><i class="icon-globe"></i></span>
             <select name="prefLanguage" id="prefLanguage" class="span12"
@@ -54,7 +54,7 @@
                 @models.data.Language.getLanguage(models.user.AuthenticationManager.getInstance().getUser().data.preflanguage).getName()
             </option>
             @for(language <- models.data.Language.listLanguages().toList) {
-                @if(language.getCode() != models.user.AuthenticationManager.getInstance().getUser().data.preflanguage) {                     
+                @if(language.getCode() != models.user.AuthenticationManager.getInstance().getUser().data.preflanguage) {
                     <option value="@language.getCode()">
                         @language.getName()
                     </option>
@@ -62,13 +62,13 @@
             }
             </select>
     </div><br><br>
-        					
+
     <div class="control-group row-fluid">
-	    <p class="text-right">
-  		    <button type="submit" class="btn btn-primary" name="btn" id="btn">@EMessages.get("forms.submit")</button>
-  			<a href="/settings">
-  			    <button type="button" class="btn">@EMessages.get("forms.cancel")</button>
-  			</a>
-		</p>
-	</div>
-}						
+        <p class="text-right">
+              <button type="submit" class="btn btn-primary" name="btn" id="btn">@EMessages.get("forms.submit")</button>
+              <a href="/settings">
+                  <button type="button" class="btn">@EMessages.get("forms.cancel")</button>
+              </a>
+        </p>
+    </div>
+}

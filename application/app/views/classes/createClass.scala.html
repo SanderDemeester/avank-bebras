@@ -6,18 +6,18 @@ gradeValues : java.util.Map[String,String])
 @import models.EMessages
 
 @main(EMessages.get("classes.add"),breadcrumbs){
-	@commons.info(inf)
-	
-	@form(controllers.classgroups.routes.ClassGroupController.save()) {
+    @commons.info(inf)
 
-    	@classgroupForm(classForm,gradeValues)
+    @form(controllers.classgroups.routes.ClassGroupController.save()) {
+
+        @classgroupForm(classForm,gradeValues)
 
     <div class="actions">
-        <input type="submit" value="Save" class="btn primary"> or
+        <input type="submit" value="Save" class="btn btn-primary"> or
         <a href="@controllers.classgroups.routes.ClassGroupController.viewClasses()" class="btn">Cancel</a>
     </div>
     }
-	
-	
-	
+
+
+
 }

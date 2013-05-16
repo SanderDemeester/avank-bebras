@@ -2,86 +2,86 @@
     currentOrder: String, currentFilter: String, breadcrumbs : List[models.data.Link],
     ori : models.util.OperationResultInfo,
     cg : models.dbentities.ClassGroup)
-    
+
     @import views.html.management.list
-    
+
     @main(EMessages.get("classes.pupil.title"), breadcrumbs){
     @commons.info(ori)
-    
+
      @if(flash.containsKey("deleteerror")) {
         <div class="alert alert-error">
             @EMessages.get("classes.pupil.delete.error")
         </div>
     } else {
-    	@if(flash.containsKey("deletesuccess")) {
+        @if(flash.containsKey("deletesuccess")) {
         <div class="alert alert-success">
             @EMessages.get("classes.pupil.delete.success")
         </div>
     }
     }
-    
-  	@if(cg!=null){
-  		@EMessages.get("classes.pupil.classinfo")<br>
-  		<table class="table table-striped table-bordered table-hover table-condensed">
-  			<tr>
-  				<th>@EMessages.get("classes.main.form.id")</th>
-  				<th>@EMessages.get("classes.main.form.name")</th>
-  				<th>@EMessages.get("classes.main.form.level")</th>
-  				<th>@EMessages.get("classes.main.form.expdate")</th>  		
-  			</tr>
-  			<tr>
-  				<td>@cg.id</td>
-  				<td>@cg.name</td>
-  				<td>@cg.level</td>
-  				<td>@cg.getExpDate()</td>
-  			</tr>
-  		
-  		</table>
-  		
-  		@EMessages.get("classes.pupil.schoolinfo")<br>
-  		<table class="table table-striped table-bordered table-hover table-condensed">
-  			<tr>
-  				<th>@EMessages.get("schools.table.id")</th>
-  				<th>@EMessages.get("schools.table.name")</th>
-  				<th>@EMessages.get("schools.table.address")</th>
-  			</tr>
-  			<tr>
-  				<td>@cg.getSchool().id</td>
-  				<td>@cg.getSchool().name</td>
-  				<td>@cg.getSchool().address</td>
-  			</tr>  		
-  		</table>
-  		
-  		@EMessages.get("classes.pupil.teacherinfo")<br>
-  		<table class="table table-striped table-bordered table-hover table-condensed"> 
-  			<tr> 		
-  				<th>@EMessages.get("classes.teacher.id")</th>
-  				<th>@EMessages.get("classes.teacher.name")</th> 
-  			</tr> 	
-  			<tr>
-  				<td>@cg.getTeacher().data.id</td>
-  				<td>@cg.getTeacher().data.name</td>
-  			</tr>	
-  		</table>
-  		
-  		@if(cg.isActive()){
-  			@EMessages.get("classes.pupil.activeinfo")
-  		}else{
-  			@EMessages.get("classes.pupil.notactiveinfo")
-  		}
-  		<div class="actions">
-        	<a href="@controllers.classgroups.routes.ClassGroupController.editClass(cg.id)" class="btn">@EMessages.get("classes.pupil.editclassinfo")</a>
-        	<a href="@controllers.classgroups.routes.HelpTeacherController.viewHelp(cg.id)" class="btn">@EMessages.get("classes.pupil.viewhelp")</a>
-        	@if(cg.isActive()){
-        		<a href="@controllers.classgroups.routes.ClassPupilController.viewOldPupils(cg.id)" class="btn">@EMessages.get("classes.pupil.oldpupils")</a>
-        	}
-        	<a href="@controllers.classgroups.routes.ClassPupilController.downloadClass(cg.id)" class="btn">@EMessages.get("classes.pupil.download")</a>
-        	<a href="@controllers.classgroups.routes.ClassGroupIOController.uploadExisting(cg.id)" class="btn">Upload</a>
-    	</div>
-  	}
+
+      @if(cg!=null){
+          @EMessages.get("classes.pupil.classinfo")<br>
+          <table class="table table-striped table-bordered table-hover table-condensed">
+              <tr>
+                  <th>@EMessages.get("classes.main.form.id")</th>
+                  <th>@EMessages.get("classes.main.form.name")</th>
+                  <th>@EMessages.get("classes.main.form.level")</th>
+                  <th>@EMessages.get("classes.main.form.expdate")</th>
+              </tr>
+              <tr>
+                  <td>@cg.id</td>
+                  <td>@cg.name</td>
+                  <td>@cg.level</td>
+                  <td>@cg.getExpDate()</td>
+              </tr>
+
+          </table>
+
+          @EMessages.get("classes.pupil.schoolinfo")<br>
+          <table class="table table-striped table-bordered table-hover table-condensed">
+              <tr>
+                  <th>@EMessages.get("schools.table.id")</th>
+                  <th>@EMessages.get("schools.table.name")</th>
+                  <th>@EMessages.get("schools.table.address")</th>
+              </tr>
+              <tr>
+                  <td>@cg.getSchool().id</td>
+                  <td>@cg.getSchool().name</td>
+                  <td>@cg.getSchool().address</td>
+              </tr>
+          </table>
+
+          @EMessages.get("classes.pupil.teacherinfo")<br>
+          <table class="table table-striped table-bordered table-hover table-condensed">
+              <tr>
+                  <th>@EMessages.get("classes.teacher.id")</th>
+                  <th>@EMessages.get("classes.teacher.name")</th>
+              </tr>
+              <tr>
+                  <td>@cg.getTeacher().data.id</td>
+                  <td>@cg.getTeacher().data.name</td>
+              </tr>
+          </table>
+
+          @if(cg.isActive()){
+              @EMessages.get("classes.pupil.activeinfo")
+          }else{
+              @EMessages.get("classes.pupil.notactiveinfo")
+          }
+          <div class="actions">
+            <a href="@controllers.classgroups.routes.ClassGroupController.editClass(cg.id)" class="btn">@EMessages.get("classes.pupil.editclassinfo")</a>
+            <a href="@controllers.classgroups.routes.HelpTeacherController.viewHelp(cg.id)" class="btn">@EMessages.get("classes.pupil.viewhelp")</a>
+            @if(cg.isActive()){
+                <a href="@controllers.classgroups.routes.ClassPupilController.viewOldPupils(cg.id)" class="btn">@EMessages.get("classes.pupil.oldpupils")</a>
+            }
+            <a href="@controllers.classgroups.routes.ClassPupilController.downloadClass(cg.id)" class="btn">@EMessages.get("classes.pupil.download")</a>
+            <a href="@controllers.classgroups.routes.ClassGroupIOController.uploadExisting(cg.id)" class="btn">Upload</a>
+        </div>
+      }
     <h2>@EMessages.get("classes.pupil.list")</h2>
     @if(currentPage!=null){
     @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
     }
-    
+
     }

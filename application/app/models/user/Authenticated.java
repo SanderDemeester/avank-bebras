@@ -10,7 +10,7 @@ public abstract class Authenticated extends User{
         ROLES.add(Role.LANDINGPAGE);
         ROLES.add(Role.VIEWSTATS);
     }
-    
+
     @Override
     public boolean isAnon() {
         return false;

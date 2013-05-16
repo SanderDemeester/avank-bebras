@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.Arrays;
 
-import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.codehaus.jackson.node.ArrayNode;
 
@@ -19,7 +17,6 @@ import play.libs.Json;
 import models.EMessages;
 import models.dbentities.UserModel;
 import models.statistics.populations.Population;
-import models.statistics.populations.SinglePopulation;
 
 /**
  * A statistic that summarizes a population as a double. For instance, the
@@ -60,7 +57,7 @@ public abstract class ContinuousStatistic extends Statistic {
          * draw about exactly nothing. */
         double binCount = 0, binWidth = 0, average = 0;
         if(n != 0) {
-        
+
             /* Calculation the optimal bin width. */
             average = sum / n;
             double m3 = 0, m2 = 0;
@@ -105,7 +102,7 @@ public abstract class ContinuousStatistic extends Statistic {
             serie.put("name", colour);
             serie.put("color", colour);
             ArrayNode pairs = serie.putArray("data");
-            
+
             /* Counting the bin values */
             //double[] bins = new double[(int)Math.ceil(binCount)];
             Map<Integer, Integer> bins = new TreeMap<Integer, Integer>();

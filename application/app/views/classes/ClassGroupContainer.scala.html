@@ -3,7 +3,7 @@
 @EMessages.get("classes.import.info.classstart") <br />
 
 @if(cgc.isCGNew()){
-	@EMessages.get("classes.import.info.new") <br />
+    @EMessages.get("classes.import.info.new") <br />
 }
 <table class="table table-striped table-bordered table-hover table-condensed">
 <tr>
@@ -17,46 +17,46 @@
 </table>
 
 @if(!cgc.isCGValid()){
-	<span style="color:#ff0000">@EMessages.get("classes.import.info.classinvalid") <br />
-	@cgc.getCgMessage()</span>
+    <span style="color:#ff0000">@EMessages.get("classes.import.info.classinvalid") <br />
+    @cgc.getCgMessage()</span>
 }
 <br />
 @EMessages.get("classes.import.info.existstudent")<br />
 <table class="table table-striped table-bordered table-hover table-condensed">
-@for(prt <- cgc.getExistingPupils()){	
-	<tr>
-	<td>@prt.user.id</td>
-	<td>@prt.user.name</td>
-	<td>@prt.user.getBirthDate()</td>
-	<td>@prt.user.gender</td>
-	<td>@prt.user.preflanguage</td>	
-	<td>@prt.user.email</td>
-	@if(!prt.isValid){
-		<td><span style="color:#ff0000">
-			@prt.message
-		</span></td>
-	
-	}
-	</tr>
+@for(prt <- cgc.getExistingPupils()){
+    <tr>
+    <td>@prt.user.id</td>
+    <td>@prt.user.name</td>
+    <td>@prt.user.getBirthDate()</td>
+    <td>@prt.user.gender</td>
+    <td>@prt.user.preflanguage</td>
+    <td>@prt.user.email</td>
+    @if(!prt.isValid){
+        <td><span style="color:#ff0000">
+            @prt.message
+        </span></td>
+
+    }
+    </tr>
 }
 </table>
 
 @EMessages.get("classes.import.info.newstudent") <br />
 <table class="table table-striped table-bordered table-hover table-condensed">
 @for(prt <- cgc.getNewPupils()){
-	<tr>
-	<td>@prt.user.id</td>
-	<td>@prt.user.name</td>
-	<td>@prt.user.getBirthDate()</td>
-	<td>@prt.user.gender</td>
-	<td>@prt.user.preflanguage</td>	
-	<td>@prt.user.email</td>
-	@if(!prt.isValid){
-		<td><span style="color:#ff0000">
-			@prt.message
-		</span></td>
-	
-	}
-	</tr>
+    <tr>
+    <td>@prt.user.id</td>
+    <td>@prt.user.name</td>
+    <td>@prt.user.getBirthDate()</td>
+    <td>@prt.user.gender</td>
+    <td>@prt.user.preflanguage</td>
+    <td>@prt.user.email</td>
+    @if(!prt.isValid){
+        <td><span style="color:#ff0000">
+            @prt.message
+        </span></td>
+
+    }
+    </tr>
 }
 </table>

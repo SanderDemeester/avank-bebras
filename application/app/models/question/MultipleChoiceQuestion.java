@@ -78,7 +78,7 @@ public class MultipleChoiceQuestion extends Question{
         for (MultipleChoiceElement e : elements.get(language)) {
             if(e.getContent().equals(input)) chosenElement = e;
         }
-        
+
         if(chosenElement == null && input != null)
             throw new AnswerGeneratorException("Invalid multiple choice element.");
         return new MultipleChoiceAnswer(this, chosenElement, language);

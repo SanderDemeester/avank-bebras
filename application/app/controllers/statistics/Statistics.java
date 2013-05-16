@@ -5,19 +5,14 @@ import java.util.ArrayList;
 
 import javax.validation.Valid;
 
-import com.avaje.ebean.Ebean;
 
 import play.mvc.Result;
-import play.mvc.BodyParser;
-import play.mvc.BodyParser.Json;
 
 import controllers.EController;
 
-import models.dbentities.UserModel;
 import models.data.Link;
 import models.user.AuthenticationManager;
 import models.statistics.populations.Population;
-import models.statistics.populations.SinglePopulation;
 import models.statistics.populations.PopulationFactory;
 import models.statistics.populations.PopulationChooser;
 import models.statistics.populations.PopulationFactoryException;

@@ -3,8 +3,8 @@
 @import views.html.management.defaultEditExtended
 
 @defaultEditExtended(questionForm, manager, breadcrumbs) {
-	<hr />
-	<a class="btn pull-right" href="@controllers.question.routes.QuestionController.export(Integer.toString(q.getID()))">@EMessages.get("question.editor.exportAsZip")</a>
-	@previewQuestion(q)
+    <hr />
+    <a class="btn pull-right" href="@controllers.question.routes.QuestionController.export(Integer.toString(q.getID()))">@EMessages.get("question.editor.exportAsZip")</a>
+    @previewQuestion(q)
 }
 

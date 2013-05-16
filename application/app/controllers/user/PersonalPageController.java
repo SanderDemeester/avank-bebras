@@ -4,25 +4,21 @@ import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Expr;
 
 import controllers.EController;
-import controllers.user.management.UserManager;
 import controllers.util.InputChecker;
 import controllers.util.PasswordHasher;
 import controllers.util.PasswordHasher.SaltAndPassword;
 import models.EMessages;
 import models.data.Link;
 import models.dbentities.UserModel;
-import models.management.ModelState;
 import models.user.AuthenticationManager;
 import models.user.Gender;
 import models.user.Role;
 import play.data.DynamicForm;
-import play.data.validation.Constraints.Required;
 import play.mvc.Content;
 import play.mvc.Result;
 import play.mvc.Results;
 import views.html.commons.noaccess;
 import views.html.user.settings;
-import views.html.user.management.edituser;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -74,14 +70,14 @@ public class PersonalPageController extends EController {
 
         // email
         if (!InputChecker.getInstance().isCorrectEmail(editInfo.get("email")) || Ebean.find(UserModel.class).where().and(Expr.eq(
-			  	"email",editInfo.get("email")),Expr.ne("id",AuthenticationManager.getInstance().getUser().getID())).findUnique() != null) {
-        	if(editInfo.get("email").isEmpty()){
-        		userModel.email = null;
-        		AuthenticationManager.getInstance().getUser().data.email = null;
-        	}else{
-		        flash("error", EMessages.get(EMessages.get("register.same_email")));
-	            return Results.redirect(controllers.user.routes.PersonalPageController.show(1));
-        	}
+                  "email",editInfo.get("email")),Expr.ne("id",AuthenticationManager.getInstance().getUser().getID())).findUnique() != null) {
+            if(editInfo.get("email").isEmpty()){
+                userModel.email = null;
+                AuthenticationManager.getInstance().getUser().data.email = null;
+            }else{
+                flash("error", EMessages.get(EMessages.get("register.same_email")));
+                return Results.redirect(controllers.user.routes.PersonalPageController.show(1));
+            }
         } else {
             userModel.email = editInfo.get("email");
             AuthenticationManager.getInstance().getUser().data.email = editInfo.get("email");
@@ -153,26 +149,26 @@ public class PersonalPageController extends EController {
         DynamicForm editPass = form().bindFromRequest();
         UserModel userModel = Ebean.find(UserModel.class).where().eq(
                 "id", AuthenticationManager.getInstance().getUser().getID()).findUnique();
-		
+
         if(!AuthenticationManager.getInstance().hasCurrentUserSamePassw(editPass.get("current_pwd"))) {
-        	flash("error", EMessages.get(EMessages.get("error.invalid_password")));
+            flash("error", EMessages.get(EMessages.get("error.invalid_password")));
             return Results.redirect(controllers.user.routes.PersonalPageController.show(2));
         }
-        
+
         if (userModel == null || !editPass.get("n_password").equals(editPass.get("controle_password"))) {
-        	flash("error", EMessages.get(EMessages.get("register.password_mismatch")));
+            flash("error", EMessages.get(EMessages.get("register.password_mismatch")));
             return Results.redirect(controllers.user.routes.PersonalPageController.show(2));
         }
-        
+
         if (editPass.hasErrors()) {
             flash("error", EMessages.get(EMessages.get("forms.error")));
             return Results.redirect(controllers.user.routes.PersonalPageController.show(2));
         }
-        
+
         PasswordHasher.SaltAndPassword sp = PasswordHasher.generateSP(editPass.get("n_password").toCharArray());
-	    String passwordHEX = sp.password;
+        String passwordHEX = sp.password;
         String passwordSalt = sp.salt;
-        
+
         userModel.password = passwordHEX;
         userModel.hash = passwordSalt;
 

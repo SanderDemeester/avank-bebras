@@ -3,9 +3,7 @@ package models.statistics.statistics;
 import java.lang.Double;
 import java.util.Date;
 
-import com.avaje.ebean.Ebean;
 
-import models.statistics.populations.Population;
 import models.dbentities.UserModel;
 
 public class Age extends ContinuousStatistic {

@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.HashMap;
 
-import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.codehaus.jackson.node.ArrayNode;
 

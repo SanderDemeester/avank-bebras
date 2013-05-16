@@ -18,7 +18,7 @@ public class QuestionFeedback {
     private Map<Question, Boolean> feedbackElements;
     private Map<Question, Answer> answers;
     private int score;
-    
+
     private String competitionID;
     private int questionSetID;
     private String userid;
@@ -36,23 +36,23 @@ public class QuestionFeedback {
     public QuestionFeedback(Map<Question, Answer> answers, String competitionID, String questionSetID, int timeLeft, String userid, String languageCode) {
         makeFeedbackElements(answers);
         this.answers = answers;
-        
+
         this.competitionID = competitionID;
         this.questionSetID = Integer.parseInt(questionSetID);
         this.userid = userid;
         this.languageCode = languageCode;
-        
+
         calculateScore();
     }
-    
+
     public String getCompetitionID() {
         return this.competitionID;
     }
-    
+
     public int getQuestionSetID() {
         return this.questionSetID;
     }
-    
+
     private void calculateScore() {
         QuestionSetModel qsModel = Ebean.find(QuestionSetModel.class).where().idEq(this.questionSetID).findUnique();
         QuestionSet questionSet = new QuestionSet(qsModel);
@@ -66,7 +66,7 @@ public class QuestionFeedback {
             }
         }
     }
-    
+
     private void makeFeedbackElements(Map<Question, Answer> answers) {
         feedbackElements = new HashMap<Question, Boolean>();
         for(Entry<Question, Answer> entry : answers.entrySet()) {
@@ -83,7 +83,7 @@ public class QuestionFeedback {
     public Map<Question, Boolean> getFeedbackElements() {
         return feedbackElements;
     }
-    
+
     /**
      * Get the answers
      * @return the questions mapped on answers
@@ -99,7 +99,7 @@ public class QuestionFeedback {
     public int getScore() {
         return score;
     }
-    
+
     /**
      * Returns the token for the CompetitionUserState for this user
      * @return the token for this user
@@ -107,7 +107,7 @@ public class QuestionFeedback {
     public String getToken() {
         return this.userid;
     }
-    
+
     /**
      * Returns the language code the answers were solved in
      * @return language code

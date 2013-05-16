@@ -20,7 +20,7 @@ import test.ContextTest;
  *
  */
 public class FAQModelTest extends ContextTest {
-    
+
     @Before
     public void clear(){
         List<FAQModel> cp = Ebean.find(FAQModel.class).findList();
@@ -42,7 +42,7 @@ public class FAQModelTest extends ContextTest {
         }catch(PersistenceException pe){
             Assert.fail(pe.toString());
         }
-        
+
         // Test that this model is actually present in the database
         Assert.assertNotNull(Ebean.find(FAQModel.class).where().eq("name","Testcase").findUnique());
     }

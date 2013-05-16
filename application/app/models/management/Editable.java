@@ -18,7 +18,7 @@ public @interface Editable {
      * @return if the field should only be editable upon creation of a model
      */
     boolean uponCreation() default false;
-    
+
     /**
      * An optional argument to tell the default form that this field should never be shown
      * to the user, only in a hidden field.
@@ -27,7 +27,7 @@ public @interface Editable {
      * @return if the field should be hidden in forms
      */
     boolean alwaysHidden() default false;
-    
+
     /**
      * An optional argument to tell the default form that this field should never be shown
      * to the user in lists.
