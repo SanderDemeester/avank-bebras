@@ -347,6 +347,7 @@ competitions.grade.warning = Mise en garde !
 competitions.grade.info = Vous êtes sur le point de prendre un concours. Afin de sélectionner les questions appropriées, nous avons besoin de connaître votre niveau désiré. Veuillez sélectionner la catégorie que vous préférez
 competitions.grade.breadcrumb = Sélectionnez la catégorie
 competitions.take.landing = Prendre rapidement une compétition
+competitions.take.more = Plus de concours
 
 competition.history.warning = Mise en garde !
 competition.history.info = Vous n'êtes actuellement pas connecté. Afin de suivre vos résultats et statistiques, vous devez être signé en.

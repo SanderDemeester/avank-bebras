@@ -347,6 +347,7 @@ competitions.grade.warning = Warnung!
 competitions.grade.info = Sie sind dabei, einen Wettbewerb zu nehmen. Um die entsprechenden Fragen auswählen, müssen wir Ihre gewünschte Klasse kennen. Bitte wählen Sie die Klasse, die Sie bevorzugen
 competitions.grade.breadcrumb = Wählen Sie Klasse
 competitions.take.landing =  Schnell einen Wettbewerb machen
+competitions.take.more = Mehr Wettbewerbe
 
 competition.history.warning = Warnung!
 competition.history.info = Sie sind momentan nicht eingeloggt. Um Titel aus Ihrer Ergebnisse und Statistiken zu halten, müssen Sie angemeldet sein.
