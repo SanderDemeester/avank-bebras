@@ -21,13 +21,13 @@ import junit.framework.Assert;
 public class UserDatabaseTest extends ContextTest {
 
     private SecureRandom random = new SecureRandom();
-    
+
     @Before
     public void cleanDB(){
-    	Collection<UserModel> um = Ebean.find(UserModel.class).findList();
-    	for(UserModel u : um){
-    		u.delete();
-    	}
+        Collection<UserModel> um = Ebean.find(UserModel.class).findList();
+        for(UserModel u : um){
+            u.delete();
+        }
     }
 
     /*
@@ -97,12 +97,12 @@ public class UserDatabaseTest extends ContextTest {
                 "mail@localhost",
                 Gender.Female,"nl"));
         teacher.data.save();
-        
-       
+
+
 
         Assert.assertNotNull(Ebean.find(UserModel.class).where().eq("id",teacherID).findUnique());
         Assert.assertNotNull(Ebean.find(UserModel.class).where().eq("name", name).findUnique());
-        
+
         UserModel userModel = Ebean.find(UserModel.class).where().eq("id", teacher.data.id).findUnique();
         Assert.assertEquals("gender",true, userModel.gender == Gender.Female);
         Assert.assertEquals("preflan",true, userModel.preflanguage == "nl");
@@ -149,7 +149,7 @@ public class UserDatabaseTest extends ContextTest {
         Assert.assertNotNull(Ebean.find(UserModel.class).where().eq("id",organizerID).findUnique());
         Assert.assertNotNull(Ebean.find(UserModel.class).where().eq("name", name).findUnique());
         UserModel userModel = Ebean.find(UserModel.class).where().eq("id", organizer.data.id).findUnique();
-        
+
         Assert.assertEquals(true, userModel.gender == Gender.Female);
         Assert.assertEquals(true, userModel.preflanguage == "en");
         Assert.assertEquals(true, userModel.email =="mail@localhost");

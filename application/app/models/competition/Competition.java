@@ -87,7 +87,7 @@ public class Competition {
     public CompetitionType getType(){
         return data.type;
     }
-    
+
     /**
      * Sets the state for this competition.
      * @param competitionState new competition state
@@ -234,19 +234,19 @@ public class Competition {
     public CompetitionState getCompetitionState(User pupil){
         throw new UnsupportedOperationException();
     }
-    
+
     public String getID() {
         return this.data.getID();
     }
-    
+
     public Date getExpirationDate() {
         return this.data.endtime;
     }
-    
+
     public Date getStartDate() {
         return this.data.starttime;
     }
-    
+
     public String getName() {
         return this.data.name;
     }

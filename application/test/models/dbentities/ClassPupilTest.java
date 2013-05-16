@@ -44,7 +44,7 @@ public class ClassPupilTest extends ContextTest {
         }catch(PersistenceException p){
             Assert.fail(p.toString());
         }
-        
+
         // Test that this model is actually present in the database
         assertNotNull(Ebean.find(ClassPupil.class).where().eq("indid","a").findUnique());
     }

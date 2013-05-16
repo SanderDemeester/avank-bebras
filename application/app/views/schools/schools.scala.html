@@ -4,18 +4,18 @@
 @import views.html.management.list
 
 @main(EMessages.get("schools.title"),breadcrumbs){
-	@commons.info(inf)
-	@if(flash.containsKey("success")) {
+    @commons.info(inf)
+    @if(flash.containsKey("success")) {
         <div class="alert alert-info">
             @EMessages.get("schools.add.success") @flash.get("success")
         </div>
-    } 
-	@EMessages.get("schools.listtext")<br><br>
-	
-	@* If currentPage is null, do not display the list *@
+    }
+    @EMessages.get("schools.listtext")<br><br>
+
+    @* If currentPage is null, do not display the list *@
 
     @if(currentPage!=null){
-       	@list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
+           @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
     }
-	
+
 }

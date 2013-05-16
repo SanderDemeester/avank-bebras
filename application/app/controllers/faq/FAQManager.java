@@ -14,11 +14,11 @@ import play.mvc.Call;
  */
 public class FAQManager extends Manager<FAQModel> {
 
-	public static final int PAGESIZE = 15;
-	
-	public FAQManager(ModelState state) {
-		super(FAQModel.class,state, "id", "language");
-	}
+    public static final int PAGESIZE = 15;
+
+    public FAQManager(ModelState state) {
+        super(FAQModel.class,state, "id", "language");
+    }
 
     @Override
     public Call getAddRoute() {
@@ -42,7 +42,7 @@ public class FAQManager extends Manager<FAQModel> {
 
     @Override
     public play.api.mvc.Call getSaveRoute() {
-    	//Using non-default form, so not necessary
+        //Using non-default form, so not necessary
         return null;
     }
 
@@ -56,9 +56,9 @@ public class FAQManager extends Manager<FAQModel> {
     public String getMessagesPrefix() {
         return "faq";
     }
-   
-    
-    
-    
+
+
+
+
 
 }

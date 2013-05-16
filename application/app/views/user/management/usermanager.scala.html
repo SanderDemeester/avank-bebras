@@ -23,13 +23,13 @@
                         <th><b><h5>@EMessages.get("user.management.meaning")</h5></b></th>
                     </thead>
                         @for(utype <- UserType.values()){
-                            <tr><td>@utype.toString()</td><td>@EMessages.get("user." + utype.toString())</td></tr>     
+                            <tr><td>@utype.toString()</td><td>@EMessages.get("user." + utype.toString())</td></tr>
                         }
                 </table>
-            </h6>    
+            </h6>
         </div>
         <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">@EMessages.get("user.management.close")</button>
         </div>
-    </div>  
+    </div>
 }

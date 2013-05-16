@@ -60,7 +60,7 @@ public abstract class ContinuousStatistic extends Statistic {
          * draw about exactly nothing. */
         double binCount = 0, binWidth = 0, average = 0;
         if(n != 0) {
-        
+
             /* Calculation the optimal bin width. */
             average = sum / n;
             double m3 = 0, m2 = 0;
@@ -105,7 +105,7 @@ public abstract class ContinuousStatistic extends Statistic {
             serie.put("name", colour);
             serie.put("color", colour);
             ArrayNode pairs = serie.putArray("data");
-            
+
             /* Counting the bin values */
             //double[] bins = new double[(int)Math.ceil(binCount)];
             Map<Integer, Integer> bins = new TreeMap<Integer, Integer>();

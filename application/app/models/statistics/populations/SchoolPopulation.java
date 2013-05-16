@@ -49,7 +49,7 @@ public class SchoolPopulation extends Population {
 
     /** @see models.statistics.populations.Population.Factory */
     public static class Factory implements Population.Factory {
-        @Override public Population create(String identifier) 
+        @Override public Population create(String identifier)
                 throws PopulationFactoryException {
             try {
                 SchoolModel sm = Ebean.find(SchoolModel.class, identifier);

@@ -13,16 +13,16 @@
 ***************************************@
 @showflash()
 
-	@if(!manager.isIgnoreErrors() && modelForm.hasErrors()) {
-		<div class="alert alert-error">
-			<strong>Error</strong> There seem to be some issues with the following fields:
-			<ul>
-			@for((k, v) <- modelForm.errors()) {
-				<li>@EMessages.get(manager.getMessagesPrefix() + ".form." + k)</li>
-			}
-			</ul>
-		</div>
-	}
+    @if(!manager.isIgnoreErrors() && modelForm.hasErrors()) {
+        <div class="alert alert-error">
+            <strong>Error</strong> There seem to be some issues with the following fields:
+            <ul>
+            @for((k, v) <- modelForm.errors()) {
+                <li>@EMessages.get(manager.getMessagesPrefix() + ".form." + k)</li>
+            }
+            </ul>
+        </div>
+    }
 
     <fieldset>
         <br>
@@ -73,7 +73,7 @@
                                         '_class -> "defaultFormElement",
                                         '_showConstraints -> false,
                                         '_id -> "datepick"
-                                    )       
+                                    )
                             }
                         }
                     }
@@ -85,10 +85,10 @@
                    </div>
                </div>
             </div>
-       </div>	
-        
-        
-        
+       </div>
+
+
+
         <div class="accordion" id="accordion2">
             <div class="accordion-group">
                 <div class="accordion-heading">
@@ -99,10 +99,10 @@
                <div id="collapseTwo" class="accordion-body collapse">
                    <div class="accordion-inner">
                                <div class="alert alert-block">
-  		                           <h4>@EMessages.get("users.form.warning")</h4>
-  		                           @EMessages.get("users.form.passwedit")
-  		                           <br>
-  		                           <br>
+                                     <h4>@EMessages.get("users.form.warning")</h4>
+                                     @EMessages.get("users.form.passwedit")
+                                     <br>
+                                     <br>
                                    @inputText(
                                        modelForm("password1"),
                                        '_label -> (EMessages.get("users.form.passw")+":"),
@@ -116,12 +116,12 @@
                                        '_class -> "defaultFormElement",
                                        '_showConstraints -> false
                                    )
-                               </div> 
+                               </div>
                    </div>
                </div>
             </div>
-       </div>	
-       
+       </div>
+
                <div class="accordion" id="accordion3">
             <div class="accordion-group">
                 <div class="accordion-heading">
@@ -136,25 +136,25 @@
                            @EMessages.get("users.form.block")
                            <br>
                            <br>
-                           @checkbox(modelForm("blocked"), 
-  		                       '_label -> (EMessages.get("otheruser.block")+":"),
-  		                       '_class -> "defaultFormElement", 
-  		                       '_showConstraints -> false
-  		                   )
-  		                   <br>
-  		                   <br>
-  		                   @inputText(modelForm("blockeduntil"), 
-  		                       '_label -> (EMessages.get("users.form.blockeduntil")+":"),
-  		                       '_class -> "defaultFormElement", 
-  		                       '_showConstraints -> false,
-  		                       '_id -> "datepick"
-  		                   )
-					   </div>                   
+                           @checkbox(modelForm("blocked"),
+                                 '_label -> (EMessages.get("otheruser.block")+":"),
+                                 '_class -> "defaultFormElement",
+                                 '_showConstraints -> false
+                             )
+                             <br>
+                             <br>
+                             @inputText(modelForm("blockeduntil"),
+                                 '_label -> (EMessages.get("users.form.blockeduntil")+":"),
+                                 '_class -> "defaultFormElement",
+                                 '_showConstraints -> false,
+                                 '_id -> "datepick"
+                             )
+                       </div>
                    </div>
                </div>
             </div>
-       </div>	
-       
+       </div>
+
                    <div class="accordion" id="accordion4">
             <div class="accordion-group">
                 <div class="accordion-heading">
@@ -170,63 +170,62 @@
                            <br>
                            <br>
                            <div class="actions">
-                            	 <input type="hidden" value="@modelForm.get().asInstanceOf[UserModel].id" id="bebrasID" />
-						    	 <input type="submit" value="@EMessages.get("otheruser.mimic")" class=" btn btn-primary" id="mimic">
+                                 <input type="hidden" value="@modelForm.get().asInstanceOf[UserModel].id" id="bebrasID" />
+                                 <input type="submit" value="@EMessages.get("otheruser.mimic")" class=" btn btn-primary" id="mimic">
                            </div>
                        </div>
                    </div>
                </div>
             </div>
-       </div>	
+       </div>
     </fieldset>
 
 
-	<script type="text/javascript">
-	
-		$("#mimic").live("click",function(){
-			
-	        var request = $.ajax({
-		    type: 'POST',
-			async : false,
-		    url: '/mimic',
-		    data: {"id": $("#bebrasID").val()}
-	        });
-	        request.done(function(data){
-		    document.cookie="@models.user.AuthenticationManager.COOKIENAME" + "=" + data + ";expires=1000";
-            window.location = "/";
-		    });
+    <script type="text/javascript">
 
-	        request.fail(function(jqXHR, data){
-		    $("#mimic_alert").show('fast').attr("class","alert alert-error").text(jqXHR.responseText + ".");
-	        });
+        $("#mimic").live("click",function(){
+
+            var request = $.ajax({
+            type: 'POST',
+            async : false,
+            url: '/mimic',
+            data: {"id": $("#bebrasID").val()}
+            });
+            request.done(function(data){
+            document.cookie="@models.user.AuthenticationManager.COOKIENAME" + "=" + data + ";expires=1000";
+            window.location = "/";
+            });
+
+            request.fail(function(jqXHR, data){
+            $("#mimic_alert").show('fast').attr("class","alert alert-error").text(jqXHR.responseText + ".");
+            });
         });
-	
-		$("#registrationdate").datepicker({ format: 'dd/mm/yyyy' });
-		$("#birthdate").datepicker({ format: 'dd/mm/yyyy' });		
-		$( "#blockeduntil" ).datepicker({      
-            format: 'dd/mm/yyyy'  
+
+        $("#registrationdate").datepicker({ format: 'dd/mm/yyyy' });
+        $("#birthdate").datepicker({ format: 'dd/mm/yyyy' });
+        $( "#blockeduntil" ).datepicker({
+            format: 'dd/mm/yyyy'
         });
-		
-		document.getElementById('password1').type = 'password'
-		document.getElementById('password2').type = 'password'
-		
-		if(!$('#blocked').is(':checked')){
-		    document.getElementById('blockeduntil').disabled = true
-		}
-		
-		$('#blocked').click(function(){
-    	    if (this.checked) {
+
+        document.getElementById('password1').type = 'password'
+        document.getElementById('password2').type = 'password'
+
+        if(!$('#blocked').is(':checked')){
+            document.getElementById('blockeduntil').disabled = true
+        }
+
+        $('#blocked').click(function(){
+            if (this.checked) {
                 document.getElementById('blockeduntil').disabled = false
                 $('#blocked').prop('checked', true);
             } else {
-            	document.getElementById('blockeduntil').disabled = true
-            	$('#blocked').prop('checked', false);
+                document.getElementById('blockeduntil').disabled = true
+                $('#blocked').prop('checked', false);
             }
         })
-				
-		wrap_type_id.options[$("#wrap_type_id option[value='@controllers.user.management.UserManagerController.getUserType(modelForm.get().asInstanceOf[UserModel].id)']").index()].selected = true
-		wrap_gender_id.options[$("#wrap_gender_id option[value='@controllers.user.management.UserManagerController.getUserGender(modelForm.get().asInstanceOf[UserModel].id)']").index()].selected = true
-		wrap_language_id.options[$("#wrap_language_id option[value='@controllers.user.management.UserManagerController.getUserLang(modelForm.get().asInstanceOf[UserModel].id)']").index()].selected = true
-		
-	</script>
-    
+
+        wrap_type_id.options[$("#wrap_type_id option[value='@controllers.user.management.UserManagerController.getUserType(modelForm.get().asInstanceOf[UserModel].id)']").index()].selected = true
+        wrap_gender_id.options[$("#wrap_gender_id option[value='@controllers.user.management.UserManagerController.getUserGender(modelForm.get().asInstanceOf[UserModel].id)']").index()].selected = true
+        wrap_language_id.options[$("#wrap_language_id option[value='@controllers.user.management.UserManagerController.getUserLang(modelForm.get().asInstanceOf[UserModel].id)']").index()].selected = true
+
+    </script>

@@ -39,8 +39,8 @@ public class ClassPopulation extends Population {
     }
 
     @Override public List<UserModel> getUsers() { //TODO Felix, check if this does what it should
-    	
-    	return classGroup.getPupils(ClassGroup.PupilSet.ALL);
+
+        return classGroup.getPupils(ClassGroup.PupilSet.ALL);
 
     }
 

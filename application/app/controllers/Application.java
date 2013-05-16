@@ -29,7 +29,7 @@ public class Application extends EController {
     public static Result index() {
         return ok(index.render("Nothing here yet...", breadcrumbs));
     }
-    
+
     /**
      * Change the language in this session
      * @param code language code to change the language to

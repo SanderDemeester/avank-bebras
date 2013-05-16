@@ -226,9 +226,9 @@ public class PopulationChooser {
                 List<UserModel> users = new ArrayList<UserModel>();
                 users.add(user.data);
                 for(ClassGroup cg : classes) {
-                    try { 
-                    	users.addAll(cg.getPupils(ClassGroup.PupilSet.ALL)); 
-                    	}
+                    try {
+                        users.addAll(cg.getPupils(ClassGroup.PupilSet.ALL));
+                        }
                     catch (PersistenceException e) {}
                 }
                 chooser.newType(
@@ -243,9 +243,9 @@ public class PopulationChooser {
                 /* Schools: Where he teaches. */
                 Set<SchoolModel> schools = new HashSet<SchoolModel>();//TODO felix, check if this is correct
                 for(ClassGroup cg : classes) {
-                	try{
-                		schools.add(Ebean.find(SchoolModel.class,cg.schoolid));
-                	}catch(PersistenceException pe){}
+                    try{
+                        schools.add(Ebean.find(SchoolModel.class,cg.schoolid));
+                    }catch(PersistenceException pe){}
                 }
                 chooser.newType(
                     PopulationType.SCHOOL,
@@ -307,7 +307,7 @@ public class PopulationChooser {
         Iterator<?> it = l.iterator();
         try {
             while(it.hasNext()) pops.add(c.newInstance(it.next()));
-        	
+
         } catch(Exception e) {
             throw new RuntimeException(e.getMessage());
         }

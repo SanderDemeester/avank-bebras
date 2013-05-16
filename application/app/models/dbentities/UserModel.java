@@ -55,73 +55,73 @@ public class UserModel extends ManageableModel implements Listable{
     @NotNull
     @JoinColumn(name="id")
     public String id;
-    
+
     @Enumerated(EnumType.STRING)
     @ManyToOne
     @NotNull
-	@JoinColumn(name="type")
+    @JoinColumn(name="type")
     public UserType type;
-    
+
     @Transient
     @Editable
     public UserTypeWrap wrap_type;
-    
+
     @Editable
     @NotNull
     @JoinColumn(name="name")
     public String name;
-    
+
     @Editable
     @JoinColumn(name="email")
     public String email;
-    
+
     @Enumerated(EnumType.STRING)
     @NotNull
     @ManyToOne
     @JoinColumn(name="gender")
     public Gender gender;
-    
+
     @Transient
     @Editable
     public GenderWrap wrap_gender;
-    
+
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     @Editable
-	@ManyToOne
-	@NotNull
-	@JoinColumn(name="bday")
+    @ManyToOne
+    @NotNull
+    @JoinColumn(name="bday")
     public Date birthdate;
-    
+
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     @Editable
     @ManyToOne
     @NotNull
     @JoinColumn(name="regdate")
     public Date registrationdate;
-    
+
     @ManyToOne
     @NotNull
     @JoinColumn(name="language")
     public String preflanguage;
-    
+
     @Editable
     @Transient
     public Language wrap_language;
-    
+
     @Editable
     @JoinColumn(name="comment")
     public String comment;
-    
+
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     @Editable
     @ManyToOne
     @JoinColumn(name="blockeduntil")
     public Date blockeduntil;
-    
+
     @Editable
     @Transient
     public boolean blocked;
-   
+
     public String password;
     public String hash;
     public String telephone;
@@ -129,10 +129,10 @@ public class UserModel extends ManageableModel implements Listable{
     public String reset_token;
 
     @Override
-	public String getID() {
-		return id;
-	}    
-    
+    public String getID() {
+        return id;
+    }
+
     @Column(name="class")
     public Integer classgroup;
 
@@ -153,14 +153,14 @@ public class UserModel extends ManageableModel implements Listable{
         this.preflanguage = preflanguage;
         this.blockeduntil = null;
         EMessages.setLang(preflanguage);
-      
+
     }
 
     public UserModel() {
-		//empty constructor
-	}
+        //empty constructor
+    }
 
-	/**
+    /**
      * A finder for User.
      * We will use this finder to execute specific sql query's.
      */
@@ -176,38 +176,38 @@ public class UserModel extends ManageableModel implements Listable{
         return options;
     }
 
-	@Override
-	public String[] getFieldValues() {
-		String[] res = {
-				id,
-				type.toString(),
-				name,
-				email,
-				EMessages.get("user." + gender.toString()),
-				convertDate(birthdate),
-				convertDate(registrationdate),
-				EMessages.get("languages." + preflanguage),
-				comment,
-				DateFormatter.formatDate(this.blockeduntil)
-		};		
-		return res;
-	}
-	
-	public String getBirthDate(){
-		return convertDate(this.birthdate);
-	}
-	
-	private String convertDate(Date d){
-		return DateFormatter.formatDate(d);
-	}
+    @Override
+    public String[] getFieldValues() {
+        String[] res = {
+                id,
+                type.toString(),
+                name,
+                email,
+                EMessages.get("user." + gender.toString()),
+                convertDate(birthdate),
+                convertDate(registrationdate),
+                EMessages.get("languages." + preflanguage),
+                comment,
+                DateFormatter.formatDate(this.blockeduntil)
+        };
+        return res;
+    }
+
+    public String getBirthDate(){
+        return convertDate(this.birthdate);
+    }
+
+    private String convertDate(Date d){
+        return DateFormatter.formatDate(d);
+    }
 
         /**
-	 * 
-	 * @return whether the user is currently blocked
-	 */
-	public boolean isCurrentlyBlocked(){
-		if(this.blockeduntil==null) return false;
-		Date today = Calendar.getInstance().getTime();
-		return !today.after(this.blockeduntil);
-	}
+     *
+     * @return whether the user is currently blocked
+     */
+    public boolean isCurrentlyBlocked(){
+        if(this.blockeduntil==null) return false;
+        Date today = Calendar.getInstance().getTime();
+        return !today.after(this.blockeduntil);
+    }
 }

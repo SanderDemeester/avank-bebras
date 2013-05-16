@@ -18,5 +18,5 @@ public enum UserType {
     AUTHOR,
     PUPIL_OR_INDEP,
     ANON;
-    
+
 }
