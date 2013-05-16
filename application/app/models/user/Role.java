@@ -20,7 +20,7 @@ public class Role implements Comparable<Role>{
     \* ====================================================================== */
 
     // Mimicing
-    public static Role MIMIC = new Role("Mimick user",
+    public static Role MIMIC = new Role("links.mimic",
         new Link("links.mimic","/mimic")
     );
 

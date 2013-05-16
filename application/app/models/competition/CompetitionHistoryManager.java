@@ -103,6 +103,6 @@ public class CompetitionHistoryManager extends Manager<CompetitionModel> {
      */
     @Override
     public String getMessagesPrefix() {
-        return "competition.history";
+        return "competition.manager";
     }
 }
