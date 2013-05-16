@@ -142,8 +142,11 @@
     \begin{subsection}{Mail}
         TODO: Eddy $\&|$ Sander
     \end{subsection}
-    \begin{subsection}{ClassGroups}
-        TODO: Jens (zeker xls dingen vermelden)
+    \begin{subsection}{ClassGroups: import and export}
+    	The importing of classgroups from xlsx files and the exporting of classgroups to XLSX files happens in two 				steps. 
+    	The importing happens as following. The file is uploaded and given to the XLSXImporter class. The 						import function of this class reads the file and returns it as a List of Lists of Strings. Each List of 					Strings represents a row in the XLSX file, with each String in said List representing a cell of that row. The 		resulting list of list of Strings is transferred to the ClassGroupIO class. The import function of that class 		parses the List in a collection of wrappers of ClassGroup objects. These wrappers contain the imported 					ClassGroup object and all UserModel object that should be linked to that ClassGroup. They also contain a 				flag and message for each object which signify whether the imported data is valid (e.g. is there a School 				that has School id that was given in the file) and a message that gives more information on what is wrong 				with the imported data (if anything). This collection of wrappers is then returned to the Controller which 				shows it to the user in a confirmation screen. If the user saves, all valid data is saved.
+    	The exporting goes in the reverse way. First the export function of the ClassGroupIO class writes the 					ClassGroup data to a List of Lists of Strings. Then the export function of XLSXImported writes that List of 				Lists of Strings to an XLSX file which is then returned to the user.
+        
     \end{subsection}
     \begin{subsection}{Datadaemon}
         This singleton object always runs on the server and is able to perform
