@@ -7,6 +7,7 @@ import controllers.EController;
 import controllers.user.management.UserManager;
 import controllers.util.InputChecker;
 import controllers.util.PasswordHasher;
+import controllers.util.PasswordHasher.SaltAndPassword;
 import models.EMessages;
 import models.data.Link;
 import models.dbentities.UserModel;
@@ -149,34 +150,31 @@ public class PersonalPageController extends EController {
         breadcrumbs.add(new Link("Home", "/"));
         breadcrumbs.add(new Link(EMessages.get("edit_pwd.edit_pwd"), "/passwedit"));
 
-	System.out.println("hierhier");
-
         DynamicForm editPass = form().bindFromRequest();
         UserModel userModel = Ebean.find(UserModel.class).where().eq(
                 "id", AuthenticationManager.getInstance().getUser().getID()).findUnique();
-
-        System.out.println(userModel.id);
-
-        //TODO: check current_pwd
-
-        System.out.println(userModel.password);
-        PasswordHasher.SaltAndPassword sap = PasswordHasher.generateSP(editPass.get("current_pwd").toCharArray());
-        System.out.println(sap.password);
-        System.out.println(userModel.password.equals(sap.password));
-
-        if (userModel == null || !editPass.get("n_password").equals(editPass.get("controle_password"))) {
-            return ok(noaccess.render(breadcrumbs));
+		
+        if(!AuthenticationManager.getInstance().hasCurrentUserSamePassw(editPass.get("current_pwd"))) {
+        	flash("error", EMessages.get(EMessages.get("error.invalid_password")));
+            return Results.redirect(controllers.user.routes.PersonalPageController.show(2));
         }
+        
+        if (userModel == null || !editPass.get("n_password").equals(editPass.get("controle_password"))) {
+        	flash("error", EMessages.get(EMessages.get("register.password_mismatch")));
+            return Results.redirect(controllers.user.routes.PersonalPageController.show(2));
+        }
+        
         if (editPass.hasErrors()) {
             flash("error", EMessages.get(EMessages.get("forms.error")));
             return Results.redirect(controllers.user.routes.PersonalPageController.show(2));
         }
+        
         PasswordHasher.SaltAndPassword sp = PasswordHasher.generateSP(editPass.get("n_password").toCharArray());
-        String passwordHEX = sp.password;
-        String saltHEX = sp.salt;
-
+	    String passwordHEX = sp.password;
+        String passwordSalt = sp.salt;
+        
         userModel.password = passwordHEX;
-        userModel.hash = saltHEX;
+        userModel.hash = passwordSalt;
 
         userModel.save();
 

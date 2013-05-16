@@ -45,6 +45,7 @@ error.mimic.cant_find_user = Kan de opgegeven gebruiker niet vinden
 error.mimic.policy_deny = Systeembeleid verhindert u de gebruiker na te bootsen
 error.mimic.user_logged_in = De gebruiker die u probeert na te bootsen is ingelogd in het systeem
 error.user_blocked = Uw account is geschorst, gelieve een admin te contacteren
+error.invalid_password = Het ingegeven (huidig) wachtwoord is niet correct!
 
 # Links from roles
 links.settings.title = Instellingen

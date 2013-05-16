@@ -215,14 +215,13 @@ public class UserManagerController extends EController {
 				}
 				
     		    // edit passw
-    		    String passw = AuthenticationManager.getInstance().simulateClientsidePasswordStrengthening(form.data().get("password1"));
-    		
-    		    SaltAndPassword sp = PasswordHasher.generateSP(passw.toCharArray());
-    		    String passwordHEX = sp.password;
-    		    String saltHEX = sp.salt;
-    		    
+				
+		        PasswordHasher.SaltAndPassword sp = PasswordHasher.generateSP(form.data().get("password1").toCharArray());
+			    String passwordHEX = sp.password;
+		        String passwordSalt = sp.salt;
+				    		    
     		    def_model.password = passwordHEX;
-    		    def_model.hash = saltHEX;
+    		    def_model.hash = passwordSalt;
 			}
 			
 			// check if blocked
