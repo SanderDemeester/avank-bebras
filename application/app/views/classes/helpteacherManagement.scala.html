@@ -1,24 +1,31 @@
-@(currentPage: Page[_ <: models.management.ManageableModel], manager: models.management.Manager[_], currentOrderBy: String,
-    currentOrder: String, currentFilter: String, breadcrumbs : List[models.data.Link],
-    ori : models.util.OperationResultInfo)
+@(
+    currentPage: Page[_ <: models.management.ManageableModel],
+    manager: models.management.Manager[_],
+    currentOrderBy: String,
+    currentOrder: String,
+    currentFilter: String,
+    breadcrumbs: List[models.data.Link],
+    ori: models.util.OperationResultInfo
+)
 
-    @import views.html.management.list
+@import views.html.management.list
 
-    @main(EMessages.get("classes.helpteacher.list"), breadcrumbs){
+@main(EMessages.get("classes.helpteacher.list"), breadcrumbs){
+
     @commons.info(ori)
     @if(flash.containsKey("deleteerror")) {
-        <div class="alert alert-error">
-            @EMessages.get("classes.helpteacher.delete.error")
-        </div>
+    <div class="alert alert-error">
+        @EMessages.get("classes.helpteacher.delete.error")
+    </div>
     } else {
-        @if(flash.containsKey("deletesuccess")) {
-        <div class="alert alert-success">
-            @EMessages.get("classes.helpteacher.delete.success")
-        </div>
+    @if(flash.containsKey("deletesuccess")) {
+    <div class="alert alert-success">
+        @EMessages.get("classes.helpteacher.delete.success")
+    </div>
     }
     }
     @if(currentPage!=null){
     @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
     }
 
-    }
+}
