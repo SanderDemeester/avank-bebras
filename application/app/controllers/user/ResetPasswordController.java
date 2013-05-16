@@ -111,11 +111,11 @@ public class ResetPasswordController extends EController {
         return ok(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
         }
             String teacherEmail = g.getTeacher().getData().email;
-            //TODO: should point to location where teacher can change passwords for a student
-            EMail mail = new StudentTeacherEmailReset(teacherEmail, userModel.id, "");
+            String baseUrl = request().host() + "/manage/users/" + userModel.id + "/edit";
+            EMail mail = new StudentTeacherEmailReset(teacherEmail, userModel.id, baseUrl);
             try {
                 mail.send();
-                flash("success", EMessages.get("forgot_pwd.mail"));
+                flash("success", EMessages.get("forgot_pwd.mail_teacher"));
                 return ok(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
             } catch (MessagingException e) {
                 flash("error", EMessages.get("forgot_pwd.notsent"));

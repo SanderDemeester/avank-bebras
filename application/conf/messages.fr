@@ -228,12 +228,13 @@ forgot_pwd.submit = Réinitialiser mot de passe
 forgot_pwd.success = Mot de passe réinitialisé avec succès.
 forgot_pwd.notsent = Une erreur s'est produite, l'email n'a pas été envoyé.
 forgot_pwd.mail = Un courriel a été envoyé à l'adresse fournie.
+forgot_pwd.mail_teacher = Un e-mail a été envoyé à votre professeur.
 forgot_pwd.mail_sent = Un nouveau mot de passe a été demandée pour l'utilisateur {0} sur Avank-Bebras. Aller à: {1} pour le réinitialiser.
 forgot_pwd.mail_subject = Réinitialisation de mot de passe
 forgot_pwd.email_blank = Laissez vide si vous n'avez pas une adresse e-mail
 forgot_pwd.reset_success = Mot de passe réinitialisé succès
 forgot_pwd.reset_fail = Impossible de réinitialiser le mot de passe
-forgot_pwd.teachermail = Votre élève {0} a demandé un nouveau mot de passe pour Avank-Bebras. S'il vous plaît le réinitialiser. 
+forgot_pwd.teachermail = Votre élève {0} a demandé un nouveau mot de passe pour Avank-Bebras. S'il vous plaît vous connecter et aller à {1} pour le réinitialiser.
 forgot_pwd.teachersubject = Mot de passe réinitialiser pour élève
 
 # Edit pwd
