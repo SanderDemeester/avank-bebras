@@ -81,8 +81,6 @@ public abstract class ContinuousStatistic extends Statistic {
             // You'd need a huge browser to view more, and we don't want the
             // binWith to get near zero.
             if(binCount > binMax || Double.isNaN(binCount)) binCount = Math.sqrt(n);
-            System.out.println("max: " + max);
-            System.out.println("binCount: " + binCount);
             binWidth = (max - min) / binCount;
 
         }
@@ -120,9 +118,6 @@ public abstract class ContinuousStatistic extends Statistic {
 
             for(int i : bins.keySet()) {
                 ArrayNode pair = pairs.addArray();
-                System.out.println("min: " + min);
-                System.out.println("i: " + i);
-                System.out.println("binWidth: " + binWidth);
                 pair.add(min + i * binWidth + binWidth / 2.0);
                 pair.add(bins.get(i));
             }

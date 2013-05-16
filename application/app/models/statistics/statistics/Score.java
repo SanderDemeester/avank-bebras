@@ -19,7 +19,6 @@ public class Score extends ContinuousStatistic {
 
     @Override public Double calculate(UserModel user) {
         double total = 0;
-        String sid = "";
         List<PupilAnswer> corrects = Ebean.find(PupilAnswer.class).where()
             .eq("indid", user.id).findList();
         if(corrects.size() == 0) return null;
