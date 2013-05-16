@@ -207,8 +207,6 @@ public class UserDatabaseTest extends ContextTest {
         List<UserModel> allUsers = UserModel.find.all();
         List<UserModel> allIndepententUser = UserModel.find.where().like("type", UserType.PUPIL_OR_INDEP.toString()).findList();
         List<UserModel> allTeachers = UserModel.find.where().like("type",UserType.TEACHER.toString()).findList();
-        System.out.println(allIndepententUser.size());
-        System.out.println(allTeachers.size());
         Assert.assertTrue(Integer.toString(allUsers.size()),allUsers.size() == numberOfIndependentUser+numberOfTeachers);
         Assert.assertTrue("indep",allIndepententUser.size() == numberOfIndependentUser);
         Assert.assertTrue("teach",allTeachers.size() == numberOfTeachers);
