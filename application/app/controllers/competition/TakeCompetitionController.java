@@ -268,7 +268,7 @@ public class TakeCompetitionController extends EController {
             try {
                 JsonNode input = Json.parse(json);
                 QuestionFeedback feedback = QuestionFeedbackGenerator.generateFromJson(
-                        input, Language.getLanguage(EMessages.getLang()));
+                        input);
                 // Save the results
                 CompetitionUserState state = null;
                 state = CompetitionUserStateManager.getInstance().getState(
@@ -277,9 +277,7 @@ public class TakeCompetitionController extends EController {
                     );
                 if(state == null) return badRequest(EMessages.get("competition.run.submit.invalidUser"));
                 state.setResults(feedback);
-            } catch (UnavailableLanguageException
-                    | UnknownLanguageCodeException
-                    | AnswerGeneratorException
+            } catch (AnswerGeneratorException
                     | CompetitionNotStartedException e) {
                 return badRequest(e.getMessage());
             }

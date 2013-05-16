@@ -101,6 +101,7 @@
 						"questionset": "@questionSet.getID()",
 						"userid": "@stateID",
 						"timeleft": 0,
+						"languagecode": "@EMessages.getLang()",
 						"questions": {
 									@for(q <- questionSet.getQuestions()) {
 										@q.getID(): null, 

@@ -21,6 +21,20 @@ import play.Logger;
  *
  */
 public class QuestionFeedbackGenerator {
+
+    /**
+     * Generate QuestionFeedback from the answers provided by the user that is encoded in json in the language given by the user
+     * @param json the answers from the user in json format
+     * @return a new QuestionFeedback for these answers
+     * @throws AnswerGeneratorException if the answers were somehow invalid (but they can be incorrect)
+     */
+    public static QuestionFeedback generateFromJson(JsonNode json) throws AnswerGeneratorException {
+        try {
+            return generateFromJson(json, Language.getLanguage(json.get("languagecode").getTextValue()));
+        } catch (UnavailableLanguageException | UnknownLanguageCodeException e) {
+            throw new AnswerGeneratorException(e.getMessage());
+        }
+    }
     
     /**
      * Generate QuestionFeedback from the answers provided by the user that is encoded in json
@@ -55,6 +69,6 @@ public class QuestionFeedbackGenerator {
             // Save the answer
             inputMap.put(question, question.getAnswerByInput(input, language));
         }
-        return new QuestionFeedback(inputMap, competition, questionset, timeleft, userid);
+        return new QuestionFeedback(inputMap, competition, questionset, timeleft, userid, language.getCode());
     }
 }
