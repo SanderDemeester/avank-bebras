@@ -1,33 +1,19 @@
 package controllers.user.management;
 
-import it.sauronsoftware.ftp4j.FTPException;
-import it.sauronsoftware.ftp4j.FTPIllegalReplyException;
 
-import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.spec.KeySpec;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.crypto.spec.PBEKeySpec;
 
-import org.bouncycastle.util.encoders.Hex;
-import org.springframework.validation.FieldError;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Expr;
-import com.avaje.ebean.InvalidValue;
-import com.avaje.ebean.ValidationException;
 import com.avaje.ebean.annotation.Transactional;
 
 import controllers.EController;
-import controllers.question.QuestionManager;
-import controllers.question.ServerManager;
 import controllers.util.InputChecker;
 import controllers.util.PasswordHasher;
 import controllers.util.PasswordHasher.SaltAndPassword;
@@ -35,31 +21,21 @@ import controllers.util.PasswordHasher.SaltAndPassword;
 import models.EMessages;
 import models.data.Language;
 import models.data.Link;
-import models.data.UnavailableLanguageException;
-import models.data.UnknownLanguageCodeException;
-import models.dbentities.QuestionModel;
 import models.dbentities.UserModel;
 import models.management.ModelState;
-import models.question.Server;
 import models.user.AuthenticationManager;
 import models.user.ChainOfCommand;
 import models.user.Gender;
-import models.user.GenderWrap;
 import models.user.IDGenerator;
 import models.user.Role;
 import models.user.User;
 import models.user.UserType;
-import models.user.UserTypeWrap;
 import play.data.Form;
-import play.data.validation.ValidationError;
 import play.mvc.Content;
 import play.mvc.Results;
 import play.mvc.Result;
 import views.html.commons.noaccess;
 import views.html.login.register;
-import views.html.question.editQuestionForm;
-import views.html.question.newQuestionForm;
-import views.html.question.server.newServerForm;
 import views.html.user.management.usermanager;
 import views.html.user.management.edituser;
 import views.html.user.management.createuser;

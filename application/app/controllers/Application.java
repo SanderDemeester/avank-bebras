@@ -5,8 +5,6 @@ import java.util.List;
 
 import models.EMessages;
 import models.data.*;
-import models.dbentities.CompetitionModel;
-import play.data.Form;
 import play.mvc.Result;
 import views.html.index;
 

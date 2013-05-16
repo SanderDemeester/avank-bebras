@@ -12,7 +12,6 @@ import com.avaje.ebean.Expr;
 import com.avaje.ebean.Expression;
 import com.avaje.ebean.ExpressionList;
 
-import controllers.user.OtherUserController;
 
 import play.mvc.Call;
 import models.dbentities.ClassPupil;

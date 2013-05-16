@@ -1,12 +1,8 @@
 package controllers.util;
 
-import java.util.HashMap;
-import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import models.user.AuthenticationManager;
-import models.user.User;
 
 /*
  * author: Thomas Mortier

@@ -3,7 +3,6 @@ package models.statistics.populations;
 import java.lang.Object;
 import java.lang.Class;
 import java.lang.RuntimeException;
-import java.lang.ClassCastException;
 import java.lang.reflect.Constructor;
 
 import java.util.Map;

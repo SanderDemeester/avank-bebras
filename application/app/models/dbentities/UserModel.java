@@ -1,7 +1,6 @@
 package models.dbentities;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -9,35 +8,29 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Column;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import models.data.Language;
 import models.management.Editable;
 
-import com.avaje.ebean.Ebean;
 import com.avaje.ebean.validation.NotNull;
 
 import controllers.util.DateFormatter;
 
 import models.management.Listable;
 import models.management.ManageableModel;
-import models.user.AuthenticationManager;
 import models.user.Gender;
 import models.user.GenderWrap;
 import models.user.UserType;
 import models.user.UserTypeWrap;
 import play.data.format.Formats;
-import play.data.validation.Constraints;
 import play.db.ebean.Model;
 import models.EMessages;
 

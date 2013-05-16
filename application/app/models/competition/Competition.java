@@ -6,7 +6,6 @@ import models.data.Language;
 import models.dbentities.ClassGroup;
 import models.dbentities.CompetitionModel;
 import models.dbentities.QuestionSetModel;
-import models.dbentities.QuestionSetQuestion;
 import models.question.Question;
 import models.question.QuestionFeedback;
 import models.question.QuestionSet;

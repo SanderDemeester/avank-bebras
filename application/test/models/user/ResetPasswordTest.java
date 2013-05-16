@@ -14,7 +14,6 @@ import static play.test.Helpers.callAction;
 import static play.test.Helpers.contentAsString;
 import static play.test.Helpers.status;
 import static org.fest.assertions.Assertions.assertThat;
-import play.api.mvc.BodyParser;
 import play.mvc.Result;
 import test.ContextTest;
 

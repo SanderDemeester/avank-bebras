@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.Arrays;
 
-import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.codehaus.jackson.node.ArrayNode;
 
@@ -19,7 +17,6 @@ import play.libs.Json;
 import models.EMessages;
 import models.dbentities.UserModel;
 import models.statistics.populations.Population;
-import models.statistics.populations.SinglePopulation;
 
 /**
  * A statistic that summarizes a population as a double. For instance, the

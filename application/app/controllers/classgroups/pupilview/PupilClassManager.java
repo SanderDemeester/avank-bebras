@@ -12,7 +12,6 @@ import com.avaje.ebean.ExpressionList;
 
 import play.mvc.Call;
 import models.dbentities.ClassGroup;
-import models.dbentities.ClassPupil;
 import models.dbentities.UserModel;
 import models.management.Manager;
 import models.management.ModelState;

@@ -4,9 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -14,7 +11,6 @@ import javax.persistence.Table;
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.validation.NotNull;
 
-import play.Logger;
 import play.db.ebean.Model;
 /**
  * The score of a competition by a pupil

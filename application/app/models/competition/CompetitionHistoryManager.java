@@ -1,7 +1,6 @@
 package models.competition;
 
 import com.avaje.ebean.Ebean;
-import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.Page;
 import controllers.competition.routes;
 import models.dbentities.CompetitionModel;

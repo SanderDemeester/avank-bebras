@@ -7,7 +7,6 @@ import models.dbentities.UserModel;
 import models.user.AuthenticationManager;
 import models.user.Role;
 import models.user.UserType;
-import play.Logger;
 import play.api.libs.Crypto;
 import play.data.Form;
 import play.data.format.Formats;

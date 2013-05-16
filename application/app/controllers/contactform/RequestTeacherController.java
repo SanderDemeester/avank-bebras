@@ -13,7 +13,6 @@ import models.mail.UpgradeRequestMail;
 import models.user.AuthenticationManager;
 import models.user.Role;
 import models.user.User;
-import models.user.UserType;
 
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;

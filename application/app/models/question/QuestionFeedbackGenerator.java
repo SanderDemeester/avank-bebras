@@ -4,16 +4,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import models.EMessages;
 import models.data.Language;
 import models.data.UnavailableLanguageException;
 import models.data.UnknownLanguageCodeException;
-import models.user.AuthenticationManager;
-import models.user.User;
 
 import org.codehaus.jackson.JsonNode;
 
-import play.Logger;
 
 /**
  * A class to transform json answers to QuestionFeedback

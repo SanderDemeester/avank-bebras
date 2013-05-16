@@ -9,7 +9,6 @@ import models.dbentities.CompetitionModel;
 import models.question.QuestionSet;
 import models.user.Anon;
 import models.user.User;
-import play.Logger;
 
 /**
  * Manages the different CompetitionUserStates from each competition
