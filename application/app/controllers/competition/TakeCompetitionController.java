@@ -101,10 +101,17 @@ public class TakeCompetitionController extends EController {
         TakeCompetitionManager competitionManager = getManager(orderBy, order, filter);
         if (userType(UserType.ANON)){
             // anonymous user can only see "running" anonymous competitions
+            List<String> competitionIds = new ArrayList<String>();
+            for (CompetitionModel competitionModel : Ebean.find(CompetitionModel.class).findList()){
+                if (checkSupportedLanguages(competitionModel)){
+                    competitionIds.add(competitionModel.id);
+                }
+            }
             competitionManager.setExpressionList(competitionManager.getFinder()
                     .where()
                     .eq("type", CompetitionType.ANONYMOUS.name())
                     .eq("active", true)
+                    .in("id", competitionIds)
                     .lt("starttime", new Date())
                     .gt("endtime", new Date())
             );
@@ -118,7 +125,10 @@ public class TakeCompetitionController extends EController {
             List<ContestClass> contestClasses = Ebean.find(ContestClass.class).where().eq("classid", classGroup).findList();
             List<String> competitionIds = new ArrayList<String>();
             for (ContestClass contestClass : contestClasses){
-                competitionIds.add(contestClass.contestid.id);
+                // check if this contest contains a question set that supports the current user's language
+                if (checkSupportedLanguages(contestClass.contestid)){
+                    competitionIds.add(contestClass.contestid.id);
+                }
             }
             competitionManager.setExpressionList(competitionManager.getFinder()
                     .where()
@@ -380,7 +390,9 @@ public class TakeCompetitionController extends EController {
         List<ContestClass> contestClasses = Ebean.find(ContestClass.class).where().eq("classid", classGroup).findList();
         List<String> competitionIds = new ArrayList<String>();
         for (ContestClass contestClass : contestClasses){
-            competitionIds.add(contestClass.contestid.id);
+            if (checkSupportedLanguages(contestClass.contestid)){
+                competitionIds.add(contestClass.contestid.id);
+            }
         }
         TakeCompetitionManager competitionManager = getManager("name", "asc", "");
         List<CompetitionModel> competitionModels = competitionManager.getFinder()
@@ -404,5 +416,37 @@ public class TakeCompetitionController extends EController {
             competitionModels = competitionModels.subList(0,4);
         }
         return competitionModels;
+    }
+
+    /**
+     * Returns a snippet of available anonymous contests.
+     * @return
+     */
+    public static List<CompetitionModel> anonymousSnippet(){
+        TakeCompetitionManager competitionManager = getManager("name", "asc", "");
+        return competitionManager.getFinder()
+                .where()
+                .eq("type", CompetitionType.ANONYMOUS.name())
+                .eq("active", true)
+                .lt("starttime", new Date())
+                .gt("endtime", new Date())
+                .findList();
+
+    }
+
+    /**
+     * Checks whether the given competitionModel supports the user's language.
+     * @param competitionModel
+     * @return true if the competition does support the user's language, else false
+     */
+    private static boolean checkSupportedLanguages(CompetitionModel competitionModel){
+        Language language;
+        try {
+            language = Language.getLanguage(EMessages.getLang());
+        } catch (UnknownLanguageCodeException | UnavailableLanguageException ex){
+            return false;
+        }
+        Competition competition = new Competition(competitionModel);
+        return competition.getAvailableLanguages().contains(language);
     }
 }
