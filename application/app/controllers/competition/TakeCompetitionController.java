@@ -199,7 +199,7 @@ public class TakeCompetitionController extends EController {
 
         // setting the correct grade
         Grade grade;
-        if (user.data != null && user.data.classgroup != null){
+        if (user.data != null && user.data.classgroup != null && competitionModel.type == CompetitionType.RESTRICTED){
             ClassGroup classGroup = Ebean.find(ClassGroup.class).where().idEq(user.data.classgroup).findUnique();
             grade = Ebean.find(Grade.class).where().ieq("name", classGroup.level).findUnique();
         }
