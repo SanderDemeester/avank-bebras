@@ -11,7 +11,7 @@
             <dl>
                 @for(competition <- controllers.competition.TakeCompetitionController.anonymousSnippet()){
                     <dt>
-                        <a href="@controllers.competition.routes.TakeCompetitionController.takeCompetition(competition.id)">
+                        <a href="@controllers.competition.routes.TakeCompetitionController.chooseGrade(competition.id)">
                             @competition.name
                         </a>
                     </dt>

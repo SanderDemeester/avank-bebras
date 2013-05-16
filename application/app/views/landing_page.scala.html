@@ -54,14 +54,20 @@
                 <p>
                     <dl>
                         @for(competition <- controllers.competition.TakeCompetitionController.snippet()){
-                        <dt>
-                            <a href="@controllers.competition.routes.TakeCompetitionController.takeCompetition(competition.id)">
-                                @competition.name
-                            </a>
-                        </dt>
-                        <dd>
-                            @competition.getTypeString()
-                        </dd>
+                            <dt>
+                                @if(new models.competition.Competition(competition).getType() != models.competition.CompetitionType.RESTRICTED){
+                                    <a href="@controllers.competition.routes.TakeCompetitionController.chooseGrade(competition.id)">
+                                        @competition.name
+                                    </a>
+                                } else {
+                                    <a href="@controllers.competition.routes.TakeCompetitionController.takeCompetition(competition.id)">
+                                        @competition.name
+                                    </a>
+                                }
+                            </dt>
+                            <dd>
+                                @competition.getTypeString()
+                            </dd>
                         }
                     </dl>
                 </p>

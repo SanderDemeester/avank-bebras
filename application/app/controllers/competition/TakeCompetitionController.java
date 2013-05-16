@@ -70,6 +70,26 @@ public class TakeCompetitionController extends EController {
     }
 
     /**
+     * Returns a list with running competition ids
+     * @return running competition ids
+     */
+    private static List<String> getRunningCompetitions(){
+        List<CompetitionModel> competitionModels = Ebean.find(CompetitionModel.class)
+                    .where()
+                    .lt("starttime", new Date())
+                    .gt("endtime", new Date())
+                    .eq("active", true)
+                    .findList();
+        List<String> ids = new ArrayList<String>();
+        for (CompetitionModel competitionModel : competitionModels){
+            if (checkSupportedLanguages(competitionModel)){
+                ids.add(competitionModel.id);
+            }
+        }
+        return ids;
+    }
+
+    /**
      * Returns the default breadcrumbs for the contest pages.
      * @return breadcrumbs
      */
@@ -107,13 +127,12 @@ public class TakeCompetitionController extends EController {
                     competitionIds.add(competitionModel.id);
                 }
             }
+            List<String> ids = getRunningCompetitions();
             competitionManager.setExpressionList(competitionManager.getFinder()
                     .where()
                     .eq("type", CompetitionType.ANONYMOUS.name())
-                    .eq("active", true)
                     .in("id", competitionIds)
-                    .lt("starttime", new Date())
-                    .gt("endtime", new Date())
+                    .in("id", ids)
             );
             Page<CompetitionModel> managerPage = competitionManager.page(page);
             return ok(views.html.competition.contests.render(defaultBreadcrumbs(), managerPage, competitionManager, order, orderBy, filter));
@@ -130,6 +149,7 @@ public class TakeCompetitionController extends EController {
                     competitionIds.add(contestClass.contestid.id);
                 }
             }
+            List<String> ids = getRunningCompetitions();
             competitionManager.setExpressionList(competitionManager.getFinder()
                     .where()
                     .or(
@@ -141,9 +161,7 @@ public class TakeCompetitionController extends EController {
                                     Expr.eq("type", CompetitionType.RESTRICTED.name()),
                                     Expr.in("id", competitionIds)
                                     ))
-                    .eq("active", true)
-                    .lt("starttime", new Date())
-                    .gt("endtime", new Date())
+                    .in("id", ids)
             );
             Page<CompetitionModel> managerPage = competitionManager.page(page);
             return ok(views.html.competition.contests.render(defaultBreadcrumbs(), managerPage, competitionManager, order, orderBy, filter));
@@ -181,7 +199,7 @@ public class TakeCompetitionController extends EController {
 
         // setting the correct grade
         Grade grade;
-        if (user.data != null && user.data.classgroup != null){
+        if (user.data != null && user.data.classgroup != null && competitionModel.type == CompetitionType.RESTRICTED){
             ClassGroup classGroup = Ebean.find(ClassGroup.class).where().idEq(user.data.classgroup).findUnique();
             grade = Ebean.find(Grade.class).where().ieq("name", classGroup.level).findUnique();
         }
@@ -400,6 +418,7 @@ public class TakeCompetitionController extends EController {
             }
         }
         TakeCompetitionManager competitionManager = getManager("name", "asc", "");
+        List<String> ids = getRunningCompetitions();
         List<CompetitionModel> competitionModels = competitionManager.getFinder()
                 .where()
                 .or(
@@ -411,9 +430,7 @@ public class TakeCompetitionController extends EController {
                                 Expr.eq("type", CompetitionType.RESTRICTED.name()),
                                 Expr.in("id", competitionIds)
                         ))
-                .eq("active", true)
-                .lt("starttime", new Date())
-                .gt("endtime", new Date())
+                .in("id", ids)
                 .findList()
         ;
 
@@ -429,12 +446,11 @@ public class TakeCompetitionController extends EController {
      */
     public static List<CompetitionModel> anonymousSnippet(){
         TakeCompetitionManager competitionManager = getManager("name", "asc", "");
+        List<String> ids = getRunningCompetitions();
         return competitionManager.getFinder()
                 .where()
                 .eq("type", CompetitionType.ANONYMOUS.name())
-                .eq("active", true)
-                .lt("starttime", new Date())
-                .gt("endtime", new Date())
+                .in("id", ids)
                 .findList();
 
     }
