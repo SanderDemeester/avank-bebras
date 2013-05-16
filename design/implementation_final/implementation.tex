@@ -104,7 +104,6 @@
         previous two classes for easier distribution of the questions.
     \end{subsection}
     \begin{subsection}{Competitions}
-        TODO: Kevin (aanvullen?)
     
         Competitions have four kinds of states (as can be seen in CompetitionState).
         
@@ -114,15 +113,15 @@
         When organizers activate the competition, it enters the active state. In this state
         teachers can see the competition and register one or more of their classes to the
         competition. When the competition is started, it is given to the singleton object
-        CompetitionUserStateManager. This object will keep track of all the competition
+        CompetitionUserStateManager. This object will keep track of all the competitions
         and all of the CompetitionUserStates associated with each competition for when
         users enter this competition.
         
         From the moment the competition enters the running state (this will go
         automatically depending on the start date given by the organizer) the pupils
-        that were registered by the teachers will be able to see the competition and
-        take part of it. There they will have a predefined amount of time to answer
-        the questions.
+        that were registered by the teachers will be able to see the competition (if they can 
+        participate in this competition) and take part of it. There they will have a predefined 
+        amount of time to answer the questions.
         
         When the competition reaches the expiration date, the competition will reach the
         finished state, on which all the CompetitionUserStates that were associated to
@@ -174,7 +173,7 @@
         administrator if needed but can easily be requested from anywhere within the application.
     \end{subsection}
     \begin{subsection}{Database}
-        TODO: Jens
+        For a visual representation of the database tables and how they relate to each other is provided in the db-relations-visual.png file. A full specification of all the attributes and constraints of the tables is provided in the db-relations.xlsx file.
     \end{subsection}
 \end{section}
 
