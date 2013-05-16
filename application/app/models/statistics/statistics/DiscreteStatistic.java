@@ -25,9 +25,11 @@ public abstract class DiscreteStatistic extends Statistic {
         for(Population population : data) {
             for(UserModel user : population.getUsers()) if(passes(user)) {
                 key = calculate(user);
-                value = map.get(key);
-                if(value == null) value = 0;
-                map.put(key, value + 1);
+                if(key != null) {
+                    value = map.get(key);
+                    if(value == null) value = 0;
+                    map.put(key, value + 1);
+                }
             }
         }
 
