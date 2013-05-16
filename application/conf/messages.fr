@@ -680,6 +680,8 @@ competition.overview.availableLanguages = Langues disponibles
 competition.overview.confirmFinish = Êtes-vous certain de que vouloir terminer ce concours ? Toutes les réponses non soumises seront perdues !
 competition.started.title = Concours n'est pas encore commencé
 competition.started.info = Le concours choisi n'est pas encore commencé. Please try again later.
+competition.questionset.title = Aucune question réglée soutenir votre niveau.
+competition.questionset.info = Le concours choisi ne prend pas en charge votre niveau. S'il vous plaît réessayer plus tard.
 
 # Contact form
 contact.formtitle = Formulaire de contact
