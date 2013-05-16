@@ -1,16 +1,14 @@
 @(stateID : String, questionSet : models.question.QuestionSet, feedback : models.question.QuestionFeedback, breadcrumbs : List[models.data.Link])
 
-@import helper._
-@import helper.twitterBootstrap._
 @import models.EMessages
 
 @main(EMessages.get("competition.name"), breadcrumbs){
     <div class="pagination text-center">
         <ul>
             <li class="active"><a class="pageClick" href="#">@EMessages.get("competition.overview")<span class="id hide">-1</span></a></li>
-        @for((q, i) <- questionSet.getQuestions().view.zipWithIndex) {
+            @for((q, i) <- questionSet.getQuestions().view.zipWithIndex) {
             <li><a class="pageClick" href="#">@(i+1)<span class="id hide">@q.getID()</span></a></li>
-        }
+            }
         </ul>
     </div>
 
@@ -62,7 +60,10 @@
                 </div>
             </div>
             <div class="text-center">
-                @EMessages.get("competition.modal.error.orYouCan") <button id="retry" class="btn btn-primary">@EMessages.get("competition.modal.error.retry")</button>
+                @EMessages.get("competition.modal.error.orYouCan")
+                <button id="retry" class="btn btn-primary">
+                    @EMessages.get("competition.modal.error.retry")
+                </button>
             </div>
         </div>
         <div class="modal-footer"></div>

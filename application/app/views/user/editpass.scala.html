@@ -1,22 +1,22 @@
-@import commons._
-@import models.EMessages.get
-@import helper._
-@import helper.twitterBootstrap._
+
+@import models.EMessages
 @import views.html.commons.showflash
 
 @helper.form(action=controllers.user.routes.PersonalPageController.changePassword) {
 
 <div class="container-fluid">
-  <div class="span10">
-           <legend>@EMessages.get("edit_pwd.edit_pwd")</legend>
+    <div class="span10">
+        <legend>@EMessages.get("edit_pwd.edit_pwd")</legend>
         @showflash()
+
         <div class="control-group row-fluid">
             <label class="control-label span2">@EMessages.get("edit_pwd.current_pwd")</label>
             <div class="controls span10">
                 <div class="input-prepend span12">
-                    <span class="add-on"><i class="icon-lock"></i> </span> <input
-                        type="password" class="input-xlarge span11" id="current_pwd" name="current_pwd"
-                        required placeholder="@EMessages.get("edit_pwd.current_pwd")">
+                    <span class="add-on"><i class="icon-lock"></i></span>
+                    <input type="password" class="input-xlarge span11"
+                        id="current_pwd" name="current_pwd" required="required"
+                        placeholder="@EMessages.get("edit_pwd.current_pwd")" />
                 </div>
             </div>
         </div>
@@ -25,9 +25,10 @@
             <label class="control-label span2">@EMessages.get("edit_pwd.new_pwd")</label>
             <div class="controls span10">
                 <div class="input-prepend span12">
-                    <span class="add-on"><i class="icon-lock"></i> </span> <input
-                        type="password" id="n_password" name="n_password" class="input-xlarge span11"
-                        required placeholder="@EMessages.get("edit_pwd.new_pwd")">
+                    <span class="add-on"><i class="icon-lock"></i></span>
+                    <input type="password" id="n_password" name="n_password"
+                        class="input-xlarge span11" required="required"
+                        placeholder="@EMessages.get("edit_pwd.new_pwd")" />
                 </div>
             </div>
         </div>
@@ -36,9 +37,11 @@
             <label class="control-label span2">@EMessages.get("edit_pwd.confirm_new_pwd")</label>
             <div class="controls span10">
                 <div class="input-prepend span12">
-                    <span class="add-on"><i class="icon-lock"></i> </span> <input
-                        type="password" id="controle_password" name="controle_password" class="input-xlarge span11"
-                        required placeholder="@EMessages.get("edit_pwd.confirm_new_pwd")">
+                    <span class="add-on"><i class="icon-lock"></i></span>
+                    <input type="password" id="controle_password"
+                        name="controle_password" class="input-xlarge span11"
+                        required="required"
+                        placeholder="@EMessages.get("edit_pwd.confirm_new_pwd")" />
                 </div>
             </div>
         </div>
@@ -51,9 +54,7 @@
             <div class="span8">&nbsp;</div>
         </div>
     </div>
-  </div>
 </div>
-
 
 <script type="text/javascript">
 $("#btn").live("click",function(){

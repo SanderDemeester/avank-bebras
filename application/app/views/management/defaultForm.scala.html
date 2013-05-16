@@ -1,23 +1,26 @@
 @(modelForm: Form[_ <: models.management.ManageableModel], manager: models.management.Manager[_])
 
-@import helper._
-@import helper.twitterBootstrap._
+@import helper.inputText
+@import helper.select
+@import helper.options
+@import helper.checkbox
 @import models.EMessages
 @import models.management.FieldType
 @import views.html.commons.showflash
 
 @***************************************
-* Flash messages *
+* Flash messages                       *
 ***************************************@
 @showflash()
 
     @if(!manager.isIgnoreErrors() && modelForm.hasErrors()) {
         <div class="alert alert-error">
+            <!-- TODO please, don't? -->
             <strong>Error</strong> There seem to be some issues with the following fields:
             <ul>
-            @for((k, v) <- modelForm.errors()) {
+                @for((k, v) <- modelForm.errors()) {
                 <li>@EMessages.get(manager.getMessagesPrefix() + ".form." + k)</li>
-            }
+                }
             </ul>
         </div>
     }

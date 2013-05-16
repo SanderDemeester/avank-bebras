@@ -1,12 +1,11 @@
 @(title: String, breadcrumbs : List[models.data.Link])
-@import commons._
+
 @import models.EMessages
-@import helper._
 
 @main(title, breadcrumbs) {
 <div class="alert alert-error">
-<strong>
-    @EMessages.get("user.error.no_login")
- </strong>
+    <strong>
+        @EMessages.get("user.error.no_login")
+    </strong>
 </div>
 }

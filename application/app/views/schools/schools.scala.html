@@ -1,5 +1,12 @@
-@(currentPage: Page[models.dbentities.SchoolModel], manager: models.management.Manager[_], currentOrderBy: String,
-    currentOrder: String, currentFilter: String , breadcrumbs : List[models.data.Link],  inf : models.util.OperationResultInfo)
+@(
+    currentPage: Page[models.dbentities.SchoolModel],
+    manager: models.management.Manager[_],
+    currentOrderBy: String,
+    currentOrder: String,
+    currentFilter: String,
+    breadcrumbs: List[models.data.Link],
+    inf: models.util.OperationResultInfo
+)
 
 @import views.html.management.list
 
@@ -15,7 +22,7 @@
     @* If currentPage is null, do not display the list *@
 
     @if(currentPage!=null){
-           @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
+       @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
     }
 
 }

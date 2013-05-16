@@ -1,9 +1,8 @@
 @(q: models.question.Question)
 
-@import helper._
-@import helper.twitterBootstrap._
 @import models.EMessages
-@import views.html.competition.run._
+@import views.html.competition.run.showRegex
+@import views.html.competition.run.showMultipleChoice
 
 <h2>@EMessages.get("questions.preview")</h2>
 
@@ -13,7 +12,8 @@
     @for(language <- q.getLanguages()) {
     <p class="muted">@language.getName():</p>
     <div id="@q.getID()" class="question well">
-        <b>@q.getTitle(language)</b><br />
+        <b>@q.getTitle(language)</b>
+        <br />
         <p class="muted">@EMessages.get("question.editor.tabs.question"):</p>
         <hr />
         <iframe class="questionframe" src="@q.getIndexLink(language)"></iframe>
@@ -34,6 +34,5 @@
         }
 
     </div>
-
     }
 }
