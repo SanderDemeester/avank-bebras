@@ -1,12 +1,13 @@
 @(question: models.question.RegexQuestion, language : models.data.Language, answer : models.question.RegexAnswer)
 
 @import models.EMessages
-    <div class="@if(answer!=null){@if(answer.isCorrect()){alert alert-success}else{alert alert-error}}">
-    <div class="row-fluid">
-        <input type="text" class="regex input-xxlarge span12" name="@question.getID()" placeholder="@EMessages.get("competition.input.regex")"
-        @if(answer!=null) {
-            value="@answer.getInput()"
-            disabled="disabled"
-        }/>
-    </div>
-    </div>
+
+<div class="@if(answer!=null){@if(answer.isCorrect()){alert alert-success}else{alert alert-error}}">
+<div class="row-fluid">
+    <input type="text" class="regex input-xxlarge span12" name="@question.getID()" placeholder="@EMessages.get("competition.input.regex")"
+    @if(answer!=null) {
+        value="@answer.getInput()"
+        disabled="disabled"
+    }/>
+</div>
+</div>
