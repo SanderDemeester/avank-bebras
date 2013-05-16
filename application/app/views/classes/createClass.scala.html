@@ -1,8 +1,11 @@
-@(classForm: Form[models.dbentities.ClassGroup], breadcrumbs : List[models.data.Link],inf : models.util.OperationResultInfo,
-gradeValues : java.util.Map[String,String])
+@(
+    classForm: Form[models.dbentities.ClassGroup],
+    breadcrumbs : List[models.data.Link],
+    inf: models.util.OperationResultInfo,
+    gradeValues: java.util.Map[String,String]
+)
 
-@import helper._
-@import helper.twitterBootstrap._
+@import helper.form
 @import models.EMessages
 
 @main(EMessages.get("classes.add"),breadcrumbs){
@@ -10,14 +13,14 @@ gradeValues : java.util.Map[String,String])
 
     @form(controllers.classgroups.routes.ClassGroupController.save()) {
 
-        @classgroupForm(classForm,gradeValues)
+    @classgroupForm(classForm,gradeValues)
 
     <div class="actions">
-        <input type="submit" value="Save" class="btn primary"> or
-        <a href="@controllers.classgroups.routes.ClassGroupController.viewClasses()" class="btn">Cancel</a>
+        <input type="submit" value="Save" class="btn btn-primary">
+        @EMessages.get("forms.or")
+        <a href="@controllers.classgroups.routes.ClassGroupController.viewClasses()" class="btn">
+            @EMessages.get("forms.cancel")
+        </a>
     </div>
     }
-
-
-
 }

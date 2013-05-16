@@ -77,6 +77,7 @@ links.manageusers.title = User management
 # Forms
 forms.cancel = Cancel
 forms.approve = Approve
+forms.save = Save
 forms.delete = Delete
 forms.deleteArg = Delete {0}
 forms.remove = Remove
@@ -90,6 +91,7 @@ forms.submit = Submit
 forms.create = Create
 forms.createArg = Create {0}
 forms.update = Update
+forms.upload = Upload
 forms.uploadFile = Upload file
 forms.title = Title
 forms.error = Please fix all errors.
@@ -97,6 +99,7 @@ forms.open = Open
 forms.unknownError = An error occured.
 forms.add = Add
 forms.error.dates = Please pick a end time that is after the chosen start time.
+forms.or = or
 
 # Question
 question.editor.name = Question Editor

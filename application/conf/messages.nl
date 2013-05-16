@@ -77,6 +77,7 @@ links.manageusers.title = Gebruikersbeheer
 # Forms
 forms.cancel = Annuleer
 forms.approve = Keur goed
+forms.save = Sla op
 forms.delete = Verwijder
 forms.deleteArg = Verwijder {0}
 forms.remove = Verwijder
@@ -90,6 +91,7 @@ forms.submit = Verzend
 forms.create = Maak aan
 forms.createArg = Maak {0} aan
 forms.update = Pas aan
+forms.upload = Upload
 forms.uploadFile = Bestand uploaden
 forms.title = Titel
 forms.error = Gelieve alle fouten te verbeteren.
@@ -97,6 +99,7 @@ forms.open = Open
 forms.unknownError = Er is een interne fout opgetreden.
 forms.add = Voeg toe
 forms.error.dates = Gelieve een eindtijdstip te kiezen dat na het gekozen starttijdstip valt.
+forms.or = of
 
 # Question
 question.editor.name = Vraagstukontwerper

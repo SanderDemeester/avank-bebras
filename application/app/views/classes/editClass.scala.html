@@ -1,8 +1,12 @@
-@(classForm: Form[models.dbentities.ClassGroup], breadcrumbs : List[models.data.Link],inf : models.util.OperationResultInfo,id : Int,
-gradeValues : java.util.Map[String,String])
+@(
+    classForm: Form[models.dbentities.ClassGroup],
+    breadcrumbs: List[models.data.Link],
+    inf: models.util.OperationResultInfo,
+    id: Int,
+    gradeValues: java.util.Map[String,String]
+)
 
-@import helper._
-@import helper.twitterBootstrap._
+@import helper.form
 @import models.EMessages
 
 @main(EMessages.get("classes.edit"),breadcrumbs){
@@ -11,15 +15,16 @@ gradeValues : java.util.Map[String,String])
     @if(classForm!=null){
         @form(controllers.classgroups.routes.ClassGroupController.update(id)) {
 
-            @classgroupForm(classForm,gradeValues)
+        @classgroupForm(classForm,gradeValues)
 
         <div class="actions">
-            <input type="submit" value="Save" class="btn primary"> or
-            <a href="@controllers.classgroups.routes.ClassGroupController.viewClasses()" class="btn">Cancel</a>
+            <input type="submit" value="Save" class="btn primary">
+            @EMessages.get("forms.or")
+            <a href="@controllers.classgroups.routes.ClassGroupController.viewClasses()" class="btn">
+                @EMessages.get("forms.cancel")
+            </a>
         </div>
-           }
+        }
     }
-
-
 
 }

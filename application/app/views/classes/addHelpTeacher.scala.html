@@ -1,8 +1,12 @@
-@(helpForm: Form[models.util.IDWrapper], breadcrumbs : List[models.data.Link],
- inf : models.util.OperationResultInfo, id : Int )
+@(
+    helpForm: Form[models.util.IDWrapper],
+    breadcrumbs : List[models.data.Link],
+    inf : models.util.OperationResultInfo,
+    id : Int
+)
 
-@import helper._
-@import helper.twitterBootstrap._
+@import helper.form
+@import helper.inputText
 @import models.EMessages
 
 @main(EMessages.get("classes.helpteacher.add"), breadcrumbs) {
@@ -18,7 +22,9 @@
 
         <div class="actions">
             <input type="submit" value="Save" class="btn btn-primary"> or
-            <a href="@controllers.classgroups.routes.HelpTeacherController.viewHelp(id)" class="btn">Cancel</a>
+            <a href="@controllers.classgroups.routes.HelpTeacherController.viewHelp(id)" class="btn">
+                @EMessages.get("forms.cancel")
+            </a>
         </div>
 
         }

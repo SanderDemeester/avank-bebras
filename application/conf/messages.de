@@ -77,6 +77,7 @@ links.manageusers.title = Benutzerverwaltung
 # Forms
 forms.cancel = Abbrechen
 forms.approve = Genehmigen
+forms.save = Bewahren
 forms.delete = Löschen
 forms.deleteArg = Löschen von {0}
 forms.remove = Entfernen
@@ -90,6 +91,7 @@ forms.submit = Senden
 forms.create = Erstellen
 forms.createArg = {0} Erstellen
 forms.update = Update
+forms.upload = Hochladen
 forms.uploadFile = Datei hochladen
 forms.title = Titel
 forms.error = Bitte beheben Sie alle Fehler.
@@ -97,6 +99,7 @@ forms.open = Offene
 forms.unknownError = Es ist ein Fehler aufgetreten.
 forms.add = Hinzufügen
 forms.error.dates = Bitte wählen Sie eine Ende-Zeit, die ist nach die gewählten Zeit starten.
+forms.or = oder
 
 # Question
 question.editor.name = Frage-Editor
