@@ -29,3 +29,7 @@ application/conf/messages.lnk
 application/conf/messages
 *.bbl
 *.blg
+*.toc
+*.nav
+*.out
+*.snm
