@@ -1,8 +1,6 @@
 @(title: String, breadcrumbs : List[models.data.Link], activetab : java.lang.Integer)
-@import commons._
-@import models.EMessages.get
-@import helper._
-@import helper.twitterBootstrap._
+
+@import models.EMessages
 @import controllers.user.PersonalPageController
 @import models.data.Language
 @import models.user.AuthenticationManager
@@ -12,6 +10,7 @@
 
 
 <div class="container-fluid">
+
     <div class="row-fluid">
         <div class="tabbable">
             <div class="span2">
@@ -43,12 +42,12 @@
                     <!-- START Password editor -->
                     <div id="passw" class="tab-pane">
                         @editpass()
-                     </div>
+                    </div>
                     <!-- END Password editor -->
                 </div>
             </div>
-      </div>
-  </div>
+        </div>
+    </div>
 </div>
 
 

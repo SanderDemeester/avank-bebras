@@ -1,7 +1,9 @@
 @(modelForm: Form[_ <: models.management.ManageableModel], manager: models.management.Manager[_])
 
-@import helper._
-@import helper.twitterBootstrap._
+@import helper.inputText
+@import helper.checkbox
+@import helper.select
+@import helper.options
 @import models.EMessages
 @import models.management.FieldType
 @import views.html.commons.showflash
@@ -17,9 +19,9 @@
         <div class="alert alert-error">
             <strong>Error</strong> There seem to be some issues with the following fields:
             <ul>
-            @for((k, v) <- modelForm.errors()) {
+                @for((k, v) <- modelForm.errors()) {
                 <li>@EMessages.get(manager.getMessagesPrefix() + ".form." + k)</li>
-            }
+                }
             </ul>
         </div>
     }
@@ -36,52 +38,52 @@
                <div id="collapseOne" class="accordion-body collapse">
                    <div class="accordion-inner">
                        @for(field <- manager.getFieldNames()) {
-            @if(!field.charAt(0).equals('_')) { @* don't show hidden fields *@
-                @if(!manager.isFieldDisabled(field)) {
-                    @defining(manager.getFields().get(field)) { fType =>
-                        @fType match {
-                            case FieldType.TEXT => {
-                                @inputText(
-                                    modelForm(field),
-                                    '_label -> (EMessages.get(manager.getMessagesPrefix() + ".form." + field)+":"),
-                                    '_class -> "defaultFormElement",
-                                    '_showConstraints -> false
-                                )
-                            }
-                            case FieldType.CHECKBOX => {
-                                @checkbox(
-                                    modelForm(field),
-                                    '_label -> (EMessages.get(manager.getMessagesPrefix() + ".form." + field)+":"),
-                                    '_class -> "defaultFormElement",
-                                    '_showConstraints -> false
-                                )
-                            }
-                            case FieldType.LIST => {
-                                @select(
-                                    modelForm(field+".id"),
-                                    options(manager.getDummyField(field).asInstanceOf[models.management.Listable].options()),
-                                    '_id -> field,
-                                    '_label -> (EMessages.get(manager.getMessagesPrefix() + ".form." + field)+":"),
-                                    '_class -> "defaultFormElement",
-                                    '_showConstraints -> false
-                                )
-                            }
-                            case FieldType.DATE => {
-                                    @inputText(
-                                        modelForm(field),
-                                        '_label -> (EMessages.get(manager.getMessagesPrefix() + ".form." + field)+":"),
-                                        '_class -> "defaultFormElement",
-                                        '_showConstraints -> false,
-                                        '_id -> "datepick"
-                                    )
+                            @if(!field.charAt(0).equals('_')) { @* don't show hidden fields *@
+                                @if(!manager.isFieldDisabled(field)) {
+                                    @defining(manager.getFields().get(field)) { fType =>
+                                        @fType match {
+                                            case FieldType.TEXT => {
+                                                @inputText(
+                                                    modelForm(field),
+                                                    '_label -> (EMessages.get(manager.getMessagesPrefix() + ".form." + field)+":"),
+                                                    '_class -> "defaultFormElement",
+                                                    '_showConstraints -> false
+                                                )
+                                            }
+                                            case FieldType.CHECKBOX => {
+                                                @checkbox(
+                                                    modelForm(field),
+                                                    '_label -> (EMessages.get(manager.getMessagesPrefix() + ".form." + field)+":"),
+                                                    '_class -> "defaultFormElement",
+                                                    '_showConstraints -> false
+                                                )
+                                            }
+                                            case FieldType.LIST => {
+                                                @select(
+                                                    modelForm(field+".id"),
+                                                    options(manager.getDummyField(field).asInstanceOf[models.management.Listable].options()),
+                                                    '_id -> field,
+                                                    '_label -> (EMessages.get(manager.getMessagesPrefix() + ".form." + field)+":"),
+                                                    '_class -> "defaultFormElement",
+                                                    '_showConstraints -> false
+                                                )
+                                            }
+                                            case FieldType.DATE => {
+                                                    @inputText(
+                                                        modelForm(field),
+                                                        '_label -> (EMessages.get(manager.getMessagesPrefix() + ".form." + field)+":"),
+                                                        '_class -> "defaultFormElement",
+                                                        '_showConstraints -> false,
+                                                        '_id -> "datepick"
+                                                    )
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    <input type="hidden" name="@modelForm(field).name" value="@modelForm(field).value" />
+                                }
                             }
                         }
-                    }
-                } else {
-                    <input type="hidden" name="@modelForm(field).name" value="@modelForm(field).value" />
-                }
-            }
-        }
                    </div>
                </div>
             </div>
@@ -96,88 +98,89 @@
                         <strong>@EMessages.get("user.management.edituser.partpasswinfo")</strong>
                     </a>
                 </div>
-               <div id="collapseTwo" class="accordion-body collapse">
-                   <div class="accordion-inner">
-                               <div class="alert alert-block">
-                                     <h4>@EMessages.get("users.form.warning")</h4>
-                                     @EMessages.get("users.form.passwedit")
-                                     <br>
-                                     <br>
-                                   @inputText(
-                                       modelForm("password1"),
-                                       '_label -> (EMessages.get("users.form.passw")+":"),
-                                       '_class -> "defaultFormElement",
-                                       '_showConstraints -> false
-                                   )
-                                   <br>
-                                   @inputText(
-                                       modelForm("password2"),
-                                       '_label -> (EMessages.get("users.form.passwrep")+":"),
-                                       '_class -> "defaultFormElement",
-                                       '_showConstraints -> false
-                                   )
-                               </div>
-                   </div>
-               </div>
+                <div id="collapseTwo" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <div class="alert alert-block">
+                            <h4>@EMessages.get("users.form.warning")</h4>
+                            @EMessages.get("users.form.passwedit")
+                            <br />
+                            <br />
+                            @inputText(
+                                modelForm("password1"),
+                                '_label -> (EMessages.get("users.form.passw")+":"),
+                                '_class -> "defaultFormElement",
+                                '_showConstraints -> false
+                            )
+                            <br />
+                            @inputText(
+                                modelForm("password2"),
+                                '_label -> (EMessages.get("users.form.passwrep")+":"),
+                                '_class -> "defaultFormElement",
+                                '_showConstraints -> false
+                            )
+                        </div>
+                    </div>
+                </div>
             </div>
-       </div>
+        </div>
 
-               <div class="accordion" id="accordion3">
+        <div class="accordion" id="accordion3">
             <div class="accordion-group">
                 <div class="accordion-heading">
                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseThree">
                         <strong>@EMessages.get("otheruser.block")</strong>
                     </a>
                 </div>
-               <div id="collapseThree" class="accordion-body collapse">
-                   <div class="accordion-inner">
-                       <div class="alert alert-block">
-                           <h4>@EMessages.get("users.form.warning")</h4>
-                           @EMessages.get("users.form.block")
-                           <br>
-                           <br>
-                           @checkbox(modelForm("blocked"),
-                                 '_label -> (EMessages.get("otheruser.block")+":"),
-                                 '_class -> "defaultFormElement",
-                                 '_showConstraints -> false
-                             )
-                             <br>
-                             <br>
-                             @inputText(modelForm("blockeduntil"),
-                                 '_label -> (EMessages.get("users.form.blockeduntil")+":"),
-                                 '_class -> "defaultFormElement",
-                                 '_showConstraints -> false,
-                                 '_id -> "datepick"
-                             )
-                       </div>
-                   </div>
-               </div>
+                <div id="collapseThree" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <div class="alert alert-block">
+                            <h4>@EMessages.get("users.form.warning")</h4>
+                            @EMessages.get("users.form.block")
+                            <br />
+                            <br />
+                            @checkbox(modelForm("blocked"),
+                                '_label -> (EMessages.get("otheruser.block")+":"),
+                                '_class -> "defaultFormElement",
+                                '_showConstraints -> false
+                            )
+                            <br />
+                            <br />
+                            @inputText(modelForm("blockeduntil"),
+                                '_label -> (EMessages.get("users.form.blockeduntil")+":"),
+                                '_class -> "defaultFormElement",
+                                '_showConstraints -> false,
+                                '_id -> "datepick"
+                            )
+                        </div>
+                    </div>
+                </div>
             </div>
-       </div>
+        </div>
 
-                   <div class="accordion" id="accordion4">
+        <div class="accordion" id="accordion4">
             <div class="accordion-group">
                 <div class="accordion-heading">
                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#collapseFour">
                         <strong>@EMessages.get("otheruser.mimic")</strong>
                     </a>
                 </div>
-               <div id="collapseFour" class="accordion-body collapse">
-                   <div class="accordion-inner">
-                       <div class="alert alert-info">
-                           <h4>@EMessages.get("info.info")</h4>
-                           @EMessages.get("users.form.mimic")
-                           <br>
-                           <br>
-                           <div class="actions">
-                                 <input type="hidden" value="@modelForm.get().asInstanceOf[UserModel].id" id="bebrasID" />
-                                 <input type="submit" value="@EMessages.get("otheruser.mimic")" class=" btn btn-primary" id="mimic">
-                           </div>
-                       </div>
-                   </div>
-               </div>
+                <div id="collapseFour" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <div class="alert alert-info">
+                            <h4>@EMessages.get("info.info")</h4>
+                            @EMessages.get("users.form.mimic")
+                            <br />
+                            <br />
+                            <div class="actions">
+                                <input type="hidden" value="@modelForm.get().asInstanceOf[UserModel].id" id="bebrasID" />
+                                <input type="submit" value="@EMessages.get("otheruser.mimic")" class=" btn btn-primary" id="mimic" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-       </div>
+        </div>
+
     </fieldset>
 
 
