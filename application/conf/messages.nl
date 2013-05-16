@@ -668,7 +668,8 @@ competition.overview.availableLanguages = Beschikbare talen
 competition.overview.confirmFinish = Ben je zeker dat je deze competitie wilt stoppen? Alle niet-verzonden vragen zullen verloren gaan!
 competition.started.title = Competitie nog niet gestart
 competition.started.info = De gekozen competitie is nog niet gestart. Gelieve het later nogmaals te proberen.
-
+competition.questionset.title = Geen vragenbundel beschikbaar die jouw niveau ondersteunt.
+competition.questionset.info = De gekozen competitie beschikt op dit moment niet over een vragenbundel die jouw niveau ondersteunt. Gelieve later nogmaals te proberen.
 
 # Contact form
 contact.formtitle = Contactformulier

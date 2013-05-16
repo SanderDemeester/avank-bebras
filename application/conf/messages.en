@@ -677,6 +677,8 @@ competition.overview.availableLanguages = Available languages
 competition.overview.confirmFinish = Are you sure you want to finish this contest? Any unsubmitted answers will be lost!
 competition.started.title = Contest is not yet started
 competition.started.info = The chosen contest is not yet started. Please try again later.
+competition.questionset.title = No question set supporting your level.
+competition.questionset.info = The chosen contest does currently not support your level. Please try again later.
 
 # Contact form
 contact.formtitle = Contact form

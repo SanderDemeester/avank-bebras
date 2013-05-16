@@ -192,6 +192,13 @@ public class TakeCompetitionController extends EController {
 
         QuestionSet questionSet = competition.getQuestionSet(grade);
 
+        if (questionSet == null){
+            // can happen when the competition does not contain a question set with the user's grade
+            return ok(views.html.commons.error.render(defaultBreadcrumbs(),
+                    EMessages.get("competition.questionset.title"), EMessages.get("competition.questionset.info"))
+            );
+        }
+
         if (userType(UserType.ANON)){
             CompetitionUserStateManager.getInstance().startCompetition(competition);
         }

@@ -677,6 +677,8 @@ competition.overview.availableLanguages = Verfügbare Sprachen
 competition.overview.confirmFinish = Sind Sie sicher, dass Sie diesen Wettbewerb zu beenden wollen? Alle noch nicht übermittelte Antworten werden gelöscht!
 competition.started.title = Wettbewerb ist noch nicht gestartet
 competition.started.info = Der gewählte Wettbewerb ist noch nicht gestartet. Bitte versuchen Sie es später erneut.
+competition.questionset.title = Keine Frage gesetzt Unterstützung Ihrer Ebene.
+competition.questionset.info = Die gewählte Wettbewerb aktuell nicht unterstützt Ihr Niveau. Bitte versuchen Sie es später erneut.
 
 # Contact form
 contact.formtitle = Kontakt-Formular
