@@ -21,7 +21,8 @@
         </fieldset>
 
         <div class="actions">
-            <input type="submit" value="Save" class="btn btn-primary"> or
+            <input type="submit" value="@EMessages.get("forms.save")" class="btn btn-primary">
+            @EMessages.get("forms.or")
             <a href="@controllers.classgroups.routes.HelpTeacherController.viewHelp(id)" class="btn">
                 @EMessages.get("forms.cancel")
             </a>

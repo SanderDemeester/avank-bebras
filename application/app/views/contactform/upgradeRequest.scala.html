@@ -1,7 +1,6 @@
 @(breadcrumbs : List[models.data.Link])
 
-@import helper._
-@import helper.twitterBootstrap._
+@import helper.form
 @import models.EMessages
 
 @main(EMessages.get("contact.upgraderequest"), breadcrumbs){
@@ -10,11 +9,11 @@
 @EMessages.get("contact.requestupgrade.explanation")
 </div>
 
-        @form(action = controllers.contactform.routes.RequestTeacherController.upload(), 'enctype -> "multipart/form-data") {
-            <input type="file" name="card">
-            <p>
-                <input type="submit" class="btn btn-primary">
-            </p>
-        }
+@form(action = controllers.contactform.routes.RequestTeacherController.upload(), 'enctype -> "multipart/form-data") {
+    <input type="file" name="card" />
+    <p>
+        <input type="submit" class="btn btn-primary" />
+    </p>
+}
 
 }

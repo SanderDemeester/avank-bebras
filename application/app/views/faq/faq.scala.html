@@ -1,5 +1,8 @@
-@(breadcrumbs : List[models.data.Link],content : List[models.dbentities.FAQModel],
-messages : models.util.OperationResultInfo)
+@(
+    breadcrumbs: List[models.data.Link],
+    content: List[models.dbentities.FAQModel],
+    messages: models.util.OperationResultInfo
+)
 
 @import models.EMessages
 
@@ -9,13 +12,11 @@ messages : models.util.OperationResultInfo)
     <div class="well">
         <h1>@EMessages.get("faq.title")</h1>
         <ul>
-        @for(q <- content){
+            @for(q <- content){
             <li><a href="#@q.id" class="scroll">@q.name</p></a>
-        }
+            }
         </ul>
     </div>
-
-
 
     @for(q <- content){
     <div class="well">
