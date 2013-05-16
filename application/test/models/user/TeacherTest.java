@@ -39,10 +39,10 @@ public class TeacherTest extends ContextTest {
 
         List<ClassGroup> cg = Ebean.find(ClassGroup.class).findList();
         for(ClassGroup c : cg) c.delete();
-        
+
         List<SchoolModel> sm = Ebean.find(SchoolModel.class).findList();
         for(SchoolModel s : sm)s.delete();
-        
+
         List<HelpTeacher> ht = Ebean.find(HelpTeacher.class).findList();
         for(HelpTeacher h : ht)h.delete();
     }
@@ -90,38 +90,38 @@ public class TeacherTest extends ContextTest {
 
     @Test
     public void testGetSchools(){
-    	UserModel data = createTestUserModel(UserType.TEACHER);
-    	SchoolModel sm = new SchoolModel();
-    	sm.address="rr";
-    	sm.id=1;
-    	sm.name="tt";
-    	
-    	SchoolModel sm2 = new SchoolModel();
-    	sm2.address="rr";
-    	sm2.id=2;
-    	sm2.name="tt";
-    	sm2.orig=data.id;
-    	
-    	SchoolModel sm3 = new SchoolModel();
-    	sm3.address="rr";
-    	sm3.id=3;
-    	sm3.name="tt";
-    	
-    	ClassGroup cp1=new ClassGroup();
+        UserModel data = createTestUserModel(UserType.TEACHER);
+        SchoolModel sm = new SchoolModel();
+        sm.address="rr";
+        sm.id=1;
+        sm.name="tt";
+
+        SchoolModel sm2 = new SchoolModel();
+        sm2.address="rr";
+        sm2.id=2;
+        sm2.name="tt";
+        sm2.orig=data.id;
+
+        SchoolModel sm3 = new SchoolModel();
+        sm3.address="rr";
+        sm3.id=3;
+        sm3.name="tt";
+
+        ClassGroup cp1=new ClassGroup();
         cp1.id=1;
         cp1.teacherid=data.id;
         cp1.schoolid = sm3.id;
-        
+
         try{
-        	data.save();
-        	sm.save();
-        	sm2.save();
-        	sm3.save();
-        	cp1.save();
+            data.save();
+            sm.save();
+            sm2.save();
+            sm3.save();
+            cp1.save();
         }catch(PersistenceException pe){
-        	Assert.fail("Something went wrong with the saving");
+            Assert.fail("Something went wrong with the saving");
         }
-        
+
         Collection<SchoolModel> coll = new Teacher(data).getSchools();
         Assert.assertEquals("not 2",2, coll.size());
         HashSet<Integer> ids = new HashSet<Integer>();
@@ -130,63 +130,63 @@ public class TeacherTest extends ContextTest {
         }
         Assert.assertTrue("not orig",ids.contains(sm2.id));
         Assert.assertTrue("not class",ids.contains(sm3.id));
-        
+
     }
-    
+
     @Test
     public void testIsPupilsTeacher(){
-    	UserModel t = createTestUserModel(UserType.TEACHER);
-    	Teacher teacher = new Teacher(t);
-    	t.id="t";
-    	
-    	ClassGroup cg1 = new ClassGroup();
-    	cg1.id=1;
-    	cg1.teacherid=t.id;
-    	Calendar c = Calendar.getInstance();
-    	c.set(Calendar.YEAR, c.get(Calendar.YEAR)+1);
-    	cg1.expdate = c.getTime();
-    	
-    	UserModel pup1 = createTestUserModel(UserType.PUPIL_OR_INDEP);
-    	pup1.id="pup1";
-    	UserModel pup2 = createTestUserModel(UserType.PUPIL_OR_INDEP);
-    	pup2.id="pup2";
-    	pup1.classgroup=cg1.id;
-    	
-    	try{
-    		t.save();
-    		cg1.save();
-    		pup1.save();
-    		pup2.save();
-    	}catch(PersistenceException pe){
-    		Assert.fail("Something went wrong with the saving");
-    	}
-    	
-    	Assert.assertTrue("f1",teacher.isPupilsTeacher(pup1.id));
-    	Assert.assertFalse("f2",teacher.isPupilsTeacher(pup2.id));
-    	
+        UserModel t = createTestUserModel(UserType.TEACHER);
+        Teacher teacher = new Teacher(t);
+        t.id="t";
+
+        ClassGroup cg1 = new ClassGroup();
+        cg1.id=1;
+        cg1.teacherid=t.id;
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, c.get(Calendar.YEAR)+1);
+        cg1.expdate = c.getTime();
+
+        UserModel pup1 = createTestUserModel(UserType.PUPIL_OR_INDEP);
+        pup1.id="pup1";
+        UserModel pup2 = createTestUserModel(UserType.PUPIL_OR_INDEP);
+        pup2.id="pup2";
+        pup1.classgroup=cg1.id;
+
+        try{
+            t.save();
+            cg1.save();
+            pup1.save();
+            pup2.save();
+        }catch(PersistenceException pe){
+            Assert.fail("Something went wrong with the saving");
+        }
+
+        Assert.assertTrue("f1",teacher.isPupilsTeacher(pup1.id));
+        Assert.assertFalse("f2",teacher.isPupilsTeacher(pup2.id));
+
     }
-    
+
     @Test
     public void getHelpClassesTest(){
-    	UserModel teach = UserTests.createTestUserModel(UserType.TEACHER);
-    	teach.id="a";
-    	ClassGroup cg = new ClassGroup();
-    	cg.id=1;
-    	HelpTeacher ht = new HelpTeacher();
-    	ht.classid=cg.id;
-    	ht.teacherid=teach.id;
-    	
-    	try{
-    		teach.save();
-    		cg.save();
-    		ht.save();
-    	}catch(PersistenceException pe){
-    		Assert.fail("Something went wrong with the saving");
-    	}
-    	
-    	Teacher t = new Teacher(teach);
-    	List<ClassGroup> helpclasses = (List<ClassGroup>) t.getHelpClasses();
-    	Assert.assertEquals(1, helpclasses.size());
-    	Assert.assertEquals(cg.id, helpclasses.get(0).id);
+        UserModel teach = UserTests.createTestUserModel(UserType.TEACHER);
+        teach.id="a";
+        ClassGroup cg = new ClassGroup();
+        cg.id=1;
+        HelpTeacher ht = new HelpTeacher();
+        ht.classid=cg.id;
+        ht.teacherid=teach.id;
+
+        try{
+            teach.save();
+            cg.save();
+            ht.save();
+        }catch(PersistenceException pe){
+            Assert.fail("Something went wrong with the saving");
+        }
+
+        Teacher t = new Teacher(teach);
+        List<ClassGroup> helpclasses = (List<ClassGroup>) t.getHelpClasses();
+        Assert.assertEquals(1, helpclasses.size());
+        Assert.assertEquals(cg.id, helpclasses.get(0).id);
     }
 }

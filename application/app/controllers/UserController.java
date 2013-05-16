@@ -7,7 +7,6 @@ import models.dbentities.UserModel;
 import models.user.AuthenticationManager;
 import models.user.Role;
 import models.user.UserType;
-import play.Logger;
 import play.api.libs.Crypto;
 import play.data.Form;
 import play.data.format.Formats;
@@ -223,7 +222,7 @@ public class UserController extends EController {
                     return badRequest(EMessages.get("error.duplicated_login"));
                 }
                 case AuthenticationManager.USER_BLOCKED: {
-                	return badRequest(EMessages.get("error.user_blocked"));
+                    return badRequest(EMessages.get("error.user_blocked"));
                 }
                 default: {
                     return badRequest(EMessages.get("error.login"));

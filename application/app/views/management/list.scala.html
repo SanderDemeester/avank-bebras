@@ -102,7 +102,7 @@
                 @for(fieldValue <- item.getFieldValues){
                     <td>
                         @fieldValue
-                        
+
                     </td>
                 }
                     @if(manager.hasActions()){
@@ -130,11 +130,11 @@
     * Pagination           *
     ***********************@
     @pagination(currentPage, currentOrderBy, currentOrder, currentFilter, manager)
-    
+
     @* JS in view because of the EMessage *@
     <script>
-		$("#remove").live("click", function() {
-			return confirm("@EMessages.get("management.confirmDelete")");
-		});
-	</script>
+        $("#remove").live("click", function() {
+            return confirm("@EMessages.get("management.confirmDelete")");
+        });
+    </script>
 }

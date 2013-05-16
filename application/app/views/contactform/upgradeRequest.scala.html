@@ -10,11 +10,11 @@
 @EMessages.get("contact.requestupgrade.explanation")
 </div>
 
-		@form(action = controllers.contactform.routes.RequestTeacherController.upload(), 'enctype -> "multipart/form-data") {    
-    		<input type="file" name="card" >    
-    		<p>
-    			<input type="submit" class="btn btn-primary">
-    		</p>    
-		}
+        @form(action = controllers.contactform.routes.RequestTeacherController.upload(), 'enctype -> "multipart/form-data") {
+            <input type="file" name="card">
+            <p>
+                <input type="submit" class="btn btn-primary">
+            </p>
+        }
 
 }

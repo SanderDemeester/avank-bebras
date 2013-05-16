@@ -4,7 +4,6 @@ import com.avaje.ebean.Ebean;
 import controllers.EController;
 import models.EMessages;
 import models.competition.*;
-import models.data.DataDaemon;
 import models.data.Link;
 import models.dbentities.CompetitionModel;
 import models.dbentities.QuestionSetModel;
@@ -19,7 +18,6 @@ import play.mvc.Result;
 import views.html.commons.noaccess;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 

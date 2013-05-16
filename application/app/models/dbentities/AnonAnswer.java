@@ -21,22 +21,22 @@ import play.db.ebean.Model;
 public class AnonAnswer extends Model implements AnswerModel{
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "anonanswer_id_seq")
     public int id;
-    
+
     @ManyToOne
     @NotNull
     @JoinColumn(name="questionid")
     public QuestionModel question;
-    
+
     public String answer;
-    
+
     public boolean correct;
-    
+
     public String language;
-    
+
     @ManyToOne
     @NotNull
     @JoinColumn(name="questionsetid")

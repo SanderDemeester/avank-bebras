@@ -60,7 +60,7 @@ public class TakeCompetitionController extends EController {
     private static boolean userType(UserType type) {
         return AuthenticationManager.getInstance().getUser().getType().equals(type);
     }
-    
+
     /**
      * Check if the current user is authorized for the competition management
      * @return is the user authorized
@@ -174,11 +174,11 @@ public class TakeCompetitionController extends EController {
      */
     public static Result takeCompetition(String id){
         String stateID;
-        
+
         CompetitionModel competitionModel = Ebean.find(CompetitionModel.class).where().idEq(id).findUnique();
         Competition competition = new Competition(competitionModel);
         User user = AuthenticationManager.getInstance().getUser();
-        
+
         // setting the correct grade
         Grade grade;
         if (user.data != null && user.data.classgroup != null){
@@ -195,7 +195,7 @@ public class TakeCompetitionController extends EController {
         if (userType(UserType.ANON)){
             CompetitionUserStateManager.getInstance().startCompetition(competition);
         }
-        
+
         // Register the user in the competition
         try {
             if(user.isAnon()) {
@@ -218,10 +218,10 @@ public class TakeCompetitionController extends EController {
                     EMessages.get("competition.started.title"), EMessages.get("competition.started.info"))
             );
         }
-        
+
         return ok(views.html.competition.run.questionSet.render(stateID, questionSet, null, defaultBreadcrumbs()));
     }
-    
+
     /**
      * Submit competition answers
      * @param json answers in json format
@@ -232,7 +232,7 @@ public class TakeCompetitionController extends EController {
         try {
             QuestionFeedback feedback = QuestionFeedbackGenerator.generateFromJson(
                     input, Language.getLanguage(EMessages.getLang()));
-            
+
             // Save the results
             CompetitionUserState state = null;
             if(AuthenticationManager.getInstance().getUser().isAnon()) {
@@ -255,10 +255,10 @@ public class TakeCompetitionController extends EController {
                 | AnswerGeneratorException e) {
             return badRequest(e.getMessage());
         }
-        
+
         return ok(EMessages.get("competition.run.submit.ok"));
     }
-    
+
     /**
      * Submit competition answers for pupils that lost their connection
      * @param json answers in json format
@@ -270,7 +270,7 @@ public class TakeCompetitionController extends EController {
             try {
                 new org.codehaus.jackson.JsonFactory().createJsonParser(json).nextToken();
             }
-            catch(NullPointerException | IOException ex) { 
+            catch(NullPointerException | IOException ex) {
                 return badRequest(EMessages.get("competition.run.submit.invalid"));
             }
             if(json == null || json.equals(""))
@@ -291,11 +291,11 @@ public class TakeCompetitionController extends EController {
                     | CompetitionNotStartedException e) {
                 return badRequest(e.getMessage());
             }
-            
+
             return ok(EMessages.get("competition.run.submit.ok"));
         } else return forbidden();
     }
-    
+
     /**
      * Submit competition answers and show feedback
      * @param json answers in json format
@@ -312,12 +312,12 @@ public class TakeCompetitionController extends EController {
                 | AnswerGeneratorException e) {
             return badRequest(e.getMessage());
         }
-        
+
         QuestionSetModel qsModel = Ebean.find(QuestionSetModel.class).where().idEq(feedback.getQuestionSetID()).findUnique();
         QuestionSet questionSet = new QuestionSet(qsModel);
         return ok(views.html.competition.run.questionSet.render("", questionSet, feedback, defaultBreadcrumbs()));
     }
-    
+
     /**
      * Live competition overview page
      * @param id competition id
@@ -328,16 +328,16 @@ public class TakeCompetitionController extends EController {
         List<Link> errorBreadcrumbs = new ArrayList<Link>();
         errorBreadcrumbs.add(new Link("Home", "/"));
         errorBreadcrumbs.add(new Link("Error",""));
-        
-        if(isAuthorized()) {        
+
+        if(isAuthorized()) {
             CompetitionModel competitionModel = Ebean.find(CompetitionModel.class).where().idEq(id).findUnique();
             if(competitionModel == null) return internalServerError(views.html.commons.error.render(errorBreadcrumbs, EMessages.get("error.title"), EMessages.get("error.text")));
             Competition competition = new Competition(competitionModel);
-            
+
             return ok(views.html.competition.run.overview.render(competition, defaultBreadcrumbs()));
         } else return ok(noaccess.render(errorBreadcrumbs));
     }
-    
+
     /**
      * Live competition overview data
      * @param id competition id
@@ -348,7 +348,7 @@ public class TakeCompetitionController extends EController {
         List<Link> errorBreadcrumbs = new ArrayList<Link>();
         errorBreadcrumbs.add(new Link("Home", "/"));
         errorBreadcrumbs.add(new Link("Error",""));
-        
+
         if(isAuthorized()) {
             try {
                 ObjectNode result = Json.newObject();
@@ -359,9 +359,9 @@ public class TakeCompetitionController extends EController {
                 return badRequest(e.getMessage());
             }
         } else return ok(noaccess.render(errorBreadcrumbs));
-        
+
     }
-    
+
     /**
      * Force a competition to finish before the expiration date
      * @param id competitionid

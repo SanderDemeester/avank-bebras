@@ -1,15 +1,11 @@
 package models.statistics.statistics;
 
 import java.lang.Double;
-import java.util.Collection;
 import java.util.List;
-import java.util.ArrayList;
 
 import com.avaje.ebean.Ebean;
 
-import models.statistics.populations.Population;
 import models.dbentities.UserModel;
-import models.dbentities.QuestionModel;
 import models.dbentities.QuestionSetModel;
 import models.dbentities.PupilAnswer;
 
