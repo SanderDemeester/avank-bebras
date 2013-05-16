@@ -22,6 +22,7 @@ public class QuestionFeedback {
     private String competitionID;
     private int questionSetID;
     private String userid;
+    private String languageCode;
 
     /**
      * Generate feedback from a given map of answers
@@ -30,14 +31,16 @@ public class QuestionFeedback {
      * @param questionSetID the id of the questionset
      * @param userid the token of the person who takes the competition
      * @param timeLeft the time left in seconds when the answers were submitted
+     * @param languageCode the language code the answers were filled in
      */
-    public QuestionFeedback(Map<Question, Answer> answers, String competitionID, String questionSetID, int timeLeft, String userid) {
+    public QuestionFeedback(Map<Question, Answer> answers, String competitionID, String questionSetID, int timeLeft, String userid, String languageCode) {
         makeFeedbackElements(answers);
         this.answers = answers;
         
         this.competitionID = competitionID;
         this.questionSetID = Integer.parseInt(questionSetID);
         this.userid = userid;
+        this.languageCode = languageCode;
         
         calculateScore();
     }
@@ -103,5 +106,13 @@ public class QuestionFeedback {
      */
     public String getToken() {
         return this.userid;
+    }
+    
+    /**
+     * Returns the language code the answers were solved in
+     * @return language code
+     */
+    public String getLanguageCode() {
+        return this.languageCode;
     }
 }
