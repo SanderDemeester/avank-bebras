@@ -34,42 +34,42 @@
 \begin{section}{In General}
     This project makes use of the MVC pattern. Because of this, our app folder is divided
     into three big parts which obviously are models, views and controllers. Each of these
-    folders pretty much have the same sub-structure. For example, a model in the models
+    folders pretty much have the same substructure. For example, a model in the models
     folders will have a corresponding controller in the controllers folder on the same
     sub-folder location. However, when some models, views and/or controllers weren't
     necessary in a certain way, they just won't exist.
     
     This project is based on the Play! framework version 2.0.4. We use Java 1.7 for our
     models and controllers, and Scala for our views. JQuery and Bootstrap are also
-    extensively used inside our views and seperate Javascript files.
+    extensively used inside our views and separate Javascript files.
 \end{section}
 
 \begin{section}{Parts}
     \begin{subsection}{Languages}
         EMessages is an extension of the Messages class that is provided by the Play!
         framework. The provided class didn't support changing of languages for a certain
-        session, so our extension allows us to do this anyways.
+        session, so our extension allows us to do this anyway.
         
         We also use messages.[language code] files inside the conf directory to translate
         everything in our application. The application.conf file has a key application.langs
         that contains a list of languages that are supported by the application and
-        where for a messages file exists. To add a language to the application you can simply
+        for which a messages file exists. To add a language to the application you can simply
         translate the messages file and add the language code to application.langs.
     \end{subsection}
     \begin{subsection}{Main view}
-        To make sure all our views look thesame, we've created one main view that has three
+        To make sure all our views look the same, we've created one main view that has three
         input arguments. A title, a list of links and an html content. The first just sets
         the page title to the given value. The second argument is a way to show breadcrumbs.
-        And the last arguments justs puts the given content inside the page.
+				The last arguments justs puts the given content inside the page.
         The main view itself adds all required link and script tags and also the common
-        element of each webpage, like the navigation on the top of the page.
+        element of each web page, like the navigation on the top of the page.
     \end{subsection}
     \begin{subsection}{AuthenticationManager}
         The AuthenticationManager is the cortex of our authentication system. This is a
         singleton that keeps track of all the logged in users and their cookie.
         This class doesn't just save one user per cookie, but a stack per cookie. This
-        allowed us to easily implement the mimicking of users by just pushing a user to
-        the stack when a mimick happens and popping them when someone un-mimicks someone
+        allowed us to easily implement the mimicing of users by just pushing a user to
+        the stack when a mimic happens and popping them when someone 'un-mimics' someone
         else.
         The ChainOfCommand checks which user can mimic other types of user.
     \end{subsection}
@@ -85,19 +85,19 @@
         A question in the application actually consists of two parts.
         The first is the question pack file that is stored on a certain remote server
         that contains the actual question and their correct answer. This will also contain
-        html files for both the question view and the feedback view, files that are shown
+        HTML files for both the question view and the feedback view, files that are shown
         from within those views can also be present in those packs.
         The second part is the info that is stored within the database. This is nothing
         more than the unique id of the question, an optional official id and a reference
         to the server on which the question pack is saved.
         
         The question editor allows users to create question packs that can be uploaded, 
-        downloaded or submitted to the application for approval. When an organiser approves
+        downloaded or submitted to the application for approval. When an organizer approves
         a question pack, they actually define the database info and send it to a remote server.
         
         The question packs are created with the help of the QuestionFactory and
-        QuestionPack classes. The QuestionFactory will check the xml file that defines
-        the question with an XSD file (that is included in the project). If the xml is
+        QuestionPack classes. The QuestionFactory will check the XML file that defines
+        the question with an XSD file (that is included in the project). If the XML is
         valid, it will create a Question from the given file so that it can be saved in
         a QuestionPack where it can be sent to a remote server, downloaded or stored
         for approval. The QuestionIO class contains some helper methods to help the
@@ -108,23 +108,23 @@
         Competitions have four kinds of states (as can be seen in CompetitionState).
         
         The first state is the draft state. In this state, it's only visible and editable
-        by organisers. 
+        by organizers. 
         
-        When organisers activate the competition, it enters the active state. In this state
+        When organizers activate the competition, it enters the active state. In this state
         teachers can see the competition and register one or more of their classes to the
         competition. When the competition is started, it is given to the singleton object
         CompetitionUserStateManager. This object will keep track of all the competitions
-        and all of the CompetitionUserState's associated with each competition for when
+        and all of the CompetitionUserStates associated with each competition for when
         users enter this competition.
         
         From the moment the competition enters the running state (this will go
-        automatically depending on the start date given by the organiser) the pupils
+        automatically depending on the start date given by the organizer) the pupils
         that were registered by the teachers will be able to see the competition (if they can 
         participate in this competition) and take part of it. There they will have a predefined 
         amount of time to answer the questions.
         
         When the competition reaches the expiration date, the competition will reach the
-        finished state, on which all the CompetitionUserState's that were associated to
+        finished state, on which all the CompetitionUserStates that were associated to
         this competition inside the CompetitionUserStateManager will be processed and
         saved to the database so that statistics of this competition can be viewed.
         
@@ -150,12 +150,12 @@
     \end{subsection}
     \begin{subsection}{Datadaemon}
         This singleton object always runs on the server and is able to perform
-        any task at any given time or interval. This is required to automatically delete
-        the uploaded images by authors in the question editor after a day. Or start and
+        any task at any given time or interval. This is required in the first place to automatically delete
+        the uploaded images by authors in the question editor after a day and also to start and
         stop a competition at the correct start- and expiration date.
     \end{subsection}
     \begin{subsection}{Routes}
-        This file is provided by the Play! framework and allows us to translate http requests
+        This file is provided by the Play! framework and allows us to translate HTTP requests
         to a certain action inside a certain controller.
         This file is located inside the conf folder.
     \end{subsection}
@@ -170,13 +170,13 @@
         views from your controller.
     \end{subsection}
     \begin{subsection}{DataManager}
-        For small enumerations like Grades and Difficulties that actually don't change very
-        often but are not very clean to hardcode in the application, we've created a DataManager
+        For small enumerations, like Grades and Difficulties, that actually don't change very
+        often but are not very clean to hard code in the application, we've created a DataManager
         to be able to save these values in the database so that they can be changed by the
         administrator if needed but can easily be requested from anywhere within the application.
     \end{subsection}
     \begin{subsection}{Database}
-        For a visual representation of the database tables and how they relate to each othes is provided in the db-				relations-visual.png file. A full specification of all the attributes and constraints of the tables is 					provided in the db-relations.xlsx file.
+        For a visual representation of the database tables and how they relate to each other is provided in the db-relations-visual.png file. A full specification of all the attributes and constraints of the tables is provided in the db-relations.xlsx file.
     \end{subsection}
 \end{section}
 
