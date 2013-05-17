@@ -12,9 +12,9 @@
 
 @main(EMessages.get("schools.title"),breadcrumbs){
     @commons.info(inf)
-    @if(flash.containsKey("success")) {
+    @if(flash.containsKey("succes")) {
         <div class="alert alert-info">
-            @EMessages.get("schools.add.success") @flash.get("success")
+            @EMessages.get("schools.add.success") @flash.get("succes")
         </div>
     }
     @EMessages.get("schools.listtext")<br><br>
