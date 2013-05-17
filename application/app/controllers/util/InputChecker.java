@@ -3,16 +3,12 @@ package controllers.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
-/*
- * author: Thomas Mortier
- *
- * Description: InputChecker is used to check different kinds of inputstrings
+/**
+ * InputChecker is used to check different kinds of inputstrings
  * like E-Mail or Name. You can simply add a new checker by adding a method public
  * boolean myChecker(String input){...}
- *
+ * @author Thomas Mortier
  */
-
 public class InputChecker {
 
     private static InputChecker _instance = null;
@@ -28,16 +24,24 @@ public class InputChecker {
         /* default */
     }
 
+    /**
+     * @return instance of InputChecker
+     */
     public static InputChecker getInstance() {
         if(_instance==null)
             _instance = new InputChecker();
         return _instance;
     }
 
-    public boolean isCorrectEmail(String email){
+    /**
+     * Checks if a given string matches the general email string
+     * 
+     * @param String email
+     * @return true if correct email
+     */
+    public boolean isCorrectEmail(String email) {
         Pattern pattern = Pattern.compile(EMAIL_PATTERN, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(email);
-
         return matcher.find();
     }
 }
