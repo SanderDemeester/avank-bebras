@@ -2,7 +2,6 @@ package controllers.user;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Expr;
-
 import controllers.EController;
 import controllers.util.InputChecker;
 import controllers.util.PasswordHasher;
@@ -19,7 +18,6 @@ import play.mvc.Result;
 import play.mvc.Results;
 import views.html.commons.noaccess;
 import views.html.user.settings;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,15 +26,25 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
- * Code for Bebras Application by AVANK
- * User: thomas
+ * Controller for the personal settings.
+ * @author Thomas Mortier
+ * 
  */
 public class PersonalPageController extends EController {
 
+	/**
+	 * @return True if the user has the rights to edit personal information
+	 */
     public static boolean isAuthorized() {
         return AuthenticationManager.getInstance().getUser().hasRole(Role.SETTINGS);
     }
 
+    /**
+     * Method which takes care of rendering the correct page for the personal
+     * information editor.
+     * 
+     * @param tab for a certain tab (information/edit information/password change)
+     */
     public static Result show(int tab) {
         ArrayList<Link> breadcrumbs = new ArrayList<Link>();
         Content showpage;
@@ -50,6 +58,9 @@ public class PersonalPageController extends EController {
         return ok(showpage);
     }
 
+    /**
+     * Change information of user. 
+     */
     public static Result changeInformation() {
         boolean error = false;
         Date bd = new Date();
@@ -71,10 +82,10 @@ public class PersonalPageController extends EController {
         // email
         if (!InputChecker.getInstance().isCorrectEmail(editInfo.get("email")) || Ebean.find(UserModel.class).where().and(Expr.eq(
                   "email",editInfo.get("email")),Expr.ne("id",AuthenticationManager.getInstance().getUser().getID())).findUnique() != null) {
-            if(editInfo.get("email").isEmpty()){
+            if(editInfo.get("email").isEmpty()) {
                 userModel.email = null;
                 AuthenticationManager.getInstance().getUser().data.email = null;
-            }else{
+            } else {
                 flash("error", EMessages.get(EMessages.get("register.same_email")));
                 return Results.redirect(controllers.user.routes.PersonalPageController.show(1));
             }
@@ -126,7 +137,11 @@ public class PersonalPageController extends EController {
         return Results.redirect(controllers.user.routes.PersonalPageController.show(1));
     }
 
-    // returns a date in a better readable string
+    /**
+     * Returns a date in a better readable string.
+     * @param dt The date we want to read.
+     * @return String which represents the date
+     */
     public static String dateToString(Date dt) {
         Calendar cal = new GregorianCalendar();
         String newdate = new String();
@@ -138,6 +153,8 @@ public class PersonalPageController extends EController {
 
     /**
      * This method is called when the user clicks on 'Change password'.
+     * TODO this shouldn't throw an 'Exception', but rather a subclass of
+     * Exception.
      * @return page after password is changed
      * @throws Exception
      */

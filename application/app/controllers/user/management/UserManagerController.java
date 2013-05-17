@@ -9,12 +9,10 @@ import java.util.List;
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Expr;
 import com.avaje.ebean.annotation.Transactional;
-
 import controllers.EController;
 import controllers.util.InputChecker;
 import controllers.util.PasswordHasher;
 import controllers.util.PasswordHasher.SaltAndPassword;
-
 import models.EMessages;
 import models.data.Language;
 import models.data.Link;
@@ -31,7 +29,6 @@ import play.mvc.Content;
 import play.mvc.Result;
 import play.mvc.Results;
 import views.html.commons.noaccess;
-import views.html.login.register;
 import views.html.user.management.usermanager;
 import views.html.user.management.edituser;
 import views.html.user.management.createuser;
@@ -47,22 +44,30 @@ import controllers.util.InputChecker;
 import controllers.util.PasswordHasher;
 import controllers.util.PasswordHasher.SaltAndPassword;
 
-
 /**
- * Code for Bebras Application by AVANK
- * User: thomas
+ * Controller class for the user management.
+ * @author Thomas Mortier
  */
-
 public class UserManagerController extends EController {
 
     public static boolean isAuthorized() {
         return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGEUSERS);
     }
 
-    public static boolean isAuthorized(String userID){
+    /**
+     * Checks if the user with userID can be accessed/edited/removed.
+     * 
+     * @param userID of the user to access/edit/remove
+     * @return True if authorized
+     */
+    public static boolean isAuthorized(String userID) {
         return ChainOfCommand.isSuperiorOf(userID);
     }
 
+    /**
+     * Make default breadcrumbs for this controller
+     * @return default breadcrumbs
+     */
     private static List<Link> defaultBreadcrumbs() {
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("app.home", "/"));
@@ -70,7 +75,16 @@ public class UserManagerController extends EController {
         return breadcrumbs;
     }
 
-    public static Result showUsers(int page, String orderBy, String order, String filter){
+    /**
+     * This result will redirect to the user list page
+     *
+     * @param orderBy the field to order by
+     * @param order "asc" or "desc"
+     * @param filter the string to filter on
+     *
+     * @return user list page
+     */
+    public static Result showUsers(int page, String orderBy, String order, String filter) {
         // breadcrumbs links
         List<Link> breadcrumbs = defaultBreadcrumbs();
 
@@ -89,10 +103,10 @@ public class UserManagerController extends EController {
         // And set the specific dataList for the type of user.
 
         UserManager userManager = new UserManager(ModelState.READ);
-        if(AuthenticationManager.getInstance().getUser().getType().toString().equals("ADMINISTRATOR")){
+        if(AuthenticationManager.getInstance().getUser().getType().toString().equals("ADMINISTRATOR")) {
             // case ADMIN
             userManager.setDataSet("ADMINISTRATOR");
-        }else{
+        } else {
             // case ORGANIZER
             userManager.setDataSet("ORGANIZER");
         }
@@ -106,7 +120,11 @@ public class UserManagerController extends EController {
         );
     }
 
-    public static Result createUser(){
+    /**
+     * Redirects the user to the page where new users can be created.
+     * @return new user page
+     */
+    public static Result createUser() {
         // breadcrumbs links
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("app.home", "/"));
@@ -122,21 +140,37 @@ public class UserManagerController extends EController {
         return ok(createuser.render(form, manager, breadcrumbs));
     }
 
-
-
-    // find UserModel based on id
-    public static UserModel findUser(String id){
+    /**
+     * Find and return the UserModel of the user with id.
+     * 
+     * @param id of the user 
+     * @return UserModel of the user
+     */
+    public static UserModel findUser(String id) {
         UserModel userModel = Ebean.find(UserModel.class).where().eq(
                 "id",id).findUnique();
         return userModel;
     }
 
-    public static UserType getUserType(UserModel um){
+    /**
+     * Returns the user type of a user model.
+     * 
+     * @param um TODO
+     * @return UserType of um
+     */
+    public static UserType getUserType(UserModel um) {
         return um.type;
     }
 
+    /**
+     * Returns to the user list view and saves the changes that have been made
+     * to a certain user with id edit_id.
+     * 
+     * @param edit_id id of the user to be updated
+     * @return User list view page
+     */
     @Transactional
-    public static Result updateUser(String edit_id){
+    public static Result updateUser(String edit_id) {
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("app.home", "/"));
         breadcrumbs.add(new Link(EMessages.get("user.management.edit"), "/manage/users/update"));
@@ -154,12 +188,11 @@ public class UserManagerController extends EController {
         }
 
         try {
-
             Date currentDate = new Date();
             Date birthday = new SimpleDateFormat("dd/MM/yyyy").parse(form.data().get("birthdate"));
 
             // validate birthday
-            if(birthday.after(currentDate)){
+            if(birthday.after(currentDate)) {
                 flash("error", EMessages.get(EMessages.get("error.wrong_date_time")));
                 return badRequest(edituser.render(form, new UserManager(ModelState.UPDATE), breadcrumbs));
             }
@@ -172,33 +205,32 @@ public class UserManagerController extends EController {
             def_model.name = form.data().get("name");
 
             // check if email is unique and validate
-            if(Ebean.find(UserModel.class).where().and(Expr.eq("email",form.data().get("email")),Expr.ne("id",def_model.id)).findUnique() != null){
+            if(Ebean.find(UserModel.class).where().and(Expr.eq("email",form.data().get("email")),Expr.ne("id",def_model.id)).findUnique() != null) {
                 flash("error", EMessages.get(EMessages.get("register.same_email")));
                 return badRequest(edituser.render(form, new UserManager(ModelState.UPDATE), breadcrumbs));
             }
 
-            if(!InputChecker.getInstance().isCorrectEmail(form.data().get("email"))){
-                if(!form.data().get("email").isEmpty()){
+            if(!InputChecker.getInstance().isCorrectEmail(form.data().get("email"))) {
+                if(!form.data().get("email").isEmpty()) {
                     flash("error", EMessages.get(EMessages.get("user.error.wrong_email")));
                     return badRequest(edituser.render(form, new UserManager(ModelState.UPDATE), breadcrumbs));
-                }else{
+                } else {
                     def_model.email = null;
                 }
-            }else{
+            } else {
                 def_model.email = form.data().get("email");
             }
 
             // password
-            if(!form.data().get("password1").isEmpty()){
+            if(!form.data().get("password1").isEmpty()) {
 
                 // check if two passwords are the same
-                if(!form.data().get("password1").equals(form.data().get("password2"))){
+                if(!form.data().get("password1").equals(form.data().get("password2"))) {
                     flash("error", EMessages.get(EMessages.get("user.error.passwnotequal")));
                     return badRequest(edituser.render(form, new UserManager(ModelState.UPDATE,edit_id), breadcrumbs));
                 }
 
                 // edit passw
-
                 PasswordHasher.SaltAndPassword sp = PasswordHasher.generateSP(form.data().get("password1").toCharArray());
                 String passwordHEX = sp.password;
                 String passwordSalt = sp.salt;
@@ -208,24 +240,23 @@ public class UserManagerController extends EController {
             }
 
             // check if blocked
-            if(form.data().get("blocked") == null){
+            if(form.data().get("blocked") == null) {
                 // unblocked
                 def_model.blockeduntil = null;
-            }else{
+            } else {
                 // blocked
-
                 // check if the user left the blockinput empty
-                if(form.data().get("blockeduntil").isEmpty()){
+                if(form.data().get("blockeduntil").isEmpty()) {
                     def_model.blockeduntil = null;
-                }else{
+                } else {
                     Date cd = new Date();
                     Date bu = new SimpleDateFormat("dd/MM/yyyy").parse(form.data().get("blockeduntil"));
 
                     // check if valid blockeduntil date
-                    if(!bu.after(cd)){
+                    if(!bu.after(cd)) {
                         flash("error", EMessages.get(EMessages.get("user.error.blockdateinvalid")));
                         return badRequest(edituser.render(form, new UserManager(ModelState.UPDATE), breadcrumbs));
-                    }else{
+                    } else {
                         // set
                         def_model.blockeduntil = new SimpleDateFormat("dd/MM/yyyy").parse(form.data().get("blockeduntil"));
                     }
@@ -252,8 +283,14 @@ public class UserManagerController extends EController {
             return Results.redirect(routes.UserManagerController.editUser(edit_id));
     }
 
+    /**
+     * Creates the user edit page for editing a user with ID id.
+     * 
+     * @param id id of the user to be edited
+     * @return User edit page
+     */
     @Transactional(readOnly=true)
-    public static Result editUser(String id){
+    public static Result editUser(String id) {
         ArrayList<Link> breadcrumbs = new ArrayList<Link>();
         Content showpage;
         breadcrumbs.add(new Link(EMessages.get("app.home"),"/"));
@@ -263,7 +300,7 @@ public class UserManagerController extends EController {
         if(!isAuthorized(id)) return Results.ok(noaccess.render(breadcrumbs));
 
         // check if id is not the same as the id of the current active user
-        if(AuthenticationManager.getInstance().getUser().getID().equals(id)){
+        if(AuthenticationManager.getInstance().getUser().getID().equals(id)) {
             flash("error", EMessages.get(EMessages.get("user.error.sameid")));
             return Results.redirect(controllers.user.management.routes.UserManagerController.showUsers(0,"name","asc",""));
         }
@@ -294,20 +331,23 @@ public class UserManagerController extends EController {
         form.get().comment = id_model.comment;
 
         // setting blocked/blockdate values
-        if(id_model.blockeduntil == null){
+        if(id_model.blockeduntil == null) {
             form.get().blocked = false;
-        }else{
+        } else {
             form.get().blocked = true;
             form.get().blockeduntil = id_model.blockeduntil;
         }
-
         manager.setIgnoreErrors(true);
-
         return ok(edituser.render(form, manager, breadcrumbs));
     }
 
+    /**
+     * Saves the new created user and returns to the user list view.
+     * 
+     * @return user list view
+     */
     @Transactional
-    public static Result saveUser(){
+    public static Result saveUser() {
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("app.home", "/"));
         breadcrumbs.add(new Link(EMessages.get("user.management.create"), "/manage/users/create"));
@@ -319,12 +359,11 @@ public class UserManagerController extends EController {
         if(form.hasErrors()) {
             return badRequest(createuser.render(form, new UserManager(ModelState.CREATE), breadcrumbs));
         }
-
         try {
             Date currentDate = new Date();
 
             // set calendar and validate
-            if(form.get().birthdate.after(currentDate)){
+            if(form.get().birthdate.after(currentDate)) {
                 flash("error", EMessages.get(EMessages.get("error.wrong_date_time")));
                 return badRequest(createuser.render(form, new UserManager(ModelState.CREATE), breadcrumbs));
             }
@@ -333,16 +372,16 @@ public class UserManagerController extends EController {
 
             // check if email is unique and validate
             if(Ebean.find(UserModel.class).where().eq(
-                    "email",form.get().email).findUnique() != null){
+                    "email",form.get().email).findUnique() != null) {
                 flash("error", EMessages.get(EMessages.get("register.same_email")));
                 return badRequest(createuser.render(form, new UserManager(ModelState.CREATE), breadcrumbs));
             }
 
-            if(!InputChecker.getInstance().isCorrectEmail(form.get().email)){
-                if(!form.get().email.isEmpty()){
+            if(!InputChecker.getInstance().isCorrectEmail(form.get().email)) {
+                if(!form.get().email.isEmpty()) {
                     flash("error", EMessages.get(EMessages.get("user.error.wrong_email")));
                     return badRequest(createuser.render(form, new UserManager(ModelState.CREATE), breadcrumbs));
-                }else{
+                } else {
                     form.get().email = null;
                 }
             }
@@ -350,7 +389,6 @@ public class UserManagerController extends EController {
             // set id
             String bebrasID = null;
             bebrasID = IDGenerator.generate(form.get().name, birthday);
-
 
             // set passw
             String passw = AuthenticationManager.getInstance().simulateClientsidePasswordStrengthening(bebrasID);
@@ -383,27 +421,40 @@ public class UserManagerController extends EController {
         return Results.redirect(controllers.user.management.routes.UserManagerController.showUsers(0,"name","asc",""));
     }
 
-    /*
-     * HELPMETHODS FOR DEFAULTFORMINFOPASSW => SHOWING CORRECT LISTVALUES FOR USER WITH
-     * ID: EDIT_ID
+    /**
+     * Helpmethod for showing the correct listvalues for user with ID edit_id.
+     * This method returns the type of the user with ID id.
+     * 
+     * @param id id of the user
+     * @return String of the user's type
      */
-
-    // USERTYPE
-    public static String getUserType(String id){
+    public static String getUserType(String id) {
         UserModel dum = Ebean.find(UserModel.class).where().eq(
                 "id",id).findUnique();
         return dum.type.toString();
     }
 
-    // USERLANG
-    public static String getUserLang(String id){
+    /**
+     * Helpmethod for showing the correct listvalues for user with ID edit_id.
+     * This method returns the language of the user with ID id.
+     * 
+     * @param id id of the user
+     * @return String of the user's language
+     */
+    public static String getUserLang(String id) {
         UserModel dum = Ebean.find(UserModel.class).where().eq(
                 "id",id).findUnique();
         return dum.preflanguage;
     }
 
-    // USERGENDER
-    public static String getUserGender(String id){
+    /**
+     * Helpmethod for showing the correct listvalues for user with ID edit_id.
+     * This method returns the gender of the user with ID id.
+     * 
+     * @param id id of the user
+     * @return String of the user's gender
+     */
+    public static String getUserGender(String id) {
         UserModel dum = Ebean.find(UserModel.class).where().eq(
                 "id",id).findUnique();
         return dum.gender.toString();

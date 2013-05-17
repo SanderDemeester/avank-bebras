@@ -6,40 +6,59 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import com.avaje.ebean.Expr;
 import com.avaje.ebean.ExpressionList;
-
 import models.management.FieldType;
 import models.management.Manager;
 import models.management.ModelState;
 import models.user.AuthenticationManager;
-import models.user.User;
 import models.dbentities.UserModel;
 import play.mvc.Call;
 
 import com.avaje.ebean.ExpressionList;
 
+/**
+ * Manager for the UserModel entity.
+ * @author Thomas Mortier
+ */
 public class UserManager extends Manager<UserModel> {
 
     ExpressionList<UserModel> UMDataSet;
-
     public String edit_id;
 
+    /**
+     * Create a new UserManager.
+     * @param state the state the manager should be in
+     */
     public UserManager(ModelState state) {
         super(UserModel.class, state, "id", "id");
     }
 
-    public UserManager(ModelState state, String i){
+    /**
+     * Create a new UserManager.
+     * @param state the state the manager should be in
+     * @param i the id for the requested UserModel, only used when editing a UserModel
+     */
+    public UserManager(ModelState state, String i) {
         super(UserModel.class, state, "id", "id");
         this.edit_id = i;
     }
-
+    
+    /**
+     * Returns the path of the route that must be followed to create a new item.
+     *
+     * @return Call path of the route that must be followed
+     */
     @Override
     public Call getAddRoute() {
         return routes.UserManagerController.createUser();
     }
 
+    /**
+     * Returns the path of the route that must be followed to edit the selected item.
+     *
+     * @param id of the user that will be edited
+     * @return Call path of the route that must be followed
+     */
     @Override
     public Call getEditRoute(String id) {
         return routes.UserManagerController.editUser(id);
@@ -50,11 +69,22 @@ public class UserManager extends Manager<UserModel> {
         return routes.UserManagerController.showUsers(page, orderBy, order, filter);
     }
 
+    /**
+     * Returns the name of the object.
+     *
+     * @return name
+     */
     @Override
     public String getMessagesPrefix() {
         return "users";
     }
 
+    /**
+     * Returns the path of the route that must be followed to remove the selected item.
+     *
+     * @param id of the user that will be deleted
+     * @return Null because a UserManager can't delete instances
+     */
     @Override
     public Call getRemoveRoute(String id) {
         return null;
@@ -110,15 +140,27 @@ public class UserManager extends Manager<UserModel> {
         return keyset.iterator();
     }
 
+    /**
+     * This method is used to get the list of UserModels that are being
+     * viewed in the view list of the DMTV.
+     * 
+     * @return List of usermodels to be viewed
+     */
     @Override
-    protected ExpressionList<UserModel> getDataSet(){
+    protected ExpressionList<UserModel> getDataSet() {
         return UMDataSet;
     }
 
-    public void setDataSet(String userType){
-        if(userType.equals("ADMINISTRATOR")){
+    /**
+     * This method makes sure that the correct list is made for a certain
+     * type of user (which calls the method)
+     * 
+     * @param userType TODO
+     */
+    public void setDataSet(String userType) {
+        if(userType.equals("ADMINISTRATOR")) {
             UMDataSet = getFinder().where().ne("type", "ADMINISTRATOR");
-        }else if(userType.equals("ORGANIZER")){
+        } else if(userType.equals("ORGANIZER")) {
             ArrayList<String> typeList = new ArrayList<String>();
             typeList.add("TEACHER");
             typeList.add("AUTHOR");
