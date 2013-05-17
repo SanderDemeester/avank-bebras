@@ -3,7 +3,6 @@ package models.statistics.populations;
 import java.util.Map;
 import java.util.HashMap;
 
-import models.EMessages;
 
 /**
  * The different types of population.

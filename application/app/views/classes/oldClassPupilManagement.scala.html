@@ -1,14 +1,19 @@
-@(currentPage: Page[_ <: models.management.ManageableModel], manager: models.management.Manager[_], currentOrderBy: String,
-    currentOrder: String, currentFilter: String, breadcrumbs : List[models.data.Link],
-    ori : models.util.OperationResultInfo)
-    
-    @import views.html.management.list
-    
-    @main(EMessages.get("classes.oldpupil.list"), breadcrumbs){
+@(
+    currentPage: Page[_ <: models.management.ManageableModel],
+    manager: models.management.Manager[_],
+    currentOrderBy: String,
+    currentOrder: String,
+    currentFilter: String,
+    breadcrumbs :List[models.data.Link],
+    ori: models.util.OperationResultInfo
+)
+
+@import views.html.management.list
+
+@main(EMessages.get("classes.oldpupil.list"), breadcrumbs){
     @commons.info(ori)
     @EMessages.get("classes.oldpupil.info")
     @if(currentPage!=null){
     @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
     }
-    
-    }
+}

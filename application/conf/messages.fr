@@ -45,6 +45,7 @@ error.mimic.cant_find_user = L'utilisateur ne peut pas trouver
 error.mimic.policy_deny = Ne peut pas imiter utilisateur par politique
 error.mimic.user_logged_in = L'utilisateur que vous essayez d'imiter est enregistré dans le système
 error.user_blocked = Votre compte est suspendu, veuillez contacter un admin
+error.invalid_password = Compte tenu de mot de passe n'est pas correct!
 
 # Links from roles
 links.settings.title = Paramètres
@@ -76,6 +77,7 @@ links.manageusers.title = Gestion des utilisateurs
 # Forms
 forms.cancel = Annuler
 forms.approve = Approuver
+forms.save = Sauver
 forms.delete = Supprimer
 forms.deleteArg = Supprimer : {0}
 forms.remove = Supprimer
@@ -89,6 +91,7 @@ forms.submit = Envoyer
 forms.create = Créer
 forms.createArg = Créer {0}
 forms.update = Mise à jour
+forms.upload = Télécharger
 forms.uploadFile = Télécharger le fichier
 forms.title = Titre
 forms.error = S'il vous plaît corriger toutes les erreurs.
@@ -96,6 +99,7 @@ forms.open = Ouvert
 forms.unknownError = Une erreur s'est produite.
 forms.add = Ajouter
 forms.error.dates = S'il vous plaît choisir une heure de fin c'est après l'heure de début de l'élu.
+forms.or = ou
 
 # Question
 question.editor.name = Question éditeur
@@ -345,6 +349,8 @@ competitions.grade = Grade
 competitions.grade.warning = Mise en garde !
 competitions.grade.info = Vous êtes sur le point de prendre un concours. Afin de sélectionner les questions appropriées, nous avons besoin de connaître votre niveau désiré. Veuillez sélectionner la catégorie que vous préférez
 competitions.grade.breadcrumb = Sélectionnez la catégorie
+competitions.take.landing = Prendre rapidement une compétition
+competitions.take.more = Plus de concours
 
 competition.history.warning = Mise en garde !
 competition.history.info = Vous n'êtes actuellement pas connecté. Afin de suivre vos résultats et statistiques, vous devez être signé en.
@@ -369,7 +375,7 @@ schools.add.success = École avec succès enregistrés. ID :
 schools.edit = Modifier une école.
 schools.table.id = ID
 schools.table.name = Nom
-schools.table.name = Adresse
+schools.table.address = Adresse
 schools.error = Quelque chose a mal tourné. Réessayez (plus tard).
 
 
@@ -394,6 +400,7 @@ servers.error.removePersistent = Il y a encore des questions qui sont sur ce ser
 servers.success.added = Serveur {0} a été créé avec succès
 servers.success.edited = Serveur {0} a été modifié avec succès
 servers.success.removed = Serveur {0} a été supprimé avec succès
+servers.title.add = Nouveau serveur
 
 # question management
 questions.preview = Aperçu
@@ -470,6 +477,7 @@ classes.pupil.form.email = Email
 classes.pupil.form.registrationdate = Date de régistration
 classes.pupil.form.comment = Commentaire
 classes.pupil.form.blockeduntil = Bloqué jusqu'à
+classes.pupil.form.password = Mot de passe
 
 classes.novalidclassid = Ce n'est pas un ID de classe valide.
 classes.pupil.editclassinfo = Modifier les infos de la classe
@@ -672,6 +680,8 @@ competition.overview.availableLanguages = Langues disponibles
 competition.overview.confirmFinish = Êtes-vous certain de que vouloir terminer ce concours ? Toutes les réponses non soumises seront perdues !
 competition.started.title = Concours n'est pas encore commencé
 competition.started.info = Le concours choisi n'est pas encore commencé. Please try again later.
+competition.questionset.title = Aucune question réglée soutenir votre niveau.
+competition.questionset.info = Le concours choisi ne prend pas en charge votre niveau. S'il vous plaît réessayer plus tard.
 
 # Contact form
 contact.formtitle = Formulaire de contact

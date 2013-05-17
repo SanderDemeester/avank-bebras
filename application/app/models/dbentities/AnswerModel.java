@@ -12,12 +12,12 @@ public interface AnswerModel {
     public String getAnswer();
     public boolean isCorrect();
     public String getLanguageCode();
-    
+
     public void setQuestion(QuestionModel question);
     public void setQuestionSet(QuestionSetModel questionSet);
     public void setAnswer(String answer);
     public void setCorrect(boolean correct);
     public void setLanguageCode(String languageCode);
-    
+
     public void save();
 }

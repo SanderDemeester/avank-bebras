@@ -19,74 +19,68 @@
 
 @main(EMessages.get("question.questions.listsubmits"), breadcrumbs){
     <h2>@EMessages.get("question.questions.listsubmits")</h2>
-    
+
     @***************************************
-	* Flash messages *
-	***************************************@
-	@if(flash.containsKey("success")) {
-	     <div class="alert alert-success">
-	         <strong>Success!</strong> @flash.get("success")
-	     </div>
-	}
-	@if(flash.containsKey("error")) {
-	     <div class="alert alert-error">
-	         <strong>Error!</strong> @flash.get("error")
-	     </div>
-	}
-	
-	<div id="actions">
-	    <form action="@controllers.question.routes.QuestionController.listSubmits(0, currentFilter)" method="GET" class="row-fluid">
-	        <div class="span11">
-	            @(EMessages.get("question.questions.submitslist.user")+":") <input type="text" class="input-large search-query filter-input" name="f" value="@currentFilter" placeholder="@EMessages.get("management.filter.input")">
-	        </div>
-	        <div class="span1 text-right">
-	            <input type="submit" id="searchsubmit" value="@EMessages.get("management.filter.button")" class="btn">
-	        </div>
-	    </form>
-	
-	</div>
-	
-	@if(currentPage.getTotalRowCount == 0){
-	    <div class="well">
-	        <p class="text-center muted">@EMessages.get("management.empty")</p>
-	    </div>
-	} else {
-	    <table class="table table-striped table-bordered table-hover table-condensed">
-	
-	        <thead>
-	            <tr>
-	                @for(headerName <- currentPage.getColumnHeaders){
-	                    @header(headerName, headerName)
-	                }
-	            </tr>
-	        </thead>
-	
-	        <tbody>
-	
-	            @for(item <- currentPage.getList){
-	                <tr>
-	                @for(fieldValue <- item.getFieldValues){
-	                    <td class="span5">
-	                        @fieldValue
-	                    </td>
-	                }
-	                	<td class="span2">
-	                		<a class="btn btn-small" href="@controllers.question.routes.QuestionController.approve(item.getUserID, item.getFileName)">
-	                			<i class="icon-edit"></i>
-	                		</a>
-	                		<a class="btn btn-small" href="@controllers.question.routes.QuestionController.removeSubmit(item.getUserID, item.getFileName)">
-								<i class="icon-remove"></i>
-							</a>
-	                	</td>
-	                </tr>
-	            }
-	
-	        </tbody>
-	
-	    </table>
-	    
-	    
-	<div id="pagination" class="pagination pagination-centered pagination-small">
+    * Flash messages                       *
+    ***************************************@
+    @views.html.commons.showflash()
+
+    <div id="actions">
+        <form action="@controllers.question.routes.QuestionController.listSubmits(0, currentFilter)" method="GET" class="row-fluid">
+            <div class="span11">
+                @(EMessages.get("question.questions.submitslist.user")+":")
+                <input type="text" class="input-large search-query filter-input"
+                    name="f" value="@currentFilter"
+                    placeholder="@EMessages.get("management.filter.input")" />
+            </div>
+            <div class="span1 text-right">
+                <input type="submit" id="searchsubmit"
+                    value="@EMessages.get("management.filter.button")" class="btn" />
+            </div>
+        </form>
+    </div>
+
+    @if(currentPage.getTotalRowCount == 0){
+        <div class="well">
+            <p class="text-center muted">@EMessages.get("management.empty")</p>
+        </div>
+    } else {
+        <table class="table table-striped table-bordered table-hover table-condensed">
+
+            <thead>
+                <tr>
+                    @for(headerName <- currentPage.getColumnHeaders){
+                        @header(headerName, headerName)
+                    }
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @for(item <- currentPage.getList){
+                <tr>
+                    @for(fieldValue <- item.getFieldValues){
+                    <td class="span5">
+                        @fieldValue
+                    </td>
+                    }
+                    <td class="span2">
+                        <a class="btn btn-small" href="@controllers.question.routes.QuestionController.approve(item.getUserID, item.getFileName)">
+                            <i class="icon-edit"></i>
+                        </a>
+                        <a class="btn btn-small" href="@controllers.question.routes.QuestionController.removeSubmit(item.getUserID, item.getFileName)">
+                            <i class="icon-remove"></i>
+                        </a>
+                    </td>
+                </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+
+    <div id="pagination" class="pagination pagination-centered pagination-small">
         <ul>
             @if(currentPage.hasPrev) {
             <li class="prev">
@@ -111,6 +105,6 @@
             }
         </ul>
     </div>
-	}
+    }
 
 }

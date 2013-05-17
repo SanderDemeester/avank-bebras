@@ -45,6 +45,7 @@ error.mimic.cant_find_user = Can not find user
 error.mimic.policy_deny = Can not mimic user by policy
 error.mimic.user_logged_in = The user that you are trying to mimic is logged into the system
 error.user_blocked = Your account has been suspended, please contact admin
+error.invalid_password = Given password is not correct!
 
 # Links from roles
 links.settings.title = Settings
@@ -76,6 +77,7 @@ links.manageusers.title = User management
 # Forms
 forms.cancel = Cancel
 forms.approve = Approve
+forms.save = Save
 forms.delete = Delete
 forms.deleteArg = Delete {0}
 forms.remove = Remove
@@ -89,6 +91,7 @@ forms.submit = Submit
 forms.create = Create
 forms.createArg = Create {0}
 forms.update = Update
+forms.upload = Upload
 forms.uploadFile = Upload file
 forms.title = Title
 forms.error = Please fix all errors.
@@ -96,6 +99,7 @@ forms.open = Open
 forms.unknownError = An error occured.
 forms.add = Add
 forms.error.dates = Please pick a end time that is after the chosen start time.
+forms.or = or
 
 # Question
 question.editor.name = Question Editor
@@ -345,6 +349,8 @@ competitions.grade = Grade
 competitions.grade.warning = Warning!
 competitions.grade.info = You're about to take a contest. In order to select the appropriate questions, we need to know your desired grade. Please select the grade you prefer
 competitions.grade.breadcrumb = Select grade
+competitions.take.landing = Quickly take a contest
+competitions.take.more = More contests
 
 competition.history.warning = Warning!
 competition.history.info = You are currently not signed in. In order to keep track off your results and stats, you need to be signed in.
@@ -369,7 +375,7 @@ schools.add.success = School succesfully saved. ID:
 schools.edit = Edit a school.
 schools.table.id = id
 schools.table.name = Name
-schools.table.name = Address
+schools.table.address = Address
 schools.error = Something went wrong. Try again (later).
 
 
@@ -394,6 +400,7 @@ servers.error.removePersistent = There are still questions that are on this serv
 servers.success.added = Server {0} was successfully created
 servers.success.edited = Server {0} was successfully edited
 servers.success.removed = Server {0} was successfully removed
+servers.title.add = New Server
 
 # question management
 questions.preview = Preview
@@ -470,6 +477,7 @@ classes.pupil.form.email = Email
 classes.pupil.form.registrationdate = Registration date
 classes.pupil.form.comment = Comment
 classes.pupil.form.blockeduntil = Blocked until
+classes.pupil.form.password = Password
 
 classes.novalidclassid = This is not a valid class ID.
 classes.pupil.editclassinfo = Edit the class info
@@ -672,6 +680,8 @@ competition.overview.availableLanguages = Available languages
 competition.overview.confirmFinish = Are you sure you want to finish this contest? Any unsubmitted answers will be lost!
 competition.started.title = Contest is not yet started
 competition.started.info = The chosen contest is not yet started. Please try again later.
+competition.questionset.title = No question set supporting your level.
+competition.questionset.info = The chosen contest does currently not support your level. Please try again later.
 
 # Contact form
 contact.formtitle = Contact form

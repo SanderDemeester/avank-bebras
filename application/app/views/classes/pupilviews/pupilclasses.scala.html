@@ -1,41 +1,46 @@
-@(currentPage: Page[_ <: models.management.ManageableModel], manager: models.management.Manager[_], currentOrderBy: String,
-    currentOrder: String, currentFilter: String, breadcrumbs : List[models.data.Link],
-    currentClass : models.dbentities.ClassGroup)
-    
-    @import views.html.management.list
-    
-    @main(EMessages.get("classes.pupil.classes.list"), breadcrumbs){
-    @commons.showflash()
-    @if(currentClass != null){
-    	<div class="well">
-    		@EMessages.get("classes.pupil.classes.current")
-    	</div>
-    	<table class="table table-striped table-bordered table-hover table-condensed">
-    		<tr>
-    			<th>@EMessages.get("classes.pupil.classes.form.id")</th>
-    			<th>@EMessages.get("classes.pupil.classes.form.name")</th>
-    			<th>@EMessages.get("classes.pupil.classes.form.schoolid")</th>
-    			<th>@EMessages.get("classes.pupil.classes.form.teacherid")</th>
-    			<th>@EMessages.get("classes.pupil.classes.form.grade")</th>
-    			<th>@EMessages.get("classes.pupil.classes.form.expirationdate")</th>    
-    		</tr>
-    		<tr>
-    			<td>@currentClass.id</td>
-    			<td>@currentClass.name</td>
-    			<td>@currentClass.schoolid</td>
-    			<td>@currentClass.teacherid</td>
-    			<td>@currentClass.level</td>
-    			<td>@controllers.util.DateFormatter.formatDate(currentClass.expdate)</td>
-    		</tr>
-    
-   		</table>
-    }
- 
-    @if(currentPage!=null){
-    	<div class="well">
-    		@EMessages.get("classes.pupil.classes.previous")
-    	</div>
-    	@list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
-    }
-    
-    }
+@(
+    currentPage: Page[_ <: models.management.ManageableModel],
+    manager: models.management.Manager[_],
+    currentOrderBy: String,
+    currentOrder: String,
+    currentFilter: String,
+    breadcrumbs: List[models.data.Link],
+    currentClass: models.dbentities.ClassGroup
+)
+
+@import views.html.management.list
+
+@main(EMessages.get("classes.pupil.classes.list"), breadcrumbs){
+@commons.showflash()
+@if(currentClass != null){
+    <div class="well">
+        @EMessages.get("classes.pupil.classes.current")
+    </div>
+    <table class="table table-striped table-bordered table-hover table-condensed">
+        <tr>
+            <th>@EMessages.get("classes.pupil.classes.form.id")</th>
+            <th>@EMessages.get("classes.pupil.classes.form.name")</th>
+            <th>@EMessages.get("classes.pupil.classes.form.schoolid")</th>
+            <th>@EMessages.get("classes.pupil.classes.form.teacherid")</th>
+            <th>@EMessages.get("classes.pupil.classes.form.grade")</th>
+            <th>@EMessages.get("classes.pupil.classes.form.expirationdate")</th>
+        </tr>
+        <tr>
+            <td>@currentClass.id</td>
+            <td>@currentClass.name</td>
+            <td>@currentClass.schoolid</td>
+            <td>@currentClass.teacherid</td>
+            <td>@currentClass.level</td>
+            <td>@controllers.util.DateFormatter.formatDate(currentClass.expdate)</td>
+        </tr>
+    </table>
+}
+
+@if(currentPage!=null){
+    <div class="well">
+        @EMessages.get("classes.pupil.classes.previous")
+    </div>
+    @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
+}
+
+}

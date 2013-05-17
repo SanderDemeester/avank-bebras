@@ -28,7 +28,7 @@ public class GradeManager extends DataManager<Grade> {
         return Grade.class;
     }
 
-    @Override public Grade createFromStrings(String... strings) 
+    @Override public Grade createFromStrings(String... strings)
             throws CreationException {
         if(strings.length != 3) throw new CreationException(
                 "Incorrect strings length.",

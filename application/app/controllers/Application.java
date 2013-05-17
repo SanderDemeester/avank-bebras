@@ -5,8 +5,6 @@ import java.util.List;
 
 import models.EMessages;
 import models.data.*;
-import models.dbentities.CompetitionModel;
-import play.data.Form;
 import play.mvc.Result;
 import views.html.index;
 
@@ -29,7 +27,7 @@ public class Application extends EController {
     public static Result index() {
         return ok(index.render("Nothing here yet...", breadcrumbs));
     }
-    
+
     /**
      * Change the language in this session
      * @param code language code to change the language to

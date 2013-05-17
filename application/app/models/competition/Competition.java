@@ -6,7 +6,6 @@ import models.data.Language;
 import models.dbentities.ClassGroup;
 import models.dbentities.CompetitionModel;
 import models.dbentities.QuestionSetModel;
-import models.dbentities.QuestionSetQuestion;
 import models.question.Question;
 import models.question.QuestionFeedback;
 import models.question.QuestionSet;
@@ -56,6 +55,14 @@ public class Competition {
     }
 
     /**
+     * Returns the number of question sets linked with this competition.
+     * @return number of linked question sets
+     */
+    public int getQuestionSetCount(){
+        return questionSets.values().size();
+    }
+
+    /**
      * Returns the database model for this competition.
      * @return underlying database model
      */
@@ -79,7 +86,7 @@ public class Competition {
     public CompetitionType getType(){
         return data.type;
     }
-    
+
     /**
      * Sets the state for this competition.
      * @param competitionState new competition state
@@ -226,19 +233,19 @@ public class Competition {
     public CompetitionState getCompetitionState(User pupil){
         throw new UnsupportedOperationException();
     }
-    
+
     public String getID() {
         return this.data.getID();
     }
-    
+
     public Date getExpirationDate() {
         return this.data.endtime;
     }
-    
+
     public Date getStartDate() {
         return this.data.starttime;
     }
-    
+
     public String getName() {
         return this.data.name;
     }

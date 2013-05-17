@@ -1,20 +1,20 @@
-@(blockForm: Form[controllers.user.BlockController.BlockDateWrapper], 
+@(blockForm: Form[controllers.user.BlockController.BlockDateWrapper],
 breadcrumbs : List[models.data.Link],id:String)
 
-@import helper._
-@import helper.twitterBootstrap._
+@import helper.form
+@import helper.inputText
 @import models.EMessages
 
 @main(EMessages.get("otheruser.block"), breadcrumbs) {
-	@form(controllers.user.routes.BlockController.block(id)){
-		<fieldset>
-			@inputText(blockForm("blockedTill"), '_label ->EMessages.get("otheruser.block.date"))
-		</fieldset>
+    @form(controllers.user.routes.BlockController.block(id)){
+        <fieldset>
+            @inputText(blockForm("blockedTill"), '_label ->EMessages.get("otheruser.block.date"))
+        </fieldset>
 
-		<div class="actions">
-        	<input type="submit" value="Save" class="btn btn-primary">
-    	</div>
-    
-	    }
-    
+        <div class="actions">
+            <input type="submit" value="@EMessages.get("forms.save")" class="btn btn-primary" />
+        </div>
+
+        }
+
 }

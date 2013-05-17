@@ -1,25 +1,30 @@
-@(classForm: Form[models.dbentities.ClassGroup], breadcrumbs : List[models.data.Link],inf : models.util.OperationResultInfo,id : Int,
-gradeValues : java.util.Map[String,String])
+@(
+    classForm: Form[models.dbentities.ClassGroup],
+    breadcrumbs: List[models.data.Link],
+    inf: models.util.OperationResultInfo,
+    id: Int,
+    gradeValues: java.util.Map[String,String]
+)
 
-@import helper._
-@import helper.twitterBootstrap._
+@import helper.form
 @import models.EMessages
 
 @main(EMessages.get("classes.edit"),breadcrumbs){
-	@commons.info(inf)
-	
-	@if(classForm!=null){
-		@form(controllers.classgroups.routes.ClassGroupController.update(id)) {
+    @commons.info(inf)
 
-    		@classgroupForm(classForm,gradeValues)
+    @if(classForm!=null){
+        @form(controllers.classgroups.routes.ClassGroupController.update(id)) {
 
-    	<div class="actions">
-        	<input type="submit" value="Save" class="btn primary"> or
-        	<a href="@controllers.classgroups.routes.ClassGroupController.viewClasses()" class="btn">Cancel</a>
-    	</div>
-   		}
+        @classgroupForm(classForm,gradeValues)
+
+        <div class="actions">
+            <input type="submit" value="@EMessages.get("forms.save")" class="btn primary" />
+            @EMessages.get("forms.or")
+            <a href="@controllers.classgroups.routes.ClassGroupController.viewClasses()" class="btn">
+                @EMessages.get("forms.cancel")
+            </a>
+        </div>
+        }
     }
-	
-	
-	
+
 }
