@@ -37,10 +37,10 @@
             <form method="get" action="/manage/@manager.url()/add" id="addform" class="enterish">
                 <td><a class="icon-plus" href="javascript:$('#addform').submit();"></a></td>
                 @for(i <- 0 to manager.columns().length - 1) { <!-- each input field -->
-                <td><input type="text" name="fields[@i]" class="input-block-level enterish"
-                    @if(manager.lastRemoved() != null) {
-                    value="@(manager.lastRemoved()(i))"
-                    } /></td>
+                <td>
+                    <input type="text" name="fields[@i]" class="input-block-level enterish"
+                    @if(manager.lastRemoved() != null) {value="@(manager.lastRemoved()(i))"} />
+                </td>
                 }
             </form>
         </tr>
@@ -48,3 +48,4 @@
 </table>
 <script src="@routes.Assets.at("javascripts/management/enterish.js")" type="text/javascript"></script>
 }
+

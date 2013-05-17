@@ -7,10 +7,8 @@ import java.util.Collection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
-import java.util.Arrays;
+import java.util.TreeMap;
 
-import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.codehaus.jackson.node.ArrayNode;
 
@@ -19,7 +17,6 @@ import play.libs.Json;
 import models.EMessages;
 import models.dbentities.UserModel;
 import models.statistics.populations.Population;
-import models.statistics.populations.SinglePopulation;
 
 /**
  * A statistic that summarizes a population as a double. For instance, the
@@ -28,10 +25,12 @@ import models.statistics.populations.SinglePopulation;
  */
 public abstract class ContinuousStatistic extends Statistic {
 
+    private static final int binMax = 40;
+
     @Override public ObjectNode asJson(Collection<Population> data) {
 
         /* Gathering some information about the data. */
-        Map<String, List<Double>> map = new HashMap<String, List<Double>>();
+        Map<String, List<Double>> map = new TreeMap<String, List<Double>>();
         double sum = 0;
         int n = 0;
         Double min = null;
@@ -43,22 +42,25 @@ public abstract class ContinuousStatistic extends Statistic {
                 map.put(population.getColour(), values);
             }
             for(UserModel user : population.getUsers()) if(passes(user)) {
-                double x = calculate(user);
-                sum += x;
-                n ++;
-                if(min == null || x < min) min = x;
-                if(max == null || x > max) max = x;
-                values.add(x);
+                Double x = calculate(user);
+                if(x != null) {
+                    sum += x;
+                    n ++;
+                    if(min == null || x < min) min = x;
+                    if(max == null || x > max) max = x;
+                    values.add(x);
+                }
             }
         }
 
         /* In case there are no values, just return an empty json, which will
          * draw about exactly nothing. */
-        double binCount = 0, binWidth = 0;
+        double binCount = 0, binWidth = 0, average = 0;
         if(n != 0) {
-        
+
             /* Calculation the optimal bin width. */
-            double average = sum / n, m3 = 0, m2 = 0;
+            average = sum / n;
+            double m3 = 0, m2 = 0;
             for(List<Double> list : map.values()) for(Double value : list) {
                 m2 += Math.pow(value - average, 2);
                 m3 += Math.pow(value - average, 3);
@@ -73,6 +75,9 @@ public abstract class ContinuousStatistic extends Statistic {
             } else {
                 binCount = 1;
             }
+            // You'd need a huge browser to view more, and we don't want the
+            // binWith to get near zero.
+            if(binCount > binMax || Double.isNaN(binCount)) binCount = Math.sqrt(n);
             binWidth = (max - min) / binCount;
 
         }
@@ -97,22 +102,43 @@ public abstract class ContinuousStatistic extends Statistic {
             serie.put("name", colour);
             serie.put("color", colour);
             ArrayNode pairs = serie.putArray("data");
-            
+
             /* Counting the bin values */
-            double[] bins = new double[(int)Math.ceil(binCount)];
+            //double[] bins = new double[(int)Math.ceil(binCount)];
+            Map<Integer, Integer> bins = new TreeMap<Integer, Integer>();
             for(Double value : map.get(colour)) {
-                int i = (int)(value / binWidth);
-                bins[i] ++;
+                int i = (int)((value - min) / binWidth);
+                if(bins.get(i) == null) bins.put(i, 0);
+                //bins[i] ++;
+                bins.put(i, bins.get(i) + 1);
             }
 
-            for(int i = 0; i < bins.length; i++) {
+            for(int i : bins.keySet()) {
                 ArrayNode pair = pairs.addArray();
                 pair.add(min + i * binWidth + binWidth / 2.0);
-                pair.add(bins[i]);
+                pair.add(bins.get(i));
             }
 
             series.add(serie);
         }
+
+        /* plotOptions to make it cuter. */
+        ObjectNode plotOptions = Json.newObject();
+        ObjectNode column = Json.newObject();
+        column.put("borderwidth", 0);
+        column.put("pointPadding", 0);
+        column.put("groupPadding", 0);
+        column.put("shadow", false);
+        column.put("stacking", "normal");
+        plotOptions.put("column", column);
+        json.put("plotOptions", plotOptions);
+
+        /* No superlong doubles in the tooltip, just totals. Note that this
+         * won't work, as we can't place javascript functions in java. I'm
+         * replacing this placeholder in javascript itself. */
+        ObjectNode tooltip = Json.newObject();
+        tooltip.put("formatter", "TOTAL_FORMATTER");
+        json.put("tooltip", tooltip);
 
         return json;
     }
@@ -134,6 +160,8 @@ public abstract class ContinuousStatistic extends Statistic {
 
         boolean between = false;
         Double value = calculate(user);
+        if(value == null) return false; // Not calculatable is certainly not
+                                        // between the given bounds.
         for(int i = 0; i < los.size() && !between; i++) {
             between = between || (los.get(i) <= value && value < ups.get(i));
         }

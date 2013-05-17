@@ -1,7 +1,6 @@
 @(modelForm: Form[_ <: models.management.ManageableModel], manager: models.management.Manager[_], breadcrumbs : List[models.data.Link])
 
-@import helper._
-@import helper.twitterBootstrap._
+@import helper.form
 @import models.EMessages
 
 @main(EMessages.get(manager.getMessagesPrefix() + ".title.edit"), breadcrumbs) {
@@ -14,24 +13,24 @@
             <input type="submit" value="@EMessages.get("forms.update")" class="btn btn-primary" id="change_info">
             <a href="@manager.getListRoute()" class="btn">@EMessages.get("forms.cancel")</a>
         </div>
-        
+
         <script type="text/javascript">
         $("#change_info").live("click",function(){
             var password1 = $("#password1").val();
             var password2 = $("#password2").val();
-	
-	        var salt1 = CryptoJS.SHA256(password1);
-	        var salt2 = CryptoJS.SHA256(password2);
-	
-	        var PBKDF2_p1 = CryptoJS.PBKDF2(password1,salt1,{ keySize: 4, iterations: 10});
-	        var PBKDF2_p2 = CryptoJS.PBKDF2(password2,salt2,{ keySize: 4, iterations: 10});
-	
-			if (password1) {
-			    $("#password1").val(PBKDF2_p1);
-			}
-			if (password2) {
-			    $("#password2").val(PBKDF2_p2);
-			}
+
+            var salt1 = CryptoJS.SHA256(password1);
+            var salt2 = CryptoJS.SHA256(password2);
+
+            var PBKDF2_p1 = CryptoJS.PBKDF2(password1,salt1,{ keySize: 4, iterations: 10});
+            var PBKDF2_p2 = CryptoJS.PBKDF2(password2,salt2,{ keySize: 4, iterations: 10});
+
+            if (password1) {
+                $("#password1").val(PBKDF2_p1);
+            }
+            if (password2) {
+                $("#password2").val(PBKDF2_p2);
+            }
         });
         </script>
 

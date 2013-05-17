@@ -100,22 +100,21 @@ public class ResetPasswordController extends EController {
             // Case 2
             Independent indep = new Independent(userModel);
             ClassGroup g = indep.getCurrentClass();
-	    
-	    // check if there is a classgroup.
-	    if(g == null){
-		flash("error", EMessages.get("forgot_pwd.no_classgroup"));
-		return ok(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
-	    }
-	    if(g.getTeacher() == null){
-		flash("error",EMessages.get("forgot_pwd.no_teacher"));
-		return ok(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
-	    }
+
+        // check if there is a classgroup.
+        if(g == null){
+        flash("error", EMessages.get("forgot_pwd.no_classgroup"));
+        return ok(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
+        }
+        if(g.getTeacher() == null){
+        flash("error",EMessages.get("forgot_pwd.no_teacher"));
+        return ok(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
+        }
             String teacherEmail = g.getTeacher().getData().email;
-            //TODO: should point to location where teacher can change passwords for a student
-            EMail mail = new StudentTeacherEmailReset(teacherEmail, userModel.id, "");
+            EMail mail = new StudentTeacherEmailReset(teacherEmail, userModel.id,"http://avank.ugent.be/manage/users/<>/edit");
             try {
                 mail.send();
-                flash("success", EMessages.get("forgot_pwd.mail"));
+                flash("success", EMessages.get("forgot_pwd.mail_teacher"));
                 return ok(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
             } catch (MessagingException e) {
                 flash("error", EMessages.get("forgot_pwd.notsent"));
@@ -183,9 +182,9 @@ public class ResetPasswordController extends EController {
         Form<ResetPasswordVerify> form = form(ResetPasswordVerify.class).bindFromRequest();
         String id = form.get().bebras_id;
         String reset_token = form.get().reset_token;
-	UserModel userModel = Ebean.find(UserModel.class).where().eq("id", id).findUnique();
+    UserModel userModel = Ebean.find(UserModel.class).where().eq("id", id).findUnique();
 
-	
+
         // We perform some checks on the server side (view can be skipped).
         if (userModel == null || userModel.reset_token.isEmpty() || !form.get().r_password.equals(form.get().controle_passwd)) {
             return ok(noaccess.render(breadcrumbs));

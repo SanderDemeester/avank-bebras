@@ -1,12 +1,7 @@
 package models.statistics.populations;
 
-import java.util.Map;
-import java.util.HashMap;
 
-import com.avaje.ebean.Ebean;
 
-import models.dbentities.UserModel;
-import models.dbentities.ClassGroup;
 
 /**
  * Factory for general populations.

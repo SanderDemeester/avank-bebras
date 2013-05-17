@@ -21,7 +21,6 @@ import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
 import play.data.Form;
 import play.libs.Json;
-import play.mvc.BodyParser;
 import play.mvc.Result;
 
 import java.util.ArrayList;

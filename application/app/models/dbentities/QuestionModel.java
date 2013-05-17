@@ -55,7 +55,7 @@ public class QuestionModel extends ManageableModel{
     @NotNull
     @JoinColumn(name="author")
     public UserModel author;
-    
+
     /**
      * Constructor to create an empty model
      * @param user the author model
@@ -75,7 +75,6 @@ public class QuestionModel extends ManageableModel{
     public String[] getFieldValues() {
         String[] result = {this.officialid
                 , this.server.id
-                , this.path
                 , Boolean.toString(this.active)
                 , this.author.name};
         return result;
@@ -110,7 +109,7 @@ public class QuestionModel extends ManageableModel{
         fixServer();
         super.save();
     }
-    
+
     /**
      * Check if the officialid in this model is not yet present in the database
      * @return is the officialid unique?

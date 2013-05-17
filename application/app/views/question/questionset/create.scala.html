@@ -6,8 +6,11 @@
 
 @(qsForm: Form[models.dbentities.QuestionSetModel], contestid: String, breadcrumbs : List[models.data.Link], showErrors: Boolean)
 
-@import helper._
-@import helper.twitterBootstrap._
+@import helper.form
+@import helper.inputText
+@import helper.select
+@import helper.options
+@import helper.checkbox
 @import models.EMessages
 
 @main(EMessages.get("question.questionset.create.title"), breadcrumbs){
@@ -17,23 +20,23 @@
     <div class="span2"></div>
     <div class="span8">
 
-        <h3> @EMessages.get("question.questionset.create.title") </h3>
+        <h3>@EMessages.get("question.questionset.create.title")</h3>
 
         @form(controllers.question.routes.QuestionSetController.save(contestid)) {
 
         <fieldset>
 
-            <legend> @EMessages.get("question.questionset.create.step2") </legend>
+            <legend>@EMessages.get("question.questionset.create.step2")</legend>
 
             @if(qsForm.hasErrors && showErrors) {
-                <div class="alert alert-error">
-                    <p>@EMessages.get("forms.error")</p>
-                </div>
+            <div class="alert alert-error">
+                <p>@EMessages.get("forms.error")</p>
+            </div>
             }
 
             @if(flash.containsKey("questionset-error")) {
             <div class="alert alert-error">
-                <strong>Error!</strong> @flash.get("questionset-error")
+                <strong>@EMessages.get("info.error")!</strong> @flash.get("questionset-error")
             </div>
             }
 
@@ -52,7 +55,9 @@
 
         <div class="actions">
             <input type="submit" value="@EMessages.get("forms.submit")" class="btn btn-primary">
-            <a href="@controllers.question.routes.QuestionSetController.cancel(contestid)" class="btn"> @EMessages.get("forms.cancel")</a>
+            <a href="@controllers.question.routes.QuestionSetController.cancel(contestid)" class="btn">
+                @EMessages.get("forms.cancel")
+            </a>
         </div>
         }
     </div>

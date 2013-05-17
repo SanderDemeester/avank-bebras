@@ -77,6 +77,7 @@ links.manageusers.title = Benutzerverwaltung
 # Forms
 forms.cancel = Abbrechen
 forms.approve = Genehmigen
+forms.save = Bewahren
 forms.delete = Löschen
 forms.deleteArg = Löschen von {0}
 forms.remove = Entfernen
@@ -90,6 +91,7 @@ forms.submit = Senden
 forms.create = Erstellen
 forms.createArg = {0} Erstellen
 forms.update = Update
+forms.upload = Hochladen
 forms.uploadFile = Datei hochladen
 forms.title = Titel
 forms.error = Bitte beheben Sie alle Fehler.
@@ -97,6 +99,7 @@ forms.open = Offene
 forms.unknownError = Es ist ein Fehler aufgetreten.
 forms.add = Hinzufügen
 forms.error.dates = Bitte wählen Sie eine Ende-Zeit, die ist nach die gewählten Zeit starten.
+forms.or = oder
 
 # Question
 question.editor.name = Frage-Editor
@@ -225,12 +228,13 @@ forgot_pwd.submit = Passwort zurücksetzen
 forgot_pwd.success = Kennwort erfolgreich zurückgesetzt.
 forgot_pwd.notsent = Es ist ein Fehler aufgetreten, war nicht die e-Mail verschickt.
 forgot_pwd.mail = Eine e-Mail wurde an die angegebene Adresse gesendet.
+forgot_pwd.mail_teacher = Eine E-Mail an Ihren Lehrer geschickt.
 forgot_pwd.mail_sent = Ein neues Passwort wurde für Benutzer {0} auf Avank-Bebras angefordert. Gehen Sie auf {1} es zurücksetzen.
 forgot_pwd.mail_subject = Zurücksetzen des Kennworts
 forgot_pwd.email_blank = Lassen Sie leer, wenn Sie eine e-Mail-Adresse nicht
 forgot_pwd.reset_success = Kennwortzurücksetzung Erfolg
 forgot_pwd.reset_fail = Fehler beim Passwort zurücksetzen
-forgot_pwd.teachermail = Ihre Schüler {0} aufgefordert ein neues Passwort für Avank-Bebras. Bitte setzen Sie es zurück. 
+forgot_pwd.teachermail = Ihre Schüler {0} aufgefordert ein neues Passwort für Avank-Bebras. Bitte loggen Sie sich ein und gehen Sie auf {1}, um es zurückzusetzen.
 forgot_pwd.teachersubject = Kennwort zurücksetzen für Schüler
 
 # Edit pwd
@@ -347,6 +351,7 @@ competitions.grade.warning = Warnung!
 competitions.grade.info = Sie sind dabei, einen Wettbewerb zu nehmen. Um die entsprechenden Fragen auswählen, müssen wir Ihre gewünschte Klasse kennen. Bitte wählen Sie die Klasse, die Sie bevorzugen
 competitions.grade.breadcrumb = Wählen Sie Klasse
 competitions.take.landing =  Schnell einen Wettbewerb machen
+competitions.take.more = Mehr Wettbewerbe
 
 competition.history.warning = Warnung!
 competition.history.info = Sie sind momentan nicht eingeloggt. Um Titel aus Ihrer Ergebnisse und Statistiken zu halten, müssen Sie angemeldet sein.
@@ -396,6 +401,7 @@ servers.error.removePersistent = Gibt es noch Fragen, die auf diesem Server sind
 servers.success.added = Server {0} wurde erfolgreich erstellt.
 servers.success.edited = Server {0} wurde erfolgreich bearbeitet
 servers.success.removed = Server {0} wurde erfolgreich entfernt.
+servers.title.add = Neue Server
 
 # question management
 questions.preview = Vorschau
@@ -543,6 +549,7 @@ classes.import.info.newstudent = Neue Studenten:
 classes.import.error.savefail = Etwas schief gelaufen ist mit dem Speichern. Vielleicht habe Sie zu lange gewartet? Die Unsafed-Daten werden nach ein paar Stunden entfernt. Oder jemand registriert man die e-Mail-Adressen, die Sie verwendet haben. Oder Sie dieselbe e-Mail-Adresse zweimal in der Datei verwendet.
 classes.import.error.postfail = Etwas schief gelaufen ist mit der Analyse der XLSX-Datei. Sind Sie sicher, dass es eine gültige Datei ist? Sie in der Dokumentation.
 classes.pupil.download = Laden Klasse
+classes.pupil.upload = Upload-Klasse von XLSX
 
 classes.pupil.classes.list = Liste der Klassen
 classes.pupil.classes.current = Die aktuelle Klasse
@@ -675,6 +682,8 @@ competition.overview.availableLanguages = Verfügbare Sprachen
 competition.overview.confirmFinish = Sind Sie sicher, dass Sie diesen Wettbewerb zu beenden wollen? Alle noch nicht übermittelte Antworten werden gelöscht!
 competition.started.title = Wettbewerb ist noch nicht gestartet
 competition.started.info = Der gewählte Wettbewerb ist noch nicht gestartet. Bitte versuchen Sie es später erneut.
+competition.questionset.title = Keine Frage gesetzt Unterstützung Ihrer Ebene.
+competition.questionset.info = Die gewählte Wettbewerb aktuell nicht unterstützt Ihr Niveau. Bitte versuchen Sie es später erneut.
 
 # Contact form
 contact.formtitle = Kontakt-Formular

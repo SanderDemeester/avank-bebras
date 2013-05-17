@@ -1,13 +1,31 @@
 @(message: String, breadcrumbs : List[models.data.Link])
 
-@import helper._
-@import helper.twitterBootstrap._
-
 @main(EMessages.get("app.home"), breadcrumbs) {
     <div class="hero-unit">
         <h1>@EMessages.get("app.startTitle")</h1>
         <p>@message</p>
         <p><a href="http://avank.ugent.be/~rtaelman/">Team pagina</a></p>
+        <p class="lead">@EMessages.get("competitions.take.landing"):</p>
+        <p>
+            <dl>
+                @for(competition <- controllers.competition.TakeCompetitionController.anonymousSnippet()){
+                    <dt>
+                        <a href="@controllers.competition.routes.TakeCompetitionController.chooseGrade(competition.id)">
+                            @competition.name
+                        </a>
+                    </dt>
+                    <dd>
+                        @competition.getTypeString()
+                    </dd>
+                }
+            </dl>
+            <a href="@controllers.competition.routes.TakeCompetitionController.list(0, "", "", "")" class="btn btn-primary btn-large">
+                @EMessages.get("competitions.take.more")
+            </a>
+        </p>
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/test
     </div>
 }

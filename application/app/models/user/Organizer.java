@@ -30,7 +30,7 @@ public class Organizer extends SuperUser{
      * @param user
      */
     public void blockPupil(User user){
-        // TODO So empty, oh so empty - Felix
+	// Use default 
     }
 
     /**
@@ -38,7 +38,7 @@ public class Organizer extends SuperUser{
      * @param user
      */
     public void mimicPupil(Independent user){
-        // TODO So empty, oh so empty - Felix
+	// Use default 
     }
 
     /**
@@ -46,7 +46,6 @@ public class Organizer extends SuperUser{
      * @return return a list of all teachers.
      */
     public Set<Teacher> listTeachers(){
-        // TODO So empty, oh so empty - Felix
         return null;
     }
 

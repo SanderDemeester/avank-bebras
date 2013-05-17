@@ -1,21 +1,22 @@
-@(breadcrumbs : List[models.data.Link],content : List[models.dbentities.FAQModel],
-messages : models.util.OperationResultInfo)
+@(
+    breadcrumbs: List[models.data.Link],
+    content: List[models.dbentities.FAQModel],
+    messages: models.util.OperationResultInfo
+)
 
 @import models.EMessages
 
 @main("FAQ", breadcrumbs){
 @commons.info(messages)
 
-	<div class="well">
-		<h1>@EMessages.get("faq.title")</h1>
-		<ul>
-		@for(q <- content){
-			<li><a href="#@q.id" class="scroll">@q.name</p></a>
-	    }
-		</ul>
-	</div>
-	
-	
+    <div class="well">
+        <h1>@EMessages.get("faq.title")</h1>
+        <ul>
+            @for(q <- content){
+            <li><a href="#@q.id" class="scroll">@q.name</p></a>
+            }
+        </ul>
+    </div>
 
     @for(q <- content){
     <div class="well">
@@ -27,6 +28,6 @@ messages : models.util.OperationResultInfo)
         </blockquote>
     </div>
     }
-    
+
     <script src="@routes.Assets.at("javascripts/faq.js")" type="text/javascript"></script>
 }

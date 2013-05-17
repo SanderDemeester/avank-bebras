@@ -17,10 +17,10 @@ import play.Play;
  *
  */
 public class Submit implements Comparable<Submit>{
-    
+
     private User user;
     private File file;
-    
+
     /**
      * Create a new submitted question model
      * @param user the author of the question
@@ -30,7 +30,7 @@ public class Submit implements Comparable<Submit>{
         this.user = user;
         this.file = file;
     }
-    
+
     /**
      * The column values for the list table
      * @return values
@@ -39,7 +39,7 @@ public class Submit implements Comparable<Submit>{
         SimpleDateFormat format = new SimpleDateFormat(Play.application().configuration().getString("application.dateFormat"));
         return new String[]{user.getData().name, format.format(file.lastModified())};
     }
-    
+
     /**
      * The author id
      * @return the author id
@@ -47,7 +47,7 @@ public class Submit implements Comparable<Submit>{
     public String getUserID() {
         return user.getID();
     }
-    
+
     /**
      * The question file name
      * @return the file name
@@ -55,7 +55,7 @@ public class Submit implements Comparable<Submit>{
     public String getFileName() {
         return file.getName();
     }
-    
+
     /**
      * The question file
      * @return the file
@@ -63,14 +63,14 @@ public class Submit implements Comparable<Submit>{
     public File getFile() {
         return file;
     }
-    
+
     /**
      * Delete the question file for this submission
      */
     public void delete() {
         file.delete();
     }
-    
+
     /**
      * Find all the submissions
      * @param filter the string to filter with
@@ -78,7 +78,7 @@ public class Submit implements Comparable<Submit>{
      */
     public static List<Submit> findAll(String filter) {
         List<Submit> list = new ArrayList<Submit>();
-        
+
         String location = Play.application().configuration().getString("questioneditor.submit");
         File rootFolder = new File(location);
         if(rootFolder.exists() && rootFolder.isDirectory()) {
@@ -99,13 +99,13 @@ public class Submit implements Comparable<Submit>{
                 }
             }
         }
-        
+
         // Default sorting with our own compareTo
         Collections.sort(list);
-        
+
         return list;
     }
-    
+
     /**
      * Find a submission
      * @param userID the userid for the wanted submission
@@ -117,10 +117,10 @@ public class Submit implements Comparable<Submit>{
         String location = Play.application().configuration().getString("questioneditor.submit")
                 + "/" + userID.replace("/", "");// Extra hard check to deny access to other subfolders
         File file = new File(location, fileName);
-        
+
         // Find user
         UserModel model = UserModel.find.byId(userID);
-        
+
         if(file.exists() && model != null) return new Submit(new Author(model), file);
         else                               return null;
     }

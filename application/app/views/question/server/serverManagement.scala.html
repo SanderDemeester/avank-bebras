@@ -4,13 +4,18 @@
 *   author: Kevin Stobbelaar           *
 ***************************************@
 
-@(currentPage: Page[_ <: models.management.ManageableModel], manager: models.management.Manager[_], currentOrderBy: String,
-    currentOrder: String, currentFilter: String, breadcrumbs : List[models.data.Link])
+@(
+    currentPage: Page[_ <: models.management.ManageableModel],
+    manager: models.management.Manager[_],
+    currentOrderBy: String,
+    currentOrder: String,
+    currentFilter: String,
+    breadcrumbs: List[models.data.Link]
+)
 
 @import views.html.management.list
 
 @main(EMessages.get("servermanagement.servers.list"), breadcrumbs){
-        <h2>@EMessages.get("servermanagement.servers.list")</h2>
-        @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
-
+    <h2>@EMessages.get("servermanagement.servers.list")</h2>
+    @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
 }

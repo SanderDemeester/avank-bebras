@@ -5,28 +5,30 @@
 *                           *
 ****************************@
 @(currentPage: Page[_], orderBy: String, order: String, currentFilter: String, manager: models.management.Manager[_])
-    <div id="pagination" class="pagination pagination-centered pagination-small">
-        <ul>
-            @if(currentPage.hasPrev) {
-            <li class="prev">
-                <a href="@manager.getListRoute(currentPage.getPageIndex - 1, orderBy, order, currentFilter)">&larr;</a>
-            </li>
-            } else {
-            <li class="prev disabled">
-                <a>&larr;</a>
-            </li>
-            }
-            <li class="current">
-                <a>Displaying @currentPage.getDisplayXtoYofZ(" to "," of ")</a>
-            </li>
-            @if(currentPage.hasNext) {
-            <li class="next">
-                <a href="@manager.getListRoute(currentPage.getPageIndex + 1, orderBy, order, currentFilter)">&rarr;</a>
-            </li>
-            } else {
-            <li class="next disabled">
-                <a>&rarr;</a>
-            </li>
-            }
-        </ul>
-    </div>
+
+<div id="pagination" class="pagination pagination-centered pagination-small">
+    <ul>
+        @if(currentPage.hasPrev) {
+        <li class="prev">
+            <a href="@manager.getListRoute(currentPage.getPageIndex - 1, orderBy, order, currentFilter)">&larr;</a>
+        </li>
+        } else {
+        <li class="prev disabled">
+            <a>&larr;</a>
+        </li>
+        }
+        <li class="current">
+            <!-- TODO EMessage -->
+            <a>Displaying @currentPage.getDisplayXtoYofZ(" to "," of ")</a>
+        </li>
+        @if(currentPage.hasNext) {
+        <li class="next">
+            <a href="@manager.getListRoute(currentPage.getPageIndex + 1, orderBy, order, currentFilter)">&rarr;</a>
+        </li>
+        } else {
+        <li class="next disabled">
+            <a>&rarr;</a>
+        </li>
+        }
+    </ul>
+</div>

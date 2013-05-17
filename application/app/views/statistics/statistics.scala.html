@@ -70,16 +70,20 @@
             @EMessages.get("statistics.statistics_chooser")
         </div>
         <div class="statistics-body" id="statistics-tab">
-            <select name="statistic"@if(statistic != null) { value="@statistic.getName()" }>
-                @if(statistic != null) {
-                <option value="@statistic.getName()">@EMessages.get(statistic.getName())</option>
-                }
-                @for(s <- StatisticFactory.instance().statistics()) { <!>
-                @if(statistic == null || s != statistic.getName()) {
-                <option value="@s">@EMessages.get(s)</option>
-                }
-                }
-            </select>
+            <div class="form-inline">
+                <select id="statistic-select" name="statistic"@if(statistic != null) { value="@statistic.getName()" }>
+                    @if(statistic != null) {
+                    <option value="@statistic.getName()">@EMessages.get(statistic.getName())</option>
+                    }
+                    @for(s <- StatisticFactory.instance().statistics()) { <!>
+                    @defining(StatisticFactory.instance().create(s)) { ss =>
+                    @if(statistic == null || s != statistic.getName()) {
+                    <option class="@if(ss.extraID() != null) { extraid @ss.extraID() }" value="@s">@EMessages.get(s)</option>
+                    }
+                    }
+                    }
+                </select>
+            </div>
             <div id="statistic-filters">
                 @if(statistic != null) {
                 @for((filter, i) <- statistic.filters().view.zipWithIndex) { <!>
@@ -112,14 +116,19 @@
             </div>
             <button type="button" class="btn" id="filter-add">@EMessages.get("statistics.add_filter")</button>
         </div>
-    </div> 
+    </div>
 
 
     <!-- =================================================================== -->
     <!--  The nice big generate button.                                      -->
     <!-- =================================================================== -->
 
-    <button type="submit" class="btn btn-primary btn-large" id="show-chart">@EMessages.get("statistics.generate")</button>
+    <div>
+        <button type="submit" class="btn btn-primary btn-large" id="show-chart">
+            @EMessages.get("statistics.generate")
+        </button>
+        <div id="spinner"><span></span></div>
+    </div>
 
 </form>
 
@@ -234,6 +243,23 @@
         color: rgb(119, 119, 119);
         text-shadow: 0px 1px 0px rgb(255, 255, 255);
         margin-bottom: 10px;
+    }
+
+    #show-chart {
+        display: inline;
+    }
+
+    #spinner {
+        vertical-align: middle;
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+    }
+
+    #spinner span {
+        position: relative;
+        top: 20px;
+        left: 20px;
     }
 
 </style>
@@ -418,12 +444,51 @@
     });
 
     $(document).on("click", "#show-chart", function() {
+        var spinner = new Spinner(spinner_opts).spin();
+        $("#spinner span").append(spinner.el);
         $.get("/statistics/json?" + $("#statistics-form").serialize(), function(data) {
+            spinner.spin(false);
+            if(data.tooltip != null && data.tooltip.formatter == "TOTAL_FORMATTER") {
+                data.tooltip.formatter = function() { return "" + this.y; }
+            }
             $("#container").highcharts(data);
             $("#stat-chart").modal();
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            alert(jqXHR);
+            alert(textStatus);
+            alert(errorThrown);
+            spinner.spin(false);
+            $("#show-chart").click();
         });
         return false;
     });
+
+    $(document).on("change", "select", function() {
+        var selected = $(this).find("option:selected");
+        $("#extraid").remove();
+        if(selected.hasClass("extraid")) {
+            selected.removeClass("extraid");
+
+            var input = $(document.createElement("input"));
+            input.attr("type", "number");
+            input.attr("id", "extraid");
+
+            switch(selected.attr("class")) {
+                case "qid":
+                    input.attr("placeholder", "@EMessages.get("question.questionset.form.qid")");
+                    break;
+                case "qsid":
+                    input.attr("placeholder", "@EMessages.get("question.questionset.form.qsid")");
+                    break;
+            }
+            input.attr("name", "extraid");
+            $(this).after(input);
+
+            selected.addClass("extraid");
+        }
+    });
+
+    $("#statistic-select").change();
 
 </script>
 }

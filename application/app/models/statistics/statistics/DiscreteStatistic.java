@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.HashMap;
 
-import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.codehaus.jackson.node.ArrayNode;
 
@@ -25,9 +24,11 @@ public abstract class DiscreteStatistic extends Statistic {
         for(Population population : data) {
             for(UserModel user : population.getUsers()) if(passes(user)) {
                 key = calculate(user);
-                value = map.get(key);
-                if(value == null) value = 0;
-                map.put(key, value + 1);
+                if(key != null) {
+                    value = map.get(key);
+                    if(value == null) value = 0;
+                    map.put(key, value + 1);
+                }
             }
         }
 

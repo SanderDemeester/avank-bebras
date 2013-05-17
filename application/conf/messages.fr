@@ -77,6 +77,7 @@ links.manageusers.title = Gestion des utilisateurs
 # Forms
 forms.cancel = Annuler
 forms.approve = Approuver
+forms.save = Sauver
 forms.delete = Supprimer
 forms.deleteArg = Supprimer : {0}
 forms.remove = Supprimer
@@ -90,6 +91,7 @@ forms.submit = Envoyer
 forms.create = Créer
 forms.createArg = Créer {0}
 forms.update = Mise à jour
+forms.upload = Télécharger
 forms.uploadFile = Télécharger le fichier
 forms.title = Titre
 forms.error = S'il vous plaît corriger toutes les erreurs.
@@ -97,6 +99,7 @@ forms.open = Ouvert
 forms.unknownError = Une erreur s'est produite.
 forms.add = Ajouter
 forms.error.dates = S'il vous plaît choisir une heure de fin c'est après l'heure de début de l'élu.
+forms.or = ou
 
 # Question
 question.editor.name = Question éditeur
@@ -225,12 +228,13 @@ forgot_pwd.submit = Réinitialiser mot de passe
 forgot_pwd.success = Mot de passe réinitialisé avec succès.
 forgot_pwd.notsent = Une erreur s'est produite, l'email n'a pas été envoyé.
 forgot_pwd.mail = Un courriel a été envoyé à l'adresse fournie.
+forgot_pwd.mail_teacher = Un e-mail a été envoyé à votre professeur.
 forgot_pwd.mail_sent = Un nouveau mot de passe a été demandée pour l'utilisateur {0} sur Avank-Bebras. Aller à: {1} pour le réinitialiser.
 forgot_pwd.mail_subject = Réinitialisation de mot de passe
 forgot_pwd.email_blank = Laissez vide si vous n'avez pas une adresse e-mail
 forgot_pwd.reset_success = Mot de passe réinitialisé succès
 forgot_pwd.reset_fail = Impossible de réinitialiser le mot de passe
-forgot_pwd.teachermail = Votre élève {0} a demandé un nouveau mot de passe pour Avank-Bebras. S'il vous plaît le réinitialiser. 
+forgot_pwd.teachermail = Votre élève {0} a demandé un nouveau mot de passe pour Avank-Bebras. S'il vous plaît vous connecter et aller à {1} pour le réinitialiser.
 forgot_pwd.teachersubject = Mot de passe réinitialiser pour élève
 
 # Edit pwd
@@ -347,6 +351,7 @@ competitions.grade.warning = Mise en garde !
 competitions.grade.info = Vous êtes sur le point de prendre un concours. Afin de sélectionner les questions appropriées, nous avons besoin de connaître votre niveau désiré. Veuillez sélectionner la catégorie que vous préférez
 competitions.grade.breadcrumb = Sélectionnez la catégorie
 competitions.take.landing = Prendre rapidement une compétition
+competitions.take.more = Plus de concours
 
 competition.history.warning = Mise en garde !
 competition.history.info = Vous n'êtes actuellement pas connecté. Afin de suivre vos résultats et statistiques, vous devez être signé en.
@@ -396,6 +401,7 @@ servers.error.removePersistent = Il y a encore des questions qui sont sur ce ser
 servers.success.added = Serveur {0} a été créé avec succès
 servers.success.edited = Serveur {0} a été modifié avec succès
 servers.success.removed = Serveur {0} a été supprimé avec succès
+servers.title.add = Nouveau serveur
 
 # question management
 questions.preview = Aperçu
@@ -543,6 +549,7 @@ classes.import.info.newstudent = Nouveaux étudiants :
 classes.import.error.savefail = Quelque chose n'allait pas avec l'économie. Peut-être que vous avez attendu trop longtemps ? Les données d'unsafed sont supprimées après une couple d'heures. Ou quelqu'un inscrit une des adresses e-mail que vous utilisiez. Ou vous avez utilisé la même adresse e-mail deux fois dans le fichier.
 classes.import.error.postfail = Quelque chose n'allait pas avec l'analyse du fichier XLSX. Êtes-vous sûr que c'est un fichier valide ? Consultez la documentation.
 classes.pupil.download = Télécharger classe
+classes.pupil.upload = Téléchargez classe de XLSX
 
 classes.pupil.classes.list = Liste des classes
 classes.pupil.classes.current = Votre classe actuelle
@@ -675,6 +682,8 @@ competition.overview.availableLanguages = Langues disponibles
 competition.overview.confirmFinish = Êtes-vous certain de que vouloir terminer ce concours ? Toutes les réponses non soumises seront perdues !
 competition.started.title = Concours n'est pas encore commencé
 competition.started.info = Le concours choisi n'est pas encore commencé. Please try again later.
+competition.questionset.title = Aucune question réglée soutenir votre niveau.
+competition.questionset.info = Le concours choisi ne prend pas en charge votre niveau. S'il vous plaît réessayer plus tard.
 
 # Contact form
 contact.formtitle = Formulaire de contact

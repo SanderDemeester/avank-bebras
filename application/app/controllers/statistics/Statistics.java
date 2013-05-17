@@ -5,19 +5,14 @@ import java.util.ArrayList;
 
 import javax.validation.Valid;
 
-import com.avaje.ebean.Ebean;
 
 import play.mvc.Result;
-import play.mvc.BodyParser;
-import play.mvc.BodyParser.Json;
 
 import controllers.EController;
 
-import models.dbentities.UserModel;
 import models.data.Link;
 import models.user.AuthenticationManager;
 import models.statistics.populations.Population;
-import models.statistics.populations.SinglePopulation;
 import models.statistics.populations.PopulationFactory;
 import models.statistics.populations.PopulationChooser;
 import models.statistics.populations.PopulationFactoryException;
@@ -97,6 +92,10 @@ public class Statistics extends EController {
         Statistic statistic = null;
         if(gf.statistic != null) {
             statistic = StatisticFactory.instance().create(gf.statistic);
+            if(statistic.extraID() != null) {
+                statistic.setQuestionSet(gf.extraid);
+                statistic.setQuestion(gf.extraid);
+            }
             Statistic filter;
             if(gf.filters != null) for(int i = 0; i < gf.filters.size(); i++) {
                 if(gf.filters.get(i) != null) {
@@ -120,6 +119,7 @@ public class Statistics extends EController {
         @Valid public String statistic;
         @Valid public List<String> filters;
         @Valid public List<List<String>> conditions;
+        @Valid public Integer extraid;
         public GroupForm() {}
     }
 

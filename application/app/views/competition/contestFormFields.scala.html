@@ -6,8 +6,10 @@
 
 @(contestForm: Form[_ <: models.management.ManageableModel])
 
-@import helper._
-@import helper.twitterBootstrap._
+@import helper.inputText
+@import helper.select
+@import helper.options
+@import helper.checkbox
 @import models.EMessages
 
 @inputText(contestForm("name"), '_label -> EMessages.get("competition.create.name"), '_showConstraints -> false)
@@ -25,19 +27,13 @@
 <div id="starttimepicker" class="input-append date">
     <label>@EMessages.get("competition.create.start")</label>
     <input class="add-on" data-format="dd/MM/yyyy hh:mm:ss" type="text" id="starttime" name="starttime" value='@contestForm("starttime").value'></input>
-            <span class="add-on">
-                <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-                </i>
-            </span>
+    <span class="add-on"><i data-time-icon="icon-time" data-date-icon="icon-calendar"></i></span>
 </div>
 
 <div id="endtimepicker" class="input-append date">
     <label>@EMessages.get("competition.create.end")</label>
     <input class="add-on" data-format="dd/MM/yyyy hh:mm:ss" type="text" id="endtime" name="endtime" value='@contestForm("endtime").value'></input>
-            <span class="add-on">
-                <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-                </i>
-            </span>
+    <span class="add-on"><i data-time-icon="icon-time" data-date-icon="icon-calendar"></i></span>
 </div>
 
 @inputText(contestForm("duration"), '_label -> EMessages.get("competition.create.duration"), '_showConstraints -> false)

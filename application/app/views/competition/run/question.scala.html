@@ -1,36 +1,34 @@
 @(question : models.question.Question, language : models.data.Language, feedback : models.question.QuestionFeedback)
 
-@import helper._
-@import helper.twitterBootstrap._
 @import models.EMessages
 
 <div id="@question.getID()" class="question well hide">
-	<h1>@question.getTitle(language)</h1>
-	<iframe class="questionframe" src="@question.getIndexLink(language)"></iframe>
-	
-	@defining(question.getType().name()) { qType =>
+    <h1>@question.getTitle(language)</h1>
+    <iframe class="questionframe" src="@question.getIndexLink(language)"></iframe>
+
+    @defining(question.getType().name()) { qType =>
         @qType match {
             case "MULTIPLE_CHOICE" => {
-            	@if(feedback != null) {
-            		@showMultipleChoice(question.asInstanceOf[models.question.MultipleChoiceQuestion], language, feedback.getAnswers().get(question).asInstanceOf[models.question.MultipleChoiceAnswer])
-            	} else {
-                	@showMultipleChoice(question.asInstanceOf[models.question.MultipleChoiceQuestion], language, null)
-            	}
+                @if(feedback != null) {
+                    @showMultipleChoice(question.asInstanceOf[models.question.MultipleChoiceQuestion], language, feedback.getAnswers().get(question).asInstanceOf[models.question.MultipleChoiceAnswer])
+                } else {
+                    @showMultipleChoice(question.asInstanceOf[models.question.MultipleChoiceQuestion], language, null)
+                }
             }
             case "REGEX" => {
-            	@if(feedback != null) {
-            		@showRegex(question.asInstanceOf[models.question.RegexQuestion], language, feedback.getAnswers().get(question).asInstanceOf[models.question.RegexAnswer])
-            	} else {
-               		@showRegex(question.asInstanceOf[models.question.RegexQuestion], language, null)
-               	}
+                @if(feedback != null) {
+                    @showRegex(question.asInstanceOf[models.question.RegexQuestion], language, feedback.getAnswers().get(question).asInstanceOf[models.question.RegexAnswer])
+                } else {
+                       @showRegex(question.asInstanceOf[models.question.RegexQuestion], language, null)
+                   }
             }
         }
     }
-    
+
     @if(feedback != null) {
-    	<hr />
-    	<h2>@EMessages.get("competition.feedback")</h2>
-    	<iframe class="questionframe" src="@question.getFeedbackLink(language)"></iframe>
+        <hr />
+        <h2>@EMessages.get("competition.feedback")</h2>
+        <iframe class="questionframe" src="@question.getFeedbackLink(language)"></iframe>
     }
-	
+
 </div>

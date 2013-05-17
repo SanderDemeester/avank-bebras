@@ -1,10 +1,6 @@
 package models.user;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
 
-import models.EMessages;
-import models.management.Listable;
 
 /**
  * Enumerates the different types of user. The earlier in the list, the more rights the user has
@@ -18,5 +14,5 @@ public enum UserType {
     AUTHOR,
     PUPIL_OR_INDEP,
     ANON;
-    
+
 }

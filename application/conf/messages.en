@@ -77,6 +77,7 @@ links.manageusers.title = User management
 # Forms
 forms.cancel = Cancel
 forms.approve = Approve
+forms.save = Save
 forms.delete = Delete
 forms.deleteArg = Delete {0}
 forms.remove = Remove
@@ -90,6 +91,7 @@ forms.submit = Submit
 forms.create = Create
 forms.createArg = Create {0}
 forms.update = Update
+forms.upload = Upload
 forms.uploadFile = Upload file
 forms.title = Title
 forms.error = Please fix all errors.
@@ -97,6 +99,7 @@ forms.open = Open
 forms.unknownError = An error occured.
 forms.add = Add
 forms.error.dates = Please pick a end time that is after the chosen start time.
+forms.or = or
 
 # Question
 question.editor.name = Question Editor
@@ -225,12 +228,13 @@ forgot_pwd.submit = Reset password
 forgot_pwd.success = Password successfully reset.
 forgot_pwd.notsent = An error occurred, the email wasn't sent.
 forgot_pwd.mail = An email was sent to the provided address.
+forgot_pwd.mail_teacher = An email was sent to your teacher.
 forgot_pwd.mail_sent = A new password was requested for user {0} on Avank-Bebras. Go to {1} to reset it.
 forgot_pwd.mail_subject = Password reset
 forgot_pwd.email_blank = Leave empty if you don't have an email address
 forgot_pwd.reset_success = Password reset success
 forgot_pwd.reset_fail = Failed to reset password
-forgot_pwd.teachermail = Your pupil {0} requested a new password for Avank-Bebras. Please reset it. 
+forgot_pwd.teachermail = Your pupil {0} requested a new password for Avank-Bebras. Please login and go to {1} to reset it.
 forgot_pwd.teachersubject = Password reset for pupil
 
 # Edit pwd
@@ -347,6 +351,7 @@ competitions.grade.warning = Warning!
 competitions.grade.info = You're about to take a contest. In order to select the appropriate questions, we need to know your desired grade. Please select the grade you prefer
 competitions.grade.breadcrumb = Select grade
 competitions.take.landing = Quickly take a contest
+competitions.take.more = More contests
 
 competition.history.warning = Warning!
 competition.history.info = You are currently not signed in. In order to keep track off your results and stats, you need to be signed in.
@@ -396,6 +401,7 @@ servers.error.removePersistent = There are still questions that are on this serv
 servers.success.added = Server {0} was successfully created
 servers.success.edited = Server {0} was successfully edited
 servers.success.removed = Server {0} was successfully removed
+servers.title.add = New Server
 
 # question management
 questions.preview = Preview
@@ -543,6 +549,7 @@ classes.import.info.newstudent = New students:
 classes.import.error.savefail = Something went wrong with the saving. Maybe you waited too long? The unsafed data gets removed after a couple of hours. Or someone registered one of the email addresses you were using. Or you used the same email address twice in the file.
 classes.import.error.postfail = Something went wrong with the parsing of the XLSX file. Are you sure it's a valid file? Check the documentation.
 classes.pupil.download = Download class
+classes.pupil.upload = Upload class from XLSX
 
 classes.pupil.classes.list = List of classes
 classes.pupil.classes.current = Your current class
@@ -675,6 +682,8 @@ competition.overview.availableLanguages = Available languages
 competition.overview.confirmFinish = Are you sure you want to finish this contest? Any unsubmitted answers will be lost!
 competition.started.title = Contest is not yet started
 competition.started.info = The chosen contest is not yet started. Please try again later.
+competition.questionset.title = No question set supporting your level.
+competition.questionset.info = The chosen contest does currently not support your level. Please try again later.
 
 # Contact form
 contact.formtitle = Contact form

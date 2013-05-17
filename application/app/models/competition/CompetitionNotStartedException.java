@@ -8,7 +8,7 @@ package models.competition;
  */
 public class CompetitionNotStartedException extends Exception{
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 1L;
 

@@ -1,25 +1,31 @@
-@(helpForm: Form[models.util.IDWrapper], breadcrumbs : List[models.data.Link],
- inf : models.util.OperationResultInfo, id : Int )
+@(
+    helpForm: Form[models.util.IDWrapper],
+    breadcrumbs: List[models.data.Link],
+    inf: models.util.OperationResultInfo,
+    id: Int
+)
 
-@import helper._
-@import helper.twitterBootstrap._
+@import helper.form
+@import helper.inputText
 @import models.EMessages
 
 @main(EMessages.get("classes.pupil.add"), breadcrumbs) {
 @commons.info(inf)
 @EMessages.get("classes.pupil.add.explanation")
 @if(helpForm!=null){
-	@form(controllers.classgroups.routes.ClassPupilController.saveExisting(id)){
-		<fieldset>
-			@inputText(helpForm("id"), '_label ->"id")
-		</fieldset>
+    @form(controllers.classgroups.routes.ClassPupilController.saveExisting(id)){
+        <fieldset>
+            @inputText(helpForm("id"), '_label ->"id")
+        </fieldset>
 
-		<div class="actions">
-        	<input type="submit" value="Save" class="btn btn-primary"> or
-        	<a href="@controllers.classgroups.routes.ClassPupilController.viewClass(id)" class="btn">Cancel</a>
-    	</div>
-    
-	    }
+        <div class="actions">
+            <input type="submit" value="@EMessages.get("forms.save")" class="btn btn-primary">
+            <a href="@controllers.classgroups.routes.ClassPupilController.viewClass(id)" class="btn">
+                @EMessages.get("forms.cancel")
+            </a>
+        </div>
+
+        }
     }
-    
+
 }

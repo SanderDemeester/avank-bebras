@@ -24,7 +24,7 @@ notFound.text = Deze pagina bestaat niet: {0}
 noAccess.title = Oeps!
 noAccess.text = U bent niet bevoegd om deze actie uit te voeren.
 error.title = Oeps!
-error.text = Er is iets misgelopen. Probeer opnieuw later.
+error.text = Er is iets misgelopen. Probeer later opnieuw.
 error.back = Ga terug
 error.date = Kon datum niet verwerken.
 error.login = Ongeldige login poging.
@@ -77,6 +77,7 @@ links.manageusers.title = Gebruikersbeheer
 # Forms
 forms.cancel = Annuleer
 forms.approve = Keur goed
+forms.save = Sla op
 forms.delete = Verwijder
 forms.deleteArg = Verwijder {0}
 forms.remove = Verwijder
@@ -90,6 +91,7 @@ forms.submit = Verzend
 forms.create = Maak aan
 forms.createArg = Maak {0} aan
 forms.update = Pas aan
+forms.upload = Upload
 forms.uploadFile = Bestand uploaden
 forms.title = Titel
 forms.error = Gelieve alle fouten te verbeteren.
@@ -97,6 +99,7 @@ forms.open = Open
 forms.unknownError = Er is een interne fout opgetreden.
 forms.add = Voeg toe
 forms.error.dates = Gelieve een eindtijdstip te kiezen dat na het gekozen starttijdstip valt.
+forms.or = of
 
 # Question
 question.editor.name = Vraagstukontwerper
@@ -202,7 +205,7 @@ register.bday = Geboortedatum
 register.gender = Geslacht
 register.preflan = Gewenste taal
 register.password = Wachtwoord
-register.confirm_password = Bevestig password
+register.confirm_password = Bevestig wachtwoord
 register.create_account = Maak account
 register.bebras_id_message = Uw Bebras ID is: 
 register.inlog_message = U kan inloggen met uw ID en wachtwoord.
@@ -224,12 +227,13 @@ forgot_pwd.submit = Verzoek reset wachtwoord
 forgot_pwd.success = Wachtwoord succesvol gereset.
 forgot_pwd.notsent = Er is een fout opgetreden, de e-mail kon niet verstuurd worden.
 forgot_pwd.mail = Er werd een e-mail verzonden naar het opgegeven adres.
+forgot_pwd.mail_teacher = Er werd een e-mail verstuurd naar je leerkracht.
 forgot_pwd.mail_sent = Er werd een nieuw wachtwoord aangevraagd voor gebruiker {0} op Avank-Bebras. Ga naar deze link {1} om het wachtwoord opnieuw in te stellen.
 forgot_pwd.mail_subject = Wachtwoord resetten
 forgot_pwd.email_blank = Laat leeg als u geen e-mailadres heeft
 forgot_pwd.reset_success = Wachtwoord is met succes opnieuw ingesteld
 forgot_pwd.reset_fail = Wachtwoord opnieuw instellen is mislukt
-forgot_pwd.teachermail = Uw leerling(e) {0} heeft een nieuw wachtwoord aangevraagd voor Avank-Bebras. Ga naar deze link {1} om het wachtwoord opnieuw in te stellen.
+forgot_pwd.teachermail = Uw leerling(e) {0} heeft een nieuw wachtwoord aangevraagd voor Avank-Bebras. Gelieve in te loggen en naar deze link {1} te gaan om het wachtwoord opnieuw in te stellen.
 forgot_pwd.teachersubject = Wachtwoord van leerling(e) resetten
 
 # Edit pwd
@@ -279,7 +283,7 @@ faq.list.error = Er is iets misgelopen tijdens het ophalen van de lijst.
 #info
 info.info = Info
 info.warning = Waarschuwing
-info.error = Error
+info.error = Fout
 info.success = Succes
 info.successedit = Uw informatie is aangepast!
 
@@ -346,6 +350,7 @@ competitions.grade.warning = Opgepast!
 competitions.grade.info = Je staat op het punt om aan een competitie deel te nemen. Om de juiste vragen te kunnen selecteren, hebben we je voorkeur niveau nodig.  Gelieve een niveau te selecteren
 competitions.grade.breadcrumb = Niveau kiezen
 competitions.take.landing = Snel een competitie doen
+competitions.take.more = Meer competities
 
 competition.history.warning = Opgelet!
 competition.history.info = Je bent momenteel niet ingelogd. Om resultaten en statistieken van vorige competities te bekijken, moet je ingelogd zijn.
@@ -393,6 +398,7 @@ servers.error.removePersistent = Er zijn nog vragen op deze server, pas ze aan v
 servers.success.added = Server {0} is aangemaakt
 servers.success.edited = Server {0} is aangepast
 servers.success.removed = Server {0} is verwijderd
+servers.title.add = Nieuwe Server
 
 questions.preview = Voorvertoning
 questions.form.author = Auteur
@@ -533,6 +539,7 @@ classes.import.info.newstudent = Nieuwe studenten:
 classes.import.error.savefail = Er is iets misgelopen met het opslaan. Misschien hebt u te lang gewacht? De data wordt verwijderd na een aantal uren. Of er heeft ondertussen iemand een van de e-mailadressen geregistreerd. Of misschien heeft u meerdere keren hetzelfde e-mailadres gebruikt in het bestand.
 classes.import.error.postfail = Er is iets misgelopen met het inlezen van het XLSX-bestand. Bent u zeker dat het geldig was? Controleer de documentatie.
 classes.pupil.download = Download klas
+classes.pupil.upload = Importeer klas via XLSX
 
 classes.pupil.classes.list = Lijst van klassen
 classes.pupil.classes.current = Jouw huidige klas
@@ -666,7 +673,8 @@ competition.overview.availableLanguages = Beschikbare talen
 competition.overview.confirmFinish = Ben je zeker dat je deze competitie wilt stoppen? Alle niet-verzonden vragen zullen verloren gaan!
 competition.started.title = Competitie nog niet gestart
 competition.started.info = De gekozen competitie is nog niet gestart. Gelieve het later nogmaals te proberen.
-
+competition.questionset.title = Geen vragenbundel beschikbaar die jouw niveau ondersteunt.
+competition.questionset.info = De gekozen competitie beschikt op dit moment niet over een vragenbundel die jouw niveau ondersteunt. Gelieve later nogmaals te proberen.
 
 # Contact form
 contact.formtitle = Contactformulier
@@ -698,5 +706,5 @@ usermodelvalidator.result.nogender = Geen (geldig) geslacht
 usermodelvalidator.result.nolanguage = Geen taal
 usermodelvalidator.result.invalidlanguage = Geen geldige taal
 usermodelvalidator.result.nopassword = Geen wachtwoord
-usermodelvalidator.result.invalidemail = Ongeldige email
-usermodelvalidator.result.existingemail = Email reeds geregistreerd
+usermodelvalidator.result.invalidemail = Ongeldige e-mail
+usermodelvalidator.result.existingemail = E-mail reeds geregistreerd

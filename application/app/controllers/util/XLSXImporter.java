@@ -119,9 +119,9 @@ public class XLSXImporter {
             return Boolean.toString(c.getBooleanCellValue());
         }
         if(cellType == XSSFCell.CELL_TYPE_NUMERIC){
-        	if(DateUtil.isCellDateFormatted(c)){
-        		return DateFormatter.formatDate(c.getDateCellValue());
-        	}
+            if(DateUtil.isCellDateFormatted(c)){
+                return DateFormatter.formatDate(c.getDateCellValue());
+            }
             return Double.toString(c.getNumericCellValue());
         }
         if(cellType == XSSFCell.CELL_TYPE_STRING){
