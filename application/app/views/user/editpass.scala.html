@@ -1,22 +1,22 @@
-@import commons._
-@import models.EMessages.get
-@import helper._
-@import helper.twitterBootstrap._
+
+@import models.EMessages
 @import views.html.commons.showflash
 
-@helper.form(action=controllers.user.routes.PersonalPageController.changePassword, 'id -> "change_password") {
+@helper.form(action=controllers.user.routes.PersonalPageController.changePassword) {
 
 <div class="container-fluid">
-  <div class="span10">
-           <legend>@EMessages.get("edit_pwd.edit_pwd")</legend>
+    <div class="span10">
+        <legend>@EMessages.get("edit_pwd.edit_pwd")</legend>
         @showflash()
+
         <div class="control-group row-fluid">
             <label class="control-label span2">@EMessages.get("edit_pwd.current_pwd")</label>
             <div class="controls span10">
                 <div class="input-prepend span12">
-                    <span class="add-on"><i class="icon-lock"></i> </span> <input
-                        type="Password" class="input-xlarge span11" id="current_pwd" name="current_pwd"
-                        required placeholder="@EMessages.get("edit_pwd.current_pwd")">
+                    <span class="add-on"><i class="icon-lock"></i></span>
+                    <input type="password" class="input-xlarge span11"
+                        id="current_pwd" name="current_pwd" required="required"
+                        placeholder="@EMessages.get("edit_pwd.current_pwd")" />
                 </div>
             </div>
         </div>
@@ -25,9 +25,10 @@
             <label class="control-label span2">@EMessages.get("edit_pwd.new_pwd")</label>
             <div class="controls span10">
                 <div class="input-prepend span12">
-                    <span class="add-on"><i class="icon-lock"></i> </span> <input
-                        type="Password" id="n_password" class="input-xlarge span11"
-                        name="n_password" required placeholder="@EMessages.get("edit_pwd.new_pwd")">
+                    <span class="add-on"><i class="icon-lock"></i></span>
+                    <input type="password" id="n_password" name="n_password"
+                        class="input-xlarge span11" required="required"
+                        placeholder="@EMessages.get("edit_pwd.new_pwd")" />
                 </div>
             </div>
         </div>
@@ -36,9 +37,11 @@
             <label class="control-label span2">@EMessages.get("edit_pwd.confirm_new_pwd")</label>
             <div class="controls span10">
                 <div class="input-prepend span12">
-                    <span class="add-on"><i class="icon-lock"></i> </span> <input
-                        type="Password" id="controle_password" class="input-xlarge span11"
-                        name="controle_password" required placeholder="@EMessages.get("edit_pwd.confirm_new_pwd")">
+                    <span class="add-on"><i class="icon-lock"></i></span>
+                    <input type="password" id="controle_password"
+                        name="controle_password" class="input-xlarge span11"
+                        required="required"
+                        placeholder="@EMessages.get("edit_pwd.confirm_new_pwd")" />
                 </div>
             </div>
         </div>
@@ -46,13 +49,32 @@
         <div class="control-group row-fluid">
             <div class="span2">&nbsp;</div>
             <div class="controls span2">
-                <button type="submit" class="btn btn-primary" name="btn_changepwd" id="btn_changepwd">@EMessages.get("edit_pwd.submit")</button>
+                <button type="submit" class="btn btn-primary" name="btn" id="btn">@EMessages.get("edit_pwd.submit")</button>
             </div>
             <div class="span8">&nbsp;</div>
         </div>
     </div>
-  </div>
 </div>
 
+<script type="text/javascript">
+$("#btn").live("click",function(){
+    var password = $("#current_pwd").val();
+    var n_password = $("#n_password").val();
+    var controle_password = $("#controle_password").val();
+
+    var salt_p = CryptoJS.SHA256(password);
+    var salt_np = CryptoJS.SHA256(n_password);
+    var salt_cp = CryptoJS.SHA256(controle_password);
+
+    var PBKDF2_password = CryptoJS.PBKDF2(password,salt_p,{ keySize: 4, iterations: 10});
+    var PBKDF2_passwordn = CryptoJS.PBKDF2(n_password,salt_np,{ keySize: 4, iterations: 10});
+    var PBKDF2_passwordc = CryptoJS.PBKDF2(controle_password,salt_cp,{ keySize: 4, iterations: 10});
+
+    $("#current_pwd").val(PBKDF2_password);
+    $("#n_password").val(PBKDF2_passwordn);
+    $("#controle_password").val(PBKDF2_passwordc);
+
+});
+</script>
+
 }
-<script src="@routes.Assets.at("javascripts/registration/validate.js")" type="text/javascript"></script>

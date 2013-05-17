@@ -6,8 +6,7 @@
 
 @(contestForm: Form[models.dbentities.CompetitionModel], breadcrumbs : List[models.data.Link], showErrors: Boolean)
 
-@import helper._
-@import helper.twitterBootstrap._
+@import helper.form
 @import models.EMessages
 @import views.html.competition.contestFormFields
 
@@ -18,17 +17,17 @@
     <div class="span2"></div>
     <div class="span8">
 
-        <h3> @EMessages.get("competition.create.title") </h3>
+        <h3>@EMessages.get("competition.create.title")</h3>
 
         @form(controllers.competition.routes.CompetitionController.save()) {
 
             <fieldset>
 
-                <legend> @EMessages.get("competition.create.step1") </legend>
+                <legend>@EMessages.get("competition.create.step1")</legend>
 
                 @if(flash.containsKey("competition-error")) {
                     <div class="alert alert-error">
-                        <strong>Error!</strong> @flash.get("competition-error")
+                        <strong>@EMessages.get("info.error")!</strong> @flash.get("competition-error")
                     </div>
                 }
 
@@ -38,7 +37,9 @@
 
             <div class="actions">
                 <input type="submit" value="@EMessages.get("forms.submit")" class="btn btn-primary">
-                <a href="@controllers.competition.routes.CompetitionController.index(0, "", "", "")" class="btn"> @EMessages.get("forms.cancel")</a>
+                <a href="@controllers.competition.routes.CompetitionController.index(0, "", "", "")" class="btn">
+                    @EMessages.get("forms.cancel")
+                </a>
             </div>
         }
     </div>

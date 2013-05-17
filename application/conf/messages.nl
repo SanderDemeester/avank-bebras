@@ -24,7 +24,7 @@ notFound.text = Deze pagina bestaat niet: {0}
 noAccess.title = Oeps!
 noAccess.text = U bent niet bevoegd om deze actie uit te voeren.
 error.title = Oeps!
-error.text = Er is iets misgelopen. Probeer opnieuw later.
+error.text = Er is iets misgelopen. Probeer later opnieuw.
 error.back = Ga terug
 error.date = Kon datum niet verwerken.
 error.login = Ongeldige login poging.
@@ -45,6 +45,7 @@ error.mimic.cant_find_user = Kan de opgegeven gebruiker niet vinden
 error.mimic.policy_deny = Systeembeleid verhindert u de gebruiker na te bootsen
 error.mimic.user_logged_in = De gebruiker die u probeert na te bootsen is ingelogd in het systeem
 error.user_blocked = Uw account is geschorst, gelieve een admin te contacteren
+error.invalid_password = Het ingegeven (huidig) wachtwoord is niet correct!
 
 # Links from roles
 links.settings.title = Instellingen
@@ -76,6 +77,7 @@ links.manageusers.title = Gebruikersbeheer
 # Forms
 forms.cancel = Annuleer
 forms.approve = Keur goed
+forms.save = Sla op
 forms.delete = Verwijder
 forms.deleteArg = Verwijder {0}
 forms.remove = Verwijder
@@ -89,6 +91,7 @@ forms.submit = Verzend
 forms.create = Maak aan
 forms.createArg = Maak {0} aan
 forms.update = Pas aan
+forms.upload = Upload
 forms.uploadFile = Bestand uploaden
 forms.title = Titel
 forms.error = Gelieve alle fouten te verbeteren.
@@ -96,6 +99,7 @@ forms.open = Open
 forms.unknownError = Er is een interne fout opgetreden.
 forms.add = Voeg toe
 forms.error.dates = Gelieve een eindtijdstip te kiezen dat na het gekozen starttijdstip valt.
+forms.or = of
 
 # Question
 question.editor.name = Vraagstukontwerper
@@ -201,7 +205,7 @@ register.bday = Geboortedatum
 register.gender = Geslacht
 register.preflan = Gewenste taal
 register.password = Wachtwoord
-register.confirm_password = Bevestig password
+register.confirm_password = Bevestig wachtwoord
 register.create_account = Maak account
 register.bebras_id_message = Uw Bebras ID is: 
 register.inlog_message = U kan inloggen met uw ID en wachtwoord.
@@ -278,7 +282,7 @@ faq.list.error = Er is iets misgelopen tijdens het ophalen van de lijst.
 #info
 info.info = Info
 info.warning = Waarschuwing
-info.error = Error
+info.error = Fout
 info.success = Succes
 info.successedit = Uw informatie is aangepast!
 
@@ -344,6 +348,8 @@ competitions.grade = Niveau
 competitions.grade.warning = Opgepast!
 competitions.grade.info = Je staat op het punt om aan een competitie deel te nemen. Om de juiste vragen te kunnen selecteren, hebben we je voorkeur niveau nodig.  Gelieve een niveau te selecteren
 competitions.grade.breadcrumb = Niveau kiezen
+competitions.take.landing = Snel een competitie doen
+competitions.take.more = Meer competities
 
 competition.history.warning = Opgelet!
 competition.history.info = Je bent momenteel niet ingelogd. Om resultaten en statistieken van vorige competities te bekijken, moet je ingelogd zijn.
@@ -368,7 +374,7 @@ schools.add.success = Opslaan van school was succesvol. ID:
 schools.edit = Bewerk een school.
 schools.table.id = ID
 schools.table.name = Naam
-schools.table.name = Adres
+schools.table.address = Adres
 schools.error = Er is een fout opgetreden. Probeer (later) opnieuw.
 
 # server management
@@ -391,6 +397,7 @@ servers.error.removePersistent = Er zijn nog vragen op deze server, pas ze aan v
 servers.success.added = Server {0} is aangemaakt
 servers.success.edited = Server {0} is aangepast
 servers.success.removed = Server {0} is verwijderd
+servers.title.add = Nieuwe Server
 
 questions.preview = Voorvertoning
 questions.form.author = Auteur
@@ -463,6 +470,7 @@ classes.pupil.form.email = E-mail
 classes.pupil.form.registrationdate = Registratiedatum
 classes.pupil.form.comment = Commentaar
 classes.pupil.form.blockeduntil = Geblokkeerd tot
+classes.pupil.form.password = Wachtwoord
 classes.novalidclassid = Dit is geen geldig klas ID.
 classes.pupil.editclassinfo = Bewerk de info van de klas.
 classes.pupil.oldpupils = Bekijk de oud-studenten.
@@ -663,7 +671,8 @@ competition.overview.availableLanguages = Beschikbare talen
 competition.overview.confirmFinish = Ben je zeker dat je deze competitie wilt stoppen? Alle niet-verzonden vragen zullen verloren gaan!
 competition.started.title = Competitie nog niet gestart
 competition.started.info = De gekozen competitie is nog niet gestart. Gelieve het later nogmaals te proberen.
-
+competition.questionset.title = Geen vragenbundel beschikbaar die jouw niveau ondersteunt.
+competition.questionset.info = De gekozen competitie beschikt op dit moment niet over een vragenbundel die jouw niveau ondersteunt. Gelieve later nogmaals te proberen.
 
 # Contact form
 contact.formtitle = Contactformulier
@@ -695,5 +704,5 @@ usermodelvalidator.result.nogender = Geen (geldig) geslacht
 usermodelvalidator.result.nolanguage = Geen taal
 usermodelvalidator.result.invalidlanguage = Geen geldige taal
 usermodelvalidator.result.nopassword = Geen wachtwoord
-usermodelvalidator.result.invalidemail = Ongeldige email
-usermodelvalidator.result.existingemail = Email reeds geregistreerd
+usermodelvalidator.result.invalidemail = Ongeldige e-mail
+usermodelvalidator.result.existingemail = E-mail reeds geregistreerd

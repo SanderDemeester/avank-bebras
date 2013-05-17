@@ -1,18 +1,13 @@
 <div class="well">
-@EMessages.get("class.availableGrades")
+    @EMessages.get("class.availableGrades")
 </div>
 <table class="table table-striped table-bordered table-hover table-condensed">
-@for(grade <- models.data.Grade.getGrades()){
-<tr>
-<td>
-@grade.name
-</td>
-<td>
-@grade.lowerbound
-</td>
-<td>
-@grade.upperbound
-</td>
-</tr>
-}
+    @for(grade <- models.data.Grade.getGrades()){
+    <tr>
+        <td>@grade.name</td>
+        <td>@grade.lowerbound</td>
+        <td>@grade.upperbound</td>
+    </tr>
+    }
 </table>
+

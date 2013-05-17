@@ -4,13 +4,14 @@
 )
 
 @main(EMessages.get("app.dashboard"), breadcrumbs) {
+
 @defining(user.roles()) { roles =>
-<style type="text/css"><!--
+<style type="text/css" xmlns="http://www.w3.org/1999/html"><!--
     div.no-margin {
         margin: 0;
     }
     .larger {
-    	font-size:16px;
+        font-size:16px;
     }
     .nav-small-margin {
         margin-bottom: 5px;
@@ -18,58 +19,82 @@
     //-->
 </style>
 <div class="row-fluid">
-<ul class="span3 nav nav-tabs nav-stacked">
-	<li><a href="#-1" class="tabber"><i class="icon-chevron-right pull-right"></i> @EMessages.get("app.overview")</a></li>
-	@for(i <- 0 to roles.size() - 1) { <!-- stupid &lt; -->
-		@if(roles(i).onLandingPage()) {
-			<li><a href="#@i" class="tabber"><i class="icon-chevron-right pull-right"></i> @roles(i).title()</a></li>
-		}
-	}
-</ul>
 
-@for(i <- 0 to roles.size() - 1) { <!-- stupid &lt; -->
-	@if(roles(i).onLandingPage()) {
-	<div id="@i" class="span9 landingel hide">
-	    <div class="navbar navbar-inner no-margin"><div class="container">
-	        <span class="brand">@roles(i).title()</span>
-	    </div></div>
-	    <div class="well"><ul class="nav nav-pills nav-stacked nav-small-margin">
-	        @for(link <- roles(i).pages()) { <!-- stupid &lt; -->
-	        <li class="larger"><a href="@link.getUrl()">@EMessages.get(link.getName())</a></li>
-	        }
-	    </ul></div>
-	</div>
-	}
-}
+    <ul class="span3 nav nav-tabs nav-stacked">
+        <li><a href="#-1" class="tabber"><i class="icon-chevron-right pull-right"></i> @EMessages.get("app.overview")</a></li>
+        @for(i <- 0 to roles.size() - 1) { <!-- stupid &lt; -->
+        @if(roles(i).onLandingPage()) {
+        <li><a href="#@i" class="tabber"><i class="icon-chevron-right pull-right"></i> @roles(i).title()</a></li>
+        }
+        }
+    </ul>
 
-	<div id="-1" class="span9 landingel">
-	    <div class="well"><ul>
-	    	<h1>@EMessages.get("app.welcome", user.getData().name)</h1>
-	        <p>@EMessages.get("app.getStarted")</p>
-	        <br />[COMPETITIONLISTSNIPPET]
-	        <br />[STATSSNIPPET]
-	    </ul></div>
-	</div>
+    @for(i <- 0 to roles.size() - 1) { <!-- stupid &lt; -->
+    @if(roles(i).onLandingPage()) {
+    <div id="@i" class="span9 landingel hide">
+        <div class="navbar navbar-inner no-margin"><div class="container">
+            <span class="brand">@roles(i).title()</span>
+        </div></div>
+        <div class="well"><ul class="nav nav-pills nav-stacked nav-small-margin">
+            @for(link <- roles(i).pages()) { <!-- stupid &lt; -->
+            <li class="larger"><a href="@link.getUrl()">@EMessages.get(link.getName())</a></li>
+            }
+        </ul></div>
+    </div>
+    }
+    }
+
+    <div id="-1" class="span9 landingel">
+        <div class="well">
+            <h1>@EMessages.get("app.welcome", user.getData().name)</h1>
+            <p>@EMessages.get("app.getStarted")</p>
+            <br />
+            @if(user.getType == models.user.UserType.PUPIL_OR_INDEP){
+                <p class="lead">@EMessages.get("competitions.take.landing"):</p>
+                <p>
+                    <dl>
+                        @for(competition <- controllers.competition.TakeCompetitionController.snippet()){
+                            <dt>
+                                @if(new models.competition.Competition(competition).getType() != models.competition.CompetitionType.RESTRICTED){
+                                    <a href="@controllers.competition.routes.TakeCompetitionController.chooseGrade(competition.id)">
+                                        @competition.name
+                                    </a>
+                                } else {
+                                    <a href="@controllers.competition.routes.TakeCompetitionController.takeCompetition(competition.id)">
+                                        @competition.name
+                                    </a>
+                                }
+                            </dt>
+                            <dd>
+                                @competition.getTypeString()
+                            </dd>
+                        }
+                    </dl>
+                </p>
+            }
+            <br />[STATSSNIPPET]
+        </div>
+    </div>
 
 </div>
 
-	<!-- Tabbing stuff -->
+    <!-- Tabbing stuff -->
     <script type="text/javascript">
     $(".tabber").live("click", function() {
-    	// Tabbing
-    	var id = $(this).attr('href');
-    	$(".landingel").hide();
-    	$(".tabber").each(function() {
-    		$(this).parent().removeClass("active");
-    	})
-    	$(id).show();
-    	$(this).parent().addClass("active");
-    	
-    	// Breadcrumbs stuff
-    	if($(".breadcrumb li").length > 1)
-    		$(".breadcrumb li:last").remove();
-    	if(id != "#-1")
-    		$(".breadcrumb").append("<li class='active'><span class='divider'>/</span>"+$(this).text()+"</li>");
+        // Tabbing
+        var id = $(this).attr('href');
+        $(".landingel").hide();
+        $(".tabber").each(function() {
+            $(this).parent().removeClass("active");
+        })
+        $(id).show();
+        $(this).parent().addClass("active");
+
+        // Breadcrumbs stuff
+        if($(".breadcrumb li").length > 1)
+            $(".breadcrumb li:last").remove();
+        if(id != "#-1")
+            $(".breadcrumb").append("<li class='active'><span class='divider'>/</span>"+$(this).text()+"</li>");
     });
     </script>
 

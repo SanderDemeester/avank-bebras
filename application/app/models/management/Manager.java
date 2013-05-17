@@ -150,13 +150,13 @@ public abstract class Manager<T extends ManageableModel> {
             .findPagingList(pageSize)
             .getPage(page);
     }
-    
+
     /**
-     * 
+     *
      * @return The Dataset the Manager is working
      */
     protected ExpressionList<T> getDataSet(){
-    	return getFinder().where();
+        return getFinder().where();
     }
 
     /**
@@ -284,7 +284,7 @@ public abstract class Manager<T extends ManageableModel> {
     private void disableField(String field) {
         disabledFields.put(field, true);
     }
-    
+
     /**
      * Make a field hidden in the listview
      * @param field field name
@@ -304,7 +304,7 @@ public abstract class Manager<T extends ManageableModel> {
         else if(!state.equals(ModelState.UPDATE)) return false;
         else                                      return val;
     }
-    
+
     /**
      * Check if a field is visible in the list view
      * @param field field name

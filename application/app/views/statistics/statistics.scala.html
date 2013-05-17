@@ -112,14 +112,19 @@
             </div>
             <button type="button" class="btn" id="filter-add">@EMessages.get("statistics.add_filter")</button>
         </div>
-    </div> 
+    </div>
 
 
     <!-- =================================================================== -->
     <!--  The nice big generate button.                                      -->
     <!-- =================================================================== -->
 
-    <button type="submit" class="btn btn-primary btn-large" id="show-chart">@EMessages.get("statistics.generate")</button>
+    <div>
+        <button type="submit" class="btn btn-primary btn-large" id="show-chart">
+            @EMessages.get("statistics.generate")
+        </button>
+        <div id="spinner"><span></span></div>
+    </div>
 
 </form>
 
@@ -234,6 +239,23 @@
         color: rgb(119, 119, 119);
         text-shadow: 0px 1px 0px rgb(255, 255, 255);
         margin-bottom: 10px;
+    }
+
+    #show-chart {
+        display: inline;
+    }
+
+    #spinner {
+        vertical-align: middle;
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+    }
+
+    #spinner span {
+        position: relative;
+        top: 20px;
+        left: 20px;
     }
 
 </style>
@@ -418,9 +440,18 @@
     });
 
     $(document).on("click", "#show-chart", function() {
+        var spinner = new Spinner(spinner_opts).spin();
+        $("#spinner span").append(spinner.el);
         $.get("/statistics/json?" + $("#statistics-form").serialize(), function(data) {
+            spinner.spin(false);
             $("#container").highcharts(data);
             $("#stat-chart").modal();
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            alert(jqXHR);
+            alert(textStatus);
+            alert(errorThrown);
+            spinner.spin(false);
+            $("#show-chart").click();
         });
         return false;
     });

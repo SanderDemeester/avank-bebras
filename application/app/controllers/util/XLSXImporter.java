@@ -20,7 +20,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  * @author Jens N. Rammant
  * Utility class for the reading and writing of XLSX files
- * TODO create jUnit test
  */
 
 public class XLSXImporter {
@@ -120,9 +119,9 @@ public class XLSXImporter {
             return Boolean.toString(c.getBooleanCellValue());
         }
         if(cellType == XSSFCell.CELL_TYPE_NUMERIC){
-        	if(DateUtil.isCellDateFormatted(c)){
-        		return DateFormatter.formatDate(c.getDateCellValue());
-        	}
+            if(DateUtil.isCellDateFormatted(c)){
+                return DateFormatter.formatDate(c.getDateCellValue());
+            }
             return Double.toString(c.getNumericCellValue());
         }
         if(cellType == XSSFCell.CELL_TYPE_STRING){

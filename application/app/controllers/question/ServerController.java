@@ -13,6 +13,8 @@ import models.EMessages;
 import models.data.Link;
 import models.management.ModelState;
 import models.question.Server;
+import models.user.AuthenticationManager;
+import models.user.Role;
 import play.data.Form;
 import play.db.ebean.Model.Finder;
 import play.mvc.Result;
@@ -33,7 +35,7 @@ import controllers.EController;
  * @author Kevin Stobbelaar
  */
 public class ServerController extends EController {
-    
+
     private static Result LIST = redirect(routes.ServerController.list(0, "id", "asc", ""));
 
     private Finder<String,Server> serverFinder = new Finder<String,Server>(String.class, Server.class);
@@ -43,11 +45,9 @@ public class ServerController extends EController {
      * @return is the user authorized
      */
     public static boolean isAuthorized() {
-        // TODO: enable this authorization
-        //return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGESERVERS);
-        return true;
+        return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGESERVERS);
     }
-    
+
     /**
      * Make default breadcrumbs for this controller
      * @return default breadcrumbs
@@ -67,7 +67,7 @@ public class ServerController extends EController {
     @Transactional(readOnly=true)
     public static Result list(int page, String orderBy, String order, String filter){
         List<Link> breadcrumbs = defaultBreadcrumbs();
-        
+
         if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
 
         ServerManager serverManager = new ServerManager(ModelState.READ);
@@ -90,7 +90,7 @@ public class ServerController extends EController {
     public static Result create(){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("servermanagement.servers.new"), "/servers/create"));
-        
+
         if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
 
         Form<Server> form = form(Server.class).bindFromRequest();
@@ -111,17 +111,17 @@ public class ServerController extends EController {
     public static Result save(){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("servermanagement.servers.new"), "/servers/create"));
-        
+
         if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
-        
+
         ServerManager manager = new ServerManager(ModelState.CREATE);
-        
+
         // Validate form
         Form<Server> form = form(Server.class).bindFromRequest();
         if(form.hasErrors()) {
             return badRequest(newServerForm.render(form, manager, breadcrumbs));
         }
-        
+
         // Test connection
         try {
             form.get().testConnection();
@@ -139,7 +139,7 @@ public class ServerController extends EController {
             return badRequest(newServerForm.render(form, manager, breadcrumbs));
         }
 
-        
+
         // Save
         try {
             form.get().save();
@@ -147,7 +147,7 @@ public class ServerController extends EController {
             flash("error", e.getMessage());
             return badRequest(newServerForm.render(form, manager, breadcrumbs));
         }
-        
+
         // Result
         flash("success", EMessages.get("servers.success.added", form.get().getID()));
         return Results.redirect(routes.ServerController.list(0, "id", "asc", ""));
@@ -166,7 +166,7 @@ public class ServerController extends EController {
         breadcrumbs.add(new Link(EMessages.get("servermanagement.servers.server") + " " + name, "/servers/:" + name));
 
         if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
-        
+
         ServerManager manager = new ServerManager(name, ModelState.UPDATE);
         manager.setIgnoreErrors(true);
 
@@ -187,9 +187,9 @@ public class ServerController extends EController {
         breadcrumbs.add(new Link(EMessages.get("servermanagement.servers.server") + " " + name, "/servers/:" + name));
 
         if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
-        
+
         ServerManager manager = new ServerManager(name, ModelState.UPDATE);
-        
+
         // Validate form
         Form<Server> form = form(Server.class).fill(manager.getFinder().byId(name)).bindFromRequest();
         if(form.hasErrors()) {
@@ -212,7 +212,7 @@ public class ServerController extends EController {
             flash("error", EMessages.get("servers.error.testConnection", fe.getMessage()));
             return badRequest(newServerForm.render(form, manager, breadcrumbs));
         }
-        
+
         // Update
         try {
         form.get().update();
@@ -220,7 +220,7 @@ public class ServerController extends EController {
             flash("error", e.getMessage());
             return badRequest(editServerForm.render(form, manager, breadcrumbs));
         }
-        
+
         // Result
         flash("success", EMessages.get("servers.success.edited", form.get().getID()));
         return LIST;
@@ -236,7 +236,7 @@ public class ServerController extends EController {
     @Transactional
     public static Result remove(String name){
         if(!isAuthorized()) return ok(noaccess.render(defaultBreadcrumbs()));
-        
+
         try {
             Ebean.delete(Server.class, name);
         } catch (PersistenceException e) {
@@ -246,7 +246,7 @@ public class ServerController extends EController {
             flash("error", e.getMessage());
             return LIST;
         }
-        
+
         // Result
         flash("success", EMessages.get("servers.success.removed", name));
         return LIST;

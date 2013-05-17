@@ -1,16 +1,13 @@
 package models.statistics.populations;
 
 import java.util.List;
-import java.util.ArrayList;
 
 import com.avaje.ebean.Ebean;
 
-import play.db.ebean.Model.Finder;
 
 import models.EMessages;
 import models.dbentities.ClassGroup;
 import models.dbentities.UserModel;
-import models.dbentities.ClassPupil;
 
 /**
  * A Population of one class.
@@ -39,8 +36,8 @@ public class ClassPopulation extends Population {
     }
 
     @Override public List<UserModel> getUsers() { //TODO Felix, check if this does what it should
-    	
-    	return classGroup.getPupils(ClassGroup.PupilSet.ALL);
+
+        return classGroup.getPupils(ClassGroup.PupilSet.ALL);
 
     }
 

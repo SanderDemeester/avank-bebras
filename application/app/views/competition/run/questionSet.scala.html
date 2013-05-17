@@ -1,44 +1,42 @@
 @(stateID : String, questionSet : models.question.QuestionSet, feedback : models.question.QuestionFeedback, breadcrumbs : List[models.data.Link])
 
-@import helper._
-@import helper.twitterBootstrap._
 @import models.EMessages
 
 @main(EMessages.get("competition.name"), breadcrumbs){
-	<div class="pagination text-center">
-		<ul>
-			<li class="active"><a class="pageClick" href="#">@EMessages.get("competition.overview")<span class="id hide">-1</span></a></li>
-		@for((q, i) <- questionSet.getQuestions().view.zipWithIndex) {
-			<li><a class="pageClick" href="#">@(i+1)<span class="id hide">@q.getID()</span></a></li>
-		}
-		</ul>
-	</div>
-	
-	<div class="well text-center hide">
-		<div id="countdown"></div>
-	</div>
-	
-	<div class="well text-center hide">
-		<div id="competitionScore">@if(feedback != null) {
-			Score: <b>@feedback.getScore()</b>
-		}</div>
-	</div>
-	
-	<div id="-1" class="question well hero-unit">
-		<h1>@questionSet.getQuestionSetModel().name</h1>
-		<p>@EMessages.get("competition.intro")</p>
-	</div>
-	@for(q <- questionSet.getQuestions()) {
-		@question(q, models.data.Language.getLanguage(EMessages.getLang()), feedback)
-	}
-	<div class="well text-center hide">
-		<button id="submit" class="btn btn-large btn-primary @if(feedback!=null){disabled}">@EMessages.get("competition.submit")</button>
-	</div>
-	
-	<!-- Hidden modal -->
+    <div class="pagination text-center">
+        <ul>
+            <li class="active"><a class="pageClick" href="#">@EMessages.get("competition.overview")<span class="id hide">-1</span></a></li>
+            @for((q, i) <- questionSet.getQuestions().view.zipWithIndex) {
+            <li><a class="pageClick" href="#">@(i+1)<span class="id hide">@q.getID()</span></a></li>
+            }
+        </ul>
+    </div>
+
+    <div class="well text-center hide">
+        <div id="countdown"></div>
+    </div>
+
+    <div class="well text-center hide">
+        <div id="competitionScore">@if(feedback != null) {
+            Score: <b>@feedback.getScore()</b>
+        }</div>
+    </div>
+
+    <div id="-1" class="question well hero-unit">
+        <h1>@questionSet.getQuestionSetModel().name</h1>
+        <p>@EMessages.get("competition.intro")</p>
+    </div>
+    @for(q <- questionSet.getQuestions()) {
+        @question(q, models.data.Language.getLanguage(EMessages.getLang()), feedback)
+    }
+    <div class="well text-center hide">
+        <button id="submit" class="btn btn-large btn-primary @if(feedback!=null){disabled}">@EMessages.get("competition.submit")</button>
+    </div>
+
+    <!-- Hidden modal -->
     <div id="submitting" class="modal hide fade">
         <div class="modal-header">
-        	<h3>@EMessages.get("competition.modal.submitting")</h3>
+            <h3>@EMessages.get("competition.modal.submitting")</h3>
         </div>
         <div class="modal-body text-center">
             <p id="finished-text" class="lead">@EMessages.get("competition.modal.ready")</p> <br />
@@ -47,75 +45,79 @@
         </div>
         <div class="modal-footer"></div>
     </div>
-    
+
     <!-- Hidden modal -->
     <div id="lostConnection" class="modal hide fade">
         <div class="modal-header">
-        	<h3>@EMessages.get("competition.modal.error")</h3>
+            <h3>@EMessages.get("competition.modal.error")</h3>
         </div>
         <div class="modal-body">
             <div id="modalError" class="alert alert-error lead"></div>
             <div id="lostConnectionContent" class="hide">
-	            <p>@EMessages.get("competition.modal.error.code")</p>
-	            <div class="row-fluid">
-	            	<textarea id="answerscode" rows="10" class="span12"></textarea>
-	            </div>
+                <p>@EMessages.get("competition.modal.error.code")</p>
+                <div class="row-fluid">
+                    <textarea id="answerscode" rows="10" class="span12"></textarea>
+                </div>
             </div>
             <div class="text-center">
-				@EMessages.get("competition.modal.error.orYouCan") <button id="retry" class="btn btn-primary">@EMessages.get("competition.modal.error.retry")</button>
-			</div>
+                @EMessages.get("competition.modal.error.orYouCan")
+                <button id="retry" class="btn btn-primary">
+                    @EMessages.get("competition.modal.error.retry")
+                </button>
+            </div>
         </div>
         <div class="modal-footer"></div>
     </div>
-    
+
     <!-- Hidden modal -->
     <div id="finished" class="modal hide fade">
         <div class="modal-header">
-        	<h3>@EMessages.get("competition.modal.finished")</h3>
+            <h3>@EMessages.get("competition.modal.finished")</h3>
         </div>
         <div class="modal-body">
             <p>@EMessages.get("competition.modal.finished.text")</p>
         </div>
         <div class="modal-footer">
-        	<button id="ready" class="btn btn-primary">@EMessages.get("competition.modal.finished.return")</button>
-			<button id="showFeedback" class="btn">@EMessages.get("competition.modal.finished.showFeedback")</button>
+            <button id="ready" class="btn btn-primary">@EMessages.get("competition.modal.finished.return")</button>
+            <button id="showFeedback" class="btn">@EMessages.get("competition.modal.finished.showFeedback")</button>
         </div>
     </div>
-	
-	<script type="text/javascript">
-	var feedback = @{feedback!=null};
-	var shouldRedirectFeedback = @{!questionSet.getCompetition().getType().equals(models.competition.CompetitionType.RESTRICTED)};
-	var deadline = @{new Date().getTime() + (questionSet.getCompetition().getDuration() * 60 * 1000)};
-	
-	// Stylesheets for the iframe
-	var links = [
-					"@routes.Assets.at("stylesheets/bootstrap.min.css")",
-					"@routes.Assets.at("stylesheets/main.css")",
-					"@routes.Assets.at("stylesheets/bootstrap-responsive.min.css")",
-					"@routes.Assets.at("stylesheets/wysiwyg/bootstrap-wysihtml5.css")"
-				];
-	
-	// Answer object
-	var answers = {
-						"competition": "@questionSet.getCompetition().getID()",
-						"questionset": "@questionSet.getID()",
-						"userid": "@stateID",
-						"timeleft": 0,
-						"questions": {
-									@for(q <- questionSet.getQuestions()) {
-										@q.getID(): null, 
-									}
-						},
-					};
-	
-	// Translations
-	var messages = new Object();
+
+    <script type="text/javascript">
+    var feedback = @{feedback!=null};
+    var shouldRedirectFeedback = @{!questionSet.getCompetition().getType().equals(models.competition.CompetitionType.RESTRICTED)};
+    var deadline = @{new Date().getTime() + (questionSet.getCompetition().getDuration() * 60 * 1000)};
+
+    // Stylesheets for the iframe
+    var links = [
+                    "@routes.Assets.at("stylesheets/bootstrap.min.css")",
+                    "@routes.Assets.at("stylesheets/main.css")",
+                    "@routes.Assets.at("stylesheets/bootstrap-responsive.min.css")",
+                    "@routes.Assets.at("stylesheets/wysiwyg/bootstrap-wysihtml5.css")"
+                ];
+
+    // Answer object
+    var answers = {
+                        "competition": "@questionSet.getCompetition().getID()",
+                        "questionset": "@questionSet.getID()",
+                        "userid": "@stateID",
+                        "timeleft": 0,
+                        "languagecode": "@EMessages.getLang()",
+                        "questions": {
+                                    @for(q <- questionSet.getQuestions()) {
+                                        @q.getID(): null,
+                                    }
+                        },
+                    };
+
+    // Translations
+    var messages = new Object();
     messages.confirmSubmit = "@EMessages.get("competition.confirmSubmit")";
     messages.noInternet = "@EMessages.get("competition.noInternet")";
     messages.timesUp = "@EMessages.get("competition.timesUp")";
-	
-	</script>
-	<script src="@routes.Assets.at("javascripts/competition/jquery.countdown.min.js")" type="text/javascript"></script>
-	<script src="@routes.Assets.at("javascripts/competition/jquery.base64.min.js")" type="text/javascript"></script>
-	<script src="@routes.Assets.at("javascripts/competition/run.js")" type="text/javascript"></script>
+
+    </script>
+    <script src="@routes.Assets.at("javascripts/competition/jquery.countdown.min.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/competition/jquery.base64.min.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/competition/run.js")" type="text/javascript"></script>
 }

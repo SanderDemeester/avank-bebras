@@ -1,23 +1,19 @@
-@(classForm: Form[models.dbentities.ClassGroup],gradeValues : java.util.Map[String,String])
+@(
+    classForm: Form[models.dbentities.ClassGroup],
+    gradeValues: java.util.Map[String,String]
+)
 
-@import helper._
-@import helper.twitterBootstrap._
+@import helper.inputText
+@import helper.select
+@import helper.options
 @import models.EMessages
 
-
-
 <fieldset>
+    @inputText(classForm("name"), '_label -> EMessages.get("class.name"))
+    @inputText(classForm("schoolid"), '_label -> EMessages.get("class.school"))
+    @select(field = classForm("level"), options = options(gradeValues), '_label -> EMessages.get("class.level"))
+    @EMessages.get("class.expdate.format"): dd/MM/yyyy @EMessages.get("example"): 14/03/2015
+    @inputText(classForm("expdate"), '_label -> EMessages.get("class.expdate"))
+</fieldset>
 
-        @inputText(classForm("name"), '_label -> EMessages.get("class.name"))
-        @inputText(classForm("schoolid"), '_label -> EMessages.get("class.school"))
-        @select(field = classForm("level"), options = options(gradeValues)
-        ,'_label -> EMessages.get("class.level"))
-        @EMessages.get("class.expdate.format"): dd/MM/yyyy @EMessages.get("example"): 14/03/2015
-        @inputText(classForm("expdate"), '_label -> EMessages.get("class.expdate"))
-        
-        
-        
-
- </fieldset>
- 
- @views.html.data.listOfGrades()
+@views.html.data.listOfGrades()

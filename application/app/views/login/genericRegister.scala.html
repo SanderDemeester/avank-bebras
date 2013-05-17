@@ -1,10 +1,12 @@
-@(title: String, breadcrumbs : List[models.data.Link], sform: Form[UserController.Register], legend_title : String,
-formAction : play.api.mvc.Call)
+@(
+    title: String,
+    breadcrumbs: List[models.data.Link],
+    sform: Form[UserController.Register],
+    legend_title: String,
+    formAction: play.api.mvc.Call
+)
 
-@import commons._
-@import models.EMessages.get
-@import helper._
-@import helper.twitterBootstrap._
+@import models.EMessages
 @import views.html.commons.showflash
 
 @helper.form(action =  formAction, 'id -> "signup"){
@@ -16,11 +18,10 @@ formAction : play.api.mvc.Call)
     <label class="control-label span2">@EMessages.get("register.name"):</label>
     <div class="controls span10">
         <div class="input-prepend inline span12">
-            <span class="add-on"><i class="icon-user"></i> </span> 
-            	<input
-                type="text" class="input-xlarge span11" id="name" name="name"
-                placeholder="@EMessages.get("register.name")" 
-                value="@sform("name").value">
+            <span class="add-on"><i class="icon-user"></i></span>
+            <input type="text" class="input-xlarge span11" id="name" name="name"
+                placeholder="@EMessages.get("register.name")"
+                value="@sform("name").value" />
         </div>
     </div>
 </div>
@@ -30,10 +31,10 @@ formAction : play.api.mvc.Call)
     <label class="control-label span2">@EMessages.get("register.email"):</label>
     <div class="controls span10">
         <div class="input-prepend span12">
-            <span class="add-on"><i class="icon-envelope"></i> </span> <input
-                type="text" class="input-xlarge span11" id="email" name="email"
-                placeholder="@EMessages.get("register.email")"
-                value="@sform("email").value">
+            <span class="add-on"><i class="icon-envelope"></i></span>
+            <input type="text" class="input-xlarge span11" id="email"
+                name="email" placeholder="@EMessages.get("register.email")"
+                value="@sform("email").value" />
         </div>
     </div>
 </div>
@@ -44,10 +45,10 @@ formAction : play.api.mvc.Call)
     <label class="control-label span2">@EMessages.get("register.bday"):</label>
     <div class="controls span10">
         <div class="input-prepend span12">
-            <span class="add-on"><i class="icon-user"></i> </span> <input
-                type="text" class="input-xlarge span11" id="bday" name="bday"
+            <span class="add-on"><i class="icon-user"></i></span>
+            <input type="text" class="input-xlarge span11" id="bday" name="bday"
                 placeholder="@EMessages.get("register.bday")"
-                value="@sform("bday").value">
+                value="@sform("bday").value" />
         </div>
     </div>
 </div>
@@ -56,26 +57,26 @@ formAction : play.api.mvc.Call)
 <div class="control-group row-fluid">
     <label class="control-label span2">@EMessages.get("register.gender"):</label>
     <div class="controls span10">
-    <i class="icon-user"></i>
-        <select name="gender" id="gender" class="span11"> @for(gender <- models.user.Gender.values().toList) {
-
+        <i class="icon-user"></i>
+        <select name="gender" id="gender" class="span11">
+            @for(gender <- models.user.Gender.values().toList) {
             <option value="@gender.toString()">
-            @EMessages.get("register."+gender.toString())
+                @EMessages.get("register."+gender.toString())
             </option>
             }
         </select>
     </div>
 </div>
 
-<!-- SIXTH BLLOCK -->
+<!-- SIXTH BLOCK -->
 <div class="control-group row-fluid">
     <label class="control-label span2">@EMessages.get("register.preflan"):</label>
     <div class="controls span10">
-<i class="icon-user"></i>
+        <i class="icon-user"></i>
         <select name="prefLanguage" id="prefLanguage" class="span11">
             @for(language <- models.data.Language.listLanguages().toList) {
             <option value="@language.getCode()">
-            @EMessages.get(language.getName())
+                @EMessages.get(language.getName())
             </option>
             }
         </select>
@@ -87,9 +88,10 @@ formAction : play.api.mvc.Call)
     <label class="control-label span2">@EMessages.get("register.password")</label>
     <div class="controls span10">
         <div class="input-prepend span12">
-            <span class="add-on"><i class="icon-lock"></i> </span> <input
-                type="Password" id="register_password" class="input-xlarge span11"
-                name="password" placeholder="@EMessages.get("register.password")">
+            <span class="add-on"><i class="icon-lock"></i></span>
+            <input type="Password" id="register_password"
+                class="input-xlarge span11" name="password"
+                placeholder="@EMessages.get("register.password")" />
         </div>
     </div>
 </div>
@@ -99,9 +101,10 @@ formAction : play.api.mvc.Call)
     <label class="control-label span2">@EMessages.get("register.confirm_password"):</label>
     <div class="controls span10">
         <div class="input-prepend span12">
-            <span class="add-on"><i class="icon-lock"></i> </span> <input
-                type="Password" id="controle_passwd" class="input-xlarge span11"
-                name="controle_passwd" placeholder="@EMessages.get("register.confirm_password")">
+            <span class="add-on"><i class="icon-lock"></i></span>
+            <input type="Password" id="controle_passwd"
+                class="input-xlarge span11" name="controle_passwd"
+                placeholder="@EMessages.get("register.confirm_password")" />
         </div>
     </div>
 </div>

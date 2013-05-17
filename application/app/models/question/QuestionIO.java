@@ -215,7 +215,7 @@ public class QuestionIO {
         }
         out.close();
     }
-    
+
     /**
      * Make a document from an url
      * @param xml absolute URL of an xml file
@@ -227,7 +227,7 @@ public class QuestionIO {
             // Parse the given XML into a DOM tree
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setNamespaceAware(true);
-    
+
             // Parse our file
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(xml);

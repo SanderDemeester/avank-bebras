@@ -20,7 +20,7 @@ public class Role implements Comparable<Role>{
     \* ====================================================================== */
 
     // Mimicing
-    public static Role MIMIC = new Role("Mimick user",
+    public static Role MIMIC = new Role("links.mimic",
         new Link("links.mimic","/mimic")
     );
 
@@ -60,7 +60,7 @@ public class Role implements Comparable<Role>{
         new Link("faq.managefaq", "/manageFAQ"),
         new Link("faq.addfaq", "/manageFAQ/new")
     );
-    
+
     public static Role DATAMANAGER = new Role(
         "links.datamanager.title",
         new Link("links.datamanager.links", "/manage/links/show"),
@@ -72,11 +72,11 @@ public class Role implements Comparable<Role>{
         "links.manageusers.title",
         new Link("links.manageusers.users","/manage/users")
     );
-    
+
     //TEACHER
     public static Role MANAGESCHOOLS = new Role(
         "schools.title",
-	    new Link("schools.title", "/schools")
+        new Link("schools.title", "/schools")
     );
 
     public static Role MANAGECLASSES = new Role(
@@ -109,17 +109,17 @@ public class Role implements Comparable<Role>{
         new Link("links.contesttaking.overview", "/available-contests"),
         new Link("links.contesttaking.history", "/available-contests/history")
     );
-    
+
     //Classes view for pupils
     public static Role PUPILCLASSVIEW = new Role(
         "classes.pupil.classes.list",
         new Link("classes.pupil.classes.list","/pclasses/view")
     );
-    
+
     //Upgrade to teacher request
     public static Role UPGRADETOTEACHER = new Role(
-    		"contact.upgraderequest",
-    		new Link("contact.upgraderequest","/upgrade")
+            "contact.upgraderequest",
+            new Link("contact.upgraderequest","/upgrade")
     );
 
     /* ====================================================================== *\
