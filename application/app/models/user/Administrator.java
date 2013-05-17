@@ -8,6 +8,10 @@ import models.dbentities.UserModel;
  */
 public class Administrator extends Organizer{
 
+	/**
+     * Constructor
+     * @param data Data model class
+     */
     public Administrator(UserModel data) {
         super(data, UserType.ADMINISTRATOR);
         ROLES.add(Role.MANAGEFAQ); //Give admin the ability to manage FAQ

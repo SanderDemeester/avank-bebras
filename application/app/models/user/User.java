@@ -28,7 +28,9 @@ public abstract class User{
     private boolean isMimicTarget = false;
 
     /**
-     * @param data
+     * Constructor
+     * @param data Data model class
+     * @param type User type
      */
     public User(UserModel data, UserType type) {
         this.data = data;
