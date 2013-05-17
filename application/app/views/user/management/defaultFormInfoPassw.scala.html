@@ -195,13 +195,14 @@
             data: {"id": $("#bebrasID").val()}
             });
             request.done(function(data){
-            document.cookie="@models.user.AuthenticationManager.COOKIENAME" + "=" + data + ";expires=1000";
-            window.location = "/";
+               window.location.href = "/";
             });
 
             request.fail(function(jqXHR, data){
             $("#mimic_alert").show('fast').attr("class","alert alert-error").text(jqXHR.responseText + ".");
             });
+            
+            return false;
         });
 
         $("#registrationdate").datepicker({ format: 'dd/mm/yyyy' });
