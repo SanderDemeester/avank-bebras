@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * Controller for question sets.
  *
- * @auhtor Kevin Stobbelaar.
+ * @author Kevin Stobbelaar.
  */
 public class QuestionSetController extends EController {
 

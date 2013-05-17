@@ -100,8 +100,7 @@ public class QuestionSetManager extends Manager<QuestionSetModel> {
 
     /**
      * Returns the path of the route that must be followed to remove the selected item.
-     *
-     * @result Call path of the route that must be followed
+     * @return Call path of the route that must be followed
      */
     @Override
     public Call getRemoveRoute(String id) {

@@ -2,7 +2,6 @@ package models.data.manager;
 
 /**
  * An element to be included in a DataManager.
- * @see controllers.data.DataManager
  * @author Felix Van der Jeugt
  */
 public interface DataElement {
