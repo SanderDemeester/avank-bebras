@@ -74,6 +74,4 @@ public class PupilClassManager extends Manager<ClassGroup> {
 
     }
 
->>>>>>> test
-
 }

@@ -20,56 +20,6 @@ import models.dbentities.UserModel;
  */
 public class UserModelValidator {
 	
-	/**
-	 * @author Jens N Rammant
-	 * enum for returning what's wrong with the usermodel
-	 */
-	public enum Result{
-		/**
-		 * Everything ok
-		 */
-		OK,
-		/**
-		 * No name
-		 */
-		NO_NAME,
-		/**
-		 * Name invalid
-		 */
-		INVALID_NAME,
-		/**
-		 * No birthdate
-		 */
-		NO_BIRTHDAY,
-		/**
-		 * Birthdate is after today
-		 */
-		BIRTHDAY_AFTER_TODAY,
-		/**
-		 * No gender
-		 */
-		NO_GENDER,
-		/**
-		 * No preferred language
-		 */
-		NO_LANGUAGE,
-		/**
-		 * Preferred language invalid
-		 */
-		INVALID_LANGUAGE,
-		/**
-		 * No password
-		 */
-		NO_PASSWORD,
-		/**
-		 * Invalid email address
-		 */
-		INVALID_EMAIL,
-		/**
-		 * Email already in system
-		 */
-		ALREADY_EXISTING_EMAIL;
-	}
 
     /**
      * Checks if the basic data in the usermodel is valid.
@@ -107,17 +57,32 @@ public class UserModelValidator {
 
     }
 
+	/**
+	 * @author Jens N Rammant
+	 * enum for returning what's wrong with the usermodel
+	 */
     public enum Result{
+        /** Everything OK */
         OK("usermodelvalidator.result.ok"),
+        /** No name given. */
         NO_NAME("usermodelvalidator.result.noname"),
+        /** Invalid name given. */
         INVALID_NAME("usermodelvalidator.result.invalidname"),
+        /** No birthdate given. */
         NO_BIRTHDAY("usermodelvalidator.result.nobirthday"),
+        /** Born in the future. */
         BIRTHDAY_AFTER_TODAY("usermodelvalidator.result.latebirthday"),
+        /** No gender provided. */
         NO_GENDER("usermodelvalidator.result.nogender"),
+        /** No preferred language given. */
         NO_LANGUAGE("usermodelvalidator.result.nolanguage"),
+        /** Invalid preferred language given. */
         INVALID_LANGUAGE("usermodelvalidator.result.invalidlanguage"),
+        /** No password provided. */
         NO_PASSWORD("usermodelvalidator.result.nopassword"),
+        /** That's not an email address. */
         INVALID_EMAIL("usermodelvalidator.result.invalidemail"),
+        /** Duplicate email address. */
         ALREADY_EXISTING_EMAIL("usermodelvalidator.result.existingemail");
 
         private final String EMessageString;
