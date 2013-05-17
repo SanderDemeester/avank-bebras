@@ -13,6 +13,9 @@ import models.management.Listable;
  */
 public class UserTypeWrap implements Listable {
 
+    /**
+     * TODO explain why it's empty
+     */
     public UserTypeWrap() {
 
     }
