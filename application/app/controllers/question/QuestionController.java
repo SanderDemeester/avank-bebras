@@ -27,6 +27,7 @@ import models.question.submits.Submit;
 import models.question.submits.SubmitsPage;
 import models.user.AuthenticationManager;
 import models.user.Role;
+
 import play.Play;
 import play.cache.Cache;
 import play.data.Form;
@@ -48,15 +49,15 @@ import controllers.EController;
  *
  */
 public class QuestionController extends EController{
-    
-    private static Result LIST = redirect(
+
+    public static Result LIST = redirect(
             routes.QuestionController.list(0, "id", "asc", "")
     );
-    
-    private static Result LISTSUBMITS = redirect(
+
+    public static Result LISTSUBMITS = redirect(
             routes.QuestionController.listSubmits(0, "")
     );
-    
+
     /**
      * Check if the current user is authorized for these actions
      * @return is the user authorized
@@ -88,7 +89,7 @@ public class QuestionController extends EController{
     @Transactional(readOnly=true)
     public static Result list(int page, String orderBy, String order, String filter){
         List<Link> breadcrumbs = defaultBreadcrumbs();
-        
+
         if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
 
         QuestionManager questionManager = new QuestionManager(ModelState.READ);
@@ -99,7 +100,7 @@ public class QuestionController extends EController{
             questionManagement.render(questionManager.page(page), questionManager, orderBy, order, filter, breadcrumbs)
         );
     }
-    
+
     /**
      * This result will redirect to the question submits list page
      *
@@ -110,16 +111,16 @@ public class QuestionController extends EController{
      */
     public static Result listSubmits(int page, String filter){
         List<Link> breadcrumbs = defaultBreadcrumbs();
-        
+
         if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
-        
+
         breadcrumbs.add(new Link(EMessages.get("question.questions.submissions"), "/questionsubmits"));
-        
+
         return ok(
             submitsManagement.render(new SubmitsPage(page, filter), filter, breadcrumbs)
         );
     }
-    
+
     /**
      * The approval page for submitted questions
      * @param userID the userID of the author
@@ -129,7 +130,7 @@ public class QuestionController extends EController{
     public static Result approve(String userID, String file){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questions.approve"), ""));
-        
+
         if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
 
         Form<QuestionModel> form = form(QuestionModel.class)
@@ -141,7 +142,7 @@ public class QuestionController extends EController{
 
         return ok(approveQuestionForm.render(form, manager, breadcrumbs, userID, file));
     }
-    
+
     /**
      * Handle the approval of the question
      * @param userID the userID of the author
@@ -152,30 +153,30 @@ public class QuestionController extends EController{
     public static Result saveApprove(String userID, String file){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questions.approve"), ""));
-        
+
         if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
-        
+
         Form<QuestionModel> form = form(QuestionModel.class).bindFromRequest();
-        
+
         QuestionManager manager = new QuestionManager(ModelState.CREATE);
-        
+
         // Check for errors in the form
         if(form.hasErrors()) {
             return badRequest(approveQuestionForm.render(form, manager, breadcrumbs, userID, file));
         }
-        
+
         // Check the uniqueness of the officialid
         if(!form.get().isUnique()) {
             flash("error", EMessages.get("question.error.officialidTaken"));
             return badRequest(approveQuestionForm.render(form, manager, breadcrumbs, userID, file));
         }
-        
+
         // Fetch the submission
         Submit submit = Submit.find(userID, file);
-        
+
         // Save the question
         form.get().save();
-        
+
         // Try to send the question to the server
         try {
             form.get().fixServer();
@@ -184,18 +185,18 @@ public class QuestionController extends EController{
         } catch (Exception e) {
             // delete the question again
             form.get().delete();
-            
+
             flash("error", "An error occured: "+e.getMessage());
             return badRequest(approveQuestionForm.render(form, manager, breadcrumbs, userID, file));
         }
-        
+
         // Only if the saving went well, we can delete the submitted archive file
         submit.getFile().delete();
 
         flash("success", EMessages.get("question.success.approved", form.get().officialid));
         return LISTSUBMITS;
     }
-    
+
     /**
      * Remove a submitted question
      * @param userID the userID of the author
@@ -204,7 +205,7 @@ public class QuestionController extends EController{
      */
     public static Result removeSubmit(String userID, String file){
         if(!isAuthorized()) return ok(noaccess.render(defaultBreadcrumbs()));
-        
+
         Submit submit = Submit.find(userID, file);
         if(submit != null){
             submit.delete();
@@ -215,7 +216,7 @@ public class QuestionController extends EController{
         }
         return LISTSUBMITS;
     }
-    
+
     /**
      * This result will redirect to the create a question page
      * containing the corresponding form.
@@ -226,7 +227,7 @@ public class QuestionController extends EController{
     public static Result create(){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questions.new"), "/questions/create"));
-        
+
         if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
 
         Form<QuestionModel> form = form(QuestionModel.class).bindFromRequest();
@@ -247,7 +248,7 @@ public class QuestionController extends EController{
     public static Result save(){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questions.new"), "/questions/create"));
-        
+
         if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
 
         Form<QuestionModel> form = form(QuestionModel.class).bindFromRequest();
@@ -255,7 +256,7 @@ public class QuestionController extends EController{
         if(form.hasErrors()) {
             return badRequest(newQuestionForm.render(form, new QuestionManager(ModelState.CREATE), breadcrumbs));
         }
-        
+
         try {
             form.get().save();
         } catch (Exception e) {
@@ -266,7 +267,7 @@ public class QuestionController extends EController{
         flash("success", EMessages.get("question.success.added", form.get().officialid));
         return LIST;
     }
-    
+
     /**
      * This result will redirect to the edit a question page containing the
      * corresponding form.
@@ -278,7 +279,7 @@ public class QuestionController extends EController{
     public static Result edit(String name){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questions.question") + " " + name, ""));
-        
+
         if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
 
         QuestionManager manager = new QuestionManager(name, ModelState.UPDATE);
@@ -286,7 +287,8 @@ public class QuestionController extends EController{
         try {
             q = Question.fetch(name);
         } catch (QuestionBuilderException e) {
-            q = null;
+            flash("error", EMessages.get("forms.unknownError")+e.getMessage());
+            return LISTSUBMITS;
         }
         manager.setIgnoreErrors(true);
 
@@ -305,7 +307,7 @@ public class QuestionController extends EController{
     public static Result update(String name){
         List<Link> breadcrumbs = defaultBreadcrumbs();
         breadcrumbs.add(new Link(EMessages.get("question.questions.question") + " " + name, ""));
-        
+
         if(!isAuthorized()) return ok(noaccess.render(breadcrumbs));
 
         QuestionManager manager = new QuestionManager(name, ModelState.UPDATE);
@@ -315,13 +317,13 @@ public class QuestionController extends EController{
         } catch (QuestionBuilderException e) {
             q = null;
         }
-        
+
         // Validate form
         Form<QuestionModel> form = form(QuestionModel.class).fill(manager.getFinder().byId(name)).bindFromRequest();
         if(form.hasErrors()) {
             return badRequest(editQuestionForm.render(form, manager, breadcrumbs, q));
         }
-        
+
         // Update
         try {
             form.get().update();
@@ -329,7 +331,7 @@ public class QuestionController extends EController{
             flash("error", e.getMessage());
             return badRequest(editQuestionForm.render(form, manager, breadcrumbs, q));
         }
-        
+
         // Result
         flash("success", EMessages.get("question.success.edited", form.get().officialid));
         return LIST;
@@ -345,7 +347,7 @@ public class QuestionController extends EController{
     @Transactional
     public static Result remove(String name){
         if(!isAuthorized()) return ok(noaccess.render(defaultBreadcrumbs()));
-        
+
         QuestionModel question = new QuestionManager(ModelState.DELETE).getFinder().byId(name);
         try{
             question.delete();
@@ -353,12 +355,12 @@ public class QuestionController extends EController{
             flash("error", e.getMessage());
             return LIST;
         }
-        
+
         // Result
         flash("success", EMessages.get("question.success.removed", question.officialid));
         return LIST;
     }
-    
+
     /**
      * This will show a file from a certain question pack
      *
@@ -371,47 +373,47 @@ public class QuestionController extends EController{
         List<Link> errorBreadcrumbs = new ArrayList<Link>();
         errorBreadcrumbs.add(new Link("Home", "/"));
         errorBreadcrumbs.add(new Link("Error",""));
-        
+
         // Get the cachetime from the config file
         int cacheTime = Integer.parseInt(Play.application().configuration().getString("question.proxy.cache"));
-        
+
         // Try to get the file from our cache
         String contentCacheKey = "question.file."+fileName+".content."+id;
         String typeCacheKey = "question.file."+fileName+".type."+id;
         byte[] result = (byte[]) Cache.get(contentCacheKey);
         String contentType = (String) Cache.get(typeCacheKey);
-        
+
         // If this file is not in our cache, we go and get the content ourselves
         if(result == null || contentType == null) {
             try {
                 QuestionModel question = new QuestionManager(ModelState.DELETE).getFinder().byId(id);
-                
+
                 // Very important step, authenticate via HTTP
                 question.server.setAuthentication();
-                
+
                 // Copy the url content
                 URL url = new URL(question.server.path + Integer.toString(question.id) + "/" + fileName);
                 URLConnection connection = url.openConnection();
                 InputStream is = connection.getInputStream();
                 ByteArrayOutputStream os = new ByteArrayOutputStream();
                 QuestionIO.copyStream(is, os);
-                
+
                 result = os.toByteArray();
                 contentType = connection.getContentType();
-                
+
                 // Add new data to the cache
                 Cache.set(contentCacheKey, result, cacheTime);
                 Cache.set(typeCacheKey, contentType, cacheTime);
             } catch (Exception e) {
-                return internalServerError(views.html.commons.error.render(errorBreadcrumbs, EMessages.get("error.title"), EMessages.get("error.text")));
+                return internalServerError(views.html.commons.error.render(errorBreadcrumbs, EMessages.get("error.title"), EMessages.get("error.text")+" "+e.getMessage()));
             }
         }
-        
+
         // Return the file with the correct header
         response().setHeader(CONTENT_TYPE, contentType);
         return ok(result);
     }
-    
+
     /**
      * Export a question to a .ZIP file
      * @param id id of the question
@@ -422,7 +424,7 @@ public class QuestionController extends EController{
         List<Link> errorBreadcrumbs = new ArrayList<Link>();
         errorBreadcrumbs.add(new Link("Home", "/"));
         errorBreadcrumbs.add(new Link("Error",""));
-        
+
         if(isAuthorized()) {
             response().setHeader("Content-Disposition", "attachment; filename=question.zip");
             Question q;

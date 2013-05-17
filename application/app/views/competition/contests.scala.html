@@ -5,8 +5,14 @@
 * author: Kevin Stobbelaar                 *
 *******************************************@
 
-@(breadcrumbs : List[models.data.Link], currentPage: Page[_ <: models.management.ManageableModel],
-manager: models.management.Manager[_], currentOrderBy: String, currentOrder: String, currentFilter: String)
+@(
+    breadcrumbs: List[models.data.Link],
+    currentPage: Page[_ <: models.management.ManageableModel],
+    manager: models.management.Manager[_],
+    currentOrderBy: String,
+    currentOrder: String,
+    currentFilter: String
+)
 
 @import views.html.management.list
 @import models.EMessages
@@ -15,37 +21,40 @@ manager: models.management.Manager[_], currentOrderBy: String, currentOrder: Str
 @main(EMessages.get("competitions.title"), breadcrumbs) {
     <div class="row-fluid">
 
-            <div class="row12">
-                <p class="lead"> @EMessages.get("competitions.totake")
+        <div class="row12">
+            <p class="lead"> @EMessages.get("competitions.totake")
 
-            @****************
-            * History       *
-            ****************@
-            @if(AuthenticationManager.getInstance().getUser().getType() == models.user.UserType.ANON){
+        @****************
+        * History       *
+        ****************@
+        @if(AuthenticationManager.getInstance().getUser().getType() == models.user.UserType.ANON){
 
-                </p></div>
-                <div>
-                    <div class="alert">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <strong>@EMessages.get("competition.history.warning")</strong> @EMessages.get("competition.history.info")
-                    </div>
-                </div>
+            </p>
+        </div>
+        <div>
+            <div class="alert">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>@EMessages.get("competition.history.warning")</strong> @EMessages.get("competition.history.info")
+            </div>
+        </div>
 
-            } else{
+        } else {
+
                 <a href="@controllers.competition.routes.CompetitionHistoryController.list(0, "", "", "")" class="pull-right btn btn-large btn-primary">
                     @EMessages.get("competitions.taken")
                 </a>
-                </p></div>
+            </p>
+        </div>
 
-            }
+        }
 
-            @*********************
-            * Available contests *
-            *********************@
-            <div class="row12">
-                <p>
-                    @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
-                </p>
-            </div>
+        @*********************
+        * Available contests *
+        *********************@
+        <div class="row12">
+            <p>
+                @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
+            </p>
+        </div>
     </div>
 }

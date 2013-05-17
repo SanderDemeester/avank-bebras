@@ -2,6 +2,8 @@ package models.dbentities;
 
 import models.data.Difficulty;
 import models.management.ManageableModel;
+
+// TODO import
 import javax.persistence.*;
 
 /**

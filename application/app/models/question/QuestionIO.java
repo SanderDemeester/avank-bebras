@@ -215,7 +215,7 @@ public class QuestionIO {
         }
         out.close();
     }
-    
+
     /**
      * Make a document from an url
      * @param xml absolute URL of an xml file
@@ -227,7 +227,7 @@ public class QuestionIO {
             // Parse the given XML into a DOM tree
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setNamespaceAware(true);
-    
+
             // Parse our file
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(xml);
@@ -237,7 +237,7 @@ public class QuestionIO {
         } catch (SAXException e) {
             throw new QuestionBuilderException("The XML is invalid."+e.getMessage());
         } catch (IOException e) {
-            throw new QuestionBuilderException("Can't read the xml file.");
+            throw new QuestionBuilderException("Can't read the xml file."+e.getMessage());
         }
     }
 
@@ -285,7 +285,7 @@ public class QuestionIO {
         } catch (SAXException e) {
             throw new QuestionBuilderException("The XML is invalid."+e.getMessage());
         } catch (IOException e) {
-            throw new QuestionBuilderException("Can't read the XML file.");
+            throw new QuestionBuilderException("Can't read the XML file."+e.getMessage());
         } catch (NullPointerException e) {
             throw new QuestionBuilderException("Unknown question type.");
         }

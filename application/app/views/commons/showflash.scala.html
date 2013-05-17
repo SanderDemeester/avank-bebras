@@ -2,24 +2,24 @@
 
 @if(flash.containsKey("success")) {
      <div class="alert alert-success">
-         <strong>@EMessages.get("app.success")!</strong> @flash.get("success")
+         <strong>@EMessages.get("info.success")!</strong> @flash.get("success")
      </div>
-} 
+}
 
 @if(flash.containsKey("error")) {
      <div class="alert alert-error">
-         <strong>@EMessages.get("app.error")!</strong> @flash.get("error")
+         <strong>@EMessages.get("info.error")!</strong> @flash.get("error")
      </div>
-} 
+}
 
 @if(flash.containsKey("warning")) {
      <div class="alert alert-warning">
-         @flash.get("warning")
+         <strong>@EMessages.get("info.warning")!</strong> @flash.get("warning")
      </div>
-} 
+}
 
 @if(flash.containsKey("info")) {
      <div class="alert alert-info">
-         @flash.get("info")
+         <strong>@EMessages.get("info.info")!</strong> @flash.get("info")
      </div>
-} 
+}

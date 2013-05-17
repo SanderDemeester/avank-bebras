@@ -30,7 +30,7 @@ import static org.junit.Assert.assertNotNull;
  *
  */
 public class ServerTest extends ContextTest{
-    
+
     @Before
     public void clear(){
         List<Server> sm = Ebean.find(Server.class).findList();
@@ -40,7 +40,7 @@ public class ServerTest extends ContextTest{
     @Test
     public void testPage() {
     }
-    
+
     /**
      * Test method for {@link play.db.ebean.Model#save()}.
      */
@@ -60,11 +60,11 @@ public class ServerTest extends ContextTest{
         } catch(PersistenceException pe) {
             Assert.fail(pe.toString());
         }
-        
+
         // Test that this model is actually present in the database
         assertNotNull(Ebean.find(Server.class).where().eq("id","servername").findUnique());
     }
-    
+
     /**
      * Test the server connection with an ftp server we know is valid
      */
@@ -77,7 +77,7 @@ public class ServerTest extends ContextTest{
         server.ftpuri = "ftp.freehostia.com";
         server.ftpport = 21;
         server.ftpuser = "rubtae";
-        
+
         try {
             server.testConnection();
         } catch (IllegalStateException | IOException | FTPIllegalReplyException
@@ -85,7 +85,7 @@ public class ServerTest extends ContextTest{
             Assert.fail(e.toString());
         }
     }
-    
+
     @Test(expected=PersistenceException.class)
     public void testDuplicateSave() {
         Server server1 = new Server();

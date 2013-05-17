@@ -50,7 +50,7 @@ public abstract class Question {
         this.indexes = new HashMap<Language, String>();
         this.feedbacks = new HashMap<Language, String>();
     }
-    
+
     /**
      * Set a model for the question data
      * @param model model with db data for the question
@@ -58,7 +58,7 @@ public abstract class Question {
     protected void setModel(QuestionModel model) {
         this.model = model;
     }
-    
+
     /**
      * Retrieve a question by id
      * @param id the id of a question
@@ -68,7 +68,7 @@ public abstract class Question {
     public static Question fetch(String id) throws QuestionBuilderException {
         // We'll first poll the questioncache before remaking the question
         Question question = QuestionCache.getQuestion(id);
-        
+
         if(question == null) {
             // Check if the id is valid
             QuestionModel model = null;
@@ -77,10 +77,10 @@ public abstract class Question {
             } catch (Exception e) {
                 throw new QuestionBuilderException(EMessages.get("question.factory.error.invalidID"));
             }
-            
+
             question = QuestionIO.getFromXml(routes.QuestionController.showQuestionFile(id, QuestionPack.QUESTIONXMLFILE).absoluteURL(EController.request()));
             question.setModel(model);
-            
+
             // Add this to the cache
             QuestionCache.putQuestion(id, question);
         }
@@ -179,7 +179,7 @@ public abstract class Question {
     public int getID() {
         return model.id;
     }
-    
+
     /**
      * Sets the id of this question
      * @param id the id this question should have
@@ -223,7 +223,7 @@ public abstract class Question {
     public String getIndex(Language language) {
         return indexes.get(language);
     }
-    
+
     /**
      * Gets the index file source for a given language
      * @param language chosen language
@@ -252,7 +252,7 @@ public abstract class Question {
     public String getFeedback(Language language) {
         return feedbacks.get(language);
     }
-    
+
     /**
      * Gets the feedback file source for a given language
      * @param language chosen language
@@ -263,7 +263,7 @@ public abstract class Question {
                 Integer.toString(this.getID()), this.getFeedback(language)
                );
     }
-    
+
     /**
      * Generate an answer object for this question based on a certain input
      * @param input input for the answer
@@ -287,20 +287,20 @@ public abstract class Question {
     public String getOfficialID() {
         return this.model.officialid;
     }
-    
+
     /**
      * Export this question to a zip archive
      * @return the file in an archive
-     * @throws QuestionBuilderException 
-     * @throws FTPListParseException 
-     * @throws FTPAbortedException 
-     * @throws FTPDataTransferException 
-     * @throws FTPException 
-     * @throws FTPIllegalReplyException 
-     * @throws IOException 
-     * @throws IllegalStateException 
+     * @throws QuestionBuilderException
+     * @throws FTPListParseException
+     * @throws FTPAbortedException
+     * @throws FTPDataTransferException
+     * @throws FTPException
+     * @throws FTPIllegalReplyException
+     * @throws IOException
+     * @throws IllegalStateException
      */
     public File export() throws IllegalStateException, IOException, FTPIllegalReplyException, FTPException, FTPDataTransferException, FTPAbortedException, FTPListParseException, QuestionBuilderException {
-        return this.getServer().downloadFile(this.getOfficialID(), AuthenticationManager.getInstance().getUser().getID());
+        return this.getServer().downloadFile(Integer.toString(this.getID()), AuthenticationManager.getInstance().getUser().getID());
     }
 }

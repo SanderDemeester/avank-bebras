@@ -82,17 +82,17 @@ public class Grade implements DataElement {
     @Override public String id() {
         return name;
     }
-    
+
     /**
-     * 
+     *
      * @return all the Grades in the system
      */
     public static List<Grade> getGrades(){
-    	try{
-    		return Ebean.find(Grade.class).findList();
-    	}catch(PersistenceException pe){
-    		return new ArrayList<Grade>();
-    	}
+        try{
+            return Ebean.find(Grade.class).findList();
+        }catch(PersistenceException pe){
+            return new ArrayList<Grade>();
+        }
     }
 
 }

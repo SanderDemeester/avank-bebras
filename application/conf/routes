@@ -61,6 +61,7 @@ POST    /questionset/:qs/questions              controllers.question.QuestionSet
 POST    /questionset/edit                       controllers.question.QuestionSetController.update(qs:Int)
 GET     /questionset/:qs/questions/remove:id    controllers.question.QuestionSetController.removeQuestion(qs:Int, id)
 GET     /questionset/questions/add-data         controllers.question.QuestionSetController.typeAhead()
+GET     /questionset/:c/cancel                 controllers.question.QuestionSetController.cancel(c)
 
 # Contest management module
 GET     /contests                       controllers.competition.CompetitionController.index(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
@@ -134,16 +135,15 @@ GET			/settings			        controllers.user.PersonalPageController.show(tab:Int ?
 POST		/settings/submit			controllers.user.PersonalPageController.changeInformation()
 GET			/settings/editinfo			controllers.user.PersonalPageController.show(tab:Int ?= 1)
 GET			/settings/passwedit			controllers.user.PersonalPageController.show(tab:Int ?= 2)
-POST		/settings/passwedit			controllers.user.PersonalPageController.changePassword()
+POST		/settings/passwedit/submit		controllers.user.PersonalPageController.changePassword()
 GET			/settings/:id			    controllers.user.PersonalPageController.show(id:Int)
 
 # User management
 GET 		/manage/users		controllers.user.management.UserManagerController.showUsers(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 GET			/manage/users/create		controllers.user.management.UserManagerController.createUser()
-GET			/manage/users/update		controllers.user.management.UserManagerController.updateUser()
+GET			/manage/users/:id/update		controllers.user.management.UserManagerController.updateUser(id)
 GET			/manage/users/save		controllers.user.management.UserManagerController.saveUser()
 GET			/manage/users/:id/edit		controllers.user.management.UserManagerController.editUser(id)
-GET			/manage/users/:id/remove	controllers.user.management.UserManagerController.removeUser(id)
 
 # Classes
 
@@ -158,7 +158,7 @@ GET		/classes/view/:id				controllers.classgroups.ClassPupilController.viewClass
 
 GET		/classes/view/:id/remove/:studid	controllers.classgroups.ClassPupilController.removeStudent(id:Int,studid)
 GET		/classes/view/:id/add			controllers.classgroups.ClassPupilController.addExistingStudent(id:Int)
-POST		/classes/view/:id/				controllers.classgroups.ClassPupilController.saveExisting(id:java.lang.Integer)
+POST		/classes/view/:id/				controllers.classgroups.ClassPupilController.saveExisting(id:Int)
 GET		/classes/view/:id/download			controllers.classgroups.ClassPupilController.downloadClass(id:Int)
 GET		/classes/view/:id/upload			controllers.classgroups.ClassGroupIOController.uploadExisting(id:java.lang.Integer)
 POST		/classes/view/:id/upload/				controllers.classgroups.ClassGroupIOController.postExisting(id:java.lang.Integer)
@@ -174,12 +174,16 @@ POST		/classes/view/:id/help/			controllers.classgroups.HelpTeacherController.sa
 
 GET		/classes/view/:id/old			controllers.classgroups.ClassPupilController.viewOldPupils(id:Int,p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
-# Classes (views of the pupils)
+# Statistics
+GET		/statistics					controllers.statistics.Statistics.show(questionorset ?= null, id:java.lang.Integer ?= null)
+POST	/statistics					controllers.statistics.Statistics.show(questionorset ?= null, id:java.lang.Integer ?= null)
+GET		/statistics/json			controllers.statistics.Statistics.showJson(questionorset ?= null, id:java.lang.Integer ?= null)
+POST	/statistics/json			controllers.statistics.Statistics.showJson(questionorset ?= null, id:java.lang.Integer ?= null)
 
+# Classes (views of the pupils)
 GET		/pclasses/view				controllers.classgroups.pupilview.PupilClassController.viewClasses(p:Int ?=0, s ?= "name", o ?= "asc", f ?= "")
 
 # Contact form
-
 GET		/contact			controllers.contactform.ContactFormController.showContactForm()
 POST		/contact/			controllers.contactform.ContactFormController.saveContactForm()
 GET		/upgrade			controllers.contactform.RequestTeacherController.showForm()

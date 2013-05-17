@@ -1,6 +1,3 @@
-/**
- * 
- */
 package models.util;
 
 import play.data.validation.Constraints;
@@ -10,9 +7,9 @@ import play.data.validation.Constraints;
  * A class to be used for forms which only have 1 field: id
  */
 public class IDWrapper{
-	/**
-	 * ID
-	 */
-	@Constraints.Required
-	public String id;
+    /**
+     * ID
+     */
+    @Constraints.Required
+    public String id;
 }

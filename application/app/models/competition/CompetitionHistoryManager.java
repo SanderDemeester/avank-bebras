@@ -3,6 +3,9 @@ package models.competition;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Page;
+import controllers.competition.routes;
 import models.dbentities.CompetitionModel;
 import models.dbentities.PupilAnswer;
 import models.dbentities.QuestionSetModel;
@@ -104,6 +107,6 @@ public class CompetitionHistoryManager extends Manager<CompetitionModel> {
      */
     @Override
     public String getMessagesPrefix() {
-        return "competition.history";
+        return "competition.manager";
     }
 }

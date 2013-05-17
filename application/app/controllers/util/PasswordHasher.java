@@ -1,6 +1,3 @@
-/**
- * 
- */
 package controllers.util;
 
 import java.security.NoSuchAlgorithmException;
@@ -21,20 +18,20 @@ import org.apache.commons.codec.binary.Hex;
  *
  */
 public class PasswordHasher {
-	
-	/**
-	 * @param clientHashedPassword the "client-side hashed" password
-	 * @return a container containing the fully hashed & hexed password and the hexed hash. Ready to be put in the
-	 *       database
-	 * @throws Exception 
-	 */
-	
-	public static SaltAndPassword generateSP(char[] clientHashedPassword) throws Exception{
-		
-		// Create object for returning salt and password.
-		SaltAndPassword saltAndPassword = new SaltAndPassword();
-		
-		 // Setup a secure PRNG
+
+    /**
+     * @param clientHashedPassword the "client-side hashed" password
+     * @return a container containing the fully hashed & hexed password and the hexed hash. Ready to be put in the
+     *       database
+     * @throws Exception
+     */
+
+    public static SaltAndPassword generateSP(char[] clientHashedPassword) throws Exception{
+
+        // Create object for returning salt and password.
+        SaltAndPassword saltAndPassword = new SaltAndPassword();
+
+         // Setup a secure PRNG
         SecureRandom random = null;
 
         // Init keyFactory to generate a random string using PBKDF2 with SHA1.
@@ -48,7 +45,7 @@ public class PasswordHasher {
 
         // Same for salt
         String saltHEX = "";
-        
+
 
         // Get instance of secureRandom.
         try {
@@ -80,10 +77,10 @@ public class PasswordHasher {
         }catch(Exception e){
             throw new Exception(EMessages.get("error.text"));
         }
-        
+
         saltAndPassword.salt = saltHEX;
         saltAndPassword.password = passwordHEX;
-        
+
         return saltAndPassword;
 	}
 	/**

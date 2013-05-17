@@ -4,10 +4,10 @@
 
 <ul class="breadcrumb">
 @for(link <- breadcrumbs) {
-  @if(breadcrumbs.lastIndexOf(link)!=breadcrumbs.size()-1) {
-      <li><a href="@link.getUrl()">@EMessages.get(link.getName())</a> <span class="divider">/</span></li>
-  } else {
-      <li class="active">@EMessages.get(link.getName())</li>
-  }
+    @if(breadcrumbs.lastIndexOf(link)!=breadcrumbs.size()-1) {
+        <li><a href="@link.getUrl()">@EMessages.get(link.getName())</a> <span class="divider">/</span></li>
+    } else {
+        <li class="active">@EMessages.get(link.getName())</li>
+    }
 }
 </ul>

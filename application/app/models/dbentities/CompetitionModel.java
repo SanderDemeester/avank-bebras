@@ -91,4 +91,12 @@ public class CompetitionModel extends ManageableModel {
         return id;
     }
 
+    /**
+     * Returns the type of this competition.
+     * @return competition type
+     */
+    public String getTypeString(){
+        return type.toString();
+    }
+
 }

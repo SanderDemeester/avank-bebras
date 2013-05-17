@@ -1,6 +1,3 @@
-/**
- * 
- */
 package models.dbentities;
 
 import java.io.Serializable;
@@ -45,10 +42,6 @@ public class HelpTeacher extends Model {
 	 *
 	 */
 	public class HelpTeacherPK implements Serializable{
-
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 1L;
 		
 		/**
@@ -112,12 +105,6 @@ public class HelpTeacher extends Model {
 			return HelpTeacher.this;
 		}
 		
-		
-		
-		
-		
 	}
-	
-	
 
 }

@@ -21,7 +21,7 @@ public class EditInfoTest extends test.ContextTest {
 
 
     public void createAndEdit(){
-    	
+
         //create dummy user (thanks to Sander)
         Map<String, String> map = new HashMap<String,String>();
         map.put("name", "Jim Jones");
@@ -40,19 +40,19 @@ public class EditInfoTest extends test.ContextTest {
         assertThat(contentAsString(result)).contains("Your Bebras ID is: jimjones.");
         assertThat(contentAsString(result)).contains("You may login with your ID and password.");
 
- 
+
         // check if editing personal information succeeds
         map = new HashMap<String,String>();
         map.put("name", "Jim Test Jones");
         map.put("email","jimtestjones@localhost.com");
         map.put("bday","1931/05/13");
         map.put("gender","Male");
-        map.put("prefLanguage","nl");        
-                      
+        map.put("prefLanguage","nl");
+
         result = callAction(
             controllers.user.routes.ref.PersonalPageController.show(1),fakeRequest().withFormUrlEncodedBody(map)
         );
-     
+
         assertNotNull(Ebean.find(UserModel.class).where().eq("id","jimjones").where().eq("type", UserType.PUPIL_OR_INDEP.toString()).findUnique());
         assertNotNull(Ebean.find(UserModel.class).where().eq("id","jimjones").where().eq("name", "Jim Test Jones"));
         assertNotNull(Ebean.find(UserModel.class).where().eq("id","jimjones").where().eq("email", "jimtestjones@localhost.com"));

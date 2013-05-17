@@ -1,11 +1,21 @@
-@(currentPage: Page[_ <: models.management.ManageableModel], manager: models.management.Manager[_], currentOrderBy: String,
-    currentOrder: String, currentFilter: String, breadcrumbs : List[models.data.Link])
+@(
+    currentPage: Page[_ <: models.management.ManageableModel],
+    manager: models.management.Manager[_],
+    currentOrderBy: String,
+    currentOrder: String,
+    currentFilter: String,
+    breadcrumbs: List[models.data.Link]
+)
 
-@import models.EMessages.get
+@import models.EMessages
 @import views.html.management.list
+@import models.user.UserType
 
 @main(EMessages.get("user.management.others"), breadcrumbs){
-        <h2>@EMessages.get("user.management.list")</h2>
-        @EMessages.get("user.management.welcome")<br><br>
-        @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
+    <h2>@EMessages.get("user.management.list")</h2>
+    @EMessages.get("user.management.welcome")
+    <br />
+    <br />
+    @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
 }
+

@@ -21,10 +21,10 @@ public abstract class User{
     // The roles this user has or can have
     protected Set<Role> ROLES = new TreeSet<Role>();// Can be made non-static if roles have to be altered on runtime
     private UserType type;
-    
+
     // Field to check if the users is mimicking some other user;
     private boolean isMimicking = false;
-    
+
     private boolean isMimicTarget = false;
 
     /**
@@ -58,14 +58,6 @@ public abstract class User{
 
     public void setData(UserModel data) {
         this.data = data;
-    }
-
-    /**
-     * Reset the password of this user. Is delegated to the
-     * AuthenticationManager.
-     */
-    public void resetPassword(){
-        // TODO I suppose this needs to be not empty - Felix
     }
 
     /**
@@ -114,28 +106,26 @@ public abstract class User{
      * @return if the given user can be mimicked by this user
      */
     public boolean canMimic(User user) {
-    	System.out.println(this.getType().ordinal());
-    	System.out.println(user.getType().ordinal());
         return this.getType().ordinal() < user.getType().ordinal()
                 && this.hasRole(Role.MIMIC);
     }
-    
+
     public boolean isMimicking(){
-    	return isMimicking;
+        return isMimicking;
     }
-    
+
     public boolean isMimicTarget(){
-    	return isMimicTarget;
+        return isMimicTarget;
     }
-    
+
     public void setMimicTarget(boolean isMimicTarget){
-    	this.isMimicking = isMimicTarget;
+        this.isMimicking = isMimicTarget;
     }
-    
+
     public void setMimickStatus(boolean isMimicking){
-    	this.isMimicking = isMimicking;
+        this.isMimicking = isMimicking;
     }
-    
+
     public abstract boolean isAnon();
 
 }

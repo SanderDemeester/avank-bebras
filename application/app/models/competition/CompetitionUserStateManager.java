@@ -1,11 +1,11 @@
 package models.competition;
 
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
+import com.avaje.ebean.Ebean;
 import models.EMessages;
 import models.data.DataDaemon;
+import models.dbentities.CompetitionModel;
 import models.question.QuestionSet;
 import models.user.Anon;
 import models.user.User;
@@ -16,15 +16,31 @@ import models.user.User;
  *
  */
 public class CompetitionUserStateManager {
-    
+
     private static CompetitionUserStateManager _instance;
     // Maps the competition-id to a map of user-ids with their states for that competition
     private Map<String, Map<String, CompetitionUserState>> states;
-    
+
     private CompetitionUserStateManager() {
         states = new HashMap<String, Map<String, CompetitionUserState>>();
     }
-    
+
+    /**
+     * This will be called everytime the singleton instance of this class is requested.
+     */
+    public void whileGetInstance() {
+        List<CompetitionModel> competitionModels = Ebean.find(CompetitionModel.class).where()
+                .lt("starttime", new Date())
+                .gt("endtime", new Date())
+                .findList();
+
+        for (CompetitionModel competitionModel : competitionModels){
+            if (!isCompetitionStarted(competitionModel.id)){
+                startCompetition(new Competition(competitionModel));
+            }
+        }
+    }
+
     /**
      * Get the unique instance of this manager
      * @return the unique CompetitionUserStateManager
@@ -32,16 +48,17 @@ public class CompetitionUserStateManager {
     public static CompetitionUserStateManager getInstance() {
         if(_instance == null)
             _instance = new CompetitionUserStateManager();
+        _instance.whileGetInstance();
         return _instance;
     }
-    
+
     /**
      * Start a competition, will auto-expire
      * @param competition
      */
     public void startCompetition(final Competition competition) {
         states.put(competition.getID(), new HashMap<String, CompetitionUserState>());
-        
+
         // Auto-expire setup
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(competition.getExpirationDate());
@@ -56,11 +73,11 @@ public class CompetitionUserStateManager {
                     // Silently fail, this means that the competition was ended before
                 }
             }
-            
-        }, calendar);  
+
+        }, calendar);
         competition.setState(CompetitionState.RUNNING);
     }
-    
+
     /**
      * Adds a new competitionuserstate for the given user to the given competition
      * @param competitionID the id of the competition
@@ -76,7 +93,7 @@ public class CompetitionUserStateManager {
         // for executing the competition than their current preferred language.
         list.put(user.getID(), new CompetitionUserState(user, questionSet, EMessages.getLang()));
     }
-    
+
     /**
      * Adds a new competitionuserstate for an anonymous user to the given competition
      * @param competitionID the id of the competition
@@ -89,7 +106,7 @@ public class CompetitionUserStateManager {
         Map<String, CompetitionUserState> list = getStates(competitionID);
         list.put(token, new CompetitionUserState(new Anon(), questionSet, EMessages.getLang()));
     }
-    
+
     /**
      * Finish a competiton and save all the states associated with it
      * @param competitionID the competition id
@@ -97,14 +114,16 @@ public class CompetitionUserStateManager {
      * call startCompetition(competition) first.
      */
     public void finishCompetition(String competitionID)
-            throws CompetitionNotStartedException{        
+            throws CompetitionNotStartedException{
+        Map<String, CompetitionUserState> list = getStates(competitionID);
+
         for(CompetitionUserState state : states.get(competitionID).values()) {
             state.save();
         }
-        
+
         states.remove(competitionID);
     }
-    
+
     /**
      * Get the state for a certain user in a competition
      * @param competitionID the id of the competition
@@ -116,14 +135,23 @@ public class CompetitionUserStateManager {
     public CompetitionUserState getState(String competitionID, String userID) throws CompetitionNotStartedException {
         return getStates(competitionID).get(userID);
     }
-    
+
     private Map<String, CompetitionUserState> getStates(String competitionID) throws CompetitionNotStartedException {
         Map<String, CompetitionUserState> list = states.get(competitionID);
         if(list == null) throw new CompetitionNotStartedException(
                 "This competition has not yet been started.");
         return list;
     }
-    
+
+    private boolean isCompetitionStarted(String competitionID) {
+        try {
+            getStates(competitionID);
+        } catch (CompetitionNotStartedException e) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Counts the amount of registered users for a certain competition that are started
      * @param competitionID the id of the competition
@@ -137,7 +165,7 @@ public class CompetitionUserStateManager {
                 "This competition has not yet been started.");
         return list.size();
     }
-    
+
     /**
      * Counts the amount of registered users for a certain competition that are started
      * @param competitionID the id of the competition

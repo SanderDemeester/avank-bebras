@@ -23,7 +23,7 @@ public class QuestionManager extends Manager<QuestionModel>{
         this(state);
         this.id = id;
     }
-    
+
     /**
      * Create a new QuestionManager based
      * @param state the state the manager should be in

@@ -99,7 +99,7 @@ public class PupilAnswer extends Model implements AnswerModel{
     public String getLanguageCode() {
         return this.language;
     }
-    
+
     @Override
     public void setQuestion(QuestionModel question) {
         this.question = question;
@@ -124,7 +124,7 @@ public class PupilAnswer extends Model implements AnswerModel{
     public void setLanguageCode(String languageCode) {
         this.language = languageCode;
     }
-    
+
     @Override
     public void save() {
         // If an old answer exists, overwrite it
@@ -132,7 +132,7 @@ public class PupilAnswer extends Model implements AnswerModel{
         map.put("indid", this.indid);
         map.put("qid", this.question.id);
         map.put("questionsetid", this.questionset.id);
-        
+
         PupilAnswer answer = Ebean.find(PupilAnswer.class).where().allEq(map).endJunction().findUnique();
         if(answer != null) answer.delete();
         super.save();

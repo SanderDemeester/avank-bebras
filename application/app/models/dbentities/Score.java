@@ -43,14 +43,14 @@ public class Score extends Model{
      * score
      */
     public int score;
-    
+
     @Override
     public void save() {
         // If an old score exists, overwrite it
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("uID", this.user.id);
         map.put("qsID", this.questionset.id);
-        
+
         Score scoreModel = Ebean.find(Score.class).where().allEq(map).findUnique();
         if(scoreModel != null){
             //Ebean.delete(scoreModel); <--- This does not work, because ebean is very dumb, so we have to do it the nasty way, I'm crying blood as I write this...

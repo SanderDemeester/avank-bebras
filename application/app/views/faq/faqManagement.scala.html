@@ -1,21 +1,27 @@
-@***************************************
-*   FAQ management page             *
-*                                      *
-*   author: Kevin Stobbelaar           *
+@****************************************
+*   FAQ management page                 *
+*                                       *
+*   author: Kevin Stobbelaar            *
 *    adapted for FAQ by Jens N. Rammant *
-***************************************@
+****************************************@
 
-@(currentPage: Page[_ <: models.management.ManageableModel], manager: models.management.Manager[_], currentOrderBy: String,
-    currentOrder: String, currentFilter: String, breadcrumbs : List[models.data.Link],
-    inf : models.util.OperationResultInfo)
+@(
+    currentPage: Page[_ <: models.management.ManageableModel],
+    manager: models.management.Manager[_],
+    currentOrderBy: String,
+    currentOrder: String,
+    currentFilter: String,
+    breadcrumbs: List[models.data.Link],
+    inf: models.util.OperationResultInfo
+)
 
 @import views.html.management.list
 
 @main(EMessages.get("faq.list"), breadcrumbs){
 @commons.info(inf)
     <div class="row">
-        <div class="span8">
-            <h2> @EMessages.get("faq.list") </h2>
+        <div class="span12">
+            <h2>@EMessages.get("faq.list")</h2>
 
             @* If currentPage is null, do not display the list *@
 

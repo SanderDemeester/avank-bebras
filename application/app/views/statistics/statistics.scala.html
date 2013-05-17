@@ -1,0 +1,494 @@
+@(
+    populations:       List[models.statistics.populations.Population],
+    populationChooser: models.statistics.populations.PopulationChooser,
+    statistic:         models.statistics.statistics.Statistic,
+    breadcrumbs:       List[models.data.Link]
+)
+
+@import models.statistics.statistics.StatisticFactory
+@import models.EMessages
+
+@main(EMessages.get("statistics.title"), breadcrumbs) {
+<style type="text/css">
+    .cbox {
+        width: 5px;
+        height: 5px;
+        display: inline;
+    }
+</style>
+<form method="POST" action="/statistics" id="statistics-form">
+
+    <!-- =================================================================== -->
+    <!--  The accordion group for adding populations.                        -->
+    <!-- =================================================================== -->
+
+    <div class="statistics-group">
+        <div class="statistics-heading">
+            @EMessages.get("statistics.population_chooser")
+        </div>
+        <div class="statistics-body" id="populations-tab">
+            <div id="populations">
+                @for(i <- 0 to populations.size() - 1) { <!>
+                <div class="population form-inline">
+                    <!-- Hidden properties of the population. -->
+                    <input type="hidden" name="colours[@i]" class="colours" value="@populations(i).getColour()" />
+                    <input type="hidden" name="ids[@i]"     class="ids"     value="@populations(i).id()" />
+                    <input type="hidden" name="types[@i]"   class="types"   value="@populations(i).populationType().getName()" />
+
+                    <!-- Hidden data for dynamic adding. -->
+                    <input type="hidden" class="index" value="@i"/>
+
+                    <!-- The actual content -->
+                    <span class="minus">
+                        <a href="#" class="btn population-remove"><span class="icon-minus">-</span></a>
+                    </span>
+                    <span class="colour-picker">
+                        <a href="#" class="btn colorPicker" data-color-format="hex" data-color="@populations(i).getColour()">
+                            <span class="preview" style="background-color: @populations(i).getColour()"></span>
+                        </a>
+                    </span>
+                    <input type="text" disabled="disabled" value="@populations(i).describe()" />
+                </div>
+                }
+            </div>
+
+            <!-- Hidden data for dynamic adding. -->
+            <input type="hidden" id="population-count" value="@populations.size()" />
+
+            <!-- Functionality for adding populations. -->
+            <button type="button" class="btn" id="populations-popup">@EMessages.get("statistics.add_population")</button>
+        </div>
+    </div>
+
+
+    <!-- =================================================================== -->
+    <!--  The statistics group for choosing a statistic and filtering.       -->
+    <!-- =================================================================== -->
+
+    <div class="statistics-group">
+        <div class="statistics-heading">
+            @EMessages.get("statistics.statistics_chooser")
+        </div>
+        <div class="statistics-body" id="statistics-tab">
+            <div class="form-inline">
+                <select id="statistic-select" name="statistic"@if(statistic != null) { value="@statistic.getName()" }>
+                    @if(statistic != null) {
+                    <option value="@statistic.getName()">@EMessages.get(statistic.getName())</option>
+                    }
+                    @for(s <- StatisticFactory.instance().statistics()) { <!>
+                    @defining(StatisticFactory.instance().create(s)) { ss =>
+                    @if(statistic == null || s != statistic.getName()) {
+                    <option class="@if(ss.extraID() != null) { extraid @ss.extraID() }" value="@s">@EMessages.get(s)</option>
+                    }
+                    }
+                    }
+                </select>
+            </div>
+            <div id="statistic-filters">
+                @if(statistic != null) {
+                @for((filter, i) <- statistic.filters().view.zipWithIndex) { <!>
+                <div class="statistic-filter form-inline">
+                    <input type="hidden" class="index" value="@i" />
+                    <button type="button" class="btn filter-remove">
+                        <span class="icon-minus">-</span>
+                    </button>
+                    <select name="filters[@i]" value="@filter.getName()">
+                        <option value="@filter.getName()">@EMessages.get(filter.getName())</option>
+                        @for(s <- StatisticFactory.instance().statistics()) { <!>
+                        @if(s != filter.getName()) {
+                        <option value="@s">@EMessages.get(s)</option>
+                        }
+                        }
+                    </select>
+                    <span class="statistic-conditions">
+                        <input type="hidden" class="condition-count" value="@filter.conditions().size()" />
+                        @for((condition, j) <- filter.conditions().view.zipWithIndex) { <!>
+                        <div class="statistic-condition input-prepend form-inline">
+                            <span class="add-on condition-remove"><span class="icon-minus">-</span></span>
+                            <input class="span2" name="conditions[@i][@j]" type="text" value="@condition" />
+                        </div>
+                        }
+                        <button type="button" class="btn condition-add"><span class="icon-plus">+</span></button>
+                    </span>
+                </div>
+                }
+                }
+            </div>
+            <button type="button" class="btn" id="filter-add">@EMessages.get("statistics.add_filter")</button>
+        </div>
+    </div>
+
+
+    <!-- =================================================================== -->
+    <!--  The nice big generate button.                                      -->
+    <!-- =================================================================== -->
+
+    <div>
+        <button type="submit" class="btn btn-primary btn-large" id="show-chart">
+            @EMessages.get("statistics.generate")
+        </button>
+        <div id="spinner"><span></span></div>
+    </div>
+
+</form>
+
+<!-- Modal popup for Choosing populations. -->
+<div class="modal hide fade" id="population-chooser">
+    <div class="modal-body">
+        <ul class="nav nav-tabs">
+            @for(poptype <- populationChooser.types()) { <!>
+            <li><a href="#@poptype.getName()" data-toggle="tab">@EMessages.get(poptype.getMessage())</a></li>
+            }
+        </ul>
+        <div class="tab-content">
+            @for(poptype <- populationChooser.types()) { <!>
+            <div class="tab-pane" id="@poptype.getName()">
+                @for(pop <- populationChooser.populations(poptype)) { <!>
+                <label class="checkbox">
+                    <input type="checkbox" class="population-check"
+                    @if(pop.getColour() != null) { disabled="disabled" checked="checked" } />
+                    <input type="hidden" name="popid" value="@pop.id()" />
+                    @pop.describe()
+                </label>
+                }
+            </div>
+            }
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">@EMessages.get("forms.cancel")</a>
+        <a href="#" class="btn btn-primary" id="population-add" data-dismiss="modal">@EMessages.get("forms.add")</a>
+    </div>
+</div>
+
+<!-- Template for new filters. -->
+<div class="hide statistic-filter form-inline" id="statistic-filter-template">
+    <input type="hidden" class="index" value="@if(statistic == null) {0} else {@statistic.filters().size()}">
+    <button type="button" class="btn filter-remove">
+        <span class="icon-minus">-</span>
+    </button>
+    <select>
+        @for(s <- StatisticFactory.instance().statistics()) { <!>
+        <option value="@s">@EMessages.get(s)</option>
+        }
+    </select>
+    <span class="statistic-conditions">
+        <input type="hidden" class="condition-count" value="0" />
+        <button type="button" class="btn condition-add"><span class="icon-plus">+</span></button>
+    </span>
+</div>
+
+<!-- Model for the actual chart. -->
+<div class="modal hide fade" id="stat-chart">
+    <div class="modal-body">
+        <div id="container"></div>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn btn-primary" data-dismiss="modal">@EMessages.get("forms.cancel")</a>
+    </div>
+</div>
+
+<script type="text/javascript" src="/assets/javascripts/highcharts.js"></script>
+<script type="text/javascript" src="/assets/javascripts/colorpicker/bootstrap-colorpicker.js"></script>
+<link type="text/css" rel="stylesheet" href="/assets/stylesheets/colorpicker/colorpicker.css"/>
+<style type="text/css">
+    .preview {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+    }
+    .population {
+        margin-bottom: 2px;
+    }
+    .colorPicker {
+        height: 100%;
+    }
+
+    .description {
+        display: inline-block;
+        margin-bottom: 0px;
+        padding: 2px;
+    }
+
+    .minus, .colour-picker {
+        display: inline-block;
+    }
+
+    .statistic-conditions {
+        display: inline-block;
+        margin-top: 2px;
+        margin-bottom: 3px;
+    }
+
+    #container {
+        width: 600px;
+        height: 400px;
+    }
+
+    #stat-chart {
+        width: 650px;
+        margin-left: -325px;
+    }
+
+    .statistics-group {
+        border: 1px solid rgb(229, 229, 229);
+        border-radius: 4px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .statistics-heading {
+        font-size: 20px;
+        font-weight: 200;
+        color: rgb(119, 119, 119);
+        text-shadow: 0px 1px 0px rgb(255, 255, 255);
+        margin-bottom: 10px;
+    }
+
+    #show-chart {
+        display: inline;
+    }
+
+    #spinner {
+        vertical-align: middle;
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+    }
+
+    #spinner span {
+        position: relative;
+        top: 20px;
+        left: 20px;
+    }
+
+</style>
+<script type="text/javascript">
+
+    function onChangeColor(e) {
+        var color = e.color.toHex();
+        $(this).children(".preview").css("background-color", color);
+        $(this).parents(".population").children(".colours").val(color);
+    }
+
+    $(document).ready(function() {
+
+        /* For the colorpicker. */
+        window.prettyPrint && prettyPrint();
+        $(".colorPicker").colorpicker();
+        $(".colorPicker").colorpicker().on("changeColor", onChangeColor);
+
+        /* Dynamically mark the first tab as active. */
+        $(".nav-tabs").children().children().first().click();
+
+    });
+
+    $(document).on("click", "#populations-popup", function() {
+        $("#population-chooser").modal();
+    });
+
+    /* Add the selected populations on the right click. */
+    $(document).on("click", "#population-add", function() {
+        var populationCount = Number($("#population-count").val());
+        var defaultcolour = "#ff0000";
+        $(".population-check:checkbox:checked").each(function(i, e) {
+
+            if($(this).prop("disabled")) return;
+
+            var colour = $(document.createElement("input"));
+            colour.attr("type", "hidden");
+            colour.attr("name", "colours[" + populationCount + "]");
+            colour.addClass("colours")
+            colour.val(defaultcolour);
+
+            var id = $(document.createElement("input"));
+            id.attr("type", "hidden");
+            id.attr("name", "ids[" + populationCount + "]");
+            id.addClass("ids");
+            id.val($(this).parent().find("[name='popid']").val());
+
+            var type = $(document.createElement("input"));
+            type.attr("type", "hidden");
+            type.attr("name", "types[" + populationCount + "]");
+            type.addClass("types");
+            type.val($(this).parent().parent().attr("id"));
+
+            var index = $(document.createElement("input"));
+            index.attr("type", "hidden");
+            index.addClass("index");
+            index.val(populationCount);
+
+            var min = $(document.createElement("span"));
+            min.addClass("icon-minus");
+            min.text("-");
+
+            var mina = $(document.createElement("a"));
+            mina.addClass("btn population-remove");
+            mina.attr("href", "#");
+            mina.append(min);
+
+            var minbtn = $(document.createElement("span"));
+            minbtn.addClass("minus");
+            minbtn.append(mina);
+
+            var col = $(document.createElement("span"));
+            col.addClass("preview");
+            col.css("background-color", defaultcolour)
+
+            var btn = $(document.createElement("a"));
+            btn.attr("href", "#");
+            btn.addClass("btn colorPicker");
+            btn.attr("data-color-format", "hex");
+            btn.attr("data-color", defaultcolour);
+            btn.append(col);
+
+            var picker = $(document.createElement("span"));
+            picker.addClass("colour-picker");
+            picker.append(btn);
+
+            var desc = $(document.createElement("input"));
+            desc.attr("type", "text");
+            desc.addClass("description");
+            desc.prop("disabled", true);
+            desc.val($(this).parent().text().trim());
+
+            var row = $(document.createElement("div"));
+            row.addClass("population form-inline");
+            row.append(colour);
+            row.append(id);
+            row.append(type);
+            row.append(index);
+            row.append(minbtn);
+            row.append(' ');
+            row.append(picker);
+            row.append(' ');
+            row.append(desc);
+
+            $("#populations").append(row);
+            populationCount += 1;
+
+            // Init the new colorpickers.
+            btn.colorpicker();
+            btn.colorpicker().on("changeColor", onChangeColor);
+
+            // Remove the label so it cannot be selected again.
+            $(this).prop("disabled", true);
+
+        });
+
+        $("#population-count").val(populationCount);
+
+    });
+
+    /* Removing populations. */
+    $(document).on("click", ".population-remove", function() {
+        // Enabling the population in the chooser.
+        var poptype = $(this).parent().siblings("input.types").val();
+        var popid   = $(this).parent().siblings("input.ids").val();
+        var check   = $("#population-chooser #" + poptype + " input[name='popid'][value='" + popid + "']").siblings("[type='checkbox']")
+        check.prop("disabled", false);
+        check.prop("checked", false);
+
+        $(this).parent().parent().remove();
+    });
+
+    /* Add a new filter on click. */
+    $(document).on("click", "#filter-add", function() {
+        var copy = $("#statistic-filter-template").clone();
+        var index = Number(copy.find(".index").val());
+        copy.removeAttr("id");
+        copy.removeClass("hide");
+        copy.find("select").attr("name", "filters[" + index + "]");
+        $("#statistic-filters").append(copy);
+
+        // Update index
+        $("#statistic-filter-template .index").val(index + 1);
+    });
+
+    /* Remove a filter. */
+    $(document).on("click", ".filter-remove", function() {
+        $(this).parent().remove();
+    });
+
+    /* Add a new condition. */
+    $(document).on("click", ".condition-add", function() {
+        var i = Number($(this).parent().siblings(".index").first().val());
+        var j = Number($(this).siblings(".condition-count").first().val());
+
+        var icon = $(document.createElement("span"));
+        icon.addClass("icon-minus");
+        icon.text("-");
+
+        var addOn = $(document.createElement("span"));
+        addOn.addClass("add-on condition-remove");
+        addOn.append(icon);
+
+        var input = $(document.createElement("input"));
+        input.attr("type", "text");
+        input.attr("name", "conditions[" + i + "][" + j + "]");
+        input.addClass("span2");
+
+        var condition = $(document.createElement("div"));
+        condition.addClass("statistic-condition input-prepend form-inline")
+        condition.append(addOn);
+        condition.append(input);
+
+        $(this).before(condition);
+        $(this).before(' ');
+
+        $(this).siblings(".condition-count").first().val(j + 1);
+    });
+
+    $(document).on("click", ".condition-remove", function() {
+        $(this).parent().remove();
+    });
+
+    $(document).on("click", "#show-chart", function() {
+        var spinner = new Spinner(spinner_opts).spin();
+        $("#spinner span").append(spinner.el);
+        $.get("/statistics/json?" + $("#statistics-form").serialize(), function(data) {
+            spinner.spin(false);
+            if(data.tooltip != null && data.tooltip.formatter == "TOTAL_FORMATTER") {
+                data.tooltip.formatter = function() { return "" + this.y; }
+            }
+            $("#container").highcharts(data);
+            $("#stat-chart").modal();
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            alert(jqXHR);
+            alert(textStatus);
+            alert(errorThrown);
+            spinner.spin(false);
+            $("#show-chart").click();
+        });
+        return false;
+    });
+
+    $(document).on("change", "select", function() {
+        var selected = $(this).find("option:selected");
+        $("#extraid").remove();
+        if(selected.hasClass("extraid")) {
+            selected.removeClass("extraid");
+
+            var input = $(document.createElement("input"));
+            input.attr("type", "number");
+            input.attr("id", "extraid");
+
+            switch(selected.attr("class")) {
+                case "qid":
+                    input.attr("placeholder", "@EMessages.get("question.questionset.form.qid")");
+                    break;
+                case "qsid":
+                    input.attr("placeholder", "@EMessages.get("question.questionset.form.qsid")");
+                    break;
+            }
+            input.attr("name", "extraid");
+            $(this).after(input);
+
+            selected.addClass("extraid");
+        }
+    });
+
+    $("#statistic-select").change();
+
+</script>
+}

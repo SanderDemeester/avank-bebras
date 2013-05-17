@@ -4,15 +4,21 @@
 * author: Kevin Stobbelaar                 *
 *******************************************@
 
-@(breadcrumbs : List[models.data.Link], currentPage: Page[_ <: models.management.ManageableModel],
-QSmanager: models.management.Manager[_], currentOrderBy: String, currentOrder: String, currentFilter: String,
-modelForm: Form[_ <: models.management.ManageableModel], Cmanager: models.management.Manager[_],
-contest: models.competition.Competition)
+@(
+    breadcrumbs : List[models.data.Link],
+    currentPage: Page[_ <: models.management.ManageableModel],
+    QSmanager: models.management.Manager[_],
+    currentOrderBy: String,
+    currentOrder: String,
+    currentFilter: String,
+    modelForm: Form[_ <: models.management.ManageableModel],
+    Cmanager: models.management.Manager[_],
+    contest: models.competition.Competition
+)
 
 @import models.EMessages
 @import views.html.management.list
-@import helper._
-@import helper.twitterBootstrap._
+@import helper.form
 @import views.html.commons.showflash
 
 
@@ -25,12 +31,13 @@ contest: models.competition.Competition)
         </div>
 
         <div class="span6 pull-right">
-            <p class="text-info lead pull-right"> @EMessages.get("competition.view.status"): @contest.getCompetitionState()
-            @if(contest.getCompetitionState() == models.competition.CompetitionState.RUNNING){
+            <p class="text-info lead pull-right">
+                @EMessages.get("competition.view.status"): @contest.getCompetitionState()
+                @if(contest.getCompetitionState() == models.competition.CompetitionState.RUNNING){
                 <a href="@controllers.competition.routes.TakeCompetitionController.overview(contest.getID())" class="btn btn-large btn-primary">
                     @EMessages.get("competition.overview.button")
                 </a>
-            }
+                }
             </p>
         </div>
 
@@ -41,7 +48,9 @@ contest: models.competition.Competition)
         <div class="span4">
 
             <div>
-                <p class="lead"> @EMessages.get("competition.view.edit") </p>
+                <p class="lead">
+                    @EMessages.get("competition.view.edit")
+                </p>
             </div>
 
             <div>
@@ -56,13 +65,13 @@ contest: models.competition.Competition)
                     @contestFormFields(modelForm)
 
                     <div>
-                        <p> @EMessages.get("competition.info.grades") </p>
+                        <p>@EMessages.get("competition.info.grades")</p>
                         <ul>
                             @for(grade <- contest.getAvailableGrades()){
                             <li>@grade.getName()</li>
                             }
                         </ul>
-                        <p> @EMessages.get("competition.info.languages") </p>
+                        <p>@EMessages.get("competition.info.languages")</p>
                         <ul>
                             @for(language <- contest.getAvailableLanguages()){
                             <li>@language.getName()</li>
@@ -80,7 +89,7 @@ contest: models.competition.Competition)
 
         <div class="span8">
             <div>
-                <p class="lead"> @EMessages.get("competition.view.qs") </p>
+                <p class="lead">@EMessages.get("competition.view.qs")</p>
             </div>
 
             <div>

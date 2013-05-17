@@ -1,74 +1,90 @@
-@import commons._
-@import models.EMessages.get
-@import helper._
-@import helper.twitterBootstrap._
+
+@import models.EMessages
 @import views.html.commons.showflash
 
 @showflash()
 @helper.form(action=controllers.user.routes.PersonalPageController.changeInformation) {
     <legend>@EMessages.get("user.pie.editintro")</legend>
-    @EMessages.get("user.pie.intro")<br><br>
-    <strong>@EMessages.get("user.pip.fulln")</strong><br>
+    @EMessages.get("user.pie.intro")
+    <br />
+    <br />
+    <strong>@EMessages.get("user.pip.fulln")</strong>
+    <br />
     <div class="input-prepend">
         <span class="add-on"><i class="icon-user"></i></span>
-        <input class="span12" type="text" id="fname" name="fname" value="@models.user.AuthenticationManager.getInstance().getUser().data.name">
-    </div><br><br>
+        <input class="span12" type="text" id="fname" name="fname" value="@models.user.AuthenticationManager.getInstance().getUser().data.name" />
+    </div>
+    <br />
+    <br />
 
-    <strong>@EMessages.get("user.pip.email")</strong><br>
+    <strong>@EMessages.get("user.pip.email")</strong>
+    <br />
     <div class="input-prepend">
         <span class="add-on"><i class="icon-envelope"></i></span>
-        <input class="span12" type="text" id="email" name="email" value="@models.user.AuthenticationManager.getInstance().getUser().data.email">
-    </div><br><br>
+        <input class="span12" type="text" id="email" name="email" value="@models.user.AuthenticationManager.getInstance().getUser().data.email" />
+    </div>
+    <br />
+    <br />
 
-    <strong>@EMessages.get("user.pip.birth")</strong><br>
-	<div class="input-prepend">
-       <span class="add-on"><i class="icon-calendar"></i> </span>
-       <input type="text" class="input-xlarge span11" id="bday" name="bday"
-           value="@controllers.user.PersonalPageController.dateToString(models.user.AuthenticationManager.getInstance().getUser().data.birthdate)">
-	</div><br><br>
-           
-    <strong>@EMessages.get("user.pip.gender")</strong><br>
+    <strong>@EMessages.get("user.pip.birth")</strong>
+    <br />
     <div class="input-prepend">
-       <span class="add-on"><i class="icon-user"></i></span>
-       <select name="gender" id="gender" class="span12"
-           value="@models.user.AuthenticationManager.getInstance().getUser().data.gender">
-           <option value="@models.user.AuthenticationManager.getInstance().getUser().data.gender.toString()">
-               @EMessages.get("user." + models.user.AuthenticationManager.getInstance().getUser().data.gender.toString())
-           </option>
-           @for(gender <- models.user.Gender.values().toList) {
-               @if(gender.toString() != models.user.AuthenticationManager.getInstance().getUser().data.gender.toString()) {
-                   <option value="@gender.toString()">
-                       @EMessages.get("user." + gender.toString())
-                   </option>
-               }
-          }
-      </select>
-    </div><br><br>
+       <span class="add-on"><i class="icon-calendar"></i></span>
+       <input type="text" class="input-xlarge span11" id="bday" name="bday"
+           value="@controllers.user.PersonalPageController.dateToString(models.user.AuthenticationManager.getInstance().getUser().data.birthdate)" />
+    </div>
+    <br />
+    <br />
 
-	<strong>@EMessages.get("user.pip.preflan")</strong><br>
+    <strong>@EMessages.get("user.pip.gender")</strong>
+    <br />
+    <div class="input-prepend">
+        <span class="add-on"><i class="icon-user"></i></span>
+        <select name="gender" id="gender" class="span12"
+            value="@models.user.AuthenticationManager.getInstance().getUser().data.gender">
+            <option value="@models.user.AuthenticationManager.getInstance().getUser().data.gender.toString()">
+            @EMessages.get("user." + models.user.AuthenticationManager.getInstance().getUser().data.gender.toString())
+            </option>
+            @for(gender <- models.user.Gender.values().toList) {
+            @if(gender.toString() != models.user.AuthenticationManager.getInstance().getUser().data.gender.toString()) {
+            <option value="@gender.toString()">
+            @EMessages.get("user." + gender.toString())
+            </option>
+            }
+            }
+        </select>
+    </div>
+    <br />
+    <br />
+
+    <strong>@EMessages.get("user.pip.preflan")</strong>
+    <br />
     <div class="input-prepend">
         <span class="add-on"><i class="icon-globe"></i></span>
-            <select name="prefLanguage" id="prefLanguage" class="span12"
-                value="@models.user.AuthenticationManager.getInstance().getUser().data.preflanguage">
+        <select name="prefLanguage" id="prefLanguage" class="span12"
+            value="@models.user.AuthenticationManager.getInstance().getUser().data.preflanguage">
             <option value="@models.user.AuthenticationManager.getInstance().getUser().data.preflanguage.toString()">
                 @models.data.Language.getLanguage(models.user.AuthenticationManager.getInstance().getUser().data.preflanguage).getName()
             </option>
             @for(language <- models.data.Language.listLanguages().toList) {
-                @if(language.getCode() != models.user.AuthenticationManager.getInstance().getUser().data.preflanguage) {                     
-                    <option value="@language.getCode()">
-                        @language.getName()
-                    </option>
-                }
+            @if(language.getCode() != models.user.AuthenticationManager.getInstance().getUser().data.preflanguage) {
+            <option value="@language.getCode()">
+                @language.getName()
+            </option>
             }
-            </select>
-    </div><br><br>
-        					
+            }
+        </select>
+    </div>
+    <br />
+    <br />
+
     <div class="control-group row-fluid">
-	    <p class="text-right">
-  		    <button type="submit" class="btn btn-primary" name="btn" id="btn">@EMessages.get("forms.submit")</button>
-  			<a href="/settings">
-  			    <button type="button" class="btn">@EMessages.get("forms.cancel")</button>
-  			</a>
-		</p>
-	</div>
-}						
+        <p class="text-right">
+              <button type="submit" class="btn btn-primary" name="btn" id="btn">@EMessages.get("forms.submit")</button>
+              <a href="/settings">
+                  <button type="button" class="btn">@EMessages.get("forms.cancel")</button>
+              </a>
+        </p>
+    </div>
+}
+

@@ -4,14 +4,26 @@
 * author: Kevin Stobbelaar                 *
 *******************************************@
 
-@(breadcrumbs : List[models.data.Link], qsid: Int, currentPage: Page[_ <: models.management.ManageableModel],
-qsqmanager: models.management.Manager[_], currentOrderBy: String, currentOrder: String, currentFilter: String,
-qsForm: Form[_ <: models.management.ManageableModel], qsmanager: models.management.Manager[_], grade: String)
+@(
+    breadcrumbs: List[models.data.Link],
+    qsid: Int,
+    currentPage: Page[_ <: models.management.ManageableModel],
+    qsqmanager: models.management.Manager[_],
+    currentOrderBy: String,
+    currentOrder: String,
+    currentFilter: String,
+    qsForm: Form[_ <: models.management.ManageableModel],
+    qsmanager: models.management.Manager[_],
+    grade: String
+)
 
 @import models.EMessages
 @import views.html.management.list
-@import helper._
-@import helper.twitterBootstrap._
+@import helper.form
+@import helper.inputText
+@import helper.select
+@import helper.options
+@import helper.checkbox
 @import views.html.commons.showflash
 
 @main(EMessages.get("question.questionset.overview"), breadcrumbs) {
@@ -21,14 +33,14 @@ qsForm: Form[_ <: models.management.ManageableModel], qsmanager: models.manageme
         <div class="span4">
 
             <div>
-                <p class="lead"> @EMessages.get("question.questionset.overview.basic") </p>
+                <p class="lead">@EMessages.get("question.questionset.overview.basic")</p>
             </div>
 
             <div>
 
                 @if(flash.containsKey("questionset-error")) {
                 <div class="alert alert-error">
-                    <strong>Error!</strong> @flash.get("questionset-error")
+                    <strong>@EMessages.get("info.error")!</strong> @flash.get("questionset-error")
                 </div>
                 }
 
@@ -56,7 +68,7 @@ qsForm: Form[_ <: models.management.ManageableModel], qsmanager: models.manageme
 
         <div class="span8">
             <div>
-                <p class="lead"> @EMessages.get("question.questionset.overview.questions") </p>
+                <p class="lead">@EMessages.get("question.questionset.overview.questions")</p>
             </div>
 
             @list(currentPage, qsqmanager, currentOrderBy, currentOrder, currentFilter)

@@ -21,8 +21,8 @@ public class Role implements Comparable<Role>{
     \* ====================================================================== */
 
     // Mimicing
-    public static Role MIMIC = new Role("Mimick user",
-    		new Link("links.mimic","/mimic")
+    public static Role MIMIC = new Role("links.mimic",
+        new Link("links.mimic","/mimic")
     );
 
     // Anon
@@ -51,7 +51,9 @@ public class Role implements Comparable<Role>{
     // Author
     public static Role QUESTIONEDITOR = new Role(
         "links.questioneditor.title",
-        new Link("links.questioneditor.open", "/questioneditor")
+        new Link("links.questioneditor.open", "/questioneditor"),
+        new Link(EMessages.get("question.editor.index.create.main", EMessages.get("question.type.MULTIPLE_CHOICE")), "/questioneditor/create/MULTIPLE_CHOICE"),
+        new Link(EMessages.get("question.editor.index.create.main", EMessages.get("question.type.REGEX")), "/questioneditor/create/REGEX")
     );
 
     //ADMIN
@@ -61,7 +63,7 @@ public class Role implements Comparable<Role>{
         new Link("faq.managefaq", "/manageFAQ"),
         new Link("faq.addfaq", "/manageFAQ/new")
     );
-    
+
     public static Role DATAMANAGER = new Role(
         "links.datamanager.title",
         new Link("links.datamanager.links", "/manage/links/show"),
@@ -73,16 +75,16 @@ public class Role implements Comparable<Role>{
         "links.manageusers.title",
         new Link("links.manageusers.users","/manage/users")
     );
-    
+
     //TEACHER
     public static Role MANAGESCHOOLS = new Role(
         "schools.title",
-	    new Link("schools.title", "/schools")
+        new Link("schools.title", "/schools")
     );
 
     public static Role MANAGECLASSES = new Role(
-	    "classes.list",
-	    new Link("classes.list", "/classes")
+        "classes.list",
+        new Link("classes.list", "/classes")
     );
 
     // Contest management
@@ -98,17 +100,29 @@ public class Role implements Comparable<Role>{
         new Link("links.contestmanager.overview", "/contests")
     );
 
+    /* Statistic Roles */
+    public static Role VIEWSTATS = new Role(
+        "statistics.title",
+        new Link("links.statistics", "/statistics")
+    );
+
     // Contest taking
     public static Role TAKINGCONTESTS = new Role(
         "links.contesttaking.title",
         new Link("links.contesttaking.overview", "/available-contests"),
         new Link("links.contesttaking.history", "/available-contests/history")
     );
-    
+
     //Classes view for pupils
     public static Role PUPILCLASSVIEW = new Role(
-    		"classes.pupil.classes.list",
-    		new Link("classes.pupil.classes.list","/pclasses/view")
+        "classes.pupil.classes.list",
+        new Link("classes.pupil.classes.list","/pclasses/view")
+    );
+
+    //Upgrade to teacher request
+    public static Role UPGRADETOTEACHER = new Role(
+            "contact.upgraderequest",
+            new Link("contact.upgraderequest","/upgrade")
     );
 
     /* ====================================================================== *\

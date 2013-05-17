@@ -84,22 +84,24 @@ $("#submitAnswersConfirm").live("click", function() {
 		
 		$("#submitting").on("shown", function() {
 			// Try to send to server
+			var request;
 			try {
-				var request = $.ajax({
+				request = $.ajax({
 					type: "GET",
 					url: "../../available-contests/forceSubmit",
 					data: { json: $.base64.decode($("#answerscode").val()) },
 					timeout: 5000,
 				});
 			} catch (e) {
-				$("#alert").show('fast').attr("class", "alert alert-error").text(messages.submit.invalid);
+				$("#alert").show('fast').attr("class", "alert alert-error").text(messages.submitinvalid);
 				window.setTimeout(function() { $("#alert").hide('fast'); }, 5000);
 				$("#submitting").modal("hide");
 			}
 			$("#answerscode").val("");
 			
 			request.done(function(msg) {
-				$("#alert").show('fast').attr("class", "alert alert-success").text(messages.submit.invalid);
+				alert(messages.submitok);
+				$("#alert").show('fast').attr("class", "alert alert-success").text(messages.submitok);
 				window.setTimeout(function() { $("#alert").hide('fast'); }, 5000);
 			});	
 			

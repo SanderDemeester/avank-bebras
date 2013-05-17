@@ -13,14 +13,14 @@ import com.avaje.ebean.Page;
  *
  */
 public class SubmitsPage implements Page<Submit>{
-    
+
     private int page = 0;
     private int resultsPerPage = Manager.DEFAULTPAGESIZE;
-    
+
     private String filter;
-    
+
     private List<Submit> list;
-    
+
     /**
      * Create a new submissions page
      * @param page the current page
@@ -30,7 +30,7 @@ public class SubmitsPage implements Page<Submit>{
         this.page = page;
         this.list = Submit.findAll(filter);
     }
-    
+
     /**
      * The column headers for the list table
      * @return headers
@@ -43,7 +43,7 @@ public class SubmitsPage implements Page<Submit>{
     public String getDisplayXtoYofZ(String arg0, String arg1) {
         return (page * resultsPerPage + 1) + arg0 + toIndex() + arg1 + getTotalRowCount();
     }
-    
+
     /**
      * The full list of submissions
      * @return list of all submissions
@@ -51,7 +51,7 @@ public class SubmitsPage implements Page<Submit>{
     public List<Submit> getTotalList() {
         return list;
     }
-    
+
     private int toIndex() {
         return Math.min(getTotalList().size(), (page + 1) * resultsPerPage);
     }

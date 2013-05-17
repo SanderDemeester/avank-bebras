@@ -9,6 +9,7 @@ import models.EMessages;
 import models.competition.Competition;
 import models.competition.CompetitionNotStartedException;
 import models.competition.CompetitionType;
+import models.competition.CompetitionUserState;
 import models.competition.CompetitionUserStateManager;
 import models.competition.TakeCompetitionManager;
 import models.data.Grade;
@@ -59,13 +60,33 @@ public class TakeCompetitionController extends EController {
     private static boolean userType(UserType type) {
         return AuthenticationManager.getInstance().getUser().getType().equals(type);
     }
-    
+
     /**
      * Check if the current user is authorized for the competition management
      * @return is the user authorized
      */
     private static boolean isAuthorized() {
         return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGECONTESTS);
+    }
+
+    /**
+     * Returns a list with running competition ids
+     * @return running competition ids
+     */
+    private static List<String> getRunningCompetitions(){
+        List<CompetitionModel> competitionModels = Ebean.find(CompetitionModel.class)
+                    .where()
+                    .lt("starttime", new Date())
+                    .gt("endtime", new Date())
+                    .eq("active", true)
+                    .findList();
+        List<String> ids = new ArrayList<String>();
+        for (CompetitionModel competitionModel : competitionModels){
+            if (checkSupportedLanguages(competitionModel)){
+                ids.add(competitionModel.id);
+            }
+        }
+        return ids;
     }
 
     /**
@@ -104,12 +125,18 @@ public class TakeCompetitionController extends EController {
         TakeCompetitionManager competitionManager = getManager(orderBy, order, filter);
         if (userType(UserType.ANON)){
             // anonymous user can only see "running" anonymous competitions
+            List<String> competitionIds = new ArrayList<String>();
+            for (CompetitionModel competitionModel : Ebean.find(CompetitionModel.class).findList()){
+                if (checkSupportedLanguages(competitionModel)){
+                    competitionIds.add(competitionModel.id);
+                }
+            }
+            List<String> ids = getRunningCompetitions();
             competitionManager.setExpressionList(competitionManager.getFinder()
                     .where()
                     .eq("type", CompetitionType.ANONYMOUS.name())
-                    .eq("active", true)
-                    .lt("starttime", new Date())
-                    .gt("endtime", new Date())
+                    .in("id", competitionIds)
+                    .in("id", ids)
             );
             Page<CompetitionModel> managerPage = competitionManager.page(page);
             return ok(views.html.competition.contests.render(defaultBreadcrumbs(), managerPage, competitionManager, order, orderBy, filter));
@@ -121,8 +148,12 @@ public class TakeCompetitionController extends EController {
             List<ContestClass> contestClasses = Ebean.find(ContestClass.class).where().eq("classid", classGroup).findList();
             List<String> competitionIds = new ArrayList<String>();
             for (ContestClass contestClass : contestClasses){
-                competitionIds.add(contestClass.contestid.id);
+                // check if this contest contains a question set that supports the current user's language
+                if (checkSupportedLanguages(contestClass.contestid)){
+                    competitionIds.add(contestClass.contestid.id);
+                }
             }
+            List<String> ids = getRunningCompetitions();
             competitionManager.setExpressionList(competitionManager.getFinder()
                     .where()
                     .or(
@@ -134,9 +165,7 @@ public class TakeCompetitionController extends EController {
                                     Expr.eq("type", CompetitionType.RESTRICTED.name()),
                                     Expr.in("id", competitionIds)
                                     ))
-                    .eq("active", true)
-                    .lt("starttime", new Date())
-                    .gt("endtime", new Date())
+                    .in("id", ids)
             );
             Page<CompetitionModel> managerPage = competitionManager.page(page);
             return ok(views.html.competition.contests.render(defaultBreadcrumbs(), managerPage, competitionManager, order, orderBy, filter));
@@ -167,14 +196,14 @@ public class TakeCompetitionController extends EController {
      */
     public static Result takeCompetition(String id){
         String stateID;
-        
+
         CompetitionModel competitionModel = Ebean.find(CompetitionModel.class).where().idEq(id).findUnique();
         Competition competition = new Competition(competitionModel);
         User user = AuthenticationManager.getInstance().getUser();
-        
+
         // setting the correct grade
         Grade grade;
-        if (user.data != null && user.data.classgroup != null){
+        if (user.data != null && user.data.classgroup != null && competitionModel.type == CompetitionType.RESTRICTED){
             ClassGroup classGroup = Ebean.find(ClassGroup.class).where().idEq(user.data.classgroup).findUnique();
             grade = Ebean.find(Grade.class).where().ieq("name", classGroup.level).findUnique();
         }
@@ -185,10 +214,17 @@ public class TakeCompetitionController extends EController {
 
         QuestionSet questionSet = competition.getQuestionSet(grade);
 
+        if (questionSet == null){
+            // can happen when the competition does not contain a question set with the user's grade
+            return ok(views.html.commons.error.render(defaultBreadcrumbs(),
+                    EMessages.get("competition.questionset.title"), EMessages.get("competition.questionset.info"))
+            );
+        }
+
         if (userType(UserType.ANON)){
             CompetitionUserStateManager.getInstance().startCompetition(competition);
         }
-        
+
         // Register the user in the competition
         try {
             if(user.isAnon()) {
@@ -211,10 +247,10 @@ public class TakeCompetitionController extends EController {
                     EMessages.get("competition.started.title"), EMessages.get("competition.started.info"))
             );
         }
-        
+
         return ok(views.html.competition.run.questionSet.render(stateID, questionSet, null, defaultBreadcrumbs()));
     }
-    
+
     /**
      * Submit competition answers
      * @param json answers in json format
@@ -225,19 +261,22 @@ public class TakeCompetitionController extends EController {
         try {
             QuestionFeedback feedback = QuestionFeedbackGenerator.generateFromJson(
                     input, Language.getLanguage(EMessages.getLang()));
-            
+
             // Save the results
+            CompetitionUserState state = null;
             if(AuthenticationManager.getInstance().getUser().isAnon()) {
-                CompetitionUserStateManager.getInstance().getState(
+                state = CompetitionUserStateManager.getInstance().getState(
                         feedback.getCompetitionID(),
                         AuthenticationManager.getInstance().getAuthCookie()
-                    ).setResults(feedback);
+                    );
             } else {
-                CompetitionUserStateManager.getInstance().getState(
+                state = CompetitionUserStateManager.getInstance().getState(
                         feedback.getCompetitionID(),
                         AuthenticationManager.getInstance().getUser().getID()
-                    ).setResults(feedback);
+                    );
             }
+            if(state == null) return badRequest(EMessages.get("competition.run.submit.invalidUserSelf"));
+            state.setResults(feedback);
         } catch (CompetitionNotStartedException e) {
             return badRequest(EMessages.get("competition.run.submit.notStarted"));
         } catch (UnavailableLanguageException
@@ -245,10 +284,10 @@ public class TakeCompetitionController extends EController {
                 | AnswerGeneratorException e) {
             return badRequest(e.getMessage());
         }
-        
+
         return ok(EMessages.get("competition.run.submit.ok"));
     }
-    
+
     /**
      * Submit competition answers for pupils that lost their connection
      * @param json answers in json format
@@ -260,7 +299,7 @@ public class TakeCompetitionController extends EController {
             try {
                 new org.codehaus.jackson.JsonFactory().createJsonParser(json).nextToken();
             }
-            catch(NullPointerException | IOException ex) { 
+            catch(NullPointerException | IOException ex) {
                 return badRequest(EMessages.get("competition.run.submit.invalid"));
             }
             if(json == null || json.equals(""))
@@ -268,23 +307,24 @@ public class TakeCompetitionController extends EController {
             try {
                 JsonNode input = Json.parse(json);
                 QuestionFeedback feedback = QuestionFeedbackGenerator.generateFromJson(
-                        input, Language.getLanguage(EMessages.getLang()));
+                        input);
                 // Save the results
-                CompetitionUserStateManager.getInstance().getState(
+                CompetitionUserState state = null;
+                state = CompetitionUserStateManager.getInstance().getState(
                         feedback.getCompetitionID(),
                         feedback.getToken()
-                    ).setResults(feedback);
-            } catch (UnavailableLanguageException
-                    | UnknownLanguageCodeException
-                    | AnswerGeneratorException
+                    );
+                if(state == null) return badRequest(EMessages.get("competition.run.submit.invalidUser"));
+                state.setResults(feedback);
+            } catch (AnswerGeneratorException
                     | CompetitionNotStartedException e) {
                 return badRequest(e.getMessage());
             }
-            
+
             return ok(EMessages.get("competition.run.submit.ok"));
         } else return forbidden();
     }
-    
+
     /**
      * Submit competition answers and show feedback
      * @param json answers in json format
@@ -301,12 +341,12 @@ public class TakeCompetitionController extends EController {
                 | AnswerGeneratorException e) {
             return badRequest(e.getMessage());
         }
-        
+
         QuestionSetModel qsModel = Ebean.find(QuestionSetModel.class).where().idEq(feedback.getQuestionSetID()).findUnique();
         QuestionSet questionSet = new QuestionSet(qsModel);
         return ok(views.html.competition.run.questionSet.render("", questionSet, feedback, defaultBreadcrumbs()));
     }
-    
+
     /**
      * Live competition overview page
      * @param id competition id
@@ -317,16 +357,16 @@ public class TakeCompetitionController extends EController {
         List<Link> errorBreadcrumbs = new ArrayList<Link>();
         errorBreadcrumbs.add(new Link("Home", "/"));
         errorBreadcrumbs.add(new Link("Error",""));
-        
-        if(isAuthorized()) {        
+
+        if(isAuthorized()) {
             CompetitionModel competitionModel = Ebean.find(CompetitionModel.class).where().idEq(id).findUnique();
             if(competitionModel == null) return internalServerError(views.html.commons.error.render(errorBreadcrumbs, EMessages.get("error.title"), EMessages.get("error.text")));
             Competition competition = new Competition(competitionModel);
-            
+
             return ok(views.html.competition.run.overview.render(competition, defaultBreadcrumbs()));
         } else return ok(noaccess.render(errorBreadcrumbs));
     }
-    
+
     /**
      * Live competition overview data
      * @param id competition id
@@ -337,7 +377,7 @@ public class TakeCompetitionController extends EController {
         List<Link> errorBreadcrumbs = new ArrayList<Link>();
         errorBreadcrumbs.add(new Link("Home", "/"));
         errorBreadcrumbs.add(new Link("Error",""));
-        
+
         if(isAuthorized()) {
             try {
                 ObjectNode result = Json.newObject();
@@ -348,9 +388,9 @@ public class TakeCompetitionController extends EController {
                 return badRequest(e.getMessage());
             }
         } else return ok(noaccess.render(errorBreadcrumbs));
-        
+
     }
-    
+
     /**
      * Force a competition to finish before the expiration date
      * @param id competitionid
@@ -367,4 +407,71 @@ public class TakeCompetitionController extends EController {
         } else return forbidden();
     }
 
+    /**
+     * Returns a snippet of available contests.
+     * @return available contests snippet.
+     */
+    public static List<CompetitionModel> snippet(){
+        UserModel user = AuthenticationManager.getInstance().getUser().getData();
+        ClassGroup classGroup = Ebean.find(ClassGroup.class).where().idEq(user.classgroup).findUnique();
+        List<ContestClass> contestClasses = Ebean.find(ContestClass.class).where().eq("classid", classGroup).findList();
+        List<String> competitionIds = new ArrayList<String>();
+        for (ContestClass contestClass : contestClasses){
+            if (checkSupportedLanguages(contestClass.contestid)){
+                competitionIds.add(contestClass.contestid.id);
+            }
+        }
+        TakeCompetitionManager competitionManager = getManager("name", "asc", "");
+        List<String> ids = getRunningCompetitions();
+        List<CompetitionModel> competitionModels = competitionManager.getFinder()
+                .where()
+                .or(
+                        Expr.or(
+                                Expr.eq("type", CompetitionType.ANONYMOUS.name()),
+                                Expr.eq("type", CompetitionType.UNRESTRICTED.name())
+                        ),
+                        Expr.and(
+                                Expr.eq("type", CompetitionType.RESTRICTED.name()),
+                                Expr.in("id", competitionIds)
+                        ))
+                .in("id", ids)
+                .findList()
+        ;
+
+        if (competitionModels.size() > 5){
+            competitionModels = competitionModels.subList(0,4);
+        }
+        return competitionModels;
+    }
+
+    /**
+     * Returns a snippet of available anonymous contests.
+     * @return
+     */
+    public static List<CompetitionModel> anonymousSnippet(){
+        TakeCompetitionManager competitionManager = getManager("name", "asc", "");
+        List<String> ids = getRunningCompetitions();
+        return competitionManager.getFinder()
+                .where()
+                .eq("type", CompetitionType.ANONYMOUS.name())
+                .in("id", ids)
+                .findList();
+
+    }
+
+    /**
+     * Checks whether the given competitionModel supports the user's language.
+     * @param competitionModel
+     * @return true if the competition does support the user's language, else false
+     */
+    private static boolean checkSupportedLanguages(CompetitionModel competitionModel){
+        Language language;
+        try {
+            language = Language.getLanguage(EMessages.getLang());
+        } catch (UnknownLanguageCodeException | UnavailableLanguageException ex){
+            return false;
+        }
+        Competition competition = new Competition(competitionModel);
+        return competition.getAvailableLanguages().contains(language);
+    }
 }

@@ -3,7 +3,11 @@ package controllers.question;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.avaje.ebean.Ebean;
+import controllers.EController;
+import controllers.competition.CompetitionController;
 import models.EMessages;
+import models.competition.Competition;
 import models.data.Difficulty;
 import models.data.Grade;
 import models.data.Link;
@@ -96,8 +100,6 @@ public class QuestionSetController extends EController {
             flash("questionset-error", EMessages.get("question.questionset.doublegrade"));
             return badRequest(views.html.question.questionset.create.render(form, contestid, breadcrumbs, true));
         }
-        // TODO check of deze question set actief gezet mag worden !
-        // TODO opvangen dat wanneer er op Cancel wordt gedrukt, de contest terug verwijderd wordt uit de database!
         questionSetModel.contest = Ebean.find(CompetitionModel.class).where().ieq("id", contestid).findUnique();
         questionSetModel.save();
         return redirect(controllers.question.routes.QuestionSetController.list(questionSetModel.id, 0, "", "", ""));
@@ -247,6 +249,22 @@ public class QuestionSetController extends EController {
             arrayNode.add(questionModels.get(i).getID());
         }
         return ok(objectNode);
+    }
+
+    /**
+     * Called when the user presses cancel when creating a new question set.
+     * This must check whether the linked contest has still question sets, if not the contest has to be removed
+     * from the database.
+     * @param contestid corresponding contest id
+     * @return competitions index page
+     */
+    public static Result cancel(String contestid){
+        CompetitionModel competitionModel = Ebean.find(CompetitionModel.class).where().idEq(contestid).findUnique();
+        Competition competition = new Competition(competitionModel);
+        if (competition.getQuestionSetCount() == 0){
+            Ebean.delete(competitionModel);
+        }
+        return CompetitionController.index(0, "", "", "");
     }
 
 

@@ -49,7 +49,7 @@ public class FAQManager extends Manager<FAQModel> {
 
     @Override
     public play.api.mvc.Call getSaveRoute() {
-    	//Using non-default form, so not necessary
+        //Using non-default form, so not necessary
         return null;
     }
 
@@ -63,9 +63,5 @@ public class FAQManager extends Manager<FAQModel> {
     public String getMessagesPrefix() {
         return "faq";
     }
-   
-    
-    
-    
 
 }

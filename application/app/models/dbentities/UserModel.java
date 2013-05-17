@@ -1,5 +1,6 @@
 package models.dbentities;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -58,7 +59,7 @@ public class UserModel extends ManageableModel implements Listable{
     @Enumerated(EnumType.STRING)
     @ManyToOne
     @NotNull
-	@JoinColumn(name="type")
+    @JoinColumn(name="type")
     public UserType type;
     
     /**
@@ -104,9 +105,9 @@ public class UserModel extends ManageableModel implements Listable{
      */
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     @Editable
-	@ManyToOne
-	@NotNull
-	@JoinColumn(name="bday")
+    @ManyToOne
+    @NotNull
+    @JoinColumn(name="bday")
     public Date birthdate;
     
     /**
@@ -126,21 +127,21 @@ public class UserModel extends ManageableModel implements Listable{
     @NotNull
     @JoinColumn(name="language")
     public String preflanguage;
-    
+
     /**
      * Wrapper for preflanguage
      */
     @Editable
     @Transient
     public Language wrap_language;
-    
+
     /**
      * Comment about the user
      */
     @Editable
     @JoinColumn(name="comment")
     public String comment;
-    
+
     /**
      * Date until when the user is blocked
      */
@@ -178,14 +179,14 @@ public class UserModel extends ManageableModel implements Listable{
      */
     public String reset_token;
 
+    /**
+     * ID of the class the user is currently in as pupil
+     */
     @Override
 	public String getID() {
 		return id;
 	}    
     
-    /**
-     * ID of the class the user is currently in as pupil
-     */
     @Column(name="class")
     public Integer classgroup;
 
@@ -219,17 +220,17 @@ public class UserModel extends ManageableModel implements Listable{
         this.preflanguage = preflanguage;
         this.blockeduntil = null;
         EMessages.setLang(preflanguage);
-      
+
     }
 
     /**
      * Constructor
      */
     public UserModel() {
-		//empty constructor
-	}
+        //empty constructor
+    }
 
-	/**
+    /**
      * A finder for User.
      * We will use this finder to execute specific sql query's.
      */
@@ -273,13 +274,13 @@ public class UserModel extends ManageableModel implements Listable{
 		return DateFormatter.formatDate(d);
 	}
 
-        /**
-	 * 
-	 * @return whether the user is currently blocked
-	 */
-	public boolean isCurrentlyBlocked(){
-		if(this.blockeduntil==null) return false;
-		Date today = Calendar.getInstance().getTime();
-		return !today.before(this.blockeduntil);
-	}
+    /**
+     *
+     * @return whether the user is currently blocked
+     */
+    public boolean isCurrentlyBlocked(){
+        if(this.blockeduntil==null) return false;
+        Date today = Calendar.getInstance().getTime();
+        return !today.after(this.blockeduntil);
+    }
 }

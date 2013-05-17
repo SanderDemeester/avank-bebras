@@ -59,7 +59,7 @@ public class CompetitionUserState {
         this.feedback = feedback;
         this.endTime = new Date();
     }
-    
+
     /**
      * Updates the current competition user state by setting the json encoded input
      * @param json answers by the user encoded in json
@@ -71,7 +71,7 @@ public class CompetitionUserState {
         QuestionFeedback feedback = QuestionFeedbackGenerator.generateFromJson(input, language);
         setResults(feedback);
     }
-    
+
     /**
      * Returns the feedback of this state
      * @return the feedback of the answers, will return null if the setResults(...) wasn't called
@@ -80,7 +80,7 @@ public class CompetitionUserState {
     public QuestionFeedback getFeedback() {
         return this.feedback;
     }
-    
+
     /**
      * Save the answers and score for this competition user state in the database
      */
@@ -96,7 +96,7 @@ public class CompetitionUserState {
                 answer.setQuestionSet(questionSet.getData());
                 answer.save();
             }
-            
+
             if(!user.isAnon()) {
                 Logger.debug("savd");
                 Score score = new Score();
@@ -107,7 +107,7 @@ public class CompetitionUserState {
             }
         }
     }
-    
+
     /**
      * Checks if this state has a feedback and therefore has already been finished
      * @return if this user is ready with the competition

@@ -19,16 +19,10 @@ import play.i18n.Lang;
 public class Language implements Comparable<Language>, Listable {
 
     private Lang lang;
-    
-    // Encapsulation for UserManagement
-    public enum lang_el {
-    	nl,
-    	en;
-    }
-    
+
     // Empty constructor for UserManagement
     public Language(){
-    	
+
     }
 
     // The list of already created languages.
@@ -137,17 +131,6 @@ public class Language implements Comparable<Language>, Listable {
     public Lang getLang() {
         return lang;
     }
-    
-    /*
-     * Returns the Lang code in string format
-     */
-    public static String getLangCode(String language){
-    	if(language.equals("English") || language.equals("Engels")){
-    		return "en";
-    	}else{
-    		return "nl";
-    	}
-    }
 
     /**
      * Lists the available Languages.
@@ -179,13 +162,13 @@ public class Language implements Comparable<Language>, Listable {
         return this.getCode().compareTo(that.getCode());
     }
 
-	@Override
-	public Map<String, String> options() {		
-		LinkedHashMap<String, String> ret_opts = new LinkedHashMap<String, String>();
-		for(Language l : listLanguages()){
-			ret_opts.put(l.getCode(), l.getName());
-		}
-		return ret_opts;
-	}
+    @Override
+    public Map<String, String> options() {
+        LinkedHashMap<String, String> ret_opts = new LinkedHashMap<String, String>();
+        for(Language l : listLanguages()){
+            ret_opts.put(l.getCode(), l.getName());
+        }
+        return ret_opts;
+    }
 
 }

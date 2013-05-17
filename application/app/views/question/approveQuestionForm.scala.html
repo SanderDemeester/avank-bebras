@@ -1,29 +1,32 @@
 @(modelForm: Form[models.dbentities.QuestionModel], manager: models.management.Manager[_], breadcrumbs : List[models.data.Link], userID : String, file : String)
 
-@import helper._
-@import helper.twitterBootstrap._
+@import helper.form
+@import helper.select
+@import helper.options
+@import helper.inputText
+@import helper.checkbox
 @import models.EMessages
 @import views.html.commons.showflash
 
 @main(EMessages.get(manager.getMessagesPrefix() + ".title.add"), breadcrumbs) {
 
-	@showflash()
+    @showflash()
 
     @form(controllers.question.routes.QuestionController.saveApprove(userID, file)) {
 
-	@if(!manager.isIgnoreErrors() && modelForm.hasErrors()) {
-		<div class="alert alert-error">
-			<strong>Error</strong> There seem to be some issues with the following fields:
-			<ul>
-			@for((k, v) <- modelForm.errors()) {
-				<li>@EMessages.get(manager.getMessagesPrefix() + ".form." + k)</li>
-			}
-			</ul>
-		</div>
-	}
+    @if(!manager.isIgnoreErrors() && modelForm.hasErrors()) {
+    <div class="alert alert-error">
+        <strong>Error</strong> There seem to be some issues with the following fields:
+        <ul>
+            @for((k, v) <- modelForm.errors()) {
+            <li>@EMessages.get(manager.getMessagesPrefix() + ".form." + k)</li>
+            }
+        </ul>
+    </div>
+    }
 
     <fieldset>
-    	@select(
+        @select(
             modelForm("author.id"),
             options(manager.getDummyField("author").asInstanceOf[models.management.Listable].options()),
             '_id -> "author",
@@ -32,8 +35,8 @@
             '_showConstraints -> false,
             '_disabled -> true
         )
-    
-    	@inputText(
+
+        @inputText(
             modelForm("officialid"),
             '_label -> (EMessages.get(manager.getMessagesPrefix() + ".form.officialid")+":"),
             '_class -> "defaultFormElement",
@@ -55,11 +58,13 @@
             '_showConstraints -> false
         )
     </fieldset>
-    
-    	<div class="actions">
-            <input type="submit" value="@EMessages.get("forms.approve")" class="btn btn-primary">
-            <a href="@controllers.question.routes.QuestionController.listSubmits(0, "")" class="btn">@EMessages.get("forms.cancel")</a>
-        </div>
+
+    <div class="actions">
+        <input type="submit" value="@EMessages.get("forms.approve")" class="btn btn-primary" />
+        <a href="@controllers.question.routes.QuestionController.listSubmits(0, "")" class="btn">
+            @EMessages.get("forms.cancel")
+        </a>
+    </div>
     }
 }
 

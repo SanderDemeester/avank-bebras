@@ -47,6 +47,8 @@ error.mimic.cant_find_user = L'utilisateur ne peut pas trouver
 error.mimic.policy_deny = Ne peut pas imiter utilisateur par politique
 error.mimic.user_logged_in = L'utilisateur que vous essayez d'imiter est enregistré dans le système
 error.user_blocked = Votre compte est suspendu, veuillez contacter un admin
+error.invalid_password = Compte tenu de mot de passe n'est pas correct!
+
 # Links from roles
 links.settings.title = Paramètres
 links.settings.editinfo = Modifier les informations
@@ -65,6 +67,7 @@ links.datamanager.diffs = Gérer les niveaux de Difficulté
 links.datamanager.grades = Gérer les notes de l'étudiant
 links.contestmanager.title = Gestion de concours
 links.contestmanager.overview = Vue d'ensemble des concours
+links.statistics = Voir vos statistiques
 links.contestmanager.create = Créer nouveau concours
 links.mimic = Imiter l'utilisateur
 links.contesttaking.title = Concours
@@ -76,6 +79,7 @@ links.manageusers.title = Gestion des utilisateurs
 # Forms
 forms.cancel = Annuler
 forms.approve = Approuver
+forms.save = Sauver
 forms.delete = Supprimer
 forms.deleteArg = Supprimer : {0}
 forms.remove = Supprimer
@@ -89,6 +93,7 @@ forms.submit = Envoyer
 forms.create = Créer
 forms.createArg = Créer {0}
 forms.update = Mise à jour
+forms.upload = Télécharger
 forms.uploadFile = Télécharger le fichier
 forms.title = Titre
 forms.error = S'il vous plaît corriger toutes les erreurs.
@@ -96,6 +101,7 @@ forms.open = Ouvert
 forms.unknownError = Une erreur s'est produite.
 forms.add = Ajouter
 forms.error.dates = S'il vous plaît choisir une heure de fin c'est après l'heure de début de l'élu.
+forms.or = ou
 
 # Question
 question.editor.name = Question éditeur
@@ -175,6 +181,22 @@ languages.nl = Néerlandais
 languages.fr = Français
 languages.de = Allemand
 
+# Statistics
+statistics.title = Statistiques
+statistics.population_chooser = Composez les populations souhaitées
+statistics.statistics_chooser = Composez la statistique souhaitées
+statistics.add_population = Ajouter une population
+statistics.add_filter = Ajouter un filtre
+statistics.generate = Générer
+statistics.count = Nombre
+statistics.populations.of_the = {0} de le/la {1}
+statistics.populations.individuals = Personnes
+statistics.populations.classes = Classes
+statistics.populations.schools = Écoles
+statistics.populations.all = Tout
+statistics.statistics.gender = Sexe
+statistics.statistics.score = Score
+
 # Login
 redirect_message = Vous allez être redirigé vers votre page d'accueil sous peu.
 login.bebras_ID = Bebras ID
@@ -208,12 +230,13 @@ forgot_pwd.submit = Réinitialiser mot de passe
 forgot_pwd.success = Mot de passe réinitialisé avec succès.
 forgot_pwd.notsent = Une erreur s'est produite, l'email n'a pas été envoyé.
 forgot_pwd.mail = Un courriel a été envoyé à l'adresse fournie.
+forgot_pwd.mail_teacher = Un e-mail a été envoyé à votre professeur.
 forgot_pwd.mail_sent = Un nouveau mot de passe a été demandée pour l'utilisateur {0} sur Avank-Bebras. Aller à: {1} pour le réinitialiser.
 forgot_pwd.mail_subject = Réinitialisation de mot de passe
 forgot_pwd.email_blank = Laissez vide si vous n'avez pas une adresse e-mail
 forgot_pwd.reset_success = Mot de passe réinitialisé succès
 forgot_pwd.reset_fail = Impossible de réinitialiser le mot de passe
-forgot_pwd.teachermail = Votre élève {0} a demandé un nouveau mot de passe pour Avank-Bebras. S'il vous plaît le réinitialiser. 
+forgot_pwd.teachermail = Votre élève {0} a demandé un nouveau mot de passe pour Avank-Bebras. S'il vous plaît vous connecter et aller à {1} pour le réinitialiser.
 forgot_pwd.teachersubject = Mot de passe réinitialiser pour élève
 
 # Edit pwd
@@ -329,6 +352,8 @@ competitions.grade = Grade
 competitions.grade.warning = Mise en garde !
 competitions.grade.info = Vous êtes sur le point de prendre un concours. Afin de sélectionner les questions appropriées, nous avons besoin de connaître votre niveau désiré. Veuillez sélectionner la catégorie que vous préférez
 competitions.grade.breadcrumb = Sélectionnez la catégorie
+competitions.take.landing = Prendre rapidement une compétition
+competitions.take.more = Plus de concours
 
 competition.history.warning = Mise en garde !
 competition.history.info = Vous n'êtes actuellement pas connecté. Afin de suivre vos résultats et statistiques, vous devez être signé en.
@@ -353,7 +378,7 @@ schools.add.success = École avec succès enregistrés. ID :
 schools.edit = Modifier une école.
 schools.table.id = ID
 schools.table.name = Nom
-schools.table.name = Adresse
+schools.table.address = Adresse
 schools.error = Quelque chose a mal tourné. Réessayez (plus tard).
 
 
@@ -378,6 +403,7 @@ servers.error.removePersistent = Il y a encore des questions qui sont sur ce ser
 servers.success.added = Serveur {0} a été créé avec succès
 servers.success.edited = Serveur {0} a été modifié avec succès
 servers.success.removed = Serveur {0} a été supprimé avec succès
+servers.title.add = Nouveau serveur
 
 # question management
 questions.preview = Aperçu
@@ -445,10 +471,16 @@ classes.pupil.list = Liste des élèves
 classes.pupil.title = Infos de la classe
 classes.pupil.form.id = ID
 classes.pupil.form.name = Nom
-classes.pupil.form.gender = Sexe
+classes.pupil.form.wrap_gender = Sexe
 classes.pupil.form.birthdate 	= Birthdate
-classes.pupil.form.preflanguage = Langue préférée
+classes.pupil.form.wrap_language = Langue préférée
 classes.pupil.form.active = Est l'utilisateur non-bloqué ?
+classes.pupil.form.wrap_type = Type
+classes.pupil.form.email = Email
+classes.pupil.form.registrationdate = Date de régistration
+classes.pupil.form.comment = Commentaire
+classes.pupil.form.blockeduntil = Bloqué jusqu'à
+classes.pupil.form.password = Mot de passe
 
 classes.novalidclassid = Ce n'est pas un ID de classe valide.
 classes.pupil.editclassinfo = Modifier les infos de la classe
@@ -489,11 +521,11 @@ classes.pupil.delete.error = Quelque chose s'est passé lors de la suppression. 
 
 class.availableGrades = Niveaux disponibles et leur âge inférieur et supérieur (suggéré) lié.
 classes.add = Ajoutez une nouvelle classe
-class.name = Classe '' nom s
-class.school = Classe '' école s
-class.level = Classe de '' niveau s
+class.name = Classe '' nom 
+class.school = Classe '' école (ID)
+class.level = Classe de '' niveau 
 class.expdate.format = Format de date
-class.expdate = Classe '' date de péremption s
+class.expdate = Classe '' date de péremption 
 classes.add.notcomplete = Veuillez remplir tous les champs obligatoires.
 classes.add.noschool = Il n'y a pas d'école avec cet ID.
 classes.add.nograde = Il n'y a pas de niveau avec ce nom. 
@@ -518,6 +550,8 @@ classes.import.info.existstudent = Étudiants actuels :
 classes.import.info.newstudent = Nouveaux étudiants :
 classes.import.error.savefail = Quelque chose n'allait pas avec l'économie. Peut-être que vous avez attendu trop longtemps ? Les données d'unsafed sont supprimées après une couple d'heures. Ou quelqu'un inscrit une des adresses e-mail que vous utilisiez. Ou vous avez utilisé la même adresse e-mail deux fois dans le fichier.
 classes.import.error.postfail = Quelque chose n'allait pas avec l'analyse du fichier XLSX. Êtes-vous sûr que c'est un fichier valide ? Consultez la documentation.
+classes.pupil.download = Télécharger classe
+classes.pupil.upload = Téléchargez classe de XLSX
 
 classes.pupil.classes.list = Liste des classes
 classes.pupil.classes.current = Votre classe actuelle
@@ -569,7 +603,7 @@ user.PUPIL_OR_INDEP = Étudiant
 # User management
 user.management.others = Utilisateurs
 user.management.list = Utilisateurs inscrits
-user.management.welcome = Ci-dessous, vous pouvez ajouter\/éditer\/supprimer registred utilisateurs.
+user.management.welcome = Ci-dessous, vous pouvez ajouter\/éditer (registred) utilisateurs.
 user.management.edituser.userinfo = Informations de l'utilisateur
 user.management.edituser.partuserinfo = Modifier les informations de l'utilisateur
 user.management.edituser.passwinfo = Mot de passe
@@ -578,6 +612,10 @@ user.management.edit = Informations relatives aux modifications
 user.management.change = Appliquer
 user.management.type = Type :
 user.management.create = Créer un nouvel utilisateur
+user.management.showlegendtype = Afficher la légende de type 
+user.management.legend = Légende
+user.management.meaning = Sens
+user.management.close = Proche
 users.form.id = ID
 users.form.type = Type
 users.form.wrap_type = Type
@@ -585,7 +623,9 @@ users.form.name = Nom
 users.form.email = Messagerie
 users.form.birthdate = Anniversaire
 users.form.wrap_gender = Sexe
+users.form.gender = Sexe
 users.form.wrap_language = Langue
+users.form.preflanguage = Langue
 users.form.registrationdate = Registrationdate
 users.form.blockeduntil = Bloqué jusqu'au
 users.form.comment = Commentaire
@@ -594,6 +634,7 @@ users.form.passwrep = Répétez le mot de passe
 users.form.warning = Mise en garde !
 users.form.passwedit = Laissez le champ mot de passe vide si vous ne voulez pas modifier le mot de passe ! 
 users.form.block = Laissez le champ bloc vide si vous ne voulez pas bloquer l'utilisateur !
+users.form.mimic = Cliquez ci-dessous si vous souhaitez que l'utilisateur imiter
 users.title.add = Créer un nouvel utilisateur
 users.title.edit = Modifier utilisateur
 user.success.added = Utilisateur : {0} a été créé avec succès
@@ -626,6 +667,8 @@ competition.run.submit.notStarted = Ce concours n'a pas encore été démarré, 
 competition.run.submit.ok = Présentation a réussi.
 competition.run.submit.invalid = Réponses non valides.
 competition.run.finished = La compétition a été finie.
+competition.run.submit.invalidUser = La concurrence n'est pas bien commencé par l'utilisateur spécifié.
+competition.run.submit.invalidUserSelf = Vous avez commencé cette compétition de manière incorrecte.
 
 competition.overview.button = Vue d'ensemble
 competition.overview.submitAnswers = Présenter les réponses de l'élève
@@ -641,6 +684,8 @@ competition.overview.availableLanguages = Langues disponibles
 competition.overview.confirmFinish = Êtes-vous certain de que vouloir terminer ce concours ? Toutes les réponses non soumises seront perdues !
 competition.started.title = Concours n'est pas encore commencé
 competition.started.info = Le concours choisi n'est pas encore commencé. Please try again later.
+competition.questionset.title = Aucune question réglée soutenir votre niveau.
+competition.questionset.info = Le concours choisi ne prend pas en charge votre niveau. S'il vous plaît réessayer plus tard.
 
 # Contact form
 contact.formtitle = Formulaire de contact
@@ -660,3 +705,17 @@ contact.requestupgrade.explanation = Ici, vous pouvez demander une mise à nivea
 otheruser.view = Bekijk gebruiker
 otheruser.block = Bloc
 otheruser.block.date = Bloquer jusqu'à (laissez vide pour sans bloc)
+otheruser.mimic = Imiter
+
+# UserModelValidator
+usermodelvalidator.result.ok = Ok
+usermodelvalidator.result.noname = Pas de nom
+usermodelvalidator.result.invalidname = Nom invalide
+usermodelvalidator.result.nobirthday = Pas de jour de naissance
+usermodelvalidator.result.latebirthday = Jour de naissance après aujourd'hui
+usermodelvalidator.result.nogender = Pas de sexe (valide)
+usermodelvalidator.result.nolanguage = Pas de language
+usermodelvalidator.result.invalidlanguage = Pas de language valied
+usermodelvalidator.result.nopassword = Pas de mot de passe
+usermodelvalidator.result.invalidemail = Pas d'' email valide
+usermodelvalidator.result.existingemail = Email déjà registré

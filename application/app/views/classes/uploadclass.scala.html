@@ -1,38 +1,53 @@
-@(breadcrumbs : List[models.data.Link], uploaded :  Collection[models.classgroups.ClassGroupContainer],id : String,
-classID : Integer)
+@(
+    breadcrumbs: List[models.data.Link],
+    uploaded: Collection[models.classgroups.ClassGroupContainer],
+    id: String,
+    classID : Integer
+)
 
-@import helper._
-@import helper.twitterBootstrap._
+@import helper.form
 
-@main("classes.import", breadcrumbs){
+@main("classes.import", breadcrumbs) {
 
-@if(uploaded!=null){
-	@for(cgc <-uploaded){
-		@ClassGroupContainer(cgc)
-	}
-}
+    @if(uploaded!=null) {
+        @for(cgc <-uploaded) {
+            @ClassGroupContainer(cgc)
+        }
+    }
 
-
-	@if(classID!=null){
-		@form(action = controllers.classgroups.routes.ClassGroupIOController.postExisting(classID), 'enctype -> "multipart/form-data") {    
-    		<input type="file" name="xlsx">    
-    		<p>
-    			<input type="submit">
-    		</p>    
-		}
-			@if(id!=null){
-				<a href="@controllers.classgroups.routes.ClassGroupIOController.saveExisting(classID,id)" class="btn">Save</a>
-			}
-	}else{		
-		@form(action = controllers.classgroups.routes.ClassGroupIOController.post(), 'enctype -> "multipart/form-data") {    
-    		<input type="file" name="xlsx">    
-    		<p>
-        		<input type="submit">
-    		</p>    
-		}
-		@if(id!=null){
-			<a href="@controllers.classgroups.routes.ClassGroupIOController.save(id)" class="btn">Save</a>
-		}
-	}
+    <div class="well">
+        <h2>@EMessages.get("classes.pupil.upload")</h2>
+        <div class="text-center">
+        @if(classID!=null) {
+            @form(action = controllers.classgroups.routes.ClassGroupIOController.postExisting(classID), 'enctype -> "multipart/form-data") {
+                <p>
+                    <input type="file" name="xlsx" />
+                </p>
+                <p>
+                    <input value="@EMessages.get("forms.upload")" type="submit" class="btn btn-large btn-primary" />
+                </p>
+            }
+            @if(id!=null) {
+                <a href="@controllers.classgroups.routes.ClassGroupIOController.saveExisting(classID,id)" class="btn">
+                    @EMessages.get("forms.save")
+                </a>
+            }
+        } else {
+            @form(action = controllers.classgroups.routes.ClassGroupIOController.post(), 'enctype -> "multipart/form-data") {
+                <p>
+                    <input type="file" name="xlsx" />
+                </p>
+                <p>
+                    <input value="@EMessages.get("forms.upload")" type="submit" class="btn btn-large btn-primary" />
+                </p>
+            }
+            @if(id!=null) {
+                <a href="@controllers.classgroups.routes.ClassGroupIOController.save(id)" class="btn">
+                    @EMessages.get("forms.save")
+                </a>
+            }
+        }
+        </div>
+    </div>
 
 }
