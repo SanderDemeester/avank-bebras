@@ -195,8 +195,7 @@
             data: {"id": $("#bebrasID").val()}
             });
             request.done(function(data){
-            document.cookie="@models.user.AuthenticationManager.COOKIENAME" + "=" + data + ";expires=1000";
-            window.location = "/";
+               window.location = "/";
             });
 
             request.fail(function(jqXHR, data){
