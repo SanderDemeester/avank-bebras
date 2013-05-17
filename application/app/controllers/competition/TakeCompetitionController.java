@@ -445,8 +445,7 @@ public class TakeCompetitionController extends EController {
     }
 
     /**
-     * Returns a snippet of available anonymous contests.
-     * @return
+     * @return a snippet of available anonymous contests.
      */
     public static List<CompetitionModel> anonymousSnippet(){
         TakeCompetitionManager competitionManager = getManager("name", "asc", "");
