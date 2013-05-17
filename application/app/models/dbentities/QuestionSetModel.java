@@ -1,10 +1,7 @@
 package models.dbentities;
 
-import com.avaje.ebean.validation.NotNull;
 import models.data.Grade;
-import models.management.Editable;
 import models.management.ManageableModel;
-import models.question.Server;
 import play.data.validation.Constraints.Required;
 
 import javax.persistence.*;

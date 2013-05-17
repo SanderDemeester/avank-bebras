@@ -17,7 +17,7 @@ import play.db.ebean.Model;
 
 /**
  * @author Jens N. Rammant
- * 
+ * Class for the db linking of Teachers to Classes (as helpteacher)
  */
 @Entity
 @Table(name="helpteachers", uniqueConstraints=@UniqueConstraint(columnNames={"teacherid","classid"}))
@@ -29,11 +29,21 @@ public class HelpTeacher extends Model {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * ID of the Teacher
+	 */
 	@Id
 	public String teacherid;
+	/**
+	 * ID of the class
+	 */
 	@Id
 	public int classid;
 	
+	/**
+	 * @author Jens N. Rammant
+	 *
+	 */
 	public class HelpTeacherPK implements Serializable{
 
 		/**
@@ -41,12 +51,19 @@ public class HelpTeacher extends Model {
 		 */
 		private static final long serialVersionUID = 1L;
 		
+		/**
+		 * ID of the teacher
+		 */
 		public String teacherid;
+		/**
+		 * ID of the class
+		 */
 		public int classid;
 		
 		/**
-		 * @param teacherid
-		 * @param classid
+		 * Constructor
+		 * @param teacherid ID of the Teacher
+		 * @param classid ID of the class
 		 */
 		public HelpTeacherPK(String teacherid, int classid) {
 			this.teacherid = teacherid;
