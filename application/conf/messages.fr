@@ -548,6 +548,7 @@ classes.import.info.newstudent = Nouveaux étudiants :
 classes.import.error.savefail = Quelque chose n'allait pas avec l'économie. Peut-être que vous avez attendu trop longtemps ? Les données d'unsafed sont supprimées après une couple d'heures. Ou quelqu'un inscrit une des adresses e-mail que vous utilisiez. Ou vous avez utilisé la même adresse e-mail deux fois dans le fichier.
 classes.import.error.postfail = Quelque chose n'allait pas avec l'analyse du fichier XLSX. Êtes-vous sûr que c'est un fichier valide ? Consultez la documentation.
 classes.pupil.download = Télécharger classe
+classes.pupil.upload = Téléchargez classe de XLSX
 
 classes.pupil.classes.list = Liste des classes
 classes.pupil.classes.current = Votre classe actuelle

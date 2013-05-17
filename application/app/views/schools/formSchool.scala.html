@@ -5,7 +5,17 @@
 
 <fieldset>
 
-        @inputText(schoolForm("name"), '_label -> EMessages.get("school.name"))
-        @inputText(schoolForm("address"), '_label -> EMessages.get("school.address"))
+        @inputText(
+        	schoolForm("name"),
+        	'_label -> (EMessages.get("school.name")+":"),
+        	'_class -> "defaultFormElement",
+    		'_showConstraints -> false
+        )
+        @inputText(
+        	schoolForm("address"),
+        	'_label -> (EMessages.get("school.address")+":"),
+        	'_class -> "defaultFormElement",
+    		'_showConstraints -> false
+        )
 
 </fieldset>

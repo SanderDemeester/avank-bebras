@@ -19,17 +19,32 @@
 
     <fieldset>
 
-        @inputText(faqForm("name"), '_label -> EMessages.get("faq.alter.title"))
-        @textarea(faqForm("content"), '_label -> EMessages.get("faq.alter.content"),
-        'rows -> 10, 'cols -> 170, 'class->"input-xxlarge")
-        @select(field = faqForm("language"), options = options(langValues)
-        ,'_label -> EMessages.get("faq.alter.language"))
+        @inputText(
+        	faqForm("name"),
+        	'_label -> (EMessages.get("faq.alter.title")+":"),
+        	'_class -> "defaultFormElement",
+    	 	'_showConstraints -> false
+        )
+        @textarea(
+        	faqForm("content"),
+        	'_label -> (EMessages.get("faq.alter.content")+":"),
+        	'rows -> 10,
+        	'cols -> 170,
+        	'class-> "defaultFormElement input-xxlarge",
+    	 	'_showConstraints -> false
+        )
+        @select(
+        	field = faqForm("language"),
+        	options = options(langValues),
+        	'_label -> (EMessages.get("faq.alter.language")+":"),
+        	'_class -> "defaultFormElement",
+    	 	'_showConstraints -> false
+        )
 
     </fieldset>
 
     <div class="actions">
         <input type="submit" value="@EMessages.get("forms.save")" class="btn btn-primary">
-        @EMessages.get("forms.or")
         <a href="@controllers.faq.routes.FAQController.list()" class="btn">
             @EMessages.get("forms.cancel")
         </a>

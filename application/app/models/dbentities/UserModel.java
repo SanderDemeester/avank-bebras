@@ -173,7 +173,7 @@ public class UserModel extends ManageableModel implements Listable{
     public String[] getFieldValues() {
         String[] res = {
                 id,
-                type.toString(),
+                EMessages.get("user." + type.toString()),
                 name,
                 email,
                 EMessages.get("user." + gender.toString()),

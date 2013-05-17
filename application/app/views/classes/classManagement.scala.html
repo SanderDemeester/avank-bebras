@@ -13,10 +13,10 @@
 @main(EMessages.get("classes.list"), breadcrumbs){
 
 @commons.info(ori)
-<h2>@EMessages.get("classes.list")</h2>
-<a href="@controllers.classgroups.routes.ClassGroupIOController.upload()" class="btn">
-    @EMessages.get("forms.upload")
+<a href="@controllers.classgroups.routes.ClassGroupIOController.upload()" class="btn btn-large pull-right">
+    @EMessages.get("classes.pupil.upload")
 </a>
+<h2>@EMessages.get("classes.list")</h2>
 @if(currentPage!=null){
 @list(currentPage, manager, currentOrderBy, currentOrder, currentFilter)
 }

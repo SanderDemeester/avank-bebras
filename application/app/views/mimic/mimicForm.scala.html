@@ -7,11 +7,17 @@
 @main(title, breadcrumbs){
 <div id="mimic_alert" class="alert hide"></div>
 <fieldset>
-    @inputText(mimicForm("bebrasID"), '_label -> "bebras ID:")
+    @inputText(
+    	mimicForm("bebrasID"),
+    	'_label -> (EMessages.get("login.bebras_ID")+":"),
+    	'_class -> "defaultFormElement",
+    	'_showConstraints -> false
+    )
 </fieldset>
 <div class="actions">
-    <input type="submit" value="Mimic" class=" btn btn-primary" id="mimic" />
+    <input type="submit" value="@EMessages.get("otheruser.mimic")" class=" btn btn-primary" id="mimic" />
 </div>
+<p />
 }
 
 <script type="text/javascript">
