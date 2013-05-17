@@ -61,14 +61,6 @@ public abstract class User{
     }
 
     /**
-     * Reset the password of this user. Is delegated to the
-     * AuthenticationManager.
-     */
-    public void resetPassword(){
-        // TODO I suppose this needs to be not empty - Felix
-    }
-
-    /**
      * Logs out the user or pops a mimic.
      */
     public void logout(){

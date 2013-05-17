@@ -92,6 +92,10 @@ public class Statistics extends EController {
         Statistic statistic = null;
         if(gf.statistic != null) {
             statistic = StatisticFactory.instance().create(gf.statistic);
+            if(statistic.extraID() != null) {
+                statistic.setQuestionSet(gf.extraid);
+                statistic.setQuestion(gf.extraid);
+            }
             Statistic filter;
             if(gf.filters != null) for(int i = 0; i < gf.filters.size(); i++) {
                 if(gf.filters.get(i) != null) {
@@ -115,6 +119,7 @@ public class Statistics extends EController {
         @Valid public String statistic;
         @Valid public List<String> filters;
         @Valid public List<List<String>> conditions;
+        @Valid public Integer extraid;
         public GroupForm() {}
     }
 
