@@ -195,12 +195,14 @@
             data: {"id": $("#bebrasID").val()}
             });
             request.done(function(data){
-               window.location = "/";
+               window.location.href = "/";
             });
 
             request.fail(function(jqXHR, data){
             $("#mimic_alert").show('fast').attr("class","alert alert-error").text(jqXHR.responseText + ".");
             });
+            
+            return false;
         });
 
         $("#registrationdate").datepicker({ format: 'dd/mm/yyyy' });
