@@ -136,6 +136,11 @@
         the CompetitionUserState for that user until the competition is finished.
         
     \end{subsection}
+    \begin{subsection}{Password Management}
+		In this day and age, a modern web application should have a good password policy and somesort of a 			security model. When the user makes an account. His password is hashed client side using a password based 			key derivation function (PBKBDF2) using a SHA1 hashing algoritme. The reason for this is that the server 			never sees the client plain text password. Because people will reuse the same password on different 		services. Then on the server side the password is hashed again using PBKDF2 with a unique per user salt. 			The server is capable to perform both operations on the server for when a teacher uploads a CVS-file. Its 			clear that it is not possible to retreive lost/forgotten passwords. This is by design. When the passwords 			are generated on the user (in the situation that a CVS is uploaded) a list can be generated containing the 			passwords. It is however imported to note that this list can not be regenerated when the process is done.
+		
+		A user can change his password in his account settings page. A teacher who is associated with a student 		can also reset a student passwords. Students without an email adres can also reset there password if there 			is a teacher associated with a class that they are in.
+    \end{subsection} 
     \begin{subsection}{Statistics}
         TODO: Felix
     \end{subsection}
