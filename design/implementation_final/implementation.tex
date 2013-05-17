@@ -183,6 +183,69 @@
     \begin{subsection}{Database}
         For a visual representation of the database tables and how they relate to each other is provided in the db-relations-visual.png file. A full specification of all the attributes and constraints of the tables is provided in the db-relations.xlsx file.
     \end{subsection}
+
+    \begin{subsection}{Statistics}
+
+        Because we've tried to keep the statistics as general and extensible as
+        possible, they've become quite complicated. Below is first an
+        explanation for the user, followed by a short guide to the code,
+        including some hints on writing more statistics.
+
+        When a users opens the statistics screen, he'll be able to select first
+        the scope of his statistic. In the `Compose the desired populations`
+        section, you can add populations of several kinds, and choose the colour
+        they'll get in a chart.
+
+        The kinds of populations we've provided are:
+        \begin{description}
+            \item[Single Populations] A single user. This will allow you to view
+                data about a single user seperately. Whereas pupils can only see
+                themselves, teachers can view the users in their classes as
+                well. Organizers and administrators van view everyone.
+            \item[Class Population] A whole class. This allows pupils to view
+                anonymous data about everyone in their class. Teachers and above
+                can also use this to quickly add a class.
+            \item[School populations] Useful for viewing the anonymous data of
+                everyone in the school. Pupils and teachers can see only their
+                own schools.
+            \item[All users] This provides anonymous information about the whole
+                user database. Anonymous users can see this, but because of the
+                size, the data specifics remain hidden.
+        \end{description}
+
+        When a user has selected his populations, he can go on selecting the
+        desired statistic. These are easily selected in a dropdown list. The
+        user can still finegrade the statistic by selecting filters, for
+        instance adding a filter for ``Gender'' and setting it to ``Male''. Then
+        only the males form the selected population will be included in the
+        statistic. Note that for filters like ``Age'', you should set it to a
+        range, like ``10,20'' for people between 10 and 20 years old.
+
+        Now, as for the implementation. You can find the populations in
+        \texttt{models.statistics.populations}. To write a new type of
+        population, you have to implement \texttt{Population}. Register your new
+        population in \texttt{PopulationType}, you can use the defined
+        populations in there as an example. Finally, you have to tell the
+        \texttt{PopulationChooser} which type of user gets to see which
+        instances of your population. There's also a number of example avaible
+        for the already existing user types and populations.
+
+        You can also define new statistics on the selected populations. The
+        current statistics and the interfaces can be found in
+        \texttt{models.statistics.statistics}. The only requirements for your
+        statistic are that (1) you implement \texttt{Statistic} and (2) you
+        register it in \texttt{StatisticFactory}. I have however spared you a
+        lot of work by writing to abstract statistics,
+        \texttt{DiscreteStatistic} and \texttt{ContinuousStatistic}. These will
+        create a Piechart or a Histogram if you extend them. Examples of
+        discrete statistics are ``Gender'' and ``Language''. Continuous
+        statistics are things like ``Age'' and ``Score''.
+
+        As a final note, for some statistics (like the score and correct
+        answers) a selected question or question set is used. These can only be
+        inserted by linking people to the statistics from somewhere.
+
+    \end{subsection}
 \end{section}
 
 \end{document}
