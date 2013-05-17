@@ -40,14 +40,14 @@ public class HelpTeacherManager extends Manager<UserModel> {
 
     @Override
     public List<String> getColumnHeaders(){
-        ArrayList<String> res = new ArrayList<String>();
-        res.add("id");
-        res.add("name");
-        res.add("gender");
-        res.add("birthdate");
-        res.add("preflanguage");
-        res.add("active");
-        return res;
+        List<String> headers = new ArrayList<String>();
+        headers.add("id");
+        for(String key : fields.keySet()) {
+            if(!key.equals("blocked")){
+                headers.add(key);
+            }
+        }
+        return headers;
     }
 
     @Override
@@ -80,7 +80,7 @@ public class HelpTeacherManager extends Manager<UserModel> {
     }
     @Override
     public String getMessagesPrefix() {
-        return "classes.helpteacher";
+        return "classes.pupil";
     }
 
 }
