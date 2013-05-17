@@ -70,16 +70,20 @@
             @EMessages.get("statistics.statistics_chooser")
         </div>
         <div class="statistics-body" id="statistics-tab">
-            <select name="statistic"@if(statistic != null) { value="@statistic.getName()" }>
-                @if(statistic != null) {
-                <option value="@statistic.getName()">@EMessages.get(statistic.getName())</option>
-                }
-                @for(s <- StatisticFactory.instance().statistics()) { <!>
-                @if(statistic == null || s != statistic.getName()) {
-                <option value="@s">@EMessages.get(s)</option>
-                }
-                }
-            </select>
+            <div class="form-inline">
+                <select id="statistic-select" name="statistic"@if(statistic != null) { value="@statistic.getName()" }>
+                    @if(statistic != null) {
+                    <option value="@statistic.getName()">@EMessages.get(statistic.getName())</option>
+                    }
+                    @for(s <- StatisticFactory.instance().statistics()) { <!>
+                    @defining(StatisticFactory.instance().create(s)) { ss =>
+                    @if(statistic == null || s != statistic.getName()) {
+                    <option class="@if(ss.extraID() != null) { extraid @ss.extraID() }" value="@s">@EMessages.get(s)</option>
+                    }
+                    }
+                    }
+                </select>
+            </div>
             <div id="statistic-filters">
                 @if(statistic != null) {
                 @for((filter, i) <- statistic.filters().view.zipWithIndex) { <!>
@@ -458,6 +462,33 @@
         });
         return false;
     });
+
+    $(document).on("change", "select", function() {
+        var selected = $(this).find("option:selected");
+        $("#extraid").remove();
+        if(selected.hasClass("extraid")) {
+            selected.removeClass("extraid");
+
+            var input = $(document.createElement("input"));
+            input.attr("type", "number");
+            input.attr("id", "extraid");
+
+            switch(selected.attr("class")) {
+                case "qid":
+                    input.attr("placeholder", "@EMessages.get("question.questionset.form.qid")");
+                    break;
+                case "qsid":
+                    input.attr("placeholder", "@EMessages.get("question.questionset.form.qsid")");
+                    break;
+            }
+            input.attr("name", "extraid");
+            $(this).after(input);
+
+            selected.addClass("extraid");
+        }
+    });
+
+    $("#statistic-select").change();
 
 </script>
 }
