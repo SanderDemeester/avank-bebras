@@ -14,12 +14,4 @@ public abstract class SuperUser extends Authenticated{
         super(data, type);
         ROLES.add(Role.QUESTIONEDITOR);
     }
-
-    /**
-     * reset password for user.
-     * @param user
-     */
-    public void resetPassword(User user){
-        // TODO I suppose this is not to remain empty? - Felix
-    }
 }
