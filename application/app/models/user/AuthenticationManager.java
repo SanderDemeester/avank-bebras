@@ -334,7 +334,6 @@ public class AuthenticationManager {
         KeySpec PBKDF2 = new PBEKeySpec(pw.toCharArray(), salt, 1000, 160);
 
         try{
-            // TODO: waarom niet de secret van Play zelf?
             secretFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
         }catch(Exception e){
             //            throw new Exception(EMessages.get("error.text"));
