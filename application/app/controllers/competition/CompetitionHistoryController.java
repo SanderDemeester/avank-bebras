@@ -58,6 +58,14 @@ public class CompetitionHistoryController extends EController {
         return competitionManager;
     }
 
+    /**
+     * Listview of competition history
+     * @param page page nr
+     * @param orderBy order field
+     * @param order order
+     * @param filter filter
+     * @return listview
+     */
     public static Result list(int page, String orderBy, String order, String filter){
         if (!isAuthorized()) return ok(noaccess.render(defaultBreadcrumbs()));;
         CompetitionHistoryManager competitionManager = getManager(orderBy, order, filter);

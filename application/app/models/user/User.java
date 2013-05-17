@@ -78,7 +78,7 @@ public abstract class User{
     /**
      * Check if a user has a certain role
      * @param role
-     * @return
+     * @return if this user has the given role
      */
     public boolean hasRole(Role role) {
         return ROLES.contains(role);
@@ -94,7 +94,7 @@ public abstract class User{
 
     /**
      * Get the type of this user
-     * @return
+     * @return the type of the user
      */
     public UserType getType() {
         return this.type;
@@ -103,7 +103,7 @@ public abstract class User{
     /**
      * Check if this user is able to mimic the given user
      * @param user
-     * @return
+     * @return if the given user can be mimicked by this user
      */
     public boolean canMimic(User user) {
         return this.getType().ordinal() < user.getType().ordinal()

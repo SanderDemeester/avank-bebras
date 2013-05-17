@@ -16,7 +16,6 @@ import models.question.Server;
 import models.user.AuthenticationManager;
 import models.user.Role;
 import play.data.Form;
-import play.db.ebean.Model.Finder;
 import play.mvc.Result;
 import play.mvc.Results;
 import views.html.commons.noaccess;
@@ -37,8 +36,6 @@ import controllers.EController;
 public class ServerController extends EController {
 
     private static Result LIST = redirect(routes.ServerController.list(0, "id", "asc", ""));
-
-    private Finder<String,Server> serverFinder = new Finder<String,Server>(String.class, Server.class);
 
     /**
      * Check if the current user is authorized for these actions
@@ -61,6 +58,10 @@ public class ServerController extends EController {
 
     /**
      * This result will redirect to the server list page
+     * @param page page nr
+     * @param orderBy order field
+     * @param order order
+     * @param filter filter
      *
      * @return server list page
      */

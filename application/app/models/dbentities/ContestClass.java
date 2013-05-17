@@ -18,10 +18,16 @@ public class ContestClass extends ManageableModel {
 
     private static final long serialVersionUID = 2L;
 
+    /**
+     * class id
+     */
     @ManyToOne
     @JoinColumn(name="classid")
     public ClassGroup classid;
 
+    /**
+     * contest id
+     */
     @ManyToOne
     @JoinColumn(name="contestid")
     public CompetitionModel contestid;

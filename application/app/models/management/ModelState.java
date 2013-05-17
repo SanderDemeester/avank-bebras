@@ -7,8 +7,20 @@ package models.management;
  *
  */
 public enum ModelState {
+    /**
+     * create
+     */
     CREATE,
+    /**
+     * read
+     */
     READ,
+    /**
+     * update
+     */
     UPDATE,
+    /**
+     * delete
+     */
     DELETE
 }

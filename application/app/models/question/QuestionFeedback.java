@@ -45,10 +45,18 @@ public class QuestionFeedback {
         calculateScore();
     }
 
+    /**
+     * 
+     * @return competition id
+     */
     public String getCompetitionID() {
         return this.competitionID;
     }
-
+    
+    /**
+     * 
+     * @return question set id
+     */
     public int getQuestionSetID() {
         return this.questionSetID;
     }

@@ -9,6 +9,10 @@ import java.lang.Exception;
 public class LanguageCreationException extends Exception {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * New exception
+     * @param message message
+     */
     public LanguageCreationException(String message) {
         super(message);
     }

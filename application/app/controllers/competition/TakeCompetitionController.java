@@ -115,6 +115,10 @@ public class TakeCompetitionController extends EController {
     /**
      * Returns a page with a listing of available competitions
      * for the current type of user.
+     * @param page page nr
+     * @param orderBy order field
+     * @param order ordering
+     * @param filter filter
      * @return  available competitions list page
      */
     public static Result list(int page, String orderBy, String order, String filter){

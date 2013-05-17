@@ -1,17 +1,21 @@
 package models.competition;
 
-import com.avaje.ebean.Ebean;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import models.data.Grade;
 import models.data.Language;
 import models.dbentities.ClassGroup;
 import models.dbentities.CompetitionModel;
 import models.dbentities.QuestionSetModel;
-import models.question.Question;
 import models.question.QuestionFeedback;
 import models.question.QuestionSet;
 import models.user.User;
 
-import java.util.*;
+import com.avaje.ebean.Ebean;
 
 /**
  * Class that contains all logic implementation about competitions.
@@ -233,19 +237,35 @@ public class Competition {
     public CompetitionState getCompetitionState(User pupil){
         throw new UnsupportedOperationException();
     }
-
+    
+    /**
+     * Get competition id
+     * @return competition id
+     */
     public String getID() {
         return this.data.getID();
     }
-
+    
+    /**
+     * Get expiration date
+     * @return expiration date
+     */
     public Date getExpirationDate() {
         return this.data.endtime;
     }
-
+    
+    /**
+     * Get start date
+     * @return start date
+     */
     public Date getStartDate() {
         return this.data.starttime;
     }
-
+    
+    /**
+     * Get name
+     * @return name
+     */
     public String getName() {
         return this.data.name;
     }

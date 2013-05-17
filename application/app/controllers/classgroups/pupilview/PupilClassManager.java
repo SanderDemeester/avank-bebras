@@ -1,21 +1,18 @@
-/**
- *
- */
 package controllers.classgroups.pupilview;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.avaje.ebean.Ebean;
-import com.avaje.ebean.ExpressionList;
-
-import play.mvc.Call;
 import models.dbentities.ClassGroup;
 import models.dbentities.UserModel;
 import models.management.Manager;
 import models.management.ModelState;
 import models.user.Independent;
+import play.mvc.Call;
+
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.ExpressionList;
 
 /**
  * @author Jens N. Rammant
@@ -25,6 +22,11 @@ public class PupilClassManager extends Manager<ClassGroup> {
 
     private String pupilID;
 
+	/**
+	 * Make a new PupilClassManager
+	 * @param pupilID id of the pupil
+	 * @param state state of the model
+	 */
     public PupilClassManager(String pupilID, ModelState state) {
         super(ClassGroup.class, state, "name", "name");
         this.pupilID=pupilID;
@@ -71,6 +73,5 @@ public class PupilClassManager extends Manager<ClassGroup> {
         return res;
 
     }
-
 
 }

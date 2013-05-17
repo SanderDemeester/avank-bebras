@@ -268,5 +268,4 @@ public class ClassGroupContainer {
         public String message;
     }
 
-
 }

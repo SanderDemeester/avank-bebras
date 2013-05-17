@@ -1,13 +1,10 @@
 package controllers.user.management;
 
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Expr;
@@ -28,17 +25,27 @@ import models.user.ChainOfCommand;
 import models.user.Gender;
 import models.user.IDGenerator;
 import models.user.Role;
-import models.user.User;
 import models.user.UserType;
 import play.data.Form;
 import play.mvc.Content;
-import play.mvc.Results;
 import play.mvc.Result;
+import play.mvc.Results;
 import views.html.commons.noaccess;
 import views.html.login.register;
 import views.html.user.management.usermanager;
 import views.html.user.management.edituser;
 import views.html.user.management.createuser;
+import views.html.user.management.edituser;
+import views.html.user.management.usermanager;
+
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Expr;
+import com.avaje.ebean.annotation.Transactional;
+
+import controllers.EController;
+import controllers.util.InputChecker;
+import controllers.util.PasswordHasher;
+import controllers.util.PasswordHasher.SaltAndPassword;
 
 
 /**

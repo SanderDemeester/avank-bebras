@@ -13,10 +13,15 @@ import models.user.User;
 
 /**
  * @author Jens N. Rammant
- *
+ * Class for Email sent by Upgrade Request
  */
 public class UpgradeRequestMail extends EMail {
 
+	/**
+	 * Constructor
+	 * @param cardImage Image to be sent as Attachment
+	 * @param fileName Name of the Image
+	 */
     public UpgradeRequestMail(File cardImage,String fileName){
         super();
         this.addAttachment(cardImage,fileName);
@@ -29,4 +34,5 @@ public class UpgradeRequestMail extends EMail {
         }
         this.addToAddress(Play.application().configuration().getString("email.upgrademail"));
     }
+
 }

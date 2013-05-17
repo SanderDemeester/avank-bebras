@@ -7,8 +7,14 @@ import play.mvc.Action;
 import play.mvc.Result;
 
 
+/**
+ * The common header for the application pages
+ * @author Ruben Taelman
+ *
+ */
 public class CommonHeaders extends Action.Simple {
 
+    @Override
     public Result call(Http.Context ctx) throws Throwable {
         ctx.response().setHeader("X-Frame-Options", "SAMEORIGIN");
         // This is because of the changes in pages when logged in or not:

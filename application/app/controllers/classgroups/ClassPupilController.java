@@ -1,6 +1,3 @@
-/**
- *
- */
 package controllers.classgroups;
 
 import java.io.File;

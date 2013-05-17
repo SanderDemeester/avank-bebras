@@ -4,6 +4,9 @@ import models.dbentities.UserModel;
 import models.user.Author;
 import models.user.User;
 
+/**
+ * Make author users
+ */
 public class AuthorUserFactory implements UserFactory{
 
     @Override

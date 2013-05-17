@@ -1,6 +1,3 @@
-/**
- *
- */
 package controllers.classgroups;
 
 import java.util.ArrayList;
@@ -19,6 +16,12 @@ import models.dbentities.UserModel;
 import models.management.Manager;
 import models.management.ModelState;
 import models.user.ChainOfCommand;
+import play.mvc.Call;
+
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Expr;
+import com.avaje.ebean.Expression;
+import com.avaje.ebean.ExpressionList;
 
 /**
  * @author Jens N. Rammant
@@ -32,6 +35,12 @@ public class ClassPupilManager extends Manager<UserModel> {
     //Determines whether the remove link does anything or not. Standard is false
     private boolean canRemove;
 
+	/**
+	 * Make a new ClassPupilManager
+	 * @param classID id of the class
+	 * @param data the dataset
+	 * @param state state of the model
+	 */
     public ClassPupilManager(int classID, DataSet data, ModelState state) {
         super(UserModel.class, state, "id", "name");
         this.classID=classID;
@@ -119,10 +128,21 @@ public class ClassPupilManager extends Manager<UserModel> {
         this.canRemove = b;
     }
 
-    public enum DataSet {
-        ACTIVE,
-        NOTACTIVE,
-        ALL
-    }
-
+	/**
+	 * Dataset
+	 */
+	public enum DataSet {
+	    /**
+	     * Active
+	     */
+		ACTIVE,
+		/**
+		 * Not active
+		 */
+		NOTACTIVE,
+		/**
+		 * All
+		 */
+		ALL
+	}
 }

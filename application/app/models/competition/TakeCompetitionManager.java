@@ -75,10 +75,15 @@ public class TakeCompetitionManager extends Manager<CompetitionModel> {
      * Returns the expression list for quering the database.
      * @return expression list for quering
      */
+    @Override
     protected ExpressionList<CompetitionModel> getDataSet(){
         return expressionList;
     }
 
+    /**
+     * Set expression list for quering the database.
+     * @param expressionList list for quering
+     */
     public void setExpressionList(ExpressionList<CompetitionModel> expressionList){
         this.expressionList = expressionList;
     }

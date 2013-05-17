@@ -8,6 +8,10 @@ package models.question;
 public class AnswerGeneratorException extends Exception{
     private static final long serialVersionUID = 1L;
 
+    /**
+     * new exception
+     * @param message message
+     */
     public AnswerGeneratorException(String message) {
         super(message);
     }

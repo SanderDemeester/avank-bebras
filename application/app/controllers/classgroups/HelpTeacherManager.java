@@ -1,6 +1,3 @@
-/**
- *
- */
 package controllers.classgroups;
 
 import java.util.ArrayList;
@@ -23,6 +20,12 @@ import models.management.ModelState;
 public class HelpTeacherManager extends Manager<UserModel> {
 
     private int classID;
+
+	/**
+	 * make a new HelpTeacherManager
+	 * @param classID id of the class
+	 * @param state state of the model
+	 */
     public HelpTeacherManager(int classID,ModelState state) {
         super(UserModel.class, state, "id", "name");
         this.classID = classID;
@@ -53,8 +56,8 @@ public class HelpTeacherManager extends Manager<UserModel> {
     @Override
     public Call getListRoute(int page, String orderBy, String order, String filter) {
         return routes.HelpTeacherController.viewHelp(classID, page, orderBy, order,filter);
-
     }
+
     @Override
     public Call getAddRoute() {
         return routes.HelpTeacherController.create(classID);

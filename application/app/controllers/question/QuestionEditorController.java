@@ -235,12 +235,10 @@ public class QuestionEditorController extends EController {
     public static Result importUpload() {
         if(isAuthorized()) {
             String userID = getUserID();
-            String upload = QuestionIO.getUserUploadLocation(userID);
 
             MultipartFormData body = request().body().asMultipartFormData();
             FilePart filePart = body.getFile("files[]");
             if(filePart !=null) {
-                String name = filePart.getFilename();
                 File file = filePart.getFile();
                 ZipInputStream zis = null;
                 try {
@@ -270,7 +268,7 @@ public class QuestionEditorController extends EController {
 
     /**
      * Submits the question
-     * param json json encoded question
+     * @param json json encoded question
      * @return submission result message
      */
     public static Result submit(String json){

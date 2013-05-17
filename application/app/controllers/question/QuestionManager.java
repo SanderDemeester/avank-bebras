@@ -6,6 +6,11 @@ import models.management.ModelState;
 import play.mvc.Call;
 import controllers.question.routes;
 
+/**
+ * Manage questions
+ * @author Ruben Taelman
+ *
+ */
 public class QuestionManager extends Manager<QuestionModel>{
     private String id;
 

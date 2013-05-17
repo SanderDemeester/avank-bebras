@@ -12,6 +12,7 @@ import models.data.Link;
  * @author Ruben Taelman
  * @author Felix Van der Jeugt
  */
+@SuppressWarnings("javadoc")
 public class Role implements Comparable<Role>{
 
 

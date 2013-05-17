@@ -1,7 +1,6 @@
 package controllers.user.management;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -18,7 +17,8 @@ import models.user.AuthenticationManager;
 import models.user.User;
 import models.dbentities.UserModel;
 import play.mvc.Call;
-import controllers.user.management.routes;
+
+import com.avaje.ebean.ExpressionList;
 
 public class UserManager extends Manager<UserModel> {
 
