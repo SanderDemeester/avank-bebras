@@ -1,10 +1,17 @@
-@(questionForm: Form[models.dbentities.QuestionModel], manager: models.management.Manager[_], breadcrumbs: List[models.data.Link], q: models.question.Question)
+@(
+    questionForm: Form[models.dbentities.QuestionModel],
+    manager: models.management.Manager[_],
+    breadcrumbs: List[models.data.Link],
+    q: models.question.Question
+)
 
 @import views.html.management.defaultEditExtended
 
 @defaultEditExtended(questionForm, manager, breadcrumbs) {
     <hr />
-    <a class="btn pull-right" href="@controllers.question.routes.QuestionController.export(Integer.toString(q.getID()))">@EMessages.get("question.editor.exportAsZip")</a>
+    <a class="btn pull-right" href="@controllers.question.routes.QuestionController.export(Integer.toString(q.getID()))">
+        @EMessages.get("question.editor.exportAsZip")
+    </a>
     @previewQuestion(q)
 }
 

@@ -4,6 +4,7 @@
 )
 
 @main(EMessages.get("app.dashboard"), breadcrumbs) {
+
 @defining(user.roles()) { roles =>
 <style type="text/css" xmlns="http://www.w3.org/1999/html"><!--
     div.no-margin {
@@ -18,16 +19,17 @@
     //-->
 </style>
 <div class="row-fluid">
-<ul class="span3 nav nav-tabs nav-stacked">
-    <li><a href="#-1" class="tabber"><i class="icon-chevron-right pull-right"></i> @EMessages.get("app.overview")</a></li>
-    @for(i <- 0 to roles.size() - 1) { <!-- stupid &lt; -->
-        @if(roles(i).onLandingPage()) {
-            <li><a href="#@i" class="tabber"><i class="icon-chevron-right pull-right"></i> @roles(i).title()</a></li>
-        }
-    }
-</ul>
 
-@for(i <- 0 to roles.size() - 1) { <!-- stupid &lt; -->
+    <ul class="span3 nav nav-tabs nav-stacked">
+        <li><a href="#-1" class="tabber"><i class="icon-chevron-right pull-right"></i> @EMessages.get("app.overview")</a></li>
+        @for(i <- 0 to roles.size() - 1) { <!-- stupid &lt; -->
+        @if(roles(i).onLandingPage()) {
+        <li><a href="#@i" class="tabber"><i class="icon-chevron-right pull-right"></i> @roles(i).title()</a></li>
+        }
+        }
+    </ul>
+
+    @for(i <- 0 to roles.size() - 1) { <!-- stupid &lt; -->
     @if(roles(i).onLandingPage()) {
     <div id="@i" class="span9 landingel hide">
         <div class="navbar navbar-inner no-margin"><div class="container">
@@ -40,10 +42,10 @@
         </ul></div>
     </div>
     }
-}
+    }
 
     <div id="-1" class="span9 landingel">
-        <div class="well"><ul>
+        <div class="well">
             <h1>@EMessages.get("app.welcome", user.getData().name)</h1>
             <p>@EMessages.get("app.getStarted")</p>
             <br />
@@ -71,7 +73,7 @@
                 </p>
             }
             <br />[STATSSNIPPET]
-        </ul></div>
+        </div>
     </div>
 
 </div>

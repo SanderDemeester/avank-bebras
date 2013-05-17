@@ -1,7 +1,6 @@
 @(id : Int, schoolForm: Form[models.dbentities.SchoolModel], breadcrumbs : List[models.data.Link],inf : models.util.OperationResultInfo)
 
-@import helper._
-@import helper.twitterBootstrap._
+@import helper.form
 @import models.EMessages
 
 @main(EMessages.get("schools.edit"),breadcrumbs){
@@ -12,8 +11,11 @@
         @formSchool(schoolForm)
 
         <div class="actions">
-            <input type="submit" value="Save" class="btn primary"> or
-            <a href="@controllers.schools.routes.SchoolController.viewSchools()" class="btn">Cancel</a>
+            <input type="submit" value="@EMessages.get("forms.save")" class="btn primary">
+            @EMessages.get("forms.or")
+            <a href="@controllers.schools.routes.SchoolController.viewSchools()" class="btn">
+                @EMessages.get("forms.cancel")
+            </a>
         </div>
         }
     }

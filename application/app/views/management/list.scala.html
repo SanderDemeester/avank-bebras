@@ -46,7 +46,7 @@
 }
 
 @***************************************
-* Flash messages *
+* Flash messages                       *
 ***************************************@
 @showflash()
 
@@ -56,18 +56,24 @@
 
 <div id="actions">
 
-    @***********************
-    * Filtering & Add new item
-    ***********************@
+    @***************************
+    * Filtering & Add new item *
+    ***************************@
     <form action="@link(0,"name")" method="GET" class="row-fluid">
         <div class="span8">
-            @(EMessages.get(manager.getMessagesPrefix() + ".form." + manager.getFilterBy())+":") <input type="text" class="input-large search-query filter-input" name="f" value="@currentFilter" placeholder="@EMessages.get("management.filter.input")">
+            @(EMessages.get(manager.getMessagesPrefix() + ".form." + manager.getFilterBy())+":")
+            <input type="text" class="input-large search-query filter-input"
+                name="f" value="@currentFilter"
+                placeholder="@EMessages.get("management.filter.input")" />
         </div>
 
         @if(manager.getAddRoute() != null){
             <div class="span4 text-right">
-                <input type="submit" id="searchsubmit" value="@EMessages.get("management.filter.button")" class="btn">
-                <a class="btn btn-primary" href="@manager.getAddRoute()"> @EMessages.get("management.add") </a>
+                <input type="submit" id="searchsubmit" class="btn"
+                    value="@EMessages.get("management.filter.button")" />
+                <a class="btn btn-primary" href="@manager.getAddRoute()">
+                    @EMessages.get("management.add")
+                </a>
             </div>
         }
     </form>
@@ -79,7 +85,7 @@
 ***********************@
 @if(currentPage.getTotalRowCount == 0){
     <div class="well">
-        <p class="text-center muted"> @EMessages.get("management.empty") </p>
+        <p class="text-center muted">@EMessages.get("management.empty")</p>
     </div>
 } else {
     <table class="table table-striped table-bordered table-hover table-condensed">
@@ -99,26 +105,25 @@
 
             @for(item <- currentPage.getList){
                 <tr>
-                @for(fieldValue <- item.getFieldValues){
+                    @for(fieldValue <- item.getFieldValues){
                     <td>
                         @fieldValue
-
+                    </td>
+                    }
+                    @if(manager.hasActions()){
+                    <td>
+                        @if(manager.getEditRoute(item.getID()) != null){
+                            <a class="btn" id="edit" href="@manager.getEditRoute(item.getID())">
+                                <i class="icon-edit"></i>
+                            </a>
+                        }
+                        @if(manager.getRemoveRoute(item.getID()) != null){
+                            <a class="btn" id="remove" href="@manager.getRemoveRoute(item.getID())">
+                                <i class="icon-remove"></i>
+                            </a>
+                        }
                     </td>
                 }
-                    @if(manager.hasActions()){
-                        <td>
-                            @if(manager.getEditRoute(item.getID()) != null){
-                                <a class="btn" id="edit" href="@manager.getEditRoute(item.getID())">
-                                    <i class="icon-edit"></i>
-                                </a>
-                            }
-                            @if(manager.getRemoveRoute(item.getID()) != null){
-                                <a class="btn" id="remove" href="@manager.getRemoveRoute(item.getID())">
-                                    <i class="icon-remove"></i>
-                                </a>
-                            }
-                        </td>
-                    }
                 </tr>
             }
 

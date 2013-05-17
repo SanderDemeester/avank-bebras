@@ -111,8 +111,7 @@ public class ResetPasswordController extends EController {
         return ok(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
         }
             String teacherEmail = g.getTeacher().getData().email;
-            String baseUrl = request().host() + "/manage/users/" + userModel.id + "/edit";
-            EMail mail = new StudentTeacherEmailReset(teacherEmail, userModel.id, baseUrl);
+            EMail mail = new StudentTeacherEmailReset(teacherEmail, userModel.id,"http://avank.ugent.be/manage/users/<>/edit");
             try {
                 mail.send();
                 flash("success", EMessages.get("forgot_pwd.mail_teacher"));

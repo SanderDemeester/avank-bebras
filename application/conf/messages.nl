@@ -283,7 +283,7 @@ faq.list.error = Er is iets misgelopen tijdens het ophalen van de lijst.
 #info
 info.info = Info
 info.warning = Waarschuwing
-info.error = Error
+info.error = Fout
 info.success = Succes
 info.successedit = Uw informatie is aangepast!
 
