@@ -10,6 +10,7 @@ public class StudentTeacherEmailReset extends EMail{
         this.setSubject(EMessages.get("forgot_pwd.teachersubject"));
         this.addReplyTo(Play.application().configuration().getString("email.contactmail"));
         this.addToAddress(recipient);
-        this.setMessage(EMessages.get("forgot_pwd.teachermail", id, message));
+	String url = message.replace("<>",id);
+        this.setMessage(EMessages.get("forgot_pwd.teachermail", id, url));
     }
 }
