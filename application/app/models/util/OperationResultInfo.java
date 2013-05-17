@@ -17,6 +17,9 @@ public class OperationResultInfo {
     private ArrayList<String> warning;
     private ArrayList<String> error;
 
+    /**
+     * Constructor
+     */
     public OperationResultInfo(){
         success = new ArrayList<String>();
         info = new ArrayList<String>();
@@ -24,6 +27,11 @@ public class OperationResultInfo {
         error  = new ArrayList<String>();
     }
 
+    /**
+     * Add a message
+     * @param message message
+     * @param type type of message
+     */
     public void add(String message,Type type){
         switch (type) {
         case ERROR:
@@ -44,6 +52,10 @@ public class OperationResultInfo {
         }
     }
 
+    /**
+     * @param type Type of message
+     * @return list of all messages of Type type
+     */
     public ArrayList<String> getList(Type type){
         switch (type){
         case ERROR:
@@ -60,8 +72,27 @@ public class OperationResultInfo {
         }
     }
 
+    /**
+     * @author Jens N. Rammant
+     * Type of message
+     */
     public enum Type{
-        SUCCESS,INFO,WARNING,ERROR
+        /**
+         * Success
+         */
+        SUCCESS,
+        /**
+         * Info
+         */
+        INFO,
+        /**
+         * Warning 
+         */
+        WARNING,
+        /**
+         * Error
+         */
+        ERROR
     }
 
 }

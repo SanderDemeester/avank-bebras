@@ -18,6 +18,7 @@ import models.dbentities.UserModel;
 
 /**
  * @author Jens N. Rammant
+ * Class that validates the data in a usermodel
  *
  */
 public class UserModelValidator {
@@ -58,17 +59,54 @@ public class UserModelValidator {
 		
 	}
 	
+	/**
+	 * @author Jens N Rammant
+	 * enum for returning what's wrong with the usermodel
+	 */
 	public enum Result{
+		/**
+		 * Everything ok
+		 */
 		OK,
+		/**
+		 * No name
+		 */
 		NO_NAME,
+		/**
+		 * Name invalid
+		 */
 		INVALID_NAME,
+		/**
+		 * No birthdate
+		 */
 		NO_BIRTHDAY,
+		/**
+		 * Birthdate is after today
+		 */
 		BIRTHDAY_AFTER_TODAY,
+		/**
+		 * No gender
+		 */
 		NO_GENDER,
+		/**
+		 * No preferred language
+		 */
 		NO_LANGUAGE,
+		/**
+		 * Preferred language invalid
+		 */
 		INVALID_LANGUAGE,
+		/**
+		 * No password
+		 */
 		NO_PASSWORD,
+		/**
+		 * Invalid email address
+		 */
 		INVALID_EMAIL,
+		/**
+		 * Email already in system
+		 */
 		ALREADY_EXISTING_EMAIL;
 	}
 }

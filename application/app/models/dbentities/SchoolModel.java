@@ -12,11 +12,8 @@ import javax.persistence.Table;
 import models.management.ManageableModel;
 import play.data.validation.Constraints.Required;
 
-import play.db.ebean.Model;
-
 /**
  * @author Jens N. Rammant
- * TODO change to Ruben's standard
  */
 @Entity
 @Table(name="Schools")
@@ -27,21 +24,31 @@ public class SchoolModel extends ManageableModel implements Comparable<SchoolMod
 	 */
 	private static final long serialVersionUID = 2L;
 	/**
-	 * 
+	 * ID of the school
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "schools_id_seq")
     public int id;
+	/**
+	 * Name of the school
+	 */
 	@Required
 	public String name;
+	/**
+	 * Address of the school
+	 */
 	@Required
 	public String address;
+	/**
+	 * ID of the user who created the school entity
+	 */
 	public String orig;
 	/**
-	 * @param id
-	 * @param name
-	 * @param address
-	 * @param orig
+	 * Constructor
+	 * @param id ID of the school
+	 * @param name name of the school
+	 * @param address address of the school
+	 * @param orig ID of the user who created the school entity
 	 */
 	public SchoolModel(int id, String name, String address, String orig) {
 		this.id = id;
@@ -50,6 +57,9 @@ public class SchoolModel extends ManageableModel implements Comparable<SchoolMod
 		this.orig = orig;
 	}
 	
+	/**
+	 * Empty constructor
+	 */
 	public SchoolModel(){}
 
 	/* (non-Javadoc)
