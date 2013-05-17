@@ -444,6 +444,9 @@
         $("#spinner span").append(spinner.el);
         $.get("/statistics/json?" + $("#statistics-form").serialize(), function(data) {
             spinner.spin(false);
+            if(data.tooltip != null && data.tooltip.formatter == "TOTAL_FORMATTER") {
+                data.tooltip.formatter = function() { return "" + this.y; }
+            }
             $("#container").highcharts(data);
             $("#stat-chart").modal();
         }).fail(function(jqXHR, textStatus, errorThrown) {
