@@ -17,9 +17,9 @@ public class Answer extends DiscreteStatistic {
         if(question == null) return null;
         List<PupilAnswer> answers = Ebean.find(PupilAnswer.class).where()
             .eq("indid", user.id)
-            .eq("qid", question.id)
+            .eq("qid", question)
             .findList();
-        if(answers == null) return null;
+        if(answers == null || answers.size() != 1) return null;
         return answers.get(0).answer;
     }
 
@@ -27,10 +27,14 @@ public class Answer extends DiscreteStatistic {
         return name;
     }
 
-    private QuestionModel question = null;
+    private Integer question = null;
 
-    @Override public void setQuestion(QuestionModel question) {
-        this.question = question;
+    @Override public void setQuestion(Integer questionid) {
+        this.question = questionid;
+    }
+
+    @Override public String extraID() {
+        return "qid";
     }
 
 }

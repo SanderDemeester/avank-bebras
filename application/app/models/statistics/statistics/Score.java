@@ -14,22 +14,35 @@ public class Score extends ContinuousStatistic {
     public static final String name = "statistics.statistics.score";
 
     @Override public Double calculate(UserModel user) {
-        double total = 0;
-        List<PupilAnswer> corrects = Ebean.find(PupilAnswer.class).where()
-            .eq("indid", user.id).findList();
-        if(corrects.size() == 0) return null;
-        for(PupilAnswer b : corrects) if(b.correct && (set == null || b.questionset.equals(set))) total++;
-        return total;
+        List<models.dbentities.Score> scores =
+            Ebean.find(models.dbentities.Score.class)
+                .where().eq("uID", user.id).findList();
+        if(scores == null || scores.size() == 0) return null;
+        if(set == null) {
+            double total = 0;
+            for(models.dbentities.Score score : scores) total += score.score;
+            return total;
+        } else {
+            double s = 0;
+            for(models.dbentities.Score score : scores) {
+                if(score.questionset.id == set) s = score.score;
+            }
+            return s;
+        }
     }
 
-    private QuestionSetModel set = null;
+    private Integer set = null;
 
-    @Override public void setQuestionSet(QuestionSetModel set) {
+    @Override public void setQuestionSet(Integer set) {
         this.set = set;
     }
 
     @Override public String getName() {
         return name;
+    }
+
+    @Override public String extraID() {
+        return "qsid";
     }
 
 }

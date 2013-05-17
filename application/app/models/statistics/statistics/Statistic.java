@@ -94,14 +94,21 @@ public abstract class Statistic {
      * Sets the question for this statistic. Most statistics ignore this, but
      * some question dependend statistics can use it.
      */
-    public void setQuestion(QuestionModel question) {
+    public void setQuestion(Integer questionid) {
     }
 
     /**
      * Sets the question set for this statistic. Most statistics ignore this,
      * but some question set dependent statistics can use this.
      */
-    public void setQuestionSet(QuestionSetModel questionset) {
+    public void setQuestionSet(Integer questionsetid) {
+    }
+
+    /**
+     * The kind of extra ID the statistic requires. null for none.
+     */
+    public String extraID() {
+        return null;
     }
 
 }

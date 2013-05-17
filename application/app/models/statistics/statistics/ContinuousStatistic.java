@@ -122,6 +122,24 @@ public abstract class ContinuousStatistic extends Statistic {
             series.add(serie);
         }
 
+        /* plotOptions to make it cuter. */
+        ObjectNode plotOptions = Json.newObject();
+        ObjectNode column = Json.newObject();
+        column.put("borderwidth", 0);
+        column.put("pointPadding", 0);
+        column.put("groupPadding", 0);
+        column.put("shadow", false);
+        column.put("stacking", "normal");
+        plotOptions.put("column", column);
+        json.put("plotOptions", plotOptions);
+
+        /* No superlong doubles in the tooltip, just totals. Note that this
+         * won't work, as we can't place javascript functions in java. I'm
+         * replacing this placeholder in javascript itself. */
+        ObjectNode tooltip = Json.newObject();
+        tooltip.put("formatter", "TOTAL_FORMATTER");
+        json.put("tooltip", tooltip);
+
         return json;
     }
 
