@@ -19,6 +19,8 @@ object ApplicationBuild extends Build {
       "stax" % "stax-api" % "1.0.1",
       "log4j" % "log4j" % "1.2.13",
       "org.apache.poi" % "poi" % "3.9",
+      "org.apache.poi" % "poi-ooxml" % "3.9",
+      "org.apache.poi" % "poi-ooxml-schemas" % "3.9",
       "org.apache.xmlbeans" % "xmlbeans" % "2.3.0",
       "javax.activation" % "activation" % "1.1.1",
       "javax.mail" % "mail" % "1.4.7"
