@@ -50,7 +50,9 @@ public class Role implements Comparable<Role>{
     // Author
     public static Role QUESTIONEDITOR = new Role(
         "links.questioneditor.title",
-        new Link("links.questioneditor.open", "/questioneditor")
+        new Link("links.questioneditor.open", "/questioneditor"),
+        new Link(EMessages.get("question.editor.index.create.main", EMessages.get("question.type.MULTIPLE_CHOICE")), "/questioneditor/create/MULTIPLE_CHOICE"),
+        new Link(EMessages.get("question.editor.index.create.main", EMessages.get("question.type.REGEX")), "/questioneditor/create/REGEX")
     );
 
     //ADMIN

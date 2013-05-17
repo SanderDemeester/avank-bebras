@@ -549,6 +549,7 @@ classes.import.info.newstudent = Neue Studenten:
 classes.import.error.savefail = Etwas schief gelaufen ist mit dem Speichern. Vielleicht habe Sie zu lange gewartet? Die Unsafed-Daten werden nach ein paar Stunden entfernt. Oder jemand registriert man die e-Mail-Adressen, die Sie verwendet haben. Oder Sie dieselbe e-Mail-Adresse zweimal in der Datei verwendet.
 classes.import.error.postfail = Etwas schief gelaufen ist mit der Analyse der XLSX-Datei. Sind Sie sicher, dass es eine gültige Datei ist? Sie in der Dokumentation.
 classes.pupil.download = Laden Klasse
+classes.pupil.upload = Upload-Klasse von XLSX
 
 classes.pupil.classes.list = Liste der Klassen
 classes.pupil.classes.current = Die aktuelle Klasse

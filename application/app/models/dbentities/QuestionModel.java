@@ -75,7 +75,6 @@ public class QuestionModel extends ManageableModel{
     public String[] getFieldValues() {
         String[] result = {this.officialid
                 , this.server.id
-                , this.path
                 , Boolean.toString(this.active)
                 , this.author.name};
         return result;

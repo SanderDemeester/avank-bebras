@@ -27,11 +27,11 @@ public class UserManager extends Manager<UserModel> {
     public String edit_id;
 
     public UserManager(ModelState state) {
-        super(UserModel.class, state, "type", "type");
+        super(UserModel.class, state, "id", "id");
     }
 
     public UserManager(ModelState state, String i){
-        super(UserModel.class, state, "type", "type");
+        super(UserModel.class, state, "id", "id");
         this.edit_id = i;
     }
 

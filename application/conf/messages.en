@@ -549,6 +549,7 @@ classes.import.info.newstudent = New students:
 classes.import.error.savefail = Something went wrong with the saving. Maybe you waited too long? The unsafed data gets removed after a couple of hours. Or someone registered one of the email addresses you were using. Or you used the same email address twice in the file.
 classes.import.error.postfail = Something went wrong with the parsing of the XLSX file. Are you sure it's a valid file? Check the documentation.
 classes.pupil.download = Download class
+classes.pupil.upload = Upload class from XLSX
 
 classes.pupil.classes.list = List of classes
 classes.pupil.classes.current = Your current class
