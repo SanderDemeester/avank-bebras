@@ -10,30 +10,30 @@
 
 <fieldset>
     @inputText(
-    	classForm("name"),
-    	'_label -> (EMessages.get("class.name")+":"),
-    	'_class -> "defaultFormElement",
-    	'_showConstraints -> false
+        classForm("name"),
+        '_label -> (EMessages.get("class.name")+":"),
+        '_class -> "defaultFormElement",
+        '_showConstraints -> false
     )
     @inputText(
-    	classForm("schoolid"),
-    	 '_label -> (EMessages.get("class.school")+":"),
-    	 '_class -> "defaultFormElement",
-    	 '_showConstraints -> false
+        classForm("schoolid"),
+         '_label -> (EMessages.get("class.school")+":"),
+         '_class -> "defaultFormElement",
+         '_showConstraints -> false
     )
     @select(
-    	field = classForm("level"),
-    	options = options(gradeValues), 
-    	'_label -> (EMessages.get("class.level")+":"),
-    	'_class -> "defaultFormElement",
-    	'_showConstraints -> false
+        field = classForm("level"),
+        options = options(gradeValues),
+        '_label -> (EMessages.get("class.level")+":"),
+        '_class -> "defaultFormElement",
+        '_showConstraints -> false
     )
     <i class="muted">@EMessages.get("class.expdate.format"): dd/MM/yyyy @EMessages.get("example"): 14/03/2015</i>
     @inputText(
-    	classForm("expdate"),
-    	'_label -> (EMessages.get("class.expdate")+":"),
-    	'_class -> "defaultFormElement",
-    	'_showConstraints -> false
+        classForm("expdate"),
+        '_label -> (EMessages.get("class.expdate")+":"),
+        '_class -> "defaultFormElement",
+        '_showConstraints -> false
     )
 </fieldset>
 

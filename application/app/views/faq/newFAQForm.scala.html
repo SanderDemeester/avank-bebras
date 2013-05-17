@@ -15,25 +15,25 @@
     <fieldset>
 
         @inputText(
-        	faqForm("name"),
-        	'_label -> (EMessages.get("faq.new.title")+":"),
-        	'class -> "defaultFormElement",
-    	 	'_showConstraints -> false
+            faqForm("name"),
+            '_label -> (EMessages.get("faq.new.title")+":"),
+            'class -> "defaultFormElement",
+             '_showConstraints -> false
         )
         @textarea(
-        	faqForm("content"),
-        	'_label -> (EMessages.get("faq.new.content")+":"),
-        	'rows -> 10,
-        	'cols -> 170,
-        	'class -> "defaultFormElement input-xxlarge",
-    	 	'_showConstraints -> false
+            faqForm("content"),
+            '_label -> (EMessages.get("faq.new.content")+":"),
+            'rows -> 10,
+            'cols -> 170,
+            'class -> "defaultFormElement input-xxlarge",
+             '_showConstraints -> false
         )
         @select(
-        	field = faqForm("language"),
-        	options = options(langValues),
-        	'_label -> (EMessages.get("faq.new.language")+":"),
-        	'_class -> "defaultFormElement",
-    	 	'_showConstraints -> false
+            field = faqForm("language"),
+            options = options(langValues),
+            '_label -> (EMessages.get("faq.new.language")+":"),
+            '_class -> "defaultFormElement",
+             '_showConstraints -> false
         )
 
     </fieldset>
