@@ -227,12 +227,13 @@ forgot_pwd.submit = Verzoek reset wachtwoord
 forgot_pwd.success = Wachtwoord succesvol gereset.
 forgot_pwd.notsent = Er is een fout opgetreden, de e-mail kon niet verstuurd worden.
 forgot_pwd.mail = Er werd een e-mail verzonden naar het opgegeven adres.
+forgot_pwd.mail_teacher = Er werd een e-mail verstuurd naar je leerkracht.
 forgot_pwd.mail_sent = Er werd een nieuw wachtwoord aangevraagd voor gebruiker {0} op Avank-Bebras. Ga naar deze link {1} om het wachtwoord opnieuw in te stellen.
 forgot_pwd.mail_subject = Wachtwoord resetten
 forgot_pwd.email_blank = Laat leeg als u geen e-mailadres heeft
 forgot_pwd.reset_success = Wachtwoord is met succes opnieuw ingesteld
 forgot_pwd.reset_fail = Wachtwoord opnieuw instellen is mislukt
-forgot_pwd.teachermail = Uw leerling(e) {0} heeft een nieuw wachtwoord aangevraagd voor Avank-Bebras. Ga naar deze link {1} om het wachtwoord opnieuw in te stellen.
+forgot_pwd.teachermail = Uw leerling(e) {0} heeft een nieuw wachtwoord aangevraagd voor Avank-Bebras. Gelieve in te loggen en naar deze link {1} te gaan om het wachtwoord opnieuw in te stellen.
 forgot_pwd.teachersubject = Wachtwoord van leerling(e) resetten
 
 # Edit pwd

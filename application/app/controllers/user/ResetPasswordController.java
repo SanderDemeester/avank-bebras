@@ -114,7 +114,7 @@ public class ResetPasswordController extends EController {
             EMail mail = new StudentTeacherEmailReset(teacherEmail, userModel.id,"http://avank.ugent.be/manage/users/<>/edit");
             try {
                 mail.send();
-                flash("success", EMessages.get("forgot_pwd.mail"));
+                flash("success", EMessages.get("forgot_pwd.mail_teacher"));
                 return ok(forgotPwd.render(EMessages.get("forgot_pwd.forgot_pwd"), breadcrumbs, form));
             } catch (MessagingException e) {
                 flash("error", EMessages.get("forgot_pwd.notsent"));

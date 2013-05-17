@@ -228,12 +228,13 @@ forgot_pwd.submit = Reset password
 forgot_pwd.success = Password successfully reset.
 forgot_pwd.notsent = An error occurred, the email wasn't sent.
 forgot_pwd.mail = An email was sent to the provided address.
+forgot_pwd.mail_teacher = An email was sent to your teacher.
 forgot_pwd.mail_sent = A new password was requested for user {0} on Avank-Bebras. Go to {1} to reset it.
 forgot_pwd.mail_subject = Password reset
 forgot_pwd.email_blank = Leave empty if you don't have an email address
 forgot_pwd.reset_success = Password reset success
 forgot_pwd.reset_fail = Failed to reset password
-forgot_pwd.teachermail = Your pupil {0} requested a new password for Avank-Bebras. Please reset it. 
+forgot_pwd.teachermail = Your pupil {0} requested a new password for Avank-Bebras. Please login and go to {1} to reset it.
 forgot_pwd.teachersubject = Password reset for pupil
 
 # Edit pwd

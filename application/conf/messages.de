@@ -228,12 +228,13 @@ forgot_pwd.submit = Passwort zurücksetzen
 forgot_pwd.success = Kennwort erfolgreich zurückgesetzt.
 forgot_pwd.notsent = Es ist ein Fehler aufgetreten, war nicht die e-Mail verschickt.
 forgot_pwd.mail = Eine e-Mail wurde an die angegebene Adresse gesendet.
+forgot_pwd.mail_teacher = Eine E-Mail an Ihren Lehrer geschickt.
 forgot_pwd.mail_sent = Ein neues Passwort wurde für Benutzer {0} auf Avank-Bebras angefordert. Gehen Sie auf {1} es zurücksetzen.
 forgot_pwd.mail_subject = Zurücksetzen des Kennworts
 forgot_pwd.email_blank = Lassen Sie leer, wenn Sie eine e-Mail-Adresse nicht
 forgot_pwd.reset_success = Kennwortzurücksetzung Erfolg
 forgot_pwd.reset_fail = Fehler beim Passwort zurücksetzen
-forgot_pwd.teachermail = Ihre Schüler {0} aufgefordert ein neues Passwort für Avank-Bebras. Bitte setzen Sie es zurück. 
+forgot_pwd.teachermail = Ihre Schüler {0} aufgefordert ein neues Passwort für Avank-Bebras. Bitte loggen Sie sich ein und gehen Sie auf {1}, um es zurückzusetzen.
 forgot_pwd.teachersubject = Kennwort zurücksetzen für Schüler
 
 # Edit pwd
