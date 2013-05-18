@@ -1,0 +1,45 @@
+\begin{document}
+\section{Instalation guide}
+\subsection{Requirements}
+\begin{itemize}
+\item sbt build tool
+\item java 1.7 (at least)
+\item postgreql 9.1 (at least)
+\end{itemize}
+
+\subsection{Server configuration - postgresql setup}
+\begin{itemize}
+\item Install postgres
+\item[First] By default our application uses the default user "postgres". Please change the password for this user to "sander". This is the default for database access but can be changed in
+\item[second] create a database "avank" using the psql tool.
+\item[second] psql -U postgres.
+\item[second] create database avank;
+\item[second] \\i <path to createTablesComplete>
+\item[second] \\i <path to populateDatabase.sql>
+\item[First] *Optional: Optional: if you cannot login using the "psql" command. You should change the authentication methode in "pg_hba.conf" to "md5". 
+"conf/application.conf" using the key "db.default.password".
+\end{itemize}
+\subsubsection{Building the application}
+\begin{itemize}
+\item[First] Install the scala build tool "sbt".
+\item[Second] If you are using a debian based package manager, you can use the apt.typefase repository.
+\item[Second] wget http://apt.typesafe.com/repo-deb-build-0002.deb
+\item[Second] sudo dpkg -i repo-deb-build-0002.deb
+\item[Second] sudo apt-get update
+\item[Second] sudo apt-get install sbt
+\item[First] Download latest source from github: https://github.ugent.be/fvdrjeug/avank-bebras
+\item[First] checkout branch "stable"
+\item[First] running the application should be as simple as typing "sbt compile stage" and running "target/start" in the application folder.
+
+\item[First] If you would like to run the application as a standalone app (this is recommended) please use the following instructions.
+\item[First] Download the zip file "name application"
+\item[First] You can (if you want) use a different "application.conf" file. This will allow you to use different default values for yor application (this is recommended).
+       You will need to build your own production zip file. The steps on how to do this can be found at the play website: http://www.playframework.com/documentation/2.0/ProductionDist
+\item[First] unzip the zip file "unzip avank-1.0-SNAPSHOT.zip"
+\item[First] execute "chmod u+x avank-1.0-SNAPSHOT/start"
+\item[First] To start the application, execute "./avank-1.0-SNAPSHOT/start".
+\item[First] The default port is "9000", you can change this with command line argument "-Dhttp.port=<port number>", so the full command would then be: "./avank-1.0-SNAPSHOT/start -Dhttp.port=80".
+      
+\item[First] Optional, it is possible to install the complete play! Framework. This should be play version 2.0.4 and can be found: http://downloads.typesafe.com/releases/play-2.0.4.zip
+\end{itemize}
+\end{document}
