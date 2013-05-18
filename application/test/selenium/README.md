@@ -22,4 +22,7 @@ Requirements for each testsuite
 	* logged in as a TEACHER user, teacher account tteacher to add as help teacher, pupil account ttester to add, existing school and class 
 * usermgmt:
 	* logged in as an ADMINISTRATOR user, pupil account with pwd=albert on 2nd pace in user overview	 
-
+* competitionmgmt:
+	* logged in as an ADMINISTRATOR user, competition=Test competition with questions=Test bundel for delete and edit
+* statistics:
+	* logged in as PUPIL user (avandam)
