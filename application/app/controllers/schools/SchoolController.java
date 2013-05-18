@@ -115,7 +115,7 @@ public class SchoolController extends EController {
             return badRequest(addschool.render(form, breadcrumbs, ori));
         }
         // Redirect back to the list
-        flash("success", Integer.toString(m.id)); // Show id of newly created
+        flash("succes", Integer.toString(m.id)); // Show id of newly created
                                                     // school in message
         return Results.redirect(controllers.schools.routes.SchoolController
                 .viewSchools(0,"name","asc",""));
