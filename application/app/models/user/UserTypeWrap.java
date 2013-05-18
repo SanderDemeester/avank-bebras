@@ -14,7 +14,7 @@ import models.management.Listable;
 public class UserTypeWrap implements Listable {
 
     /**
-     * TODO explain why it's empty
+     * Empty because instances only use the options method.
      */
     public UserTypeWrap() {
 

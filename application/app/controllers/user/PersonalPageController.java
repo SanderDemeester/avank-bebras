@@ -153,8 +153,7 @@ public class PersonalPageController extends EController {
 
     /**
      * This method is called when the user clicks on 'Change password'.
-     * TODO this shouldn't throw an 'Exception', but rather a subclass of
-     * Exception.
+     *
      * @return page after password is changed
      * @throws Exception
      */
