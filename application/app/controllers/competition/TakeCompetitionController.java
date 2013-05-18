@@ -229,7 +229,6 @@ public class TakeCompetitionController extends EController {
         // Register the user in the competition
         try {
             if(user.isAnon()) {
-                Logger.debug("registered: "+AuthenticationManager.getInstance().getAuthCookie());
                 stateID = AuthenticationManager.getInstance().getAuthCookie();
                 CompetitionUserStateManager.getInstance().registerAnon(
                         competition.getID(),
@@ -267,7 +266,6 @@ public class TakeCompetitionController extends EController {
             // Save the results
             CompetitionUserState state = null;
             if(AuthenticationManager.getInstance().getUser().isAnon()) {
-                Logger.debug("taken: "+AuthenticationManager.getInstance().getAuthCookie());
                 state = CompetitionUserStateManager.getInstance().getState(
                         feedback.getCompetitionID(),
                         AuthenticationManager.getInstance().getAuthCookie()
