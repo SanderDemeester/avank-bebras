@@ -155,7 +155,7 @@ public class UserManager extends Manager<UserModel> {
      * This method makes sure that the correct list is made for a certain
      * type of user (which calls the method)
      * 
-     * @param The usertype to set the correct dataset
+     * @param The user type to set the correct dataset
      */
     public void setDataSet(String userType) {
         if(userType.equals("ADMINISTRATOR")) {
