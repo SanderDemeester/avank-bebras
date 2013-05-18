@@ -193,6 +193,10 @@ statistics.populations.schools = Scholen
 statistics.populations.all = Alle gebruikers
 statistics.statistics.gender = Geslacht
 statistics.statistics.score = Correcte vragen
+statistics.statistics.language = Taal
+statistics.statistics.age = Leeftijd
+statistics.statistics.classlevel = Klasniveau
+statistics.statistics.answer = Antwoord
 
 # Login
 redirect_message = U zal zodadelijk worden doorgestuurd naar uw startpagina.
