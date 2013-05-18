@@ -9,9 +9,21 @@ import models.EMessages;
  */
 public enum CompetitionState {
 
+    /**
+     * draft
+     */
     DRAFT,
+    /**
+     * active
+     */
     ACTIVE,
+    /**
+     * running
+     */
     RUNNING,
+    /**
+     * finished
+     */
     FINISHED;
 
 

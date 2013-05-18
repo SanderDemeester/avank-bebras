@@ -13,6 +13,7 @@ import org.w3c.dom.NodeList;
 /**
  * Abstract class for Question factories
  * @author Ruben Taelman
+ * @param <T> type of question
  *
  */
 public abstract class QuestionFactory<T extends Question> {
@@ -31,6 +32,7 @@ public abstract class QuestionFactory<T extends Question> {
      * A question will be generated based on a NodeList
      * @param node a Node that contains the structure of questions
      * @return a new question based on contents of the NodeList
+     * @throws QuestionBuilderException 
      */
     public abstract Question newQuestion(Node node) throws QuestionBuilderException;
 

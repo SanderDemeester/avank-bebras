@@ -4,6 +4,11 @@ import models.dbentities.UserModel;
 import models.user.Organizer;
 import models.user.User;
 
+/**
+ * Make organizers
+ * @author Ruben Taelman
+ *
+ */
 public class OrganizerUserFactory implements UserFactory{
 
     @Override

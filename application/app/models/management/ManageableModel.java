@@ -16,6 +16,8 @@ import play.db.ebean.Model;
 @MappedSuperclass
 public abstract class ManageableModel extends Model{
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Returns those field values that have to be represented in a table.
      *

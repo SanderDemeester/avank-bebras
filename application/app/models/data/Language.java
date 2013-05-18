@@ -67,6 +67,9 @@ public class Language implements Comparable<Language>, Listable {
      * Creates a new language, or returns an existing language with the given
      * code.
      * @param code The code Play uses for this language.
+     * @return language
+     * @throws UnavailableLanguageException 
+     * @throws UnknownLanguageCodeException 
      */
     public static Language getLanguage(String code) throws
             UnavailableLanguageException, UnknownLanguageCodeException {
@@ -81,7 +84,9 @@ public class Language implements Comparable<Language>, Listable {
     /**
      * Creates a new language, or returns an existing language as wrapper for
      * the supplied Lang.
-     * @param code The Play language.
+     * @param lang The Play language.
+     * @return language
+     * @throws UnavailableLanguageException 
      */
     public static Language getLanguage(Lang lang) throws
             UnavailableLanguageException {
@@ -121,6 +126,7 @@ public class Language implements Comparable<Language>, Listable {
 
     /**
      * Returns the Play Lang objects this language wraps.
+     * @return lang
      */
     public Lang getLang() {
         return lang;

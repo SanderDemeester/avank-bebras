@@ -29,27 +29,45 @@ import com.avaje.ebean.validation.NotNull;
 public class QuestionModel extends ManageableModel{
     private static final long serialVersionUID = 2L;
 
+    /**
+     * id
+     */
     @Id
     @Editable(alwaysHidden=true, hiddenInList=true)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Seq")//@GeneratedValue(strategy = GenerationType.AUTO)
     public int id;
 
+    /**
+     * official id
+     */
     @Editable
     public String officialid;
 
+    /**
+     * server
+     */
     @Editable
     @ManyToOne
     @NotNull
     @JoinColumn(name="serverid")
     public Server server;
 
+    /**
+     * path
+     */
     @Transient
     public String path;
 
+    /**
+     * is active
+     */
     @Editable
     @Constraints.Required
     public boolean active;
 
+    /**
+     * author user
+     */
     @Editable
     @ManyToOne
     @NotNull

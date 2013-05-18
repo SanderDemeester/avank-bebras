@@ -166,6 +166,10 @@ public class QuestionSet {
         questions.add(question);
     }
 
+    /**
+     * If this set can be activated
+     * @return true
+     */
     public boolean canActivate(){
         return true;
     }

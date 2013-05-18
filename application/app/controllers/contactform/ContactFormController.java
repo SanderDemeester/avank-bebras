@@ -1,6 +1,3 @@
-/**
- *
- */
 package controllers.contactform;
 
 import java.util.ArrayList;
@@ -26,10 +23,10 @@ import controllers.EController;
  */
 public class ContactFormController extends EController {
 
-    /**
-     *
-     * @return a page with a contactform
-     */
+	/**
+	 * Show the contact form
+	 * @return a page with a contactform
+	 */
     public static Result showContactForm(){
         //Generate breadcrumbs
         ArrayList<Link> bc = new ArrayList<Link>();
@@ -50,10 +47,10 @@ public class ContactFormController extends EController {
 
     }
 
-    /**
-     * Tries to send the data in the contactform to the appropriate emailaddress
-     * @return a page with the contactform
-     */
+	/**
+	 * Tries to send the data in the contactform to the appropriate emailaddress
+	 * @return a page with the contactform
+	 */
     public static Result saveContactForm(){
         //Generate breadcrumbs
         ArrayList<Link> bc = new ArrayList<Link>();
@@ -79,11 +76,21 @@ public class ContactFormController extends EController {
         return redirect(routes.ContactFormController.showContactForm());
     }
 
-    public static class ContactForm{
-        @Constraints.Required
-        @Constraints.Email
-        public String email;
-        @Constraints.Required
-        public String question;
-    }
+	/**
+	 * Contact form data holder
+	 *
+	 */
+	public static class ContactForm{
+	    /**
+	     * Email address
+	     */
+		@Constraints.Required
+		@Constraints.Email
+		public String email;
+		/**
+		 * Inputted question
+		 */
+		@Constraints.Required		
+		public String question;
+	}
 }

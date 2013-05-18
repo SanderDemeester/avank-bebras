@@ -28,7 +28,6 @@ import models.question.submits.SubmitsPage;
 import models.user.AuthenticationManager;
 import models.user.Role;
 
-
 import play.Play;
 import play.cache.Cache;
 import play.data.Form;
@@ -80,8 +79,8 @@ public class QuestionController extends EController{
 
     /**
      * This result will redirect to the question list page
-     *
-     * @param oderBy the field to order by
+     * @param page page nr
+     * @param orderBy the field to order by
      * @param order "asc" or "desc"
      * @param filter the string to filter on
      *
@@ -365,7 +364,7 @@ public class QuestionController extends EController{
     /**
      * This will show a file from a certain question pack
      *
-     * @param name name of the question
+     * @param id id of the question
      * @param fileName name of the file to show
      * @return question list page
      */

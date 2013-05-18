@@ -29,8 +29,7 @@ $("#mimic").live("click",function(){
     });
 
     request.done(function(data){
-        document.cookie="@models.user.AuthenticationManager.COOKIENAME" + "=" + data + ";expires=1000";
-        window.location = "/";
+        window.location.href = "/";
         });
 
     request.fail(function(jqXHR, data){

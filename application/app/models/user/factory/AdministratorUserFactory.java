@@ -4,6 +4,11 @@ import models.dbentities.UserModel;
 import models.user.Administrator;
 import models.user.User;
 
+/**
+ * Make admin user
+ * @author Ruben Taelman
+ *
+ */
 public class AdministratorUserFactory implements UserFactory{
 
     @Override

@@ -6,7 +6,14 @@ package models.question;
  *
  */
 public enum QuestionType {
-    MULTIPLE_CHOICE("multiple-choice-question"), REGEX("regex-question");
+    /**
+     * multiple choice question
+     */
+    MULTIPLE_CHOICE("multiple-choice-question"),
+    /**
+     * regex question
+     */
+    REGEX("regex-question");
 
     private String xmlElement;
 
@@ -14,6 +21,10 @@ public enum QuestionType {
         this.xmlElement=xmlElement;
     }
 
+    /**
+     * get xml tag name
+     * @return tag name
+     */
     public String getXmlElement() {
         return this.xmlElement;
     }

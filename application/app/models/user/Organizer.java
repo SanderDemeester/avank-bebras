@@ -11,7 +11,12 @@ import models.dbentities.UserModel;
  */
 
 public class Organizer extends SuperUser{
-
+	
+	/**
+     * Constructor
+     * @param data Data model class
+     * @param type User type.
+     */
     protected Organizer(UserModel data, UserType type) {
         super(data, type);
         ROLES.add(Role.MANAGEQUESTIONS);
@@ -20,7 +25,11 @@ public class Organizer extends SuperUser{
         ROLES.add(Role.MANAGEUSERS);
         ROLES.add(Role.MIMIC);
     }
-
+    
+    /**
+     * Constructor
+     * @param data Data model class
+     */
     public Organizer(UserModel data) {
         this(data, UserType.ORGANIZER);
     }

@@ -13,12 +13,12 @@ import models.management.ModelState;
 import models.user.AuthenticationManager;
 import models.dbentities.UserModel;
 import play.mvc.Call;
-import controllers.user.management.routes;
+
+import com.avaje.ebean.ExpressionList;
 
 /**
  * Manager for the UserModel entity.
- * 
- * @author thomas
+ * @author Thomas Mortier
  */
 public class UserManager extends Manager<UserModel> {
 
@@ -35,8 +35,8 @@ public class UserManager extends Manager<UserModel> {
 
     /**
      * Create a new UserManager.
-     * @param i the id for the requested UserModel, only used when editing a UserModel
      * @param state the state the manager should be in
+     * @param i the id for the requested UserModel, only used when editing a UserModel
      */
     public UserManager(ModelState state, String i) {
         super(UserModel.class, state, "id", "id");
@@ -56,7 +56,7 @@ public class UserManager extends Manager<UserModel> {
     /**
      * Returns the path of the route that must be followed to edit the selected item.
      *
-     * @param Id of the user that will be edited
+     * @param id of the user that will be edited
      * @return Call path of the route that must be followed
      */
     @Override
@@ -82,7 +82,7 @@ public class UserManager extends Manager<UserModel> {
     /**
      * Returns the path of the route that must be followed to remove the selected item.
      *
-     * @param Id of the user that will be deleted
+     * @param id of the user that will be deleted
      * @return Null because a UserManager can't delete instances
      */
     @Override
@@ -155,7 +155,7 @@ public class UserManager extends Manager<UserModel> {
      * This method makes sure that the correct list is made for a certain
      * type of user (which calls the method)
      * 
-     * @param userType
+     * @param userType TODO
      */
     public void setDataSet(String userType) {
         if(userType.equals("ADMINISTRATOR")) {

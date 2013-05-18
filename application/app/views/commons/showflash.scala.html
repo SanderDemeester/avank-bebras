@@ -1,3 +1,5 @@
+@import models.EMessages
+
 @if(flash.containsKey("success")) {
      <div class="alert alert-success">
          <strong>@EMessages.get("info.success")!</strong> @flash.get("success")

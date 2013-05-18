@@ -43,7 +43,7 @@ public class CompetitionUserStateManager {
 
     /**
      * Get the unique instance of this manager
-     * @return unique instance
+     * @return the unique CompetitionUserStateManager
      */
     public static CompetitionUserStateManager getInstance() {
         if(_instance == null)

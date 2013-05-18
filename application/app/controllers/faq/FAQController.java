@@ -1,6 +1,3 @@
-/**
- *
- */
 package controllers.faq;
 
 import java.util.ArrayList;
@@ -63,7 +60,6 @@ public class FAQController extends EController {
         }
         return ok(faq.render(breadcrumbs,f,ori));
     }
-
 
     /**
      * Returns the list of FAQs

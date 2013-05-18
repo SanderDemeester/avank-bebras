@@ -1,6 +1,15 @@
 package controllers;
 
-import com.avaje.ebean.Ebean;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import models.EMessages;
 import models.data.Link;
 import models.dbentities.UserModel;
@@ -19,15 +28,7 @@ import views.html.login.register;
 import views.html.login.registerLandingPage;
 import views.html.mimic.mimicForm;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.avaje.ebean.Ebean;
 
 /**
  * This class receives all GET requests and based on there session identifier (cookie)
@@ -37,12 +38,6 @@ import java.util.regex.Pattern;
  */
 
 public class UserController extends EController {
-
-
-    private static final String EMAIL_PATTERN =
-            "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-
 
     /**
      * This method gets requested when the user clicks on "signup".
@@ -59,6 +54,10 @@ public class UserController extends EController {
         ));
     }
 
+    /**
+     * Mimic a user
+     * @return the page after mimicking
+     */
     public static Result mimic() {
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
@@ -70,6 +69,10 @@ public class UserController extends EController {
         return ok(mimicForm.render(EMessages.get("app.mimic"), breadcrumbs, form(MimicForm.class)));
     }
 
+    /**
+     * Execute a mimic
+     * @return Redirect to the mimicked user
+     */
     public static Result mimicExecute() {
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link("Home", "/"));
@@ -190,8 +193,11 @@ public class UserController extends EController {
 
     /**
      * This method is called when the users clicks on "login".
+     * @param id the id of the user
+     * @param password the password of the user
      *
      * @return returns the users cookie.
+     * @throws Exception 
      */
     public static Result validate_login(String id, String password) throws Exception {
         String cookie = "";
@@ -245,8 +251,8 @@ public class UserController extends EController {
 
     /**
      * @return Returns a scala template based on the type of user that is requesting the page.
+     * @throws Exception 
      */
-    @SuppressWarnings("unchecked")
     public static Result landingPage() throws Exception {
         List<Link> breadcrumbs = new ArrayList<Link>();
         breadcrumbs.add(new Link(EMessages.get("app.home"), "/"));
@@ -266,18 +272,39 @@ public class UserController extends EController {
      * Inline class that contains public fields for play forms.
      */
     public static class Register {
+        /**
+         * Name of user
+         */
         @Required
         public String name;
+        /**
+         * Email of user
+         */
         public String email;
+        /**
+         * Birthday of user
+         */
         @Required
         @Formats.DateTime(pattern = "dd/MM/yyyy")
         public String bday;
+        /**
+         * Password
+         */
         @Required
         public String password;
+        /**
+         * Repeat of password
+         */
         @Required
         public String controle_passwd;
+        /**
+         * Gender
+         */
         @Required
         public String gender;
+        /**
+         * Preferred language
+         */
         @Required
         public String prefLanguage;
     }
@@ -286,11 +313,23 @@ public class UserController extends EController {
      * Inline class that contains public fields for play forms.
      */
     public static class Login {
+        /**
+         * Id of user
+         */
         public String id;
+        /**
+         * Password of user
+         */
         public String password;
     }
 
+    /**
+     * Mimick form data holder
+     */
     public static class MimicForm {
+        /**
+         * ID of user to mimic
+         */
         public String bebrasID;
     }
 }

@@ -16,7 +16,7 @@ object ApplicationBuild extends Build {
       "org.bouncycastle" % "bcprov-jdk15on" % "1.48",
       "dom4j" % "dom4j" % "1.6.1",
       "it.sauronsoftware.ftp4j" % "ftp4j" % "1.7.2",
-      "stax" % "stax-api" % "1.0.1",
+      "org.apache.geronimo.specs" % "geronimo-stax-api_1.0_spec" % "1.0.1",
       "log4j" % "log4j" % "1.2.13",
       "org.apache.poi" % "poi" % "3.9",
       "org.apache.poi" % "poi-ooxml" % "3.9",

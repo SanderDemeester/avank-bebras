@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Expr;
 import com.avaje.ebean.annotation.Transactional;
@@ -25,16 +26,27 @@ import models.user.Role;
 import models.user.UserType;
 import play.data.Form;
 import play.mvc.Content;
-import play.mvc.Results;
 import play.mvc.Result;
+import play.mvc.Results;
 import views.html.commons.noaccess;
 import views.html.user.management.usermanager;
 import views.html.user.management.edituser;
 import views.html.user.management.createuser;
+import views.html.user.management.edituser;
+import views.html.user.management.usermanager;
+
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Expr;
+import com.avaje.ebean.annotation.Transactional;
+
+import controllers.EController;
+import controllers.util.InputChecker;
+import controllers.util.PasswordHasher;
+import controllers.util.PasswordHasher.SaltAndPassword;
 
 /**
  * Controller class for the user management.
- * @author thomas
+ * @author Thomas Mortier
  */
 public class UserManagerController extends EController {
 
@@ -66,7 +78,7 @@ public class UserManagerController extends EController {
     /**
      * This result will redirect to the user list page
      *
-     * @param oderBy the field to order by
+     * @param orderBy the field to order by
      * @param order "asc" or "desc"
      * @param filter the string to filter on
      *
@@ -143,7 +155,7 @@ public class UserManagerController extends EController {
     /**
      * Returns the user type of a user model.
      * 
-     * @param UserModel um
+     * @param um TODO
      * @return UserType of um
      */
     public static UserType getUserType(UserModel um) {
@@ -154,7 +166,7 @@ public class UserManagerController extends EController {
      * Returns to the user list view and saves the changes that have been made
      * to a certain user with id edit_id.
      * 
-     * @param String edit_id of the user to be updated
+     * @param edit_id id of the user to be updated
      * @return User list view page
      */
     @Transactional
@@ -274,7 +286,7 @@ public class UserManagerController extends EController {
     /**
      * Creates the user edit page for editing a user with ID id.
      * 
-     * @param String id of the user to be edited
+     * @param id id of the user to be edited
      * @return User edit page
      */
     @Transactional(readOnly=true)
@@ -413,7 +425,7 @@ public class UserManagerController extends EController {
      * Helpmethod for showing the correct listvalues for user with ID edit_id.
      * This method returns the type of the user with ID id.
      * 
-     * @param String id of the user
+     * @param id id of the user
      * @return String of the user's type
      */
     public static String getUserType(String id) {
@@ -426,7 +438,7 @@ public class UserManagerController extends EController {
      * Helpmethod for showing the correct listvalues for user with ID edit_id.
      * This method returns the language of the user with ID id.
      * 
-     * @param String id of the user
+     * @param id id of the user
      * @return String of the user's language
      */
     public static String getUserLang(String id) {
@@ -439,7 +451,7 @@ public class UserManagerController extends EController {
      * Helpmethod for showing the correct listvalues for user with ID edit_id.
      * This method returns the gender of the user with ID id.
      * 
-     * @param String id of the user
+     * @param id id of the user
      * @return String of the user's gender
      */
     public static String getUserGender(String id) {

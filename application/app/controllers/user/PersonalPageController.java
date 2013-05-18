@@ -39,11 +39,11 @@ public class PersonalPageController extends EController {
         return AuthenticationManager.getInstance().getUser().hasRole(Role.SETTINGS);
     }
 
-    /*
+    /**
      * Method which takes care of rendering the correct page for the personal
      * information editor.
      * 
-     * @param int tab for a certain tab (information/edit information/password change)
+     * @param tab for a certain tab (information/edit information/password change)
      */
     public static Result show(int tab) {
         ArrayList<Link> breadcrumbs = new ArrayList<Link>();
@@ -139,7 +139,7 @@ public class PersonalPageController extends EController {
 
     /**
      * Returns a date in a better readable string.
-     * @param Date dt
+     * @param dt The date we want to read.
      * @return String which represents the date
      */
     public static String dateToString(Date dt) {
@@ -153,6 +153,8 @@ public class PersonalPageController extends EController {
 
     /**
      * This method is called when the user clicks on 'Change password'.
+     * TODO this shouldn't throw an 'Exception', but rather a subclass of
+     * Exception.
      * @return page after password is changed
      * @throws Exception
      */

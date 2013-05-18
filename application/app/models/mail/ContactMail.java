@@ -8,10 +8,14 @@ import models.EMessages;
 
 /**
  * @author Jens N. Rammant
- *
+ * Class for mails sent by the Contact Form
  */
 public class ContactMail extends EMail {
 
+	/**
+	 * @param message Message of the mail
+	 * @param senderMail Email of the sender
+	 */
     public ContactMail(String message, String senderMail){
         super();
         this.setMessage(message);

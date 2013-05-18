@@ -1,6 +1,3 @@
-/**
- *
- */
 package models.user;
 
 import java.util.Calendar;
@@ -18,9 +15,12 @@ import models.dbentities.UserModel;
 
 /**
  * @author Jens N. Rammant
+ * Class that validates the data in a usermodel
  *
  */
 public class UserModelValidator {
+	
+
     /**
      * Checks if the basic data in the usermodel is valid.
      * Does not check if there is an emailaddress. If there is one, it WILL check if it's valid
@@ -57,17 +57,32 @@ public class UserModelValidator {
 
     }
 
+	/**
+	 * @author Jens N Rammant
+	 * enum for returning what's wrong with the usermodel
+	 */
     public enum Result{
+        /** Everything OK */
         OK("usermodelvalidator.result.ok"),
+        /** No name given. */
         NO_NAME("usermodelvalidator.result.noname"),
+        /** Invalid name given. */
         INVALID_NAME("usermodelvalidator.result.invalidname"),
+        /** No birthdate given. */
         NO_BIRTHDAY("usermodelvalidator.result.nobirthday"),
+        /** Born in the future. */
         BIRTHDAY_AFTER_TODAY("usermodelvalidator.result.latebirthday"),
+        /** No gender provided. */
         NO_GENDER("usermodelvalidator.result.nogender"),
+        /** No preferred language given. */
         NO_LANGUAGE("usermodelvalidator.result.nolanguage"),
+        /** Invalid preferred language given. */
         INVALID_LANGUAGE("usermodelvalidator.result.invalidlanguage"),
+        /** No password provided. */
         NO_PASSWORD("usermodelvalidator.result.nopassword"),
+        /** That's not an email address. */
         INVALID_EMAIL("usermodelvalidator.result.invalidemail"),
+        /** Duplicate email address. */
         ALREADY_EXISTING_EMAIL("usermodelvalidator.result.existingemail");
 
         private final String EMessageString;

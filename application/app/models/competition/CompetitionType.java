@@ -12,17 +12,29 @@ import java.util.LinkedHashMap;
  */
 public enum CompetitionType {
 
+    /**
+     * unrestricted
+     */
     @EnumValue("UNRESTRICTED")
     UNRESTRICTED,
 
+    /**
+     * restricted
+     */
     @EnumValue("RESTRICTED")
     RESTRICTED,
 
+    /**
+     * anonymous
+     */
     @EnumValue("ANONYMOUS")
     ANONYMOUS;
 
-    @Override
-    public String toString(){
+    /**
+     * Translate this enum
+     * @return translation
+     */
+    public String translate(){
         return EMessages.get("competition.type." + this.name().toLowerCase());
     }
 
@@ -32,9 +44,9 @@ public enum CompetitionType {
      */
     public static LinkedHashMap<String, String> options() {
         LinkedHashMap<String, String> options = new LinkedHashMap<String, String>();
-        options.put(RESTRICTED.name(), RESTRICTED.toString());
-        options.put(UNRESTRICTED.name(), UNRESTRICTED.toString());
-        options.put(ANONYMOUS.name(), ANONYMOUS.toString());
+        options.put(RESTRICTED.name(), RESTRICTED.translate());
+        options.put(UNRESTRICTED.name(), UNRESTRICTED.translate());
+        options.put(ANONYMOUS.name(), ANONYMOUS.translate());
         return options;
     }
 

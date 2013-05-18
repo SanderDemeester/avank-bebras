@@ -1,5 +1,7 @@
 package models.user;
-
+/**
+ * @author Sander Demeester
+ */
 public enum Gender {
     Male,
     Female,

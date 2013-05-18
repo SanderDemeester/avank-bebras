@@ -28,8 +28,13 @@ import models.user.Teacher;
  */
 public class SchoolManager extends Manager<SchoolModel> {
 
-    String teacherID;
-
+	String teacherID;
+	
+	/**
+	 * Make new SchoolManager
+	 * @param state state of the model
+	 * @param teacherID id of the teacher
+	 */
     public SchoolManager(ModelState state, String teacherID) {
         super(SchoolModel.class, state, "name", "name");
         this.teacherID = teacherID;

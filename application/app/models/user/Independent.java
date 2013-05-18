@@ -22,7 +22,11 @@ import com.avaje.ebean.Ebean;
 public class Independent extends Authenticated{
 
     private List<String> previousClassList;
-
+    /**
+     * Constructor
+     * @param data Data model class
+     * @param type UserType
+     */
     protected Independent(UserModel data, UserType type){
         super(data, type); //abstract class constructor could init some values
         ROLES.add(Role.PUPILCLASSVIEW);

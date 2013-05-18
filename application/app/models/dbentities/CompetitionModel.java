@@ -20,29 +20,53 @@ public class CompetitionModel extends ManageableModel {
 
     private static final long serialVersionUID = 4L;
 
+    /**
+     * creator
+     */
     public String creator;
 
+    /**
+     * id
+     */
     @Id
     public String id;
 
+    /**
+     * name
+     */
     @Constraints.Required
     public String name;
 
+    /**
+     * type
+     */
     @Constraints.Required
     @Enumerated(EnumType.STRING)
     public CompetitionType type;
 
+    /**
+     * active
+     */
     @Constraints.Required
     public boolean active;
 
+    /**
+     * start time
+     */
     @Formats.DateTime(pattern = "dd/MM/yyyy HH:mm:ss")
     @Constraints.Required
     public Date starttime;
 
+    /**
+     * end time
+     */
     @Formats.DateTime(pattern = "dd/MM/yyyy HH:mm:ss")
     @Constraints.Required
     public Date endtime;
 
+    /**
+     * duration
+     */
     @Constraints.Required
     public int duration;
 
@@ -53,7 +77,7 @@ public class CompetitionModel extends ManageableModel {
      */
     @Override
     public String[] getFieldValues() {
-        String[] fieldValues = {name, type.toString(), Boolean.toString(active), starttime.toString(), endtime.toString(), creator, "" + duration};
+        String[] fieldValues = {name, type.translate(), Boolean.toString(active), starttime.toString(), endtime.toString(), creator, "" + duration};
         return fieldValues;
     }
 

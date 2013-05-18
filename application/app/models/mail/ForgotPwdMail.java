@@ -1,10 +1,19 @@
 package models.mail;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
 import models.EMessages;
 import play.Play;
 
 public class ForgotPwdMail extends EMail {
 
+	 /**
+     * This method sends an email when the user requests a new password.
+     * @param recipient email of destination
+     * @param id the usermodel ID
+     * @param url the url for resetting password
+     */
     public ForgotPwdMail(String recipient, String id, String url) {
         super();
         this.setSubject(EMessages.get("forgot_pwd.mail_subject"));

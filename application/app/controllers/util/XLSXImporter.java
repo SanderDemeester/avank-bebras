@@ -24,7 +24,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class XLSXImporter {
 
+    /**
+     * sheet id to open
+     */
     public static final int READSHEET = 0;
+    /**
+     * Sheet name to write to
+     */
     public static final String WRITESHEET = "Sheet1";
 
     /**

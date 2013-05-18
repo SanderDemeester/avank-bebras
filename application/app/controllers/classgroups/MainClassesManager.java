@@ -1,6 +1,3 @@
-/**
- *
- */
 package controllers.classgroups;
 
 import java.util.ArrayList;
@@ -25,6 +22,11 @@ public class MainClassesManager extends Manager<ClassGroup> {
 
     protected String teacherID;
 
+	/**
+	 * Make a new MainClassesManager
+	 * @param teacherID id of the teacher
+	 * @param state state of the model
+	 */
     public MainClassesManager(String teacherID, ModelState state) {
         super(ClassGroup.class, state, "name", "teacherid");
         this.teacherID=teacherID;

@@ -1,6 +1,3 @@
-/**
- *
- */
 package controllers.schools;
 
 import java.util.ArrayList;
@@ -33,49 +30,53 @@ import controllers.EController;
  */
 public class SchoolController extends EController {
 
-    /**
-     *
-     * @return a page of all the schools the teacher is somehow associated with.
-     *         No Access page if user is not teacher.
-     */
-    public static Result viewSchools(int page, String orderBy, String order, String filter) {
-        // Generate breadcrumbs & template arguments
-        ArrayList<Link> breadcrumbs = getBreadcrumbs();
-        if (!isAuthorized())
-            return ok(noaccess.render(breadcrumbs));
-        OperationResultInfo ori = new OperationResultInfo();
-        String teacherID = (getTeacher()==null)?"!!NoTeacher!!":getTeacher().getID();
-        //Configure the manager
-        SchoolManager sm = new SchoolManager(ModelState.READ, teacherID);
-        sm.setFilter(filter);
-        sm.setOrder(order);
-        sm.setOrderBy(orderBy);
-        //Try to render list
-        try{
-            return ok(schools.render(sm.page(page), sm, orderBy, order,filter, breadcrumbs, ori));
-        }catch(PersistenceException pe){
-            ori.add(EMessages.get("schools.list.error"),OperationResultInfo.Type.ERROR);
-            return ok(schools.render(null, sm, orderBy, order,filter, breadcrumbs, ori));
-        }
-    }
+	/**
+	 * 
+	 * @param page page nr
+	 * @param orderBy order field
+	 * @param order order
+	 * @param filter filter
+	 * @return a page of all the schools the teacher is somehow associated with.
+	 *         No Access page if user is not teacher.
+	 */
+	public static Result viewSchools(int page, String orderBy, String order, String filter) {
+		// Generate breadcrumbs & template arguments
+		ArrayList<Link> breadcrumbs = getBreadcrumbs();
+		if (!isAuthorized())
+			return ok(noaccess.render(breadcrumbs));
+		OperationResultInfo ori = new OperationResultInfo();
+		String teacherID = (getTeacher()==null)?"!!NoTeacher!!":getTeacher().getID();
+		//Configure the manager
+		SchoolManager sm = new SchoolManager(ModelState.READ, teacherID);
+		sm.setFilter(filter);
+		sm.setOrder(order);
+		sm.setOrderBy(orderBy);
+		//Try to render list
+		try{
+			return ok(schools.render(sm.page(page), sm, orderBy, order,filter, breadcrumbs, ori));
+		}catch(PersistenceException pe){
+			ori.add(EMessages.get("schools.list.error"),OperationResultInfo.Type.ERROR);
+			return ok(schools.render(null, sm, orderBy, order,filter, breadcrumbs, ori));
+		}
+	}
 
-    /**
-     *
-     * @return a page for creating a new school. No Access page if user is not a
-     *         teacher
-     */
-    public static Result create() {
-        // Generate breadcrumbs
-        List<Link> breadcrumbs = getBreadcrumbs();
-        breadcrumbs.add(new Link(EMessages.get("schools.add"), "/schools/new"));
-        OperationResultInfo ori = new OperationResultInfo();
-        // Check if authorized
-        if (!isAuthorized())
-            return ok(noaccess.render(breadcrumbs));
-        // Create & render form
-        Form<SchoolModel> form = new Form<SchoolModel>(SchoolModel.class);
-        return ok(addschool.render(form, breadcrumbs, ori));
-    }
+	/**
+	 * 
+	 * @return a page for creating a new school. No Access page if user is not a
+	 *         teacher
+	 */
+	public static Result create() {
+		// Generate breadcrumbs
+		List<Link> breadcrumbs = getBreadcrumbs();
+		breadcrumbs.add(new Link(EMessages.get("schools.add"), "/schools/new"));
+		OperationResultInfo ori = new OperationResultInfo();
+		// Check if authorized
+		if (!isAuthorized())
+			return ok(noaccess.render(breadcrumbs));
+		// Create & render form
+		Form<SchoolModel> form = new Form<SchoolModel>(SchoolModel.class);
+		return ok(addschool.render(form, breadcrumbs, ori));
+	}
 
     /**
      * Saves the data from the form
@@ -114,12 +115,13 @@ public class SchoolController extends EController {
             return badRequest(addschool.render(form, breadcrumbs, ori));
         }
         // Redirect back to the list
-        flash("success", Integer.toString(m.id)); // Show id of newly created
+        flash("succes", Integer.toString(m.id)); // Show id of newly created
                                                     // school in message
         return Results.redirect(controllers.schools.routes.SchoolController
                 .viewSchools(0,"name","asc",""));
 
     }
+
     /**
      *
      * @param id of the school
@@ -146,6 +148,7 @@ public class SchoolController extends EController {
         }
 
     }
+
     /**
      * saves the updated school
      * @param id of the school
@@ -190,40 +193,40 @@ public class SchoolController extends EController {
         return res;
     }
 
-    /**
-     *
-     * @return whether the user is authorized to view a School Management page
-     */
-    private static boolean isAuthorized() {
-        return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGESCHOOLS);
-    }
+	/**
+	 * 
+	 * @return whether the user is authorized to view a School Management page
+	 */
+	private static boolean isAuthorized() {
+		return AuthenticationManager.getInstance().getUser().hasRole(Role.MANAGESCHOOLS);
+	}
+	
+	/**
+	 * 
+	 * @param id of the school
+	 * @return whether the user is authorized to edit the class
+	 * @throws PersistenceException
+	 */
+	public static boolean isAuthorized(int id) throws PersistenceException{
+		if(!isAuthorized())return false;
+		if(AuthenticationManager.getInstance().getUser().getType()==UserType.TEACHER){
+			SchoolModel sm = Ebean.find(SchoolModel.class,id);
+			return sm.orig.equals(AuthenticationManager.getInstance().getUser().getID());
+		}
+		return false;
+	}
 
-    /**
-     *
-     * @param id of the school
-     * @return whether the user is authorized to edit the class
-     * @throws PersistenceException
-     */
-    public static boolean isAuthorized(int id) throws PersistenceException{
-        if(!isAuthorized())return false;
-        if(AuthenticationManager.getInstance().getUser().getType()==UserType.TEACHER){
-            SchoolModel sm = Ebean.find(SchoolModel.class,id);
-            return sm.orig.equals(AuthenticationManager.getInstance().getUser().getID());
-        }
-        return false;
-    }
+	/**
+	 * 
+	 * @return the currently logged in Teacher. null if it's not a teacher
+	 * 
+	 */
+	private static Teacher getTeacher() {
+		try{
+			return (Teacher) AuthenticationManager.getInstance().getUser();
+		}catch(Exception e){
+			return null;
+		}
 
-    /**
-     *
-     * @return the currently logged in Teacher. null if it's not a teacher
-     *
-     */
-    private static Teacher getTeacher() {
-        try{
-            return (Teacher) AuthenticationManager.getInstance().getUser();
-        }catch(Exception e){
-            return null;
-        }
-
-    }
+	}
 }

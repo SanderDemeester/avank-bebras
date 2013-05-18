@@ -35,6 +35,7 @@ import models.user.UserType;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 
+import play.Logger;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Result;
@@ -115,6 +116,10 @@ public class TakeCompetitionController extends EController {
     /**
      * Returns a page with a listing of available competitions
      * for the current type of user.
+     * @param page page nr
+     * @param orderBy order field
+     * @param order ordering
+     * @param filter filter
      * @return  available competitions list page
      */
     public static Result list(int page, String orderBy, String order, String filter){
@@ -441,8 +446,7 @@ public class TakeCompetitionController extends EController {
     }
 
     /**
-     * Returns a snippet of available anonymous contests.
-     * @return
+     * @return a snippet of available anonymous contests.
      */
     public static List<CompetitionModel> anonymousSnippet(){
         TakeCompetitionManager competitionManager = getManager("name", "asc", "");
