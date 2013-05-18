@@ -155,7 +155,7 @@ public class UserManagerController extends EController {
     /**
      * Returns the user type of a user model.
      * 
-     * @param The user model of the user
+     * @param um The user model of the user
      * @return The user type of the user
      */
     public static UserType getUserType(UserModel um) {
