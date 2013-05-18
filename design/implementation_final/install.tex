@@ -2,30 +2,30 @@
 %Gummi|061|=)
 \date{}
 \begin{document}
-\section{Instalation guide}
+\section{Installation guide}
 \subsection{Requirements}
 \begin{itemize}
 \item sbt build tool
-\item java 1.7 (at least)
-\item postgreql 9.1 (at least)
+\item Java 1.7 (at least)
+\item PostgreSQL 9.1 (at least)
 \end{itemize}
 
-\subsection{Server configuration - postgresql setup}
+\subsection{Server configuration - PostgreSQL setup}
 \begin{itemize}
-\item Install postgres
-\item  By default our application uses the default user "postgres". Please change the password for this user to "sander". This is the default for database access but can be changed in
+\item Install Postgres
+\item  By default our application uses the default user "postgres". Please change the password for this user to "sander". This is the default for database access but can be changed.
 \item create a database "avank" using the psql tool.
 \item psql -U postgres.
 \item create database avank;
 \item \textbackslash i "path to createTablesComplete"
 \item \textbackslash i "path to populateDatabase.sql"
-\item  Optional: Optional: if you cannot login using the "psql" command. You should change the authentication methode in "pg\_hba.conf" to "md5". 
+\item  Optional: if you cannot login using the "psql" command, you should change the authentication methode in "pg\_hba.conf" to "md5". 
 "conf/application.conf" using the key "db.default.password".
 \end{itemize}
 \subsubsection{Building the application}
 \begin{itemize}
 \item  Install the scala build tool "sbt".
-\item  If you are using a debian based package manager, you can use the apt.typefase repository.
+\item  If you are using a Debian based package manager, you can use the apt.typefase repository.
 \item  wget http://apt.typesafe.com/repo-deb-build-0002.deb
 \item  sudo dpkg -i repo-deb-build-0002.deb
 \item  sudo apt-get update
@@ -35,14 +35,14 @@
 \item  running the application should be as simple as typing "sbt compile stage" and running "target/start" in the application folder.
 
 \item  If you would like to run the application as a standalone app (this is recommended) please use the following instructions.
-\item  Download the zip file "name application"
+\item  Download the ZIP file "name application"
 \item  You can (if you want) use a different "application.conf" file. This will allow you to use different default values for yor application (this is recommended).
-       You will need to build your own production zip file. The steps on how to do this can be found at the play website: http://www.playframework.com/documentation/2.0/ProductionDist
-\item  unzip the zip file "unzip avank-1.0-SNAPSHOT.zip"
+       You will need to build your own production ZIP file. The steps on how to do this can be found at the play website: http://www.playframework.com/documentation/2.0/ProductionDist
+\item  unzip the ZIP file "unzip avank-1.0-SNAPSHOT.zip"
 \item  execute "chmod u+x avank-1.0-SNAPSHOT/start"
 \item  To start the application, execute "./avank-1.0-SNAPSHOT/start".
 \item  The default port is "9000", you can change this with command line argument "-Dhttp.port="port number"", so the full command would then be: "./avank-1.0-SNAPSHOT/start -Dhttp.port=80".
       
-\item  Optional, it is possible to install the complete play! Framework. This should be play version 2.0.4 and can be found: http://downloads.typesafe.com/releases/play-2.0.4.zip
+\item  Optional, it is possible to install the complete Play! Framework. This should be Play version 2.0.4 and can be found: http://downloads.typesafe.com/releases/play-2.0.4.zip
 \end{itemize}
 \end{document}
