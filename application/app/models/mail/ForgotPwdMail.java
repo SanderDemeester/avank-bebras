@@ -1,7 +1,5 @@
 package models.mail;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 
 import models.EMessages;
 import play.Play;

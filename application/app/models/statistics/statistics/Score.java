@@ -6,8 +6,6 @@ import java.util.List;
 import com.avaje.ebean.Ebean;
 
 import models.dbentities.UserModel;
-import models.dbentities.QuestionSetModel;
-import models.dbentities.PupilAnswer;
 
 public class Score extends ContinuousStatistic {
 

@@ -9,8 +9,6 @@ import java.util.Iterator;
 import org.codehaus.jackson.node.ObjectNode;
 
 import models.dbentities.UserModel;
-import models.dbentities.QuestionModel;
-import models.dbentities.QuestionSetModel;
 import models.statistics.populations.Population;
 
 /**
