@@ -27,7 +27,7 @@ public class RegexAnswer extends Answer{
     public boolean isCorrect() {
         return input != null && input.matches(question.getRegex(language));
     }
-    
+
     /**
      * get input
      * @return input

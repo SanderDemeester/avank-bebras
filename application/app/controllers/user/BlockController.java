@@ -26,7 +26,7 @@ import controllers.EController;
 public class BlockController extends EController {
 
     /**
-     * 
+     *
      * @param id
      *            of the user to block
      * @return a page with a inputfield for blockedUntil date
@@ -45,7 +45,7 @@ public class BlockController extends EController {
             return ok(error.render(bc, "Error", EMessages.get("error.text")));
         }
     }
-    
+
     /**
      * block a user
      * @param id id of the user to block
@@ -68,7 +68,7 @@ public class BlockController extends EController {
             return ok(error.render(bc, "Error", EMessages.get("error.text")));
         }
     }
-    
+
     private static List<Link> getBreadcrumbs(String userID){
         ArrayList<Link> res = new ArrayList<Link>();
         res.add(new Link("Home","/"));
@@ -76,7 +76,7 @@ public class BlockController extends EController {
         res.add(new Link("otheruser.block","/user/"+userID+"/block"));
         return res;
     }
-    
+
     /**
      * Wrapper for blocking data
      */
@@ -87,6 +87,6 @@ public class BlockController extends EController {
         @Formats.DateTime(pattern = "dd/MM/yyyy")
         public Date blockedTill;
     }
-    
+
 }
 

@@ -28,13 +28,13 @@ import java.util.GregorianCalendar;
 /**
  * Controller for the personal settings.
  * @author Thomas Mortier
- * 
+ *
  */
 public class PersonalPageController extends EController {
 
-	/**
-	 * @return True if the user has the rights to edit personal information
-	 */
+    /**
+     * @return True if the user has the rights to edit personal information
+     */
     public static boolean isAuthorized() {
         return AuthenticationManager.getInstance().getUser().hasRole(Role.SETTINGS);
     }
@@ -42,7 +42,7 @@ public class PersonalPageController extends EController {
     /**
      * Method which takes care of rendering the correct page for the personal
      * information editor.
-     * 
+     *
      * @param tab for a certain tab (information/edit information/password change)
      */
     public static Result show(int tab) {
@@ -59,7 +59,7 @@ public class PersonalPageController extends EController {
     }
 
     /**
-     * Change information of user. 
+     * Change information of user.
      */
     public static Result changeInformation() {
         boolean error = false;

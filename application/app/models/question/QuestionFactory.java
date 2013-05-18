@@ -32,7 +32,7 @@ public abstract class QuestionFactory<T extends Question> {
      * A question will be generated based on a NodeList
      * @param node a Node that contains the structure of questions
      * @return a new question based on contents of the NodeList
-     * @throws QuestionBuilderException 
+     * @throws QuestionBuilderException
      */
     public abstract Question newQuestion(Node node) throws QuestionBuilderException;
 

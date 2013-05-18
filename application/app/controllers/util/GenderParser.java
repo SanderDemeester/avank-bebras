@@ -37,10 +37,10 @@ public class GenderParser {
         }
     }
 
-	/**
-	 * @param st String to be parsed
-	 * @return
-	 */
+    /**
+     * @param st String to be parsed
+     * @return
+     */
     public static Gender parseString(String st){
         if(st==null)return null;
         return stringToGender.get(st.toUpperCase());

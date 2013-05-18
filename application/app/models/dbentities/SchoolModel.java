@@ -20,7 +20,7 @@ import play.data.validation.Constraints.Required;
 public class SchoolModel extends ManageableModel implements Comparable<SchoolModel>{
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 2L;
     /**
@@ -56,7 +56,7 @@ public class SchoolModel extends ManageableModel implements Comparable<SchoolMod
         this.address = address;
         this.orig = orig;
     }
-    
+
     /**
      * Empty constructor
      */

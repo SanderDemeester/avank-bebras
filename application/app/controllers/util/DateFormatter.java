@@ -13,7 +13,7 @@ import java.util.Date;
  *
  */
 public class DateFormatter {
-    
+
     /**
      * default date format
      */
@@ -31,7 +31,7 @@ public class DateFormatter {
     public static String formatDate(Date d){
         return formatDate(d, false);
     }
-    
+
     /**
      * Format a date to a string
      * @param d date
@@ -43,7 +43,7 @@ public class DateFormatter {
         Format formatter = new SimpleDateFormat(extended?FORMAT_EXTENDED:FORMAT);
         return formatter.format(d);
     }
-    
+
     /**
      * Parse a string to a date
      * @param st string representation of a date

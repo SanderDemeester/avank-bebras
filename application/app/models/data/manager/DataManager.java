@@ -49,7 +49,7 @@ public abstract class DataManager<T extends DataElement> {
      * Creates a new object from the Strings supplied.
      * @param strings strings
      * @return The factorized object.
-     * @throws CreationException 
+     * @throws CreationException
      */
     public abstract T createFromStrings(String... strings)
         throws CreationException;
@@ -57,7 +57,7 @@ public abstract class DataManager<T extends DataElement> {
     /**
      * Adds the given element to the list of data elements.
      * @param element The new element
-     * @throws InsertionException 
+     * @throws InsertionException
      */
     @SuppressWarnings("unchecked")
     public void add(DataElement element) throws InsertionException {
@@ -76,7 +76,7 @@ public abstract class DataManager<T extends DataElement> {
     /**
      * Removes the element with the given id from the list of data element.
      * @param id The identifier
-     * @throws RemovalException 
+     * @throws RemovalException
      */
     public void remove(String id) throws RemovalException {
         T remove = Ebean.find(getTClass(), id);

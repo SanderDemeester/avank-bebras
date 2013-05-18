@@ -82,32 +82,32 @@ public class PasswordHasher {
         saltAndPassword.password = passwordHEX;
 
         return saltAndPassword;
-	}
-	/**
-	 * 
-	 * @param plainTextPassword password in plaintext
-	 * @return a container containing the fully hashed & hexed password and the hexed hash. Ready to be put in the
-	 *       database
-	 * @throws Exception 
-	 */
-	public static SaltAndPassword fullyHash(String plainTextPassword) throws Exception{
-		String clientHashed = AuthenticationManager.getInstance().simulateClientsidePasswordStrengthening(plainTextPassword);		
-		return generateSP(clientHashed.toCharArray());
-	}
+    }
+    /**
+     *
+     * @param plainTextPassword password in plaintext
+     * @return a container containing the fully hashed & hexed password and the hexed hash. Ready to be put in the
+     *       database
+     * @throws Exception
+     */
+    public static SaltAndPassword fullyHash(String plainTextPassword) throws Exception{
+        String clientHashed = AuthenticationManager.getInstance().simulateClientsidePasswordStrengthening(plainTextPassword);
+        return generateSP(clientHashed.toCharArray());
+    }
 
-	/**
-	 * salt and password holder
-	 *
-	 */
-	public static class SaltAndPassword{
-		/**
-		 * salt
-		 */
-		public String salt;
-		/**
-		 * password
-		 */
-		public String password;
-		
-	}
+    /**
+     * salt and password holder
+     *
+     */
+    public static class SaltAndPassword{
+        /**
+         * salt
+         */
+        public String salt;
+        /**
+         * password
+         */
+        public String password;
+
+    }
 }

@@ -11,8 +11,8 @@ import models.dbentities.UserModel;
  */
 
 public class Organizer extends SuperUser{
-	
-	/**
+
+    /**
      * Constructor
      * @param data Data model class
      * @param type User type.
@@ -25,7 +25,7 @@ public class Organizer extends SuperUser{
         ROLES.add(Role.MANAGEUSERS);
         ROLES.add(Role.MIMIC);
     }
-    
+
     /**
      * Constructor
      * @param data Data model class
@@ -39,7 +39,7 @@ public class Organizer extends SuperUser{
      * @param user
      */
     public void blockPupil(User user){
-	// Use default 
+    // Use default
     }
 
     /**
@@ -47,7 +47,7 @@ public class Organizer extends SuperUser{
      * @param user
      */
     public void mimicPupil(Independent user){
-	// Use default 
+    // Use default
     }
 
     /**

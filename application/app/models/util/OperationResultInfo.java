@@ -86,7 +86,7 @@ public class OperationResultInfo {
          */
         INFO,
         /**
-         * Warning 
+         * Warning
          */
         WARNING,
         /**

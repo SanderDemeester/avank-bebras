@@ -91,21 +91,21 @@ public class Server extends ManageableModel implements Listable{
     @Editable(hiddenInList=true)
     @Constraints.Required
     public String ftppass;
-    
+
     /**
      * ftp path
      */
     @Editable(hiddenInList=true)
     @Constraints.Required
     public String ftppath;
-    
+
     /**
      * is http secured
      */
     @Editable(hiddenInList=true)
     @Constraints.Required
     public boolean is_http_secured;
-    
+
     /**
      * http username
      */
@@ -248,7 +248,7 @@ public class Server extends ManageableModel implements Listable{
         // We are nice and close the connection
         client.disconnect(true);
     }
-    
+
     /**
      * Download a zipped file of the given question
      * @param questionID id of the question

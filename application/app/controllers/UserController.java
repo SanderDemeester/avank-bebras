@@ -197,7 +197,7 @@ public class UserController extends EController {
      * @param password the password of the user
      *
      * @return returns the users cookie.
-     * @throws Exception 
+     * @throws Exception
      */
     public static Result validate_login(String id, String password) throws Exception {
         String cookie = "";
@@ -251,7 +251,7 @@ public class UserController extends EController {
 
     /**
      * @return Returns a scala template based on the type of user that is requesting the page.
-     * @throws Exception 
+     * @throws Exception
      */
     public static Result landingPage() throws Exception {
         List<Link> breadcrumbs = new ArrayList<Link>();

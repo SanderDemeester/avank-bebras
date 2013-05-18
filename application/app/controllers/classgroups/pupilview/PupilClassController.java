@@ -20,14 +20,14 @@ import controllers.EController;
  */
 public class PupilClassController extends EController {
 
-	/**
-	 * view classes page
-	 * @param page page nr
-	 * @param orderBy order field
-	 * @param order ordering
-	 * @param filter filter
-	 * @return list view
-	 */
+    /**
+     * view classes page
+     * @param page page nr
+     * @param orderBy order field
+     * @param order ordering
+     * @param filter filter
+     * @return list view
+     */
     public static Result viewClasses(int page, String orderBy, String order, String filter){
         List<Link> bc = getBreadcrumbs();
         if(!isAuthorized())return ok(noaccess.render(bc));

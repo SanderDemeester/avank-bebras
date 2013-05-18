@@ -19,7 +19,7 @@ import models.dbentities.UserModel;
  *
  */
 public class UserModelValidator {
-	
+
 
     /**
      * Checks if the basic data in the usermodel is valid.
@@ -57,10 +57,10 @@ public class UserModelValidator {
 
     }
 
-	/**
-	 * @author Jens N Rammant
-	 * enum for returning what's wrong with the usermodel
-	 */
+    /**
+     * @author Jens N Rammant
+     * enum for returning what's wrong with the usermodel
+     */
     public enum Result{
         /** Everything OK */
         OK("usermodelvalidator.result.ok"),

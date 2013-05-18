@@ -14,18 +14,18 @@ import play.mvc.Call;
  */
 public class FAQManager extends Manager<FAQModel> {
 
-	/**
-	 * Default page size
-	 */
-	public static final int PAGESIZE = 15;
-	
-	/**
-	 * Make new FAQManager
-	 * @param state state of the model
-	 */
-	public FAQManager(ModelState state) {
-		super(FAQModel.class,state, "id", "language");
-	}
+    /**
+     * Default page size
+     */
+    public static final int PAGESIZE = 15;
+
+    /**
+     * Make new FAQManager
+     * @param state state of the model
+     */
+    public FAQManager(ModelState state) {
+        super(FAQModel.class,state, "id", "language");
+    }
 
     @Override
     public Call getAddRoute() {

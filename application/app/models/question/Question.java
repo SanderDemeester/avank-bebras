@@ -280,7 +280,7 @@ public abstract class Question {
     public QuestionModel getData() {
         return this.model;
     }
-    
+
     /**
      * @return official id
      */
