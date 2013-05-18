@@ -1,3 +1,6 @@
+\documentclass[11pt]{article}
+%Gummi|061|=)
+\date{}
 \begin{document}
 \section{Instalation guide}
 \subsection{Requirements}
@@ -14,9 +17,9 @@
 \item[second] create a database "avank" using the psql tool.
 \item[second] psql -U postgres.
 \item[second] create database avank;
-\item[second] \\i <path to createTablesComplete>
-\item[second] \\i <path to populateDatabase.sql>
-\item[First] *Optional: Optional: if you cannot login using the "psql" command. You should change the authentication methode in "pg_hba.conf" to "md5". 
+\item[second] \textbackslash i <path to createTablesComplete>
+\item[second] \textbackslash i <path to populateDatabase.sql>
+\item[First] Optional: Optional: if you cannot login using the "psql" command. You should change the authentication methode in "pg\_hba.conf" to "md5". 
 "conf/application.conf" using the key "db.default.password".
 \end{itemize}
 \subsubsection{Building the application}
