@@ -46,7 +46,7 @@ public class FAQModel extends ManageableModel {
     @Constraints.Required
     @Editable(hiddenInList=true)
     public String content;
-    
+
     @Override
     public String[] getFieldValues() {
         String[] res = {Integer.toString(id),name,language};

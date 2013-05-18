@@ -68,8 +68,8 @@ public class Language implements Comparable<Language>, Listable {
      * code.
      * @param code The code Play uses for this language.
      * @return language
-     * @throws UnavailableLanguageException 
-     * @throws UnknownLanguageCodeException 
+     * @throws UnavailableLanguageException
+     * @throws UnknownLanguageCodeException
      */
     public static Language getLanguage(String code) throws
             UnavailableLanguageException, UnknownLanguageCodeException {
@@ -86,7 +86,7 @@ public class Language implements Comparable<Language>, Listable {
      * the supplied Lang.
      * @param lang The Play language.
      * @return language
-     * @throws UnavailableLanguageException 
+     * @throws UnavailableLanguageException
      */
     public static Language getLanguage(Lang lang) throws
             UnavailableLanguageException {

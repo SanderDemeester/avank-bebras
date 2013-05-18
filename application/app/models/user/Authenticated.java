@@ -5,11 +5,11 @@ import models.dbentities.UserModel;
  * @author Sander Demeester
  */
 public abstract class Authenticated extends User{
-	
-	/**
+
+    /**
      * Constructor
      * @param data Data model class
-     * @param userType 
+     * @param userType
      */
     public Authenticated(UserModel data, UserType type) {
         super(data, type);

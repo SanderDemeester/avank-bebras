@@ -14,7 +14,7 @@ import models.management.Listable;
 public class UserTypeWrap implements Listable {
 
     /**
-     * TODO explain why it's empty
+     * Empty because instances only use the options method.
      */
     public UserTypeWrap() {
 
@@ -23,7 +23,7 @@ public class UserTypeWrap implements Listable {
     /**
      * Returns a map for the translation of different usertypes.
      * This is used in the listview in the DMTV.
-     * 
+     *
      * There is also a restriction when it comes to upgrading users
      * within the User Manager.
      * @return a map for the translation of different usertypes

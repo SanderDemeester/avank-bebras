@@ -52,7 +52,7 @@ public class UserModel extends ManageableModel implements Listable{
     @NotNull
     @JoinColumn(name="id")
     public String id;
-    
+
     /**
      * Type of the user
      */
@@ -61,14 +61,14 @@ public class UserModel extends ManageableModel implements Listable{
     @NotNull
     @JoinColumn(name="type")
     public UserType type;
-    
+
     /**
      * Wrapper for the type
      */
     @Transient
     @Editable
     public UserTypeWrap wrap_type;
-    
+
     /**
      * Name of the user
      */
@@ -76,14 +76,14 @@ public class UserModel extends ManageableModel implements Listable{
     @NotNull
     @JoinColumn(name="name")
     public String name;
-    
+
     /**
      * Name of the email
      */
     @Editable
     @JoinColumn(name="email")
     public String email;
-    
+
     /**
      * Gender of the user
      */
@@ -92,14 +92,14 @@ public class UserModel extends ManageableModel implements Listable{
     @ManyToOne
     @JoinColumn(name="gender")
     public Gender gender;
-    
+
     /**
      * Wrapper for the gender
      */
     @Transient
     @Editable
     public GenderWrap wrap_gender;
-    
+
     /**
      * Birthdate of the user
      */
@@ -109,7 +109,7 @@ public class UserModel extends ManageableModel implements Listable{
     @NotNull
     @JoinColumn(name="bday")
     public Date birthdate;
-    
+
     /**
      * Registrationdate of the user
      */
@@ -119,7 +119,7 @@ public class UserModel extends ManageableModel implements Listable{
     @NotNull
     @JoinColumn(name="regdate")
     public Date registrationdate;
-    
+
     /**
      * Preferred language of the user
      */
@@ -150,14 +150,14 @@ public class UserModel extends ManageableModel implements Listable{
     @ManyToOne
     @JoinColumn(name="blockeduntil")
     public Date blockeduntil;
-    
+
     /**
      * Is the user blocked
      */
     @Editable
     @Transient
     public boolean blocked;
-   
+
     /**
      * Password of the user (hashed)
      */
@@ -183,10 +183,10 @@ public class UserModel extends ManageableModel implements Listable{
      * ID of the class the user is currently in as pupil
      */
     @Override
-	public String getID() {
-		return id;
-	}    
-    
+    public String getID() {
+        return id;
+    }
+
     @Column(name="class")
     public Integer classgroup;
 
@@ -246,33 +246,33 @@ public class UserModel extends ManageableModel implements Listable{
         return options;
     }
 
-	@Override
-	public String[] getFieldValues() {
-		String[] res = {
-				id,
-				EMessages.get("user." + type.toString()),
-				name,
-				email,
-				EMessages.get("user." + gender.toString()),
-				convertDate(birthdate),
-				convertDate(registrationdate),
-				EMessages.get("languages." + preflanguage),
-				comment,
-				DateFormatter.formatDate(this.blockeduntil)
-		};		
-		return res;
-	}
-	
-	/**
-	 * @return String representation of birthdate
-	 */
-	public String getBirthDate(){
-		return convertDate(this.birthdate);
-	}
-	
-	private String convertDate(Date d){
-		return DateFormatter.formatDate(d);
-	}
+    @Override
+    public String[] getFieldValues() {
+        String[] res = {
+                id,
+                EMessages.get("user." + type.toString()),
+                name,
+                email,
+                EMessages.get("user." + gender.toString()),
+                convertDate(birthdate),
+                convertDate(registrationdate),
+                EMessages.get("languages." + preflanguage),
+                comment,
+                DateFormatter.formatDate(this.blockeduntil)
+        };
+        return res;
+    }
+
+    /**
+     * @return String representation of birthdate
+     */
+    public String getBirthDate(){
+        return convertDate(this.birthdate);
+    }
+
+    private String convertDate(Date d){
+        return DateFormatter.formatDate(d);
+    }
 
     /**
      *

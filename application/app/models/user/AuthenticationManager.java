@@ -383,7 +383,7 @@ public class AuthenticationManager {
 
         // To store the password as it is stored in the database.
         String passwordDB = null;
-        
+
         // Get the users information from the database.
         UserModel userModel = Ebean.find(UserModel.class).where().eq(
                 "id",getUser().data.id).findUnique();

@@ -12,7 +12,7 @@ import models.management.Listable;
  * @author Thomas Mortier
  */
 public class GenderWrap implements Listable {
-	
+
     public GenderWrap() {
 
     }

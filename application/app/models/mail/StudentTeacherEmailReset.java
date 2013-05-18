@@ -4,8 +4,8 @@ import models.EMessages;
 import play.Play;
 
 public class StudentTeacherEmailReset extends EMail{
-	
-	/**
+
+    /**
      * This method sends an email when the user requests a new password.
      * @param recipient email of destination
      * @param id the usermodel ID

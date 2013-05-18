@@ -66,7 +66,7 @@ public class EMail {
         this.replyTo = new ArrayList<InternetAddress>();
         this.attachments = new HashMap<File,String>();
     }
-    
+
     /**
      * set the message
      * @param message Message of the mail
@@ -74,7 +74,7 @@ public class EMail {
     public void setMessage(String message){
         this.message=message;
     }
-    
+
     /**
      * add something to message
      * @param extraMessage message to be added

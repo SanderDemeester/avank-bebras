@@ -19,7 +19,7 @@ import com.avaje.ebean.Ebean;
  */
 
 public class Teacher extends SuperUser{
-	/**
+    /**
      * Constructor
      * @param data Data model class
      */

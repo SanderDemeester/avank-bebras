@@ -4,8 +4,8 @@ package models.user;
  * @author Sander Demeester
  */
 public class Anon extends User{
-	
-	/**
+
+    /**
      * Constructor
      */
 

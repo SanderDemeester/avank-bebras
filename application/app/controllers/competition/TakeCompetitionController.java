@@ -35,7 +35,6 @@ import models.user.UserType;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 
-import play.Logger;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Result;

@@ -196,6 +196,10 @@ statistics.populations.schools = Schulen
 statistics.populations.all = Jeder
 statistics.statistics.gender = Geschlecht
 statistics.statistics.score = Punktzahl
+statistics.statistics.language = Sprache
+statistics.statistics.age = Alter
+statistics.statistics.classlevel = Klasse stufe
+statistics.statistics.answer = Antwort
 
 # Login
 redirect_message = Sie werden in Kürze auf Ihre Homepage umgeleitet.

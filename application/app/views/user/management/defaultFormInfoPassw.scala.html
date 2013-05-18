@@ -201,14 +201,14 @@
             request.fail(function(jqXHR, data){
             $("#mimic_alert").show('fast').attr("class","alert alert-error").text(jqXHR.responseText + ".");
             });
-            
+
             return false;
         });
-        	
-		$("#registrationdate").datepicker({ format: 'dd/mm/yyyy' });
-		$("#birthdate").datepicker({ format: 'dd/mm/yyyy' });		
-		$( "#blockeduntil" ).datepicker({      
-            format: 'dd/mm/yyyy'  
+
+        $("#registrationdate").datepicker({ format: 'dd/mm/yyyy' });
+        $("#birthdate").datepicker({ format: 'dd/mm/yyyy' });
+        $( "#blockeduntil" ).datepicker({
+            format: 'dd/mm/yyyy'
         });
 
         $("#registrationdate").datepicker({ format: 'dd/mm/yyyy' });

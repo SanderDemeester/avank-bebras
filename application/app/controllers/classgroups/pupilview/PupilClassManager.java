@@ -22,11 +22,11 @@ public class PupilClassManager extends Manager<ClassGroup> {
 
     private String pupilID;
 
-	/**
-	 * Make a new PupilClassManager
-	 * @param pupilID id of the pupil
-	 * @param state state of the model
-	 */
+    /**
+     * Make a new PupilClassManager
+     * @param pupilID id of the pupil
+     * @param state state of the model
+     */
     public PupilClassManager(String pupilID, ModelState state) {
         super(ClassGroup.class, state, "name", "name");
         this.pupilID=pupilID;

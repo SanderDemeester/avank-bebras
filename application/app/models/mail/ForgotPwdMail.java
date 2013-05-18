@@ -1,14 +1,12 @@
 package models.mail;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 
 import models.EMessages;
 import play.Play;
 
 public class ForgotPwdMail extends EMail {
 
-	 /**
+     /**
      * This method sends an email when the user requests a new password.
      * @param recipient email of destination
      * @param id the usermodel ID

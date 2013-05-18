@@ -32,7 +32,6 @@ import javax.persistence.Table;
 import models.management.Editable;
 import models.management.Listable;
 import models.management.ManageableModel;
-import play.Logger;
 import play.Play;
 import play.data.validation.Constraints;
 
@@ -91,21 +90,21 @@ public class Server extends ManageableModel implements Listable{
     @Editable(hiddenInList=true)
     @Constraints.Required
     public String ftppass;
-    
+
     /**
      * ftp path
      */
     @Editable(hiddenInList=true)
     @Constraints.Required
     public String ftppath;
-    
+
     /**
      * is http secured
      */
     @Editable(hiddenInList=true)
     @Constraints.Required
     public boolean is_http_secured;
-    
+
     /**
      * http username
      */
@@ -248,7 +247,7 @@ public class Server extends ManageableModel implements Listable{
         // We are nice and close the connection
         client.disconnect(true);
     }
-    
+
     /**
      * Download a zipped file of the given question
      * @param questionID id of the question
@@ -276,7 +275,6 @@ public class Server extends ManageableModel implements Listable{
         client.changeDirectory(questionID);
 
         List<File> files = new ArrayList<File>();
-        Logger.debug(questionID);
         // Read all the files in that folder
         for(FTPFile file : client.list()) {
             File f = QuestionIO.addTempFile(

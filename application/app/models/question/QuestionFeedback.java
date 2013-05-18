@@ -46,15 +46,15 @@ public class QuestionFeedback {
     }
 
     /**
-     * 
+     *
      * @return competition id
      */
     public String getCompetitionID() {
         return this.competitionID;
     }
-    
+
     /**
-     * 
+     *
      * @return question set id
      */
     public int getQuestionSetID() {

@@ -137,7 +137,7 @@ public class DataDaemon {
         private int interval;       // Interval between runs, <= 0 if none.
         private Runnable task;      // The task.
 
-        /** Creates a new TimedTask with the given settings. 
+        /** Creates a new TimedTask with the given settings.
          * @param date date
          * @param interval interval
          * @param task task

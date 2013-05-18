@@ -10,7 +10,7 @@ import models.dbentities.UserModel;
 
 public abstract class SuperUser extends Authenticated{
 
-	/**
+    /**
      * Constructor
      * @param data Data model class
      * @param type Usertype

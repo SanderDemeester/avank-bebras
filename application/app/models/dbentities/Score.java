@@ -22,7 +22,7 @@ import com.avaje.ebean.validation.NotNull;
 public class Score extends Model{
 
     private static final long serialVersionUID = 1L;
-    
+
     /**
      * user
      */
@@ -30,7 +30,7 @@ public class Score extends Model{
     @NotNull
     @JoinColumn(name="uID")
     public UserModel user;
-    
+
     /**
      * question set
      */
@@ -38,7 +38,7 @@ public class Score extends Model{
     @NotNull
     @JoinColumn(name="qsID")
     public QuestionSetModel questionset;
-    
+
     /**
      * score
      */

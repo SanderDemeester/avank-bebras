@@ -35,12 +35,12 @@ public class ClassPupilManager extends Manager<UserModel> {
     //Determines whether the remove link does anything or not. Standard is false
     private boolean canRemove;
 
-	/**
-	 * Make a new ClassPupilManager
-	 * @param classID id of the class
-	 * @param data the dataset
-	 * @param state state of the model
-	 */
+    /**
+     * Make a new ClassPupilManager
+     * @param classID id of the class
+     * @param data the dataset
+     * @param state state of the model
+     */
     public ClassPupilManager(int classID, DataSet data, ModelState state) {
         super(UserModel.class, state, "id", "name");
         this.classID=classID;
@@ -128,21 +128,21 @@ public class ClassPupilManager extends Manager<UserModel> {
         this.canRemove = b;
     }
 
-	/**
-	 * Dataset
-	 */
-	public enum DataSet {
-	    /**
-	     * Active
-	     */
-		ACTIVE,
-		/**
-		 * Not active
-		 */
-		NOTACTIVE,
-		/**
-		 * All
-		 */
-		ALL
-	}
+    /**
+     * Dataset
+     */
+    public enum DataSet {
+        /**
+         * Active
+         */
+        ACTIVE,
+        /**
+         * Not active
+         */
+        NOTACTIVE,
+        /**
+         * All
+         */
+        ALL
+    }
 }

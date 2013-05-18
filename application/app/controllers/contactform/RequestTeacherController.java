@@ -25,7 +25,7 @@ import controllers.EController;
  */
 @SuppressWarnings("unchecked")
 public class RequestTeacherController extends EController {
-	
+
     /**
      *
      * @return a page to upload the image
@@ -38,7 +38,7 @@ public class RequestTeacherController extends EController {
         ALLOWED_FILE_TYPES = Arrays.asList(toAdd);
     }
 
-	/**
+    /**
      * Show request teacher form
      * @return a page to upload the image
      */
@@ -55,11 +55,11 @@ public class RequestTeacherController extends EController {
         return ok(upgradeRequest.render(breadcrumbs));
     }
 
-	/**
-	 * Tries to send the mail, if possible
-	 * 
-	 * @return the upload page
-	 */
+    /**
+     * Tries to send the mail, if possible
+     *
+     * @return the upload page
+     */
     public static Result upload() {
         // Generate breadcrumbs
         List<Link> breadcrumbs = getBreadcrumbs();

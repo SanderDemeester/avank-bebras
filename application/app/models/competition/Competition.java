@@ -237,7 +237,7 @@ public class Competition {
     public CompetitionState getCompetitionState(User pupil){
         throw new UnsupportedOperationException();
     }
-    
+
     /**
      * Get competition id
      * @return competition id
@@ -245,7 +245,7 @@ public class Competition {
     public String getID() {
         return this.data.getID();
     }
-    
+
     /**
      * Get expiration date
      * @return expiration date
@@ -253,7 +253,7 @@ public class Competition {
     public Date getExpirationDate() {
         return this.data.endtime;
     }
-    
+
     /**
      * Get start date
      * @return start date
@@ -261,7 +261,7 @@ public class Competition {
     public Date getStartDate() {
         return this.data.starttime;
     }
-    
+
     /**
      * Get name
      * @return name

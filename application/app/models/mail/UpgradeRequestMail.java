@@ -17,11 +17,11 @@ import models.user.User;
  */
 public class UpgradeRequestMail extends EMail {
 
-	/**
-	 * Constructor
-	 * @param cardImage Image to be sent as Attachment
-	 * @param fileName Name of the Image
-	 */
+    /**
+     * Constructor
+     * @param cardImage Image to be sent as Attachment
+     * @param fileName Name of the Image
+     */
     public UpgradeRequestMail(File cardImage,String fileName){
         super();
         this.addAttachment(cardImage,fileName);

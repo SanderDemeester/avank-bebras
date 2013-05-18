@@ -59,7 +59,7 @@ $("#btn").live("click",function(){
     var password = $("#current_pwd").val();
     var n_password = $("#n_password").val();
     var controle_password = $("#controle_password").val();
-    
+
     var salt_p = CryptoJS.SHA256(password);
     var salt_np = CryptoJS.SHA256(n_password);
     var salt_cp = CryptoJS.SHA256(controle_password);

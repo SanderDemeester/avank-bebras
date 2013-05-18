@@ -6,7 +6,7 @@ import models.dbentities.UserModel;
  * @author Sander Demeester
  */
 public class Author extends Authenticated{
-	/**
+    /**
      * Constructor
      * @param Data model class
      */

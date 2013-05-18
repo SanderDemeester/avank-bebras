@@ -56,7 +56,7 @@ public class UserManagerController extends EController {
 
     /**
      * Checks if the user with userID can be accessed/edited/removed.
-     * 
+     *
      * @param userID of the user to access/edit/remove
      * @return True if authorized
      */
@@ -142,8 +142,8 @@ public class UserManagerController extends EController {
 
     /**
      * Find and return the UserModel of the user with id.
-     * 
-     * @param id of the user 
+     *
+     * @param id of the user
      * @return UserModel of the user
      */
     public static UserModel findUser(String id) {
@@ -154,9 +154,9 @@ public class UserManagerController extends EController {
 
     /**
      * Returns the user type of a user model.
-     * 
-     * @param um TODO
-     * @return UserType of um
+     *
+     * @param um The user model of the user
+     * @return The user type of the user
      */
     public static UserType getUserType(UserModel um) {
         return um.type;
@@ -165,7 +165,7 @@ public class UserManagerController extends EController {
     /**
      * Returns to the user list view and saves the changes that have been made
      * to a certain user with id edit_id.
-     * 
+     *
      * @param edit_id id of the user to be updated
      * @return User list view page
      */
@@ -285,7 +285,7 @@ public class UserManagerController extends EController {
 
     /**
      * Creates the user edit page for editing a user with ID id.
-     * 
+     *
      * @param id id of the user to be edited
      * @return User edit page
      */
@@ -343,7 +343,7 @@ public class UserManagerController extends EController {
 
     /**
      * Saves the new created user and returns to the user list view.
-     * 
+     *
      * @return user list view
      */
     @Transactional
@@ -424,7 +424,7 @@ public class UserManagerController extends EController {
     /**
      * Helpmethod for showing the correct listvalues for user with ID edit_id.
      * This method returns the type of the user with ID id.
-     * 
+     *
      * @param id id of the user
      * @return String of the user's type
      */
@@ -437,7 +437,7 @@ public class UserManagerController extends EController {
     /**
      * Helpmethod for showing the correct listvalues for user with ID edit_id.
      * This method returns the language of the user with ID id.
-     * 
+     *
      * @param id id of the user
      * @return String of the user's language
      */
@@ -450,7 +450,7 @@ public class UserManagerController extends EController {
     /**
      * Helpmethod for showing the correct listvalues for user with ID edit_id.
      * This method returns the gender of the user with ID id.
-     * 
+     *
      * @param id id of the user
      * @return String of the user's gender
      */

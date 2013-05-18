@@ -12,10 +12,10 @@ import models.EMessages;
  */
 public class ContactMail extends EMail {
 
-	/**
-	 * @param message Message of the mail
-	 * @param senderMail Email of the sender
-	 */
+    /**
+     * @param message Message of the mail
+     * @param senderMail Email of the sender
+     */
     public ContactMail(String message, String senderMail){
         super();
         this.setMessage(message);

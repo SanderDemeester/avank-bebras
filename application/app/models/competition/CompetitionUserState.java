@@ -18,7 +18,6 @@ import models.user.User;
 
 import org.codehaus.jackson.JsonNode;
 
-import play.Logger;
 import play.libs.Json;
 
 /**
@@ -98,7 +97,6 @@ public class CompetitionUserState {
             }
 
             if(!user.isAnon()) {
-                Logger.debug("savd");
                 Score score = new Score();
                 score.questionset = questionSet.getData();
                 score.user = user.data;

@@ -42,7 +42,7 @@ public class UserManager extends Manager<UserModel> {
         super(UserModel.class, state, "id", "id");
         this.edit_id = i;
     }
-    
+
     /**
      * Returns the path of the route that must be followed to create a new item.
      *
@@ -143,7 +143,7 @@ public class UserManager extends Manager<UserModel> {
     /**
      * This method is used to get the list of UserModels that are being
      * viewed in the view list of the DMTV.
-     * 
+     *
      * @return List of usermodels to be viewed
      */
     @Override
@@ -154,8 +154,8 @@ public class UserManager extends Manager<UserModel> {
     /**
      * This method makes sure that the correct list is made for a certain
      * type of user (which calls the method)
-     * 
-     * @param userType TODO
+     *
+     * @param userType The user type to set the correct dataset
      */
     public void setDataSet(String userType) {
         if(userType.equals("ADMINISTRATOR")) {

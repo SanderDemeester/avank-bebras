@@ -23,13 +23,13 @@ import com.avaje.ebean.validation.NotNull;
 public class PupilAnswer extends Model implements AnswerModel{
 
     private static final long serialVersionUID = 1L;
-    
+
     /**
      * pupil id
      */
     @Id
     public String indid;
-    
+
     /**
      * question
      */
@@ -37,22 +37,22 @@ public class PupilAnswer extends Model implements AnswerModel{
     @NotNull
     @JoinColumn(name="qid")
     public QuestionModel question;
-    
+
     /**
      * answer
      */
     public String answer;
-    
+
     /**
      * is correct
      */
     public boolean correct;
-    
+
     /**
      * language code
      */
     public String language;
-    
+
     /**
      * question set
      */
@@ -60,7 +60,7 @@ public class PupilAnswer extends Model implements AnswerModel{
     @NotNull
     @JoinColumn(name="questionsetid")
     public QuestionSetModel questionset;
-    
+
     /**
      * make new pupil answer
      * @param user user

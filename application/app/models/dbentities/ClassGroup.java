@@ -181,24 +181,24 @@ public class ClassGroup extends ManageableModel{
         return null;
     }
 
-	/**
-	 * 
-	 * pupil set type
-	 *
-	 */
-	public enum PupilSet{
-	    /**
-	     * All
-	     */
-		ALL,
-		/**
-		 * Active
-		 */
-		ACTIVE,
-		/**
-		 * Non-active
-		 */
-		NONACTIVE
-	}
+    /**
+     *
+     * pupil set type
+     *
+     */
+    public enum PupilSet{
+        /**
+         * All
+         */
+        ALL,
+        /**
+         * Active
+         */
+        ACTIVE,
+        /**
+         * Non-active
+         */
+        NONACTIVE
+    }
 
 }

@@ -8,7 +8,7 @@ import models.dbentities.UserModel;
  */
 public class Administrator extends Organizer{
 
-	/**
+    /**
      * Constructor
      * @param data Data model class
      */
