@@ -36,7 +36,7 @@ public class InputChecker {
     /**
      * Checks if a given string matches the general email string
      * 
-     * @param String email
+     * @param The email which which will be checked to ensure the correctness
      * @return true if correct email
      */
     public boolean isCorrectEmail(String email) {
