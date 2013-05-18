@@ -32,7 +32,6 @@ import javax.persistence.Table;
 import models.management.Editable;
 import models.management.Listable;
 import models.management.ManageableModel;
-import play.Logger;
 import play.Play;
 import play.data.validation.Constraints;
 
@@ -276,7 +275,6 @@ public class Server extends ManageableModel implements Listable{
         client.changeDirectory(questionID);
 
         List<File> files = new ArrayList<File>();
-        Logger.debug(questionID);
         // Read all the files in that folder
         for(FTPFile file : client.list()) {
             File f = QuestionIO.addTempFile(
