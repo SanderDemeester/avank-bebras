@@ -453,12 +453,6 @@
             }
             $("#container").highcharts(data);
             $("#stat-chart").modal();
-        }).fail(function(jqXHR, textStatus, errorThrown) {
-            alert(jqXHR);
-            alert(textStatus);
-            alert(errorThrown);
-            spinner.spin(false);
-            $("#show-chart").click();
         });
         return false;
     });
