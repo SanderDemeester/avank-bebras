@@ -12,4 +12,4 @@ This is the Interdisciplinary Project for the UGent Bachelor of Science, Compute
 - Eddy Van Den Heuvel
 - Felix Van der Jeugt
 
-The web-application we are developping is (or soon will be) avaible on [http://avank.ugent.be].
+The web-application we are developping is (or soon will be) available on [http://avank.ugent.be].
